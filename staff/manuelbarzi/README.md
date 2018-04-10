@@ -1,4 +1,1 @@
-# info
-
-github username: manuelbarzi
-e-mail: manuelbarzi@gmail.com
+# [Github](https://github.com/manuelbarzi)
