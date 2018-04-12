@@ -1,0 +1,84 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+   margin: 0;
+}
+html,
+body{
+    background-color: rgb(46, 45, 45);    
+    width: 100%;
+    min-height: 100% !important;
+    height: 100%
+}
+
+h1{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 0.2em; 
+    text-shadow: 0 4px 0 black;
+}
+ 
+h2{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding:15px;
+}
+
+header{
+    padding: 20px;
+    padding-left:40px;
+    padding-top: 40px;
+    background-color: rgb(85, 29, 32);
+    color: white;
+    height: 20%;
+}
+
+main{
+    display:inline-block;
+    height: 60%;
+    width: 100%;
+
+}
+aside{
+    padding:30px;
+    padding-top: 10px;
+    background-color: rgb(100, 42, 42);
+    width: 30%;
+    height: 100%;
+    float: left;
+}
+
+section{
+    width: 70%;
+    height: 100%;
+    float: right;
+    padding:40px;
+    padding-top: 10px;
+    background-color: palegoldenrod;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+footer{
+    padding: 20px;
+    background-color: rgb(107, 78, 86);
+    color: white;
+    height: 20%;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+a:hover{
+    color: pink;
+}
+
+a:focus{
+    color: rgb(223, 58, 85);
+    text-decoration: overline;
+    
+}
+
+li{
+    padding:15px;
+}
