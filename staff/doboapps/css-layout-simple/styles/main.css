@@ -1,0 +1,42 @@
+html, body {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: sandybrown;
+}
+
+header {
+    height: 20%;
+    background: tomato;
+}
+
+main {
+    height: 60%;
+    background: royalblue;
+    /* padding: 10px; */
+}
+
+aside {
+    width: 30%;
+    background: olive;
+    float: left;
+}
+
+section {
+    width: 70%;
+    background: mediumpurple;
+    float: right;
+}
+
+aside, section {
+    height: 100%;
+}
+
+footer {
+    height: 20%;
+    clear: both;
+    background: maroon;
+}
