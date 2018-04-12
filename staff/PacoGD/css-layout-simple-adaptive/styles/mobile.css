@@ -1,0 +1,41 @@
+html,
+body{
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+header{
+    height: 20%;
+    color: white;
+    background:black;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+main{
+    clear: both;
+    height: 60%;
+}
+nav, aside{
+    height: 20%;
+    color: white;
+    background:black;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+section{
+    height: 60%;
+    color: white;
+    background:black;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+
+footer{
+
+    height: 20%;
+    color: white;
+    background:black;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
