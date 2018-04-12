@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+ }
+ html, body {
+    min-height: 100% !important;
+    height: 100%;
+    background-color: black;
+    color:white;
+    text-align:center;
+}
+header, footer{
+  width:100%;
+  height: 20%;
+  border: 1px solid white;
+}
+main {
+  width:100%;
+  height: 60%;
+  border: 1px solid white;
+}
+nav, aside{
+    width:100%;
+   height: 20%;
+   border: 1px solid white;
+}
+section {
+    width:100%;
+    height: 60%;
+    border: 1px solid white;
+}

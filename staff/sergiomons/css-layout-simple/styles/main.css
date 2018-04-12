@@ -5,6 +5,7 @@
  html, body {
     min-height: 100% !important;
     height: 100%;
+    text-align: center;
 }
 header {
     height: 25%;
@@ -13,7 +14,6 @@ header {
 main {
     height: 50%;
     width: 100%;
-    
 }
 aside {
     height: 100%;
