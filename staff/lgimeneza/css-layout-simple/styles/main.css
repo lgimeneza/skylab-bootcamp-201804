@@ -2,20 +2,23 @@ body{
     background-color: blue;
     height: 100%;
     width: 100%;
-    position: absolute;
     margin: 0px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+html{
+    height: 100%;
+    width: 100%;
 }
 
 .myHeader{
     background-color: crimson;
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
     height: 15%;
 }
 .myFooter{
     background-color: cadetblue;
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
     height: 15%;
 }
 .myAside{
