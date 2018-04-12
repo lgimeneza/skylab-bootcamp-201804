@@ -1,0 +1,33 @@
+body{
+    background-color: blue;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0px;
+}
+
+.myHeader{
+    background-color: crimson;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    height: 15%;
+}
+.myFooter{
+    background-color: cadetblue;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    height: 15%;
+}
+.myAside{
+    background-color: bisque;
+    float: left;
+    width: 30%;
+    height: 100%;
+}
+.mainSection{
+    background-color: azure; 
+    height: 100%;
+}
+.mainContent{
+    height: 70%; 
+}
