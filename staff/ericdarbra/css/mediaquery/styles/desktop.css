@@ -1,0 +1,59 @@
+* {
+    background-color: black;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+main {
+    height: 50%;
+}
+
+header {
+    background: black;
+    border: solid 1px white;
+    height: 25%;
+    color: white;
+    box-sizing: border-box;
+}
+
+nav {
+    background: black;
+    border: solid 1px white;
+    width: 20%;
+    color: white;
+    box-sizing: border-box;
+    height:100%;
+    float:left;
+}
+
+section {
+    background: black;
+    border: solid 1px white;
+    width: 60%;
+    color: white;
+    height:100%;
+    float:left;
+    box-sizing: border-box;
+}
+
+aside {
+    background: black;
+    border: solid 1px white;
+    width: 20%;
+    color: white;
+    box-sizing: border-box;
+    float:right;
+    height:100%;
+}
+
+footer {
+    background: black;
+    border: solid 1px white;
+    height: 25%;
+    color: white;
+    box-sizing: border-box;
+}
