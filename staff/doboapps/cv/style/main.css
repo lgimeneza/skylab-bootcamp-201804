@@ -1,0 +1,47 @@
+body {
+    padding: 30px;
+    background: mistyrose
+}
+
+h1 {
+    text-transform: uppercase;
+    color: lightseagreen;
+}
+
+header img {
+    float: left;
+    width: 200px;
+    margin-right: 50px;
+}
+
+header {
+    margin-bottom: 50px;
+}
+
+P:first-letter {
+    font-size: 200%;
+    font-weight: bold;
+}
+p{
+text-align: justify;   
+}
+
+a {
+    text-decoration: none;
+}
+
+main h2 {
+    color: lightslategray;
+}
+
+footer{
+font-weight: bold;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
