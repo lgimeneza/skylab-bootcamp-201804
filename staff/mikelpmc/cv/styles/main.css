@@ -16,7 +16,6 @@ main {
 aside {
     text-align: center;
     background-color: #003b5a;
-    width: 30%;
 }
 
 aside img {
@@ -52,7 +51,6 @@ section#personal a {
 }
 
 section#profile {
-    width: 70%;
     background-color: rgb(235, 235, 235);
     text-align: justify;
 }
