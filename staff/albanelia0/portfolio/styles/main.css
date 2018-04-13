@@ -61,6 +61,7 @@ ul {
   height: 20%;
   justify-content: space-between;
   padding-right: 51px;
+  cursor: pointer;
 }
 
 a {
