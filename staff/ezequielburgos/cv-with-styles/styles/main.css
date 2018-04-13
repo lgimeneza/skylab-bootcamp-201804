@@ -19,12 +19,14 @@ body{
 .section-left{
     background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(49, 49, 49, 0.863), rgba(36, 1, 1, 0.85));
     border-radius: 10px;
+    border: 2px solid grey;
 }
 
 .section-right{
     background: linear-gradient(rgba(98, 107, 121, 0.7), rgba(211, 211, 211, 0.7) ,rgba(145, 104, 104, 0.7));
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     border-radius: 10px;
+    border: 2px solid grey;
 }
 
 table{
