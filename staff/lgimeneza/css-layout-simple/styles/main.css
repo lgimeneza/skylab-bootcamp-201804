@@ -11,26 +11,26 @@ html{
     width: 100%;
 }
 
-.myHeader{
+.my-header{
     background-color: crimson;
     text-align: center;
     height: 15%;
 }
-.myFooter{
+.my-footer{
     background-color: cadetblue;
     text-align: center;
     height: 15%;
 }
-.myAside{
+.my-aside{
     background-color: bisque;
     float: left;
     width: 30%;
     height: 100%;
 }
-.mainSection{
+main{
     background-color: azure; 
     height: 100%;
 }
-.mainContent{
+.main-content{
     height: 70%; 
 }

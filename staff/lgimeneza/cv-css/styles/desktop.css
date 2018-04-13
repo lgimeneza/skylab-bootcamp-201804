@@ -1,0 +1,37 @@
+#profile{
+    width: 20%;
+    height: 100%;
+    float: left;
+    background-color: rgb(243, 243, 243);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+    padding: 20px;
+}
+#experience,#education,#skills{
+    width: 73%;
+    float: left;
+}
+section{
+    margin-left: 20px;
+}
+footer{
+    margin-bottom: 3em;
+}
+progress{
+    width: 250px;
+    height: 20px;
+}
+.footer-links{
+    width: 33%;
+    float: left;
+}
+#email{
+    text-align: right;
+    vertical-align: bottom;
+    padding-top: 0.4em;
+}
+#phone{
+    text-align: center;
+    padding-top: 0.4em;
+}

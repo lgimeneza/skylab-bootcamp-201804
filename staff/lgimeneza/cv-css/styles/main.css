@@ -1,0 +1,87 @@
+@import url('mobile.css') only screen and (max-width: 768px);
+@import url('desktop.css') only screen and (min-width: 768px);
+
+*{
+    padding: 0px;
+    margin: 0px;
+    
+}
+body{
+    height: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+header{
+    height: 20%;
+    margin-top: 5%;
+    margin-left: 0.3em;
+    border:none;
+}
+footer{
+    height: 15%;
+}
+header>h1{
+    font-family: 'Roboto', sans-serif;
+    color: rgb(0, 145, 162);
+    font-size: 5em;
+}
+header>h2{
+    font-family: 'Muli', sans-serif;
+    color: rgb(179, 179, 179);
+    font-size: 20px;
+}
+hr.separator{
+    border-top: 2px solid rgb(192, 192, 192);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+section>h3{
+    font-family: 'Roboto', sans-serif;
+    color: rgb(0, 145, 162);
+    font-size: 2em;
+    margin-top: 10px;
+}
+section>h3>span{
+    color: rgb(179, 179, 179);
+    font-weight: bold;
+}
+ul{
+    list-style-type: none;
+}
+h6{
+    font-size: 1em;
+}
+.skillLabel{
+    display: inline-block;
+    width: 6em;
+    font-weight: bold;
+}
+.calendar{
+    width: 0.9em;
+}
+.linkedinLogo{
+    width: 1.3em;
+}
+.fix{
+    color: white;
+}
+.profile div{
+    margin-bottom: 0.7em;
+}
+section li{
+    margin-bottom: 0.7em;
+}
+.experience p{
+    margin-bottom: 0.4em;
+}
+.education p{
+    margin-bottom: 0.4em;
+}
+.skills p{
+    margin-bottom: 0.4em;
+}
+a{
+    color: rgb(73, 73, 73);
+    text-decoration: none;
+}

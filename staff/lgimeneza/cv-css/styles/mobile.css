@@ -1,0 +1,14 @@
+nav{
+    height: 20%;
+}
+section{
+    height: 60%;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+aside{
+    height: 20%;
+}
+.linkedin-logo{
+    padding-left: 2em;
+}
