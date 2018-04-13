@@ -1,4 +1,4 @@
-header {
+header, footer {
     height: 20%;
 }
 
@@ -6,7 +6,7 @@ main {
     height: 60%;
 }
 
-nav {
+nav, aside {
     width: 20%;
     height: 100%;
     float: left;
@@ -16,14 +16,4 @@ section {
     width: 60%;
     height: 100%;
     float: left;
-}
-
-aside {
-    width: 20%;
-    height: 100%;
-    float: left;
-}
-
-footer {
-    height: 20%;
 }
