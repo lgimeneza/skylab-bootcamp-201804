@@ -1,25 +1,3 @@
-* {
-    background-color: black;
-    color: white;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-html,
-body {
-    height: 100%;
-}
-
-header {
-    border: 1px solid white;
-    height: 20%;
-}
-
-main {
-    height: 60%;
-}
-
 nav {
     height: 25%;
 }
@@ -30,13 +8,4 @@ aside {
 
 section {
     height: 50%;
-}
-
-main > * {
-    border: 1px solid white;
-}
-
-footer {
-    height: 20%;
-    border: 1px solid white;
 }

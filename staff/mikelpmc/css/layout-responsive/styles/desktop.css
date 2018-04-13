@@ -1,35 +1,10 @@
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
+nav {
+    float: left;
+    width: 25%;
     height: 100%;
 }
 
-* {
-    background-color: black;
-    color: white;
-}
-
-header {
-    height: 20%;
-    border: 1px solid white;
-}
-
-main {
-    height: 50%;
-}
-
-main > * {
-    border: 1px solid white;
-}
-
-main {
-    height: 60%;
-}
-
-nav {
+aside {
     float: left;
     width: 25%;
     height: 100%;
@@ -39,15 +14,4 @@ section {
     width: 50%;
     height: 100%;
     float: left;
-}
-
-aside {
-    float: left;
-    width: 25%;
-    height: 100%;
-}
-
-footer {
-    border: 1px solid white;
-    height: 20%;
 }
