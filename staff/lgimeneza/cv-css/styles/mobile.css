@@ -12,3 +12,9 @@ aside{
 .linkedin-logo{
     padding-left: 2em;
 }
+footer .footer-main{
+    padding-left: 10px;
+}
+footer .footer-main div{
+    margin-bottom: 10px;
+}

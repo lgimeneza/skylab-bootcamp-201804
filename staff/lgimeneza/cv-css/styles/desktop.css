@@ -22,10 +22,6 @@ progress{
     width: 250px;
     height: 20px;
 }
-.footer-links{
-    width: 33%;
-    float: left;
-}
 #email{
     text-align: right;
     vertical-align: bottom;
@@ -34,4 +30,10 @@ progress{
 #phone{
     text-align: center;
     padding-top: 0.4em;
+}
+footer .footer-main{
+    display: flex;
+}
+footer .footer-main div{
+    flex: 1;
 }
