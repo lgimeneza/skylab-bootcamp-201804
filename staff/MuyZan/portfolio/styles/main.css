@@ -45,7 +45,7 @@ main{
 box-shadow: 5px 5px #64253f;
 display:grid;
 justify-items: center;
-
+cursor: crosshair;
 }
 
 .card:hover{
