@@ -1,0 +1,38 @@
+/* hmtl {
+    max-width: 500px;
+    background: white;
+} */
+
+body {
+    /* background: rgb(150, 173, 111); */
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 500px;
+    border: 1px solid rgb(3, 0, 0)
+}
+
+header {
+    height: 15%;
+    width: 500px;
+    background: rgb(24, 80, 28);
+    border: 1px solid rgb(3, 0, 0);
+    box-sizing: border-box;
+    color: green;
+    background: rgb(150, 173, 111);
+}
+
+main, footer {
+    background: rgb(150, 173, 111);
+}
+
+#foto-cv {
+    height: 50px;
+    width: 50px;
+}
+
+h3 {
+    color: rgb(2, 88, 6);
+}
+
+* {
+    margin: 0px;
+}
