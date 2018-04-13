@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+}
+
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+img{
+    padding: 4px;
+}
+
+.site-title{
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+
+.site-logo{
+    width: 200px;
+    vertical-align: bottom;
+}
+
+.main-title{
+    padding-left: 30px;
+    color: rgb(82, 81, 81);
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.section-header{
+    padding-left: 10px;
+    padding-top:5px;
+    padding-bottom: 5px;
+    color: white;
+    background-color: rgba(54, 54, 54, 0.7);
+    font-family: 'Montserrat', sans-serif;
+}
