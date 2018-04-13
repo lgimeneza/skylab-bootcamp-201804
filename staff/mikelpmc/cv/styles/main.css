@@ -1,0 +1,78 @@
+@import url('mobile.css') screen and (max-width: 720px);
+
+html,
+body {
+    height: 100vh;
+}
+
+* {
+    font-family: 'Source Code Pro', monospace;
+}
+
+main {
+    display: flex;
+}
+
+aside {
+    text-align: center;
+    background-color: #003b5a;
+    width: 30%;
+}
+
+aside img {
+    width: 150px;
+    border-radius: 50%;
+    border: 5px solid white;
+    transition: width 1s ease-in;
+}
+
+aside img:hover {
+    width: 200px;
+    transform: rotateY(180deg);
+}
+
+section#personal {
+    color: white;
+    text-align: center;
+}
+
+section#personal a {
+    color: white;
+    text-decoration: none;
+}
+
+.section-header {
+    text-transform: uppercase;
+    background-color: purple;
+    margin: 10px;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px rgb(219, 219, 219);
+}
+
+section#profile {
+    width: 70%;
+    background-color: rgb(235, 235, 235);
+    text-align: justify;
+}
+
+h1.name {
+    text-transform: uppercase;
+    color: rgb(2, 32, 168);
+    text-align: center;
+}
+
+section > * {
+    margin: 20px;
+}
+
+footer {
+    background-color: black;
+}
+
+footer section.social {
+    display: flex;
+    justify-content: center;
+    color: white;
+}
