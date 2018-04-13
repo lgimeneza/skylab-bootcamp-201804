@@ -21,33 +21,33 @@ time, mark, audio, video {
 
 header {
     background-color: blue;
-    animation-name: test;
+    animation-name: expandHeader;
     animation-duration: 3s;
     width: 100%;
     height:20%;
     text-align: center;
 
 }
-@keyframes test{
+@keyframes expandHeader{
     0% {height:0%;}
     100% {height:20%;}
 }
-@keyframes test2{
+@keyframes expandAside{
     0% {height:0%;}
     100% {height:60%;}
 }
-@keyframes test3{
+@keyframes expandSection{
     0% {height:0%;}
     100% {height:60%;}
 }
-@keyframes test4{
+@keyframes expandFooter{
     0% {height:0%;}
     100% {height:20%;}
 }
 main{height:100vh;}
 aside {
     background-color: orange;
-    animation-name: test2;
+    animation-name: expandAside;
     animation-duration: 3s;
     float: left;
     width:30%;
@@ -57,13 +57,13 @@ aside {
 section {
     background-color: skyblue;
     height:60%;
-    animation-name: test3;
+    animation-name: expandSection;
     animation-duration: 3s;
 }
 
 footer {
     background-color: red;
     height:20%;
-    animation-name: test4;
+    animation-name: expandFooter;
     animation-duration: 3s;
 }
