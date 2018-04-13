@@ -1,0 +1,66 @@
+html, body{
+    height:100%;
+    width: 100%;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+
+#imagen{
+    border-radius: 30%;
+    }
+
+.container{
+flex-direction: column;
+height: 100vh;
+flex:4;
+display:flex;
+
+}
+
+.container header{
+    flex:1;
+    background-color: darkslategrey;
+    color: white;
+    text-align: center;
+
+}
+
+.container main{
+
+    flex:3;
+}
+
+.container footer{
+ flex:1;
+} 
+
+body{
+    display: flex;
+
+}
+aside{
+    height:100vh;
+    flex: 1;
+    background-color: darkgrey;
+    color:white;
+    border-right: white solid 3px;
+}
+
+.personal-information h3{
+    text-align: center;
+}
+ul{
+    list-style-type: none;
+}
+figure{
+    text-align: center;
+}
+
+.name-line{
+    border-bottom: white solid 1px; 
+}
+
+
+
+
