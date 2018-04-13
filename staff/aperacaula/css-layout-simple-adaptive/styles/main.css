@@ -1,2 +1,41 @@
 @import "mobile.css" screen and (max-width: 768px);
 @import "desktop.css" screen and (min-width: 768px); 
+
+*{
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    height: 100%;
+    text-align: center;
+}
+
+body{
+    height: 100%;
+}
+
+header{
+    height: 20%;
+    width: 100%;
+    margin: 0%;
+    border: 1px solid white;
+    
+}
+
+main{
+    height: 60%;
+    width: 100%;
+    margin: 0%;
+    border: 1px solid white;
+}
+
+main> *{
+    border: 1px solid white;
+}
+
+
+footer{
+    height: 20%;
+    clear: both;
+    border: 1px solid white;
+}
