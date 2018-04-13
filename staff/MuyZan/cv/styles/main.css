@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  color: rgb(36, 36, 36);
+  font-family: "Roboto", sans-serif;
+}
+
+
+/*HEADER*/
+
+.cabecera {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+
+.cabecera .left img {
+    float: left;
+    margin-top: 20px;
+}
+
+.cabecera .left {
+  background-color: rgb(48, 48, 48);
+  color: white;
+}
+
+.contact {
+    font-size: 0.8em;
+    text-align: left;
+  }
+
+.name {
+  font-size: 1.6em;
+}
+
+.id {
+  padding-top: 30px;
+}
+
+
+
+.intro {
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    text-justify: inter-word;
+    padding: 30px;
+    font-size: 1.2em;
+    text-align: center;
+  }
+
+
+
+
+/*SEPARATION*/
+
+.header-line {
+  display: inline-flex;
+  justify-content: space-between;
+  background-color: rgb(48, 48, 48);
+  color: white;
+  width: 100%;
+  padding: 15px;
+  padding-right:30px;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+/*MAIN*/
+main {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+
+main .left {
+    background-color: rgb(223, 64, 71);
+    color: white;
+  }
+
+
+.titular-1 {
+margin-top: 20px;
+  width: 18em;
+  background-color: rgb(48, 48, 48);
+  color: white;
+  font-size: 15px;
+  text-align: right;
+  padding: 5px;
+  padding-right: 15px;
+  text-transform: uppercase;
+}
+
+.titular-2 {
+  width: 18em;
+  background-color: rgb(223, 64, 71);
+  color: white;
+  font-size: 15px;
+  text-align: right;
+  padding: 5px;
+  padding-right: 15px;
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+.date {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  width: 8em;
+  background-color: rgb(48, 48, 48);
+  color: white;
+  font-size: 10px;
+  text-align: right;
+  padding: 3px;
+  padding-right: 15px;
+  text-transform: uppercase;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.studies {
+  margin: 15px;
+  padding-left: 20px;
+}
+
+
+
+
+.idiomas img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bloque {
+  padding: 20px 50px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 0.7em;
+}
+
+.list {
+  padding-top: 20px;
+  padding-right: 150px;
+  font-size: 0.9em;
+}
+
+
+.icon{
+    border: 1px solid  rgb(223, 64, 71);;
+    border-radius: 100%;
+    padding:5px;
+ 
+    background-color: rgb(223, 64, 71);
+    margin-right: 4px;
+}
+
+.tecnica-bloques{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom:20px;
+}
+
+.bloque1{
+    margin-top:25px;
+    margin-left:25px;
+border:2px solid rgb(223, 64, 71, 0.8);;
+padding:15px;
+}
+
+
+.barra{
+    margin-top:15px;
+    margin-left:25px;
+  
+border:2px solid rgb(223, 64, 71, 0.8);;
+border-radius: 35px;
+color:rgb(223, 64, 71, 0.8);
+font-size:0.5em;
+}
+
+
+.titular-3{
+
+    margin-top: 7px;
+    margin-bottom: 7px;
+    width: 28em;
+    background-color:  rgb(223, 64, 71);
+    color: white;
+    font-size: 10px;
+    padding: 3px;
+    padding-left: 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.lado2{
+    display:flex;
+    flex-direction: column; 
+    align-items: flex-end;
+}
+
+.lado2 .bloque{
+    color:black;
+    text-transform: none;
+    font-size: 1em;
+    text-align: left;
+
+}
+
+.red{
+color:rgb(223, 64, 71);
+}
