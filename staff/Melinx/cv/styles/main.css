@@ -1,38 +1,108 @@
 body {
     font-family: 'Montserrat', sans-serif;
     font-size: 12pt;
-    background-color: aquamarine;
-    margin: 5%;
+    background: linear-gradient(rgb(164, 59, 235),rgb(240, 135, 135), rgb(243, 118, 15), rgb(183, 93, 224), rgb(125, 215, 243), rgb(213, 236, 85));    margin: 5%;
     margin-right: 5%;
     border: aliceblue;
     outline-color: black;
     outline-style: groove;
+    box-sizing: border-box;
+    outline-style: dotted;
+    border-radius: 3%;
+}
+
+#head{
+
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    float: inline-block;
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+    align-items: stretch;
+
 }
 
 header {
     font-family: 'Courier New', Courier, monospace;
-    background-color: bisque;
-    width: 89%;
-    height: 100%;
-    align-content: center;
+    font-size: 11pt;
     padding: 5%;
-    margin-bottom: 15px;
-
+    width: 55%;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: lightblue;
+    display: block;
+    float: left;
+    position: relative;
 }
 
+#pic{
+    height: 20%;
+    width: 20%;
+    display: block;
+    float: left;
+    margin-left: 4%;
+    border-color: greenyellow;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+
+}
 body{
     padding: 5%;
     padding-block-start: 5%;
 }
+#subheader {
+    box-sizing: border-box;
+    float: inline-block;
+    display: flex;
+    justify-content: space-around;
+    justify-content: center;    
+    align-content: space-around;
+}
 .contact {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace; 
     background-color: rgb(248, 165, 88);
-    width: 95%;
-    height: 80%;
+    width: 55%;
+    height: 100%;
     align-content: center;
-    padding: 2%;
+    padding: 3%;
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    margin-left: none;
+    border-radius: 3%;
+    margin-top: 2%;
+    margin-right: 3%;
 }
 
+.quote {
+    width: 25%;
+    height: 100%;
+    align-self: center;
+    padding: 3%;
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    margin-left: none;
+    border-radius: 3%;
+    margin-top: 2%;
+    background-color: #94b2f3;
+    margin-left: 4%;
+    font-size: 10pt;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#working{
+    clear: both;
+}
+
+.hr {
+    color: black;
+    border-color: black;
+}
 .section {
     font-family: 'Poppins', sans-serif;
     font-size: 14pt;
@@ -40,14 +110,15 @@ body{
 
 footer {
     font-family: 'Courier New', Courier, monospace;
-    background-color: #fa90f5;
+    background-color: #f5b1f1;
     width: 95%;
     height: 100%;
     align-content: center;
     padding: 2%;
     margin-top: 3%;
-    font-color: gray;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border-radius: 3%;
+
 }
 
 contact {
