@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0%;
+  background: #9E9E9E;
+}
+
+header {
+  width: 50%;
+}
+
+main {
+  display: flex;
+  height: 100%;
+}
+
+.header {
+  width: 100%;
+}
+ul {
+  list-style: none;
+  width: 100%;
+  padding-left: 0px;
+}
+#sidebar {
+  width: 20%;
+  background: #a83c3c;
+  padding-left: 2%;
+  padding-right: 2%;
+  color: #CFD8DC;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#sidebar .image {
+  flex-basis: 100%;
+  justify-content: center;
+  width: 100%;
+  padding-top: 5%;
+}
+
+#contents {
+  background: #D1C4E9;
+  padding-right: 20%;
+  padding-left: 4%;
+}

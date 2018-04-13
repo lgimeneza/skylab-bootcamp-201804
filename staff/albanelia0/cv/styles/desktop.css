@@ -1,0 +1,35 @@
+body {
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+header {
+  height: 30%;
+  width: 100%;
+  background: #9E9E9E;
+  margin-top: 0%;
+  align-items: center;
+}
+
+.header ul {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background: #a83c3c;
+}
+
+#sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  background: #a83c3c;
+  padding: 5%;
+}
+
+#contents {
+  display: flex;
+  background: #D1C4E9;
+  padding: 5%;
+  flex-wrap: wrap;
+}
