@@ -1,20 +1,10 @@
-nav{
-    width: 20%;
+nav, aside{
+    width: 25%;
     height: 100%;
     float: left;
-}
-aside{
-    width: 30%;
-    height: 100%;
-    float: right;
 }
 section{
     width: 50%;
     height: 100%;
     float: left;
 }
-footer{
-    height: 20%;
-    float: none;
-}
-

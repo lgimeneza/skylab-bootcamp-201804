@@ -15,14 +15,17 @@ main{
     height: 60%;
     
 }
-header{
-    background-color: black;
-    color: white;   
-    height: 20%;
-    border : 1px solid white;
-}
-nav, aside, section, footer{
+nav, aside, section, footer, header{
     background-color: black;
     color: white;
     border : 1px solid white;
+    display: flex;
+    justify-content : center;
+    align-items : center;
+}
+header{   
+    height: 20%;
+}
+footer{
+    height: 20%;
 }
