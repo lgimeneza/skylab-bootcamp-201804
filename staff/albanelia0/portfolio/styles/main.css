@@ -1,0 +1,73 @@
+* {
+  font-family: 'Indie Flower', cursive;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.screen {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  text-align: center;
+}
+
+header {
+  height: 20%;
+  background: #9E9E9E;
+}
+
+footer {
+  background: #616161;
+}
+
+.portfolio {
+  height: 75%;
+  width: 100%;
+  background: #757575;
+}
+
+.works {
+  width: 100%;
+  height: 100%;
+}
+
+#works {
+  display: flex;
+  flex-flow: row wrap;
+  padding-right: 10%;
+  padding-left: 10%;
+  justify-content: center;
+}
+
+img {
+  height: 200px;
+  margin-right: 20px;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  height: 20%;
+  justify-content: space-between;
+  padding-right: 51px;
+}
+
+a {
+  background-color: #827717;
+  transition: background-color .5s;
+}
+
+a:hover {
+  background-color: gold;
+}
