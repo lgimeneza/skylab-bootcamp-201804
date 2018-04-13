@@ -18,16 +18,17 @@ body {
   height: 100%;
 }
 
-header {
-    height: 20%;
-  }
+
+header, footer{
+  height: 20%;
+}
+
+
   main {
     height: 60%;
   }
   
-  footer {
-    height: 20%;
-  }
+ 
 
 
 
