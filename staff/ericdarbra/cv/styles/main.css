@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
-body{margin:0px;}
+body{margin:0px;width:100%;}
 h3{margin:0px;}
 
 
@@ -11,6 +11,7 @@ header > section{margin:0 auto; margin-top:10px;margin-bottom:15px;}
     margin-top: 20px;
     color: #6b6b6b;
     font-size: 85%;
+    display:block;
 }
 #headerLogo{order:2; margin-top:25px;}
 #headerContact ul{list-style: none;text-align: end;}
@@ -88,3 +89,43 @@ header > section{margin:0 auto; margin-top:10px;margin-bottom:15px;}
             max-width: 1150px;
             margin: 0 auto;
         }
+
+
+@media(max-width:728px){
+    #headerContact{
+        display:none;
+    }
+    #headerInfo{
+        display:none;
+    }
+    body{
+        width:100%; 
+    }
+    #headerLogo img{
+        padding:30px;
+        width:80%;
+    }
+    footer img{
+        max-width:200px;
+        height:100px;
+        margin:0 auto;
+
+    }
+    footer section{
+        padding:40px;
+    }
+    #competencias{
+        padding:40px;
+    }
+    #formacion{
+        padding:40px;
+        
+    }
+    footer p{
+        text-align: center;
+
+    }
+    footer article{
+        flex-direction: column;
+    }
+}
