@@ -1,0 +1,41 @@
+
+    body{
+        height: 100%;
+        width: 100%;
+        text-align: center;
+    }
+
+    header{
+        height: 200px;
+        background-color: lightblue;
+    }
+
+    main{
+        /* display: block; */
+        /* clear: both; */
+    }
+
+    aside{
+        display: block;
+        height: 200px;
+        width: 30%;
+        float: left;
+        background: yellow;
+    }
+
+
+    section{
+        display: block;
+        height: 200px;
+        width: 70%;
+        float: left;
+        background:lightcoral;
+    }
+
+
+    footer {
+        clear: both;
+        height: 200px;
+        background: lightgreen;
+    }
+    
