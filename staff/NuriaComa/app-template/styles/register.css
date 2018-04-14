@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+html, body {
+    height: 100%;
+    min-height: 100% !important;
+    font-family: Arial, Helvetica, sans-serif;
+}
+section{
+    float: left;
+    width: 50%;
+    height: 100%;
+    background-image: url('../images/fondo.jpg');
+    background-repeat: no-repeat;
+}
+aside{
+    float: left;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+}
+
+form {
+    padding-top: 15%;
+    
+}
+.formulario{
+    width: 40%;
+    font-size: 20px;
+    
+}
+.buton{
+    background-color: rgb(52, 88, 112);
+    border: 30% color rgb(52, 88, 112) ;
+    color: white;
+    width: 15%;
+    height: 7%;
+    
+}
+p{
+    color: rgb(72, 113, 141); 
+    padding: 2% 4%;
+}
+
