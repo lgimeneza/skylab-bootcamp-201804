@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+i.fa {
+  font-weight: 400;
+}
+
+body {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  font-family: 'Handlee', cursive;
+  margin: 0;
+  color: white;
+}
+
+footer {
+  background: #F2B23F;
+  flex-basis: 10%;
+}
