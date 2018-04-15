@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 2em;
+    color: forestgreen;
+    font-family: 'Helvetica', 'Verdana', 'Monaco', sans-serif;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    border: 1px solid black;
+    padding: 1%;
+    grid-gap: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 25px;
+    background-image: url("https://i2.wp.com/hipertextual.com/files/2015/05/avengers_age_of_ultron_2015_movie-wide.jpg?resize=670%2C413&ssl=1");
+}
+
+.grid-item {
+    padding: 60px;
+    border: 1px solid black;
+    /* background: rgb(163, 180, 3); */
+    box-shadow: 2px 2px 6px aqua;
+    opacity: 0.8;
+    border-radius: 25px;
+}
+
+.a {
+    grid-column: 1 / 7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.b {
+    grid-row: 2 / 4;
+    grid-column: 1/3;
+    background-image: url("https://pics.filmaffinity.com/a_quiet_place-854286921-msmall.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.c {
+    grid-row: 2 / 4;
+    grid-column: 3/5;
+    background-image: url("https://pics.filmaffinity.com/isle_of_dogs-327002857-mmed.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.d {
+    grid-row: 2 / 4;
+    grid-column: 5/7;
+    background-image: url("https://pics.filmaffinity.com/las_leyes_de_la_termodinamica-948974287-msmall.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.grid-item.a:hover {
+    background: gold;
+    /* background-image: url("https://mdn.mozillademos.org/files/6457/mdn_logo_only_color.png"); */
+    box-shadow: 0px 0px 0px aqua;
+    position: relative;
+    top: 5px;
+    left: 5px;
+    opacity: 1;
+    cursor: pointer;
+   
+}
+
+.grid-item.a:link, .grid-item.a:active, .grid-item.a:visited {
+    max-height: 169px;
+    max-width: 320px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    
+    
+}
+
+/* .grid-item.a:active {
+    background: gold;
+    background-image: url("https://www.istockphoto.com/resources/images/PhotoFTLP/img_75929395.jpg");
+    box-shadow: 0px 0px 0px aqua;
+    position: relative;
+    top: 5px;
+    left: 5px;
+    opacity: 1;
+    background-size: contain;
+} */
+
+.grid-item.b:hover {
+    background: yellow;
+    box-shadow: 0px 0px 0px aqua;
+}
+
+.grid-item.c:hover {
+    background: yellow;
+    box-shadow: 0px 0px 0px aqua;
+}
+
+.grid-item.d:hover {
+    background: yellow;
+    box-shadow: 0px 0px 0px aqua;
+}
