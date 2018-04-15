@@ -47,8 +47,8 @@ section {
     margin-top: 2%;
 }
 article {
-    width: 95%;
-    height: 95%; 
+    width: 100%;
+    height: 100%; 
 }
 .articles-container {
     display: grid;
@@ -67,7 +67,7 @@ img:hover {
 figcaption {
     margin-top: 3%;
     font-size: 25px;
-    font-style: italic;s
+    font-style: italic;
 }
 footer {
     text-align: center;
