@@ -44,24 +44,27 @@ header{
 }
 nav{
     background-color: rgba(255, 255, 255, 0.705);
-    width: 65%;
+    width: 67%;
     float: left;
     margin-top: 1%;
     margin-left: 1%;
+    padding-right: 2%;
    
 }
 
 .navMenu{
     text-decoration:none;
-    font-size: 80%;
+    font-size: 83%;
     padding: 2% 3%;
     color: black;
     
     float: left;
 }
 .search{
-    width: 28%;
+    width: 39%;
     background-image: url("images/search.png");
+    background-repeat: no-repeat;
+    background-position: right center;
     font-size: 90%;
     padding: 0 3%;
     background-color: rgba(255, 255, 255, 0.705);
@@ -108,7 +111,7 @@ main{
 .whiteBox{
     width:80%;
     height: 100%;
-    margin: -3% 10%; 
+    margin: -2% 10%; 
     background-color: rgb(255, 255, 255);
 }
 article{
@@ -150,6 +153,9 @@ h1{
     background-color: black;
     font-size: 80%;
     float: left;
+    text-align: left;
+    background-image: url("images/arrows,png");
+    background-repeat: no-repeat;
 }
 footer{
     width: 100%;
