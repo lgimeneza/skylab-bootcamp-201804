@@ -1,0 +1,45 @@
+@media (max-width: 590px){
+    #nav-bar-home {
+        height: 80%;
+        width: 30%px;
+
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#nav-bar-home {
+    height: 80%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+}
+
+#nav-bar-home a {
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+#nav-bar-home a:hover {
+    background-color: #ddd;
+    color: black;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.content {
+    margin-left: 200px;
+    padding-left: 20px;
+}
+
+footer{
+    align-self: flex-end;
+}
