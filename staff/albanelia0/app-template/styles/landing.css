@@ -1,12 +1,9 @@
-
 header {
   display: flex;
   background: #3ea7bc;
-  flex-basis: 10%;
-  justify-content: flex-end;
-  align-items: center;
   padding: 20px;
 }
+
 
 .header-link {
   font-size: 20px;
