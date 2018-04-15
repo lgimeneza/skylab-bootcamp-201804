@@ -3,9 +3,7 @@ html, body {
     height: 100%;
     width: 100%;
 }
-/* [class*="col"] {
-    width: 100%;
-} */
+
 header {
     background-color: aquamarine;
     height: 20%;
@@ -14,11 +12,11 @@ header {
 main {
     height: 100%;
 }
+
 nav, aside {
     background-color: greenyellow;
     height: 20%;
     align-content: center;
-
 
 }
 section {
