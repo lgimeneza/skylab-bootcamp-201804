@@ -27,9 +27,14 @@ body {
   color: white;
 }
 
+main {
+  display: flex;
+  background: #2d1818;
+  flex-basis: 80%;
+}
+
 .title {
   display: flex;
-  justify-content: flex-end;
   padding-right: 20px;
 }
 

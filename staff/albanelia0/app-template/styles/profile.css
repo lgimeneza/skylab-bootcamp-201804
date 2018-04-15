@@ -1,0 +1,18 @@
+header {
+  background: #4DB6AC;
+}
+
+.profile-container {
+  padding: 10% 20%;
+
+}
+
+main .profile {
+  width: 50%;
+  flex-basis: 80%;
+}
+
+main .dates {
+  width: 50%;
+  flex-basis: 80%;
+}
