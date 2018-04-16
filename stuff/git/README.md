@@ -2,9 +2,7 @@
 
 [Git cheatsheet](https://gist.github.com/LeCoupa/122b12050f5fb267e75f)
 
-# Checkout a pull request
-
-[Checking out pull requests locally](https://help.github.com/articles/checking-out-pull-requests-locally/)
+# [Checking out pull requests locally](https://help.github.com/articles/checking-out-pull-requests-locally/)
 
 ## Example
 
