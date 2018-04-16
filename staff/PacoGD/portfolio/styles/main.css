@@ -2,12 +2,14 @@
     box-sizing: border-box;
 }
 
-h1 {
+img {
     font-style: italic;
     font-weight: bold;
     font-size: 2em;
     color: forestgreen;
     font-family: 'Helvetica', 'Verdana', 'Monaco', sans-serif;
+    height: auto;
+    width: 100%;
 }
 
 .grid-container {
@@ -79,7 +81,7 @@ h1 {
    
 }
 
-.grid-item.a:link, .grid-item.a:active, .grid-item.a:visited {
+.grid-item.a:link, .grid-item.a:visited {
     max-height: 169px;
     max-width: 320px;
     position: absolute;
