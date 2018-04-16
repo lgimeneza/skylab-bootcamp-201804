@@ -1,19 +1,4 @@
 
-html, body {
-    height: 100%;
-    width: 100%;
-}
-/* [class*="col"] {
-    width: 100%;
-} */
-header {
-    background-color: aquamarine;
-    height: 20%;
-}
-
-main {
-    height: 60%;
-}
 nav, aside {
     background-color: greenyellow;
     height: 100%;
@@ -27,11 +12,5 @@ section {
     width: 60%;
     display: block;
     float:left;
-
-}
-
-footer {
-    background-color: goldenrod;
-    height: 20%;
 
 }

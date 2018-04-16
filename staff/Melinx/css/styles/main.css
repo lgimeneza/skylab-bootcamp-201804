@@ -1,8 +1,7 @@
 h1 {color:greenyellow}
 
 main{
-    display:inline-block;
-    background-color: gree
+    background-color: greenyellow;
 }
 
 h1 {
@@ -10,7 +9,7 @@ h1 {
 }
 
 header {
-    background-color: burlywood
+    background-color: burlywood;
 }
 
 main {

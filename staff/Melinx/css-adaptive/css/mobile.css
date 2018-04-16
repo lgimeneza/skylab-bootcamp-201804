@@ -1,17 +1,4 @@
 
-html, body {
-    height: 100%;
-    width: 100%;
-}
-
-header {
-    background-color: aquamarine;
-    height: 20%;
-}
-
-main {
-    height: 100%;
-}
 
 nav, aside {
     background-color: greenyellow;
@@ -26,8 +13,3 @@ section {
 
 }
 
-footer {
-    background-color: goldenrod;
-    height: 20%;
-
-}
