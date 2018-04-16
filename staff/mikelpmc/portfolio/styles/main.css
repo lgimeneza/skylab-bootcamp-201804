@@ -1,0 +1,77 @@
+@import url('mobile.css') screen and (max-width: 720px);
+
+a {
+    text-decoration: none;
+}
+
+.btn {
+    padding: 0.5rem;
+    text-transform: uppercase;
+    min-width: 120px;
+}
+
+.btn-blue {
+    background-color: #056291;
+    color: white;
+}
+
+header {
+    display: flex;
+    background-color: #dbdbdb;
+    border-bottom: 1px solid #003b5a;
+    box-shadow: 5px 2px #f1f1f1;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+header h1 {
+    color: #056291;
+    margin-top: 0px;
+}
+
+main {
+    margin: 20px;
+}
+
+section.portfolio {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+section.portfolio > article {
+    background-color: #f0f0f0;
+    border: 2px solid #003b5a;
+    border-radius: 5px;
+    box-shadow: 2px 2px rgb(219, 219, 219);
+    padding: 2rem;
+    max-width: 200px;
+    text-align: justify;
+    margin: 0.5rem;
+}
+
+section.portfolio > article .title {
+    color: #003b5a;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+section.portfolio > article img {
+    width: 100%;
+    height: auto;
+}
+
+section.portfolio > article footer {
+    background-color: inherit;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #dbdbdb;
+}
+
+footer p {
+    margin-bottom: 0;
+    padding: 0.5rem;
+}
