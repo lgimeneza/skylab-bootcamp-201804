@@ -1,0 +1,10 @@
+figure {
+    height: 30vh;
+    width: 30vh;
+    border: 2px solid salmon;
+    font-size: 5vh;
+}
+
+figure input{
+    width:25vh;
+}
