@@ -15,7 +15,6 @@ try {
     console.log('countChars(true) should throw an error', err !== undefined, err);
 }
 
-
 try {
     count = countChars(1);
 } catch(err) {
