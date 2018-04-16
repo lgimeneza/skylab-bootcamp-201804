@@ -155,7 +155,6 @@ input[type="search"] {
 
 .intro-img {
   margin-left: 18%;
-
 }
 
 .intro-text {
@@ -267,7 +266,6 @@ main {
   padding-top: 1.8em;
   color: rgb(107, 107, 114);
 }
-
 
 h1 {
   color: rgb(47, 45, 41);
@@ -385,9 +383,9 @@ footer ul > li:hover {
 
 /*media queries*/
 
-
 @media (max-width: 600px) {
-  .intro-img, .sign-up,
+  .intro-img,
+  .sign-up,
   .lettering {
     display: none;
   }
