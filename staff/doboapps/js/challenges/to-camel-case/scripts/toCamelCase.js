@@ -1,10 +1,13 @@
 function toCamelCase(str) {
 
-    var myArray = [];
+    if (typeof str !== 'string')
+    throw Error('input str is not a string');
+
+
     var sentence = "";
-    str =str.toLowerCase;
+    str = str.toLowerCase();
     
-    myArray = str.split(" ");
+    var myArray = str.split(" ");
 
     myArray.map(word => {
         var capital = word[0].toUpperCase();
