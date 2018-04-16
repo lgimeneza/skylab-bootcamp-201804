@@ -1,0 +1,217 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    min-height: 100% !important;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+header{
+    padding: 0 10%;
+    height: 82%;
+    background-color: rgb(74, 189, 210);
+}
+#login{
+    float:left;
+    width: 100%;
+    font-size: 85%;
+    color: white;
+    text-align: right;
+    margin-top: 1%;
+
+}
+#login a {
+    color: white;
+    text-decoration: none;
+    padding-right: 12%;
+}
+#header-nav {
+   float: left;
+   width: 100%;
+   margin: 0 0 0 3%;
+}
+.logo-word{
+    width: 20%;
+    float: left;
+    margin: 0 3% 0 0;
+}
+.but-header{
+    float: left;
+    background: linear-gradient(rgb(124, 124, 124),rgb(41, 39, 39));
+    color: white;
+    font-size: 70%;
+    width: 9%;
+    border: none;
+    border-radius: 8%;
+    padding: 1.2%;
+    margin-top: 1%;
+    padding-left: 1%; 
+}
+nav {
+    width: 55%;
+    background-color: rgba(255, 255, 255, 0.705);
+    float: left;
+    margin-left: 1%;
+    border-radius: 6%;
+    margin-top: 1%;
+}
+.nav-header{
+    text-decoration:none;
+    font-size: 80%;
+    padding: 1% 2%;
+    color: black;
+    float: left;
+    border-right: 1px solid rgb(110, 101, 101);
+}
+.enter-search{
+    float: left;
+    width: 37%;
+    border: none;
+    background-image: url("../images/search.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    font-size: 90%;
+    padding: 0 1%;
+    background-color: rgba(255, 255, 255, 0.705);
+    margin: 0.9% 0 0 1.5%;
+    border-radius: 9%;
+}
+.after-nav {
+    float:left;
+}
+#img-left {
+    float:left;
+    width: 40%;
+    margin-left: 4%;
+}
+#img-monkey {
+    width: 100%;
+}
+#col-right {
+    float:left;
+    width: 40%;
+    margin-top: 3%;
+}
+.word-big{
+    float: left;
+    width: 40%;
+}
+#col-right > p{
+    font-size: 90%;
+    color: rgb(54, 54, 54);
+    margin-top: 5%;
+}
+.but-2 {
+    background: linear-gradient(rgb(199, 114, 57),rgb(185, 39, 39));
+    font-size: 70%;
+    margin-top: 5% ;
+    padding: 3% 7%;
+    justify-content: center;
+    color: white;
+    border-radius: 7%;
+    border: none;
+}
+main{
+    float: left;
+    width: 100%;
+    height: 70%;
+    background-image: url("../images/noisepattern.png");
+}
+section{
+    float: left;
+    width:80%;
+    height: auto;
+    margin: -3.5% 10% 0 10%; 
+    border-radius: 8px;
+    
+    background-color: white;
+}
+#box-articles {
+    margin-left: 2%;
+}
+article{
+    width: 24%;
+    height:auto;
+    float: left;
+    margin-right: 1%;
+}
+h1{
+    font-size: 120%;
+    color: rgb(70, 67, 67);
+    padding: 3% 2%; 
+}
+.img-art{
+    width: 90%;
+    margin: 3% 3%;
+    float: left;
+}
+.p-art{
+    font-size: 80%;
+    margin: 3% 3%;
+    float: left;
+}
+.h2-art{
+    font-size: 90%;
+    margin: 3% 3%;
+    float: left;
+}
+.p2-art{
+    font-size: 75%;
+    margin: 3% 3% 3% 3%;
+    float: left;
+}
+.but-art{
+    float: left;
+    background: linear-gradient(rgb(124, 124, 124),rgb(41, 39, 39));
+    color: white;
+    font-size: 65%;
+    text-align: left;
+    width: 95%;
+    border: none;
+    border-radius: 5%;
+    padding: 2.5%;
+    margin: 1% 0 0 2%;
+    padding-left: 8%; 
+}
+.separator{
+    float:left;
+    margin: 0% 0 6% 0;
+}
+footer {
+    float:left;
+    height: 90%;
+    width:100%;
+    color: rgb(117, 117, 117);
+    background-color: rgb(37, 37, 37);
+    line-height: 1.5;
+}
+footer > div {
+    float:left;
+    font-size: 85%;
+    width: 14%;
+    margin: 1% 0 0 6%;
+    text-decoration: none;
+}
+footer > div:nth-child(1) {
+    margin: 1% 0 0 12%;
+}
+li {
+    list-style: none;
+}
+.first-li {
+    font-weight: bold;
+    color: white;
+}
+#copyright {
+    float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 60%;
+    margin: 6% 0 0 0;
+    border: 1px solid red;
+
+}
