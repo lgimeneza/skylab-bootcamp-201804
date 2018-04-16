@@ -93,7 +93,7 @@ nav{
     
 }
 .butRed{
-    background: linear-gradient(rgb(236, 108, 83), rgb(233, 92, 65));;
+    background: linear-gradient(rgb(236, 108, 83),rgb(233, 92, 65));
     float: left;
     margin: 1% 2%;
     padding: 2% 6%;
