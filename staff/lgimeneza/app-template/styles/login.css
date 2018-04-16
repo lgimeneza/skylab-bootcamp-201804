@@ -11,6 +11,11 @@ body{
 
 .container{
     width: 40%;
+    min-width: 20%;
+}
+
+.centered{
+    text-align: center;
 }
 
 .inputs{
