@@ -1,6 +1,10 @@
 @import 'colors.css';
 @import 'common.css';
 
+body {
+    background-size: cover;
+}
+
 header {
     margin-bottom: 0px;
 }

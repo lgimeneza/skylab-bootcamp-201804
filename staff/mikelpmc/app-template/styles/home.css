@@ -21,6 +21,7 @@ section.search {
 
 section#players {
     display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
     grid-template-columns: auto auto;
     grid-gap: 10px;
     margin-bottom: 100px;
