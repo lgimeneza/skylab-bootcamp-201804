@@ -6,6 +6,8 @@
 
 [Checking out pull requests locally](https://help.github.com/articles/checking-out-pull-requests-locally/)
 
+## Example
+
 ```sh
 $ git fetch upstream pull/85/head:pr
 
