@@ -1,0 +1,105 @@
+@import url("mobile.css") screen and (max-width: 720px);
+*{
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+}
+
+header{
+    display: grid;
+    grid-template: 1fr/ 40% 60%;
+    max-height: 15%;
+    background-color: black;
+
+}
+#titulo h1{
+    font-size: 3vw;
+    font-weight: normal;
+    text-transform: uppercase;
+
+}
+
+#titulo h2{
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+header h2{
+    font-size: 2vw;
+}
+
+#titulo, #barra{
+    padding: 5%;
+    color: rgb(247, 229, 195);
+    display: flex;
+}
+
+#titulo{
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+#barra{
+    justify-content: space-around;
+    align-items: flex-end;
+    font-size: 1.75vw;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(247, 229, 195);
+}
+
+main{
+    display: flex;
+    justify-content: space-around;
+    background-color: rgb(247, 229, 195);
+    height: 70%;
+    padding-bottom: 2vh;
+}
+
+aside{
+    float: left;
+    padding: 3%;
+}
+
+aside img{
+    max-width: 100%;
+    height: auto;
+}
+
+figcaption{
+    font-size: 2vw;
+}
+
+#aqui{
+    color: tomato;
+}
+
+section{
+    float: right;
+    background: rgb(247, 246, 246,0.5);
+    margin: 2%;
+    border-radius: 5%;
+}
+
+section h2{
+    margin-left: 0.5vw;
+    font-size: 2.5vw;
+}
+
+section li{
+    font-size: 2vw;
+}
+
+footer{
+    margin: 2vh;
+    clear: both;
+    max-height: 15%;
+    text-align: center;
+}
+
+footer img{
+    max-height: 100%;
+    width: auto;
+}
