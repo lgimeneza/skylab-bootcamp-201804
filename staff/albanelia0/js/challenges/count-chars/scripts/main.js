@@ -15,8 +15,8 @@ try {
 
 try {
   count = countChars(1);
-  count = countChars(1);
-  count = countChars(1);
+  count = countChars(2);
+  count = countChars(3);
 } catch (error) {
   console.log('cointChars(1) should launch and error', error !== undefined, error);
 }
