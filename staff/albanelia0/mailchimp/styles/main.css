@@ -22,19 +22,26 @@ html {
   align-items: flex-end;
 }
 
-.above-bar {
+.container-header {
+  width: 90%;
+  display: flex;
+
+
+} .above-bar {
   display: flex;
   padding: 0px 15px;
   background: #D2EAF1;
-  align-items: flex-start;
+  align-items: center;
+  height: 10%;
 }
 
 .above-bar-left {
-display: flex;
-align-items: flex-start;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
 }
+
 .above-bar-left img {
-  flex-basis: 40%;
   margin: 10px;
   background-size: cover;
   cursor: pointer;
