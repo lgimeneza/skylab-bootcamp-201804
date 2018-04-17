@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 
 function countChars(str, func) {
-    if (typeof str !== 'string')
+    if (typeof str !== 'string'){
         throw Error('input str is not a string');
-
+}
     if (!func) {
         return str.length;
     } else {
