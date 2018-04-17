@@ -1,7 +1,12 @@
+var texto='Hola que tal';
+var prueba=toRandomCase(texto);
+
+console.log ('The function works', texto === prueba.toLowerCase() && texto !== prueba)
+
 try{
     var count=toRandomCase(56)
 }catch(err){
-    err=1;
+    error=err;
 }finally{
-    console.log('This should deliver an error', err!== undefined, err)
+    console.log('This should deliver an error', error!== undefined, error)
 }

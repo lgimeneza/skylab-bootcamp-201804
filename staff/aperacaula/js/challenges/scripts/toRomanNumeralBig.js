@@ -1,10 +1,23 @@
 "use strict";
+
+//esta función intentará pasar a romano cualquier numero
 function toRomanNumeralBig(num) {
   if (typeof num === "number") {
-    dic={1:'I',2:'II',3:'III',5:'V',10:'X',50:'L',100:'C',500:'D',1000:'M'}
-    arr=(num.toString())
+    var dic=[0,'I','II','III','V','X','L','C','D','M'];
+    var arr=(num.toString()).split('');
+    var arr_final=[];
+    for(var i=0; i<arr.length; i++){
+      var cifra= Number(arr[i]);
+      if (cifra>5 && cifra%5 !== 4){
+        arr_final.push(dic[4]+dic[cifra])
+      }else if ({
+        arr_final.push(dic[4]+dic[cifra]);
+      }
+    }
     
   }else{
-      throw Error('input is not a string');
+  
+    
   }
+  throw Error('input is not a string');
 }
