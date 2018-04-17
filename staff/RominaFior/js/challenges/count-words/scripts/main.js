@@ -6,29 +6,29 @@ console.log('countWords ("hello world" should return 2) ', count === 2, count);
 
 
 try {
-    convert = toCamelCase(true)
+        count = countWords(true)
 } catch (err) {
-    console.log('toCamelCase(true should throw an error)', err !== undefined, err);
+    console.log('countWords(true should throw an error)', err !== undefined, err);
 }
 
 try {
-    convert = toCamelCase(false)
+    count = countWords(false)
 } catch (err) {
-    console.log('toCamelCase(true should throw an error)', err !== undefined, err);
+    console.log('countWords(true should throw an error)', err !== undefined, err);
 }
 
 try {
-    convert = toCamelCase(1)
+    count = countWords(1)
 } catch (err) {
-    console.log('toCamelCase(true should throw an error)', err !== undefined, err);
+    console.log('countWords(true should throw an error)', err !== undefined, err);
 }
 try {
-    convert = toCamelCase([])
+    count = countWords([])
 } catch (err) {
-    console.log('toCamelCase(true should throw an error)', err !== undefined, err);
+    console.log('countWords(true should throw an error)', err !== undefined, err);
 }
 try {
-    convert = toCamelCase({})
+    count = countWords({})
 } catch (err) {
-    console.log('toCamelCase(true should throw an error)', err !== undefined, err);
+    console.log('countWords(true should throw an error)', err !== undefined, err);
 }
