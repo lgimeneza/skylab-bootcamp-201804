@@ -8,7 +8,7 @@
              return str.length;
      } else {
          if (typeof func !== 'function')
-             throw Error('input func is not a function')
+             throw Error('input func is not a function');
  
          var count = 0;
          
