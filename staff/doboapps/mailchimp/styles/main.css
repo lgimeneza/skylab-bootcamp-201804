@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ccd0cf;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    padding: 0;
+}
+
+header {
+    background: #45bcd2;
+}
+
+header, footer {
+    padding: 60px 80px;
+}
+
+.logo {
+    float: left;
+}
+
+.search, .login {
+    border-right: none;
+}
+
+.box-border {
+    border-radius: 6px;
+    background: #d2edf3;
+}
+
+nav {
+    display: grid;
+    grid-template-columns: 20% 15% 65%;
+}
+
+nav ul {
+    margin-top: 0;
+    color: #50514b;
+    font-weight: bold;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 15% 15% 15% 15% 15% 15%;
+}
+
+li {
+    list-style: none;
+}
+
+nav li {
+    padding: 18px 10px;
+    height: 17px;
+    list-style: none;
+    border-right: 1px solid darkgray;
+}
+
+.singup {
+    font-size: 14px;
+    padding: 17px;
+    position: absolute;
+    color: white;
+    border-radius: 6px;
+}
+
+input {
+    border-radius: 6px;
+    height: 20px;
+    margin-top: -5px;
+    float: left;
+    width: 180%;
+}
+
+input+img {
+    margin-left: -25px;
+}
+
+.singup-black {
+    background: linear-gradient(to bottom, #50514b 50%, #3e3d38 50%);
+}
+
+.singup-red {
+    background: linear-gradient(to bottom, #ec6c53 50%, #e95c41 50%);
+    margin: 0;
+    padding: 20px 70px;
+}
+
+.login {
+    position: absolute;
+    right: 90px;
+    top: 20px;
+    color: white;
+}
+
+.monkey, .monkey-right {
+    width: 50%;
+}
+
+.monkey-right {
+    float: right;
+    padding-top: 40px;
+}
+
+main {
+    background: white;
+    width: 90%;
+    margin-left: 3.33%;
+    margin-top: -64px;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+main ul {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+h2 {
+    margin: 0 20px;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+h5 {
+    margin: 10px 0 0 0;
+}
+
+main img {
+    width: 100%;
+}
+
+main ul li {
+    margin: 0 20px;
+}
+
+.btn-arrow {
+    background: #3e3e36;
+    color: white;
+    float: left;
+    width: 80%;
+    padding: 5px 10%;
+    border-radius: 6px;
+    margin: 20px 0;
+}
+
+.btn-arrow div {
+    width: 15px;
+    float: right;
+}
+
+.btn-arrow img {
+    margin-top: 2px;
+    width: inherit;
+    position: absolute;
+    clip: rect(0 15px 15px 0);
+}
+
+footer {
+    background: #191814;
+    color: lightslategrey;
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    padding: 20px 50px;
+}
+
+footer ul {
+    margin-left: 40px;
+}
+
+footer ul li:first-child {
+    color: white;
+    font-weight: bold;
+}
+
+footer li {
+    padding: 5px;
+}
