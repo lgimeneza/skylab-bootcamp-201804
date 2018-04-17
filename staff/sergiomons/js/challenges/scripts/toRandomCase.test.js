@@ -1,4 +1,6 @@
  'use strict';
-  var result= toRamdonCase("Hello My World");
-  console.log(result)
+ var input= "Hello My World";
+
+  var output= toRamdonCase(input);
+  console.log(output)
 
