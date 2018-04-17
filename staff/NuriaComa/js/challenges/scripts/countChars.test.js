@@ -1,3 +1,5 @@
+console.log(">>CONTAR LETRAS")
+
 var count= countChars("hello world");
 
 
@@ -14,13 +16,13 @@ try{
         console.log("countChars(true) should launch and error", error !==undefined, error);
     }
         
-    
 
     // con un número
+    
 try{
     count = countChars(1);
 } catch (err) {
-        console.log("countChars(1) should launch and error", err !==undefined, err);
+    error=err;}
+    finally{    //assegurar-te que passa per aquí.
+        console.log("countChars(1) should launch and error", error !==undefined, error);
     }
-
-
