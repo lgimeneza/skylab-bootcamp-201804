@@ -2,15 +2,13 @@ console.log(">>CUBE")
 
 //array
 var resultado = cube([2,3,4]);
-console.log(resultado)
-
 console.log('cube([2,3,4]) should return [8, 27, 64] ==>', resultado);
 
 
 //un número
-//var resultado = cube(2);
+var resultado = cube(2);
 
-//console.log('cube(2) should return 8', resultado ===8, resultado);
+console.log('cube(2) should return 8', resultado ===8, resultado);
 
 
 
