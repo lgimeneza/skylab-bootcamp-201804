@@ -1,10 +1,10 @@
-var res= toRomanNumber("m");
-
-console.log("El numero romano es: " + res);
+var error = undefined;
 
 try {
     var res = toRomanNumber("m");
-
 } catch (err) {
-    console.log('countChars(true) shoul launch and error', err !== undefined, err);
+    error = err;
+} finally {
+    console.log('countChars("m") debería lanzar un error', error !== undefined, error);
 }
+
