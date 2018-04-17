@@ -125,18 +125,14 @@ main {
     background: #4c4c4c;
     padding: 10px;
     color: white;
-    /* text-overflow: inherit; */
-    /* order: 2; */
     margin-right: 20px;
     margin-top: 35px;
     box-sizing: border-box;
     border-radius: 10px;
-    /* border-bottom: 30px solid black; */
     background: linear-gradient(to bottom, #545454 2%, #4c4c4c 43%, #2d2d2d 61%, #2d2d2d 100%);
 }
 
 footer {
-    /*max-width:1000px;*/
     width: 100%;
     background: black;
     margin-top: -60px;
