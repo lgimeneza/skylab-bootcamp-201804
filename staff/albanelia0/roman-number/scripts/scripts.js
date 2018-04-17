@@ -16,7 +16,10 @@ function numberRoman(number) {
 
   for (key in object) {
     if (typeof number !== 'number') {
-      element = object[key];
+      throw Error('input is not a number');
+    } 
+    if (number === key) {
+      return object[key];
     }
   }
 }
