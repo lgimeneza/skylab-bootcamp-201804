@@ -2,7 +2,7 @@
 
 
 var count = toCamelCase("hello world");
-console.log('toCamelCase("hello World") should return Hello World', count);
+console.log('toCamelCase("hello World") should return hello World', count);
 
 
 try {
