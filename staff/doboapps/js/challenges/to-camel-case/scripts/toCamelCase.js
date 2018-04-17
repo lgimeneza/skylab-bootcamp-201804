@@ -9,7 +9,7 @@ function toCamelCase(str) {
     
     var myArray = str.split(" ");
 
-    myArray.map(word => {
+    myArray.map(function(word){
         var capital = word[0].toUpperCase();
         word = capital + word.substr(1);
         sentence += word;
