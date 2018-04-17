@@ -1,7 +1,8 @@
 'use strict';
 
-var count = randomCase("Helloworld");
-console.log('randomCase("hello World") should return 2', count !== undefined, count);
+
+var count = randomCase("hello world");
+console.log('randomCase("hello World") should return words upper case', count !== undefined, count);
 
 
 try {

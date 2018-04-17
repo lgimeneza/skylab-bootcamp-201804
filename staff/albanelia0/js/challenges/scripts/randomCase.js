@@ -1,24 +1,17 @@
 'use strict';
 function randomCase(str) {
-
   if (typeof str !== 'string')
-    throw Error('input str is not a string');
-
-  var otherString = "";
-  var randomnumber;
+    throw Error('input is not a string');
+   var result = '';
 
   for (var i = 0; i < str.length; i++) {
-    randomnumber = Math.round(Math.random());
-    if (randomnumber === 0) {
-
-      otherString += str[i].toLowerCase();
-
+    var random = Math.random();
+    if (random < 0.5) {
+      result += str[i].toUpperCase();
     } else {
-      otherString += str[i].toUpperCase();
+      result += str[i].toLowerCase();
     }
-
   }
-  return otherString;
 
-
-};
+  return result;
+}
