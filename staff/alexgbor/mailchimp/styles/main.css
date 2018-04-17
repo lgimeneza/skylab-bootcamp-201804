@@ -52,6 +52,7 @@ main {
     background-color: black;
     grid-template-columns: 1fr 1fr;
     grid-row: 4/5;
+    transform: translateY(20px);
 }
 
 .monkey {
