@@ -1,0 +1,15 @@
+
+nav, aside{
+    height: 20%;
+    color: white;
+    background:black;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+section{
+    height: 60%;
+    color: white;
+    background:black;
+    border: 1px solid white;
+    box-sizing: border-box;
+}

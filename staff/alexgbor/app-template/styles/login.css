@@ -1,0 +1,32 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    background:rgb(0,0,0,0.75);
+    width: 400px;
+    height:300px;
+    margin-top:3%;
+    padding-top:20px;
+    border-radius: 25px;
+    margin-left: 35%;
+}
+input {
+    width:100px;
+    color:black;
+}
+form div {
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+h2,h3 {
+    text-shadow: 2px 2px 4px #000000;
+}
+h2 {
+    margin-top:10px;
+    height: 50px;
+}

@@ -1,2 +1,40 @@
 @import "desktop.css" screen and (min-width: 728px);
 @import "mobile.css" screen and (max-width: 728px);
+
+* {
+    background-color: black;
+}
+main {
+    height: 50%;
+}
+header {
+    background: black;
+    border: solid 1px white;
+    height: 25%;
+    color: white;
+    box-sizing: border-box;
+}
+nav {
+    background: black;  
+    border: solid 1px white;
+    color: white;
+    box-sizing: border-box;
+}
+section {
+    background: black;
+    border: solid 1px white;
+    color: white;
+    box-sizing: border-box;
+}
+aside {
+    background: black;
+    border: solid 1px white;
+    color: white;
+    box-sizing: border-box;
+}
+footer {
+    background: black;
+    border: solid 1px white;
+    color: white;
+    box-sizing: border-box;
+}
