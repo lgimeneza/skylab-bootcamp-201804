@@ -4,13 +4,14 @@ function toCamelCase(str) {
     if (typeof str !== 'string')
         throw Error('input str is not a string');
     
-    return str
-        .toLowerCase()
-        .split(' ')
-        .map(function(word) {
-            return word[0].toUpperCase() + word.substr(1);
-        })
-        .join(' ');
+    return str.split(' ').map(function (word, index){
+        if (index == 0) {
+            return word.toLowerCase();
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join('');
+        
+        
+
     }
-/* map nos devuelve un array nueva a partir de una vieja, aplicándole cambios a cada uno de los 
-elementos */
+
