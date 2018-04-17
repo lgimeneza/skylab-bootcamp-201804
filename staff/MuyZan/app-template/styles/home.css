@@ -1,6 +1,7 @@
 .container{
     margin: 10% auto;
     width: 90%;
+    height: 100%;
     border: 2px solid rgb(122, 194, 253);
     background-color: rgb(165, 218, 243);
     display:grid;
