@@ -1,7 +1,17 @@
+
+var input = 'Hello World';
+
+var output = toRandomCase(input);
+
+console.log('toRandomCase(input)')
+
+
+// testing our code:
 'use strict';
 
-var count = toRandomCase('Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima alias nobis, ullam quaerat dolor voluptate corrupti, doloremque asperiores voluptatem nulla esse rem. Vitae earum aliquam assumenda unde rerum, quae voluptatem!');
-console.log('The random case version is', count);
+var count = toRandomCase('Lorem ipsum dolor sit', count);
+console.log(count)
+
 
 var error;
 
