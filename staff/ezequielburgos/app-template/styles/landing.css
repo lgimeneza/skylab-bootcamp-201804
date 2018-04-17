@@ -1,14 +1,14 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-html, body{
+html, body {
     height: 100%;
-    width: 100%; 
+    width: 100%;
     margin: 0 auto;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +17,7 @@ body{
     background-position: center;
 }
 
-header{
+header {
     display: flex;
     height: 10%;
     width: 100%;
@@ -25,45 +25,49 @@ header{
     justify-content: flex-end;
 }
 
-.flex-header{
+.flex-header {
     height: 100%;
-    width: 50%;
+    width: 100%;
     display: flex;
     border: 1px solid black;
-    background: linear-gradient(to right, rgba(49, 36, 79, 0.281) , rgba(137, 192, 171, 0.589));
+    background: linear-gradient(to right, rgba(49, 36, 79, 0.281), rgba(137, 192, 171, 0.589));
     font-weight: bold;
     align-items: center;
     justify-content: space-evenly;
-
 }
 
-.flex-header a{
+.flex-header a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     text-decoration: none;
+    height: 100%;
     color: rgb(254, 255, 212);
     font-size: calc(10px + 0.8vw);
+    border: 1px solid black;
 }
 
-a:hover{
+a:hover {
     color: orange;
 }
 
-main{
+main {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 75%;
     /* content: ""; */
-   
 }
 
-section{
+section {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.title{
+.title {
     display: flex;
     align-items: flex-end;
     height: 50%;
@@ -72,23 +76,23 @@ section{
     text-shadow: 1px 1px 5px black;
 }
 
-.heading{
+.heading {
     height: 50%;
 }
 
-.section-images{
+.section-images {
     display: flex;
     align-items: flex-start;
 }
 
-.container{
+.container {
     margin: 5%;
     height: 18vw;
     width: 18vw;
     margin-top: 0;
 }
 
-.container img{
+.container div {
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -96,7 +100,25 @@ section{
     opacity: 0.9;
 }
 
-.container img:hover{
+.container .img1 {
+    background: url(../resources/mailchimp-mobile.png);
+    background-size: 110%;
+    background-position: center;
+}
+
+.container .img2 {
+    background: url(../resources/understanding-campaign-reports.png);
+    background-size: 110%;
+    background-position: center;
+}
+
+.container .img3 {
+    background: url(../resources/spam-lawsuits2.png);
+    background-size: 110%;
+    background-position: center;
+}
+
+.container div:hover {
     box-shadow: none;
     position: relative;
     top: 5px;
@@ -104,8 +126,27 @@ section{
     opacity: 1;
 }
 
-footer{
+footer {
     width: 100%;
     height: 15%;
     background: rgba(240, 128, 128, 0.514);
+}
+
+@media all and (max-width: 700px) {
+    .section-images {
+        flex-wrap: wrap;
+    }
+}
+
+@media all and (max-width: 500px) {
+    header {
+        height: 30%;
+    }
+    .flex-header, .section-images {
+        flex-direction: column;
+    }
+    .section-images {
+        flex-wrap: nowrap;
+        align-items: center;
+    }
 }
