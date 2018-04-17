@@ -7,6 +7,6 @@ function toCamelCase(str) {
     }
     return arr.join("");
   }else{
-      throw Error('input is not a string')
+      throw Error('input is not a string');
   }
 }
