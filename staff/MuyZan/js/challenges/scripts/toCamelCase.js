@@ -1,3 +1,6 @@
+
+'use strict';
+
 function toCamelCase(str) {
   if (typeof str === "string") {
     var val = str.split(" ");

@@ -1,5 +1,5 @@
-
 'use strict';
+
 
 var count = countChars("hello world");
 
@@ -11,3 +11,4 @@ try{
 } catch(err){
     console.log("countChars(true) should launch and error", err !== undefined, err)
 }
+
