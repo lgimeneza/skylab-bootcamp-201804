@@ -1,7 +1,15 @@
+'use strict';
+
+var res = toRomanNumber(5);
+console.log('toRomanNumber(5) debería devolver: V', res==="V",res);
+
+var res = toRomanNumber(7);
+console.log('toRomanNumber(7) debería devolver: VII', res==="VII",res);
+
 var error = undefined;
 
 try {
-    var res = toRomanNumber("m");
+    res = toRomanNumber("m");
 } catch (err) {
     error = err;
 } finally {
