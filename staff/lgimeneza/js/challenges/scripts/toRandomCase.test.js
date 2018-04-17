@@ -33,12 +33,12 @@ try {
 
 // Test case is undefined
 
-var err;
+err = undefined;
 
 try {
     toRandomCase();
 } catch (error) {
     err = error;
 } finally {
-    console.log('toRomanNumerals(1) should launch and error,', 'Launch error?', err !== undefined, err);
+    console.log('toRomanNumerals() should launch and error,', 'Launch error?', err !== undefined, err);
 }
