@@ -1,8 +1,3 @@
-// var count = toCamelCase2(123);
-
-// console.log('The camel case version is', count);
-
-
 'use strict';
 
 try {

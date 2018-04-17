@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 function countChars(text, condition) {
     if (typeof text !== 'string')
@@ -7,8 +7,9 @@ function countChars(text, condition) {
     if (!condition) {
         return text.length;
     }
+
     if (typeof condition !== 'function')
-        throw Error(alert('input func is not a function'));
+        throw Error('input func is not a function');
 
     var count = 0;
 
@@ -17,5 +18,6 @@ function countChars(text, condition) {
 
         if (condition(val)) count++;
     }
+
     return count;
 }
