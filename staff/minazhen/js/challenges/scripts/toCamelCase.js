@@ -1,4 +1,5 @@
 function toCamelCase(str){
+    if (typeof str !== "string") throw Error("Write a valid string on input.")
     var camel = str.split(" ");
     var conc = [];
 
@@ -11,7 +12,6 @@ function toCamelCase(str){
         }
     }
     
-
     return conc.join("");
 }
 
