@@ -1,3 +1,6 @@
+'use strict';
+
+
 function countWords(str){
     var val = 0;
     var res = str.split(" ");
