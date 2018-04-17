@@ -1,14 +1,10 @@
 'use strict';
 
-var arr = [3, 4, 5, 6, 10, 4]
-var v = 6;
+var a = [{ name: 'jeans', price: 10.5 }, { name: 't-shirt', price: 5.99 }, { name: 'socks', price: 19.99 }];
 
-var output = reduce(arr, v);
+reduce(a, function (accum, v) {
+    if (v.price > 10)
+        return accum + v.price;
 
-console.log(output);
-
-try {
-    output = reduce(true);
-} catch (err) {
-    console.log('reduce(true) should launch an error', err !==undefined, err);
-}
+    return accum;
+}, 0); // -> 30.49
