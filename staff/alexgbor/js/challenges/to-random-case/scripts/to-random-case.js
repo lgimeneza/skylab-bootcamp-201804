@@ -1,3 +1,5 @@
+'use strict';
+
 function toRandomCase(str) {
     if (typeof str==="string") {
         var newstr="";

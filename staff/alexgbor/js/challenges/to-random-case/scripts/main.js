@@ -1,3 +1,5 @@
+'use strict';
+
 var randomsentence=toRandomCase("hello world");
 
 console.log("toRandomCase('hello world') should return the same sentence with random upper/lower case "+randomsentence);

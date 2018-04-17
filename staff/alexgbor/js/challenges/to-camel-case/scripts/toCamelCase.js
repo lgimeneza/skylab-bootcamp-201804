@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 function toCamelCase(str) {
     if (typeof str==="string" && str.length>0) {
