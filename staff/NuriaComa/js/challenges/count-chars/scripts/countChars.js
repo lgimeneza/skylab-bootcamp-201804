@@ -1,26 +1,25 @@
 "use strict";
 
-function countChars(str, func){
-    if (typeof str !== "string")  // només funcioni amb strings
+function countChars(txt, condiction){
+    if (typeof txt !== "string")  // només funcioni amb strings
     throw Error ("input is not a String");
 
-    if (!func){
+    if (!condiction){
 
-        return str.length;
+        return txt.length;
     
         
     }else {
-        if (typeof func !== "function")
+        if (typeof condiction !== "function")
         throw Error ("input is not a String");
 
         var count=0;
 
-        for (var i=0; i<str.length; i++){
-            var val=str[i]
+        for (var i=0; i<txt.length; i++){
+            var val=txt[i]
 
-            if(func(val)) count ++;
+            if(condiction(val)) count ++;
         }
         return count;
     }
-    
 }
