@@ -1,2 +1,30 @@
 @import "desktop.css" screen and (min-width: 768px);
 @import "mobile.css" screen and (max-width: 768px);
+
+html,
+body{
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+header{
+    height: 20%;
+    color: white;
+    background:black;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+main{
+    clear: both;
+    height: 60%;
+}
+
+
+footer {
+    height: 20%;
+    color: white;
+    background: black;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
