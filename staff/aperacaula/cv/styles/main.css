@@ -1,0 +1,95 @@
+
+@import url("mobile.css") screen and (max-width: 720px);
+
+*{
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    text-align: justify;
+    
+}
+
+a{
+    text-decoration: none;
+    color: darkslategray;
+}
+
+header{
+    display: grid;
+    grid-template-columns: 85% 15%;
+    height: 30%;
+    padding: 2%;
+    background-color: rgb(243, 243, 243);
+}
+
+
+header h1{
+    white-space: nowrap;;
+    font-size: 5vw;
+
+}
+
+header h3{
+    white-space: nowrap;
+    font-size: 2vw;
+    color: rgb(105, 104, 104)
+
+}
+header img{
+    grid-column-start: 2;
+    align-self: flex-end;
+    border-radius: 5%;
+    max-width: 100%;
+    height: auto;
+}
+header section{
+    grid-column-start: 1;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
+}
+
+main{
+    display: grid;
+    grid-template-rows: 25% 25% 25% 25%;
+    clear: both;
+    /* border: 1px solid black; */
+    height: 70%;
+    padding: 2%;
+    align-content: space-between;
+
+}
+
+main section{
+    padding: 2%;
+}
+
+.grids {
+    display: grid;
+    grid-template: 1fr / 25% 75% ;
+}
+
+.fecha{
+    color: darkslategray;
+}
+
+ul{
+    padding: 1%;
+    padding-left: 7%;
+
+}
+section h2{
+    font-size: 3vw;
+    border-bottom: 1px solid gray;
+
+}
+
+p,li{
+    font-size: 2.5vw;
+}
