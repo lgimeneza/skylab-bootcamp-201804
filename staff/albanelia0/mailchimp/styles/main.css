@@ -25,9 +25,20 @@ html {
 .container-header {
   width: 90%;
   display: flex;
+}
 
+a .a-round-box-gradiente {
+  border: 1px solid;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  background: #50514C;
+  border: black;
+  background: linear-gradient(rgb(80, 81, 76) 50%, rgb(62, 62, 55) 50%);
+}
 
-} .above-bar {
+.above-bar {
   display: flex;
   padding: 0px 15px;
   background: #D2EAF1;
