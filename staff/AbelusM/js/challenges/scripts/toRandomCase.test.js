@@ -1,10 +1,7 @@
 'use strict';
-var randomCase = toRandomCase('Hello My World');
+var input = 'Hello World';
 
-console.log(randomCase);
+var output = toRandomCase('input');
 
-try {
-    randomCase = toRandomCase(true);
-} catch (err) {
-    console.log('toRandomCase(true) should launch an error', err !==undefined, err);
-}
+console.log('toRandomCase(input) should return input in random case', input.toLowerCase() === output.toLowerCase() && input !== output
+);
