@@ -19,7 +19,7 @@ try {
     console.log('countChars(true) should throw an error', error !== undefined, error);
 }
 
-error = undefined
+error = undefined;
 
 try {
     count = countChars(1);
@@ -29,7 +29,7 @@ try {
     console.log('countChars(1) should throw an error', error !== undefined, error);
 }
 
-error = undefined
+error = undefined;
 
 try {
     count = countChars([]);
