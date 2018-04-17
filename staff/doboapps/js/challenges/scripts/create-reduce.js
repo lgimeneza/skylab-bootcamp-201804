@@ -1,7 +1,9 @@
-var a = [{ name: 'jeans', price: 10.5 }, { name: 't-shirt', price: 5.99 }, { name: 'socks', price: 19.99 }];
 
 
 function reduce(arr, callback) {
+
+    if (typeof arr !== 'object' || !arr instanceof Array) throw Error('input array is not an array');
+
     var total=0;
     var iterate = function (i) {
         total=callback(total,arr[i]);

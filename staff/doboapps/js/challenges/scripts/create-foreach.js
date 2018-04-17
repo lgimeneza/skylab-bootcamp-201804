@@ -1,10 +1,12 @@
-var array = [1, 2, 3];
+'use strict';
 
 
 function foreach(arr, callback) {
 
+    if (typeof arr !== 'object' || !arr instanceof Array) throw Error('input array is not an array');
+
     var iterate = function (i) {
-        callback(arr[i], i, array);
+        callback(arr[i], i, arr);
         if (++i < arr.length)
             iterate(i);
     };    
