@@ -3,23 +3,36 @@ var count = countChars("Hello world");
 
 console.log('countChars("hello world") should return 11', count === 11, count);
 
+var error;
+
 try {
 
     count = countChars(true);
 } catch (err) {
-    console.log('countChars(true) should launch and error', err !== undefined, err);
+    error=err;
+}finally{
+    console.log('countChars(true) should launch and error', error !== undefined, error);
 }
+
+error = undefined;
+
 try {
 
     count = countChars(1);
 } catch (err) {
-    console.log('countChars(1) should launch and error', err !== undefined, err);
+    error=err;
+}finally{
+    console.log('countChars(1) should launch and error', error !== undefined, error);
 }
+
+error = undefined;
 try {
 
     count = countChars([]);
-} catch (err) {
-    console.log('countChars([]) should launch and error', err !== undefined, err);
+} catch (err){
+    error=err;
+} finally{
+    console.log('countChars([]) should launch and error', error !== undefined, error);
 }
 
 count = countChars('abracadabra', function (c) { return c === 'a'; });
