@@ -1,13 +1,12 @@
-function toCamelCase(str){
-    //TODO
+'use strict'; 
+    function toCamelCase(str) {
+        str = str.toLowerCase();
+        var wordArray = str.split(" ");
 
-    return  // res -> "helloMyWorld"
+        for (var i = 1; i < wordArray.length; i++) {
+            wordArray[i] = wordArray[i].replace(wordArray[i][0], wordArray[i][0].toUpperCase());
+        }
+        return wordArray.join("");
+     }
 
-    function tocamelCase(str) { 
-        return str.toLowerCase().replace(/-(.)/g, function(match, group1) {
-            return group1.toUpperCase();
-        });
-    }
-
-    
-}
+     
