@@ -1,6 +1,6 @@
 'use strict';
 
-var count = toRandomCase('hi there I am putting a Long sentence');
+var count = toRandomCase('Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima alias nobis, ullam quaerat dolor voluptate corrupti, doloremque asperiores voluptatem nulla esse rem. Vitae earum aliquam assumenda unde rerum, quae voluptatem!');
 console.log('The random case version is', count);
 
 var error;
