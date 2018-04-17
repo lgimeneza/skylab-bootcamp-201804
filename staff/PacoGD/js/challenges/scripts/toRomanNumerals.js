@@ -1,5 +1,5 @@
 'use strict';
-/*
+/* Esto son apuntes
 function toRomanNumerals(num) {
     var result = '';
     var decimal = [10, 5, 1];

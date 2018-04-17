@@ -1,4 +1,5 @@
 'use strict';
+/* Los comentarios son apuntes */
 function countChars(str) {
     //TODO
     if (typeof str === "string")
