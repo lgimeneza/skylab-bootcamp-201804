@@ -1,3 +1,4 @@
-var count = countChart("hello world")
+'use strict';
+var count = countWords("hello world")
 
-console.log('countChar("hello World")should return 2', count === 2, count)
+console.log('countWords("hello World")should return 2', count === 2, count)

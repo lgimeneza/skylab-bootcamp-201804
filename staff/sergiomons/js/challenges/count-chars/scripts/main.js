@@ -39,3 +39,4 @@ try {
 } catch(err) {
     console.log('countChars("abracadabra", "...") should throw an error', err !== undefined, err);
 } 
+

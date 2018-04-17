@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 function toCamelCase(str) {
        str=str.toLowerCase();
        var arrayWord=str.split(" ");
