@@ -1,0 +1,1 @@
+console.log(toRandomCase("Hello World"));
