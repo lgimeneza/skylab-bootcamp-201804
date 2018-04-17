@@ -9,6 +9,10 @@ function toCamelCase(str) {
             }
         }
         res[0]=res[0].toLowerCase();
+        for (i=1;i<res.length;i++) {
+            res[i].toLowerCase();
+            res[i][0].toUpperCase();
+        }
         return res.join("");
     }
     else {
