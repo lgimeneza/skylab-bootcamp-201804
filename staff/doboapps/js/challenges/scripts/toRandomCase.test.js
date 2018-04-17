@@ -1,14 +1,8 @@
 'use strict';
- 
- var randomNumeral = toRandomNumeral("Hello My World"); 
- console.log('randomNumeral(Hello My World) should return ', randomNumeral.toLocaleLowerCase() === "hello my world");
- 
 
- 
- var randomNumeral = toRandomNumeral("Hello My World"); 
- console.log('randomNumeral(Hello My World) should return ', randomNumeral.toLocaleLowerCase() === "hello my world");
- 
-
+var input = "Hello My World";
+var output = toRandomNumeral(input);
+console.log('randomNumeral(Hello My World) should return input in random case ', input.toLowerCase() === output.toLowerCase() && input !==output);
 
 var error;
 
@@ -28,7 +22,7 @@ var error;
 //  }finally{
 //     console.log('randomNumeral(true) should throw an error', error !== undefined, error);
 //  }
- 
+
 //  try {
 //     count = toRandomNumeral([]);
 // }catch(err) {
