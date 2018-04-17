@@ -6,10 +6,10 @@ function forEach(array, handler) {
     }
     var index=0;
     var iterate = function (index) {
-    handler(array[index], index , array);
-    if (++index < array.length) {
-        iterate(index);
-    }
+       handler(array[index], index , array);
+       if (++index < array.length) {
+          iterate(index);
+       }
    }
     iterate(0);
 }

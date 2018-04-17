@@ -1,5 +1,5 @@
 var a = [1,2,3];
 
-forEach(a, function(v) { console.log(v) });
-forEach(a, function(v, i) { console.log(v, i) });
-forEach(a, function(v, i, arr) { console.log(v, i, arr) });
+forEach(a, function(valueCurrent) { console.log(valueCurrent) });
+forEach(a, function(valueCurrent, i) { console.log(valueCurrent, i) });
+forEach(a, function(valueCurrent, i, arr) { console.log(valueCurrent, i, arr) });
