@@ -17,4 +17,4 @@ try{
         console.log("countChars(true) should launch and error", err !==undefined, err);
     }
 
-// Con un array
+
