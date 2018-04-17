@@ -1,3 +1,10 @@
+# Learning
+
+[Learn Flexbox](https://scrimba.com/g/gflexbox)
+
+[Learn CSS Grid](https://scrimba.com/g/gR8PTE)
+
+
 # Challenges
 
 [Flexbox Froggy](https://flexboxfroggy.com)
