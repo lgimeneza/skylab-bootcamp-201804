@@ -2,7 +2,6 @@
 .content {
     display: grid;
     height: 100%;
-    /*grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));*/
     grid-template-columns: 37% 63%;
     grid-template-rows: 7% 25% 17% 6% 15% 20%;
     color:white;
@@ -22,18 +21,6 @@
     grid-row: 5;
     font-size: 130%;
 }
-
-/*.buttons {
-    background-color: #F20000;
-    width:30%;
-    height: 100%;
-    border: 2px solid white;
-    border-radius: 3px;
-    color: white;
-    font-weight: bold;
-    font-size: 110%;
-    
-}*/
 a.buttons {
     background-color: #F20000;
     width:30%;
