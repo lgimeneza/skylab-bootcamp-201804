@@ -1,3 +1,5 @@
-const countWords = str => {
+'use strict';
+
+function countWords(str) {
     return str.split(' ').length;
-};
+}

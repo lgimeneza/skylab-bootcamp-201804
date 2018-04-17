@@ -1,5 +1,7 @@
-const str = 'Mikel Parra';
-const count = countWords(str);
+'use strict';
+
+var str = 'Mikel Parra';
+var count = countWords(str);
 
 console.log(
     'countWords("Mikel Parra") should return 2',

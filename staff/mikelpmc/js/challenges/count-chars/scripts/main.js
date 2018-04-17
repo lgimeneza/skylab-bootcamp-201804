@@ -1,4 +1,6 @@
-let count = countChars('hello world');
+'use strict';
+
+var count = countChars('hello world');
 
 console.log(
     'countChars("hello world") should return 11: ',
@@ -7,7 +9,7 @@ console.log(
 );
 
 try {
-    let count = countChars(true);
+    count = countChars(true);
 } catch (error) {
     console.log(
         'countChars(true) should throw an error',
@@ -17,19 +19,19 @@ try {
 }
 
 try {
-    let count = countChars(1);
+    count = countChars(1);
 } catch (err) {
     console.log('countChars(1) should throw an error', err !== undefined, err);
 }
 
 try {
-    let count = countChars([]);
+    count = countChars([]);
 } catch (err) {
     console.log('countChars([]) should throw an error', err !== undefined, err);
 }
 
 try {
-    let count = countChars('abracadabra', '...');
+    count = countChars('abracadabra', '...');
     console.log(count);
 } catch (err) {
     console.log(

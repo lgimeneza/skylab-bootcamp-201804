@@ -1,4 +1,6 @@
-const res = toCamelCase('Hello My World');
+'use strict';
+
+var res = toCamelCase('Hello My World');
 
 console.log(
     'toCamelCase("Hello My World") should return "helloMyWorld"',
@@ -7,7 +9,7 @@ console.log(
 );
 
 try {
-    const res = toCamelCase(1);
+    var res = toCamelCase(1);
 } catch (error) {
     console.log(
         'toCamelCase(1) should throw an error"',
