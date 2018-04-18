@@ -1,15 +1,17 @@
-.profile{
+.pf-profile{
     display: flex;
     align-content: space-between;
     align-items: flex-start;
-
+    flex-wrap: wrap;
 }
 
 figure {
     position: relative;
     height: 30vh;
+    min-height: 30vh;
     width: 30vh;
-    border: 2px solid rgb(255, 135, 88);
+    min-width: 30vh;
+    border: 2px solid var(--font-border-color);
     font-size: 5vh;
     margin: auto;
 }
@@ -22,7 +24,7 @@ figure {
     position:absolute;
     width: 100%;
     height:100%;
-    background-color:  rgba(255, 202, 167, 0.8);
+    background-color:  var(--bg-alpha-color);
 }
 
 figure p{
@@ -32,30 +34,57 @@ figure p{
     font-size: 0.8em;
     padding-top: calc(50% - 0.4em);
     text-align: center;
-    color:rgb(255, 135, 88);
+    color:var(--font-border-color);
 }
 
 #profile_pic:hover{
     opacity: 0.2;
 }
 
-article{
-    box-sizing: border-box;
-    border: 1px solid green;
-    padding: 3%;
-    width:80%;
-    margin: 30px auto;
+.info{
+    height: 20vh;
+    width:70%;
+    margin: 0 auto;
+    padding: 0 30px;
 }
 
-article input{
-    width: 80%;
-    margin:10%;
+.info input{
+    width: 100%;
+    margin:0;
+    margin-top:1.5em;
     float: center;
     text-align: center;
     font-family: 'Just Another Hand', cursive;
     background-color: transparent;
-    color: rgb(255, 135, 88);
+    color: var(--font-border-color);
     border: none;
-    border-bottom: 0.3px inset rgb(255, 135, 88);
+    border-bottom: 0.3px inset var(--font-border-color);
 }
 
+.display-events {
+    margin: 1em auto;
+    height:50px;
+    min-width: 90%;
+    background-color: var(--bg-alpha-color);
+    overflow-y: scroll;
+}
+table {
+    width: 80%;
+    margin: auto;
+}
+thead, tfoot{
+    background-color: white;
+    color: var(--bg-alpha-color);
+    font-size: 0.7em;
+}
+
+td input{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1em;
+    border: 0.2px solid black;  
+}
+
+tr {
+    height: 2em;
+    vertical-align: middle;
+}

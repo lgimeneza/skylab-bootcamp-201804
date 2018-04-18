@@ -12,10 +12,10 @@
 <body>
     <header>
         <img src="images/logoWb.png" alt="Kalenmaker logo" class="logoHeader">
-        <a href="">Log in</a>
+        <a href="">Home</a>
     </header>
     <main>
-        <section class="profile">
+        <section class="pf-profile">
             <figure>
                 <p>Upload Picture</p>
                 <input type="image" id="profile_pic" src="images/transp.png" alt="picture">
@@ -26,11 +26,43 @@
                     <input type="text" placeholder="user name" id="user_name"> <br>
                     <input type="email" name="email" placeholder="user@email.com" id="user-email"> <br>
                 </form>
-
             </article>
-        </section>
-
-        
+            <article class="display-events">
+                <h6>Nearly events:</h6>
+                <table>
+                    <thead>
+                        <tr>
+                            <td class="td-date">Date</td>
+                            <td class="td-notes">Notes</td>
+                            <td class="td-event">Event</td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <form action="">
+                                <td class="td-date">
+                                    <input type="date" name="inp-date" id="inp-date" placeholder="Add new date">
+                                </td>
+                                <td class="td-notes">
+                                    <input type="text" name="inp-notes" id="inp-notes" placeholder="Add new notes">
+                                </td>
+                                <td class="td-event">
+                                    <input type="text" name="inp-event" id="inp-event" placeholder="Add new event">
+                                    <button type="submit">Add It!</button>
+                                </td>
+                            </form>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td class="td-date"></td>
+                            <td class="td-notes"></td>
+                            <td class="td-event"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>       
     </main>
     <footer>
         <a href="http//www.minazhen-fakeweb.com">MinaZhen</a>
