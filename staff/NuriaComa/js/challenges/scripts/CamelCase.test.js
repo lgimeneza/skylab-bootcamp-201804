@@ -1,29 +1,32 @@
 "use strict"
-console.log(">>JUNTAR PALABRAS")
+console.log(">>CAMEL CASE")
 
-var res = toCamelCase("Hello My World")
-
-console.log('toCamelCase("Hello My World") should return helloMyWorld', res ==="helloMyWorld", res);
-
-var error=undefined;
-try{
-    count = toCamelCase(true);
-} catch (err) {
-    error=err;}
-    finally{    //assegurar-te que passa per aquí.
-        console.log("toCamelCase(true) should launch and error", error !==undefined, error);
+test(
+    function(){
+        return toCamelCase("Hello My World");
+    },
+    'toCamelCase("Hello My World") should return helloMyWorld',
+    function(result){
+        return result==="helloMyWorld";
     }
-        
+);
 
-    // con un número
-    
-try{
-    count = toCamelCase(1);
-} catch (err) {
-    error=err;}
-    finally{    //assegurar-te que passa per aquí.
-        console.log("toCamelCase(1) should launch and error", error !==undefined, error);
+test(
+    withErrorCapturing(function() {
+        toCamelCase(true);
+    }),
+    "toCamelCase(true) should launch and error",
+    function(result){
+        return result.message === "input is not a string";
     }
+);
 
-
-
+test(
+    withErrorCapturing(function() {
+        toCamelCase(1);
+    }),
+    "toCamelCase(1) should launch and error",
+    function(result){
+        return result.message === "input is not a string";
+    }
+);

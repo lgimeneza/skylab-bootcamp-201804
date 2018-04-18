@@ -1,28 +1,37 @@
 "use strict"
 
-console.log(">>CONTAR PALABRAS")
-
-var count= countWords("hello world");
-
-console.log('countWords("hello world") should return 2', count === 2, count);
+console.log(">>COUNT WORDS")
 
 
-var error=undefined;
-try{
-    count = countWords(true);
-} catch (err) {
-    error=err;}
-    finally{    //assegurar-te que passa per aquí.
-        console.log("countWords(true) should launch and error", error !==undefined, error);
+test(
+    function(){
+        return countWords("hello world")
+    },
+
+    'countWords("hello world") should return 2',
+
+    function(result){
+        return result ===2;
     }
-        
+);
 
-    // con un número
-    
-try{
-    count = countWords(1);
-} catch (err) {
-    error=err;}
-    finally{    //assegurar-te que passa per aquí.
-        console.log("countWords(1) should launch and error", error !==undefined, error);
+
+test(
+    withErrorCapturing(function(){
+        countWords(true);
+    }),
+    'countWords(true) should throw an error',
+    function(result){
+        return result.message ==='input text is not a string';
     }
+);
+
+test(
+    withErrorCapturing(function(){
+        countWords([]);
+    }),
+    'countWords([]]) should throw an error',
+    function(result){
+        return result.message ==='input text is not a string';
+    }
+);

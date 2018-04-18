@@ -1,17 +1,15 @@
-'use strict'
+'use strict';
 
-var a = [1,2,3];
+function forEach(arr, handler) {
+    if (typeof arr !== 'object' || !arr instanceof Array) throw Error('input array is not an array');
 
-function forEach(array, handler) {
-    var index=0;
+    if (typeof handler !== 'function') throw Error('input handler is not a function');
 
-    var iterate = function (index) {
+	var iterate = function(index) {
+		handler(arr[index]);
+		
+		if(++index < arr.length) iterate(index);
+    }
 
-    handler(array[index], index , array);
-
-        if (++index < array.length){ iterate(index);}
-        
-
-   }
-   iterate(index);
+	iterate(0);
 }

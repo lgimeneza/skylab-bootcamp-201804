@@ -6,7 +6,7 @@ function toRandomCase(str, func){
     }
     if (!func){
        
-        var input=" ";
+        var input="";
         var letters=str.toLowerCase();
         var lettersArray=letters.split("");
         for (var i=0; i<lettersArray.length; i++){
@@ -23,7 +23,7 @@ function toRandomCase(str, func){
 
     }else {
         if (typeof func !== "function")
-        throw Error ("input is not a String");
+        throw Error ("input is not a string");
     }
 }
 

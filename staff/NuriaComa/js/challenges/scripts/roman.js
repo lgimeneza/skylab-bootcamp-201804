@@ -8,12 +8,12 @@ function romanNum(num, func){
 
         var romannumbers=["I","II","III","IV","V","VI","VII","VIII","IX","X"]
         for (var i=0; i<romannumbers.length; i++){
-            var res= romannumbers[num-1];
+            var result= romannumbers[num-1];
         }
-        return res
+        return result
 
     }else {
         if (typeof func !== "function")
-        throw Error ("input is not a String");
+        throw Error ("input is not a string");
     }
 }

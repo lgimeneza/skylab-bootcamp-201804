@@ -1,40 +1,62 @@
 "use strict"
 
-console.log(">>NÚMEROS ROMANOS")
+console.log(">>ROMAN")
 
-var res = romanNum(2)
-
-console.log('to Roman Numbers(2) should return II', res ==="II", res);
-
-var res = romanNum(4)
-
-console.log('to Roman Numbers(4) should return IV', res ==="IV", res);
-
-var res = romanNum(6)
-
-console.log('to Roman Numbers(6) should return VI', res ==="VI", res);
-
-var res = romanNum(9)
-
-console.log('to Roman Numbers(9) should return IX', res ==="IX", res);
-
-
-var error=undefined;
-try{
-    count = romanNum(true);
-} catch (err) {
-    error=err;}
-    finally{    //assegurar-te que passa per aquí.
-        console.log("romanNum(true) should launch and error", error !==undefined, error);
+test(
+    function(){
+        return romanNum(2);
+    },
+    'to Roman Numbers(2) should return II',
+    function(result){
+        return result === "II";
     }
-        
+);
 
-    // con un número
-    
-try{
-    count = romanNum("1");
-} catch (err) {
-    error=err;}
-    finally{    //assegurar-te que passa per aquí.
-        console.log('romanNum("1") should launch and error', error !==undefined, error)
+test(
+    function(){
+        return romanNum(4);
+    },
+    'to Roman Numbers(2) should return IV',
+    function(result){
+        return result === "IV";
     }
+);
+test(
+    function(){
+        return romanNum(6);
+    },
+    'to Roman Numbers(6) should return VI',
+    function(result){
+        return result === "VI";
+    }
+);
+
+test(
+    function(){
+        return romanNum(9);
+    },
+    'to Roman Numbers(6) should return IX',
+    function(result){
+        return result === "IX";
+    }
+);
+
+test(
+    withErrorCapturing(function() {
+        romanNum(true);
+    }),
+    'romanNum(true) should throw an error',
+    function(result) {
+        return result.message === "input is not a string";
+    }
+);
+
+test(
+    withErrorCapturing(function() {
+        romanNum("1");
+    }),
+    'romanNum("1") should throw an error',
+    function(result) {
+        return result.message === "input is not a string";
+    }
+);

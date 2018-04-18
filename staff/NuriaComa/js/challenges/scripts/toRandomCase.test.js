@@ -1,36 +1,35 @@
 "use strict"
+console.log(">>RANDOM CASE")
 
-console.log(">>MAYÚSCULAS ALEATORIAS")
-
-var input="Hello My World";
-
-var output = toRandomCase(input);
-
-input.toLowerCase() === output.toLowerCase();
-input!==output;
-
-
-console.log('toRandomCase(input) should return input in random case', input.toLowerCase===output.toLowerCase, output);
-
-
-var error=undefined;
-
-try{
-    count = toRandomCase(true);
-} catch (err) {
-    error=err;}
-    finally{    //assegurar-te que passa per aquí.
-        console.log("toRandomCase(true) should launch and error", error !==undefined, error);
-    }
+var input="Hello My World"; 
+test(
+    function(){
         
-
-    // con un número
-    
-try{
-    count = toRandomCase(1);
-} catch (err) {
-    error=err;}
-    finally{    //assegurar-te que passa per aquí.
-        console.log('toRandomCase(1) should launch and error', error !==undefined, error);
+        return toRandomCase(input);
+    },
+    'toRandomCase(input) should return input in random case',
+    function(results){
+        return input.toLowerCase() === results.toLowerCase();
+        
     }
+)
 
+test (
+    withErrorCapturing(function(){
+        toRandomCase(true);
+    }),
+    "toRandomCase(true) should launch and error",
+    function(results){
+        return results.message ==="input is not a string";
+    }
+);
+
+test (
+    withErrorCapturing(function(){
+        toRandomCase(1);
+    }),
+    "toRandomCase(1) should launch and error",
+    function(results){
+        return results.message ==="input is not a string";
+    }
+);
