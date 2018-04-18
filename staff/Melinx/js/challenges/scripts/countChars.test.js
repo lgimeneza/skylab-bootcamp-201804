@@ -7,9 +7,9 @@ console.log('countChars("hello world") should return 11', count === 11, count);
 count = countChars('0123456789');
 console.log('countChars("0123456789") should return 11', count === 10, count);
 
-var error;
+// los try/catch son BOOLEANOS, por lo tanto funcionan por tipo de valor (numero, o )
 
-error = undefined;
+var error;
 
 try {
     count = countChars(true);

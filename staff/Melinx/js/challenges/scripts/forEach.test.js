@@ -23,10 +23,12 @@ if (check === false) console.log('error has occured')
 
 console.log(newArr);
 
-
+var error; // declaramos error y aqui esta undefined.
 try {
     forEach([1,23,45,2,3,4], secondParameter);
-    console.log('forEach([1,23,45,2,3,4]) should return 6', count === 6, count);
 } catch(err) {
-    console.log('error');
+    error=err;
+} finally {
+    console.log('forEach([1,23,45,2,3,4]) should return 6', count === 6, count);
 }
+
