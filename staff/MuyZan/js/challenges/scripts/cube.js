@@ -1,33 +1,44 @@
 "use strict";
 
+/**
+ * Calculates the cube of a given numeric input.
+ *
+ * @example
+ *
+ * var res = numbersToCube(2) // -> 8
+ *
+ * var res = numbersToCube([1, 2, 3]) // --> [1, 8, 27]
+ *
+ *
+ * @param {number|number[]} val - Initial number or Initial array of numbers given.
+ *
+ *
+ * @throws {Error} - If input is not a number or an array
+ * @throws {Error} - If the index of array contains a non number input.
+ *
+ * @returns {number|number[]} - The cube of the input number or array of numbers;
+ */
+
 function numbersToCube(val) {
-  if (typeof val !== "number" && typeof val !== "object") {
+  if (typeof val === "number") {
+    return cube(val);
+  }
+
+  if (!(val instanceof Array)) {
+    //zan note: !() primero comprobar si es una instancia, y luego negarla.
     throw Error("It is not a number or array!");
   }
-
-  if (typeof val === "number") {
-    var number = val;
-    number = cube(number);
-    return number;
-  }
-  if (typeof val === "object") {
-    var newVal = [];
-    for (var i = 0; i < val.length; i++) {
-        
-      if (typeof val[i] !== "number") {
-        throw Error("It is not a number");
-      }
-
-      var number = val[i];
-      number = cube(number);
-      newVal.push(number);
+  var newVal = [];
+  for (var i = 0; i < val.length; i++) {
+    if (typeof val[i] !== "number") {
+      throw Error("Input array is not a number in the index" + i);
     }
-    return newVal;
+    newVal[i] = cube(val[i]);
   }
+  return newVal;
 }
 
 function cube(n) {
-  var res;
-  res = n * n * n;
-  return res;
+  return n ** 3; //same that n*n*n, cube formula
 }
+
