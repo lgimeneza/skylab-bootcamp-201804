@@ -1,3 +1,5 @@
+'use strict';
+
 var input = 'hola que tal';
 var output = toRandomCase(input);
 

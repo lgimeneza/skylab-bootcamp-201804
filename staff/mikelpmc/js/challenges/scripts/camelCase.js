@@ -1,3 +1,5 @@
+'use strict';
+
 function toCamelCase(str) {
     if (typeof str !== 'string') throw Error('input str is not a string');
 
