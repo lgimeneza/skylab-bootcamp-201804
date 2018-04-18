@@ -1,3 +1,5 @@
+'use strict';
+
 function toRandomCase(text){
 
     if (typeof text !== 'string'){

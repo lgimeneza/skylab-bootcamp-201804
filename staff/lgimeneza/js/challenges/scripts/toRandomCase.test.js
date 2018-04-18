@@ -1,3 +1,5 @@
+'use strict';
+
 // Test case lower case input is equals to output
 
 var result = toRandomCase('Hello World');

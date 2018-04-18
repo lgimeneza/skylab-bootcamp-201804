@@ -1,3 +1,5 @@
+'use strict';
+
 // Test case with valid númber
 
 var result = toRomanNumerals(1);
