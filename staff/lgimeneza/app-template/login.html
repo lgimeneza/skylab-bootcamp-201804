@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>App template</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+<body>
+    <div>
+        <img src="" alt="">
+    </div>
+    <div class="main-content">
+        <div class="container">
+            <div class="centered">
+                <h1>Log In</h1>
+            </div>
+            <div>
+                <p>
+                    <span>Need an account?</span>
+                    <a href="register.html">Create an account</a>
+                </p>
+            </div>
+            <form>
+                <div>
+                    <label for="new_username">Username</label>
+                </div>
+                <div>
+                    <input class="inputs" type="text" name="username" tabindex="1" id="new_username" value="">
+                </div>
+                <div>
+                    <input type="checkbox" name="show-password" id="show-password" value="1">
+                    <label for="show-password" title="Show Password">Show</label>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                </div>
+                <div>
+                    <input class="inputs" type="password" name="password" tabindex="3" id="new_password" maxlength="51" value="">
+                </div>
+                <button class="inputs" id="create-account" type="submit" value="Create My Account"
+                    disabled="disabled" tabindex="4">Log In</button>
+                <div class="centered">
+                    <input name="stay-signed-in" type="checkbox" aria-checked="false" tabindex="0" value="Y" id="stay-signed-in">
+                    <label for="stay-signed-in">Keep me logged in</label>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+i.fa {
+  font-weight: 400;
+}
+
+header {
+  display: flex;
+  flex-basis: 10%;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
+}
+
+body {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  font-family: 'Handlee', cursive;
+  margin: 0;
+  color: white;
+}
+
+main {
+  display: flex;
+  background: #2d1818;
+  flex-basis: 80%;
+}
+
+.title {
+  display: flex;
+  padding-right: 20px;
+}
+
+footer {
+  background: #F2B23F;
+  flex-basis: 10%;
+}
+
+.header-link {
+  font-size: 20px;
+  padding: 6px;
+  color: white;
+}

@@ -1,0 +1,82 @@
+@import "common.css";
+button {
+    padding: 3%;
+    width: 100%;
+    height: auto;
+    margin: 6% 0%;
+    font-size: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2dbe60;
+    color: white;
+}
+
+.button:hover {
+    background-color: #248d49;
+    cursor: pointer;
+}
+
+h2 {
+    font-size: 35px;
+    padding: 5% 0% 5%;
+}
+
+.logoGoogle {
+    width: 14%;
+    padding-right: 6%;
+}
+
+.google {
+    background-color: white;
+    border: 0.4px solid #b5bcba;
+    color: black;
+}
+.google:hover{
+    border-color:  #2dbe60;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li:before {
+    content: '✓ ';
+}
+li{
+    margin-bottom: 5%;
+    font-size: 90%;
+}
+.input{
+    display: block;
+    width: 100%;
+    margin: 5% 0% 5%;
+    border-radius: 5px;
+    border: none;
+    background: #eef2f3;
+    padding: 4%;
+}
+::-webkit-input-placeholder { 
+    padding: 5%;
+    font-size: 120%;
+  }
+.small{
+    font-size: 60%;
+    padding-top: 3%;
+    color: gray;
+}  
+.sesion{
+    text-decoration: none;
+    color: #2dbe60;
+}
+.logeIn{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contentLog{
+    padding: 13% 33% 33%;
+}
+.check{
+    font-size: 80%;
+}
