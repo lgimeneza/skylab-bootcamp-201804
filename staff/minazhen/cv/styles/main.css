@@ -1,0 +1,135 @@
+html {
+    height: 100%;
+    width: 100%; 
+    background-color: rgb(223, 255, 223);
+}
+
+body {
+    box-sizing: border-box;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Raleway', sans-serif;
+}
+header, footer {
+    position: fixed;
+    margin: 0;
+    background-color: green;
+    height: 15%;
+    width:100%;
+    text-align: center;
+    color:  rgb(223, 255, 223);
+}
+
+header {
+    top: 0px;
+}
+main {
+    top:15%;
+    position: relative;
+    height: 70%;
+}
+
+.info, .content{
+    box-sizing: border-box;
+    padding: 20px;
+}
+.info {
+    float:left;
+    margin-left: 2%;
+    height: 100%;
+    width: 20%;
+    background-color: palegreen;
+}
+
+img {
+    left: 20%;
+    position: relative;
+    width: 60%;
+}
+.content {
+    float:right;
+    padding-right: 5%;
+    height: 100%;
+    width: 75%;
+    overflow-y: scroll;
+}
+
+footer {
+    bottom: 0;
+}
+
+footer * {
+    display: inline;
+    position: relative;
+    top: calc(20% + 0.2em);
+    text-decoration: none;
+    color:   rgb(223, 255, 223);
+}
+
+footer p{
+    font-size: 30px;
+    margin: 0 20px;
+    color: rgb(169, 255, 169);
+}
+ul{
+    margin: 0 10% 0 -10px;
+    font-size: 12px;
+    list-style: none;
+}
+
+li *{
+    margin:5%;
+    white-space:pre;
+    text-align: center;
+    display: block;
+    color:rgb(0, 77, 0); 
+    text-decoration: none;  
+    font-weight: bolder;
+}
+
+
+h2 {color:rgb(0, 77, 0);
+    text-transform: uppercase;}
+
+h3{ text-align: center;}
+
+
+
+article, article p{
+    width:95%;
+    float:right;
+    color:rgb(48, 175, 48);
+    margin-bottom: 2%;
+}
+
+strong, em, span{
+    color:rgb(0, 77, 0);
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+span {
+    float: right;
+}
+em {
+    font-size: 12px;
+}
+
+article p{
+    text-align: justify;
+    font-size: 10px;
+}
+
+h4{
+    color:black;
+    font-weight: 100;
+    margin-left: -2%;
+    text-transform: uppercase;
+}
+
+
+
+

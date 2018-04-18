@@ -1,0 +1,21 @@
+
+
+
+nav {
+  height: 100%;
+  width: 20%;
+  float: left;
+}
+
+section {
+  height: 100%;
+  width: 60%;
+  float: left;
+}
+
+aside {
+  height: 100%;
+  width: 20%;
+  float: left;
+}
+

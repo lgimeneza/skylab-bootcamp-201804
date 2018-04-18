@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+ }
+ html, body {
+    min-height: 100% !important;
+    height: 100%;
+    margin: 1% 4% 4% 4%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+header{
+  width:100%;
+  height: 20%;
+  border-bottom: 3px solid rgb(4, 106, 146);
+  text-align: center;
+}
+a {
+    text-decoration: none;
+    color: rgb(4, 106, 146);
+}
+#job{
+    width: 91%;
+    height:100%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 11%;
+}
+figure {
+    float: right;
+    width: 9%;
+    right: 0;
+    height: 100%;
+}
+img {
+    padding-bottom: 5%;
+    width: 100%;
+    height: 100%;
+    float: right;
+}
+.wordSections {
+    width: 100%;
+    border-bottom: 2px solid rgb(4, 106, 146);
+    margin-bottom: 1%;
+}
+main {
+  width:100%;
+  height: 60%;
+}
+#name {
+    margin: 1% 0 1% 0;
+    text-align: center;
+}
+.col-left {
+    width: 22%;
+    float: left;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 1% 0 1% 1%; 
+}
+.col-right {
+    width: 70%;
+    float: left;
+    font-size: 20px;
+    margin: 1% 0 1% 0;
+    text-align: justify;
+    line-height: 25px;
+}
+section {
+    width: 100%;
+    float: left;
+    margin: 1.3% 0 1.3% 0;
+}
+li {
+    margin: 2% 0 2% 0;
+}
+footer {
+    margin: 0 0 1% 0;
+    width: 100%;
+    float: left;
+}

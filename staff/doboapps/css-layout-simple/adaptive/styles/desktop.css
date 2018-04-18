@@ -1,0 +1,12 @@
+
+nav,aside,section{
+width: 20%; 
+float: left;
+height: 100%;
+}
+section{
+width: 60%;   
+}
+header, footer {
+height: 20%;
+}

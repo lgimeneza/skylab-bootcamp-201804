@@ -1,0 +1,119 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+body {
+    position: absolute;
+    background-color: black;
+    overflow: hidden;
+    font-family: 'Dosis', sans-serif;
+}
+main {
+    position: absolute;
+    height: 96%;
+    width: 98%;
+    border-radius: 10px;
+    background-color: lightblue;
+}
+header, footer {
+    position: absolute;
+    background-color: indigo;
+    
+}
+header {
+    top:0;
+    border-radius: 10px 10px 0 0;
+    height: 10%;
+    width: 100%;
+}
+h1 {
+    text-align: center;
+    color: lightblue;
+    margin-top: 0;
+}
+footer {
+    position: absolute;
+    border-radius: 0 0 10px 10px;
+    bottom:0;
+    height: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+
+}
+a{
+    margin:0 2em;
+    text-decoration: none;
+    color: white;
+}
+section{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -47%);
+    overflow-y: scroll;
+    width:98%;
+    height: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(297px, 1fr));
+
+    grid-gap: 10px;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+article {
+    position: relative;
+    width: 100%;
+}
+article img{
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+    height:100%;
+    opacity: 1;
+
+}
+div{
+    height: 195px;
+    width: 297px;
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+}
+article div{
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background-color: indigo;
+    opacity: 0;
+}
+
+h3 {
+    
+    margin: 20px 5px 1px 2px;
+    color:  lightblue;
+    text-align: center;
+}
+p {
+    color: linen;
+    padding: 5px;
+    margin: 1px;
+    line-height: 0.8em;
+    text-align: justify;
+    font-family: 'Gaegu', cursive;
+}
+
+article:hover div{
+    opacity: 0.8;
+}
+article:hover img{
+    opacity: 0.5;
+}
+
+
+
+
+
