@@ -1,0 +1,190 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    min-height: 150% !important;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.blue{
+    background-color: rgb(74, 189, 210);
+    height: 35%;
+}
+header{
+    padding: 0 10%;
+    
+}
+.login{
+    float: right;
+    font-size: 90%;
+    color: white;
+    text-decoration: none;
+    margin-top: 1%;
+    
+}
+.logo{
+    width: 20%;
+    float: left;
+    margin-top: 2.5%;
+    margin-right: 3%;
+}
+.butBlack{
+    color: white;
+    background: linear-gradient(rgb(80, 81, 75), rgb(63, 63, 55));
+    border-radius: 7px;
+    border: none;
+    font-size: 60%;
+    padding: 1.5%;
+    margin-top: 2%;
+    float: left;
+}
+nav{
+    background-color: rgba(255, 255, 255, 0.705);
+    width: 67%;
+    float: left;
+    margin-top: 1%;
+    margin-left: 1%;
+    padding-right: 2%;
+    border-radius: 10px;
+   
+}
+
+.navMenu{
+    text-decoration:none;
+    font-size: 83%;
+    padding: 2% 3%;
+    color: black;
+    
+    float: left;
+}
+.search{
+    width: 39%;
+    background-image: url("../images/search.png");
+    background-repeat: no-repeat;
+    background-position: right center;
+    font-size: 90%;
+    padding: 0 3%;
+    background-color: rgba(255, 255, 255, 0.705);
+    float: left;
+    margin-top: 1.5%;
+}
+.monkey{
+    width: 40%;
+    margin-top: 2%;
+    float: left;
+    clear: both;
+}
+.whiteTitle{
+    width: 55%;
+    margin: 2% 0%;
+    float: left;
+    margin-left: 2%;
+}
+.pHeader{
+    font-size: 100%;
+    color: rgba(0, 0, 0, 0.527);
+    float: left;
+    width: 50%;
+    margin: 0 2%;
+    
+}
+.butRed{
+    background: linear-gradient(rgb(236, 108, 83),rgb(233, 92, 65));
+    float: left;
+    margin: 1% 2%;
+    padding: 2% 6%;
+    font-size: 80%;
+    color: white;
+    border-radius: 7px;
+    border: none;
+}
+main{
+    background-image: url("../images/noisepattern.png");
+    background-repeat: repeat;
+    width: 100%;
+    height: 35%;
+    float: left;
+}
+.whiteBox{
+    width:80%;
+    height: 100%;
+    margin: 0 10%; 
+    margin-top: -2%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: rgb(255, 255, 255);
+}
+article{
+    width: 25%;
+    height: 70%;
+    float: left;
+}
+h1{
+    font-size: 100%;
+    padding: 3% 2%;
+    
+}
+.imgArt{
+    width: 90%;
+    margin: 3% 3%;
+    float: left;
+}
+.pArt{
+    font-size: 100%;
+    margin: 3% 3%;
+    float: left;
+}
+.hArt{
+    font-size: 100%;
+    margin: 3% 3%;
+    float: left;
+    clear: both;
+}
+.p2Art{
+    font-size: 100%;
+    margin: 3% 3%;
+    float: left;
+}
+.iArt{
+    width: 95%;
+    color: white;
+    margin-left: 2%;
+    padding: 3% 5%;
+    background-color: black;
+    font-size: 80%;
+    float: left;
+    text-align: left;
+    background-image: url("../images/arrows,png");
+    background-repeat: no-repeat;
+    border-radius: 5px;
+}
+footer{
+    width: 100%;
+    height: 40%;
+    background-color: black;
+    padding: 0 10%;
+    color: white;
+    clear: both;
+    
+}
+
+li{
+    margin-top: 5%;
+    padding: 0 10%;
+    list-style: none;
+    font-size: 90%;
+    color: gray;
+}
+.liFooter{
+    font-size: 110%;
+    font-weight: 20%;
+    color: white;
+}
+.pFooter{
+    float: right;
+    color: gray;
+}

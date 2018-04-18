@@ -1,0 +1,101 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+html, body{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    background: white;
+    
+}
+
+.firstHeader{
+    width: 100%;
+    height: 20%;
+    background:#b5bcba;
+    
+    color: white; 
+}
+figure{
+  padding-right: 5%;
+  padding-top: 1%;
+}
+.info{
+    padding-left: 16%;
+    padding-top: 1%;
+}
+img{
+    float: left;
+    width: 15%;
+    border-radius: 100%;
+    padding: 1%;
+    background: white;
+}
+h1{
+    font-size: 200%;
+    
+    color: #c7fefe;
+    
+}
+main{
+    padding: 6%;
+}
+article{
+    padding: 10%;
+}
+h3{
+    padding-bottom: 1%;
+    padding-top: 1%;
+    
+}
+h4{
+    padding: 5%;
+    color: #58b1ca;
+}
+
+aside{
+    background: #eaeaea;
+    font-size: 15px;
+    padding: 5%;
+    
+}
+div{
+    display:inline-flex;
+}
+li{
+    list-style: none;
+    
+}
+
+footer{
+    width: 100%;
+    height: 20%;
+    background-color: #58b1ca;
+    color: white;
+    float: left;
+}
+
+
+.blue{
+    color: #58b1ca;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.contact{
+    padding-bottom: 0%;
+}
+.work{
+padding: 2%;
+}
+.academic{
+padding: 2%;
+}
+.languages{
+padding: 2%;
+}

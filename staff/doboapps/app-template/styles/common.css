@@ -1,0 +1,100 @@
+html, body, ul {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: url('https://vignette.wikia.nocookie.net/leon-smallwood/images/2/21/SKY_GRADIENT.png');
+    color:white;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+nav ul{
+    border: 2px solid;
+    background: none;
+    padding: 20px;
+    margin: 10px 0;
+    box-shadow: 2px 2px 16px; 
+}
+
+header img {
+    width: 100%;
+}
+
+li {
+    list-style: none;
+    text-align: center;
+    padding: 5px;
+}
+
+li a{
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px;
+}
+
+li a:hover{
+    color: palegoldenrod;
+}
+
+main, section {
+    clear: both;
+    text-align: justify;
+}
+
+section form *{  
+    margin: 10px;
+}
+
+form input{
+    padding: 5px;
+    border-radius: 5px;
+}
+
+section form{  
+    text-align: center;
+    padding: 15px;
+}
+
+footer {
+    text-align: center;
+    font-weight: bold
+}
+
+/*Mobile ---------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 768px) {
+    header {
+        text-align: center
+    }
+    header  img{
+        width: 70%;
+    }
+
+    li {
+        width: 100%;
+    }
+}
+
+/*Desktop ---------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 768px) {
+    header img {
+        float: left;
+        max-width: 100px;
+    }
+    header {
+        display: flex;
+        align-items: center;
+    }
+    nav ul{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    li {
+        float: left;
+    
+    }
+
+}
