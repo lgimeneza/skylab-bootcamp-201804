@@ -1,3 +1,5 @@
+"use strict";
+
 var saveArr = [];
 
 function forEach(arr, handler){
@@ -12,4 +14,3 @@ function forEach(arr, handler){
     loop(0);
 }
 
-"use strict"
