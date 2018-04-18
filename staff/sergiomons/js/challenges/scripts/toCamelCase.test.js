@@ -1,11 +1,41 @@
 'use strict';
-var res = toCamelCase("Hello My World")
-   
-console.log('toCamelCase("hello World")should return helloMyWorld', res === "helloMyWorld", res);
 
-try {
-    res= toCamelCase(Number) ;
- } catch(err) {
-     console.log('toCamelCase() should throw an error', err !== undefined, err);
- }
+test(function () {
+    return toCamelCase("Hello My World");
+},
+    'toCamelCase(Hello My World) should return helloMyWorld',
+    function (result) {
+        return result === "helloMyWorld";
+    });
 
+    test(
+        runWithErrorCapturing(function() {
+            toCamelCase(true);
+        }),
+        'toCamelCase(true) should throw an error',
+        function(result) {
+            return result.message === 'input text is not a string';
+        }
+    );
+    
+    test(
+        runWithErrorCapturing(function() {
+            toCamelCase(1);
+        }),
+        'toCamelCase(1) should throw an error',
+        function(result) {
+            return result.message === 'input text is not a string';
+        }
+    );
+    
+    test(
+        runWithErrorCapturing(function() {
+            toCamelCase([]);
+        }),
+        'toCamelCase([]) should throw an error',
+        function(result) {
+            return result.message === 'input text is not a string';
+        }
+    );
+    
+    
