@@ -1,3 +1,5 @@
+"use strict"
+
 console.log(">>CONTAR LETRAS")
 
 var count= countChars("hello world");

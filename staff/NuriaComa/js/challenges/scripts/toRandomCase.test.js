@@ -1,3 +1,5 @@
+"use strict"
+
 console.log(">>MAYÚSCULAS ALEATORIAS")
 
 var input="Hello My World";

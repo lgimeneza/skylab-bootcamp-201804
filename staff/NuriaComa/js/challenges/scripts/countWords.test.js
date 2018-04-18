@@ -1,3 +1,5 @@
+"use strict"
+
 console.log(">>CONTAR PALABRAS")
 
 var count= countWords("hello world");

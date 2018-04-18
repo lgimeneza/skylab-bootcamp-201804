@@ -1,3 +1,4 @@
+"use strict"
 console.log(">>FOREACH")
 
 var a=[1,2,3]
