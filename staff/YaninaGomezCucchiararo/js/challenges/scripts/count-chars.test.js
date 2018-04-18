@@ -1,30 +1,71 @@
 'use strict';
 
-var count = countChars('Hello world');
+test(
+    function() {
+        return countChars('hello world');
+    },
+    'countChars("hello world") should return 11',
+    function(result) {
+        return result === 11;
+    }
+);
 
-console.log('countChars("hello world") should return 11', count === 11, count);
+test(
+    function() {
+        return countChars('0123456789');
+    },
+    'countChars("0123456789") should return 10',
+    function(result) {
+        return result === 10;
+    }
+);
 
-var count = countChars('123456789');
+test(
+    runWithErrorCapturing(function() {
+        countChars(true);
+    }),
+    'countChars(true) should throw an error',
+    function(result) {
+        return result.message === 'input text is not a string';
+    }
+);
 
-console.log('countChars("123456789") should return 9', count === 9, count);
-/*---------------para explicar en consola el error de que no es un string--------------------*/
+test(
+    runWithErrorCapturing(function() {
+        countChars(1);
+    }),
+    'countChars(1) should throw an error',
+    function(result) {
+        return result.message === 'input text is not a string';
+    }
+);
 
-try {
-    var count = countChars(true);
+test(
+    runWithErrorCapturing(function() {
+        countChars([]);
+    }),
+    'countChars([]) should throw an error',
+    function(result) {
+        return result.message === 'input text is not a string';
+    }
+);
 
-} catch (err) {
-    console.log('countChars(true) shoul launch and error', err !== undefined, err);
-}
+test(
+    function() {
+        return countChars('abracadabra', function(c) { return c === 'a'; });
+    },
+    'countChars("abracadabra", function(c) { return c === "a"; }) should return 5',
+    function(result) {
+        return result === 5;
+    }
+)
 
-
-try {
-    var count = countChars([]);
-
-} catch (err) {
-    console.log('countChars([]) shoul launch and error', err !== undefined, err);
-}
-
-count = countChars('abracadabra', function (c) { return c === 'a'; });
-
-console.log()
-
+test(
+    runWithErrorCapturing(function() {
+        countChars('abracadabra', '...');
+    }),
+    'countChars("abracadabra", "...") should throw an error',
+    function(result) {
+        return result.message === 'input condition is not a function';
+    }
+);
