@@ -1,13 +1,10 @@
-'use strict';
+"use strict";
 
+function countChars(str) {
+  if (typeof str === "string") {
+    return str.length;
 
-function countChars(str){
-
-    if(typeof str === "string"){
-        return str.length;
-
-        
-        /* other solution 
+    /* other solution 
         ----------------------
     var val = 0;
     for(var i=0; i < str.length; i++){
@@ -15,8 +12,7 @@ function countChars(str){
     }
     return val;
     ---------------------*/
-    }
+  }
 
-    throw Error("input is not a string")
-
+  throw Error("input is not a string");
 }
