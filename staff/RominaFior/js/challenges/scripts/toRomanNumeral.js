@@ -33,7 +33,10 @@ function toRomanNumeral(num) {
         num = "VIII"
         break;
     case 9:
-        num = "IX"        
+        num = "IX"
+        break;
+    default:
+        num = "Please insert a number from 1 to 9";            
     }
     return num;
 }
