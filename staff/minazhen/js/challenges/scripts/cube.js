@@ -16,8 +16,6 @@
  * @returns - The cube of the input number or array of numbers.
  */
 
-
-
 function cube(n){
     var arr = [];
 
@@ -26,11 +24,10 @@ function cube(n){
     if (Array.isArray(n)){
         for (var i = 0; i < n.length; i++){
             var idxN = n[i];
-            if (typeof idxN !== "number") throw Error("Array can only include numbers.");
+            if (typeof idxN !== "number") throw Error("Array can only include numbers, check index " + i);
             arr.push(parseFloat((Math.pow(idxN, 3)).toFixed(4)));
         }
         return arr;
     }
-    throw Error(n," is not a valid value.");
+    throw Error(n + " is not a valid value.");
 }
-

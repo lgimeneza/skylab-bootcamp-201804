@@ -1,40 +1,35 @@
 "use strict";
 
-var count = countWords("Hello World");
+test(function () { return countWords("Hello World");},
+            "countWords('Hello World') should return 2",
+            function (result) { return result === 2;
+    });
 
-console.log("countWords('Hello World') should be 2", count === 2, count);
+test(function () { return countWords("Hello litte World");}, 
+            "countWords('Hello litte World') should return 3", 
+            function(result) {return result === 3;
+    });
 
-var count = countWords("Hello litte World");
+test(errorHandling(function() {countWords(true)}),
+    "countWords(true) should throw an error",
+    function(result) {
+        return result.message === "Input str is not a string";
+});
 
-console.log("countWords('Hello little World') should be 2", count === 3, count);
+test(errorHandling(function() {countWords(123145167)}),
+                "countWords(123145167) should throw an error",
+                function(result) {
+                    return result.message === "Input str is not a string";
+    });
 
-var error = undefined;
+test(errorHandling(function() {countWords([])}),
+                'countWords("") should throw an error',
+                function(result) {
+                    return result.message === "Input str is not a string";
+    });
 
-var error;
-
-try{
-    count = countWords(123145167);
-} catch (err) {
-    error = err;
-} finally {
-    console.log("countWords(123145167) should throw an error", error !== undefined, error);
-}
-
-try {
-    count = countWords(true);
-} catch(err) {
-    error = err;
-} finally {
-    console.log("countWords(true) should throw an error", error !== undefined, error);
-}
-
-error = undefined;
-
-try {
-    count = countWords([]);
-} catch(err) {
-    error = err;
-} finally {
-    console.log("countWords([]) should throw an error", error !== undefined, error);
-}
-
+test(errorHandling(function() {countWords({})}),
+                'countWords({}) should throw an error',
+                function(result) {
+                    return result.message === "Input str is not a string";
+});

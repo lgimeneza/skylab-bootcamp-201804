@@ -15,7 +15,7 @@
  */
 
 function countWords(str){
-    if (typeof str !== "string") throw Error ("Input is not a string");
+    if (typeof str !== "string") throw Error ("Input str is not a string");
     
     return str.split(" ").length; 
 }

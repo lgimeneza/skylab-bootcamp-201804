@@ -18,7 +18,7 @@
 function countChars(str, handler){
     if (typeof str === "string") {
         if (handler) {
-            if (typeof handler !== 'function') throw Error('input handler is not a function');
+            if (typeof handler !== 'function') throw Error('Input handler is not a function');
                 var count = 0;
 
             for (var i = 0; i < str.length; i++) {
@@ -32,5 +32,5 @@ function countChars(str, handler){
         }
         return str.length; 
     }
-    throw Error ("input is not a string");
+    throw Error ("Input str is not a string");
 }
