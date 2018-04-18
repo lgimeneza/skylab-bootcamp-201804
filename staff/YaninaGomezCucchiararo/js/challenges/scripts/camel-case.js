@@ -9,3 +9,4 @@ function toCamelCase(str){
     return arr.join("");
     } 
 }
+

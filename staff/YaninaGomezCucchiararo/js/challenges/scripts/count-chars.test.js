@@ -1,3 +1,5 @@
+'use strict';
+
 var count = countChars('Hello world');
 
 console.log('countChars("hello world") should return 11', count === 11, count);
