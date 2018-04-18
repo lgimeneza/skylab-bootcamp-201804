@@ -3,13 +3,31 @@
 /**
  * Runs a test case unit.
  * 
+ * @example
+ * 
+ * function fun() {
+ *      return 'Hello, World!';
+ * }
+ * 
+ * test(
+ *      function() {
+ *          return fun();
+ *      },
+ * 
+ *      'fun() should return "Hello, World!"',
+ * 
+ *      function(result) {
+ *          return result === 'Hello, World!';
+ *      }
+ * );
+ * 
  * @param {function} testCase - The test case to run.
  * @param {string} message - The description of the test.
  * @param {function} check - The function that checks the results of the test.
  * 
  * @author manuelbarzi
  * 
- * @version 2.1.0
+ * @version 2.1.1
  */
 function test(testCase, message, check) {
     try {
