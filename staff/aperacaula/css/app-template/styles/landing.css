@@ -1,0 +1,121 @@
+header{
+    display: grid;
+    grid-template: 1fr/ 30% 70%;
+    height: 8%;
+    background-color: black;
+    padding-bottom: 1%;
+
+}
+
+#name h1{
+    font-size: 3vw;
+    font-weight: normal;
+    text-transform: uppercase;
+
+}
+
+#name, #nav-bar{
+    padding: 5%;
+    color: white;
+    display: flex;
+    background-color: black;
+}
+
+#nav-bar{
+    justify-content: space-around;
+    font-size: 2vw;
+    align-items: flex-end;
+    padding-bottom: 0%;
+
+}
+
+#nav-bar a {
+    display: block;
+    color: #f2f2f2;
+    padding: 14px 16px;
+    text-decoration: none;
+    height: 3vh;
+    margin-bottom: 0%;
+}
+
+#nav-bar a:hover {
+    background-color: #B5BAC0;
+    color: black;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 80%;
+    background: url(https://prolight.co.uk/wp-content/uploads/2018/03/LEDJ46_E05.jpg) rgb(255, 255, 255, 0.5) no-repeat center center fixed ;
+    background-size: cover;
+}
+
+#content{
+    display:block;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 100%;
+    width: 70%;
+    padding: 5vh;
+    margin-top: 10%;
+    text-align: left;
+
+}
+
+p, h2{
+    padding: 2%;
+}
+
+#buttons{
+    margin-top: 2vh;
+    margin-bottom: 1vh; 
+    text-align: center;
+}
+
+#separator{
+    color: white;
+    margin-top: 5vh;
+}
+#gallery{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 5%;
+    padding: 5%;
+    padding-top: 2%;
+}
+
+
+.image-container{
+    width: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding-top: 1.5vh;
+    
+}
+
+.image-container img{
+    max-width: 100%;
+    height: auto;
+    padding-left: 1.5vw;
+    transition: all 2s ease;
+
+}
+
+.image-container:hover img {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+*{
+    margin: 0%;
+    padding: 0%;
+   }
+header{
+    background: violet;
+    height: 25%;
+}
+ul li{
+    display: inline-block;
+    
+}
+main{
+    height: 50%;
+    width: 100%;
+}
+p{
+    width: 100%;
+}
+html{
+    height: 100%;
+    width: 100%;
+}
+body{
+    height: 100%;
+    width: 100%;
+}
+aside{
+    background: red;
+    float: left;
+    width: 30%;
+    height: 100%;
+    
+}
+section{
+    float: left;
+    height: 100%;
+    width: 70%;
+    background: gray;
+    
+}
+footer{
+    clear: both;
+    margin-bottom: 0%;
+    background: blue;
+    height: 25%;
+}

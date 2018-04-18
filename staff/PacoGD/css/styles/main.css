@@ -1,0 +1,31 @@
+body{
+    height: 100%;
+    width: 100%;
+}
+
+header{
+    height: 200px;
+    background: pink;
+}
+main{
+    clear: both;
+    height: 200px;
+}
+section{
+    height: 200px;
+    width: 30%;
+    background: yellowgreen;
+    float: left;
+}
+aside{
+    height: 200px;
+    width: 70%;
+    background: blue;
+    float: left;
+}
+footer{
+
+    clear: both;
+    height: 200px;
+    background: green;
+}

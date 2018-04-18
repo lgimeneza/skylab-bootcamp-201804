@@ -1,0 +1,33 @@
+/*Mobile ---------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 768px) {
+
+     
+
+    .profile img{
+        width: 50%;
+        margin-right: 1%;
+        float: left;
+    }
+
+}
+
+/*Desktop ---------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 768px) {
+    
+ 
+
+    .profile img{
+        width: 25%;
+        margin-right: 1%;
+        float: left;
+    }
+    
+    footer{
+        clear: both;
+    }
+
+
+
+}

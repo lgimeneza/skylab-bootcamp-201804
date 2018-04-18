@@ -1,0 +1,31 @@
+.container{
+    margin: 10% auto;
+    width: 90%;
+    height: 100%;
+    border: 2px solid rgb(122, 194, 253);
+    background-color: rgb(165, 218, 243);
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 20% auto 20%;
+}
+
+.header {
+    grid-column: 3 / -1;
+}
+
+.menu{
+    grid-column: 1 / span 2;
+    grid-row: 1 / -1;
+}
+
+
+
+div{
+    border:1px solid black;
+}
+
+.container > div:nth-child(even){
+    background-color: black;
+    color: white;
+}
+

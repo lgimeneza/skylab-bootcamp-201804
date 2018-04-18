@@ -1,0 +1,9 @@
+nav, aside, section {
+   width:20%;
+   float: left;
+   height: 100%;
+   border: 1px solid white;
+}
+section {
+    width: 60%;
+}

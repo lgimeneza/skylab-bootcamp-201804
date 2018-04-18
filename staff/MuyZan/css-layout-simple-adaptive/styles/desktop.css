@@ -1,0 +1,20 @@
+
+nav, section, aside{
+    height: 100%;
+    display:inline-block;
+}
+
+nav, aside{
+    width: 20%;
+}
+
+nav{
+    float: left;
+    }
+    section{
+        width: 60%;
+    } 
+    aside{
+        float: right;
+     
+    }
