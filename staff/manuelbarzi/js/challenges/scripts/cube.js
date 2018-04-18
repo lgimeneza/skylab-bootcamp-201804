@@ -18,11 +18,7 @@
 function cube(num) {
     if (typeof num === 'number') return num ** 3;
     
-    
     if (!(num instanceof Array)) throw Error('input num is not a number, neither an array');
-    
-    
-    throw Error(123)
     
     for (var i = 0; i < num.length; i++) {
         if (typeof num[i] !== 'number') throw Error('input array is not a number at index ' + i);
