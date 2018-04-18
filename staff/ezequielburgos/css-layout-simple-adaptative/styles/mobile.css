@@ -1,0 +1,38 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    margin: auto 0;
+}
+
+h2, h1{
+    margin: 0px;
+}
+
+header {
+    height: 20%;
+    background-color: lightblue;
+}
+
+main {
+    /* display: block; */
+    /* clear: both; */
+    height: 60%;
+}
+
+aside, nav {
+   
+    height: 20%;
+    background: yellow;
+}
+
+section {
+    height: 60%;
+    background: lightcoral;
+}
+
+footer {
+    
+    height: 20%;
+    background: lightgreen;
+}

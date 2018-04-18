@@ -1,0 +1,36 @@
+body{
+    background-color: blue;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+html{
+    height: 100%;
+    width: 100%;
+}
+
+.my-header{
+    background-color: crimson;
+    text-align: center;
+    height: 15%;
+}
+.my-footer{
+    background-color: cadetblue;
+    text-align: center;
+    height: 15%;
+}
+.my-aside{
+    background-color: bisque;
+    float: left;
+    width: 30%;
+    height: 100%;
+}
+main{
+    background-color: azure; 
+    height: 100%;
+}
+.main-content{
+    height: 70%; 
+}

@@ -1,0 +1,50 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+header{
+    background-color: bisque;
+    font-size: 20px;
+    text-indent: 5%;
+    height: 10%;
+}
+
+h1{
+    margin: 0%;
+}
+body {
+    margin: 0%;
+    height: 100vh;
+    width: 100%;
+}
+
+header img{
+    height: 5%;
+    width: 5%;
+}
+aside{
+    background-color: beige;
+    float: left;
+    width: 20%;
+    height: 100%;
+}
+section{
+    text-indent: 5%;
+    text-align: justify;
+    background-color: blanchedalmond;
+    float: right;
+    width: 80%;
+    height: 100%;
+}
+
+
+footer{
+
+    background-color: aliceblue;
+    clear: both;
+    width: 100%;
+    height: 5%;
+    margin: 0%;
+
+
+}
