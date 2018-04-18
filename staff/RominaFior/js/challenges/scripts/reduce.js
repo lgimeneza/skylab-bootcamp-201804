@@ -3,7 +3,7 @@
 
 function reduce(arr, func) {
     
-    if (Array.isArray(arr) == false &&  typeof func !== 'function')
+    if (Array.isArray(arr) === false &&  typeof func !== 'function')
         throw Error('input is not valid');
     
     var count = 0;
