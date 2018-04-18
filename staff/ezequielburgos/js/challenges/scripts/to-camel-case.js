@@ -1,5 +1,19 @@
 'use strict';
 
+
+/**
+ *Joins sentence words in a lower camel case style. 
+ *
+ * @example
+ * 
+ * var camelCaseMe = toCamelCase('hello my world') // --> helloMyWorld
+ * 
+ * @param {string} str - The text to change the case from.
+ * 
+ * @throws {Error} - If input text is not a string.
+ * 
+ * @returns {string} - The Text camel Cased.
+ */
 function toCamelCase(str) {
     if (typeof str !== 'string')
         throw Error('input str is not a string!!');
@@ -14,8 +28,8 @@ function toCamelCase(str) {
     var newArr = [];
     newArr.push(arr[0]);
     // toUpperCase() all first letters
-    for (i = 1; i < arr.length; i++) {
-        letterArr = arr[i].split("");
+    for (var i = 1; i < arr.length; i++) {
+        var letterArr = arr[i].split("");
         letterArr[0] = letterArr[0].toUpperCase();
         newArr.push(letterArr.join(""));
     }
@@ -23,17 +37,3 @@ function toCamelCase(str) {
     return newArr.join("");
 
 }
-
-// here's another way to do it:
-
-// function toCamelCase2(str) {
-
-//     str = str.toLowerCase();
-//     var wordArray = str.split(" ");
-//     for (var i = 1; i < wordArray.length; i++) {
-//         wordArray[i] = wordArray[i].replace(wordArray[i][0], wordArray[i][0].toUpperCase());
-//     }
-//     return wordArray.join("");
-
-
-// }

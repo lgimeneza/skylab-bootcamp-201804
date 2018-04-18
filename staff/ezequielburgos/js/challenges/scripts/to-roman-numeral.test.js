@@ -1,37 +1,41 @@
 'use strict';
 
+test(
+    function () {
+        return toRomanNumeral(5);
+    },
+    'toRomanNumeral(5) should return "V"',
+    function (result) {
+        return result === "V";
+    }
+);
 
-var count = toRomanNumeral(9);
-console.log('The roman numeral is: ' + count);
+test(
+    runWithErrorCapturing(function () {
+        toRomanNumeral(true);
+    }),
+    'toRomanNumeral(true) should throw an error',
+    function (result) {
+        return result.message === 'input should be a number!!';
+    }
+);
 
-var error;
+test(
+    runWithErrorCapturing(function () {
+        toRomanNumeral(13);
+    }),
+    'toRomanNumeral(13) should throw an error',
+    function (result) {
+        return result.message === 'The number introduced must be contained in between 1 and 10!';
+    }
+);
 
-try {
-    count = toRomanNumeral(true);
-} catch (err) {
-    error = err;
-} finally {
-    console.log('toRomanNumeral(true) should throw an error', error != undefined, error)
-}
-
-error = undefined;
-
-try {
-    count = toRomanNumeral(13);
-} catch (err) {
-    error = err;
-} finally {
-    console.log('toRomanNumeral(1) should throw an error', error != undefined, error)
-}
-
-error = undefined;
-
-try {
-    count = toRomanNumeral([]);
-} catch (err) {
-    error = err;
-} finally {
-    console.log('toRomanNumeral([]) should throw an error', error != undefined, error)
-}
-
-error = undefined;
+test(
+    runWithErrorCapturing(function () {
+        toRomanNumeral([]);
+    }),
+    'toRomanNumeral([]) should throw an error',
+    function (result) {
+        return result.message === 'input should be a number!!';
+    }
+);
