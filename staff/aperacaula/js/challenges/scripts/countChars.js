@@ -1,4 +1,7 @@
 "use strict";
 function countChars(str){
-    return str.length;
+    if (typeof str === 'string') return str.length;
+    throw Error('It is not a string')
+
+    
 }

@@ -1,8 +1,12 @@
 'use strict';
 function cube(numbers){
+
     if (numbers instanceof Array || typeof numbers === 'number'){
         if (numbers instanceof Array){
             for(var i=0;i<numbers.length;i++){
+                if (typeof numbers[i] !== 'number'){
+                    throw Error('input array is not a number at index '+i)
+                }
                 numbers[i]= numbers[i]**3;
             }
             return numbers;
