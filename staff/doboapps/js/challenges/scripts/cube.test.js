@@ -27,6 +27,8 @@ try {
     console.log("cube('') should throw an error", error !== undefined,error)
 }
 
+
+
 function testThrowError(testCase,message){
 
     var error;
