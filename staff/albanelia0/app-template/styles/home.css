@@ -1,0 +1,38 @@
+header {
+  background: #9E9D24;
+}
+
+.title {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer {
+  background: #689F38;
+}
+
+a {
+  font-size: 20px;
+  color: wheat;
+}
+
+main {
+  flex-direction: column;
+  padding: 50px 20%;
+}
+
+.images-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.images-container .image {
+  flex-basis: 40%;
+  height: 150px;
+  margin: 10px;
+  background-size: cover;
+  cursor: pointer;
+}
