@@ -3,7 +3,7 @@ console.log(">>CUBE")
 
 //array
 var resultado = cube([2,3,4]);
-console.log('cube([2,3,4]) should return [8, 27, 64]' resultado.toString() === [8, 27, 64].tostring, resultado);
+console.log('cube([2,3,4]) should return [8, 27, 64]', resultado.toString() === [8, 27, 64].tostring, resultado);
 
 
 //un número
