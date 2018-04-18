@@ -22,7 +22,7 @@ function cube(value) {
         return Math.pow(value, 3);  
 
     if( !(value instanceof Array) )
-        throw Error('input value is not a number, heither an array')
+        throw Error('input value is not a number, neither an array')
 
     var arrayCube = [];
 
