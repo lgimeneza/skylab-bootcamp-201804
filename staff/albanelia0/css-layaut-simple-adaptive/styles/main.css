@@ -1,0 +1,31 @@
+@import url("mobile.css") only screen and (max-width:768px);
+@import url("desktop.css") only screen and (min-width:768px);
+
+* {
+  background: black;
+  color: white;
+  text-align: center;
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+  border: 1px solid white;
+}
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+main {
+  height: 60%;
+}
+
+header {
+  height: 20%;
+}
+
+footer {
+  height: 20%;
+}

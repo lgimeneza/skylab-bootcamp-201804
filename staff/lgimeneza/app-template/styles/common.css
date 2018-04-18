@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300');
+
+*{
+    margin: 0;
+}
+
+.site-title{
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+
+.site-logo{
+    width: 200px;
+    vertical-align: bottom;
+}
+
+.main-title{
+    padding-left: calc(100% / 2 - 400px);
+    color: rgb(82, 81, 81);
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+@media all and (max-width: 650px) {
+    .site-title{
+        font-size: 1.5em;
+    }
+}
+
+@media all and (max-width: 550px) {
+    .site-title{
+        font-size: 1em;
+    }
+}
+
+.section-header{
+    padding-left: 10px;
+    padding-top:5px;
+    padding-bottom: 5px;
+}
+
+.section-header, .site-footer{
+    background-color: rgba(54, 54, 54, 0.7);
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+#skylab-ref{
+    color: white;
+}
+
+.site-footer{
+    padding-top:10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.row div:hover img {
+	opacity: 1;
+	-webkit-animation: flash 1.5s;
+	animation: flash 1.5s;
+}
+@-webkit-keyframes flash {
+	0% {
+		opacity: .4;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes flash {
+	0% {
+		opacity: .4;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.navigation li{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+li:last-child{
+    padding-left: auto;
+}
+
+.navigation{
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navigation a {
+    text-decoration: none;
+    display: block;
+    color: white;
+}
+
+.navigation a:hover {
+    background: darken(deepskyblue, 2%);
+}
+
+@media all and (max-width: 800px) {
+    .navigation {
+        justify-content: space-around;
+    }
+}
+
+@media all and (max-width: 600px) {
+    .navigation {
+        flex-flow: column wrap;
+        padding: 0;
+    }
+}
+
+.navigation a { 
+    text-align: center; 
+    padding: 10px;
+    border-top: 1px solid rgba(255,255,255,0.3); 
+    border-bottom: 1px solid rgba(0,0,0,0.1); 
+}
+
+.navigation li:last-of-type a {
+    border-bottom: none;
+}

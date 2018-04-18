@@ -1,0 +1,150 @@
+* {
+    font-family: 'Comfortaa', cursive;
+}
+
+body {
+    background-image: url('../images/background.jpg');
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+header {
+    margin-bottom: 100px;
+}
+
+.active {
+    background-color: var(--active-color);
+}
+
+.btn {
+    text-decoration: none;
+    border: 2px solid black;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--main-btn-bg-color);
+    border-color: white;
+    color: white;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    padding-top: 2em;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    border-radius: 5px;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 40px;
+    text-decoration: none;
+}
+
+nav ul li a:hover:not(.active) {
+    background-color: #111;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: #c50831;
+    position: fixed;
+    width: 100%;
+    bottom: 0%;
+}
+
+footer p {
+    color: white;
+}
+
+.container-form {
+    margin-top: 2rem;
+    background-color: white;
+    margin: 2rem;
+    padding: 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.container-form:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+input[type='text'],
+input[type='email'],
+input[type='search'],
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type='submit'] {
+    width: 100%;
+    background-color: #4caf50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    background-color: white;
+    max-width: 150px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+}
+
+.btn-block {
+    padding: 20px 40px;
+    width: 100%;
+    font-size: 16px;
+    border-color: #960527;
+    color: #c50831;
+    text-transform: uppercase;
+}
+
+.pull-right {
+    float: right;
+}
+
+@media (max-width: 450px) {
+    nav ul li {
+        float: none;
+    }
+}
