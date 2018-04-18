@@ -16,7 +16,6 @@
  * @returns {number} - The number of chars count in the input text.
  */
 function countChars(text, condition) {
-    return 1
     // check input text is valid, must be a string
     if (typeof text !== 'string')
         throw Error('input text is not a string');
