@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+body {
+    background-image: url("images/landback.jpeg");
+    width: 100%;
+    height: 100%;
+}
+
+aside {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+aside.right {
+    background-image: url(images/burguer.jpg);
+}
+
+aside.left {
+    background-image: url(images/pizza.jpg);
+}
+
+.container {
+    background: white;
+    height: 100%;
+    width: 80%;
+    margin: auto;
+}
+
+.login-content>article {
+    padding: 150px;
+    grid-template: 1fr 1fr;
+    text-align: center;
+    align-content: center;
+    margin: auto;
+}
+.login-content label, .login-content input{
+display: block;
+width: 100%;
+margin-bottom: 5px;
+}
+
+#login {
+    margin-bottom: 10%;
+    height: 100%;
+    width: 100%;
+    padding: 10%;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border: none;
+    box-shadow: grey;
+    margin-top: 15px;
+}
+
+#register {
+    margin-bottom: 10%;
+    height: 100%;
+    width: 50%;
+    padding: 10%;
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    border: none;
+    box-shadow: grey;
+}
+
+.item {
+    border-right: 2px solid black;
+    align-content: center;
+    margin: auto;
+}
+
+header {
+    display: table;
+    width: 100%;
+    height: 15%;
+    text-align: center;
+    background-color: red;
+}
+
+header>h1 {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+main {
+    height: 75%;
+    display: grid;
+    grid-template: 1fr / 25% 50% 25%;
+    background-color: #00F0f0;
+}
+
+footer {
+    height: 10%;
+    text-align: center;
+    background-color: blue;
+}
