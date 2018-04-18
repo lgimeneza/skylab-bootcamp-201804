@@ -1,3 +1,5 @@
+'use strict';
+
 function toRomanNumeral(num) {
     if (num > 10 || num < 0) {
         throw Error("The number introduced must be contained in between 1 and 10!");

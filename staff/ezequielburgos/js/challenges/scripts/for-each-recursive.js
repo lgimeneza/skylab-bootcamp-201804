@@ -1,3 +1,5 @@
+'use strict';
+
 // RECURSIVIDAD
 // forEach(a, console.log)
 // function forEach:

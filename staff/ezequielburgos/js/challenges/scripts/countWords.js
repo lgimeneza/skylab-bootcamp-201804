@@ -1,3 +1,5 @@
+'use strict';
+
 function countWords(str){
     var arr = [];
     arr = str.split(" ");

@@ -1,3 +1,5 @@
+'use strict';
+
 // forEach(a, console.log)
 var a = [1, 12, 19];
 console.log('Recursive version')

@@ -1,3 +1,5 @@
+'use strict';
+
 // REDUCE RECURSIVE:
 
 function reduce(arr, func, initial) {

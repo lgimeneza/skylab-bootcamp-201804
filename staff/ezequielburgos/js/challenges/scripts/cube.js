@@ -1,3 +1,5 @@
+'use strict';
+
 function cube(num) {
 
     if (typeof num == "number") {
