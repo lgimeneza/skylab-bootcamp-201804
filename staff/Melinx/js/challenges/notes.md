@@ -58,3 +58,52 @@ if num-- > -1) countDown(num);
 }
 ```
 
+```sh
+a = [1,2,3]
+a.toString()
+
+-- lo utilizamos para poder comparar los resultados de arrays en objetos
+
+Object notes form console:
+
+```sh
+o = {}
+{}
+o.name = 'john''
+VM161:1 Uncaught SyntaxError: Invalid or unexpected token
+    at cube (<anonymous>:2:5)
+    at <anonymous>:1:1
+cube @ VM133:2
+(anonymous) @ VM137:1
+o.toString()
+"[object Object]"
+o.toString = function() {return o}
+ƒ () {return o}
+o.to
+undefined
+o.toString
+ƒ () {return o}
+o.toString()
+{toString: ƒ}toString: ƒ ()__proto__: Object
+o =  {}
+{}
+o = new Object()
+{}
+o.name = 'john'
+"john"
+o.salute = (function() {return 'hello buddy!';})
+            
+ƒ () {return 'hello buddy!';}
+o.titles=['full stak developer', 'bar tender'];
+(2) ["full stak developer", "bar tender"]
+o.consoleLog('hola mundo')
+VM204:1 Uncaught TypeError: o.consoleLog is not a function
+    at eval (eval at cube (Primitive:2), <anonymous>:1:3)
+    at cube (<anonymous>:2:5)
+    at <anonymous>:1:1
+(anonymous) @ VM204:1
+cube @ VM133:2
+(anonymous) @ VM137:1
+o.consoleLog = function(text) {console.log(text)};
+ƒ (text) {console.log(text)}
+```

@@ -1,12 +1,38 @@
 'use strict';
 
-var count = countWords('hello world');
+//positive-case testing:
 
-console.log('countWords("hello world") should return 2', count === 2, count);
+test(
+    function() {
+        return countWords("hello world you\'re a bmf ");
+    },
+    'countChars("hello world you\'re a bmf") should return 5',
+    function(result) {
+        return result === 5;
+    }
+);
 
-count = countWords('hello there world');
+// fail-case testing:
 
-console.log('countWords("hello there world") should return 3', count === 3, count);
+test(
+    runWithErrorCapturing(function() {
+        countChars(true);
+    }),
+    'countChars(true) should throw an error',
+    function(result) {
+        return result.message === 'input text is not a string';
+    }
+);
+
+test(
+    runWithErrorCapturing(function() {
+        countChars(1);
+    }),
+    'countChars(1) should throw an error',
+    function(result) {
+        return result.message === 'input text is not a string';
+    }
+);
 
 
 
@@ -17,6 +43,7 @@ error = undefined;
 try{
     count=countWords(true);
 } catch(err){
+    error = err;
     console.log('countWords(true) should throw an error', err !== undefined, err);
 }
 

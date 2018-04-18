@@ -26,15 +26,15 @@
 
 function cube(num) {
     if (typeof num === 'number') return num ** 3;
-    if (!(num instanceof Array)) throw Error('input num is not an array of numbers')
+    if (!(num instanceof Array)) throw Error('input num is not an array of numbers');
     for (var i = 0; i < num.length; i++) {
-        if (typeof num[i] !== 'number') throw Error('input in array is not a  number at index' + i);
+        if (typeof num[i] !== 'number') throw Error('input in array is not a number at index ' + i);
     }
     var res = [];
     for (var i = 0; i < num.length; i++) {
+        var val = num[i]; // declare val to avoi d num[i] **3;
+        res[i] = val ** 3;
+    }
+    return res;
 
-    var val = num[i];
-    res[i] = val **3;
-}
-return res;
 }
