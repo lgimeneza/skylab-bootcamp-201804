@@ -1,0 +1,23 @@
+header {
+  display: flex;
+  background: #3ea7bc;
+  padding: 20px;
+}
+
+.rightScreen {
+  width: 50%;
+}
+
+h1 {
+  transform: rotate(-20deg);
+  font-size: 60px;
+  padding-left: 80px;
+}
+
+.leftScreen {
+  width: 50%;
+}
+
+#introduce {
+  padding-top: 40px
+}

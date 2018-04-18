@@ -1,0 +1,18 @@
+section {
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+ul{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: auto;
+}
+
+li{
+    margin: 5px;  
+}
+
+span {
+    background: gainsboro;
+    margin: 20px;
+}

@@ -1,0 +1,54 @@
+html,
+body {
+    margin: 0;
+}
+
+main {
+    height: 100vh;
+}
+
+header {
+    display: block;
+    background-color: blueviolet;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0.5em;
+    text-align: center;
+}
+
+aside {
+    background-color: red;
+    float: left;
+    width: 20%;
+    height: 100%;
+}
+
+aside h2 {
+    text-align: center;
+}
+
+section {
+    background-color: yellow;
+    float: right;
+    width: 80%;
+    height: 100%;
+}
+
+section p {
+    text-align: justify;
+    margin: 10px;
+}
+
+footer {
+    position: fixed;
+    background-color: blueviolet;
+    width: 100%;
+    height: 50px;
+    bottom: 0%;
+}
+
+footer p {
+    text-align: center;
+}

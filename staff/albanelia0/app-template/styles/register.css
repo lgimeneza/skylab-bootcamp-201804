@@ -1,0 +1,55 @@
+header {
+  display: flex;
+  justify-content: flex-end;
+  background: #7B1FA2;
+  padding-right: 20px;
+  flex-basis: 10%;
+}
+
+main {
+  display: flex;
+  background: #2d1818;
+  flex-basis: 80%;
+}
+
+form {
+  height: 100%;
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+form input {
+  padding: 15px;
+  margin: 10px;
+  background: #2d1818;
+  color: white;
+  font-size: 15px;
+  width: 40%;
+}
+
+#submit {
+  width: 20%;
+  background: #F2B23F;
+  color: white;
+}
+
+h4 {
+  width: 80px;
+  padding-right: 10px;
+}
+#remenber-me {
+  display: flex;
+  width: 20%;
+}
+
+.input {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}

@@ -1,0 +1,31 @@
+
+@import url("mobile.css") (max-width: 768px);
+@import url("desktop.css") (min-width: 768px);
+
+body, html{
+    height: 100%;
+}
+*{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+main{
+    height: 60%;
+    
+}
+nav, aside, section, footer, header{
+    background-color: black;
+    color: white;
+    border : 1px solid white;
+    display: flex;
+    justify-content : center;
+    align-items : center;
+}
+header{   
+    height: 20%;
+}
+footer{
+    height: 20%;
+}
