@@ -1,5 +1,17 @@
 'use strict';
 
-var res = toCamelCase('Hello My World');
+test(function () {
+    return toCamelCase("Hello World");
+},
+    'toCamelCase("Hello World") should return "helloWorld"',
+    function (result) {
+        return result === "helloWorld";
+    });
 
-console.log('toCamelCase("Hello My World") should return "helloMyWorld"', res === "helloMyWorld", res);
+test(runWithErrorCapturing(function () {
+    return toCamelCase(5);
+}),
+    'toCamelCase(5) should throw an error',
+    function (result) {
+        return result.message === "Enter a string.";
+    });
