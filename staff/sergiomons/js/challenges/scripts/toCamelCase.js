@@ -1,7 +1,7 @@
 'use strict';
-function toCamelCase(str, func) {
+function toCamelCase(str) {
     if (typeof str !== "string")
-       throw Error('input str is not a string');
+       throw Error('input text is not a string');
        
        str=str.toLowerCase();
        var arrayWord=str.split(" ");
