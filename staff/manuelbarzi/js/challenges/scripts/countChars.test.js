@@ -21,7 +21,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         countChars(true);
     }),
     'countChars(true) should throw an error',
@@ -31,7 +31,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         countChars(1);
     }),
     'countChars(1) should throw an error',
@@ -41,7 +41,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         countChars([]);
     }),
     'countChars([]) should throw an error',
@@ -61,7 +61,7 @@ test(
 )
 
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         countChars('abracadabra', '...');
     }),
     'countChars("abracadabra", "...") should throw an error',
