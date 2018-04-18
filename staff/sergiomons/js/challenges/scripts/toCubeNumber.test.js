@@ -1,5 +1,7 @@
 'use strict'
- var outputNumElevated= cubeNumber(2);
+ var res = cube(3);
+
+ console.log('cube(3) should return 27' res === 27, res)
 
 
- console.log('outputNumElevated("2") should return 2', outputNumElevated === 8, outputNumElevated);
+ console.log('cube("[1,2,3]") should return [1,8,27]', res === 8, res);

@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * Get cube of a number.
+ * 
+ * @param {number | number} num 
+ * @param {Function} func 
+ */
 function cubeNumber(num, func) {
     if (typeof num !== 'number' && !Array.isArray(num)) {
        throw Error('input str is not a number');
