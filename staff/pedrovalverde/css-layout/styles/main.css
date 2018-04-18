@@ -1,0 +1,32 @@
+body, html{
+    height: 100%;
+}
+*{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+header{
+    background-color: cyan;
+    height: 20%;
+}
+main{
+    height: 60%;
+}
+aside{
+    background-color: red;
+    width: 30%;
+    height: 100%;
+    float: left;
+}
+section{
+    background-color: blue;
+    width: 70%;
+    height: 100%;
+    float: right;
+}
+footer{
+    height: 20%;
+    background-color: cyan;
+    float: none;
+}
