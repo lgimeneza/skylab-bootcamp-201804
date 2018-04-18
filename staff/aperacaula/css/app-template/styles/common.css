@@ -1,0 +1,110 @@
+*{
+    font-family: 'Roboto Slab', serif;
+    margin: 0%;
+}
+
+html, body{
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+header{
+    display: grid;
+    grid-template: 1fr/ 30% 70%;
+    height: 8%;
+    background-color: black;
+    padding-bottom: 1%;
+
+}
+
+#name h1{
+    font-size: 3vw;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: white;
+
+}
+
+#name, #nav-bar{
+    padding: 5%;
+    color: white;
+    display: flex;
+    background-color: black;
+}
+
+#nav-bar{
+    justify-content: space-around;
+    font-size: 2vw;
+    align-items: flex-end;
+    padding-bottom: 0%;
+    
+
+}
+
+#nav-bar a {
+    display: block;
+    color: #f2f2f2;
+    padding: 14px 16px;
+    text-decoration: none;
+    height: 3vh;
+    margin-bottom: 0%;
+}
+
+#nav-bar a:hover {
+    background-color: #B5BAC0;
+    color: black;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 80%;
+    background: url(https://prolight.co.uk/wp-content/uploads/2018/03/LEDJ46_E05.jpg) rgb(255, 255, 255, 0.5) no-repeat center center fixed ;
+    background-size: cover;
+}
+
+.button{
+    padding: 1%;
+    border-radius: 7px;
+    color: black;
+    text-decoration: none;
+    font-size: 3vh%;
+    margin-right: 4vw;
+    border: black 1px solid;
+    background-color: rgb(255, 255, 255);
+}
+
+.button:hover{
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clear: both;
+    min-height: 10%;
+    background-color: black;
+}
+
+footer a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1vw;
+    height: 10%;
+}
+
+footer img{
+    width: 35%;
+    height: auto;
+}

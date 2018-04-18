@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+body{margin:0px;width:100%;}
+h3{margin:0px;}
+
+
+header{display:flex; flex:1 auto;font-family: 'Ubuntu', sans-serif;    max-width: 1440px;margin:0 auto;}
+header > section{margin:0 auto; margin-top:10px;margin-bottom:15px;}
+#headerContact{order: 3;margin-top:15px;}
+#headerInfo {
+    order: 1;
+    margin-top: 20px;
+    color: #6b6b6b;
+    font-size: 85%;
+    display:block;
+}
+#headerLogo{order:2; margin-top:25px;}
+#headerContact ul{list-style: none;text-align: end;}
+
+#formacion {
+    margin: 0 auto;
+    font-family: ubuntu;
+    background: #f5f5f5;
+    text-align: center;
+    padding: 75px;
+    
+}
+    #formacion h3 {
+        color: #009ee3;
+        font-size: 210%;
+        /* background: #ececec; */
+        padding-bottom: 25px;
+    }
+    #formacion p{
+        max-width: 1440px;
+        margin:0 auto;
+        line-height: 40px;
+    }
+
+    #competencias {
+        margin: 0 auto;
+        font-family: ubuntu;
+        /*background: #f5f5f5;*/
+        text-align: center;
+        padding: 75px;
+        
+    }
+        #competencias h3 {
+            color: #009ee3;
+            font-size: 210%;
+            /* background: #ececec; */
+            padding-bottom: 25px;
+        }
+        #competencias p{
+            max-width: 1440px;
+            margin:0 auto;
+            line-height: 40px;
+        }
+        footer {
+            background: #009ee4;
+            
+          
+           
+        }
+        footer h3 {
+            font-size: 210%;
+            color: white;
+            display: block;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        footer p {
+            margin: 30px;
+            order: 2;
+            font-size: 105%;
+            line-height: 25px;
+            max-width: 1090px;
+        }
+        footer section{background: #009ee4;margin: 0 auto;
+            font-family: ubuntu;
+            max-width:1440px;
+            text-align: left;
+            padding: 75px;}
+        footer img{
+            order:1;
+            
+        }
+        #flexFooter {
+            display: flex;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+
+@media(max-width:728px){
+    #headerContact{
+        display:none;
+    }
+    #headerInfo{
+        display:none;
+    }
+    body{
+        width:100%; 
+    }
+    #headerLogo img{
+        padding:30px;
+        width:80%;
+    }
+    footer img{
+        max-width:200px;
+        height:100px;
+        margin:0 auto;
+
+    }
+    footer section{
+        padding:40px;
+    }
+    #competencias{
+        padding:40px;
+    }
+    #formacion{
+        padding:40px;
+        
+    }
+    footer p{
+        text-align: center;
+
+    }
+    footer article{
+        flex-direction: column;
+    }
+}

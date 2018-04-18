@@ -1,0 +1,12 @@
+section{
+text-align: center
+}
+
+section img{
+ border-radius: 5px;  
+ width: 20%; 
+}
+
+section p{
+    text-align: justify
+    }
