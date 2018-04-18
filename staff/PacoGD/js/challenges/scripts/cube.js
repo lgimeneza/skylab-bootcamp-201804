@@ -21,7 +21,7 @@ function cube(num) {
 
     for (var i = 0; i< num.length;i++){
 
-        if(typeof num[i] !== 'number') throw Error ('input array is not a number at index'+i);
+        if(typeof num[i] !== 'number') throw Error ('input array is not a number at index '+i);
 
     }
     var res =[];
