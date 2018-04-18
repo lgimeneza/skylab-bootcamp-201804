@@ -1,0 +1,11 @@
+nav, aside {
+    float:left;
+    height: 100%;
+    width: 20%;
+}
+
+section {
+    float:left;
+    height: 100%;
+    width: 60%;
+}
