@@ -1,40 +1,52 @@
 'use strict';
 
-var array = [1, 2, 3];
+var input = [1, 2, 3];
+var output=[];
 
-console.log("forEach: normal use");
-array.forEach(function(elem,i,array){
-    console.log(elem,i,array)   
+
+test(function(){
+     foreach(input,
+    function(value){
+        output.push(value);
+    });
+},
+"forEach(input, function(elem, i, input) { console.log(elem, i, input) }) should fulfill output with values from input",
+function(result){
+
+    return result = input.toString() === output.toString();
+    
 });
 
 
-console.log("forEach: function own");
-foreach(array, function (elem, i, array) { console.log(elem, i, array) });
-
-var error;
-
-try {
+test(withErrorCapturing(function(){
     foreach();
-} catch (err) {
-    error = err;    
-}finally{
-    console.log('foreach() without arguments should thorw an error,', error !==undefined,error)
-}
+}),
+"forEach() without arguments should throw an error",
+function(result){
+   return result.message === "input arr is not an array";
+   
+});
+
+test(withErrorCapturing(function(){
+    foreach(undefined,
+    function(elem,i,input){
+        output.push(v);
+    });
+}),
+'forEach(undefined, function(elem, i, input) { output.push(v) }) without first argument should throw an error',
+function(result){
+   return result.message === "input arr is not an array";
+   
+});
 
 
-try {
-    foreach(1, function(elem,i,array) {  console.log(elem, i, array) });
-} catch (err) {
-    error = err;    
-}finally{
-    console.log('foreach(1,  function(elem,i,array) {  console.log(elem, i, array) }) whit first argument as number should thorw an error,', error !==undefined,error)
-}
+test(withErrorCapturing(function(){
+    foreach(input);
+}),
+'forEach(input) without second argument should throw an error',
+function(result){
+    return result.message === 'input handler is not a function';
+   
+});
 
-try {
-    foreach([]);
-} catch (err) {
-    error = err;    
-}finally{
-    console.log('foreach([]) without second argument(function) should thorw an error,', error !==undefined,error)
-}
 

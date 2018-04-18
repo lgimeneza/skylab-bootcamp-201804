@@ -18,7 +18,7 @@ test(function(){
  });
 
 
-test(runWithErrorCapturing(function(){
+test(withErrorCapturing(function(){
     cube(true);
 }),
  "cube('') should throw an error",
@@ -27,7 +27,7 @@ test(runWithErrorCapturing(function(){
  });
 
 
-test(runWithErrorCapturing(function(){
+test(withErrorCapturing(function(){
         cube('');
     }),
      "cube('') should throw an error",

@@ -16,7 +16,7 @@ test(function () {
     });
 
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     return countChars(true);
 }), 'countChars(true) should return an error',
     function (result) {
@@ -25,7 +25,7 @@ test(runWithErrorCapturing(function () {
 
 
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     return countChars([]);
 }), 'countChars([]) should return an error',
     function (result) {
@@ -33,7 +33,7 @@ test(runWithErrorCapturing(function () {
     });
 
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     return countChars([]);
 }), 'countChars([]) should return an error',
     function (result) {
@@ -49,7 +49,7 @@ test(function () {
     });
 
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     return countChars('abracadabra', '...');
 }), 'countChars("abracadabra", "...") should throw an error',
     function (result) {

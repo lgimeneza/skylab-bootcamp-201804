@@ -9,7 +9,7 @@ test(function () {
     });
 
 
-test( runWithErrorCapturing(function () {
+test( withErrorCapturing(function () {
     return countWords(2);
 }), 'CountWords(2) should return error',
     function (result) {
@@ -17,7 +17,7 @@ test( runWithErrorCapturing(function () {
     });
 
 
-test( runWithErrorCapturing(function () {
+test( withErrorCapturing(function () {
     return countWords(true);
 }), 'CountWords(true) should return error',
     function (result) {
@@ -25,7 +25,7 @@ test( runWithErrorCapturing(function () {
     });
 
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     return countWords([]);
 }), 'CountWords([]) should return error',
     function (result) {
