@@ -55,7 +55,7 @@ function concat(text) {
 
 // what happens if...
 
-concat(1).concat(2).concat(3).toString().concat(4); // -> "1 2 34"
+concat(1).concat(2).concat(3).toString().concat(4); // -> "1 2 34" -> 3 and 4 are concatenated in a different manner! (no space in-between)
 
 // why is this happening!? mmm... may doc about String.prototype.concat() help? ;)
 
