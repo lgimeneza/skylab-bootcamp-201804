@@ -16,7 +16,7 @@ test(function () {
         return result.toString() === [1, 8, 27].toString();
     });
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     cube(true);
 }),
     'cube(true) should throw an error',
@@ -24,7 +24,7 @@ test(runWithErrorCapturing(function () {
         return result.message === 'input num is not a number, neither an array';
     });
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     cube([1, 2, 'a']);
 }),
     'cube([1, 2, "a"]) should throw an error',
