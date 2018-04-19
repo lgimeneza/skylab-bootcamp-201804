@@ -18,7 +18,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(
+    withErrorCapturing(
         function() {
             toReduce();
         }
@@ -30,7 +30,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(
+    withErrorCapturing(
         function() {
             toReduce(undefined, function(accum, valueCurrent) {
               if (valueCurrent.price > 10){
@@ -47,7 +47,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(
+    withErrorCapturing(
         function() {
             toReduce(a);
         }

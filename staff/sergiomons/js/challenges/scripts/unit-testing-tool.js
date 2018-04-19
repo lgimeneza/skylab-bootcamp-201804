@@ -9,7 +9,7 @@
  * 
  * @author manuelbarzi
  * 
- * @version 2.1.0
+ * @version 3.0.0
  */
 function test(testCase, message, check) {
     try {
@@ -29,7 +29,7 @@ function test(testCase, message, check) {
  * 
  * @returns {function} - An anonymous function that wraps the running of the test case in a secure manner (try-catch).
  */
-function runWithErrorCapturing(testCase) {
+function withErrorCapturing(testCase) {
     return function () {
         var error;
 

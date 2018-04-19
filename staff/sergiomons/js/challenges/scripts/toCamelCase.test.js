@@ -9,7 +9,7 @@ test(function () {
     });
 
     test(
-        runWithErrorCapturing(function() {
+        withErrorCapturing(function() {
             toCamelCase(true);
         }),
         'toCamelCase(true) should throw an error',
@@ -19,7 +19,7 @@ test(function () {
     );
     
     test(
-        runWithErrorCapturing(function() {
+        withErrorCapturing(function() {
             toCamelCase(1);
         }),
         'toCamelCase(1) should throw an error',
@@ -29,7 +29,7 @@ test(function () {
     );
     
     test(
-        runWithErrorCapturing(function() {
+        withErrorCapturing(function() {
             toCamelCase([]);
         }),
         'toCamelCase([]) should throw an error',

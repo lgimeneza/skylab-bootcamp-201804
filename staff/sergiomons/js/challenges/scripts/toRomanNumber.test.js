@@ -9,7 +9,7 @@ test(function () {
     });
     
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         toRomanNumbers(true);
     }),
     'toRomanNumbers(true) should throw an error',
@@ -19,7 +19,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         toRomanNumbers("string");
     }),
     'toRomanNumbers("string") should throw an error',
@@ -29,7 +29,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         toRomanNumbers([]);
     }),
     'toRomanNumbers([]) should throw an error',

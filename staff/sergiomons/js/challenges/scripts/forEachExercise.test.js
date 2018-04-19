@@ -5,7 +5,8 @@ var output = [];
 
 test(
     function() {
-        return forEach(input, function(v) { output.push(v) });
+        forEach(input, function(v) { output.push(v) });
+        return output;
     },
     'forEach(input, function(v) { output.push(v) }) should fulfill output with values from input',
     function(result) {
@@ -14,7 +15,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(
+    withErrorCapturing(
         function() {
             forEach();
         }
@@ -26,7 +27,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(
+    withErrorCapturing(
         function() {
             forEach(undefined, function(v) { output.push(v) });
         }
@@ -38,7 +39,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(
+    withErrorCapturing(
         function() {
             forEach(input);
         }

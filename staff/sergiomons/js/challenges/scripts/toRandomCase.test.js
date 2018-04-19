@@ -11,7 +11,7 @@ test(function () {
     });
     
     test(
-        runWithErrorCapturing(function() {
+        withErrorCapturing(function() {
             toRandomCase(true);
         }),
         'toRandomCase(true) should throw an error',
@@ -21,7 +21,7 @@ test(function () {
     );
     
     test(
-        runWithErrorCapturing(function() {
+        withErrorCapturing(function() {
             toRandomCase(1);
         }),
         'toRandomCase(1) should throw an error',
@@ -31,7 +31,7 @@ test(function () {
     );
     
     test(
-        runWithErrorCapturing(function() {
+        withErrorCapturing(function() {
             toRandomCase([]);
         }),
         'toRandomCase([]) should throw an error',
