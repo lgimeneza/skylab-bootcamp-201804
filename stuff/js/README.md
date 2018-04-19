@@ -2,15 +2,15 @@
 
 ```js
 function filter(arr, func) {
-     var res = []
+     var res = [];
 
      for (var i = 0; i < arr.length; i++) {
-         var val = arr[i]
+         var val = arr[i];
 
-         if (func(val)) res.push(val)
+         if (func(val)) res.push(val);
      }
 
-    return res
+    return res;
 }
 ```
 
@@ -21,14 +21,14 @@ concat(1).concat(2).toString(); // -> "1 2"
 
 function concat(text) {
 	return {
-		concat: function(text2) {
+	    concat: function(text2) {
 			return {
                 toString: function() {
                     return text + ' ' + text2;
-                }
-            }
-        },
-    }
+                }                
+            };
+        }
+    };
 }
 
 // what if requiring to concat a variable number of times in one statement?
@@ -50,7 +50,7 @@ function concat(text) {
 		toString: function() {
 			return accum;
         }
-    }
+    };
 }
 
 // what happens if...
@@ -87,8 +87,8 @@ var funB;
 
 // NOTE: as wtf() is defined each one in its own scope, they do not collide 👍
 
-funA('hola')
+funA('hola');
 "hola!!!"
-funB('hola')
+funB('hola');
 "hola???"
 ```
