@@ -1,6 +1,20 @@
 'use strict';
 
-var res= toCamelCase('Hello My World');
+test (function(){
+    return toCamelCase('Hello My World')
+},
+    'toCamelCase("Hello My World") should return helloMyWorld',
+    function (result) {
+        return result === 'helloMyWorld';
+    }
 
-console.log('toCamelCase("Hello My World") should return "helloMyWorld"', res === "helloMyWorld", res);
+);
 
+test(runWithErrorCapturing(function(){
+    toCamelCase(true);
+}),
+    'toCamelCase("true") should throw an error',
+    function (result) {
+        return result.message === 'Input is not a string';
+    }
+);
