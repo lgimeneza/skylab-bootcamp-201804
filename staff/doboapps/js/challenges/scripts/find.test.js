@@ -1,13 +1,12 @@
 'use strict';
 
-var input = [1,2,3,4,5,6,7,8];
-var output = 5;
+ var input = [1,2,3,4,5,6,7,8];
+ var output = 5;
 
-var value =find(input,function(element){
-    
+
+var value =find(input,function(element){    
     return  element>4;
 });
-
 console.log(value);
 
 
@@ -21,6 +20,19 @@ test(function(){
     "find(input, function(element) { return element>3) }) the input should 5",
     function(result){
         return result === output;
+    }
+);
+
+
+test(function(){
+    return find(input,function(element){
+
+                return  element>100;
+
+    })},
+    "find(input, function(element) { return element>100) }) the input should undefined",
+    function(result){
+        return result === undefined;
     }
 );
 
