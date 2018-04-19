@@ -6,17 +6,16 @@
  * @example
  *
  * var res = numbersToCube(2) // -> 8
- *
  * var res = numbersToCube([1, 2, 3]) // --> [1, 8, 27]
  *
  *
- * @param {number|number[]} val - Initial number or Initial array of numbers given.
+ * @param {number|number[]} val - Initial number or Initial array of given numbers.
  *
  *
- * @throws {Error} - If input is not a number or an array
- * @throws {Error} - If the index of array contains a non number input.
+ * @throws {Error} - Input is not a number or an array.
+ * @throws {Error} - The index of a given array contains a non number valor.
  *
- * @returns {number|number[]} - The cube of the input number or array of numbers;
+ * @returns {number|number[]} - The cube of the input number or array of numbers.
  */
 
 function numbersToCube(val) {
@@ -31,7 +30,7 @@ function numbersToCube(val) {
   var newVal = [];
   for (var i = 0; i < val.length; i++) {
     if (typeof val[i] !== "number") {
-      throw Error("Input array is not a number in the index" + i);
+      throw Error("Input array is not a number in the index " + i);
     }
     newVal[i] = cube(val[i]);
   }
@@ -39,6 +38,6 @@ function numbersToCube(val) {
 }
 
 function cube(n) {
-  return n ** 3; //same that n*n*n, cube formula
+  return n ** 3; //same that n*n*n, cube's formula
 }
 

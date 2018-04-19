@@ -1,8 +1,8 @@
 "use strict";
 
 function forEach(arr, myHandler) {
-  if (typeof arr !== "object") {
-    throw Error("It is not an object or array!");
+  if (!arr instanceof Array) {
+    throw Error("The first input is not an array!");
   }
   var index = 0;
   var iterator = function() {

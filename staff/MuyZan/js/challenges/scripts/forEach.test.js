@@ -1,27 +1,31 @@
 "use strict";
 
-var myArray = [1, 2, 3];
-var myArray2 = [5, 4, 3];
-var myNum = 545;
-var myName = "zan";
-var myConsole = function(v,i,arr){ console.log(v,i,arr)}
+/**** variables */
 
-forEach(myArray, myConsole);
-
-var input = [1, 2, 3];
+var myConsole = function(v,i,arr){ console.log(v,i,arr)};
 var output = []; 
+var myPush = function(v) { output.push(v) };
 
-forEach(input, function(v) { output.push(v) });
+/************Test****************/
 
-console.log('forEach(input, function(v) { output.push(v) }) should fulfill output with values from input', input.toString() === output.toString(), output);
+test(function () {
+    return forEach([1, 2, 3], myPush);
+},
+    'forEach(input, function(v) { output.push(v) }) should fulfill output with values from input',
+    function (result) {
+        return [1, 2, 3].toString() === output.toString();
+    }
+)
+
+/************Error Handling****************/
+
+test(withErrorCapturing(function () {
+    forEach("zan", myConsole);
+}),
+    'forEach("zan", myConsole) should throw an error',
+    function (result) {
+        return result.message === 'The first input is not an array!';
+    })
 
 
-var error;
-try {
-    error = forEach(myName, myConsole);
-} catch (err) {
-    error = err;
-}finally{
-  console.log("toRandomCase(not an object) should launch and error", error !== undefined, error);
-}
 
