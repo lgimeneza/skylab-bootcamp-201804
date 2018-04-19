@@ -1,11 +1,6 @@
-
+# higher-order function
 
 ```js
-function forEach(arr, func) {
-	for (var i = 0; i < arr.length; i++) func(arr[i])
-}
-
-
 function filter(arr, func) {
      var res = []
 
@@ -17,28 +12,24 @@ function filter(arr, func) {
 
     return res
 }
+```
 
-function find(arr, func) {
-	for (var i=0; i < arr.length; i++) {
-        var val = arr[i]
+# scope & context
 
-		if (func(val)) return val
-    }
-}
+```js
+function concat(text) {
+	var accum = text;
 
-function find(arr, func) {
-    var res
+	return {
+		concat: function(text) {
+			accum = accum + text;
 
-	for (var i=0; i < arr.length; i++) {
-        var val = arr[i]
+			return this;
+        },
 
-		if (func(val)) {
-            res = val
-            
-			break
+		toString: function() {
+			return accum;
         }
     }
- 
-    return res
 }
 ```
