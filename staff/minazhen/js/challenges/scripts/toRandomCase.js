@@ -1,12 +1,30 @@
-var ckRand = [];
+"use strict";
+
+/**
+ * Changes each letter randomly between lowe case and upper case.
+ * 
+ * @example
+ * 
+ * var r = toRandomCase('ab'); //-> "aB" or "ab" or "AB" or "Ab"
+ * 
+ * @param {string} str - The text to randomly change the letters.
+ * 
+ * @throws {Error} - If input str is not a string.
+ * 
+ * @returns {string} - New string with random lower/upper case letters. 
+ */
+
 
 function toRandomCase(str) {
-    ckRand = [];
+    
     if (typeof str !== 'string') {
-        throw Error(" input " + str + " is not a valid string");
+        throw Error("Input is not a valid string");
     }
+    
+    var ckRand = [];
     var string = str;
     var letters = "";
+
     for (var i = 0; i < string.length; i++){
         var l = string.charAt(i);
         if (l.match(/[A-z]/)) {
@@ -20,4 +38,3 @@ function toRandomCase(str) {
     return letters;
 }
 
-"use strict"
