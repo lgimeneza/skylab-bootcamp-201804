@@ -1,17 +1,24 @@
 "use strict";
-var count= cube(3);
-console.log("countWords(count) should return 27 ", count===27, count);
 
-count= cube([1,2,3]);
-console.log("countWords(count) should return [1,8,27] ", count.toString()===[1,8,27].toString(), count);
+test(function(){
+    return cube(3)
+},'cube(3) should return 27',
+function(obtained_in_try){
+    return obtained_in_try===27
+})
 
-var error;
+test(runWithErrorCapturing(function(){
+    return cube('aaa');
+}),'cube(aaa) should launch an error',
+function(obtained_in_try){
+    return (obtained_in_try.message === 'input is wrong type' || obtained_in_try.message === 'input array is not a number at index ');
+})
 
-try {
-    count= cube([1,2,'f']);
-} catch (err) {
-    error=err;
-    
-}finally{
-    console.log("countWords(count) should launch an error", error!== undefined, error)
+test(function(){
+    return cube([1,2,3])
+}, 'cube([1,2,3]) should return [1,8,27]',
+function(obtained_in_try){
+    return obtained_in_try.toString() === [1,8,27].toString();
 }
+)
+

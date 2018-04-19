@@ -5,7 +5,7 @@ function cube(numbers){
         if (numbers instanceof Array){
             for(var i=0;i<numbers.length;i++){
                 if (typeof numbers[i] !== 'number'){
-                    throw Error('input array is not a number at index '+i)
+                    throw Error('input array is not a number at index ')
                 }
                 numbers[i]= numbers[i]**3;
             }
