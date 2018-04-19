@@ -12,23 +12,6 @@ return accum + v.price;
 return accum;
 }, 0); // -> 30.49*/
 
-'use strict'
-
-
-
-/*
-function reduce (a, v){
-     var accum= 0;
-    for( var i = 0; i < a.length; i++){
-        accum=accum+a[i];
-        if( a[i] === v){
-            break;
-        } 
-    }
-    
-
-}
-*/
 'use strict';
 
 

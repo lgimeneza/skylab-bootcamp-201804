@@ -1,24 +1,37 @@
 'use strict';
-/*
-create a function that works as Array.prototype.map(). implement it using the traditional "for (var i = ...)" loop.
+/**
+ * DOCUMENTACION
+ * 
+ * Maps values from an input array into a new array, operating on each of them with the given handler.
+ * 
+ * @example
+ * 
+ * var input = [1,2,3];
+ * 
+ * map(input, function(v){ return v**2}); // -> [1,4,9];
+ * 
+ * @param {Array} - the input array.
+ * @param {Function} handler - The handler function that operates on each value of the input array.
+ * 
+ * @throws {Error} - If input array and/or handler is not valid.
+ * 
+ *@returns {Array} - The resulting new array, after operating on each value of the input array.
+ * 
+ */
 
-demo:
-
-var names = ['john', 'mary', 'jack'];
-
-map(names, function(v) { return v.toUpperCase(); });
-// -> output
-['JOHN', 'MARY', 'JACK']
-*/
-
-function map(array, handler){
+function map(arr, handler){
+    
+    if (!(arr instanceof Array)){
+        throw Error ('input array is not valid');
+    }
+    if (!(handler instanceof Function)){
+        throw Error ('input handler is not valid');
+    }
+    
     var result =[];
 
-   
-for (var i=0; i< array.lenght; i++){
-        result.push(handler(array[i]);
-        }
-
+    for (var i=0; i< arr.lenght; i++){
+    result.push(handler(arr[i]));
+    }   
     return result;
-
 }
