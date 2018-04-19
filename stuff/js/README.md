@@ -33,3 +33,29 @@ function concat(text) {
     }
 }
 ```
+
+# self-invoking function
+
+```js
+var funA;
+(function() {
+	funA = function(text) { return wtf(text); }
+
+	function wtf(text) { return text + '!!!'; }
+})();
+
+
+var funB;
+(function() {
+	funB = function(text) { return wtf(text); }
+
+	function wtf(text) { return text + '???'; }
+})();
+
+// NOTE: as wtf() is defined each one in its own scope, they do not collide 👍
+
+funA('hola')
+"hola!!!"
+funB('hola')
+"hola???"
+```
