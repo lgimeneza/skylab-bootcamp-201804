@@ -92,3 +92,60 @@ funA('hola');
 funB('hola');
 "hola???"
 ```
+
+# prototype inheritance
+
+```js
+function Person(name, surname) {
+	this.name = name;
+	this.surname = surname;
+}
+
+Person.prototype.salute = function() { return 'hello, i am ' + this.name };
+
+function Woman(name, surname) {
+	Person.call(this, name, surname);
+}
+
+Woman.prototype = new Person();
+Woman.prototype.gender = 'female';
+
+function Man(name, surname) {
+	Person.call(this, name, surname);
+}
+
+Man.prototype = new Person();
+Man.prototype.gender = 'male';
+
+var persons = [
+	new Man('john', 'doe'),
+	new Woman('mary', 'wayne'),
+	new Man('donpe', 'pito'),
+	new Man('donjo', 'se'),
+	new Woman('anna', 'o')
+];
+
+function paintWomen(persons) {
+	var filtered = persons.filter(function(p) { return p.gender === 'female'; });
+
+	filtered.forEach(console.log);
+}
+
+paintWomen(persons);
+// -> output:
+Woman {name: "mary", surname: "wayne"} 0 (2) [Woman, Woman]
+Woman {name: "anna", surname: "o"} 1 (2) [Woman, Woman]
+
+// another way to filter women
+
+function paintWomen(persons) {
+	var filtered = persons.filter(function(p) { return p instanceof Woman; });
+
+	filtered.forEach(console.log);
+}
+
+paintWomen(persons);
+// -> output:
+Woman {name: "mary", surname: "wayne"} 0 (2) [Woman, Woman]
+Woman {name: "anna", surname: "o"} 1 (2) [Woman, Woman]
+```
