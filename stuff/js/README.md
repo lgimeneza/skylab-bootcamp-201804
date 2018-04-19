@@ -93,6 +93,10 @@ funB('hola');
 "hola???"
 ```
 
+# constructor function & prototype
+
+![constructor function & prototype](images/Array.prototype.forEach_var-vs-val.jpg)
+
 # prototype inheritance
 
 ```js
