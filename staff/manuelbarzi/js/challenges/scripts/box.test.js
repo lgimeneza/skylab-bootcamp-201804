@@ -42,7 +42,7 @@ test(
 
         return box.retrieve('456');
     },
-    'box.updatePassword() should replace password correctly with new one and retrieve succeed',
+    'box.updatePassword() should replace password with new one and box.retrieve() recover the secret correctly',
     function(result) {
         return result === 'my secret';
     }
