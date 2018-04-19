@@ -1,6 +1,11 @@
 'use strict';
 function toCamelCase(str){
-    if(typeof str === "String"){
+
+    if (typeof str !== 'string'){
+        throw Error ('Input is not a string');
+    }
+
+    if(typeof str === "string"){
         str=str.toLowerCase();
         var arr=str.split(" ");
         for (var i=1; i<arr.length; i++) {
