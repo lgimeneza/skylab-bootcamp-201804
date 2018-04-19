@@ -18,4 +18,3 @@ test(runWithErrorCapturing(function(){
         return result.message === 'Input is not a string';
     }
 );
-
