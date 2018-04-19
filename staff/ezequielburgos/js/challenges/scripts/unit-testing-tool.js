@@ -1,32 +1,80 @@
 'use strict';
 
 /**
+ * Runs a test case unit.
  * 
- * @param {function} testCase 
- * @param {} message 
- * @param {*} check 
+ * @example
+ * 
+ * // normal test
+ * 
+ * function fun() {
+ *      return 'Hello, World!';
+ * }
+ * 
+ * test(
+ *      function() {
+ *          return fun();
+ *      },
+ * 
+ *      'fun() should return "Hello, World!"',
+ * 
+ *      function(result) {
+ *          return result === 'Hello, World!';
+ *      }
+ * );
+ * 
+ * // test with error capturing
+ * 
+ * function notFun() {
+ *      throw Error('CRASH!');
+ * }
+ * 
+ * test(
+ *      withErrorCapturing(
+ *          function() {
+ *              notFun();
+ *          }
+ *      ),
+ * 
+ *      'notFun() should throw error with message "CRASH!"',
+ * 
+ *      function(result) {
+ *          return result && result.message === 'CRASH!';
+ *      }
+ * );
+ * 
+ * @param {function} testCase - The test case to run.
+ * @param {string} description - The description of the test case.
+ * @param {function} check - The function that checks the results of the test case.
+ * 
+ * @author manuelbarzi
+ * 
+ * @version 3.0.0
  */
-function test(testCase, message, check) {
+function test(testCase, description, check) {
     try {
         var res = testCase();
 
-        console.log(message, check(res), res);
+        check(res) ? console.log('TEST', description, 'TRUE', '->', res) :
+            console.warn('TEST', description, 'FALSE', '->', res);
     } catch (err) {
-        console.error(message, 'FAILED', err);
+        console.error('TEST', description, 'ERROR', '->', err);
     }
 }
 
-
 /**
+ * Wraps a test case with an error capturing function.
  * 
- * @param {*} func 
+ * @param {function} testCase - The test case to run.
+ * 
+ * @returns {function} - An anonymous function that wraps the execution of the test case in a secure manner (try-catch), captures the error and returns it.
  */
-function runWithErrorCapturing(func) {
+function withErrorCapturing(testCase) {
     return function () {
         var error;
 
         try {
-            func();
+            testCase();
         } catch (err) {
             error = err;
         }
@@ -34,72 +82,3 @@ function runWithErrorCapturing(func) {
         return error;
     };
 }
-
-
-
-
-
-
-
-// 'use strict';
-
-// /**
-//  * Runs a test case unit.
-//  * 
-//  * @example
-//  * 
-//  * function fun() {
-//  *      return 'Hello, World!';
-//  * }
-//  * 
-//  * test(
-//  *      function() {
-//  *          return fun();
-//  *      },
-//  * 
-//  *      'fun() should return "Hello, World!"',
-//  * 
-//  *      function(result) {
-//  *          return result === 'Hello, World!';
-//  *      }
-//  * );
-//  * 
-//  * @param {function} testCase - The test case to run.
-//  * @param {string} message - The description of the test.
-//  * @param {function} check - The function that checks the results of the test.
-//  * 
-//  * @author manuelbarzi
-//  * 
-//  * @version 2.1.1
-//  */
-// function test(testCase, message, check) {
-//     try {
-//         var res = testCase();
-
-//         check(res) ? console.log(message, 'TRUE', '->', res) :
-//             console.warn(message, 'FALSE', '->', res);
-//     } catch (err) {
-//         console.error(message, 'ERROR', '->', err);
-//     }
-// }
-
-// /**
-//  * Wraps a test case with error capturing function.
-//  * 
-//  * @param {function} testCase - The test case to run.
-//  * 
-//  * @returns {function} - An anonymous function that wraps the running of the test case in a secure manner (try-catch).
-//  */
-// function runWithErrorCapturing(testCase) {
-//     return function () {
-//         var error;
-
-//         try {
-//             testCase();
-//         } catch (err) {
-//             error = err;
-//         }
-
-//         return error;
-//     };
-// }
