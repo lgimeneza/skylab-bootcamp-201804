@@ -5,11 +5,13 @@ var output = [];
 
 test(
     function() {
-        return forEach(input, function(v) { output.push(v) });
+        forEach(input, function(v) { output.push(v) });
+
+        return output;
     },
-    'forEach(input, function(v) { output.push(v) }) should fulfill output with values from input',
+    'forEach(input, function(v) { output.push(v) }) should fulfill output with input values [' + input + ']',
     function(result) {
-        return input.toString() === output.toString();
+        return input.toString() === result.toString();
     }
 );
 
