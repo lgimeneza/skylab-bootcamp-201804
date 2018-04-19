@@ -61,6 +61,8 @@ concat(1).concat(2).concat(3).toString().concat(4); // -> "1 2 34"
 
 ```
 
+[Understanding Scope and Context in JavaScript](http://ryanmorr.com/understanding-scope-and-context-in-javascript/)
+
 # chaining methods (aka method chaining or chainable or cascading)
 
 ```js
