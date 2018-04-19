@@ -1,15 +1,32 @@
 "use strict";
 
+/**
+ * Randomizes the upper and lower case of a given text entry. (string)
+ *
+ * @example
+ *
+ * var result = toRandomCase('hello world') // -> "HEllO WoRld"
+ * var result = toRandomCase('hello world') // -> "heLLO woRLd"
+ * var result = toRandomCase('hello world') // -> "hElLo WOrlD"
+ *
+ * @param {string} str - The text to randomize the words from.
+ *
+ * @throws {Error} - If input text is not a string.
+ *
+ * @returns {string} - The randomized upper and lower case letter-text.
+ */
+
 function toRandomCase(str) {
-  var res;
+  var res = "";
+
   if (typeof str !== "string") {
-    throw Error("It is not a string!");
+    throw Error("input is not a string");
   }
 
   for (var i = 0; i < str.length; i++) {
     var oldLetter = str[i];
     var newLetter = toUpperLowerCase(oldLetter);
-    res = str.replace(oldLetter, newLetter);
+    res += newLetter;
   }
   return res;
 }
@@ -22,3 +39,6 @@ function toUpperLowerCase(n) {
     return (n = n.toLowerCase());
   }
 }
+
+
+

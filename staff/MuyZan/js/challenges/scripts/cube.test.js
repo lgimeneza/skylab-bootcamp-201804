@@ -1,58 +1,44 @@
 "use strict";
 
+/**************** Test ****************/
 
+test(function () {
+  return numbersToCube(3);
+},
+  'numbersToCube(3) should return 27',
+  function (result) {
+      return result === 27;
+  })
 
-
-var num = numbersToCube(3);
-
-console.log('numberToCube("3") should return 27', num === 27, num);
-
-
-/*zan note: para poder comparar los valores, porque a = [1,2] b = [1,2] // a === b ---> false. Porque compara las posiciones 
-en memoria, no los valores.
-c = a / a === c ---> true; compara los valores.
-*/
-var num = numbersToCube([1, 2, 3]);
-var result = [1, 8, 27];
-result = result.toString();
-
-console.log(
-  "numberToCube([1, 2, 3]) should return [1, 8, 27]",
-  num.toString() === result,
-  num
-);
-
-
-function test(testCase, message, check){
-  try{
-    var res = testCase()
-    console.log(messsage, check(res), res);
-  }catch(err){
-    console.log(message, "FAILED")
+test(function () {
+  return numbersToCube([1, 2, 3]);
+},
+  'numbersToCube([1, 2, 3]) should return [1, 8, 27]',
+  function (result) {
+      return result.toString() === [1, 8, 27].toString();
   }
-}
+)
 
-test(function(){return numbersToCube(2);},'numberToCube("2") should return 8', function(result){return result === 8})
+/********** Error Handling **********/
+
+test(withErrorCapturing(function () {
+  numbersToCube(true);
+}),
+  'numbersToCube(true) should throw an error',
+  function (result) {
+      return result.message === "It is not a number or array!";
+  })
+
+test(withErrorCapturing(function () {
+  numbersToCube([1, 2, 'a']);
+}),
+  'numbersToCube([1, 2, "a"]) should throw an error',
+  function (result) {  
+      return result.message === "Input array is not a number in the index 2";
+  })
 
 
-function testThrowError(testCase, message){
 
-  var error;
-
-  try{
-    testCase()
-  }catch(err){
-    error = err;
-  }finally{
-    console.log(message, error!== undefined, error);
-  }
-}
-
-testThrowError(function(){numbersToCube("casa")}, "numbersToCube('casa') should launch and error") 
-//nota zan: una función anónima pasa como parámetro otra función, que será lanzada cuando se la declare dentro de la primera
-//Sino la encierro se ejecutaría  al llamarla antes que el testThrow.
-
-testThrowError(function(){numbersToCube([1, 5, "casa", 8])}, "numbersToCube([1,5,'casa',8]) should launch and error") 
 
 
 
