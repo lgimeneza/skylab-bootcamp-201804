@@ -15,6 +15,7 @@
  * @returns {string} - The camelCased format text.
  */
 
+ 
  function toCamelCase(str) {
   if (typeof str === "string") {
     var val = str.split(" ");
@@ -29,5 +30,4 @@
   }
   throw Error("input is not a string");
 }
-
 
