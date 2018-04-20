@@ -27,6 +27,12 @@ if(typeof Array.prototype.wrap !== 'function') {
 
         if (typeof right !== 'string') throw Error('input right is not valid');
 
-        return this.map(function(v) { return left + v + right; });
+        //return this.map(function(v) { return left + v + right; }); // WARN! what if this function does not exists neither? 
+
+        var res = [];
+
+        for (var i = 0; i < this.length; i++) res.push(left + this[i] + right);
+
+        return res;
     };
 }
