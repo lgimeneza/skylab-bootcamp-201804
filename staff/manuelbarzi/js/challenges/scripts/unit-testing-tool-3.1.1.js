@@ -49,7 +49,7 @@
  * 
  * @author manuelbarzi
  * 
- * @version 3.1.0
+ * @version 3.1.1
  */
 function test(testCase, description, check) {
     try {
