@@ -12,7 +12,7 @@ function toCamelCase(str, func){
 
     }else {
         if (typeof func !== "function")
-        throw Error ("input is not a String");
+        throw Error ("input is not a string");
     }
 }
 

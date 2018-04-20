@@ -2,13 +2,13 @@
 
 function countWords(str, func){
     if (typeof str !=="string"){
-        throw Error ("input is not a string")
+        throw Error ('input text is not a string')
     }if(!func){
         var words= str.split(" ");
         return words.length
 
     }else {
         if (typeof func !== "function")
-        throw Error ("input is not a String");
+        throw Error ('input text is not a string');
     }
 }
