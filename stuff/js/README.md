@@ -155,3 +155,7 @@ paintWomen(persons);
 Woman {name: "mary", surname: "wayne"} 0 (2) [Woman, Woman]
 Woman {name: "anna", surname: "o"} 1 (2) [Woman, Woman]
 ```
+
+# other interesting things
+
+[Colorful console.log](https://coderwall.com/p/fskzdw/colorful-console-log)
