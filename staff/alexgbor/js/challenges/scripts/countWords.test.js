@@ -8,7 +8,7 @@ function(result) {
     return result===2;
 });
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     return countWords(true);
 }),
     'countWords(true) should throw an error.',

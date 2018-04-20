@@ -8,7 +8,7 @@ test(function () {
         return result === "helloWorld";
     });
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     return toCamelCase(5);
 }),
     'toCamelCase(5) should throw an error',

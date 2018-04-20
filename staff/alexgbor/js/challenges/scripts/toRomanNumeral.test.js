@@ -16,7 +16,7 @@ test(function () {
         return result === "VIII";
     });
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     return toRomanNumeral(true);
 }),
     'toRomanNumeral(true) should throw an error',
@@ -24,7 +24,7 @@ test(runWithErrorCapturing(function () {
         return result.message === "Insert a number, not a string.";
     });
 
-    test(runWithErrorCapturing(function () {
+    test(withErrorCapturing(function () {
         return toRomanNumeral(22);
     }),
         'toRomanNumeral(22) should throw an error',
