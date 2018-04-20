@@ -57,10 +57,10 @@ var test, withErrorCapturing;
         try {
             var res = testCase();
 
-            check(res) ? console.log('%c TEST ' + description + ' TRUE -> ' + res + ' ', 'background: green; color: white; display: block;') :
-                console.warn('TEST ' +  description + ' FALSE ->', res);
+            check(res) ? console.log('%c TEST -> ' + description + ' -> TRUE -> ', 'background: green; color: white; display: block;', res) :
+            console.log('%c TEST -> ' + description + ' -> FALSE -> ', 'background: yellow; color: black; display: block;', res);
         } catch (err) {
-            console.error('TEST ' + description + ' ERROR ->', err);
+            console.log('%c TEST -> ' + description + ' -> ERROR -> ', 'background: red; color: white; display: block;', res);
         }
     }
 

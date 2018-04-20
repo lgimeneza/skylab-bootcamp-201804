@@ -6,7 +6,7 @@ test(
     },
     'countWords("hello world") should return 2',
     function(result) {
-        return result.length === 2;
+        return result === 2;
     }
 );
 
@@ -16,7 +16,7 @@ test(
     },
     'countWords("hello    world ") - applied on text with two words and extra blank spaces - should return 2',
     function(result) {
-        return result.length === 2;
+        return result === 2;
     }
 );
 
