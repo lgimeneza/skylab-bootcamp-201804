@@ -94,7 +94,7 @@ function Man(name, surname) {
 Man.prototype = new Person();
 
 
-//
+// demos
 
 var c = new Cat('minino');
 
