@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Runs a test case unit and outputs the results in the console.
+ * Runs a test case unit and outputs the result in the console.
  * 
  * @example
  * 
