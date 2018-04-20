@@ -9,7 +9,7 @@ test(function() {
      }
 );
 
-test(runWithErrorCapturing(function() {
+test(withErrorCapturing(function() {
     return toRandomCase(1);
     }),
     "toRandomCase(1) should throw an error",
