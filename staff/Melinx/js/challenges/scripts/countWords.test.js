@@ -1,24 +1,24 @@
 'use strict';
 
-//positive-case testing:
+//positive-case OR success case testing:
 
 test(
     function() {
         return countWords("hello world you\'re a bmf ");
     },
-    'countChars("hello world you\'re a bmf") should return 5',
+    'countWords("hello world you\'re a bmf") should return 6',
     function(result) {
-        return result === 5;
+        return result === 6;
     }
 );
 
-// fail-case testing:
+// fail-case OR error-case testing:
 
 test(
     runWithErrorCapturing(function() {
-        countChars(true);
+        countWords(true);
     }),
-    'countChars(true) should throw an error',
+    'countWords(true) should throw an error',
     function(result) {
         return result.message === 'input text is not a string';
     }
@@ -26,24 +26,11 @@ test(
 
 test(
     runWithErrorCapturing(function() {
-        countChars(1);
+        countWords(1);
     }),
-    'countChars(1) should throw an error',
+    'countWords(1) should throw an error',
     function(result) {
         return result.message === 'input text is not a string';
     }
 );
-
-
-
-//TESTING --- queremos q el error esté definido, si nos da undefined significa que no ha captado el error. antes de cada try-catch reinicializamos el error a undefined,
-
-error = undefined;
-
-try{
-    count=countWords(true);
-} catch(err){
-    error = err;
-    console.log('countWords(true) should throw an error', err !== undefined, err);
-}
 

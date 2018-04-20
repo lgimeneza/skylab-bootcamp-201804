@@ -32,7 +32,7 @@ function cube(num) {
     }
     var res = [];
     for (var i = 0; i < num.length; i++) {
-        var val = num[i]; // declare val to avoi d num[i] **3;
+        var val = num[i]; // declare val to avoid num[i] **3;
         res[i] = val ** 3;
     }
     return res;
