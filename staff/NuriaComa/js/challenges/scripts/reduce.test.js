@@ -6,7 +6,7 @@ var a = [{ name: 'jeans', price: 10.5 }, { name: 't-shirt', price: 5.99 }, { nam
 
 test(
   function(){
-      return toReduce();
+      return toReduce(4);
   },
   'to Roman Numbers(2) should return IV',
   function(result){

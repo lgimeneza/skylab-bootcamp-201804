@@ -16,11 +16,12 @@ test(
     function(){
         return romanNum(4);
     },
-    'to Roman Numbers(2) should return IV',
+    'to Roman Numbers(4) should return IV',
     function(result){
         return result === "IV";
     }
 );
+
 test(
     function(){
         return romanNum(6);
@@ -35,7 +36,7 @@ test(
     function(){
         return romanNum(9);
     },
-    'to Roman Numbers(6) should return IX',
+    'to Roman Numbers(9) should return IX',
     function(result){
         return result === "IX";
     }

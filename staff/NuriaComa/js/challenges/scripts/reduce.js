@@ -1,6 +1,7 @@
 "use strict";
 
 
+
 function toReduce(arr, handler, init) {
 	 
 	var result=0;
