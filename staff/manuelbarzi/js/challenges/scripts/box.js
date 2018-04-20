@@ -17,7 +17,7 @@ var box = (function () {
          * @throws {Error} - If password is invalid or incorrect, or secret is invalid.
          */
         keep: function (password, secret) {
-            if (typeof password !== 'string') throw Error('invalid password');
+            if (typeof __password !== 'string') throw Error('invalid password');
 
             if (typeof secret !== 'string') throw Error('invalid secret');
 

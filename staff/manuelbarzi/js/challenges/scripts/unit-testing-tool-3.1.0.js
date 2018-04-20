@@ -58,7 +58,7 @@ function test(testCase, description, check) {
         check(res) ? console.log('%c TEST -> ' + description + ' -> TRUE -> ', 'background: green; color: white; display: block;', res) :
             console.log('%c TEST -> ' + description + ' -> FALSE -> ', 'background: yellow; color: black; display: block;', res);
     } catch (err) {
-        console.log('%c TEST -> ' + description + ' -> ERROR -> ', 'background: red; color: white; display: block;', res);
+        console.log('%c TEST -> ' + description + ' -> ERROR -> ', 'background: red; color: white; display: block;', err);
     }
 }
 
