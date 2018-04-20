@@ -1,7 +1,7 @@
 'use strict';
 
 function countWords(str) {
-    if (typeof str=="string" && str.length>0) {
+    if (typeof str==="string") {
         var newarr=str.split(" ");
         return newarr.length;
     }
