@@ -15,7 +15,7 @@ test(
 // fail-case OR error-case testing:
 
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         countWords(true);
     }),
     'countWords(true) should throw an error',
@@ -25,7 +25,7 @@ test(
 );
 
 test(
-    runWithErrorCapturing(function() {
+    withErrorCapturing(function() {
         countWords(1);
     }),
     'countWords(1) should throw an error',

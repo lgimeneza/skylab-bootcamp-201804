@@ -22,7 +22,7 @@ test(function () {
 
 //  below we are testing FAIL cases
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     cube(true);
 }),
     'cube(true) should throw an error',
@@ -31,7 +31,7 @@ test(runWithErrorCapturing(function () {
     }
 )
 
-test(runWithErrorCapturing(function () {
+test(withErrorCapturing(function () {
     cube([1, 2, 'a']);
 }),
     'cube([1, 2, "a"]) should throw an error',
