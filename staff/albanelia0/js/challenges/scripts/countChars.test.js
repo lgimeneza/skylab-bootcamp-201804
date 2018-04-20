@@ -60,11 +60,11 @@ test(
 );
 
 test(
-  withErrorCapturing(function () {
-    countChars('abracadabra', '...');
-  }),
-  'countChars("abracadabra", "...") should throw an error',
-  function (result) {
-    return result.message === 'input condition is not a function';
-  }
+    withErrorCapturing(function() {
+        countChars('abracadabra', '...');
+    }),
+    'countChars("abracadabra", "...") should throw an error',
+    function(result) {
+        return result.message === 'input condition is not a function';
+    }
 );
