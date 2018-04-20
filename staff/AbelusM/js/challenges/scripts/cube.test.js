@@ -1,60 +1,33 @@
 'use strict';
 
-var res = cube(3);
+test(function () {
+    return cube(3);
+},
+    'cube(3) should return 27',
+    function (result) {
+        return result === 27;
+    });
 
-console.log('cube (3) should return 27', res === 27, res);
+test(function () {
+    return cube([1, 2, 3]);
+},
+    'cube([1, 2, 3]) should return [1, 8, 27]',
+    function (result) {
+        return result.toString() === [1, 8, 27].toString();
+    });
 
-res = cube([1, 2, 3]);
-
-console.log('cube([1,2,3]) should return [1,8,27]', res.toString() === [1, 8, 27].toString(), res);
-
-var error;
-
-try {
+test(runWithErrorCapturing(function () {
     cube(true);
-} catch (err) {
-    error = err;
-} finally {
-    console.log('cube(true) should throw an error', error !== undefined, error);
-}
+}),
+    'cube(true) should throw an error',
+    function (result) {
+        return result.message === 'input num is not a number, neither an array';
+    });
 
-error = undefined
-
-testThrowError(function () {
-    cube(true);
-}, 'cube("") should throw an error');
-
-function test(function (){
-return cube(3)},
- 'cube(3) should return 27', 27);
-
-
-function testThrowError(testCase, message) {
-    var error;
-
-    try {
-        testCase();
-    } catch (error) {
-        error = err;
-
-    } finally {
-        console.log(message, error !== undefined, error)
-    }
-
-}
-
-
-
-
-
-// var input = [3, 6]
-
-// var output = cube(input);
-
-// console.log(output);
-
-// try {
-//     input = cube(true);
-// } catch (err) {
-//     console.log('cube(true) should launch an error', err !==undefined, err);
-// }
+test(runWithErrorCapturing(function () {
+    cube([1, 2, 'a']);
+}),
+    'cube([1, 2, "a"]) should throw an error',
+    function (result) {
+        return result.message === 'input array is not a number at index 2';
+    });

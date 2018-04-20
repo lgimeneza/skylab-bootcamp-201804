@@ -1,12 +1,13 @@
 'use strict';
+
 /**
- * Count chars in txt (string.)
+ * Count chars in text (string).
  * 
  * @example
  * 
- * var count = countChars ('hello world', function(c){return c === 'e';}) // --> 1
+ * var count = countChars('hello world', function(c) { return c === 'e'; }); // -> 1
  * 
- * @param {string} text - The next to count the chars from. 
+ * @param {string} text - The text to count the chars from.
  * @param {function} [condition] - A condition to count chars (optional).
  * 
  * @throws {Error} - If input text is not a string.
@@ -17,16 +18,16 @@
 function countChars(text, condition) {
     // check input text is valid, must be a string
     if (typeof text !== 'string')
-        throw Error('input str is not a string');
+        throw Error('input text is not a string');
 
     // check condition exists, otherwise return string length
     if (!condition) {
         return text.length;
     }
 
-    // check is condition is valid, must be a function
+    // check condition is valid, must be a function
     if (typeof condition !== 'function')
-        throw Error('input func is not a function');
+        throw Error('input condition is not a function');
 
     var count = 0;
 
