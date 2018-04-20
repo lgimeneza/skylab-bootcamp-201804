@@ -1,0 +1,18 @@
+main section{
+    display:grid;
+    grid-template: 25% 25% 25% 25% / 25% 25% 25% 25%;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+}
+main section div img{
+    width:80%;
+}
+main section div{
+    width:90%;
+    padding:10px;
+    
+}
+main section:hover{
+    box-shadow: 1px;
+}

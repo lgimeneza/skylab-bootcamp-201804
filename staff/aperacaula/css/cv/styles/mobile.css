@@ -1,0 +1,10 @@
+header{
+    height: 30%;
+    padding: 2%;
+    background-color: rgb(243, 243, 243);
+}
+
+img{
+    clear: both;
+    border: rgb(37, 16, 16) 3px solid;
+}

@@ -1,0 +1,8 @@
+main {
+    flex-direction: column;
+}
+
+aside {
+    width: 100%;
+    text-align: center;
+}

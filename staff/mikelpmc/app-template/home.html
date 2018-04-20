@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Athletic Club - Home</title>
+
+    <link rel="shortcut icon" href="images/athleticclub.png" type="image/png">
+
+    <link href="https://fonts.googleapis.com/css?family=Audiowide|Comfortaa" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/home.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="landing.html">Landing</a>
+                </li>
+                <li>
+                    <a href="login.html">Login</a>
+                </li>
+                <li>
+                    <a href="home.html" class="active">Home</a>
+                </li>
+                <li>
+                    <a href="profile.html">Profile</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="home">
+        <section class="search">
+            <input type="search" name="search" id="search" placeholder="Search Players">
+        </section>
+
+        <section id="players"></section>
+    </main>
+
+    <footer>
+        <p>&copy; 2018 - Skylab Coders Academy</p>
+    </footer>
+
+    <script src="scripts/players.js"></script>
+    <script>
+        let $players = document.getElementById('players');
+        players.map(p => {
+            $players.innerHTML += `<div class="card" key="${p.number}">
+                <img src="images/players/${p.number}.jpg">
+                <div class="container">
+                    <h4>
+                        <b>${p.number}. ${p.name}</b>
+                    </h4>
+                    <p>${p.position}</p>
+                </div>
+            </div>`;
+        });
+    </script>
+</body>
+
+</html>
