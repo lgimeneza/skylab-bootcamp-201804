@@ -79,6 +79,18 @@ footer a{
     line-height: 0.9em;
 }
 
+button {
+    border-radius: 2em/5em;
+    border:0.5px inset rgb(225, 172, 137); 
+    outline: 0;
+    color: white;
+    background-color: rgb(255, 202, 167);
+    box-shadow: 0 0 3px salmon;
+    font-size: 0.7em;
+    padding: 0.2em;
+    margin:auto;
+}
+
 /*scrollbar*/
 ::-webkit-scrollbar{
 

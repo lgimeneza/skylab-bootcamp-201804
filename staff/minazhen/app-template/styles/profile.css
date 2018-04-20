@@ -62,29 +62,55 @@ figure p{
 }
 
 .display-events {
+    position:relative;
     margin: 1em auto;
     height:50px;
-    min-width: 90%;
+    min-width: 80%;
     background-color: var(--bg-alpha-color);
     overflow-y: scroll;
 }
+
+h6 {
+    position: fixed;
+    margin:1% auto;
+    float: right;
+    width: 10%;
+    height: 4em;
+    text-align: center;
+}
+
 table {
-    width: 80%;
-    margin: auto;
+    width:80%;
+    float:right;
+    margin: 0.5em;
+    border-collapse: collapse;
 }
 thead, tfoot{
     background-color: white;
     color: var(--bg-alpha-color);
-    font-size: 0.7em;
+    border: 1px solid white;
 }
 
-td input{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 1em;
-    border: 0.2px solid black;  
-}
-
-tr {
-    height: 2em;
+tr{
+    height:1.5em;
     vertical-align: middle;
+}
+
+td {
+    font-size: 0.8em;
+    padding-left: 0.3em;
+    
+}
+
+tbody td{
+    border: 1px dotted white;
+}
+tfoot {
+    text-align: center;
+}
+td input{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 0.7em;
+    width:70%;
+    border: 0.2px solid black;  
 }
