@@ -12,17 +12,17 @@ describe('countChars', function () {
     it('should throw an error on countChars(true)', function () {
         expect(function () {
             countChars(true);
-        }).toThrow(Error('input text is not a string'));
+        }).toThrowError('input text is not a string');
     })
 
     it('should throw an error on countChars(1)', function () {
         expect(function () {
             countChars(1);
-        }).toThrow(Error('input text is not a string'));
+        }).toThrowError('input text is not a string');
     })
     it('should return 5 on countChars("abracadabra", function(c) { return c === "a"; }', function () {
         expect(function () {
             countChars('abracadabra', '...');
-        }).toThrow(Error('input condition is not a function'));
+        }).toThrowError('input condition is not a function');
     });
 });

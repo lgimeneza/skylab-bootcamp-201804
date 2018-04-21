@@ -24,10 +24,10 @@
 if (typeof Array.prototype.wrap !== 'function')
 
 
-var arr = ['1', 2, 3, 'hola']; // shorcut of new Array(1, 2, 3);
+var arr = [1,2,3];
 
 Array.prototype.wrap = function (left, right) {
-    if (typeof left !== 'string' || typeof right !== 'string') throw Error('left and right should be strings');
+    if (typeof left !== 'string' || typeof right !== 'string') throw Error('inputs left and right should be strings');
 
     for (var i = 0; i < this.length; i++) {
         var newElement = left + this[i] + right;
@@ -36,5 +36,5 @@ Array.prototype.wrap = function (left, right) {
     return this;
 };
 
-console.log(arr.wrap('[', ']').wrap('{', '}').wrap('<', '>'));
+
 
