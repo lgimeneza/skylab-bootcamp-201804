@@ -19,7 +19,7 @@ describe('cube test', function () {
     });
 
 
-    it("should cube([1,2,'a'] return trhow ", function () {
+    it("should cube([1,2,'a']) return trhow ", function () {
         expect(function () {
             cube([1,2,'a']);
         }).toThrow(Error('input array is not a number at index2'));
