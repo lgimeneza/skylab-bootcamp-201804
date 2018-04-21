@@ -2,44 +2,47 @@
 
 test(
     function() {
-        return find(['john', 'mary', 'jack'], function(v) { return v.indexOf('a') > -1; });
+        return find(['john', 'mary', 'jack'], function(v) { return v.indexOf('c') > -1; });
     },
-    "find(['john', 'mary', 'jack'], function(v) { return v.indexOf('a') > -1; }) should return 'mary'",
+    "find(['john', 'mary', 'jack'], function(v) { return v.indexOf('c') > -1; }) should return 'jack'",
+    function(result) {
+        return result === 'jack';
+    }
+);
+'use strict';
+
+test(
+    function() {
+        return find(arr, function(v) {
+            return v.indexOf('a') > -1;
+        });
+    },
+    "find(names, function(v) { return v.indexOf('a') > -1; }) should return 'mary'",
     function(result) {
         return result === 'mary';
     }
 );
 
 test(
-    function() {
-        return find(['john', 'mary', 'jack'], function(v) { return v.indexOf('w') > -1; });
-    },
-    "find(['john', 'mary', 'jack'], function(v) { return v.indexOf('w') > -1; }) should return undefined",
+    withErrorCapturing(
+        function() {
+            return find(["john", "mary", "jack"]);
+        }
+    ),
+    'find(["john", "mary", "jack"]) should throw error',
     function(result) {
-        return result === undefined;
+        return result.message === 'input condition is missing';
     }
 );
 
 test(
     withErrorCapturing(
         function() {
-            return find();
+            return find(1);
         }
     ),
-    'find() should throw error',
+    'find(1) should throw error',
     function(result) {
-        return result.message === 'input array is not valid';
-    }
-);
-
-test(
-    withErrorCapturing(
-        function() {
-            return find([]);
-        }
-    ),
-    'find() should throw error',
-    function(result) {
-        return result.message === 'input condition is not valid';
+        return result.message === 'Input arr should be an array';
     }
 );

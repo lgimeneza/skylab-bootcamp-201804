@@ -21,16 +21,17 @@
  * 
  */
 
+var arr = ["john", "mary", "jack"];
 
- function find(arr, condition) {
+function find(arr, condition) {
+    if (!(arr instanceof Array)) throw Error('Input arr should be an array');
 
-    if (!(arr instanceof Array)) throw Error ('input array is not valid');
+    if (typeof condition !== 'function')
+        throw Error('input condition is missing');
 
-    if (!(handler instanceof Function)) throw Error ('handler is not valid');
-    
-    for (var i = 0;  i<arr.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
         var val = arr[i];
+
         if (condition(val)) return val;
     }
-
- }
+}

@@ -12,7 +12,7 @@
  * 
  * 
  * @throws {Error} - if input text is not a string.
- *  @throws {Error} - if given condition is not a function.
+ * @throws {Error} - if given condition is not a function.
 
  * 
  * @returns {number} - The num of chars count in the text input. 

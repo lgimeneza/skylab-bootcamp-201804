@@ -1,11 +1,11 @@
 'use strict';
 
-function countWords(str){
+function countWords(text){
 
-    if (typeof str !== 'string')
-        throw Error('input str is not a string');
+    if (typeof text !== 'string')
+        throw Error('input text is not a string');
         
-        var result = str.split(' ').length;;
+        var result = text.split(' ').length;;
         return result;
         
 

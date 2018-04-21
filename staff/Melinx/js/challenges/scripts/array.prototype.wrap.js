@@ -1,58 +1,40 @@
 'use strict';
-
 /**
- * DOCUM: wrap
- * creates a polyfill and its test, in files Array.prototype.wrap.js (and .test.js, respectively) , that performs as the following demos show:
- * 
- * @example
- * 
- * demos:   
-
-var a = [1, 2, 3]
-
-a.wrap('[', ']'); // -> ['[1]', '[2]', '[3]']
-
-a.wrap('[', ']').wrap('{', '}'); // -> ['{[1]}', '{[2]}', '{[3]}']
-
-a.wrap('[', ']').wrap('{', '}').wrap('<', '>'); // -> ['<{[1]}>', '<{[2]}>', '<{[3]}>']
- * 
- */
+     * Wraps the items of an input with left and right text array and return them in a new array.
+     * 
+     * @example
+     * 
+     * var a = [1, 2, 3];
+     * 
+     * a.wrap('[', ']'); // -> ['[1]', '[2]', '[3]']
+     * 
+     * a.wrap('[', ']').wrap('{', '}'); // -> ['{[1]}', '{[2]}', '{[3]}']
+     * 
+     * a.wrap('[', ']').wrap('{', '}').wrap('<', '>'); // -> ['<{[1]}>', '<{[2]}>', '<{[3]}>']
+     * 
+     * @param {string} left - The left text to set in the left side of the wrapping.
+     * @param {string} right - The right text to set in the right side of the wrapping.
+     * 
+     * @throws {Error} - If input left and/or right texts are not valid.
+     * 
+     * @returns {Array} - The resulting array with the contents of the input array wrapped by left and right symbols.
+     */
 
 
 if (typeof Array.prototype.wrap !== 'function')
-/**
- * 
- * @param
- * 
- * @param
- * 
- * 
- * 
- */
-
-    Array.prototype.wrap = function (left, right) {
-
-        //TODO
-
-
-        for (var i = 0; i < this.length; i++)
-            if (typeof this[i] !== 'number') return false;
-        return true;
-    };
 
 
 var arr = ['1', 2, 3, 'hola']; // shorcut of new Array(1, 2, 3);
 
-Array.prototype.wrap = function (left,right) {
-if (typeof left !== 'string' || typeof right !== 'string') throw Error ('a and b should be strings');
+Array.prototype.wrap = function (left, right) {
+    if (typeof left !== 'string' || typeof right !== 'string') throw Error('left and right should be strings');
 
-var res = [];
     for (var i = 0; i < this.length; i++) {
         var newElement = left + this[i] + right;
-        this[i] += newElement;
+        this[i] = newElement;
     }
-return this;
+    return this;
 };
 
-console.log(arr.wrap('[',']').wrap('{','}').wrap('<','>'));
+console.log(arr.wrap('[', ']').wrap('{', '}').wrap('<', '>'));
 

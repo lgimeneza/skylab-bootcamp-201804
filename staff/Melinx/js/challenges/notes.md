@@ -7,7 +7,7 @@ a.reduce(function(accum, v) {return accum + v.price}, 0)
 
 ```
 
- --> inicializamos el v a 0 porque le estamos dieciendo que sume sobre valores de una propiedad de un arrayinicializamos el v a 0 porque le estamos dieciendo que sume sobre valores de una propiedad de un array
+ --> inicializamos el v a 0 porque le estamos dieciendo que sume sobre valores de una propiedad de un array.
 
 ------
 ```sh
@@ -65,45 +65,35 @@ a.toString()
 -- lo utilizamos para poder comparar los resultados de arrays en objetos
 
 Object notes form console:
+```
 
 ```sh
 o = {}
 {}
 o.name = 'john''
-VM161:1 Uncaught SyntaxError: Invalid or unexpected token
-    at cube (<anonymous>:2:5)
-    at <anonymous>:1:1
-cube @ VM133:2
-(anonymous) @ VM137:1
+
 o.toString()
-"[object Object]"
+-> "[object Object]"
 o.toString = function() {return o}
 ƒ () {return o}
-o.to
-undefined
+
 o.toString
 ƒ () {return o}
 o.toString()
 {toString: ƒ}toString: ƒ ()__proto__: Object
-o =  {}
-{}
+
 o = new Object()
 {}
 o.name = 'john'
 "john"
+
 o.salute = (function() {return 'hello buddy!';})
             
 ƒ () {return 'hello buddy!';}
 o.titles=['full stak developer', 'bar tender'];
 (2) ["full stak developer", "bar tender"]
 o.consoleLog('hola mundo')
-VM204:1 Uncaught TypeError: o.consoleLog is not a function
-    at eval (eval at cube (Primitive:2), <anonymous>:1:3)
-    at cube (<anonymous>:2:5)
-    at <anonymous>:1:1
-(anonymous) @ VM204:1
-cube @ VM133:2
-(anonymous) @ VM137:1
+
 o.consoleLog = function(text) {console.log(text)};
 ƒ (text) {console.log(text)}
 ```
@@ -111,7 +101,7 @@ o.consoleLog = function(text) {console.log(text)};
 4/19
 
 ```sh
-var i = 0  tiene scope local si el for esta dentro de la funcion, pero si esta fuera de una funcion la variable i tiene
+var i = 0  tiene scope local si el for esta dentro de la funcion, pero si esta fuera de una funcion la variable i tiene/...?
 
 function fun() {
 	var ret;
@@ -197,8 +187,10 @@ function concat(text){
     return {
         concat: function(text2) {
             accum = accum + ' ' + text2;
-            return this; // apunta al objeto del scope en donde se encuentra // el this no implica closure, sino context. el accum implica closure porque accede a la variable accum definida fuera de su scope.
-            // cuando creamos una veraible en el scope Global, el objeto de esa var sera window. 
+            return this; 
+            
+// apunta al objeto del scope en donde se encuentra // el this no implica closure, sino context. el accum implica closure porque accede a la variable accum definida fuera de su scope.
+// cuando creamos una veraible en el scope Global, el objeto de esa var sera window. 
         },
 
         toString: function() {
@@ -249,9 +241,8 @@ function Person(name, lastName){
 	this.lastName = lastName;
 }
 
-undefined
 var p =  new Person('john','doe')
-undefined
+
 p
 Person {name: "john", lastName: "doe"}
 function Person(name, lastName){
@@ -263,13 +254,11 @@ function Person(name, lastName){
 }
 
 undefined
-var john = john.salute()
-VM698:1 Uncaught TypeError: Cannot read property 'salute' of undefined
-    at <anonymous>:1:17
-(anonymous) @ VM698:1
+
 var john = new Person ('john', 'doe')
-undefined
+
 john.salute()
+
 "hello, my name is john"
 john instanceof Object
 true
