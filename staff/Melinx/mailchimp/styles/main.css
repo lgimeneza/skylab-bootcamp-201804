@@ -1,0 +1,90 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.app {
+    display: grid;
+    height: max-content;
+    grid-template-areas: "Header" "Content" "Footer";
+}
+
+.header {
+    padding-left: 40px;
+    display: grid;
+    height: auto;
+    grid-column: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-row: 1fr 1fr 1fr;
+    overflow: auto;
+    background-color: aqua;
+    opacity: 0.3%;
+    font-family: Arial, sans-serif;
+}
+
+.second-row {
+    grid-column: 3/9;
+}
+
+/* 
+This is just to see where it all started.
+.content {
+    grid-area: Content;
+    overflow: auto;
+    /* (when structure was simple in grid-area mode) this OVERFLOW made section above stick as in freeze header of drive docs . nos it's useless, I know.*/
+
+.nested-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    height: 50%;
+    padding: 10px;
+    background-color: #e2ffff;
+    grid-gap: 10px;
+ 
+}
+
+.nest-box {
+    border: 1px solid snow;
+    padding: 2%;
+    background-color: skyblue;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14pt;
+    align-self: top;
+    justify-content: center;
+}
+#text {
+    font-size: 8pt;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+#text2 {
+    font-size: 10pt;
+    font-variant: small-caps;
+}
+.footer {
+    grid-area: Footer;    
+    border-top: 1px solid #d3d3d3;
+}
+
+.nest-footer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 50%;
+    padding: 10px;    
+    background-color: #1e1e2f;
+    grid-gap: 10px;
+    color: white;
+    list-style: none;
+
+
+}
+
+.sec {
+    border: #d3d3d3;
+    border-radius: 10px;
+    border-color: antiquewhite;
+    font-family: Arial, sans-serif, normal;
+    font-size: 8pt;
+}
