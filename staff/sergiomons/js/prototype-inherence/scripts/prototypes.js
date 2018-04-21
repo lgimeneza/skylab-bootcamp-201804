@@ -118,8 +118,8 @@ function paintWomen(persons) {
 
 paintWomen(persons);
 // -> output:
-Woman {name: "mary", surname: "wayne"} 0 (2) [Woman, Woman]
-Woman {name: "anna", surname: "o"} 1 (2) [Woman, Woman]
+//Woman {name: "mary", surname: "wayne"} 0 (2) [Woman, Woman]
+//Woman {name: "anna", surname: "o"} 1 (2) [Woman, Woman]
 
 // another way to filter women
 
@@ -131,5 +131,5 @@ function paintWomen(persons) {
 
 paintWomen(persons);
 // -> output:
-Woman {name: "mary", surname: "wayne"} 0 (2) [Woman, Woman]
-Woman {name: "anna", surname: "o"} 1 (2) [Woman, Woman]
+//Woman {name: "mary", surname: "wayne"} 0 (2) [Woman, Woman]
+//Woman {name: "anna", surname: "o"} 1 (2) [Woman, Woman]

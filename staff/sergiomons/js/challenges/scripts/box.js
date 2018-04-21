@@ -5,7 +5,7 @@
  */
 var box = (function () {
     var _password = '123';
-    var _secret;
+    var _secret='my secret';
 
     return {
         /**
@@ -23,6 +23,7 @@ var box = (function () {
 
             if (_password !== password) throw Error('wrong password');
 
+            
             _secret = secret;
         },
 
