@@ -1,50 +1,41 @@
 'use strict';
-/* Los comentarios son apuntes */
 
 /**
  * Count chars in text (string).
  * 
- * @example 
+ * @example
  * 
- * var count = countChars ('Hello world', function (c) { return c ==='e'; }); // -> 1
+ * var count = countChars('hello world', function(c) { return c === 'e'; }); // -> 1
  * 
- * @param {string} text - The text to count the charts from.
- * @param {Function} condition - A condition to count chars(optional).
+ * @param {string} text - The text to count the chars from.
+ * @param {function} [condition] - A condition to count chars (optional).
  * 
- * @throws {error} - If input text is not a string.
- * @throws {error} - If given a condition is not a function.
+ * @throws {Error} - If input text is not a string.
+ * @throws {Error} - If given a condition, is not a function.
  * 
  * @returns {number} - The number of chars count in the input text.
  */
-function countChars(str) {
+function countChars(text, condition) {
+    // check input text is valid, must be a string
+    if (typeof text !== 'string')
+        throw Error('input text is not a string');
 
-    if (typeof str === "string")
-        return str.length
-
-    throw Error('input is not a string')
-}
-
-function countChars(str, func) {
-    //check input text is valid, must be a string
-    if (typeof str !== 'string')
-        throw Error('input str is not a string');
-
-    //check condition exists, otherwise return string length
-    if (!func) {
-        return str.length;
+    // check condition exists, otherwise return string length
+    if (!condition) {
+        return text.length;
     }
-    // check condition is valid must be a function.
-    if (typeof func !== 'function')
-        throw Error('input func is not a function')
+
+    // check condition is valid, must be a function
+    if (typeof condition !== 'function')
+        throw Error('input condition is not a function');
 
     var count = 0;
 
-    for (var i = 0; i < str.length; i++) {
-        var val = str[i];
+    for (var i = 0; i < text.length; i++) {
+        var val = text[i];
 
-        if (func(val)) count++;
+        if (condition(val)) count++;
     }
 
     return count;
-
-} 
+}

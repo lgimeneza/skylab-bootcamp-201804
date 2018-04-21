@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Runs a test case unit.
+ * Runs a test case unit and putputs the result in the console.
  * 
  * @example
  * 
@@ -25,25 +25,25 @@
  * 
  * @author manuelbarzi
  * 
- * @version 1.0.0
+ * @version 3.1.0
  */
-function test(testCase, message, check) {
+function test(testCase, description, check) {
     try {
         var res = testCase();
-        console.log(message, check(res), res);
+        check(res) ? console.log ('%c TEST -> ' + description + ' -> TRUE -> '),'background: green; color: white; display: block;',res):console.log('%c TEST -> ' + description + ' -> FALSE -> ', 'background: yellow; color: black; display: block;', res);
     } catch (err) {
-        console.error(message, 'FAILED', err);
+        console.log('%c TEST -> ' + description + ' -> ERROR -> ', 'background: red; color: white; display: block;', res);
     }
 }
 
-function runWithErrorHandling(func) {
+function withErrorCapturing(func) {
     return function () {
-        var error;
+        
         try {
-            func();
+            return testCase();
         } catch (err) {
-            error = err;
+            return err;
         }
         return error;
-    }
+    };
 }
