@@ -1,13 +1,17 @@
-/**
- * exemple: 
- * 
- * var array = ['albanelia'];
- * output --> AlBaNeLiA
- */
-
+'use strict';
 
 if (typeof Array.prototype.toRandomCase !== "function") {
 
+/**
+ * convert one letter to lowercase and the other uppercase
+ * 
+ * @example: 
+ * var array = ['albanelia'];
+ * toRandomCase(array) // -> AlBaNeLiA
+ * @param {array} 
+ * @throws if the input is not an array
+ * 
+ */
   Array.prototype.toRandomCase = function() {
     if (typeof this !== 'array') throw Error('input is not a array!');
     var array = [];

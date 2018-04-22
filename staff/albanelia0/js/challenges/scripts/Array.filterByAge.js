@@ -1,5 +1,14 @@
 'use strict';
-
+/**
+ * filter names by age
+ * @example
+ * var result = filterByAge(array, function(person) {
+ * return person.age > 18;
+ * }); // -> result = ['Juan', 'Maider'];
+ * 
+ * @param {object} people -
+ * @param {function} fn -
+ */
 function filterByAge(people, fn) {
   var filteredPeople = people.filter(fn);
 

@@ -1,18 +1,27 @@
-
-// Write a function to merge two arrays, remove all duplicate elements and put into brackets the odd numbers:
-
-// DEMO:
-
-// var array1 = [1, 2, 3, 5];
-// var array2 = [2, 30, 1, 4];
-
-// console.log(arrayMerger(array1, array2)); / / return →[{ 3}, { 5}, 30, 4];
+'use strict';
 
 var array1 = [1, 2, 3, 5];
 var array2 = [2, 30, 1, 4];
 
+/**
+ * Write a function to merge two arrays, remove all duplicate elements and put into brackets the odd numbers
+ * 
+ * @param {Array} array1 - Accepts an array as a first parameter
+ * @param {Array} array2 - Accepts an array as a second parameter
+ * 
+ * @example
+ * 
+ * var array1 = [1, 2, 3, 5];
+ * var array2 = [2, 30, 1, 4];
+ * console.log(arrayMerger(array1, array2)); / / return →[{ 3}, { 5}, 30, 4];
+ * 
+ * @throws if the parameters are not an array
+ */
 
 function arrayMerger(array1, array2) {
+  if (!(array1 instanceof array)) throw Error('parameter not valid');
+  if (!(array2 instanceof array)) throw Error('parameter not valid');
+    
   var arrayB = array2;
   var arrayA = array1;
   var result = [];

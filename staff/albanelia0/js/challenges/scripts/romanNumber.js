@@ -1,6 +1,13 @@
-
 'use strict';
-
+/**
+ * returns the Roman number from 1 to 10
+ * 
+ * @param {number} number 
+ * @example
+ * numberRoman(2) // -> II
+ * @throws
+ * if the input is not a number
+ */
 function numberRoman(number) {
   var object = {
     1: 'I',
