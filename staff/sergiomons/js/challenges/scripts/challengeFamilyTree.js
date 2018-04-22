@@ -3,17 +3,17 @@
 
 -Create a constructor Person, with name, surname, eyes, hair and genre (you can add something else if you want).
 -Create two constructors from Person: one Father and one Mother, giving values to name, surname, eyes color… This two people “make” some childs (genetic is random.range). 
--Add manually the names, surnames and with genetic; give the other parameters to the sons.
+-Add manually the names, surnames and with genetic; give the other parameters to the sons(eyes, hair, genre).
 -Try it couple times to see that this is really random.*/
 
 /**
- * Constructor Function.
+ * Person constructor Function with several parametres.
  * 
- * @param {string} name - The name of the person.
- * @param {string} surname - The surname of the person.
- * @param {string} eyes - The eye's color of the person.
- * @param {string} hair - The hair's color of the person.
- * 
+ * @param {string} name - The name of the Person.
+ * @param {string} surname - The surname of the Person.
+ * @param {string} eyes - The eye's color of the Person.
+ * @param {string} hair - The hair's color of the Person.
+ * @param {string} genre - The genre of the Person.
  * 
  */
 function Person(name, surname, eyes, hair, genre) {
@@ -75,8 +75,18 @@ function Child(eyes, hair, genre) {
 Child.prototype = new Person();
 
 /**
+ * Function which return the numbers of the children and their features randomly.
+ * 
+ * @example 
+ * 
+ * mother.procreate(father) // -> [child, child, child]
+ * 
+ * Child {eyes: "brown", hair: "black", genre: "Female"}
+ * Child {eyes: "blue", hair: "blonde", genre: "Female"}
+ * Child {eyes: "blue", hair: "black", genre: "Male"}
  * 
  * @param {Object} father - The father of the relation.
+ * 
  * @property {property} procreate - It is a property of the mother.
  * 
  * @throws {Error} - If param introduce is not instance of Father, throw an error.
@@ -106,6 +116,7 @@ Mother.prototype.procreate = function(father) {
 }
 
 /**
+ * Function which return the numbers of the children and their features randomly like previus function.
  * 
  * @param {Object} mother - The mother of the relation.
  * @property {property} procreate - It is a property of the father.
@@ -115,6 +126,8 @@ Mother.prototype.procreate = function(father) {
  * @returns {function} - The function will return a 'mother.procreate(father)' function, meaning the father have the procreate property as well. 
  */
 Father.prototype.procreate = function(mother) {
-	if(!(mother instanceof Mother)) throw Error('He leaves home');
+	if(!(mother instanceof Mother)) throw Error('mmm wtf...');
 	return mother.procreate(this);
 }
+
+mother.procreate(father);
