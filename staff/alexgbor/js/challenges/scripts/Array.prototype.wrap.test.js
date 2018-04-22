@@ -1,19 +1,29 @@
 'use strict';
 
+var input=[1,2,3];
+
 test(function() {
-    return [1,2,3].wrap("[","]");
+    return input.wrap("[","]");
 },
-'[1,2,3].wrap("[","]") should return [[1],[2],[3]]',
+'input.wrap("[","]") should return [[1],[2],[3]]',
 function (result) {
-   return result.toString() ===["[1]","[2]","[3]"].toString();
+   return result.toString() ===["[1]","[2]","[3]"].toString() && input.toString()==="1,2,3";
 }
 );
 
 test(function() {
-    return [1,2,3].wrap("[","]").wrap("{","}");
+    return input.wrap("[","]").wrap("{","}");
 },
-'[1,2,3].wrap("[","]").wrap("{","}" should return [{[1]},{[2]},{[3]}]',
+'input.wrap("[","]").wrap("{","}" should return [{[1]},{[2]},{[3]}]',
 function (result) {
-    return result.toString() ===["{[1]}","{[2]}","{[3]}"].toString();
+    return result.toString() ===["{[1]}","{[2]}","{[3]}"].toString() && input.toString()==="1,2,3";
 }
 );
+
+test(withErrorCapturing(function () {
+    return input.wrap("[");
+}),
+    'input.wrap("[") should throw an error.',
+    function (result) {
+        return result.message === "Two arguments.";
+    });
