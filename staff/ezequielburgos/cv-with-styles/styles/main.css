@@ -1,0 +1,43 @@
+@import "desktop.css" screen and (min-width: 700px);
+@import "mobile.css" screen and (max-width: 700px);
+
+
+html{
+    margin: auto;
+    /* background-image: url("https://1.bp.blogspot.com/_nbADpD65WD4/TCT-o6l3aTI/AAAAAAAAgXw/r7rEArUSfQE/w1200-h630-p-k-no-nu/aurora-ultimate-1600x1200.jpg"); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    height: 2000px;
+    width: 2000px;
+    background: linear-gradient(rgb(42, 42, 122), rgb(126, 153, 194), rgb(241, 158, 158))
+}
+
+body{
+    text-align: center;
+}
+
+.section-left{
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(49, 49, 49, 0.863), rgba(36, 1, 1, 0.85));
+    border-radius: 10px;
+    border: 2px solid grey;
+}
+
+.section-right{
+    background: linear-gradient(rgba(98, 107, 121, 0.7), rgba(211, 211, 211, 0.7) ,rgba(145, 104, 104, 0.7));
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 10px;
+    border: 2px solid grey;
+}
+
+table{
+    width: 160px;
+}
+
+footer{
+    border: 3px solid grey;
+    border-radius: 10px;
+}
+
+img{
+    opacity: 0.9;
+}

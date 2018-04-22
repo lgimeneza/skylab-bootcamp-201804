@@ -1,0 +1,56 @@
+*{
+    box-sizing: border-box;
+    background-color: #CCC;
+    color : blue;
+    padding: 0;
+    margin: 0;
+    font-size: 22px;
+}
+body, html{
+    height: 100%;
+}
+header{
+    -display: grid;
+    -grid-template-columns : 60% 40%;
+    -grid-template-rows: 100%;   
+    text-align: center;
+    height: 15%;
+}
+
+#foto{
+    top:15px;
+    right: 10%;
+    position: absolute;
+}
+
+header div{
+    display: flex;
+    justify-content : center;
+    align-items : center;
+}
+header div span{
+    padding: 40px;
+    border : 1px solid black;
+}
+h1{
+    color : green;
+    font-size: 40px;
+}
+h2{
+    color : orangered;
+    padding: 1% 12%;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+h3{
+    text-transform: uppercase;
+    color : orange;
+    padding: 1% 10%;
+}
+p{
+    padding: 1% 10%;
+    text-align: justify;
+}
+ul{
+    padding: 1% 15%;
+}

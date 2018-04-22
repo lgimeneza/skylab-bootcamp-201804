@@ -1,0 +1,2 @@
+@import "maindesktop.css" screen and (min-width: 769px);
+@import "mainmobile.css" screen and (max-width: 768px);
