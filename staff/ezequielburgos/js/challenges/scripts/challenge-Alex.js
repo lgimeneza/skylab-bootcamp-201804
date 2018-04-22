@@ -1,3 +1,4 @@
+'use strict'
 
 function coinInsert() {
     var numberOfCoins = prompt('Introduce a money quantity. You will have as many turns as coins you introduce');
@@ -5,12 +6,12 @@ function coinInsert() {
     return numberOfCoins;
 }
 
-var coins = coinInsert();
+var turns = Math.floor(coinInsert() / 2);
 
-function randomFruitArray(money) {
+function randomFruitArray(theTurns) {
     var arr = []
     var fruitArr = ['Beetroot', 'Potato', 'Apple', 'Orange', 'Plum'];
-    while (arr.length < money * 3) {
+    while (arr.length < theTurns * 3) {
         var randomNumber = Math.floor(Math.random() * 5);
         var randomFruit = fruitArr[randomNumber];
         arr[arr.length] = randomFruit;
@@ -18,18 +19,18 @@ function randomFruitArray(money) {
     return arr;
 }
 
-var fruitArray = randomFruitArray(coins);
+var fruitArray = randomFruitArray(turns);
 
 function fruitArraySlicer() {
     var slice = 0;
     var earnedMoney = 0;
-    var index = coins - 1;
+    var index = turns - 1;
     while (slice < fruitArray.length) {
         var fruitArraySlice = fruitArray.slice(slice, slice + 3)
         alert("This is the fruit combination! " + fruitArraySlice);
         earnedMoney = earnedMoney + oneTurnValue(fruitArraySlice);
 
-        if (oneTurnValue(fruitArraySlice) == 0){
+        if (oneTurnValue(fruitArraySlice) == 0) {
             var plumCounter = 0;
             for (let i = 0; i < fruitArraySlice.length; i++) {
                 var element = fruitArraySlice[i];
@@ -49,9 +50,9 @@ function fruitArraySlicer() {
         index--;
     }
 
-    var benefit = earnedMoney - coins;
+    var benefit = earnedMoney - (turns * 2);
 
-    var score = alert("Introduced coins => " + coins + "€\nMoney earned playing => " + earnedMoney + "€\nBenefit => " + benefit + "€\nThanks for playing!");
+    var score = alert("Introduced coins => " + (turns * 2) + "€\nMoney earned playing => " + earnedMoney + "€\nBenefit => " + benefit + "€\nThanks for playing!");
 
     return score;
 }
@@ -67,13 +68,13 @@ function oneTurnValue(arr) {
     var result = 0;
 
     if (arr.toString() === "Beetroot,Beetroot,Beetroot") {
-        result = 40;
-    } else if (arr.toString() === "Potato,Potato,Potato") {
-        result = 30;
-    } else if (arr.toString() === "Apple,Apple,Apple") {
         result = 20;
-    } else if (arr.toString() === "Orange,Orange,Orange") {
+    } else if (arr.toString() === "Potato,Potato,Potato") {
+        result = 15;
+    } else if (arr.toString() === "Apple,Apple,Apple") {
         result = 10;
+    } else if (arr.toString() === "Orange,Orange,Orange") {
+        result = 8;
     } else if (arr.toString() === "Plum,Plum,Plum") {
         result = 5;
     } else {
@@ -82,7 +83,7 @@ function oneTurnValue(arr) {
             if (element === "Beetroot") {
                 beetrootCounter++;
                 if (beetrootCounter === 2) {
-                    result = 10;
+                    result = 12;
                 }
             }
             if (element === "Potato") {
@@ -94,13 +95,13 @@ function oneTurnValue(arr) {
             if (element === "Apple") {
                 appleCounter++;
                 if (appleCounter === 2) {
-                    result = 4;
+                    result = 6;
                 }
             }
             if (element === "Orange") {
                 orangeCounter++;
                 if (orangeCounter === 2) {
-                    result = 2;
+                    result = 4;
                 }
             }
             if (element === "Plum") {
@@ -116,7 +117,13 @@ function oneTurnValue(arr) {
     return result;
 }
 
-fruitArraySlicer()
+function slotMachine() {
+    return fruitArraySlicer();
+}
+
+slotMachine()
+
+
 
 // SlotMachine (Alex G. to Ezequiel)
 //  SlotMachine(coins) should take an amount of money as input (coins=turns) and return the benefit after all the turns. Make a slot machine with 3 slots and 5 different fruits. 
@@ -135,3 +142,29 @@ fruitArraySlicer()
 
 // SlotMachine(20);
 // output: Your benefit is 5€.
+
+
+/*
+
+prob3x(premio3x - precioJugada) + prob2x(premio2x - precioJugada) + prob0€(premio0€ - precioJugada) = 0 (para juego equilibrado)    
+
+var premio3xBetroots = 20;
+var premio3xPotato = 15;
+var premio3xApple = 10;
+var premio3xOrange = 8;
+var premio3xPlum = 5;
+
+var premio2xBetroots = 4;
+var premio2xPotato = 3;
+var premio2xApple = 2;
+var premio2xOrange = 2;
+var premio2xPlum = 2;
+
+var precioJugada = 2€;
+
+var total = 1/125*(premio3xBetroots - precioJugada) + 15/125*(premio2xBetroots - precioJugada) + 1/125*(premio3xPotato - precioJugada) + 15/125*(premio2xPotato - precioJugada) + 1/125*(premio3xApple - precioJugada) + 15/125*(premio2xApple - precioJugada) + 1/125*(premio3xOrange - precioJugada) + 15/125*(premio2xOrange - precioJugada) + 1/125*(premio3xPlum - precioJugada) + 15/125*(premio2xPlum - precioJugada) + 9/25*(0 - precioJugada);
+
+console.log(total);
+
+
+*/
