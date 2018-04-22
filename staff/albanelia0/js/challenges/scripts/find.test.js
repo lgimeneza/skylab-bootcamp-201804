@@ -39,7 +39,7 @@ test(
       return find([]);
     }
   ),
-  'find() should throw error',
+  'find([]) should throw error',
   function (result) {
     return result.message === 'input condition is not valid';
   }
