@@ -2,7 +2,7 @@
 
 test(
     function(){
-        return countWords('hello words');
+        return countWords('hello world');
     },
     'countWords ("hello world") should return 2',
     function(count){

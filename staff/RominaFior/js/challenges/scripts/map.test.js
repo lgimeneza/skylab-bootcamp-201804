@@ -6,7 +6,7 @@ test(
     },
     'map([1,2,3], function(v){ return v**2; }) should return a new array with values [1,4,9]',
     function(result){
-        return input !== result && result.toString()==='1,4,9';
+        return input !== result && result.toString()==='1,4,6';
     }
 );
 
@@ -34,15 +34,3 @@ test(
     }
 );
 
-/* test(
-    withErrorCapturing(
-        function() {
-            map(input);
-        }
-    ),
-    'map(input) without second argument should throw an error',
-    function(result) {
-        return result.message === 'input handler is not a valid';
-    }
-); 
-   */

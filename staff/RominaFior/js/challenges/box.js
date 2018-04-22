@@ -2,7 +2,12 @@
 
 
 var box;
-
+/* var box= {
+    keep:function (password, secret) {};
+    retrieve:
+    updatePassword:
+}
+ */
 (function() {
 	box = function(text) { return secret(text); }
 
@@ -20,7 +25,7 @@ function box(pass) {
         }
     }
 }
-function box(){
+function box(password){
     return{
         updatePassword: function (password) {
             return password

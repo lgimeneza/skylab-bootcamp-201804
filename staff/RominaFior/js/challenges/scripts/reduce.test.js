@@ -2,16 +2,16 @@
 
 
 
-var a = [{ name: 'jeans', price: 10.5 }, { name: 't-shirt', price: 5.99 }, { name: 'socks', price: 19.99 }];
 
-/* var result= reduce(a, function(accum, v){
-    if (v.price > 10){
-        return accum + v.price;
-    }
-    return accum;
-});
+/*var res = reduce([1, 2, 3, 4, 5], function(accum, v) { return accum + v; }, 0);
 
-console.log(result);
+console.log('reduce([1, 2, 3, 4, 5], function(accum, v) { return accum + v; }, 0) should return 15', res === 15, res);
+
+res = reduce([1, 2, 3, 4, 5], function(accum, v) { return accum + v; });
+
+console.log('reduce([1, 2, 3, 4, 5], function(accum, v) { return accum + v; }) should return 15', res === 15, res);
+
+var error;
  */
 test(
     withErrorCapturing(
