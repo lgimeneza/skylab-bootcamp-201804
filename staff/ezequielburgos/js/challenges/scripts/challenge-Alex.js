@@ -1,14 +1,18 @@
 'use strict'
 
+
+var numberOfCoins;
+
 function coinInsert() {
-    var numberOfCoins = prompt('Introduce a money quantity. You will have as many turns as coins you introduce');
+    numberOfCoins = prompt('Introduce a money quantity. You will have as many turns as coins you introduce');
     numberOfCoins ? alert('thanks') : alert('insert coin');
     return numberOfCoins;
 }
 
-var turns = Math.floor(coinInsert() / 2);
-
 function randomFruitArray(theTurns) {
+
+    if (typeof theTurns !== 'number') throw Error('input parameter should be a number');
+
     var arr = []
     var fruitArr = ['Beetroot', 'Potato', 'Apple', 'Orange', 'Plum'];
     while (arr.length < theTurns * 3) {
@@ -19,9 +23,9 @@ function randomFruitArray(theTurns) {
     return arr;
 }
 
-var fruitArray = randomFruitArray(turns);
-
 function fruitArraySlicer() {
+    var turns = Math.floor(coinInsert() / 2);
+    var fruitArray = randomFruitArray(turns);
     var slice = 0;
     var earnedMoney = 0;
     var index = turns - 1;
@@ -121,7 +125,7 @@ function slotMachine() {
     return fruitArraySlicer();
 }
 
-slotMachine()
+// slotMachine()
 
 
 
