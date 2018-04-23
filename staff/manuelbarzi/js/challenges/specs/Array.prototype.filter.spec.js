@@ -9,6 +9,7 @@ describe('Array.prototype.filter', function () {
         expect(output.length).toBe(2);
         // expect(output[0]).toEqual(input[0]);
         // expect(output[1]).toEqual(input[1]);
+        // or better:
         expect(input.slice(0, 2)).toEqual(output);
     });
 });
