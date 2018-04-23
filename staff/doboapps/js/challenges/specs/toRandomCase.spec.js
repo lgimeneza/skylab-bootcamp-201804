@@ -3,6 +3,16 @@
 
 describe( 'toRandomNumeral.', function(){
 
+    it("Should return text in random case')",function(){
+  
+            
+            var input = "hello World";
+            var output = toRandomNumeral(input);
+
+            expect(input.toLowerCase()).toBe(output.toLowerCase());
+            expect(input).not.toBe(output);
+                      
+    });
 
 
     it("Should toRandomNumeral() throw Error('It is not a String!')",function(){

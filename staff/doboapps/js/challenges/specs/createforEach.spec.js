@@ -10,8 +10,24 @@ describe( 'Create a forEach', function(){
     
 
     it("Should forEach(input, function(elem, i, input) { output.push(value); }) return output with values from input",function(){
-        forEach(input, function(value) {  output.push(value); })
+        
+        forEach(input, function(value) {  output.push(value); });
+
         expect(input).toEqual(output);
+
+    });  
+
+
+
+    it("Should forEach(input, function(elem, i, input) { output.push(value); }) return output with values from input",function(){
+        
+        spyOn(output,'push');
+
+        forEach(input, function(value) {  output.push(value); });
+
+        expect(output.push).toHaveBeenCalled();
+        expect(output.push.calls.count()).toEqual(3);
+
     });  
 
     
