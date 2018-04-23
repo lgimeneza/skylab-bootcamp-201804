@@ -1,6 +1,13 @@
 'use strict'
 
 describe('toRandomCase', function(){
+
+    // it('should return text in random case', function(){
+    //     var input = 'Hello World';
+
+
+    // })
+
     it('toRandomCase(true) shoud throw an error', function(){
         expect(function(){
             toRandomCase(true);

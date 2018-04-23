@@ -3,9 +3,9 @@
 describe("slotMachine", function () {
 
     describe('coinInsert()', function () {
-        it('should coinIsert() be defined', function () {
-            expect(coinInsert()).toBeDefined()
-        });
+        // it('should coinIsert() be defined', function () {
+        //     expect(coinInsert()).toBeDefined()
+        // });
     })
 
     describe('randomFruitArray(5)', function () {
