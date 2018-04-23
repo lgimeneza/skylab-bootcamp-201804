@@ -27,6 +27,6 @@ describe('The family tree', function () {
         var lover = new Lover()
         expect(function() {
             father.procreate(lover);
-        }).toThrow(Error('He leaves home'));
+        }).toThrow(Error('mmm wtf...'));
     });
 });
