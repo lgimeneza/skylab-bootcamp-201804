@@ -1,51 +1,33 @@
 'use strict';
-function toRandomCase(str) {
-    return str.toLowerCase().split('').map(function (c) {
-        return Math.random() < .5 ? c : c.toUpperCase();
-    }).join('');
+ 
+// solution 1 (alex p.)
+
+function switchLetter(letter) { //switches to upper or lower depending on the original state  
+    if (letter === letter.toUpperCase()) return letter.toLowerCase();
+    if (letter === letter.toLowerCase()) return letter.toUpperCase();
 }
 
-/* Esto son apuntes */
-/* function(c){
-    return Math.random() < .5? c : c.toUpperCase();
-} 
+function toRandomCase(text) {
+    // TODO
+    if (typeof text === 'string') {
+        var arr_text = text.split('');
+        var length = arr_text.length; //marca un máximo de letras a cambiar
+        var random_pos = []; //marcara qué posiciones cambiarán
+        var num_random = Math.floor((Math.random() * length) + 1); //determina cuantas letras cambiarán su estado
+       var index = 0;
 
-function toRandomCase(str) {
-
-if (typeof str !== 'string')
-    throw Error('input str is not a string!!');
-    
-    // create an array of words
-    var arr = [];
-    arr = str.split(" ");
-
-    // creamos random entre 1 y 0
-    var randomNumber = Math.random();
-
-    var newArr = [];
-
-    // toUpperCase() all first letters
-    for (i = 0; i < arr.length; i++) {
-        letterArr = arr[i].split("");
-        for (var j = 0; j < letterArr.length; j++) {
-            if (Math.random() > 0.5) {
-                letterArr[j] = letterArr[j].toUpperCase();
-            } else {
-                letterArr[j] = letterArr[j].toLowerCase();
-            }
-
+        while (index < num_random) {
+            var random_index = Math.floor((Math.random() * length - 1) + 1);
+            if (!(random_pos.includes(random_index))) random_pos.push(random_index); //guarda las posiciones que cambiarán
+            index++;
         }
-        newArr.push(letterArr.join(""));
+
+        for (var i = 0; i < random_pos.length; i++) {
+            arr_text[random_pos[i]] = switchLetter(arr_text[random_pos[i]]);
+        }
+
+        return arr_text.join('');
+    } else {
+        throw Error('input is not a string');
     }
-
-    return newArr.join(" ");
-
-
-
-
-
-
-
-
-
-*/
+}

@@ -1,12 +1,5 @@
 'use strict';
 
-var a = [1, 12, 19, 4, 5];
-console.log('Recursive version');
-forEach(a, function (v, i, arr) { console.log(v, i, arr) });
-
-/* No borrar, son apuntes! */
-/* 'use strict';
-
 var input = [1, 2, 3];
 var output = [];
 
@@ -42,4 +35,4 @@ try {
     error = err;
 } finally {
     console.log('forEach(input) without second argument should throw an error', error !== undefined, error);
-} */
+}

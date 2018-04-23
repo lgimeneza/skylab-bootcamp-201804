@@ -9,9 +9,11 @@
  * 
  * return newString = ('tal que hola')
  * 
- * @param {string} - The same words ordered randomly.
+ * @param {string} - A string of words.
  * 
  * @throws {Error} - If input is not a string.
+ * 
+ * @returns {String} - The same words ordered randomly.
  */
 
 var text = ('hola que tal');
