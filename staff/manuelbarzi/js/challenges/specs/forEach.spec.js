@@ -22,7 +22,7 @@ describe('forEach', function () {
         expect(output.push).toHaveBeenCalled();
         expect(output.push.calls.count()).toEqual(3);
 
-        // expect(input).toEqual(output); // WARN! fails! why? because spy alters the original push method, and then the toEqual comparator detects that input.push, which in fact is Array.prototype.push, does not much output.push (altered by the spy);
+        // expect(input).toEqual(output); // WARN! fails! why? because spy alters the original push method, and then the toEqual comparator detects that input.push, which in fact is Array.prototype.push, does not much output.push (altered by the spy).
         expect(input.toString()).toEqual(output.toString());
     });
 
