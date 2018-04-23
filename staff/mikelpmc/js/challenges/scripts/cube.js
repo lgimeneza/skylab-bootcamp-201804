@@ -1,28 +1,38 @@
 'use strict';
 
 /**
- * Returns the cube of a given number or array of numbers
+ * Calculates the cube of an input number, or array of numbers.
  *
  * @example
  *
- * var res = cube(2) // -> 8
- * var res2 = cube([2, 3]) // -> 8, 27
+ * var res = cube(3); // -> 27
  *
- * @param {number|number[]} numbers
+ * var res = cube([1, 2, 3]); // -> [1, 8, 27]
  *
- * @return {string} - Comma separated string with the cubes of the given numbers
+ * @param {number | number[]} num - The input number or array of numbers.
+ *
+ * @throws {Error} - If input number or array of numbers is not valid.
+ *
+ * @returns {number | number[]} - The cube of the input number or array of numbers.
  */
-function cube(numbers) {
-    return numbers
-        .toString()
-        .split(',')
-        .map(n => parseInt(Math.pow(n, 3)))
-        .join(', ');
-}
+function cube(num) {
+    if (typeof num === 'number') return num ** 3;
 
-try {
-    var res = cube([2, "3", false]);
-    console.log(res);
-} catch (error) {
-    console.log(error);
+    if (!(num instanceof Array))
+        throw Error('input num is not a number, neither an array');
+
+    for (var i = 0; i < num.length; i++) {
+        if (typeof num[i] !== 'number')
+            throw Error('input array is not a number at index ' + i);
+    }
+
+    var res = [];
+
+    for (var i = 0; i < num.length; i++) {
+        var val = num[i];
+
+        res[i] = val ** 3;
+    }
+
+    return res;
 }
