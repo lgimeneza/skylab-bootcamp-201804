@@ -1,0 +1,30 @@
+form {
+    margin: 0 auto;
+    width: 80%;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    display: grid;
+    padding: 5%;
+}
+
+label {
+    display: inline-block;
+    text-align: left;
+}
+
+input {
+    font: 1em sans-serif;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #999;
+}
+
+input:focus {
+    border-color: green;
+}
+
+button {
+    justify-content: center;
+    width: 40%;
+    text-align: center;
+}
