@@ -3,12 +3,27 @@
 
 var numberOfCoins;
 
+
+/**
+ * This function allows you to introduce the number of coins that will later determine the number of turns you have.
+ * 
+ * @throws {Error} - 
+ * 
+ * @returns {string} - The number of coins you introduced in the prompt
+ */
 function coinInsert() {
     numberOfCoins = prompt('Introduce a money quantity. You will have as many turns as coins you introduce');
     numberOfCoins ? alert('thanks') : alert('insert coin');
     return numberOfCoins;
 }
 
+/**
+ * This function will generate a random array of fruits 
+ * 
+ * @throws {Error} - 
+ * 
+ * @returns {string} - The number of coins you introduced in the prompt
+ */
 function randomFruitArray(theTurns) {
 
     if (typeof theTurns !== 'number') throw Error('input parameter should be a number');
