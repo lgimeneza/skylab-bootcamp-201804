@@ -21,6 +21,7 @@ function reduce(arr, func) {
     count = func(count, arr[i]);
   }
   return count;
+  
 }
 
 
