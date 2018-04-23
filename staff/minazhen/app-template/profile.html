@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/profile.css">
     <link href="https://fonts.googleapis.com/css?family=Just+Another+Hand|Sue+Ellen+Francisco|Yesteryear" rel="stylesheet">
+    <link rel="icon" href="images/k_ico.ico" type="image/gif" sizes="16x16">
 </head>
 <body>
     <header>
@@ -16,51 +17,59 @@
     </header>
     <main>
         <section class="pf-profile">
-            <figure>
-                <p>Upload Picture</p>
-                <input type="image" id="profile_pic" src="images/transp.png" alt="picture">
-                <input type="file" id="load_file">
-            </figure>
             <article class="info">
+                <figure>
+                    <input type="image" id="profile_pic" src="images/transp.png" alt="picture">
+                    <p>Upload Picture</p>
+                    <input type="file" id="load_file">
+                </figure>
                 <form action="">
-                    <input type="text" placeholder="user name" id="user_name"> <br>
-                    <input type="email" name="email" placeholder="user@email.com" id="user-email"> <br>
+                    <input type="text" placeholder="user name" id="user_name"> 
+                    <input type="email" name="email" placeholder="user@email.com" id="user-email">
                 </form>
             </article>
             <article class="display-events">
-                <h6>Nearly events:</h6>
-                <table>
-                    <thead>
-                        <tr>
-                            <td class="td-date">Date</td>
-                            <td class="td-notes">Notes</td>
-                            <td class="td-event">Event</td>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <form action="">
-                                <td class="td-date">
-                                    <input type="date" name="inp-date" id="inp-date" placeholder="Add new date">
-                                </td>
-                                <td class="td-notes">
-                                    <input type="text" name="inp-notes" id="inp-notes" placeholder="Add new notes">
-                                </td>
-                                <td class="td-event">
-                                    <input type="text" name="inp-event" id="inp-event" placeholder="Add new event">
-                                    <button type="submit">Add It!</button>
-                                </td>
-                            </form>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        <tr>
-                            <td class="td-date">a</td>
-                            <td class="td-notes">b</td>
-                            <td class="td-event">c</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div>
+                    <div class="display-events-left">
+                        <span>Nearly events:</span>
+                        <button type="submit" class="button">Add It!</button>
+                    </div>
+                    <div class="display-events-right">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td class="td-date">Date</td>
+                                    <td class="td-notes">Notes</td>
+                                    <td class="td-event">Event</td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <form action="">
+                                        <td class="td-date">
+                                            <input type="date" name="inp-date" id="inp-date" placeholder="Add new date">
+                                        </td>
+                                        <td class="td-notes">
+                                            <input type="text" name="inp-notes" id="inp-notes" placeholder="Add new notes">
+                                        </td>
+                                        <td class="td-event">
+                                            <input type="text" name="inp-event" id="inp-event" placeholder="Add new event">
+                                            
+                                        </td>
+                                    </form>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr>
+                                    <td class="td-date"></td>
+                                    <td class="td-notes"></td></td>
+                                    <td class="td-event"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </article>
         </section>       
     </main>
