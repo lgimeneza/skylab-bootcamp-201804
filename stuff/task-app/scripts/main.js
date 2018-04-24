@@ -1,3 +1,5 @@
+'use strict';
+
 // TODO implement the presentation logic
 
 var $form = $('form');
@@ -14,14 +16,20 @@ $form.submit(function(e) {
 
     $input.val('');
 
-    listTodos();
+    refresh();
 });
+
+function refresh() {
+    listTodos();
+
+    listDones();
+}
 
 var $todosTitle, $todosList;
 
 function listTodos() {
     if (!$todosTitle) {
-        $todosTitle = $('<h1>todo\'s</h1>');
+        $todosTitle = $('<h2>todo\'s</h2>');
 
         $form.after($todosTitle);
     }
@@ -36,20 +44,75 @@ function listTodos() {
 
     var todos = logic.listTodos();
 
-    todos.forEach(function(task) {
-        var $taskItem = $('<li></li>');
-        $taskItem.append(task.text);
+    if (todos.length) {
+        $todosTitle.show();
+        $todosList.show();
 
-        $taskButton = $('<button>V</button>');
-
-        $taskButton.click(function() {
-            logic.markTaskDone(task.id);
-
-            listTodos();
+        todos.forEach(function(task) {
+            var $taskItem = $('<li></li>');
+    
+            $taskItem.append(task.text);
+    
+            var $taskButton = $('<button>V</button>');
+    
+            $taskButton.click(function() {
+                logic.markTaskDone(task.id);
+    
+                refresh();
+            });
+    
+            $taskItem.append($taskButton);
+    
+            $todosList.append($taskItem);
         });
+    } else {
+        $todosTitle.hide();
+        $todosList.hide();
+    }
+}
 
-        $taskItem.append($taskButton);
+var $donesTitle, $donesList;
 
-        $todosList.append($taskItem);
-    });
+function listDones() {
+    if (!$donesTitle) {
+        $donesTitle = $('<h2>done\'s</h2>');
+
+        $todosList.after($donesTitle);
+    }
+
+    if (!$donesList) {
+        $donesList = $('<ul></ul>');
+
+        $donesTitle.after($donesList);
+    }
+
+    $donesList.empty();
+
+    var dones = logic.listDones();
+
+    if (dones.length) {
+        $donesTitle.show();
+        $donesList.show();
+
+        dones.forEach(function(task) {
+            var $taskItem = $('<li></li>');
+    
+            $taskItem.append(task.text);
+    
+            var $taskButton = $('<button>X</button>');
+    
+            $taskButton.click(function() {
+                logic.removeTask(task.id);
+    
+                refresh();
+            });
+    
+            $taskItem.append($taskButton);
+    
+            $donesList.append($taskItem);
+        });
+    } else {
+        $donesTitle.hide();
+        $donesList.hide();
+    }
 }
