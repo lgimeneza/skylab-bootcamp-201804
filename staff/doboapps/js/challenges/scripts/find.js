@@ -19,7 +19,9 @@
  * 
  * 
  */
+var vac = $("vacations")
 
+vac.text()
 
 function find(arr, condition) {
 
