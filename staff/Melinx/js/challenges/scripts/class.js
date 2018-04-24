@@ -55,8 +55,16 @@
 	var members = [];
 	members.push(s1, s2, s3, s4, t1, t2, t3);
 
+	// y cuando hay dos Marks qué pasa?
+
 	Array.prototype.findBy = function (input) {
 		var input;
+		// if (!(members instanceof Array)){
+		// 	throw Error ('input array is not valid')
+		// }
+		// if (!(members instanceof Array)){
+		// 	throw Error ('input array is not valid')
+		// }
 		if (typeof input === 'number' || typeof input === 'string') {
 			for (var i = 0; i < this.length; i++)
 				if (input === this[i].name || input == this[i].dni) {
@@ -68,3 +76,5 @@
 	};
 	members.findBy('Mark');
 
+
+	members[1].getInfo();
