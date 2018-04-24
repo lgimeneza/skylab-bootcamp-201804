@@ -1,24 +1,30 @@
 "use strict";
 
-if (typeof Array.prototype.randomProperty !== "function"){
-    Array.prototype.randomProperty = function(propsArray, prop) {
-        var copyPropsArray = []; 
-        propsArray.forEach(function(v){ copyPropsArray.push(v)});
-        for (var i = 0; i < this.length; i++){
-            if (copyPropsArray.length === 0) {
-                propsArray.forEach(function(v){ copyPropsArray.push(v)});
-            }
+function randomPropertiesValuesWithoutRepeating(array, propertyName, propertiesArray) {
 
-            var rand = Math.floor(Math.random() * copyPropsArray.length);
+    if (!Array.isArray(array)) {throw Error("First parameter must be an array.")};
+    array.forEach(function (v){ if (typeof v !== "object") throw Error("Array has to content objects")});
+    if (typeof propertyName !== "string") {throw Error("Second parameter must be a string.")};
+    if (!Array.isArray(array)) {throw Error("Third parameter must be an array.")};
+    
+    var copyPropArray = []; 
 
-            this[i][prop] = copyPropsArray[rand];
-            copyPropsArray.splice(rand, 1);
+    for (var i = 0; i < array.length; i++){
+        if (copyPropArray.length === 0) {
+            propertiesArray.forEach(function(v){ copyPropArray.push(v)});
         }
-    }
-};
 
-var propsCol = ["red", "black", "white"];
-var propsPrp = [true, false];
+        var rand = Math.floor(Math.random() * copyPropArray.length);
+
+        array[i][propertyName] = copyPropArray[rand];
+        copyPropArray.splice(rand, 1);
+    }
+}
+
+
+var prop_Col = ["red", "black", "white"];
+var prop_Boolean = [true, false];
+var prop_ABC = ["A", "B", "C", "D", "E", "F"];
 
 var obj1 = [{property: "", color: ""},{property: "", color: ""},{property: "", color: ""},
 {property: "", color: ""},{property: "", color: ""},{property: "", color: ""}];
