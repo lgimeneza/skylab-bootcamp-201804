@@ -1,6 +1,17 @@
-
 'use strict';
 
-var count = countWords('hello world');
+test(function() {
+    return countWords("hello world");
+},
+ 'countWords("Hello world") should return 2',
+function(result) {
+    return result===2;
+});
 
-console.log('countWords("hello world") should return 2', count === 2, count);
+test(withErrorCapturing(function () {
+    return countWords(true);
+}),
+    'countWords(true) should throw an error.',
+    function (result) {
+        return result.message === "You must input a string.";
+    });
