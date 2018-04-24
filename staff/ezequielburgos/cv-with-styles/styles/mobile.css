@@ -1,0 +1,94 @@
+*{
+    box-sizing: border-box;  
+}
+
+body, html{
+    max-width: 50em;
+    height: 100em;
+    font-family: Arial;
+}
+
+body{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+
+.section-left{
+    height: 50%;
+    width: 100%;
+    min-width: 250px;
+    color: lightgray;
+    padding: 3%;
+    border: 1px solid grey;
+    font-size: 14px;
+    text-align: center;
+    font-family: Courier, monospace;
+    line-height: 1em;
+   
+}
+
+aside{
+    padding: 5%;
+}
+
+.section-left h2{
+    text-decoration: underline;
+    font-size: 18px;
+
+}
+
+a:link {
+    text-decoration: none;
+    color: grey;
+    font-size: 16px;
+}
+
+.section-right{
+    font-size: 11.5px;
+    height: 50%;
+    width: 100%;
+    min-width: 400px;
+    color: rgb(53, 41, 41);
+    text-align: justify;
+    line-height: 1em;
+    border: 1px solid grey;
+   
+}
+
+.section-right h2{
+    text-decoration: underline;
+}
+
+header{
+    height: 10%;
+    padding: 5%;
+
+    text-align: center;
+    font-size: 18px;
+    text-decoration: underline overline;
+
+}
+
+
+main{
+    padding: 5%;
+    height: 75%;
+
+}
+
+footer{
+    padding: 3%;
+    height: 15%; 
+}
+
+#foto-cv{
+    
+    height: 150px;
+    border-radius: 5px;
+    border: 2px solid gray;
+}
+
+hr{
+    background: grey;
+}

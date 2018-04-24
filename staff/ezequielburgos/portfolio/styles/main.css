@@ -1,0 +1,97 @@
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    font-family: Arial;
+}
+
+.grid-container {
+    display: grid;
+    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr 1fr / 2fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    padding: 25px;
+    background: radial-gradient(rgb(192, 125, 63), rgb(170, 130, 179));
+}
+
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    border: 1px solid black;
+    background: rgb(107, 202, 163);
+    text-shadow: 0px 0px 15px gray;
+    color: white; 
+}
+
+#side-bar{
+    display: block;
+    padding: 10%;
+    background: linear-gradient(lightblue, rgb(111, 155, 170));
+    color:  rgb(114, 74, 124);
+    text-shadow: 0px 0px 0px;
+    text-align: justify;
+}
+
+.one{
+    grid-column: 1 / 6;
+} 
+
+.two{  
+    grid-row: 2 / 7;   
+}
+
+.three{
+    grid-row: 2 / 4;
+    grid-column: 2 / 4;   
+    background-image: url(http://www.universal.org.ar/wp-content/uploads/2016/12/490487412_00-690x390.jpg);
+    background-size: cover;
+    background-position: center; 
+}
+
+.four{
+    grid-column: 2 / 4;
+    grid-row: 4 / 7; 
+    background-image: url(http://media.sit.savoie-mont-blanc.com/original/158745/0-1788822.jpg);
+    background-size: cover;
+    background-position: center; 
+}
+
+.five{
+    grid-column: 4 / 6;
+    grid-row: 2 / 5;
+    background-image: url(https://s2.reutersmedia.net/resources/r/?m=02&d=20170512&t=2&i=1184440241&r=LYNXMPED4B21B&w=1280);
+    background-size: cover;
+    background-position:center; 
+}
+
+.six{
+    grid-column: 4 / 6;
+    grid-row: 5 / 7;
+    background-image: url(https://images.pexels.com/photos/56875/tree-dawn-nature-bucovina-56875.jpeg?auto=compress&cs=tinysrgb&h=350);
+    background-size: cover;
+    background-position:center; 
+}
+
+.seven{
+    grid-column: 1 / 6;
+} 
+
+.grid-item{
+    box-shadow: 2px 2px 6px black;
+    opacity: 0.85; 
+}
+
+.grid-item:hover{
+    box-shadow: 0px 0px 0px;
+    opacity: 1;
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+
+.images-one{
+    height: 100%;
+    width: 100%;
+}
