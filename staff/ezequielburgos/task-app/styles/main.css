@@ -12,6 +12,7 @@ li{
 
 .jumbotron {
     background-color: honeydew;
+    margin-bottom: 0;
 }
 
 .input-text{
@@ -31,4 +32,14 @@ li{
     display: flex;
     justify-content: space-between;
     width: 500px;
+}
+
+.progress {
+   margin-bottom: 50px;
+
+}
+
+main{
+    width: 90%;
+    padding: 5% 10% 0%;
 }

@@ -19,7 +19,7 @@ $form.submit(function (e) {
     refresh();
 });
 
-// 
+// do both functions (todo and done) when you execute refresh
 function refresh() {
     listTodos();
 
@@ -90,26 +90,30 @@ function listDones() {
     }
     // we create an ul tag
     if (!$donesList) {
-        $donesList = $('<ul></ul>');
+        $donesList = $('<ul class="list-group"></ul>');
 
         $donesTitle.after($donesList);
     }
-
+// we empty the list:
     $donesList.empty();
-    // ñlkasjfñldskfñlkjfasdñlkfjñlaksdjfñlaskjdfñlkasjdfñlkajsñflkjasdñlfkjad
-    // ñlkasjfñldskfñlkjfasdñlkfjñlaksdjfñlaskjdfñlkasjdfñlkajsñflkjasdñlfkjad
+
     var dones = logic.listDones();
 
+    // if the array of Dones is not empty: 
     if (dones.length) {
+        // show the titlte and list:
         $donesTitle.show();
         $donesList.show();
 
         dones.forEach(function (task) {
-            var $taskItem = $('<li></li>');
+            // declare the list item:
+            var $taskItem = $('<li class="list-group-item"></li>');
 
+            // insert the text
             $taskItem.append(task.text);
 
-            var $taskButton = $('<button class="btn btn-dark">X</button>');
+            // declare the task button
+            var $taskButton = $('<button class="btn btn-outline-dark">X</button>');
 
             $taskButton.click(function () {
                 logic.removeTask(task.id);
@@ -117,11 +121,15 @@ function listDones() {
                 listDones();
             });
 
+            // place the button next tot the list-item the button 
             $taskItem.append($taskButton);
 
+            // place the list-item span inside the list
             $donesList.append($taskItem);
         });
+        // if there is no Dones... hide both the title and the list:
     } else {
+
         $donesTitle.hide();
         $donesList.hide();
     }
