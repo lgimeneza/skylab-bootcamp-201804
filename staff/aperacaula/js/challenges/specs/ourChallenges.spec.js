@@ -89,7 +89,7 @@ describe("filterPerson", function() {
 describe('List of numbers with 0', function(){
     it('should return [["03","01"],["02"]) when [1,2,3].listNumbers()', function(){
         expect([1,2,3].listNumbers().toString()).toBe([["03","01"],["02"]].toString())
-    }
+    })
 
     it('should throw an error', function(){
         expect(function(){

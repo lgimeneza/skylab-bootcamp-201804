@@ -61,10 +61,10 @@ function Single(name, height, weight, age, gender){
     Person.call(this, name, height, weight, age, gender)
 }
 
-Single.prototype = Person.prototype;
+Single.prototype = new Person();
 Single.prototype.civilStatus= 'single';
 
-Married.prototype = Person.prototype;
+Married.prototype = new Person();
 Married.prototype.civilStatus= 'married'; 
 
 var person1 = new Married('Jaime', 1.87, 65, 20, 'male');

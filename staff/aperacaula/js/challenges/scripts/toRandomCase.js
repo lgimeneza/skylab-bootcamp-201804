@@ -9,10 +9,9 @@ function switchLetter(letter){ //switches to upper or lower depending on the ori
 function toRandomCase(text){
     if (typeof text ==='string'){
         var arr_text= text.split('');
-        length= arr_text.length; //marca un máximo de letras a cambiar
+        var length= arr_text.length; //marca un máximo de letras a cambiar
         var random_pos= []; //marcara qué posiciones cambiarán
         var num_random= Math.floor((Math.random() * length) + 1); //determina cuantas letras cambiarán su estado
-      
         var index=0;
         while (index<num_random){
             var random_index=Math.floor((Math.random() * length-1) + 1);
