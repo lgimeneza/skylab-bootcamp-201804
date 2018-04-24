@@ -1,26 +1,33 @@
 'use strict';
 
-var roman=toRomanNumeral(1);
+test(function () {
+    return toRomanNumeral(3);
+},
+    'toRomanNumeral(3) should return "III"',
+    function (result) {
+        return result === "III";
+    });
 
-console.log("toRomanNumeral(1) should return 'I'", roman==="I", roman);
+test(function () {
+    return toRomanNumeral(8);
+},
+    'toRomanNumeral(8) should return "VIII"',
+    function (result) {
+        return result === "VIII";
+    });
 
-roman=toRomanNumeral(5);
+test(withErrorCapturing(function () {
+    return toRomanNumeral(true);
+}),
+    'toRomanNumeral(true) should throw an error',
+    function (result) {
+        return result.message === "Insert a number, not a string.";
+    });
 
-console.log("toRomanNumeral(5) should return 'V'", roman==="V", roman);
-
-roman=toRomanNumeral(4);
-
-console.log("toRomanNumeral(4) should return 'IV'", roman==="IV", roman);
-
-roman=toRomanNumeral(9);
-
-console.log("toRomanNumeral(9) should return 'IX'", roman==="IX", roman);
-
-var error=undefined;
-try {
-    roman=toRomanNumeral("1");
-} catch(err) {
-    error=err;
-} finally {
-    console.log("toRomanNumeral('1') should throw an error", error!=undefined, error);
-}
+    test(withErrorCapturing(function () {
+        return toRomanNumeral(22);
+    }),
+        'toRomanNumeral(22) should throw an error',
+        function (result) {
+            return result.message === "Only numbers in the range 1-10.";
+        });

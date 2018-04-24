@@ -1,0 +1,16 @@
+
+nav, aside {
+    background-color: greenyellow;
+    height: 100%;
+    width: 20%;
+    display: block;
+    float:left;
+}
+section {
+    background-color: pink;
+    height: 100%;
+    width: 60%;
+    display: block;
+    float:left;
+
+}
