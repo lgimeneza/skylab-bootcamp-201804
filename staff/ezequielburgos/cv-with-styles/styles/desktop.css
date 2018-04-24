@@ -1,0 +1,93 @@
+*{
+    box-sizing: border-box;  
+}
+
+body, html{
+    max-width: 50em;
+    height: 55em;
+    font-family: Arial;
+}
+
+
+.section-left{
+    display: block;
+    height:100%;
+    width: 30%;
+    background: linear-gradient(black, rgb(49, 49, 49), rgb(36, 1, 1));
+    color: lightgray;
+    float: left;
+    padding: 3%;
+    border: 1px solid grey;
+    font-size: 14px;
+    text-align: center;
+    font-family: Courier, monospace;
+}
+
+aside{
+    padding: 5%;
+}
+
+.section-left h2{
+    text-decoration: underline;
+    font-size: 18px;
+
+}
+
+a:link {
+    text-decoration: none;
+    color: grey;
+    font-size: 16px;
+}
+
+.section-right{
+    font-size: 12px;
+    display:block;
+    height: 100%;
+    width: 70%;
+    color: rgb(53, 41, 41);
+    float: left;
+    text-align: justify;
+    line-height: 1em;
+    border: 1px solid grey;
+    
+}
+
+.section-right h2{
+    text-decoration: underline;
+}
+
+header{
+    height: 10%;
+    padding: 5%;
+
+    text-align: center;
+    font-size: 18px;
+    text-decoration: underline overline;
+
+}
+
+
+main{
+    padding: 5%;
+    height: 75%;
+
+}
+
+footer{
+    padding: 5%;
+    height: 15%;
+
+
+}
+
+img{
+    position:relative;
+    right: 16px;
+    height: 150px;
+    border-radius: 5px;
+    border: 2px solid gray;
+}
+
+hr{
+    background: grey;
+}
