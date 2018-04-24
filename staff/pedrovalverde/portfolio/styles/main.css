@@ -1,0 +1,67 @@
+/*@import url("mobile.css") (max-width: 768px);*/
+
+body, html {
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    height: 10%;
+}
+
+main {
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 83%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+aside, section, footer, header {
+    width: 100%;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main aside {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.aside_info {
+    background-color: red;
+    border: 1px solid black;
+    height: 90%;
+}
+
+main section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.windows_project {
+    background-color: red;
+    border: 1px solid black;
+    height: 100%;
+    padding: 2%;
+}
+
+img {
+    width: 100%;
+    height: 90%;
+}
+
+footer {
+    height: 7%;
+}

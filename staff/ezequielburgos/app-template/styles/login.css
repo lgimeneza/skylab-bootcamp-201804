@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-image: url(http://drevogizny.ru/wp-content/uploads/2017/03/swinging-bridge.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+h1 {
+    color: rgba(255, 255, 255, 0.842);
+    border: 2px solid rgba(194, 81, 81, 0.527);
+    font-size:calc(20px + 2.5vw);
+    background: linear-gradient(to right, rgba(106, 219, 102, 0.37) , rgba(137, 192, 171, 0.589));
+    padding: 1%;
+
+}
+
+section {
+    display: grid;
+    height: 40%;
+    width: 25%;
+    min-width: 250px;
+    background: linear-gradient(to right, rgba(106, 219, 102, 0.205) , rgba(137, 192, 171, 0.589));
+    grid-template-areas: "h h" "m m" "l s";
+}
+
+section:hover{
+    /* background: linear-gradient(to right, rgba(106, 219, 102, 0.349) , rgba(137, 192, 171, 0.726)); */
+    box-shadow: 0px 0px 4px white;
+}
+
+.grid-items {
+    border: 2px solid rgba(194, 81, 81, 0.527);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input{
+    padding: 4%;
+    border-radius: 5px;
+    font-size: 0.8em;
+    background-color: rgba(40, 92, 73, 0.712);
+    color: white;
+}
+
+input:focus{
+    background-color: rgba(40, 92, 73);
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+.username {
+    grid-area: h;
+}
+
+#username-input{
+    height: 3em;
+    width: calc(15em + 5vw);
+}
+
+.password {
+    grid-area: m;
+}
+
+#password-input{
+    height: 3em;
+    width: calc(15em + 5vw);
+}
+
+a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(194, 81, 81, 0.527);
+    background: linear-gradient(0deg, rgba(35, 78, 63, 0.849) 50%, rgba(40, 92, 73, 0.89) 51%);
+    width: 80%;
+    height: 60%;
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;
+}
+
+a:hover{
+    background: linear-gradient(0deg, rgb(35, 78, 63) 50%, rgb(40, 92, 73) 51%);
+}
+
+.login {
+    grid-area: l;
+}
+
+.sign-up {
+    grid-area: s;
+}
+
