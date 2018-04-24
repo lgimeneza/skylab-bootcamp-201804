@@ -1,0 +1,114 @@
+header {
+    padding: 10px;
+    position: relative;
+    font-size: 2vh;
+    color: whitesmoke;
+    background-color: rgb(177, 136, 136);
+    padding-top: 20px;
+}
+
+.logo {
+    height: 8vh;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+body {
+    font-family: Avenir, sans-serif;
+}
+
+main {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+.grid-container {
+    height: 100vh;
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr;
+    grid-template-rows: auto;
+    padding: 5%;
+    grid-gap: 2%;
+    font-size: 3vw;
+    color: white;
+    background-attachment: fixed;
+    background-image: url(https://static.vecteezy.com/system/resources/previews/000/097/473/non_2x/palm-leaf-pattern-vector.jpg);
+}
+
+.grid {
+    background-color: pink;
+    padding: 4%;
+    border-radius: 10px;
+}
+
+.text {
+    color: gray;
+    font-size: 2vw;
+    line-height: auto;
+}
+
+.gr1 {
+    grid-column: 1/5;
+    grid-row: 1/2;
+    background-image: url(https://thumbs.dreamstime.com/b/palm-frond-16325815.jpg);
+    opacity: .8;
+    background-size: cover;
+}
+
+.gr2 {
+    grid-row: 2;
+    grid-column: 1;
+    background-image: url(https://i0.wp.com/www.jordihernandez.es/wp-content/uploads/2013/08/porque-se-utiliza-hola-mundo-en-internet.jpg?fit=700%2C402);
+    background-size: cover;
+    background-position: center;
+}
+
+.gr3 {
+    grid-row: 2/4;
+    grid-column: 2/4;
+}
+
+.gr4 {
+    grid-row: 3;
+    grid-column: 4/5;
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/eb/Polypodium_vulgare_Moore1.png);
+    background-size: cover;
+    background-position: center;
+
+}
+
+.gr5 {
+    grid-row: 4;
+}
+
+.gr6 {
+    grid-row: 4;
+    grid-column: 2/5;
+    font-size: 1vmax;
+}
+
+.gr7 {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.gr8 {
+    grid-row: 2;
+    grid-column: 4;
+}
+
+footer {
+    padding: 10px;
+    position: relative;
+    font-size: 2vh;
+    color: whitesmoke;
+    background-color: rgb(177, 136, 136);
+    padding-top: 20px;
+}
+
+h2 {
+    font-size: 2vw;
+    font-family: 'Anonymous Pro', monospace;
+}
