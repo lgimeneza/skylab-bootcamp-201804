@@ -1,0 +1,22 @@
+@import "mobile.css" screen and (max-width: 768px);
+@import "desktop.css" screen and (min-width: 768px);
+
+html, body {
+    height: 100%;
+    _width: 100%;
+}
+
+header {
+    background-color: aquamarine;
+    height: 20%;
+}
+
+main {
+    height: 60%;
+}
+
+footer {
+    background-color: goldenrod;
+    height: 20%;
+
+}
