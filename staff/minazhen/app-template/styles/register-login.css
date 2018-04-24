@@ -40,7 +40,7 @@ input{
     background-color: transparent;
     padding: 0;
     text-align: center;
-    font: 22px 'Just Another Hand', cursive;
+    font: 22px 'Just Another Hand', Verdana;
     color: var(--font-border-color);
 }
 
@@ -58,13 +58,13 @@ input::placeholder {
 
 .register > p, .register > p > a{
     text-justify: auto;
-    font: 15px/20px 'Sue Ellen Francisco', cursive;
+    font: 15px/20px 'Sue Ellen Francisco', Verdana;
     color:rgb(255, 255, 255);
     margin-bottom: 0.5em;
 }
 
 .confirm {
-    font: 15px/20px 'Sue Ellen Francisco', cursive;
+    font: 15px/20px 'Sue Ellen Francisco', Verdana;
     border: none;
 }
 

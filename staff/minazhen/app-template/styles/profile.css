@@ -73,7 +73,7 @@ form {      /*********RIGHT********************/
     background-color: transparent;
     padding: 0;
     text-align: center;
-    font: 20px 'Just Another Hand', cursive;
+    font: 20px 'Just Another Hand', 12px monospace;
     color: var(--font-border-color);
 }
 
@@ -152,7 +152,7 @@ tfoot {
     text-align: center;
 }
 td input{
-    font-family: 'Just Another Hand', cursive;
+    font: 18px 'Just Another Hand', 10px Verdana;
     width:90%;
     border: 0.2px solid black;  
 }
