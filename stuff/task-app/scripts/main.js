@@ -104,7 +104,7 @@ function listDones() {
             $taskButton.click(function() {
                 logic.removeTask(task.id);
     
-                refresh();
+                listDones();
             });
     
             $taskItem.append($taskButton);
