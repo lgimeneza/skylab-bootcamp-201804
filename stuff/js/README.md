@@ -17,14 +17,26 @@ function filter(arr, func) {
 # scope & context
 
 ```js
+// what's the result?
+
+var fun;
+
+for (var i = 0; i < 3; i++) if (i === 2) fun = function() { return i; };
+
+fun(); // -> 3 // why!?
+
+// how to implement the following?
+
 concat(1).concat(2).toString(); // -> "1 2"
+
+// first approach
 
 function concat(text) {
 	return {
-	    concat: function(text2) {
+	    concat: function(nextText) {
 			return {
                 toString: function() {
-                    return text + ' ' + text2;
+                    return text + ' ' + nextText;
                 }                
             };
         }
@@ -42,7 +54,7 @@ function concat(text) {
 
 	return {
 		concat: function(text) {
-			accum = accum + ' ' + text;
+			accum += ' ' + text;
 
 			return this;
         },
