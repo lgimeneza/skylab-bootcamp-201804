@@ -1,0 +1,6 @@
+li {padding: 3px;}
+
+li:nth-child(even) {background: #CCC;}
+li:nth-child(odd) {background: #999;}
+
+li > p{ margin:0;}
