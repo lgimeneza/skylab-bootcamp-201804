@@ -7,8 +7,12 @@ document.forms[0].addEventListener('submit', function (e) {
 
     var query = input.value;
 
-    logic.searchBeers(query, function (beers) {
-        listBeers(beers);
+    logic.searchBeers(query, function (error, beers) {
+        if (error) {
+            alert('sorry, something went wrong... :(');
+        } else {
+            listBeers(beers);
+        }
     });
 
     input.value = '';
@@ -28,11 +32,59 @@ function listBeers(beers) {
         list.removeChild(list.firstChild);
     }
 
-    beers.forEach(function (beer) {
-        var item = document.createElement('li');
+    if (beers.length) {
+        beers.forEach(function (beer) {
+            var item = document.createElement('li');
+    
+            var a = document.createElement('a');
+            a.href = '#';
+            a.appendChild(document.createTextNode(beer.name));
+    
+            a.addEventListener('click', function () {
+                logic.getBeerInfo(beer.id, function (error, beer) {
+                    if (error) {
+                        alert('sorry, something went wrong... :(');
+                    } else {
+                        showBeer(beer);
+                    }
+                });
+            });
+    
+            item.appendChild(a);
+    
+            list.appendChild(item);
+        });
+    }
+}
 
-        item.appendChild(document.createTextNode(beer.name));
+var info;
 
-        list.appendChild(item);
-    });
+function showBeer(beer) {
+    if (!info) {
+        info = document.createElement('section');
+
+        document.body.appendChild(info);
+    }
+
+    info.innerHTML = '';
+
+    var title = document.createElement('h2');
+
+    title.appendChild(document.createTextNode(beer.name));
+
+    info.appendChild(title);
+
+    var desc = document.createElement('p');
+
+    desc.appendChild(document.createTextNode(beer.description || 'sorry, no description available :('));
+
+    info.appendChild(desc);
+
+    if (beer.labels && beer.labels.medium) {
+        var img = document.createElement('img');
+
+        img.src = beer.labels.medium;
+
+        info.appendChild(img);
+    }
 }
