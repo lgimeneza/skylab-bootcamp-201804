@@ -1,34 +1,47 @@
 "use strict";
 
-var res = toRandomCase("Hello World");
+/************ Test ***********/
 
-console.log('toRandomCase("10" should return X', res === "X", res);
+var input = "Hello My World";
 
-var res = toRandomCase("Morenita reshulona");
+test(
+  function() {
+    return toRandomCase("Hello My World");
+  },
+  'toRandomCase("Hello My World") should return input in random case',
+  function(result) {
+    return input.toLowerCase() === result.toLowerCase() && input !== result;
+  }
+);
 
-console.log('toRandomCase("1" should return I', res === "I", res);
+/************ Error Handling ****************/
 
-var res = toRandomCase("Cacatuas con pistachos");
+test(
+  withErrorCapturing(function() {
+    toRandomCase(true);
+  }),
+  "toRandomCase(true) should launch and error",
+  function(result) {
+    return result.message === "input is not a string";
+  }
+);
 
-console.log('toRandomCase("5" should return V', res === "V", res);
+test(
+  withErrorCapturing(function() {
+    toRandomCase(4);
+  }),
+  "toRandomCase(4) should launch and error",
+  function(result) {
+    return result.message === "input is not a string";
+  }
+);
 
-
-var error;
-
-try {
-  count = toRandomCase(4);
-} catch (err) {
-    error = err;
-}finally{
-  console.log("toRandomCase(4) should launch and error", error !== undefined, error);
-}
-
-error = undefined;
-
-try {
-  count = toRandomCase(true);
-} catch (err) {
-    error = err;
-}finally{
-  console.log("toRandomCase(true) should launch and error", error !== undefined, error);
-}
+test(
+  withErrorCapturing(function() {
+    toRandomCase([]);
+  }),
+  "toRandomCase([]) should launch and error",
+  function(result) {
+    return result.message === "input is not a string";
+  }
+);
