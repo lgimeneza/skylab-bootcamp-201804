@@ -11,6 +11,10 @@ var logic = (function () {
 
     return {
         addTask: function (text) {
+            
+            if(text === undefined){
+                throw Error('text is nempty?')
+            };
             var task = new Task(text);
 
             tasks.push(task);
@@ -19,6 +23,7 @@ var logic = (function () {
         },
 
         listTodos: function () {
+
             return tasks.filter(function (task) { return !task.done; });
         },
 
@@ -48,7 +53,7 @@ var logic = (function () {
                 if (task.id === id){ 
                     taskIndex = index;
 
-                    return task
+                    return task;
                 };
             });
 
