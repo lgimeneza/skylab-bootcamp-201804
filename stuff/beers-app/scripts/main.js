@@ -1,13 +1,13 @@
 'use strict';
 
-document.forms[0].addEventListener('submit', function (e) {
+document.forms[0].addEventListener('submit', function(e) {
     e.preventDefault();
 
     var input = this.elements[0];
 
     var query = input.value;
 
-    logic.searchBeers(query, function (beers) {
+    logic.searchBeers(query, function(beers) {
         listBeers(beers);
     });
 
@@ -28,8 +28,16 @@ function listBeers(beers) {
         list.removeChild(list.firstChild);
     }
 
-    beers.forEach(function (beer) {
-        var item = document.createElement('li');
+    beers.forEach(function(beer) {
+        console.log('HOLA');
+        var item = document.createElement('button');
+
+        // handler click por cada uno
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            console.log('hola');
+        });
 
         item.appendChild(document.createTextNode(beer.name));
 
