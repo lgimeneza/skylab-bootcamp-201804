@@ -76,7 +76,7 @@ function showBeer(beer) {
 
     var desc = document.createElement('p');
 
-    desc.appendChild(document.createTextNode(beer.description || 'sorry, no description available :('));
+    desc.appendChild(document.createTextNode(beer.description || beer.style.description));
 
     info.appendChild(desc);
 

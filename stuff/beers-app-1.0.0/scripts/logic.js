@@ -20,7 +20,7 @@ var logic = (function () {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     var results = JSON.parse(this.responseText);
-
+                    console.log(results);
                     callback(undefined, results);
                 // } else {
                 //     callback(Error(xhr.status));
