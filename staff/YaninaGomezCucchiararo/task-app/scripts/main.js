@@ -35,7 +35,7 @@ function listTodos() {
     }
 
     if (!$todosList) {
-        $todosList = $('<ul></ul>');
+        $todosList = $('<ul style= list style:none></ul>');
 
         $todosTitle.after($todosList);
     }
