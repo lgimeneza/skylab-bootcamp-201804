@@ -2,9 +2,11 @@
 
 var logic = (function () {
     function call(path, callback) {
+        //obtiene la informacion de la url q le pasamos. 
         var xhr = new XMLHttpRequest();
 
         xhr.addEventListener("load", function () {
+            //convierte el texto JSON en JS.
             var results = JSON.parse(this.responseText);
     
             callback(results);
@@ -15,10 +17,11 @@ var logic = (function () {
     }
 
     return {
+        //enseña toda la lista de la palabra buscada
         searchBeers: function (query, callback) {
             call('search/all?q=' + query, callback);
         },
-
+        //enseña la id seleccionada
         getBeerInfo: function (id, callback) {
             call('beer/' + id, callback);
         }
