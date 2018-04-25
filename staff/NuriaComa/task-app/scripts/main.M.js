@@ -97,18 +97,18 @@ function listDones() {
         $donesList.show();
 
         dones.forEach(function(task) {
+            
             var $taskItem = $('<li class="list-group-item"></li>');
     
             $taskItem.append('<span>' + task.text + '</span>&nbsp;');
     
-            var $taskButton = $('<button class="btn btn-danger">✗</button>');
+            var $taskButton = $('<button class=" btn btn-info">✗</button>');
     
             $taskButton.click(function() {
                 logic.removeTask(task.id);
     
                 listDones();
             });
-    
     
             $taskItem.append($taskButton);
     
