@@ -2,7 +2,7 @@
 
 describe('logic (beers)', function() {
     it('should search beers', function(done) {
-        logic.searchBeers('mahou', function(beers) {
+        logic.searchBeers('watafac', function(beers) {
             expect(beers).toBeDefined();
 
             expect(beers.length).toBe(4);
