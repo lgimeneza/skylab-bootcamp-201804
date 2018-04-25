@@ -1,6 +1,5 @@
 'use strict';
 
-<<<<<<< HEAD
 describe('logic (tasks)', function() {
     beforeEach(function() {
         logic.clear();
@@ -67,26 +66,5 @@ describe('logic (tasks)', function() {
         var dones = logic.listDones();
 
         expect(dones.length).toBe(0);
-=======
-describe('logic (beers)', function() {
-    it('should search beers', function(done) {
-        logic.searchBeers('mahou', function(beers) {
-            expect(beers).toBeDefined();
-
-            expect(beers.length).toBe(4);
-
-            done();
-        });
-    });
-
-    it('should get beer info', function(done) {
-        logic.getBeerInfo('xnRniA', function(beer) {
-            expect(beer).toBeDefined();
-
-            expect(beer.id).toBe('xnRniA');
-
-            done();
-        });
->>>>>>> develop
     });
 });
