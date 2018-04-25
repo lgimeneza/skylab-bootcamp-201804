@@ -14,7 +14,7 @@ document.forms[0].addEventListener('submit', function (e) {
     input.value = '';
 });
 
-var list;
+var list, container;
 
 function listBeers(beers) {
     if (!list) {
@@ -53,13 +53,11 @@ function listBeers(beers) {
 
     function showInfo(beer) {
 
-        var container = document.createElement('div');
-
         if (container) {
             container.innerHTML = '';
         };
 
-        
+        container = document.createElement('div');
         var title = document.createElement('h2'); // --> <h2><h2>
         var beerName = document.createTextNode(beer.name); // --> Mahou
         document.body.appendChild(container)
