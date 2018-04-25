@@ -32,7 +32,7 @@
     
     var res = [];
 
-    for (var i = 0; i < array.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
         res.push(handler(arr[i]));
     }
     return res;
