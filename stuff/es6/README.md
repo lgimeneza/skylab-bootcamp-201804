@@ -1,4 +1,6 @@
-// scope and binding
+# scope and context vs binding and arrow functions
+
+```js
 
 a = {
 	b: 1,
@@ -19,9 +21,11 @@ a = {
 
 a.fun([1,2,3])
 (3) [2, 3, 4]
+```
 
-// static on factory pattern
+# statics and factory pattern
 
+```js
 var Human = (function () {
     class Person {
         constructor(name) {
@@ -55,3 +59,4 @@ Woman {name: "sarah"}
 
 m = Human.newMan('john')
 Man {name: "john"}
+```
