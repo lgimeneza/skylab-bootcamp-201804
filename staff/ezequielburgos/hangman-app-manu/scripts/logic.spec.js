@@ -176,3 +176,6 @@ describe('logic (hangman)', function () {
         expect(hangman.status()).toBe(Hangman.LOSE)
     })
 })
+
+
+

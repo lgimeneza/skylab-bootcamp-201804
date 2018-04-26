@@ -1,23 +1,25 @@
 'use strict';
 
 const Hangman = (function () {
+
     class Hangman {
         constructor(word, attempts) {
-            if (typeof word !== 'string') throw Error('invalid word ' + word)
+            if (typeof word !== 'string') throw Error('invalid word ' + word) 
 
-            this._word = word.trim()
-
+            this._word = word.trim() // --> removes the whiteSpaces
+         
             if (!this._word.length) throw Error('word cannot empty or blank')
 
-            this._attempts = attempts || 10
+            this._attempts = attempts || 10 // --> returns 10 when attempts are undefined
 
             if (typeof this._attempts !== 'number') throw Error('invalid attempts ' + this._attempts)
 
             if (this._attemps <= 0) throw Error('invalid number of attempts ' + this._attempts)
 
-            this._guessed = new Array(this._word.length).fill('_')
+            this._guessed = new Array(this._word.length).fill('_') // --> llenamos array con underscores
 
             this._status = Hangman.CONTINUE
+
         }
 
         guessed() {
@@ -99,3 +101,4 @@ const Hangman = (function () {
     return Hangman
 })()
 
+var hangman = new Hangman('hello', 10);
