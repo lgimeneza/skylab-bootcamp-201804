@@ -77,10 +77,12 @@ function listBeers(beers) {
         });
     }
 }
+
 function handleBeerInfo(id) {
     logic.getBeerInfo(id, function(error, beer) {
         if (error) {
             alert('Oops! something went wrong: ', error);
+
             clearList();
         } else {
             infoShow = document.createElement('div');
