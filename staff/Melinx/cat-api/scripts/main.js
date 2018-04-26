@@ -1,5 +1,7 @@
 'use strict';
 
+// https://thecatapi.com/docs.html
+
 document.getElementById('button').addEventListener('click', loadkittos);
 
 function loadkittos() {
