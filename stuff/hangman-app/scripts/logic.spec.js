@@ -8,16 +8,34 @@ describe('logic (hangman)', function () {
         hangman = new Hangman(wordToGuess)
     })
 
+    it('should "guessing the whole word at once" win', function() {
+        expect(hangman.try('hello')).toBeTruthy()
+        expect(hangman.guessed()).toEqual(['h', 'e', 'l', 'l', 'o'])
+        expect(hangman.attempts()).toBe(10)
+        expect(hangman.status()).toBe(Hangman.WIN)
+    })
+
+    it('should "trying to guess the whole word at once fail" lose', function() {
+        expect(hangman.try('wrong')).toBeFalsy()
+        expect(hangman.guessed()).toEqual(['_', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(0)
+        expect(hangman.status()).toBe(Hangman.LOSE)
+    })
+
     it('should "entering an invalid word to be guessed (when initiating the game)" throw error', function() {
+        let input
+        
         expect(function() {
-            new Hangman()
-        }).toThrow(Error('invalid input word'))
+            new Hangman(input)
+        }).toThrow(Error('invalid word ' + input))
     })
 
     it('should "entering and invalid lettor or word (when guessing)" throw error', function() {
+        let input
+
         expect(function() {
-            hangman.try()
-        }).toThrow(Error('invalid input letter or word'))
+            hangman.try(input)
+        }).toThrow(Error('invalid letter or word ' + input))
     })
 
     it('should "try a letter and match" return true', function () {
