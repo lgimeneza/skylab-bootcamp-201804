@@ -33,9 +33,18 @@ function listBeers(beers) {
         var link= document.createElement('a');
 
         link.addEventListener("click", function (){
+
             logic.getBeerInfo(beer.id, function(){
 
-                
+                if (!info) {
+                    info = document.createElement('section');
+            
+                    document.body.appendChild(info);
+                }
+            
+                info.innerHTML = '';
+            
+
                 var title= document.createElement("h1");
                 document.body.appendChild(title);
                 title.appendChild(document.createTextNode(beer.name));
@@ -43,11 +52,8 @@ function listBeers(beers) {
                 var info=document.createElement("p");
                 document.body.appendChild(info);
                 info.appendChild(document.createTextNode(beer.style.description));
-                
-                
-                
-
-                if(beer.labels.icon){
+       
+                if(beer.labels.medium){
                     var iconImg=document.createElement("img")
                     iconImg.src=beer.labels.medium;
                     document.body.appendChild(iconImg);
