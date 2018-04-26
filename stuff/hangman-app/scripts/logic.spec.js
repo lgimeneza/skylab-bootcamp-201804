@@ -15,9 +15,63 @@ describe('logic (hangman)', function () {
         expect(hangman.status()).toBe(Hangman.WIN)
     })
 
+    it('should "guessing the whole word at once - after a few tries" win', function() {
+        expect(hangman.try('h')).toBeTruthy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(10)
+        expect(hangman.status()).toBe(Hangman.CONTINUE)
+
+        expect(hangman.try('x')).toBeFalsy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(9)
+        expect(hangman.status()).toBe(Hangman.CONTINUE)
+
+        expect(hangman.try('y')).toBeFalsy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(8)
+        expect(hangman.status()).toBe(Hangman.CONTINUE)
+
+        expect(hangman.try('z')).toBeFalsy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(7)
+        expect(hangman.status()).toBe(Hangman.CONTINUE)
+        
+        expect(hangman.try('hello')).toBeTruthy()
+        expect(hangman.guessed()).toEqual(['h', 'e', 'l', 'l', 'o'])
+        expect(hangman.attempts()).toBe(7)
+        expect(hangman.status()).toBe(Hangman.WIN)
+    })
+
     it('should "trying to guess the whole word at once fail" lose', function() {
         expect(hangman.try('wrong')).toBeFalsy()
         expect(hangman.guessed()).toEqual(['_', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(0)
+        expect(hangman.status()).toBe(Hangman.LOSE)
+    })
+
+    it('should "trying to guess the whole word at once - after a few tries - fail" lose', function() {
+        expect(hangman.try('h')).toBeTruthy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(10)
+        expect(hangman.status()).toBe(Hangman.CONTINUE)
+
+        expect(hangman.try('x')).toBeFalsy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(9)
+        expect(hangman.status()).toBe(Hangman.CONTINUE)
+
+        expect(hangman.try('y')).toBeFalsy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(8)
+        expect(hangman.status()).toBe(Hangman.CONTINUE)
+
+        expect(hangman.try('z')).toBeFalsy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
+        expect(hangman.attempts()).toBe(7)
+        expect(hangman.status()).toBe(Hangman.CONTINUE)
+
+        expect(hangman.try('wrong')).toBeFalsy()
+        expect(hangman.guessed()).toEqual(['h', '_', '_', '_', '_'])
         expect(hangman.attempts()).toBe(0)
         expect(hangman.status()).toBe(Hangman.LOSE)
     })
