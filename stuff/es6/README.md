@@ -23,6 +23,45 @@ a.fun([1,2,3])
 (3) [2, 3, 4]
 ```
 
+# class inheritance, method overriding, and accessing ancestor members by means of super and __proto__ (WARN!) 
+
+```js
+class Grandma {
+	toString() { return 'i am grandma' }
+}
+
+class Mom extends Grandma {
+	toString() { return 'i am mom' }
+}
+
+class Daughter extends Mom {
+	toString() { return 'i am daughter' }
+}
+
+class ConfusedDaughter extends Mom {
+    toString() { return super.toString() }
+}
+
+class VeryConfusedDaughter extends Mom {
+    toString() { return this.__proto__.__proto__.__proto__.toString() }
+}
+
+console.log(new Grandma().toString())
+// -> "i am grandma"
+
+console.log(new Mom().toString())
+// -> "i am mom"
+
+console.log(new Daughter().toString())
+// -> "i am daughter"
+
+console.log(new ConfusedDaughter().toString())
+// -> "i am mom"
+
+console.log(new VeryConfusedDaughter().toString())
+// -> "i am grandma"
+```
+
 # statics and factory pattern
 
 ```js
