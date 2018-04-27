@@ -7,26 +7,35 @@ describe('logic (calculator)', function() {
         calc = new Calculator()
     })
 
-    it('should invalid number throw error', function() {
-        expect(function() {
-            calc.number()
-        }).toThrow()
+    it('should entering numbers 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0, have status 1234567890', function() {
+        calc.one()
+        calc.two()
+        calc.three()
+        calc.four()
+        calc.five()
+        calc.six()
+        calc.seven()
+        calc.eight()
+        calc.nine()
+        calc.zero()
+
+        expect(calc.status()).toBe(1234567890)
     })
 
     it('should 1 + 1 + 1 = 3', function() {
-        calc.number(1)
+        calc.one()
         expect(calc.status()).toBe(1)
 
         calc.sum()
         expect(calc.status()).toBe(1)
 
-        calc.number(1)
+        calc.one()
         expect(calc.status()).toBe(1)
 
         calc.sum()
         expect(calc.status()).toBe(2)
 
-        calc.number(1)
+        calc.one()
         expect(calc.status()).toBe(1)
 
         calc.result()
@@ -34,7 +43,7 @@ describe('logic (calculator)', function() {
     })
 
     it('should -1 + 1 = 0', function() {
-        calc.number(1)
+        calc.one()
         expect(calc.status()).toBe(1)
 
         calc.negate()
@@ -43,7 +52,7 @@ describe('logic (calculator)', function() {
         calc.sum()
         expect(calc.status()).toBe(-1)
 
-        calc.number(1)
+        calc.one()
         expect(calc.status()).toBe(1)
 
         calc.result()
@@ -51,19 +60,19 @@ describe('logic (calculator)', function() {
     })
 
     it('should 5 - 2 - 1 = 2', function() {
-        calc.number(5)
+        calc.five()
         expect(calc.status()).toBe(5)
 
-        calc.subs()
+        calc.sub()
         expect(calc.status()).toBe(5)
 
-        calc.number(2)
+        calc.two()
         expect(calc.status()).toBe(2)
 
-        calc.subs()
+        calc.sub()
         expect(calc.status()).toBe(3)
 
-        calc.number(1)
+        calc.one()
         expect(calc.status()).toBe(1)
 
         calc.result()
@@ -71,19 +80,19 @@ describe('logic (calculator)', function() {
     })
 
     it('should 5 * 2 * 3 = 30', function() {
-        calc.number(5)
+        calc.five()
         expect(calc.status()).toBe(5)
 
         calc.mul()
         expect(calc.status()).toBe(5)
 
-        calc.number(2)
+        calc.two()
         expect(calc.status()).toBe(2)
 
         calc.mul()
         expect(calc.status()).toBe(10)
 
-        calc.number(3)
+        calc.three()
         expect(calc.status()).toBe(3)
 
         calc.result()
@@ -91,19 +100,22 @@ describe('logic (calculator)', function() {
     })
 
     it('should 30 / 3 / 2 = 5', function() {
-        calc.number(30)
+        calc.three()
+        expect(calc.status()).toBe(3)
+
+        calc.zero()
         expect(calc.status()).toBe(30)
 
         calc.div()
         expect(calc.status()).toBe(30)
 
-        calc.number(3)
+        calc.three()
         expect(calc.status()).toBe(3)
 
         calc.div()
         expect(calc.status()).toBe(10)
 
-        calc.number(2)
+        calc.two()
         expect(calc.status()).toBe(2)
 
         calc.result()
