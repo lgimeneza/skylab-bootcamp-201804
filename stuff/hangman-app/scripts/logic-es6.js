@@ -52,48 +52,52 @@ const Hangman = (function () {
         static get LOSE() { return 2 }
     }
 
-    function tryLetter(target, letter) {
-        const index = target._word.indexOf(letter)
+    // Hangman.CONTINUE = 0;
+    // Hangman.WIN = 1;
+    // Hangman.LOSE = 2;
+
+    function tryLetter(inst, letter) {
+        const index = inst._word.indexOf(letter)
 
         let match = false
 
         if (index > -1) {
-            for (let i = index; i < target._word.length; i++) {
-                const char = target._word[i]
+            for (let i = index; i < inst._word.length; i++) {
+                const char = inst._word[i]
 
-                if (char === letter) target._guessed[i] = char
+                if (char === letter) inst._guessed[i] = char
             }
 
             match = true
-        } else target._attempts--
+        } else inst._attempts--
 
-        update(target)
+        update(inst)
 
         return match
     }
 
-    function tryWord(target, word) {
+    function tryWord(inst, word) {
         let match = false
 
-        if (word === target._word) {
-            for (var i = 0; i < target._word.length; i++)
-                target._guessed[i] = target._word[i]
+        if (word === inst._word) {
+            for (var i = 0; i < inst._word.length; i++)
+                inst._guessed[i] = inst._word[i]
 
             match = true
-        } else target._attempts = 0
+        } else inst._attempts = 0
 
-        update(target)
+        update(inst)
 
         return match
     }
 
-    function update(target) {
-        if (!target._attempts)
-            target._status = Hangman.LOSE
-        else if (target._guessed.indexOf('_') === -1)
-            target._status = Hangman.WIN
+    function update(inst) {
+        if (!inst._attempts)
+            inst._status = Hangman.LOSE
+        else if (inst._guessed.indexOf('_') === -1)
+            inst._status = Hangman.WIN
         else
-            target._status = Hangman.CONTINUE
+            inst._status = Hangman.CONTINUE
     }
 
     return Hangman
