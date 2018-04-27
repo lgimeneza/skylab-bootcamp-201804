@@ -1,6 +1,6 @@
 'use strict';
 
-
+let Hangman = (function() {
 function Hangman(word, attempts) {
 
     if (typeof word !== 'string' || typeof word === undefined) throw Error('invalid word ' + word)
@@ -72,3 +72,6 @@ Hangman.prototype.try = function (letterOrWord) {
 
         return this._status
     }
+
+    return Hangman
+})();
