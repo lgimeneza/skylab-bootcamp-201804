@@ -3,14 +3,14 @@
 const Hangman = (function () {
 
     class Hangman {
-        constructor(word, attempts) {
+        constructor(word, attempts = 10) {
             if (typeof word !== 'string') throw Error('invalid word ' + word) 
 
             this._word = word.trim() // --> removes the whiteSpaces
          
             if (!this._word.length) throw Error('word cannot empty or blank')
 
-            this._attempts = attempts || 10 // --> returns 10 when attempts are undefined
+            this._attempts = attempts
 
             if (typeof this._attempts !== 'number') throw Error('invalid attempts ' + this._attempts)
 
@@ -100,5 +100,3 @@ const Hangman = (function () {
 
     return Hangman
 })()
-
-var hangman = new Hangman('hello', 10);
