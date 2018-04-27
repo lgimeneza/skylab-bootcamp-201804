@@ -3,7 +3,7 @@
 //Version JS5
 
 // function Hangman(word) {
-//   if (typeof word !== "string") throw Error("invalid input word");
+//   if (typeof word !== "string") throw Error("invalid word undefined");
 
 //   this.wordToGuess = word;
 //   this.numAttempts = 10;
@@ -20,27 +20,34 @@
 // }
 
 // Hangman.prototype.try = function(letter) {
-//   if (typeof letter !== "string") throw Error("invalid input letter or word");
+//   if (typeof letter !== "string") throw Error("invalid letter or word undefined");
 
-//   if (this.wordToGuess.indexOf(letter) === -1) {
-//     this.numAttempts--;
-//     if (this.numAttempts === 0) this.status = Hangman.LOSE;
-//     return false;
-//   }
-
-//   for (var i = 0; i < this.listLetters.length; i++) {
-//     if (this.wordToGuess[i] === letter) {
-//       this.listLetters[i] = letter;
+//   if (letter.length>1){
+//     if (letter === this.wordToGuess) {
+//       this.listLetters= this.wordToGuess.split('');
+//       this.status= Hangman.WIN;
+//     }else{
+//       this.status= Hangman.LOSE;
+//       this.numAttempts = 0 ;
 //     }
+//   } else{
+//     if (this.wordToGuess.indexOf(letter) === -1) {
+//       this.numAttempts-- ;
+//       if (this.numAttempts ===0) this.status= Hangman.LOSE;
+//       return false;
+//     }
+//       for (var i = 0; i < this.listLetters.length; i++) {
+//       if (this.wordToGuess[i] === letter) {
+//         this.listLetters[i] = letter ;
+//       }}
+//   }    
+  
+//   if (this.listLetters.join('') === this.wordToGuess){
+
+//       this.status= Hangman.WIN ;
 //   }
 
-//   if (
-//     letter === this.wordToGuess ||
-//     this.listLetters.join("") === this.wordToGuess
-//   ) {
-//     this.status = Hangman.WIN;
-//   }
-//   return this.wordToGuess.includes(letter);
+//   return this.wordToGuess.includes(letter)
 // };
 
 // Hangman.prototype.guessed = function() {
@@ -60,7 +67,7 @@
 class Hangman {
 
   constructor(word, opportunities=10) {
-    if (typeof word !== "string") throw Error("invalid input word");
+    if (typeof word !== "string") throw Error("invalid word undefined");
     this.wordToGuess = word
     this.numAttempts = opportunities
     this.listLetters = []
@@ -75,23 +82,33 @@ class Hangman {
   }
 
   try(letter) {
-    if (typeof letter !== "string") throw Error("invalid input letter or word")
+    if (typeof letter !== "string") throw Error("invalid letter or word undefined")
 
-    if (this.wordToGuess.indexOf(letter) === -1) {
-      this.numAttempts--
-      if (this.numAttempts ===0) this.state= Hangman.LOSE
-      return false
-    }
-
-    for (var i = 0; i < this.listLetters.length; i++) {
-      if (this.wordToGuess[i] === letter) {
-        this.listLetters[i] = letter
+    if (letter.length>1){
+      if (letter === this.wordToGuess) {
+        this.listLetters= this.wordToGuess.split('')
+        this.state= Hangman.WIN
+      }else{
+        this.state= Hangman.LOSE
+        this.numAttempts = 0
       }
-    }
-    if (letter === this.wordToGuess || this.listLetters.join('') === this.wordToGuess){
+    } else{
+      if (this.wordToGuess.indexOf(letter) === -1) {
+        this.numAttempts--
+        if (this.numAttempts ===0) this.state= Hangman.LOSE
+        return false
+      }
+        for (var i = 0; i < this.listLetters.length; i++) {
+        if (this.wordToGuess[i] === letter) {
+          this.listLetters[i] = letter
+        }}
+    }    
+    
+    if (this.listLetters.join('') === this.wordToGuess){
 
         this.state= Hangman.WIN
     }
+
     return this.wordToGuess.includes(letter)
   }
 
@@ -107,15 +124,15 @@ class Hangman {
     return this.state
   }
 
-//   static get WIN(){
-//       return 'YOU WON'
-//   }
+  // static get WIN(){
+  //     return 'YOU WON'
+  // }
 
-//   static get LOSE(){
-//       return 'YOU LOST'
-//   }
+  // static get LOSE(){
+  //     return 'YOU LOST'
+  // }
 
-//   static get CONTINUE(){
-//       return 'Keep playing ;)'
-//   }
+  // static get CONTINUE(){
+  //     return 'Keep playing ;)'
+  // }
 }
