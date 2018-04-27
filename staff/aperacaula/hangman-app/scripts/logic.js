@@ -12,7 +12,7 @@
 //     this.listLetters.push("_");
 //   }
 
-//   this.status = "Keep playing ;)";
+//   this.statuss = "Keep playing ;)";
 
 //   Hangman.WIN = "YOU WON";
 //   Hangman.LOSE = "YOU LOST";
@@ -25,15 +25,15 @@
 //   if (letter.length>1){
 //     if (letter === this.wordToGuess) {
 //       this.listLetters= this.wordToGuess.split('');
-//       this.status= Hangman.WIN;
+//       this.statuss= Hangman.WIN;
 //     }else{
-//       this.status= Hangman.LOSE;
+//       this.statuss= Hangman.LOSE;
 //       this.numAttempts = 0 ;
 //     }
 //   } else{
 //     if (this.wordToGuess.indexOf(letter) === -1) {
 //       this.numAttempts-- ;
-//       if (this.numAttempts ===0) this.status= Hangman.LOSE;
+//       if (this.numAttempts ===0) this.statuss= Hangman.LOSE;
 //       return false;
 //     }
 //       for (var i = 0; i < this.listLetters.length; i++) {
@@ -44,7 +44,7 @@
   
 //   if (this.listLetters.join('') === this.wordToGuess){
 
-//       this.status= Hangman.WIN ;
+//       this.statuss= Hangman.WIN ;
 //   }
 
 //   return this.wordToGuess.includes(letter)
@@ -58,9 +58,11 @@
 //   return this.numAttempts;
 // };
 
-// Hangman.prototype.statuss = function() {
-//   return this.status;
+// Hangman.prototype.status = function() {
+//   return this.statuss;
 // };
+
+
 
 // Version JS6
 
@@ -120,7 +122,7 @@ class Hangman {
     return this.listLetters
   }
 
-  statuss (){
+  status (){
     return this.state
   }
 
