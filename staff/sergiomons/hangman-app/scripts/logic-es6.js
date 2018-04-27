@@ -1,69 +1,100 @@
 'use strict';
 
-const logic = (function () {
+const Hangman = (function () {
     class Hangman {
-        constructor(word, attempts) {
-        if(typeof word !== 'string' || typeof word === undefined) throw Error('invalid word ' + word)
-        
-        this.word = word
-        this._attempts = attempts || 10
-        this.arrWord = new Array(this.word.length).fill('_')
-        this.letterOrWord = ''
-        this._status = Hangman.CONTINUE
-    
-    }
-    static get CONTINUE() {return 0}
-    static get WIN() {return 1}
-    static get LOSE() {return 2}
-}
-    
-    let hangman = new Hangman('hello')
-    
-    Hangman.prototype.try = function(letterOrWord){
-    
-        if(typeof letterOrWord !== 'string' || typeof letterOrWord === undefined) throw Error('invalid letter or word ' + letterOrWord)
-       
-        this.letterOrWord = letterOrWord
-        
-        if (this.letterOrWord.length === 1) return (this.word.indexOf(letterOrWord) > -1) ? true : false;
-        if (this.letterOrWord.length > 1) return (this.letterOrWord === this.word) ? true : false;
-           
-    }
-    
-    Hangman.prototype.guessed = function(){
-    
-        for(let i = 0; i < this.word.length; i++){
-            if(this.letterOrWord.length === this.word.length && this.letterOrWord === this.word){
-                this.arrWord[i] = this.letterOrWord.charAt(i);
-            } else if (this.letterOrWord.length === 1 && this.letterOrWord === this.word.charAt(i)){
-                this.arrWord[i] = this.letterOrWord;
-        }
-      }
-        return this.arrWord
-    }
-    
-    Hangman.prototype.attempts = function(){
-    
-        if(!this.try(this.letterOrWord))
-           (this.letterOrWord.length === 1) ? this._attempts-- : this._attempts = 0;
-    
-        return this._attempts
-    }
-    
-    Hangman.prototype.status = function(){
-    
-        if(this.arrWord.indexOf('_') === -1){
-            this._status = Hangman.WIN
-        }
-    
-        if(this._attempts === 0){
-            this._status = Hangman.LOSE
-        }
-    
-        return this._status
-    }
-    
-    
+        constructor(word, attempts = 10) {
+            if (typeof word !== 'string') throw Error('invalid word ' + word)
 
+            this._word = word.trim()
 
-})();
+            if (!this._word.length) throw Error('word cannot empty or blank')
+
+            this._attempts = attempts
+
+            if (typeof this._attempts !== 'number') throw Error('invalid attempts ' + this._attempts)
+
+            if (this._attemps <= 0) throw Error('invalid number of attempts ' + this._attempts)
+
+            this._guessed = new Array(this._word.length).fill('_')
+
+            this._status = Hangman.CONTINUE
+        }
+
+        guessed() {
+            return this._guessed
+        }
+
+        attempts() {
+            return this._attempts
+        }
+
+        status() {
+            return this._status
+        }
+
+        try(text) {
+            if (typeof text !== 'string') throw Error('invalid letter or word ' + text)
+
+            text = text.trim();
+
+            if (!text.length) throw Error('text cannot empty or blank');
+
+            if (this._status === Hangman.CONTINUE && this._attempts > 0)
+                return text.length === 1 ? tryLetter(this, text) : tryWord(this, text)
+
+            return false;
+        }
+
+        static get CONTINUE() { return 0 }
+
+        static get WIN() { return 1 }
+
+        static get LOSE() { return 2 }
+    }
+
+    function tryLetter(target, letter) {
+        const index = target._word.indexOf(letter)
+
+        let match = false
+
+        if (index > -1) {
+            for (let i = index; i < target._word.length; i++) {
+                const char = target._word[i]
+
+                if (char === letter) target._guessed[i] = char
+            }
+
+            match = true
+        } else target._attempts--
+
+        update(target)
+
+        return match
+    }
+
+    function tryWord(target, word) {
+        let match = false
+
+        if (word === target._word) {
+            for (var i = 0; i < target._word.length; i++)
+                target._guessed[i] = target._word[i]
+
+            match = true
+        } else target._attempts = 0
+
+        update(target)
+
+        return match
+    }
+
+    function update(target) {
+        if (!target._attempts)
+            target._status = Hangman.LOSE
+        else if (target._guessed.indexOf('_') === -1)
+            target._status = Hangman.WIN
+        else
+            target._status = Hangman.CONTINUE
+    }
+
+    return Hangman
+})()

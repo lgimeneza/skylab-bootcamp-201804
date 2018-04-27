@@ -138,7 +138,7 @@ describe('logic (hangman)', function () {
     })
 
     it('should "waste all attempts" lose', function () {
-        var count = 10
+        var count = hangman.attempts()
 
         while(--count) {
             hangman.try('x')
@@ -158,7 +158,7 @@ describe('logic (hangman)', function () {
     it('should "waste all attempts given" lose', function () {
         hangman = new Hangman(wordToGuess, 5)
 
-        let count = 5
+        let count = hangman.attempts()
 
         while(--count) {
             hangman.try('x')
