@@ -82,6 +82,6 @@ const equalArray = (arr1 ,arr2)=>  arr1.toString() == arr2.toString()
 return Hangman}
 )()
 
-Hangman.CONTINUE = 0;
-Hangman.WIN = 1;
-Hangman.LOSE = 2;
+Hangman.CONTINUE=0;
+Hangman.WIN=1;
+Hangman.LOSE=2;
