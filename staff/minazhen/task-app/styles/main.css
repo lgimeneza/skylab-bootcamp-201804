@@ -1,6 +1,11 @@
-li {padding: 3px;}
+body{background-color: lightgray;}
 
-li:nth-child(even) {background: #CCC;}
-li:nth-child(odd) {background: #999;}
+h1 {
+    text-align:center;
+    color: whitesmoke;
+    text-shadow: 0 0 5px rgb(0, 255, 0);
+    font-variant: small-caps;
+    margin: 10px;
+    margin-bottom: 40px;
+}
 
-li > p{ margin:0;}
