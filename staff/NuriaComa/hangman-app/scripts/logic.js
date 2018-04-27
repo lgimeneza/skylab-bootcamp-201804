@@ -4,7 +4,7 @@
             
         for (var i=0; i<wordToGuess.length; i++){
             
-            hangman.push("_");
+            this.hangman.push("_");
         }
     }
 
@@ -18,9 +18,9 @@
         this.wordToGuess = wordToGuess;
 
         this.acum=0;
-        this.hangman=[];
-        this.letter;
-        this.attempts=10;
+        this.hangman= new Array(this.wordToGuess.length).fill('_');
+        this.letter=[];
+        this._attempts=10;
 
         Hangman.CONTINUE=0;
         Hangman.WIN=1;
@@ -33,33 +33,39 @@
             throw Error('invalid input letter or word');
         };
 
-        letter=letter.trim();
+        this.letter=letter.trim();
     
         for (var i=0; i<this.wordToGuess.length; i++){
 
             if(this.wordToGuess.includes(letter)){
                 
+                this.letter
                 return true;
                 
+                
             }else{
+                this._attempts --;
                 return false;
-                this.attempts --;
+                
             }
         }
       
     }
-    Hangman.prototype.guessed=function(letter){
+    Hangman.prototype.guessed=function(){
 
-        for (var i=0; i<this.wordToGuess.length; i++){
-        var sust= this.wordToGuess.indexOf(letter);
+        for (var i=0; i < this.wordToGuess.length; i++){
         
+            if(this.letter === this.wordToGuess.charAt(i)){
+                this.hangman[i] = this.letter;    
+            }   
         }
-        this.hangman[sust] = letter;
+
+        return this.hangman
     }
            
     Hangman.prototype.attempts=function(){
 
-       return this.attempts
+       return this._attempts
         
 
             
