@@ -9,19 +9,19 @@ let estado
 
 
 class Hangman {
-    constructor(word, att) {
+    constructor(word, att = 10) {
         
-        wordToGuess = word;
+        wordToGuess = word
 
         if(typeof word !== 'string') throw Error('invalid input word')
 
-        emptyWord = [];
+        emptyWord = []
 
         for(var i=0; i < word.length; i++){
             emptyWord.push('_')
         }
         
-        attem = att || 10
+        attem = att
         estado = Hangman.CONTINUE
     }
     
