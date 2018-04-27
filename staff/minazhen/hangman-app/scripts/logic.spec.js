@@ -90,6 +90,13 @@ describe('logic (hangman)', function () {
         }).toThrow(Error('invalid word ' + input))
     })
 
+    it('should "entering and invalid number or word in attempts" throw error', function() {
+
+        expect(function() {
+            new Hangman("hola", 0)
+        }).toThrow(Error("invalid attempts"))
+    })
+
     it('should "entering and invalid lettor or word (when guessing)" throw error', function() {
         let input
 
