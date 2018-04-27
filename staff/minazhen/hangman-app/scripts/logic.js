@@ -16,34 +16,35 @@ class Hangman {
 
     try(str){
         if (typeof str !== "string") throw Error ('invalid letter or word ' + str);
-        
+        let stat = 0;
+        let bool = true;
         if (str.length > 1){
             if (str === this.w) {
                 this.w_split = this.w.split("");
-                this.stat = Hangman.WIN;
+                stat = 1;
             } else {
                 this.att = 0;
-                this.stat = Hangman.FAIL;
-                return false;
+                stat = 2;
+                bool = false;
             }
-
-
         } 
-        
-        if  (this.w.indexOf(str) === -1) {
-            this.att--;
-            return false;
-        }
-        let word = this.w.split("");
-        for(let i = 0; i < word.length; i++){
-            if (word[i] === str) {
-                console.log(i + " " + word[i]);
-                this.w_split[i] = str;
+        if (!stat){
+            if  (this.w.indexOf(str) === -1) {
+                this.att--;
+                bool = false;
+            }
+            let word = this.w.split("");
+            for(let i = 0; i < word.length; i++){
+                if (word[i] === str) {
+                    console.log(i + " " + word[i]);
+                    this.w_split[i] = str;
+                }
             }
         }
         if (this.w_split.indexOf('_') === -1) this.stat = Hangman.WIN;
-        if (this.att === 0) this.stat = Hangman.WIN;
-        return true;
+        if (this.att === 0) this.stat = Hangman.LOSE;
+        
+        return bool;
     }
 
     guessed() {
@@ -56,20 +57,9 @@ class Hangman {
     
 }
 
-let hangman = new Hangman("hello");
+Hangman.CONTINUE = 0;
+Hangman.WIN = 1;
+Hangman.LOSE = 2;
 
 
 
-            // start(wordToGuess) {
-            //     let guess = "";
-            //     if (guessed() !== undefined) {
-            //         this.guessed() = "surprise";
-            //     } else {
-            //         console.log(wordToGuess.length)
-            //         if (wordToGuess.length > 1) {
-            //             console.log()
-            //             guess = wordToGuess.split("").map (v => "'_'");
-            //             this.guessed() = guess;
-            //         }
-            //     }
-            // }

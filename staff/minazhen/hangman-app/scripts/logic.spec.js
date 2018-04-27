@@ -8,11 +8,11 @@ describe('logic (hangman)', function () {
         hangman = new Hangman(wordToGuess)
     })
 
-    // it('should hangman statusses be defined', function() {
-    //     expect(Hangman.CONTINUE).toBeDefined()
-    //     expect(Hangman.WIN).toBeDefined()
-    //     expect(Hangman.LOSE).toBeDefined()
-    // })
+    it('should hangman statusses be defined', function() {
+        expect(Hangman.CONTINUE).toBeDefined()
+        expect(Hangman.WIN).toBeDefined()
+        expect(Hangman.LOSE).toBeDefined()
+    })
 
     it('should "guessing the whole word at once" win', function() {
         expect(hangman.try('hello')).toBeTruthy()
