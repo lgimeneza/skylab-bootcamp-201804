@@ -39,24 +39,24 @@ describe('logic (calculator)', function() {
         expect(calc.status()).toBe(1234567890)
     })
 
-    it('should 1 + 1 + 1 = 3', function() {
+    it('should 1 + 2 + 4 = 7', function() {
         calc.one()
         expect(calc.status()).toBe(1)
 
         calc.sum()
         expect(calc.status()).toBe(1)
 
-        calc.one()
-        expect(calc.status()).toBe(1)
-
-        calc.sum()
+        calc.two()
         expect(calc.status()).toBe(2)
 
-        calc.one()
-        expect(calc.status()).toBe(1)
+        calc.sum()
+        expect(calc.status()).toBe(3)
+
+        calc.four()
+        expect(calc.status()).toBe(4)
 
         calc.result()
-        expect(calc.status()).toBe(3)
+        expect(calc.status()).toBe(7)
     })
 
     it('should -1 + 1 = 0', function() {
