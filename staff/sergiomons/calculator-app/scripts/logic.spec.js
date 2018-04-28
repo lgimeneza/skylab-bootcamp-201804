@@ -8,39 +8,55 @@ describe('logic (calculator)', function() {
     })
 
     it('should entering numbers 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0, have status 1234567890', function() {
-       
         calc.one()
-        calc.two()
-        calc.three()
-        calc.four()
-        calc.five()
-        calc.six()
-        calc.seven()
-        calc.eight()
-        calc.nine()
-        calc.zero()
+        expect(calc.status()).toBe(1)
 
+        calc.two()
+        expect(calc.status()).toBe(12)
+
+        calc.three()
+        expect(calc.status()).toBe(123)
+
+        calc.four()
+        expect(calc.status()).toBe(1234)
+        
+        calc.five()
+        expect(calc.status()).toBe(12345)
+
+        calc.six()
+        expect(calc.status()).toBe(123456)
+
+        calc.seven()
+        expect(calc.status()).toBe(1234567)
+
+        calc.eight()
+        expect(calc.status()).toBe(12345678)
+
+        calc.nine()
+        expect(calc.status()).toBe(123456789)
+
+        calc.zero()
         expect(calc.status()).toBe(1234567890)
     })
 
-    it('should 1 + 1 + 1 = 3', function() {
+    it('should 1 + 2 + 4 = 7', function() {
         calc.one()
         expect(calc.status()).toBe(1)
 
         calc.sum()
         expect(calc.status()).toBe(1)
 
-        calc.one()
-        expect(calc.status()).toBe(1)
-
-        calc.sum()
+        calc.two()
         expect(calc.status()).toBe(2)
 
-        calc.one()
-        expect(calc.status()).toBe(1)
+        calc.sum()
+        expect(calc.status()).toBe(3)
+
+        calc.four()
+        expect(calc.status()).toBe(4)
 
         calc.result()
-        expect(calc.status()).toBe(3)
+        expect(calc.status()).toBe(7)
     })
 
     it('should -1 + 1 = 0', function() {
