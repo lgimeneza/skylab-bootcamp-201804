@@ -35,6 +35,10 @@ describe('logic (rock-paper-scissors)', function () {
         expect(function() {
             game.play({}, [])
         }).toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('', '')
+        }).toThrowError('invalid hands')
     })
 
     it('should player1 win in 2 rounds', function () {
