@@ -22,7 +22,8 @@ class Hangman {
     }
 
     guessed() {
-        return this.showGuessed;
+        return this.showGuessed; 
+        
     }
 
     attempts() {
