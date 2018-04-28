@@ -1,69 +1,126 @@
 'use strict'
 
-
-var Calculator =(function(){
-
-   
-    class Calculator {
-
-
-        constructor(){
-            
-            this._display="";
-            this._beforeDisplay="";
-            this._accum=0;
-            this._opeartion=0;
-        }
-    
-        status(){
-            return parseInt(this._display);
-        }
-
-        sum(){
-            this._opeartion="+";  
-            this._beforeDisplay="";         
-        }
-
-        // result(){
-
-        // }
-
-        one(){   addNumber(this,1);   }
-        two(){    addNumber(this,2);   }
-        three(){    addNumber(this,3);   }
-        four(){    addNumber(this,4);   }
-        five(){    addNumber(this,5);   }
-        six(){    addNumber(this,6);   }
-        seven(){    addNumber(this,7);   }
-        eight(){    addNumber(this,8);   }
-        nine(){    addNumber(this,9);   }
-        zero(){    addNumber(this,0);   }
-  
-
-
+class Calculator {
+    constructor() {
+        this._history = []
+        this._status = 0
     }
 
-    function addNumber(obj,num){
-        obj._operation=0;
-        obj._display+=num;
-        obj._beforeDisplay=obj._display;
+    _push(key) {
+        if (typeof key !== 'number') {
+            this._pushSymbol(key)
+        } else {
+            this._pushNumber(key)
+        }
+
+        this._updateStatus()
     }
 
-    function operation(obj){
+    _pushSymbol(symbol) {
+        if (symbol === '+/-') {
+            const last = this._history[this._history.length - 1]
 
- 
+            this._history[this._history.length - 1] = -last
+        } else
+            this._history.push(symbol)
     }
 
-return Calculator;
+    _pushNumber(number) {
+        const last = this._history[this._history.length - 1]
 
-})()
+            if (typeof last === 'number')
+                this._history[this._history.length - 1] = last * 10 + number
+            else
+                this._history.push(number)
+    }
 
+    _updateStatus() {
+        const last = this._history[this._history.length - 1]
 
-   // number(num){//en el primer number result = num
+        if (typeof last === 'number') 
+            this._status = last
+        else {
+            this._status = this.result()
+        }
+    }
 
-        //    if (!(typeof num == "number")) throw Error("Input num is not a number"); 
-           
-  
+    zero() {
+        this._push(0)
+    }
+    one() {
+        this._push(1)
+    }
+    two() {
+        this._push(2)
+    }
+    three() {
+        this._push(3)
+    }
+    four() {
+        this._push(4)
+    }
+    five() {
+        this._push(5)
+    }
+    six() {
+        this._push(6)
+    }
+    seven() {
+        this._push(7)
+    }
+    eight() {
+        this._push(8)
+    }
+    nine() {
+        this._push(9)
+    }
 
-        //    this._display=num;
-        // }
+    sum() {
+        this._push('+')
+    }
+    sub() {
+        this._push('-')
+    }
+    mul() {
+        this._push('*')
+    }
+    div() {
+        this._push('/')
+    }
+    negate() {
+        this._push('+/-')
+    }
+
+    status() {
+        return this._status
+    }
+
+    result() {
+        let accum = this._history[0]
+
+        for (let i = 1; i < this._history.length - 1; i++) {
+            const val = this._history[i]
+
+            if (typeof val !== 'number') {
+                switch (val) {
+                    case '+':
+                        accum += this._history[i + 1]
+                        break
+                    case '-':
+                        accum -= this._history[i + 1]
+                        break
+                    case '*':
+                        accum *= this._history[i + 1]
+                        break
+                    case '/':
+                        accum /= this._history[i + 1]
+                        break
+                }
+            }
+        }
+
+        this._status = accum
+
+        return accum
+    }
+}
