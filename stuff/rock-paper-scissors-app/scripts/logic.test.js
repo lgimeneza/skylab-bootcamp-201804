@@ -7,6 +7,36 @@ describe('logic (rock-paper-scissors)', function () {
         game = new RockPaperScissors('romeo', 'juliette')
     })
 
+    it('should err on invalid hands', function () {
+        expect(function() {
+            game.play()
+        }).toThrowError('invalid hands')
+
+        expect(function() {
+            game.play(true, false)
+        }).toThrowError('invalid hands')
+
+        expect(function() {
+            game.play(1, 2)
+        }).toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('piedra', 'papel')
+        }).toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('rock')
+        }).toThrowError('invalid hands')
+
+        expect(function() {
+            game.play(undefined, 'rock')
+        }).toThrowError('invalid hands')
+
+        expect(function() {
+            game.play({}, [])
+        }).toThrowError('invalid hands')
+    })
+
     it('should player1 win in 2 rounds', function () {
         game.play('paper', 'rock')
         expect(game.status()).toBe(RockPaperScissors.CONTINUE)
