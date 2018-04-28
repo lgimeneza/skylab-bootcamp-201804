@@ -14,6 +14,13 @@ function filter(arr, func) {
 }
 ```
 
+# recursion
+
+[Understanding Recursion in JavaScript](https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03)
+
+[Recursion in JavaScript](https://www.codecademy.com/es/courses/javascript-lesson-205/0/1)
+
+
 # scope & context
 
 ```js
@@ -110,12 +117,27 @@ funB('hola');
 "hola???"
 ```
 
+[IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
+
 # constructor function & prototype
 
 ![constructor function & prototype](images/Array.prototype.forEach_var-vs-val.jpg)
 
 # [prototype inheritance](prototype-inheritance)
 
-# other interesting things
+# references
 
 [Colorful console.log](https://coderwall.com/p/fskzdw/colorful-console-log)
+
+[A Tricky JavaScript Interview Question Asked by Google and Amazon](https://medium.com/coderbyte/a-tricky-javascript-interview-question-asked-by-google-and-amazon-48d212890703)
+
+[Entendiendo los tipos en JS](https://medium.com/entendiendo-javascript/entendiendo-los-tipos-en-javascript-4c1c718e8e2a)
+
+[Entendiendo this en JS](https://medium.com/entendiendo-javascript/entendiendo-this-javascript-cba60c8cec8c)
+
+[Asynchronous JS](https://www.youtube.com/playlist?list=PL4cUxeGkcC9jAhrjtZ9U93UMIhnCc44MH)
+
+[The Modern Javascript Tutorial](https://javascript.info/)
+
+[JS - The Definitive Guide](http://www.stilson.net/documentation/javascript.pdf)
+
