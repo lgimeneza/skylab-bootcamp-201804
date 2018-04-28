@@ -36,8 +36,8 @@ describe('logic (rock-paper-scissors)', function () {
             game.play({}, [])
         }).toThrowError('invalid hands')
 
-        expect(function(){
-            game.play('','')
+        expect(function() {
+            game.play('', '')
         }).toThrowError('invalid hands')
     })
 
@@ -47,15 +47,15 @@ describe('logic (rock-paper-scissors)', function () {
         expect(game.winner()).toBeUndefined()
 
         game.play('scissors', 'paper')
-       /*  expect(game.status()).toBe(RockPaperScissors.GAMEOVER)
+        expect(game.status()).toBe(RockPaperScissors.GAMEOVER)
         expect(game.winner()).toBe('romeo')
 
         var state = game.state()
         expect(state.length).toBe(2)
         expect(state[0]).toEqual({ player1: 'paper', player2: 'rock'})
-        expect(state[1]).toEqual({ player1: 'scissors', player2: 'paper'})*/
+        expect(state[1]).toEqual({ player1: 'scissors', player2: 'paper'})
     })
- /*
+
     it('should player1 win in 3 rounds', function () {
         game.play('rock', 'paper')
         expect(game.status()).toBe(RockPaperScissors.CONTINUE)
@@ -119,5 +119,5 @@ describe('logic (rock-paper-scissors)', function () {
         expect(function() {
             game.play('rock', 'paper')
         }).toThrowError('GAME OVER!')
-    }) */
+    })
 })
