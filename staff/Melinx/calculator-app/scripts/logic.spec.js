@@ -1,13 +1,13 @@
 'use strict'
 
-describe('logic (calculator)', function() {
+describe('logic (calculator)', function () {
     let calc
 
-    beforeEach(function() {
+    beforeEach(function () {
         calc = new Calculator()
     })
 
-    it('should entering numbers 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0, have status 1234567890', function() {
+    it('should entering numbers 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0, have status 1234567890', function () {
         calc.one()
         calc.two()
         calc.three()
@@ -22,7 +22,7 @@ describe('logic (calculator)', function() {
         expect(calc.status()).toBe(1234567890)
     })
 
-    it('should 1 + 1 + 1 = 3', function() {
+    it('should 1 + 1 + 1 = 3', function () {
         calc.one()
         expect(calc.status()).toBe(1)
 
@@ -42,7 +42,7 @@ describe('logic (calculator)', function() {
         expect(calc.status()).toBe(3)
     })
 
-    it('should -1 + 1 = 0', function() {
+    it('should -1 + 1 = 0', function () {
         calc.one()
         expect(calc.status()).toBe(1)
 
@@ -59,7 +59,7 @@ describe('logic (calculator)', function() {
         expect(calc.status()).toBe(0)
     })
 
-    it('should 5 - 2 - 1 = 2', function() {
+    it('should 5 - 2 - 1 = 2', function () {
         calc.five()
         expect(calc.status()).toBe(5)
 
@@ -79,7 +79,7 @@ describe('logic (calculator)', function() {
         expect(calc.status()).toBe(2)
     })
 
-    it('should 5 * 2 * 3 = 30', function() {
+    it('should 5 * 2 * 3 = 30', function () {
         calc.five()
         expect(calc.status()).toBe(5)
 
@@ -99,7 +99,7 @@ describe('logic (calculator)', function() {
         expect(calc.status()).toBe(30)
     })
 
-    it('should 30 / 3 / 2 = 5', function() {
+    it('should 30 / 3 / 2 = 5', function () {
         calc.three()
         expect(calc.status()).toBe(3)
 
