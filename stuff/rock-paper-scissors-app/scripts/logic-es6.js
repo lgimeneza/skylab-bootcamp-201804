@@ -46,7 +46,7 @@ class RockPaperScissors {
     _roundWinner(round) {
         if (round.player1 === 'rock' && round.player2 === 'scissors' || round.player1 === 'scissors' && round.player2 === 'paper' || round.player1 === 'paper' && round.player2 === 'rock') return 'player1'
 
-        if (round.player1 === round.player2) return undefined
+        if (round.player1 === round.player2) return
 
         return 'player2'
     }
