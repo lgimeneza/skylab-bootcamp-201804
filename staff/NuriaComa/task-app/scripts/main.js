@@ -1,45 +1,118 @@
-    "use strict"
-    $('form').submit(function(event){
-        //que no refresque la web al hacer submit
-        event.preventDefault();
-        //borrar texto en el array para no repetir en el list
-        $(".todo").empty()
-        //guardar texto input en la variable
-        var $input = $(this).find("input[type=text]");
-        var text=$input.val();
-        //llamar funcion addTask
-        logic.addTask(text);
+'use strict';
 
-        //borrar texto en el input
-        $input.val(" ");
-        
-        refresh();
-    });
-    function refresh(){
+// TODO implement the presentation logic
 
-        listTodos();
+var $form = $('form');
 
-        
+$form.submit(function(e) {
+    e.preventDefault();
+
+    // var $input = $(this).find('input');
+    var $input = $(this).find('input[type=text]');
+
+    var text = $input.val();
+
+    logic.addTask(text);
+
+    $input.val('');
+
+    refresh();
+});
+
+function refresh() {
+    listTodos();
+
+    listDones();
+}
+
+var $todosTitle, $todosList;
+
+function listTodos() {
+    if (!$todosTitle) {
+        $todosTitle = $('<h3>TO DO</h3>');
+
+        $form.after($todosTitle);
     }
-        function listTodos(){
 
-       
-            //crear array con el map llamando a la funcion del logic
-            logic.listTodos().map(function(task){
-                
-            //crear los li y el boton y el texto del todo
-            
-            $(".todo").append("<li class='list-group-item'> "+task.text+ " <input type='button' value='✓' class='moveButton btn btn-outline-info'></li>" );
-            })
-        }
+    if (!$todosList) {
+        $todosList = $('<ul class="list-group"></ul>');
 
-        var todos = logic.listTodos();
+        $todosTitle.after($todosList);
+    }
+
+    $todosList.empty();
+
+    var todos = logic.listTodos();
+
+    if (todos.length) {
+        $todosTitle.show();
+        $todosList.show();
 
         todos.forEach(function(task) {
-            $(".moveButton").click(function(){
-            logic.markTaskDone(task.id);
-
-            });
-        });
+            var $taskItem = $('<li class="list-group-item"></li>');
     
+            $taskItem.append(task.text);
+    
+            var $taskButton = $('<button type="button" class="btn btn-outline-info float-right">✓</button>');
+    
+            $taskButton.click(function() {
+                logic.markTaskDone(task.id);
+    
+                refresh();
+            });
+    
+            $taskItem.append($taskButton);
+    
+            $todosList.append($taskItem);
+        });
+    } else {
+        $todosTitle.hide();
+        $todosList.hide();
+    }
+}
 
+var $donesTitle, $donesList;
+
+function listDones() {
+    if (!$donesTitle) {
+        $donesTitle = $('<h3>DONE</h3>');
+
+        $todosList.after($donesTitle);
+    }
+
+    if (!$donesList) {
+        $donesList = $('<ul class="list-group"></ul>');
+
+        $donesTitle.after($donesList);
+    }
+
+    $donesList.empty();
+
+    var dones = logic.listDones();
+
+    if (dones.length) {
+        $donesTitle.show();
+        $donesList.show();
+
+        dones.forEach(function(task) {
+            var $taskItem = $('<li class="list-group-item"></li>');
+    
+            $taskItem.append('<span>' + task.text + '</span>&nbsp;');
+    
+            var $taskButton = $('<button type="button" class="btn btn-outline-info float-right">✗</button>');
+    
+            $taskButton.click(function() {
+                logic.removeTask(task.id);
+    
+                listDones();
+            });
+    
+            $taskItem.append($taskButton);
+    
+            $donesList.append($taskItem);
+        });
+    } else {
+        $donesTitle.hide();
+        $donesList.hide();
+    }
+}
