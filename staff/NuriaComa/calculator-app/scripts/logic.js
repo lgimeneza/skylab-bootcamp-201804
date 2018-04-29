@@ -5,11 +5,9 @@ function Calculator(){
 
     this._status = "";
     this.numbers=0;
-    this.res;
+    this._result;
     this.oper="";
 }
-
-var calc = new Calculator();
 
 
 
@@ -74,16 +72,20 @@ Calculator.prototype.status=function(){
 
 Calculator.prototype.sum= function(){
 
-    if(this.numbers !==0){
-
-        this.numbers + parseInt(this._status)
-    }else{
+    if(this.numbers ===0){
 
         this.numbers=parseInt(this._status);
-
+        
         this._status="";
-    }
 
+        return this.numbers
+
+    }else{
+ 
+        this._status= this.numbers + parseInt(this._status)
+        return this._status
+    }
+    
 }
 
 Calculator.prototype.negate=function(){
@@ -94,6 +96,6 @@ Calculator.prototype.negate=function(){
 Calculator.prototype.result=function(){
 
 
-    return 
+    return this._result
 
 }

@@ -21,11 +21,12 @@ RockPaperScissors.prototype.play = function (hand1, hand2) {
         throw Error('invalid hands')
     }
 
-    this._hand1 = hand1;
+    this._hand1 = hand1.trim().toLowerCase();
+    
 
     if (!this._hand1.length) throw Error('invalid hands');
 
-    this._hand2 = hand2;
+    this._hand2 = hand2.trim().toLowerCase();
 
     if (!this._hand2.length) throw Error('invalid hands');
 
@@ -36,6 +37,8 @@ RockPaperScissors.prototype.play = function (hand1, hand2) {
     if (this._hand2 !== "rock" && this._hand2 !== "paper" && this._hand2 !== "scissors") {
         throw Error('invalid hands')
     }
+
+    
 
     if(this._status==RockPaperScissors.GAMEOVER){
         

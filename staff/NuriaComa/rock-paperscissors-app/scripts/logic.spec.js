@@ -1,11 +1,14 @@
 'use strict'
 
-
 describe('logic (rock-paper-scissors)', function () {
     var game
 
     beforeEach(function() {
         game = new RockPaperScissors('romeo', 'juliette')
+    })
+
+    it('should game states be different', function() {
+        expect(RockPaperScissors.CONTINUE).not.toBe(RockPaperScissors.GAMEOVER)
     })
 
     it('should err on invalid hands', function () {
@@ -36,6 +39,28 @@ describe('logic (rock-paper-scissors)', function () {
         expect(function() {
             game.play({}, [])
         }).toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('', '')
+        }).toThrowError('invalid hands')
+    })
+
+    it('should not err on valid hands variants', function () {
+        expect(function() {
+            game.play('ROCK', 'PAPER')
+        }).not.toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('    ROCK', 'PAPER       ')
+        }).not.toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('sciSsOrs', 'RocK')
+        }).not.toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('sciSsOrs     ', '     RocK')
+        }).not.toThrowError('invalid hands')
     })
 
     it('should player1 win in 2 rounds', function () {
@@ -49,7 +74,6 @@ describe('logic (rock-paper-scissors)', function () {
 
         var state = game.state()
         expect(state.length).toBe(2)
-
         expect(state[0]).toEqual({ player1: 'paper', player2: 'rock'})
         expect(state[1]).toEqual({ player1: 'scissors', player2: 'paper'})
     })

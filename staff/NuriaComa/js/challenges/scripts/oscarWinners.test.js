@@ -11,7 +11,7 @@ describe("Oscar List", function(){
     {movie: 'Gladiator', year: 2000},
     {movie: 'A beautiful mind', year: 2001},
     {movie: 'The Lord of the Rings: The Return of the King',year: 2003},
-    {movie: 'Rain Man', year: 1988}, {movie: 'Kramer vs. Kramer', year: 1979}]).toEqual(oscarList=[{movie: 'Kramer vs. Kramer', year: 1979},
+    {movie: 'Rain Man', year: 1988}, {movie: 'Kramer vs. Kramer', year: 1979}]).toBe(oscarList=[{movie: 'Kramer vs. Kramer', year: 1979},
                                                                                             {movie: 'Rain Man', year: 1988}, 
                                                                                             {movie: 'Forrest Gump', year: 1995},
                                                                                             {movie: 'Gladiator', year: 2000},
