@@ -7,6 +7,10 @@ describe('logic (rock-paper-scissors)', function () {
         game = new RockPaperScissors('romeo', 'juliette')
     })
 
+    it('should game states be different', function() {
+        expect(RockPaperScissors.CONTINUE).not.toBe(RockPaperScissors.GAMEOVER)
+    })
+
     it('should err on invalid hands', function () {
         expect(function() {
             game.play()
