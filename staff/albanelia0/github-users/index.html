@@ -5,34 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Github-Users</title>
+  <script src="vendor/bootstrap/4.1.0/css/bootstrap.min.css.map"></script>
 </head>
-<body>
+<body class="container-fluid">
   <header>
     <h1>Github-Users</h1>
     <form action="">
-      <input type="text" placeholder="Find users...">
-      <input type="submit">
+      <input class="input-text" type="text" placeholder="Find users...">
+      <input class="input-submit" type="submit">
     </form>
   </header>
 
   <main>
-    <section>
+    <section class="container">
       <h2>Results</h2>
-      <div class="results-container">
-      </div>
+      <div class="results-container"></div>
     </section>
-    <section>
+    <section class="profile">
       <h2>Profile</h2>
-      <img src="image/user-icon.png" style="width: 200px" alt="user gitgub">
+      <figure>
+        <img src="image/user-icon.png" style="width: 200px" alt="user gitgub">
+      </figure>
       <ul>
-        <li>Alba Martes</li>
-        <li>16 Repositories</li>
-        <li>zoo stars</li>
+        <li class="name"></li>
+        <li class="bio"></li>
+        <li class="repos"></li>
       </ul>
-      
+
     </section>
   </main>
-  
+
 
   <script src="scripts/main.js"></script>
 </body>
