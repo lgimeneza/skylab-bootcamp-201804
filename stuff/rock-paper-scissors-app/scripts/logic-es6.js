@@ -36,7 +36,7 @@ class RockPaperScissors {
             if (results.player1 > results.player2) winning = this._player1
             else if (results.player1 < results.player2) winning = this._player2
 
-            if (this._rounds.length > 1 && winning) {
+            if (winning) {
                 this._status = RockPaperScissors.GAMEOVER
                 this._winner = winning
             }
