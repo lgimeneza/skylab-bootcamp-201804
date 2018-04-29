@@ -16,11 +16,11 @@ class RockPaperScissors {
         if (typeof hand1 !=='string') throw invalidHands;
         if (typeof hand2 !=='string') throw invalidHands;
 
-        this._hand1 = hand1.trim();
-        this._hand2 = hand2.trim();
+        this._hand1 = hand1.trim().toLowerCase();
+        this._hand2 = hand2.trim().toLowerCase();
 
-        if (!this.handValid(this._hand1)) throw invalidHands;
-        if (!this.handValid(this._hand2)) throw invalidHands;
+        if (!this._handValid(this._hand1)) throw invalidHands;
+        if (!this._handValid(this._hand2)) throw invalidHands;
 
         if (this._status === RockPaperScissors.GAMEOVER) throw Error('GAME OVER!')
 
@@ -44,7 +44,6 @@ class RockPaperScissors {
             } else {
                 this._winner = this._player2;
             }
-
         } else {
             this._status = RockPaperScissors.CONTINUE;
         }
@@ -60,18 +59,9 @@ class RockPaperScissors {
 
     static get GAMEOVER(){ return 2; }
 
-    handValid(hand){
-        let _hand = hand.toLowerCase();
-        switch (_hand){
-            case 'rock':
-                return true;
-            case 'paper':
-                return true;
-            case 'scissors':
-                return true;
-            default:
-                return false;
-        }
-    }
+    _handValid(hand){
+        if (hand === 'rock' | hand === 'paper' | hand === 'scissors') return true;
 
+        return false;
+    }
 }
