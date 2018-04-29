@@ -19,8 +19,14 @@ class RockPaperScissors {
     }
 
     play(hand1, hand2) {
-        if (hand1 !== 'rock' && hand1 !== 'scissors' && hand1 !== 'paper') throw Error('invalid hands')
-        if (hand2 !== 'rock' && hand2 !== 'scissors' && hand2 !== 'paper') throw Error('invalid hands')
+
+        if (typeof hand1 !== 'string' || typeof hand2 !== 'string') throw Error('invalid hands');
+
+        hand1 = hand1.toLowerCase().trim();
+        hand2 = hand2.toLowerCase().trim();
+
+        if (hand1 !== 'rock' && hand1 !== 'scissors' && hand1 !== 'paper') throw Error('invalid hands');
+        if (hand2 !== 'rock' && hand2 !== 'scissors' && hand2 !== 'paper') throw Error('invalid hands');
 
         this.status();
 
@@ -128,4 +134,4 @@ function winOneRound(target, hand1, hand2) {
 
 var game = new RockPaperScissors('romeo', 'juliette');
 
-
+game.play('     sciSsOrs', 'RocK')
