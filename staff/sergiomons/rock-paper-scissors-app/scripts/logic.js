@@ -6,7 +6,6 @@ let RockPaperScissors = (function() {
             this._player1 = player1
             this._player2 = player2
             this._history = []
-            this._symbols = ['rock', 'paper', 'scissors']
             this._status = RockPaperScissors.CONTINUE
             this._countPlayer1 = 0
             this._countPlayer2 = 0
@@ -18,25 +17,21 @@ let RockPaperScissors = (function() {
     
         play(hand1, hand2) {
             if (this._status === 1) throw Error ('GAME OVER!')
-            if ((typeof hand1 !== 'string' || typeof hand2 !== 'string') || (this._symbols.indexOf(hand1 = hand1.trim().toLowerCase()) === -1) || (this._symbols.indexOf(hand2 = hand2.trim().toLowerCase()) === -1)) throw Error('invalid hands')
-        
+            if (typeof hand1 !== 'string' || typeof hand2 !== 'string')  throw Error('invalid hands')
+            hand1 = hand1.trim().toLowerCase()
+            hand2 = hand2.trim().toLowerCase()
+            if ((hand1 !== "rock" && hand1 !== "paper" && hand1 !== "scissors") || (hand2 !== "rock" && hand2 !== "paper" && hand2 !== "scissors")) throw Error('invalid hands')
             const playerHands = { player1: hand1, player2: hand2 }
             this._history.push(playerHands)
             operHand(this, hand1, hand2)
             this._check();
         }
     
-        state() {
-            return this._history
-        }
+        state() { return this._history}
     
-        status() {
-             return this._status
-        }
+        status() { return this._status}
     
-        winner() {
-            return this._winner
-        }
+        winner() { return this._winner}
     
         _check() {
             if ((this._countPlayer1 === 2 || this._countPlayer2 === 2) || (this._whoWinArray[0] === 0 && this._whoWinArray[1] === 0 && this._whoWinArray[2] !== 0))
