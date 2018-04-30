@@ -7,6 +7,10 @@ describe('logic (rock-paper-scissors)', function () {
         game = new RockPaperScissors('romeo', 'juliette')
     })
 
+    it('should game states be different', function() {
+        expect(RockPaperScissors.CONTINUE).not.toBe(RockPaperScissors.GAMEOVER)
+    })
+
     it('should err on invalid hands', function () {
         expect(function() {
             game.play()
@@ -41,11 +45,29 @@ describe('logic (rock-paper-scissors)', function () {
         }).toThrowError('invalid hands')
     })
 
+    it('should not err on valid hands variants', function () {
+        expect(function() {
+            game.play('ROCK', 'PAPER')
+        }).not.toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('    ROCK', 'PAPER       ')
+        }).not.toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('sciSsOrs', 'RocK')
+        }).not.toThrowError('invalid hands')
+
+        expect(function() {
+            game.play('sciSsOrs     ', '     RocK')
+        }).not.toThrowError('invalid hands')
+    })
+
     it('should player1 win in 2 rounds', function () {
         game.play('paper', 'rock')
         expect(game.status()).toBe(RockPaperScissors.CONTINUE)
         expect(game.winner()).toBeUndefined()
-        
+
         game.play('scissors', 'paper')
         expect(game.status()).toBe(RockPaperScissors.GAMEOVER)
         expect(game.winner()).toBe('romeo')
@@ -57,7 +79,6 @@ describe('logic (rock-paper-scissors)', function () {
     })
 
     it('should player1 win in 3 rounds', function () {
-        
         game.play('rock', 'paper')
         expect(game.status()).toBe(RockPaperScissors.CONTINUE)
         expect(game.winner()).toBeUndefined()

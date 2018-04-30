@@ -14,7 +14,10 @@ class RockPaperScissors {
         if (this._status===RockPaperScissors.GAMEOVER) {
             throw Error('GAME OVER!')
         }
-        if ((h1==='paper' || h1==='rock' || h1==='scissors') && (h2==='paper' || h2==='rock' || h2==='scissors')) {
+        if (typeof h1 !=='string' || typeof h2 !=='string') {
+            throw Error('invalid hands')
+        }
+        if ((h1.toLowerCase().trim()==='paper' || h1.toLowerCase().trim()==='rock' || h1.toLowerCase().trim()==='scissors') && (h2.toLowerCase().trim()==='paper' || h2.toLowerCase().trim()==='rock' || h2.toLowerCase().trim()==='scissors')) {
             this._state.push({'player1':h1,'player2':h2})
             if (h1!==h2) {
                 if ((h1==='rock' && h2==='scissors')||(h1==='scissors' && h2==='paper')||(h1==='paper' && h2==='rock')) {
