@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Trigger/Open The Modal -->
+    <!-- <button id="myBtn">Open Modal</button> -->
+    <section>
+        <h5>AVISO: Calculadora en desarrollo.</h5>
+        <h6>El orden del factor SÍ que altera el producto.</h6>
+        
+    </section>
+    <!-- The Modal -->
+    <article id="myModal" class="modal">
+
+        <div class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <form>
+                <input type="text" name="calculator-screen" id="calculator-screen">
+
+                <input type="button" value="AC" class="clearAll">
+                <input type="button" value="C" class="clear">
+                <input type="button" value="±" class="negate">
+                <input type="button" value="&divide;" class="div">
+
+                <input type="button" value="7" class="seven">
+                <input type="button" value="8" class="eight">
+                <input type="button" value="9" class="nine">
+                <input type="button" value="&times;" class="mul">
+
+                <input type="button" value="4" class="four">
+                <input type="button" value="5" class="five">
+                <input type="button" value="6" class="six">
+                <input type="button" value="-" class="sub">
+
+                <input type="button" value="1" class="one">
+                <input type="button" value="2" class="two">
+                <input type="button" value="3" class="three">
+                <input type="button" value="+" class="sum">
+
+                <input type="button" value="," class="comma">
+                <input type="button" value="0" class="zero">
+                <input type="button" value="=" class="equal">
+
+            </form>
+            
+
+        </div>
+
+    </article>
+    <script src="vendor/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="scripts/logic.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
