@@ -25,4 +25,4 @@ function toRandomCase(string){
      }
      return newArr.join(" ");
     myArr = Math.floor(Math.random()*2);
-}
+};

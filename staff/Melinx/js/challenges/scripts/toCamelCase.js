@@ -1,7 +1,5 @@
 'use strict'
 
-var str = "hello My World";
-
     //A GOOD SOLUTION:
     
     function toCamelCase(str){

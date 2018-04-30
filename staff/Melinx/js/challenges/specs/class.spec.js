@@ -6,7 +6,7 @@ describe("Class - a spy, when findBy is used to search for a Person's info.", fu
     beforeEach(function() {
       members = {
         findBy: function(value) {
-          Person = this[i];
+          Person = this;
         },
         getInfo: function() {
           return info;
@@ -32,22 +32,22 @@ describe("Class - a spy, when findBy is used to search for a Person's info.", fu
     });
   });
 
-  describe("Class - a spy to throw an error", function() {
-    var foo, bar;
+  // describe("Class - a spy to throw an error", function() {
+  //   var foo, bar;
   
-    beforeEach(function() {
-        members = {
-            findBy: function(value) {
-              Person = this[i];
-            }
-      };
+  //   beforeEach(function() {
+  //       members = {
+  //           findBy: function(value) {
+  //             Person = this[i];
+  //           }
+  //     };
   
-      spyOn(members, 'findBy').and.throwError("input should be either the person\'s name OR their dni number");
-    });
+  //     spyOn(members, 'findBy').and.throwError("input should be either the person\'s name OR their dni number");
+  //   });
   
-    it("throws the value", function() {
-      expect(function() {
-        members.findBy(true)
-      }).toThrowError('input should be either the person\'s name OR their dni number');
-    });
-  });
+  //   it("throws the value", function() {
+  //     expect(function() {
+  //       members.findBy(true)
+  //     }).toThrowError('input should be either the person\'s name OR their dni number');
+  //   });
+  // });
