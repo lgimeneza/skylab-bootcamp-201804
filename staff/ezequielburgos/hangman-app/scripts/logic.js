@@ -2,72 +2,95 @@
 
 // TODO
 
-const Hangman = (function () {
+class Hangman {
 
-    class Hangman {
-        constructor(word, attempts = 10) {
-            if (typeof word !== 'string') {
-                throw Error('invalid word ' + word)
-            }
+    constructor(word, attempts = 10) {
 
-            this._word = word.trim();
+        this._word = word;
 
-            if (!this._word.length) throw Error('word cannot empty or blank')
+        if (typeof word !== 'string') throw Error('invalid word ' + word)
 
-            this._attempts = attempts || 10
+        this._attempts = attempts;
 
-            if (typeof this._attempts !== 'number') throw Error('invalid attempts ' + this._attempts)
+        this._status = Hangman.CONTINUE;
 
-            if (this._attempts <= 0) throw Error('invalid number of attempts' + this._attempts)
-
-            this._guessed = new Array(this._word.length).fill('_')
-
-            this._status = Hangman.CONTINUE
-
-        }
-
-        guessed(){
-            return this._guessed
-        }
-        
-        attempts(){
-            return this._attempts
-        }
-
-        status(){
-            return this._status
-        }
-
-        try(text){
-
-        }
-
-        static get CONTINUE(){return 0}
-        static get WIN(){return 1}
-        static get LOSE(){return 2}
+        this._wordEmptyArr = [];
+        for (let i = 0; i < word.length; i++) { this._wordEmptyArr.push('_') };
 
     }
 
-    function tryLetter(target, letter){
+    try(letterOrWord) {
 
+        if (typeof letterOrWord !== 'string') throw Error('invalid letter or word ' + letterOrWord)
+
+        if (letterOrWord.length === 1) {
+            return tryLetter(this, letterOrWord)
+        } else if (letterOrWord.length > 1) {
+            return tryWord(this, letterOrWord)
+        } else {
+            throw Error('invalid letter or word ' + letterOrWord)
+        }
+
+        guessed();
+        status();
+    }
+    guessed() {
+        return this._wordEmptyArr;
+    }
+    attempts() {
+        return this._attempts;
+    }
+    status() {
+        return this._status;
     }
 
-    function tryWord(target, word){
+}
+
+function tryLetter(_this, letter) {
+    // var wordArr = _this._word.split("");
+
+    // for (let i = 0; i < wordArr.length; i++) {
+    //     const element = wordArr[i];
+    //     if (wordArr[i] === letter) {
+    //         _this._wordEmptyArr[i] = letter;
+    //     }else{
+    //         _this._attempts--;
+    //         if (_this._attempts === 0) { _this._status = 0 }
+    //     }
+    // }
+
+    if (_this._word.indexOf(letter) !== -1) {
+        return _this._wordEmptyArr[_this._word.indexOf(letter)] = letter;
+    } else {
+        _this._attempts--;
+        if (_this._attempts === 0) { _this._status = 0 }
+        return false
 
     }
+}
 
-    function update(target){
-
+function tryWord(_this, word) {
+    if (_this._word === word) {
+        _this._status = 2;
+        for (let i = 0; i < word.length; i++) {
+            const element = word[i]
+            _this._wordEmptyArr[i] = element;
+        }
+        return _this._wordEmptyArr;
+    } else {
+        _this._status = 0;
+        _this._attempts = 0;
     }
+}
+
+Hangman.CONTINUE = 1;
+Hangman.WIN = 2;
+Hangman.LOSE = 0;
 
 
-    return Hangman
+let hangman = new Hangman('hello');
 
-})();
-
-
-
-
+(hangman.try('h'))
 
 
 
