@@ -6,7 +6,6 @@ describe('logic (beers)', function() {
             expect(error).toBeUndefined();
 
             expect(beers).toBeDefined();
-
             expect(beers.length).toBe(4);
 
             done();
@@ -28,7 +27,6 @@ describe('logic (beers)', function() {
             expect(error).toBeUndefined();
             
             expect(beer).toBeDefined();
-
             expect(beer.id).toBe('xnRniA');
 
             done();
