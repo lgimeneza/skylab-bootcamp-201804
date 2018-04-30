@@ -1,7 +1,7 @@
 'use strict';
 
 
-function foreach(arr, callback) {
+function forEach(arr, callback) {
 
     if (typeof arr !== 'object' || !arr instanceof Array) throw Error('input arr is not an array');
 
