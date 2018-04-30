@@ -27,7 +27,7 @@ class RockPaperScissors {
                     this._score2++
                 }
             }
-            if ((this._score1===2||this._score2===2)||(this._state.length===3 &&((this._score1===1 && this._score2===0 )||(this._score1===0 && this._player2===1)))||(this._state.length>3 && (this._score1!==this._score2))) {
+            if ((this._score1===2||this._score2===2)||(this._state.length===3 && ((this._score1===1 && this._score2===0 )||(this._score1===0 && this._score2===1)))||(this._state.length>3 && (this._score1!==this._score2))) {
                 this._status=RockPaperScissors.GAMEOVER
             }
             else {
