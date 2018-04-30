@@ -1,6 +1,8 @@
 'use strict';
 
 function toRandomCase(text) {
+    if(typeof text !== 'string') throw Error ('input text is not a string')
+
     var newText = new String(text);
     var res = [];
     var temp;
