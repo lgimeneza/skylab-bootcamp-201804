@@ -11,19 +11,8 @@ function RockPaperScissors(player1, player2) {
 RockPaperScissors.CONTINUE = 0;
 RockPaperScissors.GAMEOVER = 1;
 
-RockPaperScissors.prototype._handsAreStrings = function (hand1, hand2) {
-    return typeof hand1 === 'string' && typeof hand2 === 'string';
-}
-
-RockPaperScissors.prototype._handsAreValidSymbols = function (hand1, hand2) {
-    return this._symbols.indexOf(hand1.trim().toLowerCase()) > -1 && this._symbols.indexOf(hand2.trim().toLowerCase()) > -1;
-}
-
 RockPaperScissors.prototype.play = function (hand1, hand2) {
-    if (!this._handsAreStrings(hand1, hand2) || !this._handsAreValidSymbols(hand1, hand2)) throw Error('invalid hands');
-
-    hand1 = hand1.trim().toLowerCase();
-    hand2 = hand2.trim().toLowerCase();
+    if (typeof hand1 !== 'string' || typeof hand2 !== 'string' || this._symbols.indexOf(hand1 = hand1.trim().toLowerCase()) === -1 || this._symbols.indexOf(hand2 = hand2.trim().toLowerCase()) === -1) throw Error('invalid hands');
 
     if (this._status === RockPaperScissors.CONTINUE) {
         var round = { player1: hand1, player2: hand2 };
@@ -66,6 +55,6 @@ RockPaperScissors.prototype._roundWinner = function (round) {
 
 RockPaperScissors.prototype.status = function () { return this._status; };
 
-RockPaperScissors.prototype.state = function () { return this._rounds; };
+RockPaperScissors.prototype.state = function() { return this._rounds; };
 
 RockPaperScissors.prototype.winner = function () { return this._winner; };
