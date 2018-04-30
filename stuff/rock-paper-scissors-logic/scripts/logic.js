@@ -36,13 +36,18 @@ RockPaperScissors.prototype.play = function (hand1, hand2) {
 
 RockPaperScissors.prototype._updateStatus = function () {
     if (this._rounds.length > 1) {
-        var results = this._rounds.reduce(function (accum, round) {
+        var tieOnRound2;
+
+        var results = this._rounds.reduce(function (accum, round, index) {
             var roundWinner = this._roundWinner(round);
 
             if (roundWinner) accum[roundWinner]++;
+            else if (index === 1) tieOnRound2 = true;
 
             return accum;
         }.bind(this), { player1: 0, player2: 0 });
+
+        if (this._rounds.length === 2 && tieOnRound2) return;
 
         var winning;
 
