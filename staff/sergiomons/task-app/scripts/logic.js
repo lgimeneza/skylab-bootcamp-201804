@@ -48,7 +48,7 @@ var logic = (function () {
                 if (task.id === id){ 
                     taskIndex = index;
 
-                    return task
+                    return task;
                 };
             });
 
