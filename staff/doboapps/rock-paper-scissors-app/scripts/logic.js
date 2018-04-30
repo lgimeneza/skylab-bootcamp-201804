@@ -71,16 +71,10 @@ function rule(hand1, hand2, obj) {
     } else if (hand2 === "paper" && hand1 === "rock"|| hand2 === "scissors" && hand1 === "paper" || hand2 === "rock" && hand1 === "scissors"){
         obj._score.p2++
     } else {
-        
+        //si los scores son iguales (empate) y el numero de ronda es mayor a 3, quien gane gana
+        // si los scores no son iguales y el numero de ronda es mayor a 3, gana el de score mas grande
     }
     
-    // if (hand1 === "paper" && hand2 === "rock") obj._score.p1++;
-    // if (hand1 === "scissors" && hand2 === "paper") obj._score.p1++;
-    // if (hand1 === "rock" && hand2 === "scissors") obj._score.p1++;
-
-    // if (hand2 === "paper" && hand1 === "rock") obj._score.p2++;
-    // if (hand2 === "scissors" && hand1 === "paper") obj._score.p2++;
-    // if (hand2 === "rock" && hand1 === "scissors") obj._score.p2++;
 
     console.log(obj._score)
 
