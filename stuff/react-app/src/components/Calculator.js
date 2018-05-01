@@ -1,67 +1,98 @@
-'use strict'
-
 import React, { Component } from 'react'
+import './Calculator.css'
 import calculin from '../logic/calculin'
+import Result from './Result'
+import Input from './Input'
+import History from './History'
 
 class Calculator extends Component { // smart
     constructor() {
         super()
 
         this.state = {
-            operand1: undefined,
-            operand2: undefined,
-            result: undefined
+            operand1: '',
+            operand2: '',
+            result: '',
+            history: []
         }
+
+        this.changeOperand1 = this.changeOperand1.bind(this)
+        this.changeOperand2 = this.changeOperand2.bind(this)
+        this.submit = this.submit.bind(this)
     }
 
-    changeOperand1 = (e) => {
-        const operand1 = parseInt(e.target.value)
+    changeOperand1(e) {
+        let operand1 = e.target.value
 
         this.setState({
             operand1
         })
     }
 
-    changeOperand2 = (e) => {
-        const operand2 = parseInt(e.target.value)
+    changeOperand2(e) {
+        const operand2 = e.target.value
 
         this.setState({
             operand2
         })
     }
 
-    submit = (e) => {
+    submit(e) {
         e.preventDefault()
 
+        const operand1 = parseInt(this.state.operand1)
+        const operand2 = parseInt(this.state.operand2)
         let result
 
         switch (this.props.operation) {
             case '+':
-                result = calculin.sum(this.state.operand1, this.state.operand2)
+                result = calculin.sum(operand1, operand2)
                 break
             case '-':
-                result = calculin.sub(this.state.operand1, this.state.operand2)
+                result = calculin.sub(operand1, operand2)
                 break
             case '*':
-                result = calculin.mul(this.state.operand1, this.state.operand2)
+                result = calculin.mul(operand1, operand2)
                 break
             case '/':
-                result = calculin.div(this.state.operand1, this.state.operand2)
+                result = calculin.div(operand1, operand2)
         }
 
+        const operation = `${operand1} ${this.props.operation} ${operand2}  = ${result}`
+
+        result = result.toString()
+    
+
+        this.setState(prevState => {
+            return {
+                result,
+                history: [...prevState.history, operation]
+            }
+        })
+    }
+
+    clear = (e) => {
+        e.preventDefault()
+
         this.setState({
-            result
+            operand1: '',
+            operand2: '',
+            result: ''
         })
     }
 
     render() {
-        return <form onSubmit={this.submit}>
-            <input type="text" onChange={this.changeOperand1} />
-            {this.props.operation}
-            <input type="text" onChange={this.changeOperand2} />
-            <button type="submit">=</button>
-            {this.state.result}
-        </form>
+        return <div className="form">
+            <form onSubmit={this.submit}>
+                <Input handleChange={this.changeOperand1} value={this.state.operand1} />
+                {this.props.operation}
+                <Input handleChange={this.changeOperand2} value={this.state.operand2} />
+                <button type="submit">=</button>
+                <Result value={this.state.result} />
+                <button onClick={this.clear}>clear</button>
+            </form>
+            <History operations={this.state.history} />
+        </div>
     }
 }
 

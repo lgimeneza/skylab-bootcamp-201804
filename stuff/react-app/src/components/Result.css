@@ -1,0 +1,6 @@
+.result {
+    background-color: skyblue;
+    display: inline-block;
+    min-width: 20px;
+    min-height: 20px;
+}
