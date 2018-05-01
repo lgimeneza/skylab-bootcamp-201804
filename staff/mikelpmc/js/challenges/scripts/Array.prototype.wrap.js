@@ -1,3 +1,5 @@
+'use strict';
+
 // - wrap
 
 // create a polyfill and its test, in files Array.prototype.wrap.js (and .test.js, respectively) ,
