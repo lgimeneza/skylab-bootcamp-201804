@@ -1,0 +1,45 @@
+box-1{
+    background-color: aliceblue;
+}
+
+li{
+    color: lightcoral;
+}
+
+.bg-light{
+    background-color: rgba(128, 76, 165, 0.705)!important;
+}
+
+.jumbotron {
+    background-color: honeydew;
+    margin-bottom: 0;
+}
+
+.input-text{
+    display: inline;
+    width: 200px;
+    margin: 20px;
+}
+
+.listing{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    background: lightcyan;
+}
+
+.list-group-item{
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+.progress {
+   margin-bottom: 50px;
+
+}
+
+main{
+    width: 90%;
+    padding: 5% 10% 0%;
+}
