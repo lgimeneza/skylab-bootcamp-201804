@@ -5,6 +5,6 @@ function ListToDo(props){
         props.markTaskDone(taskId)
     }
 
-    return <ul>{props.tasks.map((task, index) => <li key= {index}> {task.text} <button onClick={() => handleClick(task.id)}>done</button> </li>)}</ul>
+    return <ul>{props.tasks.map((task, index) => <li key= {index}> {task.text} <button onClick={() => props.handleClick(task.id)}>done</button> </li>)}</ul>
 }
 export default ListToDo
