@@ -1,5 +1,3 @@
-'use strict'
-
 const calculin = {
     sum(a, b) { return a + b },
 

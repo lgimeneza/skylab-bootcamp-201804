@@ -1,21 +1,16 @@
-'use strict'
-
 // import React, { Component } from 'react'
 import React from 'react'
+import './Input.css'
 
 
 // class Input extends Component {
 //     render() {
-//         return <div className="input">
-//             <input type="text" onChange={this.props.handleChange} />
-//         </div>
+//         return <input className="input" type="text" onChange={this.props.handleChange} />
 //     }
 // }
 
 function Input(props) {
-    return <div className="input">
-        <input type="text" onChange={props.handleChange} />
-    </div>
+    return <input className="input" type="text" onChange={props.handleChange} value={props.value}/>
 }
 
 
