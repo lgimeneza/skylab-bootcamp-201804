@@ -10,7 +10,7 @@ a = {
 } 
 
 a.fun([1,2,3])
-(3) [2, 3, 4]
+(3) [2, 3, 4]
 
 a = {
 	b: 1,
@@ -20,7 +20,7 @@ a = {
 } 
 
 a.fun([1,2,3])
-(3) [2, 3, 4]
+(3) [2, 3, 4]
 ```
 
 # class inheritance, method overriding, and accessing ancestor members by means of super and __proto__ (WARN!) 
@@ -91,15 +91,16 @@ var Human = (function () {
 })();
 
 h = new Human('human')
-Person {name: "human"}
+Person {name: "human"}
 
 w = Human.newWoman('sarah')
-Woman {name: "sarah"}
+Woman {name: "sarah"}
 
 m = Human.newMan('john')
-Man {name: "john"}
+Man {name: "john"}
 ```
 
 # References
 
 [ES6 tips and tricks to make your code cleaner, shorter, and easier to read!](https://medium.freecodecamp.org/make-your-code-cleaner-shorter-and-easier-to-read-es6-tips-and-tricks-afd4ce25977c)
+
