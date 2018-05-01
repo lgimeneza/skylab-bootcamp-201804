@@ -8,7 +8,7 @@
 //   }
 //   iterate (index);
 // }
-
+'use strict'
 
 function forEach(array, action){
   if (typeof action!== "function" && !(array instanceof Array)) throw Error('wrong input(s)')

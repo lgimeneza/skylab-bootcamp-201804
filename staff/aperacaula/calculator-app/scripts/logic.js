@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class Calculator {
   constructor() {
     this._status = ""
@@ -102,3 +103,5 @@ class Calculator {
   
 
 }
+=======
+>>>>>>> features/react

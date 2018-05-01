@@ -23,9 +23,6 @@ class RockPaperScissors {
 
         let obj = { player1: hand1, player2: hand2 }
         this.stateArr.push(obj);
-
-        
-
         rule(hand1, hand2, this);
 
     }
@@ -73,8 +70,7 @@ function rule(hand1, hand2, obj) {
     } else if (hand2 === "paper" && hand1 === "rock"|| hand2 === "scissors" && hand1 === "paper" || hand2 === "rock" && hand1 === "scissors"){
         obj._score.p2++
     } else {
-        if this.rounds>3
-
+        if (this.rounds>=3){}
     }
     
     // if (hand1 === "paper" && hand2 === "rock") obj._score.p1++;

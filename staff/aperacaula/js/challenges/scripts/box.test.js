@@ -1,5 +1,5 @@
 'use strict';
-debugger
+
 test(
     function(){
         box.keep('123','test');
