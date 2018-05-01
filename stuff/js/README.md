@@ -14,13 +14,13 @@
 
 ```js
 function filter(arr, func) {
-    var res = [];
+     var res = [];
 
-    for (var i = 0; i < arr.length; i++) {
-        var val = arr[i];
+     for (var i = 0; i < arr.length; i++) {
+         var val = arr[i];
 
-        if (func(val)) res.push(val);
-    }
+         if (func(val)) res.push(val);
+     }
 
     return res;
 }
@@ -32,6 +32,7 @@ function filter(arr, func) {
 
 [Recursion in JavaScript](https://www.codecademy.com/es/courses/javascript-lesson-205/0/1)
 
+
 # scope & context
 
 ```js
@@ -39,29 +40,23 @@ function filter(arr, func) {
 
 var fun;
 
-for (var i = 0; i < 3; i++)
-    if (i === 2)
-        fun = function() {
-            return i;
-        };
+for (var i = 0; i < 3; i++) if (i === 2) fun = function() { return i; };
 
 fun(); // -> 3 // why!?
 
 // how to implement the following?
 
-concat(1)
-    .concat(2)
-    .toString(); // -> "1 2"
+concat(1).concat(2).toString(); // -> "1 2"
 
 // first approach
 
 function concat(text) {
-    return {
-        concat: function(nextText) {
-            return {
+	return {
+	    concat: function(nextText) {
+			return {
                 toString: function() {
                     return text + ' ' + nextText;
-                }
+                }                
             };
         }
     };
@@ -69,58 +64,43 @@ function concat(text) {
 
 // what if requiring to concat a variable number of times in one statement?
 
-concat(1)
-    .concat(2)
-    .toString(); // -> "1 2"
-concat(1)
-    .concat(2)
-    .concat(3)
-    .toString(); // -> "1 2 3"
-concat(1)
-    .concat(2)
-    .concat(3)
-    .concat(4)
-    .toString(); // -> "1 2 3 4"
+concat(1).concat(2).toString(); // -> "1 2"
+concat(1).concat(2).concat(3).toString(); // -> "1 2 3"
+concat(1).concat(2).concat(3).concat(4).toString(); // -> "1 2 3 4"
 
 function concat(text) {
-    var accum = text;
+	var accum = text;
 
-    return {
-        concat: function(text) {
-            accum += ' ' + text;
+	return {
+		concat: function(text) {
+			accum += ' ' + text;
 
-            return this;
+			return this;
         },
 
-        toString: function() {
-            return accum;
+		toString: function() {
+			return accum;
         }
     };
 }
 
 // what happens if...
 
-concat(1)
-    .concat(2)
-    .concat(3)
-    .toString()
-    .concat(4); // -> "1 2 34" -> 3 and 4 are concatenated in a different manner! (no space in-between)
+concat(1).concat(2).concat(3).toString().concat(4); // -> "1 2 34" -> 3 and 4 are concatenated in a different manner! (no space in-between)
 
 // why is this happening!? mmm... may doc about String.prototype.concat() help? ;)
+
 ```
 
 [Understanding Scope and Context in JavaScript](http://ryanmorr.com/understanding-scope-and-context-in-javascript/)
 
 [Everything you wanted to know about JavaScript scope](https://toddmotto.com/everything-you-wanted-to-know-about-javascript-scope/)
 
+
 # chaining methods (aka method chaining or chainable or cascading)
 
 ```js
-a()
-    .b()
-    .c()
-    .d()
-    .e();
+a().b().c().d().e();
 ```
 
 # self-invoking function
@@ -128,32 +108,25 @@ a()
 ```js
 var funA;
 (function() {
-    funA = function(text) {
-        return wtf(text);
-    };
+	funA = function(text) { return wtf(text); }
 
-    function wtf(text) {
-        return text + '!!!';
-    }
+	function wtf(text) { return text + '!!!'; }
 })();
+
 
 var funB;
 (function() {
-    funB = function(text) {
-        return wtf(text);
-    };
+	funB = function(text) { return wtf(text); }
 
-    function wtf(text) {
-        return text + '???';
-    }
+	function wtf(text) { return text + '???'; }
 })();
 
 // NOTE: as wtf() is defined each one in its own scope, they do not collide 👍
 
 funA('hola');
-('hola!!!');
+"hola!!!"
 funB('hola');
-('hola???');
+"hola???"
 ```
 
 [IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
@@ -164,7 +137,7 @@ funB('hola');
 
 # [prototype & inheritance](prototype-inheritance)
 
-[Javascript inheritance behind the scene **proto**, [[prototype]] and prototype](https://hackernoon.com/understand-nodejs-javascript-object-inheritance-proto-prototype-class-9bd951700b29)
+[Javascript inheritance behind the scene __proto__, [[prototype]] and prototype](https://hackernoon.com/understand-nodejs-javascript-object-inheritance-proto-prototype-class-9bd951700b29)
 
 [JavaScript's Pseudo Classical Inheritance diagram](https://kenneth-kin-lum.blogspot.com.es/2012/10/javascripts-pseudo-classical.html)
 
