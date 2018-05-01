@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react'
 import calculin from '../logic/calculin'
+import Result from './Result'
+import Input from './Input'
 
 class Calculator extends Component { // smart
     constructor() {
@@ -12,9 +14,13 @@ class Calculator extends Component { // smart
             operand2: undefined,
             result: undefined
         }
+
+        this.changeOperand1 = this.changeOperand1.bind(this)
+        this.changeOperand2 = this.changeOperand2.bind(this)
+        this.submit = this.submit.bind(this)
     }
 
-    changeOperand1 = (e) => {
+    changeOperand1(e) {
         const operand1 = parseInt(e.target.value)
 
         this.setState({
@@ -22,7 +28,7 @@ class Calculator extends Component { // smart
         })
     }
 
-    changeOperand2 = (e) => {
+    changeOperand2(e) {
         const operand2 = parseInt(e.target.value)
 
         this.setState({
@@ -30,7 +36,7 @@ class Calculator extends Component { // smart
         })
     }
 
-    submit = (e) => {
+    submit(e) {
         e.preventDefault()
 
         let result
@@ -56,11 +62,11 @@ class Calculator extends Component { // smart
 
     render() {
         return <form onSubmit={this.submit}>
-            <input type="text" onChange={this.changeOperand1} />
+            <Input handleChange={this.changeOperand1} />
             {this.props.operation}
-            <input type="text" onChange={this.changeOperand2} />
+            <Input handleChange={this.changeOperand2} />
             <button type="submit">=</button>
-            {this.state.result}
+            <Result value={this.state.result} />
         </form>
     }
 }
