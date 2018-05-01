@@ -1,24 +1,17 @@
 'use strict';
 
-// RECURSIVIDAD
-// forEach(a, console.log)
-// function forEach:
+function forEach(arr, handler) {
+    if (typeof arr !== 'object' || !arr instanceof Array) throw Error('input array is not an array');
 
-var newArr = [];
+    if (typeof handler !== 'function') throw Error('input handler is not a function');
 
-function forEach(arr, handler /*esto será console.log*/){
-    var iterate = function(index){
-        handler(arr[index], index, arr);
-        // this line is for testing:
-        newArr.push(arr[index], index, arr);  
+	var iterate = function(index) {
+		handler(arr[index]);
+		
+		if(++index < arr.length) iterate(index);
+    }
 
-        if(++index != arr.length){
-            iterate(index);
-        }
-            
-    };
-    iterate(0);
-    console.log(newArr);
+	iterate(0);
 }
 
 
