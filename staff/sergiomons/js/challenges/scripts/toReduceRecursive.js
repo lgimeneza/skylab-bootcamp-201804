@@ -12,4 +12,4 @@
    }
     iterate(0);
    return sum;
-}
+};

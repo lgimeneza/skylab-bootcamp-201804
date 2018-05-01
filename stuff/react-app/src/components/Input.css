@@ -1,0 +1,6 @@
+.input {
+    display: inline-block;
+    background-color: skyblue;
+    min-width: 20px;
+    min-height: 20px;
+}
