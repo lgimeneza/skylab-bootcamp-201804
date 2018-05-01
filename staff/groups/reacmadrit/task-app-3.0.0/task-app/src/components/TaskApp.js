@@ -8,7 +8,6 @@ class TaskApp extends Component {
         super()
         this.state = {
             inputText: '',
-            listTasks: [],
             listTodos: [],
             listDones: []
         }
@@ -16,6 +15,7 @@ class TaskApp extends Component {
         this._handlerAddingTask = this._handlerAddingTask.bind(this)
         this.filterTasks = this.filterTasks.bind(this)
         this.markDone=this.markDone.bind(this)
+        this.delete=this.delete.bind(this)
     }
 
     addTask(e) {
@@ -27,7 +27,7 @@ class TaskApp extends Component {
                 this.setState(prevState => {
                     return {
                         inputText: '',
-                        listTasks: [...prevState.listTasks, taskToAdd]
+                        listTodos: [...prevState.listTodos, taskToAdd]
                     }
                 })
             })
@@ -38,14 +38,13 @@ class TaskApp extends Component {
 
     filterTasks() {
 
-        let _listTodos = this.state.listTasks.filter(v => {
+        let _listTasks = this.state.listTasks.filter(v => {
             return v.done === false
         })
         let _listDones = this.state.listTasks.filter(v => {
             return v.done === true
         })
-        console.log(this.state.listTasks)
-        console.log(_listTodos)
+
         this.setState({
             listTodos: _listTodos,
             listDones: _listDones
@@ -60,7 +59,7 @@ class TaskApp extends Component {
         })
     }
     markDone(iden) {
-        let tasksDone=this.state.listTasks.map(function(v) {
+        let tasksDone=this.state.listTodos.map(function(v) {
             if (v.id===iden) {
                 v.done=true
             }
@@ -68,7 +67,19 @@ class TaskApp extends Component {
         })
 
         this.setState({
-         listTasks: tasksDone
+            listTodos: tasksDone
+        })
+    }
+
+    delete(iden) {
+        let taskDelete=this.state.listDones.map(function(v) {
+            if (v.id!==iden) {
+                return v
+            }  
+        })
+
+        this.setState({
+            listDones: taskDelete
         })
     }
     render() {
@@ -86,7 +97,7 @@ class TaskApp extends Component {
 
             </form>
 
-        <UpdateLists listTodos={this.state.listTodos} listDones={this.state.listDones} onMarkDone={this.markDone}>
+        <UpdateLists listTodos={this.state.listTodos} listDones={this.state.listDones} onMarkDone={this.markDone} onDelete={this.delete}>
                 
             </UpdateLists>
         </div>
