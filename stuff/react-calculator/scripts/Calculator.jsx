@@ -53,6 +53,7 @@ class Calculator extends React.Component { // smart
 
     render() {
         return <form onSubmit={this.submit}>
+            <h2>Calculator</h2>
             <input type="text" onChange={this.changeOperand1} />
             {this.props.operation}
             <input type="text" onChange={this.changeOperand2} />
