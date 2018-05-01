@@ -1,40 +1,52 @@
 'use strict';
 
-// forEach(a, console.log)
-var a = [1, 12, 19];
-console.log('Recursive version')
+var input = [1, 2, 3];
+var output = [];
 
-forEach(a, /*this second parameter will be handler*/ function (v, i, arr) { return console.log(v, i, arr) });
+test(
+    function() {
+        forEach(input, function(v) { output.push(v) });
 
-// function forEach compiled:
-console.log('Legacy version')
+        return output;
+    },
+    'forEach(input, function(v) { output.push(v) }) should fulfill output with input values [' + input + ']',
+    function(result) {
+        return input.toString() === result.toString();
+    }
+);
 
-var newArr2 = [];
-
-a.forEach(function (a, i, arr) {
-    console.log(a, i, arr)
-    newArr2.push(a, i, arr)
-});
-
-console.log(newArr2);
-
-var count = 0;
-
-// testing this:
-if (newArr.length == newArr2.length) {
-    for (var i = 0; i < newArr.length; i++) {
-        if (newArr[i] === newArr2[i]) {
-            count++;
-        } else {
-            console.log('position ' + i + ' does not match between the two arrays.');
+test(
+    withErrorCapturing(
+        function() {
+            forEach();
         }
+    ),
+    'forEach() without arguments should throw an error',
+    function(result) {
+        return result.message === 'input array is not an array';
     }
-    if (count == newArr.length) {
-        console.log('Your function is testing correctly');
+);
+
+test(
+    withErrorCapturing(
+        function() {
+            forEach(undefined, function(v) {});
+        }
+    ),
+    'forEach(undefined, function(v) {}) without first argument should throw an error',
+    function(result) {
+        return result.message === 'input array is not an array';
     }
-} else {
-    console.log('the arrays have a different length');
-}
+);
 
-
-
+test(
+    withErrorCapturing(
+        function() {
+            forEach(input);
+        }
+    ),
+    'forEach(input) without second argument should throw an error',
+    function(result) {
+        return result.message === 'input handler is not a function';
+    }
+);

@@ -1,0 +1,28 @@
+body {
+    background-color: rgb(231, 231, 231);
+}
+.row {
+    margin-bottom: 20px;
+}
+.form-control {
+   background-color: rgb(247, 236, 222);
+}
+.list-group-item{
+    font-size: 22px;
+
+}
+.btn-outline-secondary {
+    background-color: rgb(139, 172, 112);
+    color: white;
+}
+h1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-style: italic;
+    font-weight: bold;
+}
+h3 {
+    margin-top: 15px;
+}
+h3:nth-of-type(2) {
+    color: rgb(139, 172, 112);
+}
