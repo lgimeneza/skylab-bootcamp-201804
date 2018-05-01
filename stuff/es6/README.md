@@ -1,64 +1,75 @@
 # scope and context vs binding and arrow functions
 
 ```js
+a = {
+    b: 1,
+    fun: function(arr) {
+        return arr.map(v => v + this.b);
+    }
+};
+
+a.fun([1, 2, 3])(3)[(2, 3, 4)];
 
 a = {
-	b: 1,
-	fun: function(arr) {
-		return arr.map(v => v + this.b)
+    b: 1,
+    fun: function(arr) {
+        return arr.map(
+            function(v) {
+                return v + this.b;
+            }.bind(this)
+        );
     }
-} 
+};
 
-a.fun([1,2,3])
-(3) [2, 3, 4]
-
-a = {
-	b: 1,
-	fun: function(arr) {
-		return arr.map(function(v) { return v + this.b }.bind(this))
-    }
-} 
-
-a.fun([1,2,3])
-(3) [2, 3, 4]
+a.fun([1, 2, 3])(3)[(2, 3, 4)];
 ```
 
-# class inheritance, method overriding, and accessing ancestor members by means of super and __proto__ (WARN!) 
+# class inheritance, method overriding, and accessing ancestor members by means of super and **proto** (WARN!)
 
 ```js
 class Grandma {
-	toString() { return 'i am grandma' }
+    toString() {
+        return 'i am grandma';
+    }
 }
 
 class Mom extends Grandma {
-	toString() { return 'i am mom' }
+    toString() {
+        return 'i am mom';
+    }
 }
 
 class Daughter extends Mom {
-	toString() { return 'i am daughter' }
+    toString() {
+        return 'i am daughter';
+    }
 }
 
 class ConfusedDaughter extends Mom {
-    toString() { return super.toString() }
+    toString() {
+        return super.toString();
+    }
 }
 
 class VeryConfusedDaughter extends Mom {
-    toString() { return this.__proto__.__proto__.__proto__.toString() }
+    toString() {
+        return this.__proto__.__proto__.__proto__.toString();
+    }
 }
 
-console.log(new Grandma().toString())
+console.log(new Grandma().toString());
 // -> "i am grandma"
 
-console.log(new Mom().toString())
+console.log(new Mom().toString());
 // -> "i am mom"
 
-console.log(new Daughter().toString())
+console.log(new Daughter().toString());
 // -> "i am daughter"
 
-console.log(new ConfusedDaughter().toString())
+console.log(new ConfusedDaughter().toString());
 // -> "i am mom"
 
-console.log(new VeryConfusedDaughter().toString())
+console.log(new VeryConfusedDaughter().toString());
 // -> "i am grandma"
 ```
 
@@ -91,11 +102,15 @@ var Human = (function () {
 })();
 
 h = new Human('human')
-Person {name: "human"}
+Person {name: "human"}
 
 w = Human.newWoman('sarah')
-Woman {name: "sarah"}
+Woman {name: "sarah"}
 
 m = Human.newMan('john')
-Man {name: "john"}
+Man {name: "john"}
 ```
+
+# References
+
+[ES6 tips and tricks to make your code cleaner, shorter, and easier to read!](https://medium.freecodecamp.org/make-your-code-cleaner-shorter-and-easier-to-read-es6-tips-and-tricks-afd4ce25977c)
