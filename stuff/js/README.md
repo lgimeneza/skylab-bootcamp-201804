@@ -159,5 +159,3 @@ funB('hola');
 
 [Annotated ECMAScript 5.1 ](http://es5.github.io)
 
-[Promises explained with simple real life analogies](https://codeburst.io/javascript-promises-explained-with-simple-real-life-analogies-dd6908092138)
-
