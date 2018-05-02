@@ -54,7 +54,7 @@ class Taskapp extends Component {
         e.preventDefault()
 
         this.setState({
-            text =""
+            text : ""
         })
     }
 
