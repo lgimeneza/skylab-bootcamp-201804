@@ -4,7 +4,7 @@ import React from "react"
 function List(props) {
     return (
      <div>
-         <h2>{props.listTitle}</h2>
+         {props.taskList.length>0 && <h2>{props.listTitle}</h2>}
          <ul>
              {props.taskList.map((task,index) => {
                  if(task.done === props.condition){
