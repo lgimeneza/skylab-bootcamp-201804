@@ -1,5 +1,3 @@
-// smart
-
 import React, { Component } from 'react'
 import UpdateLists from './UpdateLists'
 
@@ -8,50 +6,40 @@ class TaskApp extends Component {
         super()
         this.state = {
             inputText: '',
-            listTodos: [],
-            listDones: []
+            listTasks: []
         }
         this.addTask = this.addTask.bind(this)
         this._handlerAddingTask = this._handlerAddingTask.bind(this)
-        this.filterTasks = this.filterTasks.bind(this)
         this.markDone=this.markDone.bind(this)
         this.delete=this.delete.bind(this)
     }
 
     addTask(e) {
         e.preventDefault()
-
-        return Promise.resolve()
-            .then(() => {
-                let taskToAdd = { desc: this.state.inputText, done: false, id: Date.now() }
-                this.setState(prevState => {
-                    return {
-                        inputText: '',
-                        listTodos: [...prevState.listTodos, taskToAdd]
-                    }
-                })
+        if (this.state.inputText.length>0) {
+            let taskToAdd = { desc: this.state.inputText, done: false, id: Date.now() }
+            this.setState(prevState => {
+                return {
+                    inputText: '',
+                    listTasks: [...prevState.listTasks, taskToAdd]
+                }
             })
-            .then(() => {
-                this.filterTasks()
-            })
+        }
     }
 
-    filterTasks() {
-
-        let _listTasks = this.state.listTasks.filter(v => {
-            return v.done === false
-        })
-        let _listDones = this.state.listTasks.filter(v => {
-            return v.done === true
-        })
-
+    delete(iden) {
+        let newTodos=this.state.listTasks.slice()
+        for (var i =0; i < newTodos.length; i++) {
+            if (newTodos[i].id === iden) {
+            newTodos.splice(i,1);
+            break;
+        }}
         this.setState({
-            listTodos: _listTodos,
-            listDones: _listDones
+            listTasks: newTodos
         })
-    }
 
-    // for onChange type input, so it automatically updates
+    }  
+
     _handlerAddingTask(e) {
         let inputText = e.target.value
         this.setState({
@@ -59,7 +47,8 @@ class TaskApp extends Component {
         })
     }
     markDone(iden) {
-        let tasksDone=this.state.listTodos.map(function(v) {
+        
+        let newTasks=this.state.listTasks.map(function(v) {
             if (v.id===iden) {
                 v.done=true
             }
@@ -67,19 +56,7 @@ class TaskApp extends Component {
         })
 
         this.setState({
-            listTodos: tasksDone
-        })
-    }
-
-    delete(iden) {
-        let taskDelete=this.state.listDones.map(function(v) {
-            if (v.id!==iden) {
-                return v
-            }  
-        })
-
-        this.setState({
-            listDones: taskDelete
+            listTasks: newTasks
         })
     }
     render() {
@@ -93,13 +70,9 @@ class TaskApp extends Component {
 
                 <input type="submit" />
 
-
-
             </form>
 
-        <UpdateLists listTodos={this.state.listTodos} listDones={this.state.listDones} onMarkDone={this.markDone} onDelete={this.delete}>
-                
-            </UpdateLists>
+        <UpdateLists onListTasks={this.state.listTasks} onMarkDone={this.markDone} onDelete={this.delete}/>
         </div>
     }
 }
