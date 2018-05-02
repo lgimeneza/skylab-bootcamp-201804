@@ -10,7 +10,7 @@ class Taskapp extends Component {
     super();
 
     this.state = {
-      newTask: "",
+      newTask: "",//ojo
       taskList: []
       /* id:Date.now() */
     };
@@ -23,6 +23,7 @@ class Taskapp extends Component {
     let newTask = e.target.value;
 
     this.setState({ newTask });
+
   }
 
   handleAddingTask(e) {
@@ -36,7 +37,13 @@ class Taskapp extends Component {
       return {
         taskList: [...prevState.taskList, task]
       };
+
     });
+
+    this.setState({
+      newTask: ''//fa que es resetegi l input
+    })
+    
   }
 
   modifyTaskStatus(id){
@@ -68,6 +75,7 @@ class Taskapp extends Component {
           <Form
             handleAddingTask={this.handleAddingTask}
             handleTaskToAdd={this.handleTaskToAdd}
+            newTask={this.state.newTask}//fa que es resetegi l input
           />
         </header>
         <main>
