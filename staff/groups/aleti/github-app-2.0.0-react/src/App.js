@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import SearchUsers from './components/SearchUsers'
 import UsersList from './components/UsersList'
 import UserDetails from './components/UserDetails'
@@ -39,25 +38,24 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <SearchUsers 
-            handleWriteUser={this.handleChange} 
-            searchUsers={this._searchUsers} 
-            value={this.state.query} />
-        <div className="Row">
-          <div className="Col">
-            <UsersList 
+        <section className="search-container">
+          <SearchUsers
+            handleWriteUser={this.handleChange}
+            searchUsers={this._searchUsers}
+            value={this.state.query}
+          />
+        </section>
+        <section className="results-container">
+          <div className="user-list">
+            <UsersList
               users={this.state.users}
-              handleUsers={this._retrieveUser}/>
+              handleUsers={this._retrieveUser}
+            />
           </div>
-          <div className="Col">
-            <UserDetails 
-              user={this.state.user}/>
+          <div className="user-detail">
+            <UserDetails user={this.state.user} />
           </div>
-        </div>
+        </section>
       </div>
     );
   }
