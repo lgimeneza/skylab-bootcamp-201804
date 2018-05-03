@@ -1,4 +1,4 @@
-'use strict'
+
 
 const logic = {
     url: 'https://api.github.com',
@@ -21,4 +21,4 @@ const logic = {
 
 }
 
-
+export default logic
