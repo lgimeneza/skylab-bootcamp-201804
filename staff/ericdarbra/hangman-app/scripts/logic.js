@@ -30,8 +30,6 @@ class Hangman {
         
         if(typeof char !== 'string')throw Error('invalid input letter or word')
 
-        let found;
-
 
         if(!wordToGuess.includes(char)){
             attem--
