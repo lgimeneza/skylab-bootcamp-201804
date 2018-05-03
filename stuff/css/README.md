@@ -46,3 +46,8 @@
 
 [text-overflow](https://css-tricks.com/almanac/properties/t/text-overflow/)
 
+# references
+
+["You might not need a CSS framework"](https://www.youtube.com/watch?v=5FdHqVDlXu0)
+
+
