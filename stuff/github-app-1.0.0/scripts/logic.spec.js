@@ -15,12 +15,34 @@ describe('logic (github)', () => {
         })
     })
 
+    it('should "no-results-please" search get no results', done => {
+        logic.searchUsers('no-results-please', (err, users) => {
+            expect(err).toBeUndefined()
+
+            expect(users).toBeDefined()
+            expect(users instanceof Array).toBeTruthy()
+            expect(users.length).toBe(0)
+
+            done()
+        })
+    })
+
     it('should "tom" retrieval get info', done => {
         logic.retrieveUser('tom', (err, user) => {
             expect(err).toBeUndefined()
             
             expect(user).toBeDefined()
             expect(user.login).toBe('tom')
+
+            done()
+        })
+    })
+
+    it('should "no-info-please" retrieval get no info', done => {
+        logic.retrieveUser('no-info-please', (err, user) => {
+            expect(err).toBeUndefined()
+            
+            expect(user).toBeUndefined()
 
             done()
         })

@@ -5,7 +5,7 @@ const logic = {
     token: 'TOKEN',
 
     headers() {
-        return { headers: { Authorization: `Bearer ${this.token}` } }
+        return { headers: { Authorization: `Bearer ${this.token}`}}
     },
 
     searchUsers(query) {
@@ -17,6 +17,5 @@ const logic = {
     retrieveUser(username) {
         return fetch(`${this.url}/users/${username}`, this.headers())
             .then(resp => resp.json())
-            .then(data => data.login ? data : undefined)
     }
 }

@@ -12,7 +12,20 @@ describe('logic (github)', () => {
 
                 done()
             })
-            .catch(err => expect(err).toBeUndefined())
+            .catch(done)
+    })
+
+    it('should "no-results-please" search get no results', done => {
+        logic.searchUsers('no-results-please')
+            .then(users => {
+
+                expect(users).toBeDefined()
+                expect(users instanceof Array).toBeTruthy()
+                expect(users.length).toBe(0)
+
+                done()
+            })
+            .catch(done)
     })
 
     it('should "tom" retrieval get info', done => {
@@ -23,6 +36,16 @@ describe('logic (github)', () => {
 
                 done()
             })
-            .catch(err => expect(err).toBeUndefined())
+            .catch(done)
+    })
+
+    it('should "no-info-please" retrieval get no info', done => {
+        logic.retrieveUser('no-info-please')
+            .then(user => {
+                expect(user).toBeUndefined()
+
+                done()
+            })
+            .catch(done)
     })
 })
