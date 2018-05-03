@@ -1,3 +1,15 @@
+# functions
+
+[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+
+[function expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function)
+
+[function declaration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)
+
+[First-class Function](https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function)
+
+[What is meant by 'first class object'?](https://stackoverflow.com/questions/705173/what-is-meant-by-first-class-object)
+
 # higher-order function
 
 ```js
@@ -123,7 +135,11 @@ funB('hola');
 
 ![constructor function & prototype](images/Array.prototype.forEach_var-vs-val.jpg)
 
-# [prototype inheritance](prototype-inheritance)
+# [prototype & inheritance](prototype-inheritance)
+
+[Javascript inheritance behind the scene __proto__, [[prototype]] and prototype](https://hackernoon.com/understand-nodejs-javascript-object-inheritance-proto-prototype-class-9bd951700b29)
+
+[JavaScript's Pseudo Classical Inheritance diagram](https://kenneth-kin-lum.blogspot.com.es/2012/10/javascripts-pseudo-classical.html)
 
 # references
 
@@ -140,4 +156,6 @@ funB('hola');
 [The Modern Javascript Tutorial](https://javascript.info/)
 
 [JS - The Definitive Guide](http://www.stilson.net/documentation/javascript.pdf)
+
+[Annotated ECMAScript 5.1 ](http://es5.github.io)
 

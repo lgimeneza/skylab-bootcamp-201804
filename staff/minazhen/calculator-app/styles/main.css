@@ -1,0 +1,54 @@
+body {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+section{
+    text-align: center;
+    margin-bottom: 1em;
+    width: 100%;
+}
+
+section > * {margin:0;}
+
+.modal-content form{
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-gap: 10px;
+    height:500px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+input{ 
+    border-radius: 10px; 
+    padding: 10px;
+}
+
+#calculator-screen {
+    font-size: 2em;
+    grid-column: 1 / -1;
+}
+
+.equal{
+    grid-column: 3 / -1;
+}
+
+@media screen and (orientation: portrait){
+
+    .modal-content form{
+        position: absolute;
+        display: grid;
+        height: 70vh;
+        left:2vw;
+        right: 0;
+        width: 86vw;
+        border: none;
+        justify-content: space-around;
+    }
+
+
+}
