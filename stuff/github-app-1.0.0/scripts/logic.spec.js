@@ -1,6 +1,8 @@
 'use strict'
 
 describe('logic (github)', () => {
+    logic.token = '316f8c330c989ac16e9c3a0a6fa1a2b8c3c18935'
+
     it('should "tom" search get results', done => {
         logic.searchUsers('tom', (err, users) => {
             expect(err).toBeUndefined()
