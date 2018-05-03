@@ -17,7 +17,10 @@ class TaskApp extends Component {
     addTask(e) {
         e.preventDefault()
         if (this.state.inputText.length>0) {
-            let taskToAdd = { desc: this.state.inputText, done: false, id: Date.now() }
+            let taskToAdd = { 
+                desc: this.state.inputText, 
+                done: false, 
+                id: Date.now() }
             this.setState(prevState => {
                 return {
                     inputText: '',
