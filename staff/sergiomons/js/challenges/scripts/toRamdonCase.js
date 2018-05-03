@@ -10,5 +10,5 @@
              if (randomNumber === false) 
              arrayOfLetters[i]=arrayOfLetters[i].toUpperCase(); 
         }
-        return arrayOfLetters.join("")
+        return arrayOfLetters.join("");
   }

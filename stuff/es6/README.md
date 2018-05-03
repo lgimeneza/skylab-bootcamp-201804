@@ -99,3 +99,8 @@ Woman {name: "sarah"}
 m = Human.newMan('john')
 Man {name: "john"}
 ```
+
+# References
+
+[ES6 tips and tricks to make your code cleaner, shorter, and easier to read!](https://medium.freecodecamp.org/make-your-code-cleaner-shorter-and-easier-to-read-es6-tips-and-tricks-afd4ce25977c)
+

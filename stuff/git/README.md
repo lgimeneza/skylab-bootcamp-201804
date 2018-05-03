@@ -15,3 +15,7 @@ $ git fetch upstream pull/85/head:pr
 
 $ git checkout pr
 ```
+
+# references
+
+[GitHub Learning Lab](https://lab.github.com/)
