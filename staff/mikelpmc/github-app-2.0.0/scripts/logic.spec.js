@@ -1,7 +1,7 @@
 'use strict';
 
 describe('logic (github)', () => {
-    logic.token = '0054321f54c06b0fcb1765dcfa259c8d6f0fadc7';
+    logic.token = '';
 
     it('should "tom" search get results', done => {
         const promise = logic.searchUsers('tom');
