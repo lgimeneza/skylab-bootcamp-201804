@@ -4,7 +4,6 @@
 
 [Learn CSS Grid](https://scrimba.com/g/gR8PTE)
 
-
 # Challenges
 
 [Flexbox Froggy](https://flexboxfroggy.com)
@@ -40,3 +39,15 @@
 [Wondering What the Difference is Between "@IMPORT" and "LINK" in CSS?](https://www.lifewire.com/difference-between-important-and-link-3466404)
 
 [Importing a stylesheet](http://www.htmlhelp.com/reference/css/style-html.html#importing)
+
+# text-overflow
+
+[Repasamos las posibilidades de la propiedad text-overflow de CSS3](https://www.arsys.es/blog/programacion/diseno-web/text-overflow-css3/)
+
+[text-overflow](https://css-tricks.com/almanac/properties/t/text-overflow/)
+
+# references
+
+["You might not need a CSS framework"](https://www.youtube.com/watch?v=5FdHqVDlXu0)
+
+
