@@ -1,5 +1,3 @@
-
-
 const logic = {
     url: 'https://api.github.com',
     token: '316f8c330c989ac16e9c3a0a6fa1a2b8c3c18935',

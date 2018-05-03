@@ -11,10 +11,11 @@ class App extends Component {
 
   state = {
     users: [],
+    user: {},
     query: '',
   }
 
-  searchUsers = e => {
+  _searchUsers = e => {
     e.preventDefault();
 
     logic.searchUsers(this.state.query)
@@ -23,10 +24,12 @@ class App extends Component {
       });
   }
 
-  handleGetUser = e => {
-    e.preventDefault();
-
-    logic.retrieveUser()
+  _retrieveUser = username => {
+    logic.retrieveUser(username)
+      .then(user => {
+        console.log(user)
+        this.setState({user})
+      });
   }
 
   handleChange = e => {
@@ -40,14 +43,21 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        
         <SearchUsers 
-          handleWriteUser={this.handleChange} 
-          searchUsers={this.searchUsers} 
-          value={this.state.query} />
-
-        <UsersList _users={this.state.users}/>
-        <UserDetails />
+            handleWriteUser={this.handleChange} 
+            searchUsers={this._searchUsers} 
+            value={this.state.query} />
+        <div className="Row">
+          <div className="Col">
+            <UsersList 
+              users={this.state.users}
+              handleUsers={this._retrieveUser}/>
+          </div>
+          <div className="Col">
+            <UserDetails 
+              user={this.state.user}/>
+          </div>
+        </div>
       </div>
     );
   }
