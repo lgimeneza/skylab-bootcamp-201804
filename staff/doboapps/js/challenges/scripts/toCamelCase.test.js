@@ -10,7 +10,7 @@ try {
 }catch(err) {
     error = err;
 }finally{
-   console.log('randomNumeral(true) should throw an error', error !== undefined, error);
+   console.log('toCamelCase(true) should throw an error', error !== undefined, error);
 }
 
 
@@ -19,7 +19,7 @@ try {
 }catch(err) {
     error = err;
 }finally{
-   console.log('randomNumeral(1) should throw an error', error !== undefined, error);
+   console.log('toCamelCase(1) should throw an error', error !== undefined, error);
 }
 
 
@@ -28,6 +28,6 @@ try {
 }catch(err) {
     error = err;
 }finally{
-   console.log('randomNumeral([]) should throw an error', error !== undefined, error);
+   console.log('toCamelCase([]) should throw an error', error !== undefined, error);
 }
 
