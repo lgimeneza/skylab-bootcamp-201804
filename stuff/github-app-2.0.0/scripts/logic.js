@@ -8,17 +8,14 @@ const logic = {
         return { headers: { Authorization: `Bearer ${this.token}`}}
     },
 
-    searchUsers(query, callback) {
-        fetch(`${this.url}/search/users?q=${query}`, this.headers())
+    searchUsers(query) {
+        return fetch(`${this.url}/search/users?q=${query}`, this.headers())
             .then(resp => resp.json())
-            .then(data => callback(undefined, data.items))
-            .catch(err => callback(err))
+            .then(data => data.items)
     },
 
-    retrieveUser(username, callback) {
-        fetch(`${this.url}/users/${username}`, this.headers())
+    retrieveUser(username) {
+        return fetch(`${this.url}/users/${username}`, this.headers())
             .then(resp => resp.json())
-            .then(data => callback(undefined, data))
-            .catch(err => callback(err))
     }
 }
