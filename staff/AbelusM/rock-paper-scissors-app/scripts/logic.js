@@ -7,29 +7,25 @@ class RockPaperScissors {
         this.player2 = player2
         this._status = RockPaperScissors.CONTINUE
         this.rounds = 0
-        this.state = []
         this.count1 = 0
         this.count2 = 0
+        this.control = ['rock', 'paper', 'scissors']
     }
 
     play(hand1, hand2) {
-        let handFirst = hand1
-        let handSec = hand2
-        if (typeof hand1 !== 'string' || typeof hand2 !== 'string') throw Error('invalid hands')
+        if (typeof hand1 !== 'string' || typeof hand2 !== 'string' || this.control.indexOf(hand1 = hand1.trim().toLowerCase()) === -1 || this.control.indexOf(hand2 = hand2.trim().toLowerCase()) === -1) throw Error('invalid hands')
 
-        if (handFirst !== 'rock' && handFirst !== 'scissors' && handFirst !== 'paper') throw Error('invalid hands')
-
-        if (handSec !== 'rock' && handSec !== 'scissors' && handSec !== 'paper') throw Error('invalid hands')
-
-        this.rounds += 1
-
-        this.state.push({'player1': hand1, 'player2': hand2}) // pairs are first player, odds second player
-
-
-        if (hand1 === 'rock' && hand2 === 'scissors' || hand1 === 'paper' && hand2 === 'rock' || hand1 === 'scissors' && hand2 === 'paper') {
-            this.count1 += 1
-        } else {
-            this.count2 += 1
+        if (hand1 !== hand2) {
+            if (
+                hand1 === 'rock' && hand2 === 'scissors' ||
+                hand1 === 'paper' && hand2 === 'rock' ||
+                hand1 === 'scissors' && hand2 === 'paper') {
+                this.count1++
+                this.rounds++
+            } else {
+                this.count2++
+                this.rounds++
+            }
         }
     }
 
@@ -55,12 +51,6 @@ class RockPaperScissors {
         if (this.count2 === 2)
             this._status = RockPaperScissors.GAMEOVER
         return this.player2
-    }
-
-
-
-    state() {
-
     }
 
     static get CONTINUE() { return 0 }
