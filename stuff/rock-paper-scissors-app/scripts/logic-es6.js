@@ -23,13 +23,18 @@ class RockPaperScissors {
 
     _updateStatus() {
         if (this._rounds.length > 1) {
-            const results = this._rounds.reduce((accum, round) => {
+            let tieOnRound2
+
+            const results = this._rounds.reduce((accum, round, index) => {
                 const roundWinner = this._roundWinner(round)
 
                 if (roundWinner) accum[roundWinner]++
+                else if (index === 1) tieOnRound2 = true
 
                 return accum
             }, { player1: 0, player2: 0 })
+
+            if (this._rounds.length === 2 && tieOnRound2) return
 
             let winning
 
