@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import logic from './logic'
 
@@ -41,6 +40,13 @@ class App extends Component {
   render() {
     const { query, users, user: { login, avatar_url, followers, following } } = this.state
 
+    // const query = this.state.query
+    // const users = this.state.users
+    // const login = this.state.user.login
+    // const avatar_url = this.state.user.avatar_url
+    // const followers = this.state.user.followers
+    // const following = this.state.user.following
+
     return (
       <main>
         <header>
@@ -58,6 +64,12 @@ class App extends Component {
             <h2>list</h2>
             <ul>
               {users.map(({ id, login, avatar_url }) =>
+                //users.map(user => {
+                // const id = user.id
+                // const login = user.login
+                // const avatar_url = user.avatar_url
+                // ...
+                //}
                 <li key={id}>
                   <h3>{login}</h3>
                   <img src={avatar_url} onClick={() => this.showInfo(login)} alt={login} title={login} />

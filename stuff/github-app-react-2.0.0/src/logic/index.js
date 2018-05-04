@@ -1,5 +1,3 @@
-'use strict'
-
 const logic = {
     url: 'https://api.github.com',
     token: 'TOKEN',
