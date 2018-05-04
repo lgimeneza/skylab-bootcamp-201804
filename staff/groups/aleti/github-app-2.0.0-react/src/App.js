@@ -7,7 +7,6 @@ import logic from './logic/index'
 import './App.css';
 
 class App extends Component {
-
   state = {
     users: [],
     user: {},
