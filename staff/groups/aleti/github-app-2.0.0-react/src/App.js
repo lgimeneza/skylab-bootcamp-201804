@@ -31,7 +31,7 @@ class App extends Component {
     logic.retrieveUser(username)
       .then(user => {
         this.setState({
-          user,
+          user: user,
           query: ''
         })
       });
