@@ -37,7 +37,7 @@ class App extends Component {
         this.setState({
           inputText: '',
           resultsList: data,
-          userDetails:{}
+          userDetails: {}
         }))
 
 
