@@ -2,6 +2,30 @@
   text-align: center;
 }
 
+img{
+  width: 200px;
+}
+
+li{
+  list-style: none;
+}
+
+
+
+section{
+  background:beige;
+  width: 50%;
+  display: inline-block;
+  float: left;
+  height: 500px;
+
+}
+
+section:nth-child(odd){
+  background:lightcyan;
+  overflow: scroll;
+} 
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
