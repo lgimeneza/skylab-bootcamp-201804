@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import logic from './logic'
-import SearchUsers from './components/searchUsers/SearchUsers'
-import ListUsers from './components/listUsers/ListUsers';
+import UsersSearch from './components/UsersSearch/UsersSearch'
+import UsersList from './components/UsersList/UsersList';
+import UserInfo from './components/UserInfo/UserInfo';
+import Title from './components/Title/Title';
 
 class App extends Component {
 
@@ -13,18 +15,24 @@ class App extends Component {
     this.state = {
       username: '',
       data: [],
-      onError: 0
+      onError: 0,
+      user: {}
     }
   }
 
   _searchUsers = (e) => {
     e.preventDefault()
-    
+
     logic.searchUsers(this.state.username)
-    .then(data => { this.setState({data})
-      // data.message ? this.setState({ onError: true }) : this.setState({ onError: false });
-      // this.setState({data, username: ''})
-    })
+      .then(data => {
+        this.setState({ data })
+        // data.message ? this.setState({ onError: true }) : this.setState({ onError: false });
+        // this.setState({data, username: ''})
+      })
+  }
+  _retrieveUser = (username) => {
+    logic.retrieveUser(username)
+      .then(user => { this.setState({ user }) })
   }
 
   _handlerWriteName = (e) => {
@@ -33,25 +41,20 @@ class App extends Component {
     })
   }
 
-  
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          {/* here goes the title */}
-          <h1 className="App-title">Github User App</h1>
-        </header>
+      
+          < Title/>
 
-      < SearchUsers _searchUsers={this._searchUsers}  _handlerWriteName={this._handlerWriteName} value={this.state.username}/>
-    
-      {!this.state.data.length ? '' : < ListUsers data={this.state.data}/>}
+        < UsersSearch _searchUsers={this._searchUsers} _handlerWriteName={this._handlerWriteName} value={this.state.username} />
 
-        <div>
-          <h2>Show user info</h2>
-          <img />
-          <p>info </p>
-          <p>info</p>
+        <div className="listsContainer">
+
+          {!this.state.data.length ? '' : < UsersList data={this.state.data} _retrieveUser={this._retrieveUser} />}
+
+          <UserInfo user={this.state.user} />
+
         </div>
 
       </div>

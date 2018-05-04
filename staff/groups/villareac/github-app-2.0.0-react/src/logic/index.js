@@ -1,5 +1,3 @@
-import React from 'react'
-
 const logic = {
     url: 'https://api.github.com',
     token: 'TOKEN',

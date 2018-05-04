@@ -1,15 +1,15 @@
 import React from 'react'
+import './UsersSearch.css'
 
-function SearchUsers(props){
+function UsersSearch(props){
     return (
-        <div>
+        <div className='form'>
           <form onSubmit={props._searchUsers}>
             <input placeholder="search slave!" onChange={props._handlerWriteName} value={props.value}/>
             <button>this is the button</button>
           </form>
         </div>
-
     )
 }
 
-export default SearchUsers
+export default UsersSearch
