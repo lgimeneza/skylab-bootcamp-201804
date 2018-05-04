@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 70px;
   padding: 20px;
   color: white;
 }
@@ -21,6 +21,23 @@
 .App-intro {
   font-size: large;
 }
+
+h1{
+  font-style: italic;
+}
+
+main {
+  display: grid;
+  grid-template: 100% / 50% 50%
+}
+.col-left {
+  grid-column: 1;
+}
+
+.col-right {
+  grid-column: 2;
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
