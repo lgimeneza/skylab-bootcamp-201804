@@ -15,8 +15,8 @@ class App extends Component {
 
   _searchUsers = e => {
     e.preventDefault();
-
-    logic.searchUsers(this.state.query)
+    if(this.state.query.length > 0 ){
+      logic.searchUsers(this.state.query)
       .then(users => {
         this.setState({
           users: users,
@@ -24,13 +24,14 @@ class App extends Component {
           query: ''
         })
       });
+    }
   }
 
   _retrieveUser = username => {
     logic.retrieveUser(username)
       .then(user => {
         this.setState({
-          user,
+          user: user,
           query: ''
         })
       });
