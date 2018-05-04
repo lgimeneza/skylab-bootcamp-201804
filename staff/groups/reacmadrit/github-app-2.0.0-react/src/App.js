@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+
+
+import './App.css'
 import logic from './logic'
 import Form from './components/Form/Form'
-import ShowList from './components/ShowList/ShowList'
-import ShowDetails from './components/ShowDetails/ShowDetails'
+import UserList from './components/UserList/UserList'
+import DetailUser from './components/DetailUser/DetailUser'
 
 class App extends Component {
 
@@ -19,29 +21,26 @@ class App extends Component {
 
   showDetails = (login) => {
     logic.retrieveUser(login)
-    .then(data => 
-    this.setState({
-      userDetails: data
-    })
-    
-    )
+      .then(data =>
+        this.setState({
+          userDetails: data
+        })
+
+      )
   }
 
 
   listUsers = e => {
     e.preventDefault()
-
-    logic.searchUsers(this.state.inputText)
-      .then(data =>
-
-        this.setState({
-          inputText: '',
-          resultsList: data,
-          userDetails: {}
-        }))
-
-
-
+    if (this.state.inputText.length) {
+      logic.searchUsers(this.state.inputText)
+        .then(data =>
+          this.setState({
+            inputText: '',
+            resultsList: data,
+            userDetails: {}
+          }))
+    }
   }
 
   handlerText = e => {
@@ -63,16 +62,17 @@ class App extends Component {
 
         <Form onHandlerText={this.handlerText} onListUsers={this.listUsers} onState={this.state} />
 
-        <section>
-          
-          <ShowList onState={this.state} onShowDetails={this.showDetails}/>
-        </section>
+        <div className="padre">
+          <section>
 
-        
-        <section>
-          <ShowDetails onState={this.state}/>
-        </section>
+            <UserList onState={this.state} onShowDetails={this.showDetails} />
+          </section>
 
+
+          <section>
+            <DetailUser onState={this.state} />
+          </section>
+        </div>
       </div>
     );
   }

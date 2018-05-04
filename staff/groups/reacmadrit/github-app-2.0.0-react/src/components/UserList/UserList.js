@@ -1,12 +1,11 @@
 import React from 'react'
-import ShowDetails from '../ShowDetails/ShowDetails';
 
-function ShowList(props) {
+function UserList(props) {
     if (props.onState.resultsList.length > 0) {
         let results = props.onState.resultsList.map(v =>
 
             <li key={v.login}>
-                <img onClick={() => {
+                <img alt="user" onClick={() => {
                     props.onShowDetails(v.login)
                 }}
                     src={v.avatar_url} />
@@ -24,4 +23,4 @@ function ShowList(props) {
 
 }
 
-export default ShowList
+export default UserList
