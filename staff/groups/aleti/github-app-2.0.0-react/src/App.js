@@ -19,15 +19,21 @@ class App extends Component {
 
     logic.searchUsers(this.state.query)
       .then(users => {
-        this.setState({users: users})
+        this.setState({
+          users: users,
+          user: {},
+          query: ''
+        })
       });
   }
 
   _retrieveUser = username => {
     logic.retrieveUser(username)
       .then(user => {
-        console.log(user)
-        this.setState({user})
+        this.setState({
+          user,
+          query: ''
+        })
       });
   }
 
@@ -42,7 +48,7 @@ class App extends Component {
           <SearchUsers
             handleWriteUser={this.handleChange}
             searchUsers={this._searchUsers}
-            value={this.state.query}
+            query={this.state.query}
           />
         </section>
         <section className="results-container">
