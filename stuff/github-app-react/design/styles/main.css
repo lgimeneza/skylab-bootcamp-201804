@@ -5,23 +5,23 @@
 }
 
 h1 {
-  background-color: yellow;
+    background-color: yellow;
 }
 
 .left {
-  float: left;
+    float: left;
 }
 
 .right {
-  float: right;
+    float: right;
 }
 
 img {
-  width: 400px;
-  border-radius: 10px;
-  cursor: pointer;
+    width: 400px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 ul {
-  list-style-type: none;  
+    list-style-type: none;  
 }
