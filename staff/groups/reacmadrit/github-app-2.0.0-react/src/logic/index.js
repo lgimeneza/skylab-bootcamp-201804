@@ -1,6 +1,6 @@
 const logic = {
     url: 'https://api.github.com',
-    token: '08490b09ce2aa3412a502b8eae9545f1f9b02961',
+    token: ' 810b1108767d4bb8f45bcdc37bfe067746a40bd6    ',
 
     headers() {
         return { headers: { Authorization: `Bearer ${this.token}` } }
