@@ -16,15 +16,15 @@ class App extends Component {
 
   _searchUsers = e => {
     e.preventDefault();
-    if(this.state.query.length > 0 ){
+    if (this.state.query.length > 0) {
       logic.searchUsers(this.state.query)
-      .then(users => {
-        this.setState({
-          users: users,
-          user: {},
-          query: ''
-        })
-      });
+        .then(users => {
+          this.setState({
+            users: users,
+            user: {},
+            query: ''
+          })
+        });
     }
   }
 
@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   handleChange = e => {
-    this.setState({query: e.target.value})
+    this.setState({ query: e.target.value })
   }
 
   render() {
