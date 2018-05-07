@@ -108,7 +108,7 @@ const logic = {
                 throw Error('Input parameter not valid')
 
             return fetch(`${this.url}/user/${userId}`, { 
-                body: JSON.stringify(data),
+                body: JSON.stringify(body),
                 headers: {
                     "content-type": "application/json",
                     "Authorization": 'Bearer ' + token

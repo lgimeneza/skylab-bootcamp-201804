@@ -369,49 +369,107 @@ describe('logic (project-app)', function() {
         });
     });
 
+    it('should not retrieve user with wrong token', function(done) {
 
+        let user = 'user' + Date.now()
+        let password = 'pw1'
 
+        let body = { "username": user, "password": password  }
 
+        logic.registerUser(body)
+        .then((registerUserRes)=>{
+            expect(registerUserRes).toBeDefined();
+            expect(registerUserRes.status).toEqual('OK');
+            expect(registerUserRes.data.id.length).toBe(24);
+            logic.loginUser(body)
+            .then((loginUserRes)=>{
+                expect(loginUserRes).toBeDefined();
+                expect(loginUserRes.status).toEqual('OK');
+                expect(loginUserRes.data.token.length).toBe(171)
+                logic.retrieveUser(loginUserRes.data.id, 'ljkadshfkljhdfasdfadsf')
+                .then((retrieveUserRes)=>{
+                    expect(retrieveUserRes).toBeDefined();
+                    expect(retrieveUserRes.status).toEqual('KO');
+                    logic.unregisterUser(body, loginUserRes.data.id, loginUserRes.data.token)
+                    .then((unregisterUserRes) => {
+                        expect(unregisterUserRes).toBeDefined();
+                        expect(unregisterUserRes.status).toEqual('OK')
+                        done()
+                    });
+                });
+            });
+        });
+    });
 
+    it('should not retrieve user without token', function(done) {
 
-    // it('should retrieve user', function(done) {
+        let user = 'user' + Date.now()
+        let password = 'pw1'
 
-    //     let user = 'user' + Date.now()
-    //     let password = 'pw1'
+        let body = { "username": user, "password": password  }
 
-    //     let body = { "username": user, "password": password  }
+        logic.registerUser(body)
+        .then((registerUserRes)=>{
+            expect(registerUserRes).toBeDefined();
+            expect(registerUserRes.status).toEqual('OK');
+            expect(registerUserRes.data.id.length).toBe(24);
+            logic.loginUser(body)
+            .then((loginUserRes)=>{
+                expect(loginUserRes).toBeDefined();
+                expect(loginUserRes.status).toEqual('OK');
+                expect(loginUserRes.data.token.length).toBe(171)
+                logic.retrieveUser(loginUserRes.data.id)
+                .catch(err => {
+                    expect(err).toBeDefined()
+                    expect(err.message).toBe('Input parameter not valid')
+                    logic.unregisterUser(body, loginUserRes.data.id, loginUserRes.data.token)
+                    .then((unregisterUserRes) => {
+                        expect(unregisterUserRes).toBeDefined();
+                        expect(unregisterUserRes.status).toEqual('OK')
+                        done()
+                    });
+                });
+            });
+        });
+    });
 
-    //     logic.registerUser(body)
-    //     .then((registerUserRes)=>{
-    //         expect(registerUserRes).toBeDefined();
-    //         expect(registerUserRes.status).toEqual('OK');
-    //         expect(registerUserRes.data.id.length).toBe(24);
-    //         logic.loginUser(body)
-    //         .then((loginUserRes)=>{
-    //             expect(loginUserRes).toBeDefined();
-    //             expect(loginUserRes.status).toEqual('OK');
-    //             expect(loginUserRes.data.token.length).toBe(171)
-    //             logic.retrieveUser(loginUserRes.data.id, loginUserRes.data.token)
-    //             .then((retrieveUserRes)=>{
-    //                 expect(retrieveUserRes).toBeDefined();
-    //                 expect(retrieveUserRes.status).toEqual('OK');
-    //                 expect(retrieveUserRes.data.username).toBe(_user)
-    //                 logic.updateUser(body, loginUserRes.data.id, loginUserRes.data.token)
-    //                 .then((updateUserRes) => {
-    //                     expect(updateUserRes).toBeDefined();
-    //                     expect(updateUserRes.status).toEqual('OK')
-    //                     logic.unregisterUser(body, loginUserRes.data.id, loginUserRes.data.token)
-    //                     .then((unregisterUserRes) => {
-    //                         expect(unregisterUserRes).toBeDefined();
-    //                         expect(unregisterUserRes.status).toEqual('OK')
-    //                     });
-    //                 });
-    //             });
-    //         });
-    //     });
-    // });
+    it('should update user age', function(done) {
 
+        let user = 'user' + Date.now()
+        let password = 'pw1'
 
+        let body = { "username": user, "password": password, "age": "30" }
 
+        logic.registerUser(body)
+        .then((registerUserRes)=>{
+            expect(registerUserRes).toBeDefined();
+            expect(registerUserRes.status).toEqual('OK');
+            expect(registerUserRes.data.id.length).toBe(24);
+            logic.loginUser(body)
+            .then((loginUserRes)=>{
+                expect(loginUserRes).toBeDefined();
+                expect(loginUserRes.status).toEqual('OK');
+                expect(loginUserRes.data.token.length).toBe(171)
+                logic.updateUser(body, loginUserRes.data.id, loginUserRes.data.token)
+                .then((updateUserRes) => {
+                    expect(updateUserRes).toBeDefined();
+                    expect(updateUserRes.status).toEqual('OK')
+                    logic.retrieveUser(loginUserRes.data.id, loginUserRes.data.token)
+                    .then((retrieveUserRes)=>{
+                        expect(retrieveUserRes).toBeDefined();
+                        expect(retrieveUserRes.status).toEqual('OK');
+                        expect(retrieveUserRes.data.username).toBe(user)
+                        expect(retrieveUserRes.data.age).toEqual('30')
+                        logic.unregisterUser(body, loginUserRes.data.id, loginUserRes.data.token)
+                        .then((unregisterUserRes) => {
+                            expect(unregisterUserRes).toBeDefined();
+                            expect(unregisterUserRes.status).toEqual('OK')
+                            done()
+                        });
+                    });
+                });
+            });
+        });
+    });
 
 });
