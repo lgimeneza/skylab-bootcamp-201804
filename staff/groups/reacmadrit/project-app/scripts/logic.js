@@ -1,16 +1,37 @@
 'use strict'
+let logic;
 
-const logic = {
-    url: 'https://skylabcoders.herokuapp.com/api/',
+(function () {
+    logic = {
+        url: 'https://skylabcoders.herokuapp.com/api/',
 
-    // _headers() {
-    //     return {
-    //          headers: { Authorization: `Bearer ${this.token}` } }
-    // },
+        register(user, pass) {
+            return action(user, pass, 'user/', this.url)
+        },
 
+        login(user, pass) {
+            return action(user, pass, 'auth/', this.url)
+        },
 
+        retrieve(userID, token) {
+            let dataPackage = {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                })
+            }
+            if (typeof userID !== 'string' || typeof token !== 'string') {
+                throw Error('input must be strings')
+            }
 
-    register(user, pass) {
+            return fetch(this.url + `user/${userID}`, dataPackage)
+                .then(res => res.json())
+                .catch(err => err.message)
+        }
+    }
+
+    function action(user, pass, path, url) {
         let dataPackage = {
             method: 'POST',
             body: JSON.stringify({
@@ -25,46 +46,9 @@ const logic = {
             throw Error('input must be strings')
         }
 
-        return fetch(this.url + 'user/', dataPackage)
-            .then(res => res.json())
-            .catch(err => err.message)
-    },
-
-    login (user,pass) {
-        let dataPackage = {
-            method: 'POST',
-            body: JSON.stringify({
-                username: user,
-                password: pass
-            }),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        }
-        if (typeof user !== 'string' || typeof pass !== 'string') {
-            throw Error('input must be strings')
-        }
-
-        return fetch(this.url + 'auth/', dataPackage)
-            .then(res => res.json())
-            .catch(err => err.message)
-    },
-
-    retrieve (userID,token) {
-        let dataPackage = {
-            method: 'GET',
-            headers: new Headers({
-                'Authorization':`Bearer ${token}`,
-                'Content-Type': 'application/json'
-            })
-        }
-        if (typeof userID !== 'string' || typeof token !== 'string') {
-            throw Error('input must be strings')
-        }
-
-        return fetch(this.url + `user/${userID}`, dataPackage)
+        return fetch(url + path, dataPackage)
             .then(res => res.json())
             .catch(err => err.message)
     }
+})()
 
-}

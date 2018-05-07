@@ -1,22 +1,20 @@
 'use strict'
 
 describe('logic (project)', () => {
-    let token = ''
-    let userId = ''
-
     it('should REGISTER new user toni return status OK and ID', done => {
-        logic.register('toni6', '123').then(response => {
+        logic.register('toni14527834', '123').then(response => {
             expect(response).toBeDefined()
             expect(response instanceof Object).toBeTruthy()
             expect(response.status).toBe("OK")
             done()
         })
     })
-    it('should REGISTER new user toni throw error', function(){
-        expect(function() {
-            logic.register('123')}).toThrowError('input must be strings')
-        })
+    it('should REGISTER new user toni throw error', function () {
+        expect(function () {
+            logic.register('123')
+        }).toThrowError('input must be strings')
     })
+
 
 
     it('should LOGIN from toni return status OK and new token', done => {
@@ -44,16 +42,17 @@ describe('logic (project)', () => {
         })
     })
 
+
     it('should RETRIEVE from toni 123 return status OK and data object with username and id', done => {
         logic.login('toni', '123')
             .then(response => {
                 logic.retrieve(response.data.id, response.data.token)
-                .then(response => {
-                    expect(response).toBeDefined()
-                    expect(response instanceof Object).toBeTruthy()
-                    expect(response.data.id).toBeDefined()
-                    done()
-                })
+                    .then(response => {
+                        expect(response).toBeDefined()
+                        expect(response instanceof Object).toBeTruthy()
+                        expect(response.data.id).toBeDefined()
+                        done()
+                    })
             })
     })
 
@@ -61,11 +60,13 @@ describe('logic (project)', () => {
         logic.login('toni', '123')
             .then(response => {
                 logic.retrieve(response.data.id, 'kqjqwejiqew')
-                .then(response => {
-                    expect(response).toBeDefined()
-                    expect(response instanceof Object).toBeTruthy()
-                    expect(response.error).toBe('invalid token')
-                    done()
-                })
+                    .then(response => {
+                        expect(response).toBeDefined()
+                        expect(response instanceof Object).toBeTruthy()
+                        expect(response.error).toBe('invalid token')
+                        done()
+                    })
             })
     })
+
+})
