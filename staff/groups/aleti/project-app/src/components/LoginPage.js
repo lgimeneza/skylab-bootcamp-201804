@@ -7,8 +7,7 @@ class LoginPage extends Component {
     constructor(props) {
         super(props);
 
-        // reset login status
-        //this.props.dispatch(userActions.logout());
+        // reset login statu
 
         this.state = {
             username: '',

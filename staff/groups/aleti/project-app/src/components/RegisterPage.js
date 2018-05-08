@@ -43,8 +43,6 @@ class RegisterPage extends Component {
         const { user } = this.state;
         if (user.firstName && user.lastName && user.username && user.password && user.confirmpw) {
             if (user.password === user.confirmpw){
-
-                //TODO: error if password not de same
                 const body = { 
                     "username": user.username, 
                     "password": user.password, 

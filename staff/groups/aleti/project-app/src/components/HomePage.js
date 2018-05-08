@@ -8,6 +8,10 @@ class HomePage extends Component {
         //this.props.dispatch(userActions.getAll());
     }
 
+    handleLogoutUser(){
+        localStorage.setItem('token', '')
+    }
+
     handleDeleteUser(id) {
         //return (e) => this.props.dispatch(userActions.delete(id));
     }
@@ -36,7 +40,7 @@ class HomePage extends Component {
                     </ul>
                 } */}
                 <p>
-                    <Link to="/login">Logout</Link>
+                    <Link to="/" onClick={ this.handleLogoutUser }>Logout</Link>
                 </p>
             </div>
         );

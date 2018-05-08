@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
 
-import { history } from './components/history';
-import { alertActions } from './components/alert.actions';
+import history from './components/history'
 import { PrivateRoute } from './components/PrivateRoute';
 import HomePage from './components/HomePage';
 import LoginPage from './components/LoginPage';
@@ -15,10 +14,10 @@ class App extends Component {
     super(props);
 
     const { dispatch } = this.props;
-    history.listen((location, action) => {
-        // clear alert on location change
-        //dispatch(alertActions.clear());
-    });
+    // history.listen((location, action) => {
+    //     // clear alert on location change
+    //     //dispatch(alertActions.clear());
+    // });
 }
 
   render() {
