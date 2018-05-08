@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import logic from './logic'
+import Register from './components/Register/Register'
+import Login from './components/Login/Login'
+import Profile from './components/Profile/Profile';
+// Router
 
 class App extends Component {
 
@@ -14,7 +17,10 @@ class App extends Component {
       publicData: [],
       id: '',
       onError: false,
-      token: ''
+      token: '',
+      disabled: "disabled",
+      newUsername: "",
+      newPassword: ""
     }
   }
 
@@ -55,7 +61,7 @@ class App extends Component {
 
     logic.login(userData)
       .then(data =>
-        this.setState({ id: data.data.id, token: data.data.token, username: '', password: '' })
+        this.setState({ id: data.data.id, token: data.data.token, username: '' })
       )
   }
 
@@ -72,6 +78,34 @@ class App extends Component {
         this.setState({ publicData: data.data })
       )
   }
+
+  // UPDATE
+
+  _handlerUpdate = (e) => {
+
+    logic.id = this.state.id;
+    logic.token = this.state.token
+
+    let userData = {
+      username: this.state.publicData.username,
+      password: this.state.password,
+      newUsername: this.state.newUsername,
+      newPassword: this.state.newPassword
+    }
+
+    logic.update(userData)
+      .then(data => console.log(data))
+
+  }
+  _handlerWriteNewUsername = (e) => {
+    this.setState({ newUsername: e.target.value })
+  }
+
+  _handlerWriteNewPassword = (e) => {
+    this.setState({ newPassword: e.target.value })
+  }
+
+
 
   _handlerDelete = () => {
 
@@ -92,36 +126,43 @@ class App extends Component {
     return (
       <div>
         {/* REGISTER */}
-        <h1>register</h1>
-        <form onSubmit={this._handlerRegister}>
-          <input type="text" value={this.state.username} placeholder="insert username" onChange={this._handlerWriteUsername} />
-          <input type="password" value={this.state.password} placeholder="insert password" onChange={this._handlerWritePassword} />
-          <button type="submit">Register</button>
-        </form>
+        <Register
+          _handlerWriteUsername={this._handlerWriteUsername}
+          _handlerWritePassword={this._handlerWritePassword}
+          _handlerRegister={this._handlerRegister}
+          username={this.state.username}
+          password={this.state.password}
+        />
 
-        {/* LOGIN */}
-        <h1>login</h1>
-        <form onSubmit={this._handlerLogin}>
-          <input type="text" value={this.state.username} placeholder="insert username" onChange={this._handlerWriteUsername} />
-          <input type="password" value={this.state.password} placeholder="insert password" onChange={this._handlerWritePassword} />
-          <button type="submit">Login</button>
-        </form>
+        <Login
+          _handlerWriteUsername={this._handlerWriteUsername}
+          _handlerWritePassword={this._handlerWritePassword}
+          _handlerLogin={this._handlerLogin}
+          username={this.state.username}
+          password={this.state.password}
+        />
 
-        {/* PROFILE */}
-        <h1>Profile</h1>
-        <button onClick={this._handlerRetrieve}>Conseguir datos</button>
-        <input type="text" placeholder={this.state.publicData.username} />
-        <input type="text" placeholder={this.state.publicData.id} />
+        <Profile
 
-        {/* Delete profile */}
-        <h2>Delete profile</h2>
-        <div>
-          <input type="text" value={this.state.username} placeholder="insert username" onChange={this._handlerWriteUsername} />
-          <input type="password" value={this.state.password} placeholder="insert password" onChange={this._handlerWritePassword} />
-          <button onClick={this._handlerDelete}>confirm</button>
-        </div>
+
+          username={this.state.publicData.username}
+          password={this.state.password}
+
+          _handlerRetrieve={this._handlerRetrieve}
+          _handlerUpdate={this._handlerUpdate}
+          _handlerWriteNewUsername={this._handlerWriteNewUsername}
+
+          _handlerDelete={this._handlerDelete}
+          _handlerWriteUsername={this._handlerWriteUsername}
+          _handlerWritePassword={this._handlerWritePassword}
+
+
+        />
+
+
 
       </div>
+
     );
   }
 }

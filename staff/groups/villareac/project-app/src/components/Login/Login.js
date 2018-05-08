@@ -1,45 +1,24 @@
-import React, {Component} from "react"
+import React, { Component } from "react"
 
 
-class Login extends Component{
+class Login extends Component {
 
-   constructor(){
-       super();
+    constructor() {
+        super();
+    }
+    render() {
+        return (
 
-       this.state = {
-           username:'',
-           password:''
-       }
-   }
-
-
-_handlerLogin=(e)=>{
-
-    e.preventDefault();
-
-
-
-
-}
-
-
-render(){
-    return
-    <div>
-         <h1>LOGIN</h1>
-            <section>
-                <form onSubmit={this._handlerLogin}>
-                    <input type="text" placeholder="user"/>
-                    <input type="password" placeholder="pass
-                    word"/>
+            <div>
+                <h1>login</h1>
+                <form onSubmit={this.props._handlerLogin}>
+                    <input type="text" value={this.props.username} placeholder="insert username" onChange={this.props._handlerWriteUsername} />
+                    <input type="password" value={this.props.password} placeholder="insert password" onChange={this.props._handlerWritePassword} />
                     <button type="submit">Login</button>
                 </form>
-            </section>
-    </div>
-
-}
-
-
+            </div>
+        )
+    }
 
 }
 
