@@ -15,11 +15,11 @@
  * 
  * // local storage
  * 
- * Xtorage.local.set('session', { id: '789ghi' })
+ * Xtorage.local.set('user', { id: '789ghi' })
  *
- * const session = Xtorage.local.get('session')
+ * const user = Xtorage.local.get('user')
  * 
- * console.log(session.id) // -> "789ghi"
+ * console.log(user.id) // -> "789ghi"
  * 
  */
 class Xtorage {
