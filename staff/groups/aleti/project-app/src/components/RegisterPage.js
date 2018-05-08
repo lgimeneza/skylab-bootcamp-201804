@@ -97,42 +97,16 @@ class RegisterPage extends Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <InputUser name='firstName' helpText='First Name is required' labelText='First Name' value={user.firstName} submitted={submitted} handleChange={this.handleChange}  />
-                    {/* <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
-                        <label htmlFor="firstName">First Name</label>
-                        <input type="text" className="form-control" name="firstName" value={user.firstName} onChange={this.handleChange} />
-                        {submitted && !user.firstName &&
-                            <div className="help-block">First Name is required</div>
-                        }
-                    </div> */}
-                    <div className={'form-group' + (submitted && !user.lastName ? ' has-error' : '')}>
-                        <label htmlFor="lastName">Last Name</label>
-                        <input type="text" className="form-control" name="lastName" value={user.lastName} onChange={this.handleChange} />
-                        {submitted && !user.lastName &&
-                            <div className="help-block">Last Name is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={user.username} onChange={this.handleChange} />
-                        {submitted && !user.username &&
-                            <div className="help-block">Username is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
-                        {submitted && !user.password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
-                        <label htmlFor="password">Confirm password</label>
-                        <input type="password" className="form-control" name="confirmpw" value={user.confirmpw} onChange={this.handleChange} />
-                        {submitted && !user.password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
+                    <InputUser name='firstName' helpText='First Name is required' labelText='First Name' 
+                        value={user.firstName} submitted={submitted} handleChange={this.handleChange}  />
+                    <InputUser name='lastName' helpText='Last Name is required' labelText='Last Name' 
+                        value={user.lastName} submitted={submitted} handleChange={this.handleChange}  />
+                    <InputUser name='username' helpText='Username is required' labelText='Username' 
+                        value={user.username} submitted={submitted} handleChange={this.handleChange}  />
+                    <InputUser name='password"' helpText='Password is required' labelText='Password' 
+                        value={user.password} submitted={submitted} handleChange={this.handleChange}  />
+                    <InputUser name='password' helpText='Password is required' labelText='Confirm password' value={user.confirmpw} submitted={submitted} handleChange={this.handleChange}  />
+                    
                     <div className="form-group">
                         <button className="btn btn-primary">Register</button>
                         {registering && 
