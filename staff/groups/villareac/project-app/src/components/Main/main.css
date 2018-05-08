@@ -1,64 +1,103 @@
-
-
-
 .container {
-    margin-top:75px;
+    margin-top: 75px;
     padding: 16px;
     display: flex;
-    
-    flex-flow:row wrap;
+    flex-flow: row wrap;
     justify-content: space-around;
-    }
-    
-    .firstSection, .secondSection{
+}
+
+.firstSection, .secondSection {
     height: 100%;
-    margin:0%;
+    margin: 0%;
     width: 40%;
-    }
-    
-    button {
-        padding: 3%;
-        width: 100%;
-        height: auto;
-        margin: 6% 0%;
-        font-size: 20px;
-        border-radius: 5px;
-        border: none;
-        background-color: #2dbe60;
-        color: white;
-    }
-    button:hover {
-        background-color: #248d49;
-        cursor: pointer;
-    }
-    
-    h2 {
-        font-size: 35px;
-        padding: 5% 0% 5%;
-    }
-    
-    input{
-        display: block;
-        width: 100%;
-        margin: 5% 0% 5%;
-        border-radius: 5px;
-        border: none;
-        background: #eef2f3;
-        padding: 4%;
-    }
-    ::-webkit-input-placeholder { 
-        padding: 5%;
-        font-size: 120%;
-      }
-    
-    
-    .list {
-        list-style: none;
-    }
-    .list li:before {
-        content: '✓ ';
-    }
-    .list li{
-        margin-bottom: 5%;
-        font-size: 90%;
-    }
+}
+
+button {
+    padding: 3%;
+    width: 100%;
+    height: auto;
+    margin: 6% 0%;
+    font-size: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2dbe60;
+    color: white;
+}
+
+button:hover {
+    background-color: #248d49;
+    cursor: pointer;
+}
+
+h2 {
+    font-size: 35px;
+    padding: 5% 0% 5%;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin: 5% 0% 5%;
+    border-radius: 5px;
+    border: none;
+    background: #eef2f3;
+    padding: 4%;
+}
+
+::-webkit-input-placeholder {
+    padding: 5%;
+    font-size: 120%;
+}
+
+.list {
+    list-style: none;
+}
+
+.list li:before {
+    content: '✓ ';
+}
+
+.list li {
+    margin-bottom: 5%;
+    font-size: 90%;
+}
+
+.big {
+    font-size: 300%;
+    padding: 0%;
+}
+
+.small {
+    font-size: 70%;
+    color: white;
+    padding-top: 4%;
+}
+
+.sesion {
+    text-decoration: none;
+    color: #2dbe60;
+}
+
+.inicia {
+    font-size: 14px;
+}
+
+/*login styles*/
+
+.container2{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top:100px;
+
+}
+
+.container h2{
+    padding:0;
+}
+
+.container2 form {
+    width: 50%;
+}

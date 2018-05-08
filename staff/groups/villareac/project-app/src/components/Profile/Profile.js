@@ -23,16 +23,16 @@ class Profile extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="container">
 
 
                 <section className="firstSection">
-                    <h2>Trabaja mejor en equipo con Fevernote Business</h2>
-                    <ul className="list">
-                        <li>Novedad. Espacios para organizar y colaborar con tu equipo</li>
-                        <li>Usuarios y dispositivos ilimitados para que puedas acceder a las notas desde cualquier lugar</li>
-                        <li>Con una suscripción anual de Evernote Business se incluye Evernote Premium gratis para uso personal</li>
-                    </ul>
+                <h2 className="big">¡Has vuelto! Debe ser época de productividad.
+                </h2>
+                    <button className="button">Open Fevernote</button>
+                    <p className="inicia">You've already logged in.
+                        <a className="sesion" href=""> Log Out</a>
+                    </p>
                 </section>
 
 
