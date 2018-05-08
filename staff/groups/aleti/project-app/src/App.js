@@ -7,6 +7,7 @@ import { PrivateRoute } from './components/PrivateRoute';
 import HomePage from './components/HomePage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
+import LandingPage from './components/LandingPage'
 
 class App extends Component {
 
@@ -31,7 +32,9 @@ class App extends Component {
                     } */}
                     <Router history={history}>
                         <div>
-                            <PrivateRoute exact path="/" component={ HomePage } />
+                            <PrivateRoute path="/home" component={ HomePage } />
+                            <Route exact path="/" component={ LandingPage } />
+                            <Route path="/landing" component={ LandingPage } />
                             <Route path="/login" component={ LoginPage } />
                             <Route path="/register" component={ RegisterPage } />
                         </div>

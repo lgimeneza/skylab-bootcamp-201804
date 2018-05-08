@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-// import { userActions } from '../_actions';
+import logic from '../logic'
+import swal from 'sweetalert2'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -32,7 +32,25 @@ class LoginPage extends Component {
         const { username, password } = this.state;
         //const { dispatch } = this.props;
         if (username && password) {
-            //dispatch(userActions.login(username, password));
+
+            const body = { "username": username, "password": password  }
+            logic.loginUser(body).then(data => {
+                if (data.status === 'OK'){
+                    localStorage.setItem('token', data.data.id)
+                    this.props.history.push('/home')
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Something went wrong!',
+                        text: data.error
+                    })
+                }
+            })
+            this.setState({
+                username: '',
+                password: '',
+                submitted: false
+            })
         }
     }
 
@@ -70,11 +88,5 @@ class LoginPage extends Component {
     }
 }
 
-// function mapStateToProps(state) {
-//     const { loggingIn } = state.authentication;
-//     return {
-//         loggingIn
-//     };
-// }
 
 export default LoginPage
