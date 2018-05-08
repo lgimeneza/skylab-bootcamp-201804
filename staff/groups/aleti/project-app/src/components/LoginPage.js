@@ -66,7 +66,7 @@ class LoginPage extends Component {
                         value={username} submitted={submitted} handleChange={this.handleChange} />
                     <InputUser name='password' helpText='Password is required' labelText='Password'
                         value={password} submitted={submitted} handleChange={this.handleChange} />
-                    <ButtonInput name='Login' destination='register' nameLink='Register' />
+                    <ButtonInput name='Login' destination='register' nameLink='Register' condition={loggingIn}/>
                 </form>
             </div>
         );

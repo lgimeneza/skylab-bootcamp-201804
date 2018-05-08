@@ -104,10 +104,11 @@ class RegisterPage extends Component {
                         value={user.lastName} submitted={submitted} handleChange={this.handleChange}  />
                     <InputUser name='username' helpText='Username is required' labelText='Username' 
                         value={user.username} submitted={submitted} handleChange={this.handleChange}  />
-                    <InputUser name='password"' helpText='Password is required' labelText='Password' 
+                    <InputUser name='password' helpText='Password is required' labelText='Password' 
                         value={user.password} submitted={submitted} handleChange={this.handleChange}  />
-                    <InputUser name='password' helpText='Password is required' labelText='Confirm password' value={user.confirmpw} submitted={submitted} handleChange={this.handleChange}  />
-                    <ButtonInput name='Register' destination='login' nameLink='Cancel' />
+                    <InputUser name='confirmpw' helpText='Password is required' labelText='Confirm password' 
+                        value={user.confirmpw} submitted={submitted} handleChange={this.handleChange}  />
+                    <ButtonInput name='Register' destination='login' nameLink='Cancel' condition={registering} />
                 </form>
             </div>
         );
