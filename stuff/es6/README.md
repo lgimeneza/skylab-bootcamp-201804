@@ -1,10 +1,10 @@
-# scoped vars
+# scoped vars (var vs let)
 
 ```js
 for (var i = 1; i < 5; i++){
    setTimeout(() => console.log(i), 1000);
 }
-// output ->
+
 5
 5
 5
@@ -13,7 +13,7 @@ for (var i = 1; i < 5; i++){
 for (let i = 1; i < 5; i++){
    setTimeout(() => console.log(i), 1000);
 }
-// output ->
+
 1
 2
 3
@@ -24,7 +24,7 @@ for (var i = 1; i < 5; i++){
 		setTimeout(() => console.log(i), 1000);
    })(i)
 }
-// output ->
+
 1
 2
 3
