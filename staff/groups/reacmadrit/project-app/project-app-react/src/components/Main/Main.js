@@ -1,16 +1,31 @@
-import React from "react";
+import React, {Component} from "react";
 import { Route } from 'react-router-dom'
 import { Landing, Home, Profile, Register, Login } from "../index"
 
-function Main (){
+class Main extends Component{
+    state= {
+        userName:'',
+        password: ''
+    }
 
-    return <div>
-          <Route exact path="/" component={Landing} />
-          <Route path="/home" render={props => <Home />} />
-          <Route path="/profile" render={props => <Profile />} />
-          <Route path="/register" render={props => <Register/>} />
-          <Route path="/login" render={props => <Login />} />        
-    </div>
+    _updatePassword = (userName,password)=>(
+
+        this.setState({
+            userName,
+            password
+        })          
+    )
+    
+
+    render() {
+        return <div>
+              <Route exact path="/" component={Landing} />
+              <Route path="/home" render={props => <Home />} />
+              <Route path="/profile" render={props => <Profile mainState={this.state}/>} />
+              <Route path="/register" render={props => <Register/>} />
+              <Route path="/login" render={props => <Login updatePassword={this._updatePassword}/>} />        
+        </div>
+    }
 
 }
 

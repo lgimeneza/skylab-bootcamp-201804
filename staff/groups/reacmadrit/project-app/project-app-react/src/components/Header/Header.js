@@ -13,6 +13,9 @@ function Header() {
                 <li>
                     <Link to="/register">Register</Link>
                 </li>
+                <li>
+                    <Link to="/profile">Profile</Link>
+                </li>
             </ul>
         </nav>
     </header>
