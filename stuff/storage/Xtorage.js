@@ -5,11 +5,21 @@
  * 
  * @example
  * 
- * Xtorage.session.setObject('user', { id: '123abc456edf' })
+ * // session storage
+ * 
+ * Xtorage.session.setObject('user', { id: '123abc' })
  *
  * const user = Xtorage.session.getObject('user')
  * 
- * console.log(user.id) // -> "123abc456edf"
+ * console.log(user.id) // -> "123abc"
+ * 
+ * // local storage
+ * 
+ * Xtorage.local.setObject('session', { id: '789ghi' })
+ *
+ * const session = Xtorage.local.getObject('session')
+ * 
+ * console.log(session.id) // -> "789ghi"
  * 
  */
 class Xtorage {
