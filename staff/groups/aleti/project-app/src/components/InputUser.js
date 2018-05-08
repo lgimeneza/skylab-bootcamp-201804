@@ -11,7 +11,7 @@ function InputUser(props) {
             {submitted && !value &&
                 <div className="help-block">{helpText}</div>
             }
-        </div> 
+        </div>
     )
 }
 
