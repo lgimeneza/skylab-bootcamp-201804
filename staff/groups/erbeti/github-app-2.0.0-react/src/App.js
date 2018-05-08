@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './images/logo-github.png';
 import './App.css';
 import Title from './components/Title/Title'
 import SearchForm from './components/SearchForm/SearchForm'
@@ -77,7 +77,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ei-sc-github.svg/768px-Ei-sc-github.svg.png" className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo" />
           <Title text={"GITHUB USERS APP"} />
           <SearchForm 
             handlerSearch={this.handlerSearch}

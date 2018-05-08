@@ -16,7 +16,7 @@ function UserSearch(props) {
             }
             <ul>
                 {props.list.map(function(e){
-                    return (<li key={e.id}> <img src={e.avatar_url} /> <p > {e.login} <button onClick={() => props.handlerClick(e.login)}>➤</button></p> </li>)
+                    return (<div onClick={() => props.handlerClick(e.login)}><li key={e.id}> <img src={e.avatar_url} /> <p > {e.login} </p> </li></div>)
                 })}
             </ul>
             </div>
