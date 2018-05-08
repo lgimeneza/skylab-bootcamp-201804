@@ -17,10 +17,14 @@ class HomePage extends Component {
     }
 
     render() {
-        const { user, users } = this.props;
+        //const { user, users } = this.props;
+        console.log("id : " +localStorage.getItem("id"))
+        console.log("token : " +localStorage.getItem("token"))
         return (
             <div className="col-md-6 col-md-offset-3">
-                {/* <h1>Hi {user.firstName}!</h1> */}
+                {<h1>Hi {localStorage.getItem('userName')}!
+                </h1>}
+            
                 {/* <p>You're logged in with React!!</p>
                 <h3>All registered users:</h3>
                 {users.loading && <em>Loading users...</em>}
@@ -40,6 +44,7 @@ class HomePage extends Component {
                     </ul>
                 } */}
                 <p>
+                <Link to="/profile" className="btn btn-link">Profile</Link>
                     <Link to="/" onClick={ this.handleLogoutUser }>Logout</Link>
                 </p>
             </div>

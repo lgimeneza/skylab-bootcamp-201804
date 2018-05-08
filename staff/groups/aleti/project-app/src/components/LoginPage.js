@@ -29,19 +29,17 @@ class LoginPage extends Component {
 
         this.setState({ submitted: true });
         const { username, password } = this.state;
-        //const { dispatch } = this.props;
         if (username && password) {
-
-            const body = { "username": username, "password": password  }
-            logic.loginUser(body).then(data => {
-                if (data.status === 'OK'){
-                    localStorage.setItem('token', data.data.id)
+            const body = { "username": username, "password": password }
+            logic.loginUser(body).then(result => {
+                if (result.status === 'OK') {
+                    this.storageUserData(result)
                     this.props.history.push('/home')
                 } else {
                     swal({
                         type: 'error',
                         title: 'Something went wrong!',
-                        text: data.error
+                        text: result.error
                     })
                 }
             })
@@ -51,6 +49,18 @@ class LoginPage extends Component {
                 submitted: false
             })
         }
+    }
+
+    storageUserData(result) {
+        localStorage.setItem('token', result.data.token)
+        localStorage.setItem('id', result.data.id)
+        logic.retrieveUser(result.data.id, result.data.token)
+        .then(res => {
+            if (res.status === 'OK') {
+                localStorage.setItem('userName', res.data.username)
+            }
+        })
+
     }
 
     render() {
