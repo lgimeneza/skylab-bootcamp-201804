@@ -69,7 +69,7 @@ class Profile extends Component {
 
     _handleUpdate = (e) => {
         e.preventDefault()
-        let pictureUrl = document.getElementById('picture_url').value
+        let picture_url = document.getElementById('picture_url').value
         let token = localStorage.getItem('token-app')
         let userId = localStorage.getItem('id-app')
         let pass = this.props.mainState.password
@@ -80,11 +80,11 @@ class Profile extends Component {
             lastName: this.state.lastName,
             age: this.state.age,
             location: this.state.location,
-            profile_url: pictureUrl
+            picture_url
         }
         logic.update(userId, token, userName, pass, newProps).then(resp => {
             if (resp.status === 'OK') {
-                //TO do
+                console.log(resp)
             } else {
                 this.setState({ serverErrorMessage: resp.error })
             }
@@ -104,7 +104,7 @@ class Profile extends Component {
                     <input value={this.state.lastName} onChange={this._handleLastName} id="lastName" type="text" placeholder="Your last name" />
                     <input value={this.state.age} onChange={this._handleAge} id="age" type="text" placeholder="What's your age?" />
                     <input value={this.state.location} onChange={this._handleLocation} id="location" type="text" placeholder="What city do you live in?" />
-                    <input value={this.state.profile_url} id="picture_url" type="text" placeholder="URL for profile picture?" />
+                    <input value={this.state.profile_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?" />
                     <p className="text-danger">{this.state.serverErrorMessage}</p>
                     <input type="submit" value='update' />
 
