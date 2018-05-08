@@ -7,11 +7,11 @@
  * 
  * // session storage
  * 
- * Xtorage.session.setObject('user', { id: '123abc' })
+ * Xtorage.session.setObject('user', { name: 'John', surname: 'Doe' })
  *
  * const user = Xtorage.session.getObject('user')
  * 
- * console.log(user.id) // -> "123abc"
+ * console.log(user.name, user.surname) // -> "John" "Doe"
  * 
  * // local storage
  * 
