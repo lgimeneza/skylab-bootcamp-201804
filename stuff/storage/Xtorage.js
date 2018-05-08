@@ -7,17 +7,17 @@
  * 
  * // session storage
  * 
- * Xtorage.session.setObject('user', { name: 'John', surname: 'Doe' })
+ * Xtorage.session.set('user', { name: 'John', surname: 'Doe' })
  *
- * const user = Xtorage.session.getObject('user')
+ * const user = Xtorage.session.get('user')
  * 
  * console.log(user.name, user.surname) // -> "John" "Doe"
  * 
  * // local storage
  * 
- * Xtorage.local.setObject('session', { id: '789ghi' })
+ * Xtorage.local.set('session', { id: '789ghi' })
  *
- * const session = Xtorage.local.getObject('session')
+ * const session = Xtorage.local.get('session')
  * 
  * console.log(session.id) // -> "789ghi"
  * 
