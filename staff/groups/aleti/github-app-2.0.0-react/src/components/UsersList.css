@@ -12,6 +12,7 @@
   align-items: center;
   margin: 8px;
   border-radius: 7px;
+  cursor: pointer;
 }
 
 .user-item .user-image img {
