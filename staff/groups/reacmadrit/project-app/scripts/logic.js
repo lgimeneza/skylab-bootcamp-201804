@@ -42,6 +42,9 @@ let logic;
                 if (key==='username' || key==='password') {
                     throw Error('You cannot delete your username or password')
                 }
+                if (newProps[key] instanceof Object) {
+                    throw Error('All values must be primitives')
+                }
                 body[key]=newProps[key]    
                 }
             let dataPackage = {
