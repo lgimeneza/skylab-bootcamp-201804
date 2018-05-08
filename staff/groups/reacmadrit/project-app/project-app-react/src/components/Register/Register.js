@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import logic from "../../logic"
+import logic from "../../logic";
+import {withRouter} from 'react-router-dom'
 
 class Register extends Component {
     state = {
@@ -54,7 +55,7 @@ class Register extends Component {
             logic.register(this.state.userName,this.state.password)
             .then(res => {
                 if (res.status==='OK') {
-                    console.log(res) //seguir aqui
+                    this.props.history.push('/login')
                 }
                 else {
                     this.setState({ registerFailedMessage:res.error.toUpperCase() })
@@ -63,8 +64,8 @@ class Register extends Component {
             })
         }        
     }
-    // componentWillMount() => render() => componentDidMount()
 
+    
     render() {
 
         return <div>
@@ -83,4 +84,4 @@ class Register extends Component {
 
 }
 
-export default Register;
+export default withRouter(Register);
