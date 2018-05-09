@@ -98,15 +98,15 @@ class RegisterPage extends Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <InputUser name='firstName' helpText='First Name is required' labelText='First Name' 
+                    <InputUser type='text' name='firstName' helpText='First Name is required' labelText='First Name' 
                         value={user.firstName} submitted={submitted} handleChange={this.handleChange}  />
-                    <InputUser name='lastName' helpText='Last Name is required' labelText='Last Name' 
+                    <InputUser type='text' name='lastName' helpText='Last Name is required' labelText='Last Name' 
                         value={user.lastName} submitted={submitted} handleChange={this.handleChange}  />
-                    <InputUser name='username' helpText='Username is required' labelText='Username' 
+                    <InputUser type='text' name='username' helpText='Username is required' labelText='Username' 
                         value={user.username} submitted={submitted} handleChange={this.handleChange}  />
-                    <InputUser name='password' helpText='Password is required' labelText='Password' 
+                    <InputUser type='password' name='password' helpText='Password is required' labelText='Password' 
                         value={user.password} submitted={submitted} handleChange={this.handleChange}  />
-                    <InputUser name='confirmpw' helpText='Password is required' labelText='Confirm password' 
+                    <InputUser type='password' name='confirmpw' helpText='Password is required' labelText='Confirm password' 
                         value={user.confirmpw} submitted={submitted} handleChange={this.handleChange}  />
                     <ButtonInput name='Register' destination='login' nameLink='Cancel' condition={registering} />
                 </form>
@@ -114,6 +114,5 @@ class RegisterPage extends Component {
         );
     }
 }
-
 
 export default RegisterPage

@@ -62,9 +62,9 @@ class LoginPage extends Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <InputUser name='username' helpText='Username is required' labelText='Username'
+                    <InputUser type='text' name='username' helpText='Username is required' labelText='Username'
                         value={username} submitted={submitted} handleChange={this.handleChange} />
-                    <InputUser name='password' helpText='Password is required' labelText='Password'
+                    <InputUser type='password' name='password' helpText='Password is required' labelText='Password'
                         value={password} submitted={submitted} handleChange={this.handleChange} />
                     <ButtonInput name='Login' destination='register' nameLink='Register' condition={loggingIn}/>
                 </form>
