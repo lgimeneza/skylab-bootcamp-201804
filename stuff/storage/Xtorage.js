@@ -15,11 +15,11 @@
  * 
  * // local storage
  * 
- * Xtorage.local.set('user', { id: '789ghi' })
+ * Xtorage.local.set('user', { id: 'abc123' })
  *
  * const user = Xtorage.local.get('user')
  * 
- * console.log(user.id) // -> "789ghi"
+ * console.log(user.id) // -> "abc123"
  * 
  */
 class Xtorage {
@@ -40,9 +40,7 @@ class Xtorage {
 	 * @param {string} key - Identifies the value in storage
 	 * @param {any} value - The value to be stored
 	 */
-	set(key, obj) {
-		this.storage.setItem(key, JSON.stringify(obj))
-	}
+	set(key, obj) { this.storage.setItem(key, JSON.stringify(obj)) }
 
 	/**
 	 * Retrieves a value from storage
@@ -51,28 +49,26 @@ class Xtorage {
 	 * 
 	 * @returns {any} - The stored value
 	 */
-	get(key) {
-		return JSON.parse(this.storage.getItem(key))
-	}
+	get(key) { return JSON.parse(this.storage.getItem(key)) }
 
 	/**
 	 * Removes a value from storage
 	 * 
 	 * @param {string} key - The identifier of the value in storage
 	 */
-	remove(key) {
-		return this.storage.removeItem(key)
-	}
+	remove(key) { return this.storage.removeItem(key) }
 
 	/**
 	 * Session storage singleton
 	 */
-	static session = new Xtorage(sessionStorage)
+	//static session = new Xtorage(sessionStorage) // babel
+	static get session() { return this._session ? this._session : this._session = new Xtorage(sessionStorage) }
 
 	/**
 	 * Local storage singleton
 	 */
-	static local = new Xtorage(localStorage)
+	//static local = new Xtorage(localStorage) // babel
+	static get local() { return this._local ? this._local : this._local = new Xtorage(localStorage) }
 }
 
 export default Xtorage
