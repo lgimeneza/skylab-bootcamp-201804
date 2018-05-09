@@ -7,6 +7,7 @@ import { Carousel } from 'react-bootstrap'
 //import { userActions } from '../_actions';
 
 class HomePage extends Component {
+
   componentDidMount() {
     //this.props.dispatch(userActions.getAll());
   }
@@ -48,7 +49,7 @@ class HomePage extends Component {
                 <MenuItem eventKey={3.2}>Help Center</MenuItem>
                 <MenuItem eventKey={3.3}>favorites</MenuItem>
                 <MenuItem divider />
-                <MenuItem eventKey={3.3}>Manage profiles</MenuItem>
+                <MenuItem eventKey={3.3}><Link to="/profile" className="btn btn-secundary">Profile</Link></MenuItem>
               </NavDropdown>
             </Nav>
             <Nav pullRight>
@@ -124,8 +125,12 @@ class HomePage extends Component {
         </div>
       </div>
 
-    );
-  }
+            
+
+        );
+    }
+
+
 
 }
 

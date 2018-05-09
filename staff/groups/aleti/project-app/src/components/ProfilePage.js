@@ -25,25 +25,26 @@ class ProfilePage extends Component {
                 <div className="container">
                     <div className="col-sm-8 col-sm-offset-2">
 
-                        {<h1>Hi {localStorage.getItem('userName')} ! </h1>}
+                        {<h1> {localStorage.getItem('userName')}'s Profile </h1>}
 
                         <div>
-                            <span>Update</span><br />
-                            <span>Account</span>
+                            <Link to="/profile/update" className="btn btn-link">Public</Link><br />
+                            <Link to="/profile/account" className="btn btn-link">Account</Link>
                         </div>
 
                         <div>
-                            <Route exact path="/profile/account" component={Account} />
                             <Route exact path="/profile/update" component={Update} />
-
+                            <Route exact path="/profile/account" component={Account} />
                         </div>
 
-                        <Link to="/home" className="btn btn-link">Home</Link>
+                        {/* <Link to="/home" className="btn btn-link">Home</Link> */}
 
                     </div>
+                    
                 </div>
 
             </div>
+            
         );
     }
 }
