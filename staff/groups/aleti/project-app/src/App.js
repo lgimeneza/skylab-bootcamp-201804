@@ -19,7 +19,7 @@ class App extends Component {
     //     // clear alert on location change
     //     //dispatch(alertActions.clear());
     // });
-}
+  }
 
   render() {
     const { alert } = this.props;
@@ -35,7 +35,7 @@ class App extends Component {
             </div>
         </Router>
     );
-}
+  }
 }
 
 export default App
