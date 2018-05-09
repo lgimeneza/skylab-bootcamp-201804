@@ -1,9 +1,9 @@
-import userApi from './UserApi'
-import movieApi from './MovieApi'
+import user from './userLogic'
+import movie from './movieLogic'
 
 const logic = {
-    userApi,
-    movieApi
+    user,
+    movie
 }
 
 export default logic

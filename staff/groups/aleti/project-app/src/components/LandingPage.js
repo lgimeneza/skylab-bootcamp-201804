@@ -3,20 +3,8 @@ import { Link } from 'react-router-dom';
 
 
 class LandingPage extends Component {
-    constructor(props) {
-        super(props);
-
-        //this.props.dispatch(userActions.logout());
-
-        this.state = {
-
-        };
-
-    }
 
     render() {
-        const { loggingIn } = this.props;
-        const { username, password, submitted } = this.state;
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,16 +24,11 @@ class LandingPage extends Component {
                     </div>
                 </nav>
                 <div className="col-md-6 col-md-offset-3">
-
                     <h2>Landing</h2>
                 </div>
-
-
             </div>
         );
     }
 }
-
-
 
 export default LandingPage
