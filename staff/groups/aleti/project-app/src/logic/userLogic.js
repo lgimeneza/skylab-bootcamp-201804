@@ -1,7 +1,6 @@
-const UserApi = {
+const userLogic = {
 
     url: 'https://skylabcoders.herokuapp.com/api',
-    token: '',
 
     loginUser(body){
         return Promise.resolve()
@@ -20,7 +19,6 @@ const UserApi = {
                 method: 'POST'
             })
             .then(resp => resp.json())
-            .then(info => info)
 
         })
     },
@@ -42,7 +40,6 @@ const UserApi = {
                 method: 'POST'
             })
             .then(resp => resp.json())
-            .then(info => info)
 
         })
     },
@@ -61,7 +58,6 @@ const UserApi = {
                 method: 'GET'
             })
             .then(resp => resp.json())
-            .then(info => info)
 
         })
     },
@@ -89,7 +85,7 @@ const UserApi = {
                 method: 'DELETE'
             })
             .then(resp => resp.json())
-            .then(info => info)
+
         })
     },
 
@@ -115,10 +111,10 @@ const UserApi = {
                 method: 'PUT'
             })
             .then(resp => resp.json())
-            .then(info => info)
+
         })
     }
 
 }
 
-export default UserApi
+export default userLogic

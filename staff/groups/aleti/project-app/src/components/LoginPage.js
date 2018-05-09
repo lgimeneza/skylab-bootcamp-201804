@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import logic from '../logic'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';
@@ -33,7 +32,7 @@ class LoginPage extends Component {
         const { username, password } = this.state;
         if (username && password) {
             const body = { "username": username, "password": password }
-            logic.userApi.loginUser(body).then(result => {
+            logic.user.loginUser(body).then(result => {
                 if (result.status === 'OK') {
                     this.storageUserData(result)
                     this.props.history.push('/home')
@@ -56,7 +55,7 @@ class LoginPage extends Component {
     storageUserData(result) {
         localStorage.setItem('token', result.data.token)
         localStorage.setItem('id', result.data.id)
-        logic.userApi.retrieveUser(result.data.id, result.data.token)
+        logic.user.retrieveUser(result.data.id, result.data.token)
         .then(res => {
             if (res.status === 'OK') {
                 localStorage.setItem('userName', res.data.username)

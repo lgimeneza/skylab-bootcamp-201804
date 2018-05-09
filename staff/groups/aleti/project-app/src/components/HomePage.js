@@ -2,14 +2,42 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
 import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
-import { Carousel } from 'react-bootstrap'
+import logic from '../logic'
 
 //import { userActions } from '../_actions';
 
 class HomePage extends Component {
 
+  state = {
+    movies: {},
+    value: ''
+  }
+
   componentDidMount() {
-    //this.props.dispatch(userActions.getAll());
+    logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc')
+      .then(data => {
+        this.setState({
+          movies: data
+        })
+      })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      value: e.target.value
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    console.log(event)
+    // logic.movie.searchMulti('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.value)
+    //   .then(data => {
+    //     this.setState({
+    //       movies: data
+    //     })
+    //   })
   }
 
   handleLogoutUser() {
@@ -22,10 +50,6 @@ class HomePage extends Component {
 
 
   render() {
-    const { user, users } = this.props;
-
-
-
     return (
 
       <div className="content-home">
@@ -53,11 +77,13 @@ class HomePage extends Component {
               </NavDropdown>
             </Nav>
             <Nav pullRight>
-              <Navbar.Collapse eventKey={4}>
-                <Navbar.Form pullLeft>
-                  <FormGroup>
-                    <FormControl type="text" placeholder="Search" />
-                  </FormGroup>{' '}
+              <Navbar.Collapse eventKey={4} >
+                <Navbar.Form pullLeft  >
+                  <form className="buttonSubmit" action="" onSubmit={this.handleSubmit}>
+                    <FormGroup  role="form">
+                      <FormControl onSubmit={this.handleSubmit} onChange={this.handleChange} value={this.state.value} type="text" placeholder="Search" />
+                    </FormGroup>
+                  </form>
                   <Button type="submit">Submit</Button>
                 </Navbar.Form>
               </Navbar.Collapse>
@@ -70,67 +96,31 @@ class HomePage extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <div className="container-LAV">
-          <h2>Popular in LAV</h2>
-          <Carousel>
-            <Carousel.Item>
-              <img width={900} height={500} alt="900x500" src="/carousel.png" />
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img width={900} height={500} alt="900x500" src="/carousel.png" />
-              <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img width={900} height={500} alt="900x500" src="/carousel.png" />
-              <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
-        </div>
+        <Grid>
+          <Row>
+            {this.state.movies.results && (
+              this.state.movies.results.map(movie => {
+                return (
+                  <Col xs={12} sm={6} md={3}>
+                    <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
+                      <h3>Thumbnail label</h3>
+                      <p>Description</p>
+                      <p>
+                        <Button bsStyle="primary">Button</Button>&nbsp;
+                        <Button bsStyle="default">Button</Button>
+                      </p>
+                    </Thumbnail>
+                  </Col>
+                )
+              })
+            )}
+          </Row>
+        </Grid>
 
-        <div className="container-start">
-        <h2>keep watching</h2>
-          <Carousel>
-            <Carousel.Item>
-              <img width={900} height={500} alt="900x500" src="../images/fff(1).png" />
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img width={900} height={500} alt="900x500" src="/carousel.png" />
-              <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img width={900} height={500} alt="900x500" src="/carousel.png" />
-              <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
-        </div>
+
       </div>
-
-            
-
-        );
-    }
-
-
+    );
+  }
 
 }
 

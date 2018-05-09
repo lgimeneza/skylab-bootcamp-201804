@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import logic from '../logic/index'
+import logic from '../logic'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
@@ -52,10 +51,10 @@ class RegisterPage extends Component {
                     "lastname": user.lastName
                 }
                 
-                logic.userApi.registerUser(body).then(data => {
+                logic.user.registerUser(body).then(data => {
                     if (data.status === 'OK') {
                         swal({
-                            title: 'Registered!',
+                            text: 'Registered!',
                             title: 'Go to login!',
                             type: 'success'
                         }).then(result => {

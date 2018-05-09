@@ -11,18 +11,7 @@ import ProfilePage from './components/ProfilePage'
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-
-    const { dispatch } = this.props;
-    // history.listen((location, action) => {
-    //     // clear alert on location change
-    //     //dispatch(alertActions.clear());
-    // });
-  }
-
   render() {
-    const { alert } = this.props;
     return (
         <Router history={history}>
             <div className="content-api">

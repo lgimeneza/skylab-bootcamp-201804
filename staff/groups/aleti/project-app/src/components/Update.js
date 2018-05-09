@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import logic from '../logic/index'
-import swal from 'sweetalert2'
 
 class Update extends Component {
     constructor(props) {
