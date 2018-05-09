@@ -31,19 +31,17 @@ class LoginPage extends Component {
 
         this.setState({ submitted: true });
         const { username, password } = this.state;
-        //const { dispatch } = this.props;
         if (username && password) {
-
-            const body = { "username": username, "password": password  }
-            logic.loginUser(body).then(data => {
-                if (data.status === 'OK'){
-                    localStorage.setItem('token', data.data.id)
+            const body = { "username": username, "password": password }
+            logic.loginUser(body).then(result => {
+                if (result.status === 'OK') {
+                    this.storageUserData(result)
                     this.props.history.push('/home')
                 } else {
                     swal({
                         type: 'error',
                         title: 'Something went wrong!',
-                        text: data.error
+                        text: result.error
                     })
                 }
             })
@@ -55,6 +53,18 @@ class LoginPage extends Component {
         }
     }
 
+    storageUserData(result) {
+        localStorage.setItem('token', result.data.token)
+        localStorage.setItem('id', result.data.id)
+        logic.retrieveUser(result.data.id, result.data.token)
+        .then(res => {
+            if (res.status === 'OK') {
+                localStorage.setItem('userName', res.data.username)
+            }
+        })
+
+    }
+
     render() {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
@@ -62,9 +72,9 @@ class LoginPage extends Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <InputUser name='username' helpText='Username is required' labelText='Username'
+                    <InputUser type='text' name='username' helpText='Username is required' labelText='Username'
                         value={username} submitted={submitted} handleChange={this.handleChange} />
-                    <InputUser name='password' helpText='Password is required' labelText='Password'
+                    <InputUser type='password' name='password' helpText='Password is required' labelText='Password'
                         value={password} submitted={submitted} handleChange={this.handleChange} />
                     <ButtonInput name='Login' destination='register' nameLink='Register' condition={loggingIn}/>
                 </form>
