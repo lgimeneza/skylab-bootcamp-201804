@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import { Modal } from "../index"
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 
 class Profile extends Component {
@@ -26,7 +26,7 @@ class Profile extends Component {
         let userId = localStorage.getItem('id-app')
         let token = localStorage.getItem('token-app')
 
-        if(userId && token){
+        if (userId && token) {
 
             logic.retrieve(userId, token).then(resp => {
                 Promise.resolve().then(() => {
@@ -120,7 +120,7 @@ class Profile extends Component {
 
         if (!this.props.isLogged()) {
             return <h2>You are not allowed</h2>
-            
+
         } else {
             return (
                 <div>
@@ -143,7 +143,10 @@ class Profile extends Component {
                         <Modal viewModal={this.state.viewModal} closeModal={this._closeModal} />
 
                     </form>
-
+                    
+                    <Link to="/unregister">
+                    <button >Unergister</button>
+                    </Link>
 
                 </div>
 

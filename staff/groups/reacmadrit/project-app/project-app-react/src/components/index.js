@@ -5,6 +5,7 @@ import Profile from './Profile/Profile'
 import Login from './Login/Login'
 import Modal from './Modal/Modal'
 import Error404 from './Error404/Error404'
+import Unregister from './Unregister/Unregister'
 
 
 export {
@@ -14,5 +15,6 @@ export {
     Profile,
     Login,
     Modal,
-    Error404
+    Error404,
+    Unregister
 }

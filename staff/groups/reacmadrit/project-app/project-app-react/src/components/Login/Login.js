@@ -27,34 +27,40 @@ class Login extends Component {
     _handleLogin = (e) => {
         e.preventDefault()
         logic.login(this.state.userName, this.state.password)
-        .then(res => {
+            .then(res => {
 
-            if (res.status === 'OK') {
-                localStorage.setItem('token-app', res.data.token)
+                if (res.status === 'OK') {
+                    localStorage.setItem('token-app', res.data.token)
 
-                localStorage.setItem('id-app', res.data.id)
-                this.props.history.push('/home')              
+                    localStorage.setItem('id-app', res.data.id)
+                    this.props.history.push('/home')
 
-            } else {
-                this.setState({
-                    loginFailedMessage: res.error
-                })
-            }
+                } else {
+                    this.setState({
+                        loginFailedMessage: res.error
+                    })
+                }
 
 
-        })
+            })
     }
 
     render() {
 
         return (
-            <div>
+            <div className="container" >
 
                 <form onSubmit={this._handleLogin}>
-                    <input value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name" />
-                    <input value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
-                    <p className="text-danger">{this.state.loginFailedMessage}</p>
-                    <input type="submit" value="Send" />
+                    <div className="form-group col-sm-4 col-sm-offset-4">
+                        <input className="form-control" value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name" />
+                    </div>
+                    <div className="form-group col-sm-4 col-sm-offset-4">
+                        <input className="form-control" value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
+                    </div>
+                    <div className="form-group">
+                        <p className="text-danger">{this.state.loginFailedMessage}</p>
+                        <input className="btn btn-primary " type="submit" value="Send" />
+                    </div>
                 </form>
             </div>
 
