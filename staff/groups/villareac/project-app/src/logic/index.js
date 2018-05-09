@@ -1,5 +1,8 @@
 
+
+
 const logic = {
+
     url: 'https://skylabcoders.herokuapp.com',
     token: '',
     id: '',
@@ -46,4 +49,5 @@ const logic = {
 
 }
 
+// UNEXPECTED TOKEN EXPORT --> comment the following line to make jasmine tests work 
 export default logic

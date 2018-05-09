@@ -2,8 +2,6 @@
 
 describe('logic (project-app)', () => {
 
-
-
     var formData = {
         username: 'user',
         password: 'pass'
@@ -27,6 +25,7 @@ describe('logic (project-app)', () => {
         logic.token = ''
 
         it('should return status "ok"', done => {
+            console.log('first test')
             logic.register(formData)
                 .then(data => {
                     expect(data).toBeDefined()
@@ -37,11 +36,10 @@ describe('logic (project-app)', () => {
                     done()
                 })
                 .catch(done)
-
         })
 
           it(`login should return status ("OK"), id (${logic.id}) and defined token`, done => {
-           
+            console.log('second test')
             logic.login(formData)
                 .then(data => {
                     expect(data).toBeDefined()
@@ -95,7 +93,5 @@ describe('logic (project-app)', () => {
                 })
                 .catch(done)
         }) 
-
     })
-
 })
