@@ -28,7 +28,7 @@ class ProfilePage extends Component {
                         {<h1> {localStorage.getItem('userName')}'s Profile </h1>}
 
                         <div>
-                            <Link to="/profile/update" className="btn btn-link">Update</Link><br />
+                            <Link to="/profile/update" className="btn btn-link">Public</Link><br />
                             <Link to="/profile/account" className="btn btn-link">Account</Link>
                         </div>
 
@@ -40,9 +40,11 @@ class ProfilePage extends Component {
                         {/* <Link to="/home" className="btn btn-link">Home</Link> */}
 
                     </div>
+                    
                 </div>
 
             </div>
+            
         );
     }
 }
