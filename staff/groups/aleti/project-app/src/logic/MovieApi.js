@@ -35,3 +35,5 @@ const MovieApi = {
     }
 
 }
+
+export default MovieApi

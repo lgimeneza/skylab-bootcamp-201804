@@ -121,4 +121,4 @@ const UserApi = {
 
 }
 
-export default logic
+export default UserApi
