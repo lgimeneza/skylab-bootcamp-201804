@@ -31,7 +31,7 @@ class HomePage extends Component {
         <Navbar inverse collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#brand">SeriesLAV</a>
+              <a href="#brand">Movies&TV-LAV</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
