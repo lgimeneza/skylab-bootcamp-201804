@@ -1,81 +1,127 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-import { Navbar, MenuItem, NavItem, Nav, NavDropdown } from 'react-bootstrap'
-
+// import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem,  FormGroup, FormControl, Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
+import logic from '../logic'
 
 //import { userActions } from '../_actions';
 
 class HomePage extends Component {
-    componentDidMount() {
-        //this.props.dispatch(userActions.getAll());
-    }
 
-    handleLogoutUser() {
-        localStorage.setItem('token', '')
-    }
+  state = {
+    movies: {},
+    value: ''
+  }
 
-    handleDeleteUser(id) {
-        //return (e) => this.props.dispatch(userActions.delete(id));
-    }
+  componentDidMount() {
+    logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc')
+      .then(data => {
+        this.setState({
+          movies: data
+        })
+      })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      value: e.target.value
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    console.log(event)
+    // logic.movie.searchMulti('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.value)
+    //   .then(data => {
+    //     this.setState({
+    //       movies: data
+    //     })
+    //   })
+  }
+
+  handleLogoutUser() {
+    localStorage.setItem('token', '')
+  }
+
+  handleDeleteUser(id) {
+    //return (e) => this.props.dispatch(userActions.delete(id));
+  }
 
 
-    render() {
-        const { user, users } = this.props;
+  render() {
+    return (
 
-        // <p>
-        //   <Link to="/" onClick={this.handleLogoutUser}>Logout</Link>
-        // </p>
-
-        return (
-
-            <div>
-                <Navbar inverse collapseOnSelect>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                            <a href="#brand">React-Bootstrap</a>
-                        </Navbar.Brand>
-                        <Navbar.Toggle />
-                    </Navbar.Header>
-                    <Navbar.Collapse>
-                        <Nav>
-                            <NavItem eventKey={1} href="#">
-                                Link
-      </NavItem>
-                            <NavItem eventKey={2} href="#">
-                                Link
-      </NavItem>
-                            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                                <MenuItem eventKey={3.1}>Action</MenuItem>
-                                <MenuItem eventKey={3.2}>Another action</MenuItem>
-                                <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                                <MenuItem divider />
-                                <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                            </NavDropdown>
-                        </Nav>
-                        <Nav pullRight>
-                            <NavItem eventKey={1} href="#">
-                                Link Right
-      </NavItem>
-                            <NavItem eventKey={2} href="#">
-                                Link Right
-      </NavItem>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>;
-
-        {<h1>Hi {localStorage.getItem('userName')}!
-                </h1>}
-
+      <div className="content-home">
+        <Navbar inverse collapseOnSelect>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="#brand">Movies&TV-LAV</a>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav>
+              <NavItem eventKey={1} href="#">
+                <Link to="#">Series</Link>
+              </NavItem>
+              <NavItem eventKey={2} href="#">
+                <Link to="#">Movies</Link>
+              </NavItem>
+              <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
+                <MenuItem eventKey={3.1}>Settings</MenuItem>
+                <MenuItem eventKey={3.2}>Help Center</MenuItem>
+                <MenuItem eventKey={3.3}>favorites</MenuItem>
+                <MenuItem divider />
+                <MenuItem eventKey={3.3}><Link to="/profile" className="btn btn-secundary">Profile</Link></MenuItem>
+              </NavDropdown>
+            </Nav>
+            <Nav pullRight>
+              <Navbar.Collapse eventKey={4} >
+                <Navbar.Form pullLeft  >
+                  <form className="buttonSubmit" action="" onSubmit={this.handleSubmit}>
+                    <FormGroup  role="form">
+                      <FormControl onSubmit={this.handleSubmit} onChange={this.handleChange} value={this.state.value} type="text" placeholder="Search" />
+                    </FormGroup>
+                  </form>
+                  <Button type="submit">Submit</Button>
+                </Navbar.Form>
+              </Navbar.Collapse>
+              <NavItem eventKey={2} href="#">
                 <p>
-                    <Link to="/profile" className="btn btn-link">Profile</Link>
-                    <Link to="/" onClick={this.handleLogoutUser}>Logout</Link>
+                  <Link to="/" onClick={this.handleLogoutUser}>Logout</Link>
                 </p>
-            </div>
+              </NavItem>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
 
-        );
-    }
+        <Grid>
+          <Row>
+            {this.state.movies.results && (
+              this.state.movies.results.map(movie => {
+                return (
+                  <Col xs={12} sm={6} md={3}>
+                    <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
+                      <h3>Thumbnail label</h3>
+                      <p>Description</p>
+                      <p>
+                        <Button bsStyle="primary">Button</Button>&nbsp;
+                        <Button bsStyle="default">Button</Button>
+                      </p>
+                    </Thumbnail>
+                  </Col>
+                )
+              })
+            )}
+          </Row>
+        </Grid>
 
+
+      </div>
+    );
+  }
 
 }
 
