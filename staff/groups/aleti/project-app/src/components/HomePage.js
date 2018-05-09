@@ -8,7 +8,7 @@ class HomePage extends Component {
         //this.props.dispatch(userActions.getAll());
     }
 
-    handleLogoutUser(){
+    handleLogoutUser() {
         localStorage.setItem('token', '')
     }
 
@@ -18,14 +18,16 @@ class HomePage extends Component {
 
     render() {
         //const { user, users } = this.props;
-        console.log("id : " +localStorage.getItem("id"))
-        console.log("token : " +localStorage.getItem("token"))
+        console.log("id : " + localStorage.getItem("id"))
+        console.log("token : " + localStorage.getItem("token"))
         return (
-            <div className="col-md-6 col-md-offset-3">
-                {<h1>Hi {localStorage.getItem('userName')}!
+            <div className="jumbotron">
+                <div className="container">
+                    <div className="col-md-6 col-md-offset-3">
+                        {<h1>WELLCOME HOME  {localStorage.getItem('userName')}!
                 </h1>}
-            
-                {/* <p>You're logged in with React!!</p>
+
+                        {/* <p>You're logged in with React!!</p>
                 <h3>All registered users:</h3>
                 {users.loading && <em>Loading users...</em>}
                 {users.error && <span className="text-danger">ERROR: {users.error}</span>}
@@ -43,10 +45,12 @@ class HomePage extends Component {
                         )}
                     </ul>
                 } */}
-                <p>
-                <Link to="/profile" className="btn btn-link">Profile</Link>
-                    <Link to="/" onClick={ this.handleLogoutUser }>Logout</Link>
-                </p>
+                        <p>
+                            <Link to="/profile" className="btn btn-link">Profile</Link>
+                            <Link to="/" onClick={this.handleLogoutUser}>Logout</Link>
+                        </p>
+                    </div>
+                </div>
             </div>
         );
     }

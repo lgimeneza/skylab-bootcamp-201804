@@ -98,7 +98,6 @@ class RegisterPage extends Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-
                     <InputUser type='text' name='firstName' helpText='First Name is required' labelText='First Name' 
                         value={user.firstName} submitted={submitted} handleChange={this.handleChange}  />
                     <InputUser type='text' name='lastName' helpText='Last Name is required' labelText='Last Name' 

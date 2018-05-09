@@ -31,7 +31,7 @@ class App extends Component {
                 <Route path="/landing" component={ LandingPage } />
                 <Route path="/login" component={ LoginPage } />
                 <Route path="/register" component={ RegisterPage } />
-
+                <Route path="/profile" component={ ProfilePage } />
             </div>
         </Router>
     );

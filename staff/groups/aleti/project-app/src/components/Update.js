@@ -69,6 +69,7 @@ class Update extends Component {
                         <Link to="/profile" className="btn btn-link">Go Back</Link>
                     </div>
                 </form> */}
+                <Link to="/home" className="btn btn-link">Go Home</Link>
             </div>
         );
     }
