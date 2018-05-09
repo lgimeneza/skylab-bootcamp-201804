@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logic from '../../logic/logic'
+import logic from '../../logic'
 import {Link} from 'react-router-dom'
 import swal from 'sweetalert2'
 
@@ -54,7 +54,7 @@ class RegisterUser extends Component {
     }
 
     acceptRegister = (e) =>{
-       console.log(this.props.history)
+       
         e.preventDefault()
         Promise.resolve()
         .then(() => this.checkFields())

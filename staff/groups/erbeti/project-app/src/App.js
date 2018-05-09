@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import logo from './logo.svg';
-import logic from './logic/logic.js';
+import logic from './logic';
 import './App.css';
 import Landing from './components/Landing/Landing'
 import Home from './components/Home/Home'
@@ -11,7 +11,7 @@ import RegisterUser from './components/RegisterUser/RegisterUser'
 
 class App extends Component {
 
-
+  
 
   render() {
     return (
@@ -30,9 +30,6 @@ class App extends Component {
           <div>
             <Route path="/profile" component={Profile}/>
             </div>
-          <div>
-            <Route path="/user/:user" />
-          </div>
         </main>
       </Switch>
     );

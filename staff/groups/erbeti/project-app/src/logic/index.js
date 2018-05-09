@@ -32,6 +32,7 @@ const logic={
                     if (resp.status === 'KO'){
                         throw Error(resp.error)
                     }
+                    else{return resp}
                 })
           
         })
@@ -59,6 +60,9 @@ const logic={
                     if (resp.status === 'KO'){
                         throw Error(resp.error)
                     }
+                    else{
+                        return resp
+                    }
                 })
                 
                 
@@ -78,6 +82,9 @@ const logic={
         .then(resp => {
             if (resp.status === 'KO'){
                 throw Error(resp.error)
+            }
+            else {
+                return resp
             }
         })
 
@@ -99,6 +106,9 @@ const logic={
                 if (resp.status === 'KO'){
                     throw Error(resp.error)
                 }
+                else{
+                    return resp
+                }
             })
       
 
@@ -117,6 +127,9 @@ const logic={
         .then(resp => {
             if (resp.status === 'KO'){
                 throw Error(resp.error)
+            }
+            else {
+                return resp
             }
         })
     }

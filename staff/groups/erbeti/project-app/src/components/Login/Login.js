@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import logic from '../../logic/logic'
+import logic from '../../logic'
 import swal from 'sweetalert2'
+import Xtorage from '../../Xtorage'
 
 class Login extends Component {
 
@@ -21,17 +22,28 @@ class Login extends Component {
     }
 
 
+
     acceptLogin = (e) => {
         e.preventDefault()
-
+        
+        // this.props.saveIdToken(this.state.username, this.state.password)
         logic.loginUser(this.state.username, this.state.password)
+            .then(res =>
+                    {
+                    Xtorage.local.clear()
+                    Xtorage.local.set('user', { userName: this.state.username ,id: res.data.id, token: res.data.token })
+                    console.log(Xtorage.local.get("user"))
+                    }
+
+                    
+                
+            )
             .then(resp => {
+
                 swal(
                     'Successful login',
-                    //this.props.history.push("/home")
-
-                ),
-                console.log({})
+                ).then(this.props.history.push('/home'))
+                
                 
             })
             .catch(err => 
