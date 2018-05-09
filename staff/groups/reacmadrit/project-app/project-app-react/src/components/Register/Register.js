@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import logic from "../../logic";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 class Register extends Component {
     state = {
@@ -8,7 +8,7 @@ class Register extends Component {
         password: "",
         repeatPassword: "",
         notMatchingMessage: "",
-        registerFailedMessage:""
+        registerFailedMessage: ""
     }
 
     _comparePassword() {
@@ -36,9 +36,7 @@ class Register extends Component {
         }).then(() => {
             this._comparePassword()
         })
-
     }
-
 
     _handleKeepRepeatPassword = (e) => {
         let repeatPassword = e.target.value;
@@ -53,36 +51,68 @@ class Register extends Component {
     _handleRegister = (e) => {
         e.preventDefault();
         if (!this.notMatchingMessage) {
-            logic.register(this.state.userName,this.state.password)
-            .then(res => {
-                if (res.status==='OK') {
-                    this.props.history.push('/login')
-                }
-                else {
-                    this.setState({ registerFailedMessage:res.error.toUpperCase() })
-                }
-            
-            })
-        }        
+            logic.register(this.state.userName, this.state.password)
+                .then(res => {
+                    if (res.status === 'OK') {
+                        this.props.history.push('/login')
+                    }
+                    else {
+                        this.setState({ registerFailedMessage: res.error})
+                    }
+                })
+        }
     }
 
-    
+
     render() {
+        return <div className="container">
 
-        return <div>
+            <form className="form-control" onSubmit={this._handleRegister}>
+                <div className="row justify-content-center ">
+                    <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.userName} onChange={this._handleKeepName} type="text"
+                        placeholder="User name" />
+                </div>
+                <div className="row justify-content-center ">
+                    <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.password} onChange={this._handleKeepPassword} type="password"
+                        placeholder="Password" />
+                </div>
+                <div className="row justify-content-center ">
+                    <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword}
+                        type="password" placeholder="Repeat Password" />
+                </div>
+                <div className="row justify-content-center ">
 
-            <form onSubmit={this._handleRegister}>
-                <input value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name" />
-                <input value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
-                <input value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
-                <p className="text-danger">{this.state.notMatchingMessage}</p>
-                <p className="text-warning">{this.state.registerFailedMessage}</p>
-                <input type="submit" value="Send" />
+                    <p className="text-danger text-capitalize">{this.state.notMatchingMessage}</p>
+                </div>
+
+                <div className="row justify-content-center ">
+
+                    <p className="text-warning text-capitalize">{this.state.registerFailedMessage}</p>
+                </div>
+                <div className="row justify-content-center ">
+
+                    <input className="row justify-content-center " type="submit" value="Send" />
+                </div>
             </form>
 
         </div>
     }
-
+    
 }
 
 export default withRouter(Register);
+
+
+
+// <div>
+
+//     <form onSubmit={this._handleRegister}>
+//         <input value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name" />
+//         <input value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
+//         <input value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
+//         <p className="text-danger">{this.state.notMatchingMessage}</p>
+//         <p className="text-warning">{this.state.registerFailedMessage}</p>
+//         <input type="submit" value="Send" />
+//     </form>
+
+// </div>

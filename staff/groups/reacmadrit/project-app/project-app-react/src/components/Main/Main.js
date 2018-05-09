@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import { Route, Switch } from 'react-router-dom';
 import { Landing, Home, Profile, Register, Login, Error404, Unregister } from "../index";
+import main from './Main'
 
 class Main extends Component {
 
@@ -10,7 +11,7 @@ class Main extends Component {
     }
 
     render() {
-        return <div>
+        return <div className ="main-background">
             <Switch>
                 <Route exact path="/" component={Landing} />
                 <Route path="/home" render={props => <Home isLogged={this.isLogged} />} />

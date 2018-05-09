@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import { Modal } from "../index"
 import { withRouter, Link } from 'react-router-dom'
-
+import profile from './Profile.css'
 
 class Profile extends Component {
 
@@ -123,32 +123,89 @@ class Profile extends Component {
 
         } else {
             return (
-                <div>
-                    <img className='w-25' src={this.state.picture_url} alt="profile pic" />
 
-                    <form onSubmit={this._handleUpdate}>
-                        <input value={this.state.name} onChange={this._handleName} id="name" type="text" placeholder="Your name" />
-                        <input value={this.state.lastName} onChange={this._handleLastName} id="lastName" type="text" placeholder="Your last name" />
-                        <input value={this.state.age} onChange={this._handleAge} id="age" type="text" placeholder="What's your age?" />
-                        <input value={this.state.location} onChange={this._handleLocation} id="location" type="text" placeholder="What city do you live in?" />
-                        <input value={this.state.profile_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?" />
+                <div className="container profile-form">
+                    <div className="row justify-content-center ">
+                        <img className='w-25 h-25 img-thumbnail' src={this.state.picture_url}
+                            alt="profile pic" />
+                    </div>
+                    <div className="form-control">
+                        <form onSubmit={this._handleUpdate}>
+                            <div className="row justify-content-center ">
+                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.name} onChange={this._handleName} id="name" type="text" placeholder="Your name" />
+                            </div>
+                            <div className="row justify-content-center ">
 
-                        <input value={this.state.password} onChange={this._handlePassword}
-                            id="password" type="password" placeholder="Confirm password" />
+                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.lastName} onChange={this._handleLastName} id="lastName" type="text" placeholder="Your last name"
+                                />
+                            </div>
+                            <div className="row justify-content-center ">
+                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.age} onChange={this._handleAge} id="age" type="text" placeholder="What's your age?" />
+                            </div>
+                            <div className="row justify-content-center ">
 
-                        <p className="text-danger">{this.state.serverErrorMessage}</p>
-                        <input type="submit" value='update' />
+                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.location} onChange={this._handleLocation} id="location" type="text" placeholder="What city do you live in?"
+                                />
+                            </div>
+                            <div className="row justify-content-center ">
+                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.profile_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?"
+                                />
+                            </div>
+                            <div className="row justify-content-center ">
+                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.password} onChange={this._handlePassword} id="password" type="password" placeholder="Confirm password"
+                                />
+                            </div>
+                            <div className="row justify-content-center ">
 
+                                <p className="text-danger">{this.state.serverErrorMessage}</p>
+                            </div>
 
-                        <Modal viewModal={this.state.viewModal} closeModal={this._closeModal} />
+                            <div className="row justify-content-center ">
 
-                    </form>
-                    
-                    <Link to="/unregister">
-                    <button >Unergister</button>
-                    </Link>
+                                <input id="button" className="form-group col-sm-4 col-sm-offset-4" type="submit" value='update' />
+                            </div>
+                            <div className="row justify-content-center ">
+
+                                <Modal viewModal={this.state.viewModal} closeModal={this._closeModal} />
+                            </div>
+                        </form>
+                        <Link to="/unregister">
+                            <div className="row justify-content-center ">
+
+                                <button className="form-group col-sm-4 col-sm-offset-4">Unergister</button>
+                            </div>
+                        </Link>
+                    </div>
 
                 </div>
+
+                //    <div>
+
+                //         <img className='w-25' src={this.state.picture_url} alt="profile pic" />
+
+                //         <form onSubmit={this._handleUpdate}>
+                //             <input value={this.state.name} onChange={this._handleName} id="name" type="text" placeholder="Your name" />
+                //             <input value={this.state.lastName} onChange={this._handleLastName} id="lastName" type="text" placeholder="Your last name" />
+                //             <input value={this.state.age} onChange={this._handleAge} id="age" type="text" placeholder="What's your age?" />
+                //             <input value={this.state.location} onChange={this._handleLocation} id="location" type="text" placeholder="What city do you live in?" />
+                //             <input value={this.state.profile_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?" />
+
+                //             <input value={this.state.password} onChange={this._handlePassword}
+                //                 id="password" type="password" placeholder="Confirm password" />
+
+                //             <p className="text-danger">{this.state.serverErrorMessage}</p>
+                //             <input type="submit" value='update' />
+
+
+                //             <Modal viewModal={this.state.viewModal} closeModal={this._closeModal} />
+
+                //         </form>
+
+                //         <Link to="/unregister">
+                //         <button >Unergister</button>
+                //         </Link>
+
+                //     </div>
 
             )
         }

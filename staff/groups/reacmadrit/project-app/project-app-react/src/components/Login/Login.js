@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
+import login from './Login.css'
 
 
 class Login extends Component {
@@ -10,7 +11,6 @@ class Login extends Component {
         password: "",
         loginFailedMessage: ""
     }
-
 
     _handleKeepName = (e) => {
         let userName = e.target.value;
@@ -48,21 +48,51 @@ class Login extends Component {
     render() {
 
         return (
-            <div className="container" >
+           
+            <div className="container login-form">
+                    <form onSubmit={this._handleLogin}>
+                        <div className="row justify-content-center ">
+                            <div className="row form-group col-sm-5 col-sm-offset-3">
+                                <input className="form-control name-input" value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name"/>
+                            </div>
+                        </div>
+                        <div className="row justify-content-center ">
+                            <div className="row form-group col-sm-5 col-sm-offset-3">
+                                <input className="form-control"value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
+                            </div>
+                        </div>
+                
+                <div className="row justify-content-center ">
 
-                <form onSubmit={this._handleLogin}>
-                    <div className="form-group col-sm-4 col-sm-offset-4">
-                        <input className="form-control" value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name" />
-                    </div>
-                    <div className="form-group col-sm-4 col-sm-offset-4">
-                        <input className="form-control" value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
-                    </div>
                     <div className="form-group">
-                        <p className="text-danger">{this.state.loginFailedMessage}</p>
-                        <input className="btn btn-primary " type="submit" value="Send" />
+                        <p className="text-danger"></p>
+                        <input className="btn btn-primary " type="submit" value="Send" type="submit" value="Send" />
                     </div>
+                </div>
+
                 </form>
             </div>
+
+           
+            /* // <div className="container" >
+
+            //     <form onSubmit={this._handleLogin}>
+                   
+            //         <div className="form-group col-sm-4 col-sm-offset-4">
+            //             <input className="form-control" value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name" />
+            //         </div>
+            //         <div className="form-group col-sm-4 col-sm-offset-4">
+            //             <input className="form-control" value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
+            //         </div>
+            //         <div className="form-group">
+            //             <p className="text-danger">{this.state.loginFailedMessage}</p>
+            //             <input className="btn btn-primary " type="submit" value="Send" />
+                 
+            //         </div>
+
+
+            //     </form>
+            // </div> */
 
         )
     }
