@@ -6,6 +6,7 @@ import Register from '../Register/Register'
 import Login from '../Login/Login'
 import Profile from '../Profile/Profile'
 
+
 class Main extends Component {
 
     constructor() {
@@ -37,9 +38,15 @@ class Main extends Component {
     }
 
     /**
-     * This componentDiMount receives the data from the sessionStorage of the browser if this exists.
+     * This componentDiMount receives the data from the sessionStorage of the browser in case it exists.
+     * The 'key' string allows you to unlock the data stored in sessionStorage
+     * 
+     * @example
+     * 
+     * componentDidMount() --> insert example
+     * 
+     * @returns {Object | null} - returns an object with the data stored in sessionStorage
      */
-
     componentDidMount() {
         const sessionData = sessionStorage.getItem('key');
         if (sessionData) {
@@ -47,9 +54,18 @@ class Main extends Component {
         }
     }
 
-    // INPUTS
+    // INPUTS 
 
+    /**
+    * This handlers target input text and they set it to whatever the user introduces when
+    * updating profile settings.
+    * 
+    * @param {string} text - a parameter to target the event capturing.
+    * 
+    * @returns {string | number} - The string or number introduced by the user.
+    */
     _handlerWriteUsername = (e) => {
+        console.log(e)
         this.setState({ username: e.target.value })
     }
 
@@ -75,6 +91,15 @@ class Main extends Component {
 
     // REGISTER
 
+    /**
+     * This handler
+     * 
+     * @example
+     * 
+     * componentDidMount() --> insert example
+     * 
+     * @returns {Object | null} - returns an object with the data stored in sessionStorage
+     */
     _handlerRegister = (e) => {
         e.preventDefault();
 
