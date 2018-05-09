@@ -42,7 +42,11 @@ class Profile extends Component {
                     <button onClick={this.props._handlerRetrieve}>Conseguir datos</button><br />
                     {/* <button onClick={this.props.state.disabled = ""}>Enable changes</button><br/> */}
                     <button onClick={this.props._handlerUpdate}>Submit changes</button><br />
-                    <input disabled={this.props.disabled} type="text" placeholder={this.props.username} onChange={this.props._handlerWriteNewUsername} />
+                    <input type="text" placeholder={this.props.username} onChange={this.props._handlerWriteNewUsername} />
+                    <input type="text" placeholder={(this.props.age) ? this.props.age : ''} onChange={this.props._handlerWriteAge} />
+                    <input type="text" placeholder={(this.props.gender) ? this.props.gender : ''} onChange={this.props._handlerWriteGender} />
+                    <input type="text" placeholder='password required' onChange={this.props._handlerWritePassword} />
+
 
                     <button onClick={this._handlerVisibility}>delete profile</button>
                     {this.state.visible && <div>

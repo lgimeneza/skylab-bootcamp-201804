@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import '../Main/main.css'
 
 class Register extends Component {
-    constructor() {
-        super()
-    }
 
     render() {
         return( 
