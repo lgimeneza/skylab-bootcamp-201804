@@ -3,17 +3,12 @@ import React from "react";
 
 function Home (props){
 
-
-    if(props.viewInfoPrivate){
-
-        return <div>Hello from Home {localStorage.getItem('token-app')}</div>
+    if(props.isLogged()){
+        return <div>Hello from Home </div>
     }
     else{
-        return <div>You are not allowed </div>
-
+        return <h2>You are not allowed</h2>
     }
-
-
 }
 
 export default Home;
