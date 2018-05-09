@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './HomePage.css';
 // import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem,  FormGroup, FormControl, Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem,  Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
+// import { FormGroup, FormControl } from 'react-bootstrap'
 import logic from '../logic'
 import { LinkContainer } from 'react-router-bootstrap';
 
