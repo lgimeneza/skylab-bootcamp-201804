@@ -83,8 +83,6 @@ class HomePage extends Component {
                 </LinkContainer>
               </NavDropdown>
             </Nav>
-          </Navbar.Collapse> 
-          <Navbar.Collapse>
             <Navbar.Form pullRight>
               <FormGroup>
                   <FormControl type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
