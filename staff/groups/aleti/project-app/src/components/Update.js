@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logic from '../logic/userLogic'
+import logic from '../logic/index'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
