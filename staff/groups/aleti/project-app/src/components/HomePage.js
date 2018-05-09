@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-import { Navbar, MenuItem, NavItem, Nav, NavDropdown } from 'react-bootstrap'
-
+import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
+import { Carousel } from 'react-bootstrap'
 
 //import { userActions } from '../_actions';
 
@@ -23,46 +23,105 @@ class HomePage extends Component {
   render() {
     const { user, users } = this.props;
 
-    // <p>
-    //   <Link to="/" onClick={this.handleLogoutUser}>Logout</Link>
-    // </p>
+
 
     return (
 
-      <div>
+      <div className="content-home">
         <Navbar inverse collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#brand">SeriesLAP</a>
+              <a href="#brand">SeriesLAV</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
               <NavItem eventKey={1} href="#">
-                Link
-      </NavItem>
+                <Link to="#">Series</Link>
+              </NavItem>
               <NavItem eventKey={2} href="#">
-                Link
-      </NavItem>
+                <Link to="#">Movies</Link>
+              </NavItem>
               <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                <MenuItem eventKey={3.1}>Action</MenuItem>
-                <MenuItem eventKey={3.2}>Another action</MenuItem>
-                <MenuItem eventKey={3.3}>Something else here</MenuItem>
+                <MenuItem eventKey={3.1}>Settings</MenuItem>
+                <MenuItem eventKey={3.2}>Help Center</MenuItem>
+                <MenuItem eventKey={3.3}>favorites</MenuItem>
                 <MenuItem divider />
-                <MenuItem eventKey={3.3}>Separated link</MenuItem>
+                <MenuItem eventKey={3.3}>Manage profiles</MenuItem>
               </NavDropdown>
             </Nav>
             <Nav pullRight>
-              <NavItem eventKey={1} href="#">
-                Link Right
-      </NavItem>
+              <Navbar.Collapse eventKey={4}>
+                <Navbar.Form pullLeft>
+                  <FormGroup>
+                    <FormControl type="text" placeholder="Search" />
+                  </FormGroup>{' '}
+                  <Button type="submit">Submit</Button>
+                </Navbar.Form>
+              </Navbar.Collapse>
               <NavItem eventKey={2} href="#">
-                Link Right
-      </NavItem>
+                <p>
+                  <Link to="/" onClick={this.handleLogoutUser}>Logout</Link>
+                </p>
+              </NavItem>
             </Nav>
           </Navbar.Collapse>
-        </Navbar>;
+        </Navbar>
+
+        <div className="container-LAV">
+          <h2>Popular in LAV</h2>
+          <Carousel>
+            <Carousel.Item>
+              <img width={900} height={500} alt="900x500" src="/carousel.png" />
+              <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img width={900} height={500} alt="900x500" src="/carousel.png" />
+              <Carousel.Caption>
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img width={900} height={500} alt="900x500" src="/carousel.png" />
+              <Carousel.Caption>
+                <h3>Third slide label</h3>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </div>
+
+        <div className="container-start">
+        <h2>keep watching</h2>
+          <Carousel>
+            <Carousel.Item>
+              <img width={900} height={500} alt="900x500" src="../images/fff.png" />
+              <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img width={900} height={500} alt="900x500" src="/carousel.png" />
+              <Carousel.Caption>
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img width={900} height={500} alt="900x500" src="/carousel.png" />
+              <Carousel.Caption>
+                <h3>Third slide label</h3>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </div>
       </div>
 
     );

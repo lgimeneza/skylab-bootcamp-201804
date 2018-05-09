@@ -1,5 +1,4 @@
 .container {
-
   width: 100%;
 }
 
@@ -12,6 +11,14 @@ html {
 body {
   height: 100%;
   width: 100%;
+}
+
+.content-api {
+  height: 100%;
+}
+
+.content-home {
+  height: 100%;
 }
 
 .header {
@@ -66,6 +73,17 @@ input {
   height: 500px;
   width: 700px;
   color: white;
-
 }
 
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.container-LAV {
+  height: 100%;
+}
+
+.container-start{
+  height: 100%;
+}
