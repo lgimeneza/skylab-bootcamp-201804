@@ -101,7 +101,7 @@ class HomePage extends Component {
         <h2>keep watching</h2>
           <Carousel>
             <Carousel.Item>
-              <img width={900} height={500} alt="900x500" src="../images/fff.png" />
+              <img width={900} height={500} alt="900x500" src="../images/fff(1).png" />
               <Carousel.Caption>
                 <h3>First slide label</h3>
                 <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
