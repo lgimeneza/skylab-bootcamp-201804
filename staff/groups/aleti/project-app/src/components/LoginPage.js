@@ -54,6 +54,7 @@ class LoginPage extends Component {
 
     storageUserData(result) {
         localStorage.setItem('token', result.data.token)
+        console.log("entra en el login el sig token :" ,localStorage.getItem("token") )
         localStorage.setItem('id', result.data.id)
         logic.user.retrieveUser(result.data.id, result.data.token)
         .then(res => {

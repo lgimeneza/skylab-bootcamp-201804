@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logic from '../logic/index'
+import logic from '../logic/userLogic'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
@@ -34,6 +34,7 @@ class Update extends Component {
     componentDidMount = () => {
         logic.retrieveUser(localStorage.getItem('id'), localStorage.getItem('token'))
             .then(data => {
+                console.log(data)
                 if (data.status === 'OK') {
                     const { name, value } = data;
                     this.setState({
