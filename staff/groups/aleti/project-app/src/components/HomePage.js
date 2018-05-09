@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
+// import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem,  FormGroup, FormControl, Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
 import logic from '../logic'
 
 //import { userActions } from '../_actions';
@@ -97,6 +98,7 @@ class HomePage extends Component {
         </Grid>
 
       </div>
+
       );
     }
 
