@@ -39,6 +39,7 @@ class Register extends Component {
 
     }
 
+
     _handleKeepRepeatPassword = (e) => {
         let repeatPassword = e.target.value;
 

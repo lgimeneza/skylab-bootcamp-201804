@@ -33,13 +33,7 @@ class Login extends Component {
                 localStorage.setItem('token-app', res.data.token)
 
                 localStorage.setItem('id-app', res.data.id)
-                this.props.history.push('/home')
-
-                
-                    this.props.updatePassword(this.state.userName,this.state.password)
-            
-               // this.props.setState({ password: this.state.password})
-                
+                this.props.history.push('/home')              
 
             } else {
                 this.setState({

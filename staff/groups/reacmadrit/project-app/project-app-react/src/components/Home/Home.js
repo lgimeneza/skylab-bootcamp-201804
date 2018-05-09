@@ -1,9 +1,18 @@
 import React from "react";
 
 
-function Home (){
+function Home (props){
 
-    return <div>Hello from Home {localStorage.getItem('token-app')}</div>
+
+    if(props.viewInfoPrivate){
+
+        return <div>Hello from Home {localStorage.getItem('token-app')}</div>
+    }
+    else{
+        return <div>You are not allowed </div>
+
+    }
+
 
 }
 
