@@ -46,12 +46,22 @@ class Profile extends Component {
         
         Promise.resolve()
         .then(()=> this.setState({username: userName}) )
-        .then(() =>{
-            const { username, password, name, surname, birth, location, additional } = this.state
+        .then(()=> {
+            let body= {
+                username: this.state.username,
+                password: this.state.password,
+                name: this.state.name,
+                surname: this.state.surname,
+                birth: this.state.birth,
+                location: this.state.location,
+                additional: this.state.additional
+            }
+            return body
+
         })
-        //arreglar assignacio de sobrats
-        logic.updateInfo(id, { username, password, name, surname, birth, location, additional }, token)
-        .then(logic.retrieveInfo(id, token)
+        .then(body => 
+            logic.updateInfo(id, body, token)
+            .then(logic.retrieveInfo(id, token)
             .then(resp => this.setState({
                 name: resp.data.name,
                 surname: resp.data.surname,
@@ -61,6 +71,9 @@ class Profile extends Component {
             })
 
             ))
+        
+        )
+        
     }
 
 
