@@ -1,7 +1,7 @@
 /**
  * Common interface for session and local storage
  * 
- * Provides accessors for storing and retrieving any JSON-compliance type items
+ * Provides accessors for storing and retrieving any JSON-compliance type item (value)
  * 
  * @example
  * 
@@ -21,6 +21,8 @@
  * 
  * console.log(user.id) // -> "abc123"
  * 
+ * @author manuelbarzi
+ * @version 1.0.1
  */
 class Xtorage {
 	/**
@@ -40,7 +42,9 @@ class Xtorage {
 	 * @param {string} key - Identifies the value in storage
 	 * @param {any} value - The value to be stored
 	 */
-	set(key, obj) { this.storage.setItem(key, JSON.stringify(obj)) }
+	set(key, value) {
+		this.storage.setItem(key, typeof value === 'object' ? JSON.stringify(value) : value)
+	}
 
 	/**
 	 * Retrieves a value from storage
@@ -49,14 +53,32 @@ class Xtorage {
 	 * 
 	 * @returns {any} - The stored value
 	 */
-	get(key) { return JSON.parse(this.storage.getItem(key)) }
+	get(key) {
+		const value = this.storage.getItem(key)
+
+		try {
+			return JSON.parse(value)
+		} catch (e) {
+			return value === "undefined" ? undefined : value
+		}
+	}
 
 	/**
 	 * Removes a value from storage
 	 * 
 	 * @param {string} key - The identifier of the value in storage
 	 */
-	remove(key) { return this.storage.removeItem(key) }
+	remove(key) { this.storage.removeItem(key) }
+
+	/**
+	 * Clears all values from storage
+	 */
+	clear() { this.storage.clear() }
+
+	/**
+	 * Returns the number of items stored
+	 */
+	get length() { return this.storage.length }
 
 	/**
 	 * Session storage singleton
@@ -71,4 +93,5 @@ class Xtorage {
 	static get local() { return this._local ? this._local : this._local = new Xtorage(localStorage) }
 }
 
-export default Xtorage
+//export default Xtorage // babel
+if (typeof module !== 'undefined') module.exports = Xtorage
