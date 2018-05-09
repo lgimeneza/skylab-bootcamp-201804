@@ -39,14 +39,14 @@ let logic;
                 password: pass
             }
             for (const key in newProps) {
-                if (key==='username' || key==='password') {
+                if (key === 'username' || key === 'password') {
                     throw Error('You cannot delete your username or password')
                 }
                 if (newProps[key] instanceof Object) {
                     throw Error('All values must be primitives')
                 }
-                body[key]=newProps[key]    
-                }
+                body[key] = newProps[key]
+            }
             let dataPackage = {
                 method: 'PUT',
                 body: JSON.stringify(body),
@@ -55,9 +55,9 @@ let logic;
                     'Content-Type': 'application/json'
                 })
             }
-            return fetch(this.url + `user/${userID}`,dataPackage)
-            .then(res => res.json())
-            .catch(err => err.message)
+            return fetch(this.url + `user/${userID}`, dataPackage)
+                .then(res => res.json())
+                .catch(err => err.message)
         },
 
         delete(userID, token, user, pass, propertyToDelete) {
@@ -68,13 +68,13 @@ let logic;
                 username: user,
                 password: pass
             }
-            if (propertyToDelete=== 'username' || propertyToDelete=== 'password') {
+            if (propertyToDelete === 'username' || propertyToDelete === 'password') {
                 throw Error('You cannot delete your username or password')
             }
 
-            body[propertyToDelete]=null
-            
-            
+            body[propertyToDelete] = null
+
+
             let dataPackage = {
                 method: 'PUT',
                 body: JSON.stringify(body),
@@ -83,12 +83,12 @@ let logic;
                     'Content-Type': 'application/json'
                 })
             }
-            return fetch(this.url + `user/${userID}`,dataPackage)
-            .then(res => res.json())
-            .catch(err => err.message)
+            return fetch(this.url + `user/${userID}`, dataPackage)
+                .then(res => res.json())
+                .catch(err => err.message)
         },
-        
-        unregister(user,pass,token,id) {
+
+        unregister(user, pass, token, id) {
             let dataPackage = {
                 method: 'DELETE',
                 body: JSON.stringify({
@@ -100,11 +100,11 @@ let logic;
                     'Content-Type': 'application/json'
                 })
             }
-            if (typeof user !== 'string' || typeof pass !== 'string' ||typeof token !== 'string' || typeof id !== 'string') {
+            if (typeof user !== 'string' || typeof pass !== 'string' || typeof token !== 'string' || typeof id !== 'string') {
                 throw Error('inputs must be strings')
             }
-    
-            return fetch(this.url+`user/${id}`, dataPackage)
+
+            return fetch(this.url + `user/${id}`, dataPackage)
                 .then(res => res.json())
                 .catch(err => err.message)
         }
