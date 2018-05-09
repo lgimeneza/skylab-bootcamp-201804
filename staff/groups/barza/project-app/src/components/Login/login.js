@@ -4,6 +4,8 @@ import { Link, Redirect } from 'react-router-dom';
 import logic from '../../logic';
 import swal from 'sweetalert2';
 
+import Header from '../header/Header';
+
 class Login extends Component {
     state = {
         username: '',
@@ -52,6 +54,7 @@ class Login extends Component {
         if (this.state.isLogged) return <Redirect to="/home" />;
 
         return (
+            <div><Header isLogged={this.state.isLogged} />
             <section className="content">
                 <header>
                     <h2>FitFood💪</h2>
@@ -97,6 +100,7 @@ class Login extends Component {
                 </div>
                 <div className="content-right" />
             </section>
+            </div>
         );
     }
 }

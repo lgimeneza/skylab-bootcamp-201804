@@ -5,10 +5,11 @@ function UsersList(props) {
     return <section>
         <h3 className='title'>User List</h3>
         {props.users.length > 0 && props.users.map(user => {
-            return <div key={user.id}>
+            return <ul><li key={user.id}>
                 <img src={user.avatar_url} onClick={() => props.onRetrieverUser(user.login)} />
                 <figcaption>{user.login}</figcaption>
-            </div>
+            </li>
+            </ul>
         })}
     </section>
 }

@@ -3,6 +3,8 @@ import { Link, Redirect } from 'react-router-dom';
 import logic from '../../logic';
 import swal from 'sweetalert2';
 
+import Header from '../header/Header';
+
 class Home extends Component {
     state = {
         isLogged: false
@@ -19,7 +21,10 @@ class Home extends Component {
     }
 
     render() {
-        return !this.state.isLogged ? <Redirect to="/" /> : <h1>Hola</h1>;
+        return !this.state.isLogged ? <Redirect to="/" /> : 
+            <div><Header isLogged={this.state.isLogged} />
+            <h1>Hola</h1>  {this.state.isLogged && <Link to='/profile'>Profile</Link>}
+            </div>
     }
 }
 

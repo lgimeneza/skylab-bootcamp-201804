@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import logic from '../../logic';
 import 'animate.css';
-
 import swal from 'sweetalert2';
+
+import Header from '../header/Header'
 
 class Register extends Component {
     state = {
@@ -58,12 +59,6 @@ class Register extends Component {
         }
     };
 
-    // swal({
-    //     type: 'error',
-    //     title: 'Oops...',
-    //     text: 'Password and repeat-Password does not match'
-    // });
-
     handleInput = e => {
         const value = e.target.value;
         const name = e.target.name;
@@ -77,6 +72,7 @@ class Register extends Component {
         if (this.state.redirect) return <Redirect to="/login" />;
 
         return (
+            <div><Header />
             <section className="content">
                 <header>
                     <h2>FitFood💪</h2>
@@ -166,6 +162,7 @@ class Register extends Component {
                 </form>
                 <div className="content-right" />
             </section>
+           </div>
         );
     }
 }

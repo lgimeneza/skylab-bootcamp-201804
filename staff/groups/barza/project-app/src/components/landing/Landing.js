@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../header/Header'
 
 const Landing = () => {
     return (
+        <div><Header />
         <main>
             <Link to="/login">
                 <button>Login</button>
@@ -11,6 +13,7 @@ const Landing = () => {
                 <button>Register</button>
             </Link>
         </main>
+        </div>
     );
 };
 
