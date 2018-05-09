@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Router, Route } from 'react-router-dom';
-import history from '../components/history'
-//import { PrivateRoute } from './components/PrivateRoute';
-import HomePage from '../components/HomePage'
+import { Link, Route } from 'react-router-dom';
 import Account from '../components/Account'
 import Update from '../components/Update'
 

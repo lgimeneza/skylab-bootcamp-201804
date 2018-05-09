@@ -15,8 +15,7 @@ class LandingPage extends Component {
     }
 
     render() {
-        const { loggingIn } = this.props;
-        const { username, password, submitted } = this.state;
+        
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -29,7 +28,7 @@ class LandingPage extends Component {
                             <li className="nav-item">
                                 <Link to="/login" className="nav-link">Login</Link>
                             </li>
-                            <li class="nav-item">
+                            <li className="nav-item">
                                 <Link to="/register" className="nav-link">Register</Link>
                             </li>
                         </ul>

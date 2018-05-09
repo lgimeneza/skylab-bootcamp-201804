@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import logic from '../logic'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';

@@ -21,57 +21,8 @@ class Account extends Component {
         };
     }
 
-    handleSubmit(event) {/* 
-        event.preventDefault();
-
-        this.setState({ submitted: true });
-        const { user } = this.state;
-        if (user.firstName && user.lastName && user.username && user.password && user.confirmpw) {
-            if (user.password === user.confirmpw) {
-                const body = {
-                    "username": user.username,
-                    "password": user.password,
-                    "firstname": user.firstName,
-                    "lastname": user.lastName
-                }
-                logic.registerUser(body).then(data => {
-                    if (data.status === 'OK') {
-                        swal({
-                            title: 'Registered!',
-                            title: 'Go to login!',
-                            type: 'success'
-                        }).then(result => {
-                            if (result.value) {
-                                this.props.history.push('/login')
-                            }
-                        })
-                    } else {
-                        swal({
-                            type: 'error',
-                            title: 'Something went wrong!',
-                            text: data.error
-                        })
-                    }
-
-                })
-            } else {
-                swal({
-                    type: 'error',
-                    title: 'Something went wrong!',
-                    text: "Those passwords didn't match"
-                })
-            }
-            this.setState({
-                user: {
-                    firstName: '',
-                    lastName: '',
-                    username: '',
-                    password: '',
-                    confirmpw: ''
-                },
-                submitted: false
-            })
-        } */
+    handleSubmit(event) {
+        
     }
 
     render() {

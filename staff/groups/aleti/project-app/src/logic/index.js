@@ -101,9 +101,9 @@ const logic = {
 
             if (!body) throw Error('Input body not valid')
 
-            if( typeof body.username !== 'string' || 
+            if( /* typeof body.username !== 'string' || 
                 typeof body.password !== 'string' || 
-                typeof userId !== 'string' ||
+                typeof userId !== 'string' || */
                 typeof token !== 'string' ) 
                 throw Error('Input parameter not valid')
 
