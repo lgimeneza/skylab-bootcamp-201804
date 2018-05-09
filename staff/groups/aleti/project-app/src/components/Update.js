@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import logic from '../logic/index'
+import logic from '../logic/userLogic'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
@@ -9,12 +8,13 @@ class Update extends Component {
 
     state = {
         user: {
+            username: '',
             firstname: '',
             lastname: '',
             email: '',
             bio: '',
             location: '',
-            password : ''
+            password: ''
         },
         submitted: false,
     };
@@ -57,28 +57,24 @@ class Update extends Component {
             confirmButtonText: 'Confirm',
             showLoaderOnConfirm: true,
             preConfirm: (pass) => {
-                console.log("capturado : ", pass)
-
-              return 
-              this.setState({user: {password : pass}})
-              logic.updateUser(this.state.user, localStorage.getItem('id'), localStorage.getItem('token'))
-              .then(data => {
-                  console.log("data : ",data)
-                  if (data.status === 'OK') {
-                      console.log("done")
-                  } else {
-                      throw Error("wrong token or body")
-                  }
-              });
+                this.setState({ user: { password: pass } })
+                let temp_body = { "username": localStorage.getItem('userName'), "password": pass }
+                return logic.loginUser(temp_body)
+                    .then(response => response)
+                    .catch(error => { swal.showValidationError(`Request failed: ${error}`) })
             },
             allowOutsideClick: () => !swal.isLoading()
-          }).then((result) => {
-            if (result.status === 'OK') {
-                console.log("done")
+        }).then((result) => {
+            if (result.value.status === 'OK') {
+                logic.updateUser(this.state.user, localStorage.getItem('id'), localStorage.getItem('token'))
+                .then(res => res)
+                .catch(error => { swal.showValidationError(`Request failed: ${error}`) })
+                console.log("paso por aqui")
             } else {
-                throw Error("wrong token or body")
+                //throw Error("wrong token or body")
+                console.log("wrong way")
             }
-          })
+        })
     }
 
     render() {
