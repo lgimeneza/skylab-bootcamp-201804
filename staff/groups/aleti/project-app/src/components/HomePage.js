@@ -10,16 +10,35 @@ import logic from '../logic'
 class HomePage extends Component {
 
   state = {
-    movies: {}
+    movies: {},
+    value: ''
   }
 
   componentDidMount() {
     logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc')
-    .then(data => {
+      .then(data => {
         this.setState({
           movies: data
+        })
       })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      value: e.target.value
     })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    console.log(event)
+    // logic.movie.searchMulti('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.value)
+    //   .then(data => {
+    //     this.setState({
+    //       movies: data
+    //     })
+    //   })
   }
 
   handleLogoutUser() {
@@ -38,7 +57,7 @@ class HomePage extends Component {
         <Navbar inverse collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#brand">SeriesLAV</a>
+              <a href="#brand">Movies&TV-LAV</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
@@ -59,11 +78,13 @@ class HomePage extends Component {
               </NavDropdown>
             </Nav>
             <Nav pullRight>
-              <Navbar.Collapse eventKey={4}>
-                <Navbar.Form pullLeft>
-                  <FormGroup>
-                    <FormControl type="text" placeholder="Search" />
-                  </FormGroup>{' '}
+              <Navbar.Collapse eventKey={4} >
+                <Navbar.Form pullLeft  >
+                  <form className="buttonSubmit" action="" onSubmit={this.handleSubmit}>
+                    <FormGroup  role="form">
+                      <FormControl onSubmit={this.handleSubmit} onChange={this.handleChange} value={this.state.value} type="text" placeholder="Search" />
+                    </FormGroup>
+                  </form>
                   <Button type="submit">Submit</Button>
                 </Navbar.Form>
               </Navbar.Collapse>
@@ -80,9 +101,9 @@ class HomePage extends Component {
           <Row>
             {this.state.movies.results && (
               this.state.movies.results.map(movie => {
-                return(
+                return (
                   <Col xs={12} sm={6} md={3}>
-                    <Thumbnail  src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
+                    <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
                       <h3>Thumbnail label</h3>
                       <p>Description</p>
                       <p>
@@ -97,10 +118,10 @@ class HomePage extends Component {
           </Row>
         </Grid>
 
-      </div>
 
-      );
-    }
+      </div>
+    );
+  }
 
 }
 

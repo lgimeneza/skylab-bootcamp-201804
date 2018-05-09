@@ -21,6 +21,10 @@ body {
   height: 100%;
 }
 
+.buttonSubmit{
+  display: inline-block;
+  padding-right: 10px;
+} 
 .header {
   height: 150px;
   width: 100%;
@@ -84,6 +88,6 @@ input {
   height: 100%;
 }
 
-.container-start{
+.container-start {
   height: 100%;
 }
