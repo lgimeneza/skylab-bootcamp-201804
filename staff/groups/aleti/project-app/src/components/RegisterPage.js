@@ -20,7 +20,7 @@ class RegisterPage extends Component {
             },
             submitted: false,
             registerResult: {}
-            
+
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -44,21 +44,21 @@ class RegisterPage extends Component {
         this.setState({ submitted: true });
         const { user } = this.state;
         if (user.firstName && user.lastName && user.username && user.password && user.confirmpw) {
-            if (user.password === user.confirmpw){
-                const body = { 
-                    "username": user.username, 
-                    "password": user.password, 
+            if (user.password === user.confirmpw) {
+                const body = {
+                    "username": user.username,
+                    "password": user.password,
                     "firstname": user.firstName,
                     "lastname": user.lastName
                 }
                 logic.registerUser(body).then(data => {
-                    if (data.status === 'OK'){
+                    if (data.status === 'OK') {
                         swal({
-                            title:'Registered!',
-                            title:'Go to login!',
+                            title: 'Registered!',
+                            title: 'Go to login!',
                             type: 'success'
                         }).then(result => {
-                            if(result.value){
+                            if (result.value) {
                                 this.props.history.push('/login')
                             }
                         })
@@ -92,12 +92,13 @@ class RegisterPage extends Component {
     }
 
     render() {
-        const { registering  } = this.props;
+        const { registering } = this.props;
         const { user, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
+
                     <InputUser type='text' name='firstName' helpText='First Name is required' labelText='First Name' 
                         value={user.firstName} submitted={submitted} handleChange={this.handleChange}  />
                     <InputUser type='text' name='lastName' helpText='Last Name is required' labelText='Last Name' 
