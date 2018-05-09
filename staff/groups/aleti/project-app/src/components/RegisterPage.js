@@ -51,7 +51,8 @@ class RegisterPage extends Component {
                     "firstname": user.firstName,
                     "lastname": user.lastName
                 }
-                logic.registerUser(body).then(data => {
+                
+                logic.userApi.registerUser(body).then(data => {
                     if (data.status === 'OK') {
                         swal({
                             title: 'Registered!',
