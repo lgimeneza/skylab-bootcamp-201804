@@ -25,7 +25,7 @@ class App extends Component {
     const { alert } = this.props;
     return (
         <Router history={history}>
-            <div>
+            <div className="content-api">
                 <PrivateRoute path="/home" component={ HomePage } />
                 <Route exact path="/" component={ LandingPage } />
                 <Route path="/landing" component={ LandingPage } />
