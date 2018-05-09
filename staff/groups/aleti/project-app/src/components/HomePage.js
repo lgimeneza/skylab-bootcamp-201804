@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './HomePage.css';
 // import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem,  FormGroup, FormControl, Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
 import logic from '../logic'
+import { LinkContainer } from 'react-router-bootstrap';
 
 //import { userActions } from '../_actions';
 
@@ -63,36 +63,45 @@ class HomePage extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <NavItem eventKey={1} href="#">
-                <Link to="#">Series</Link>
-              </NavItem>
-              <NavItem eventKey={2} href="#">
-                <Link to="#">Movies</Link>
-              </NavItem>
+              <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                <NavItem eventKey={1}>Series</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                <NavItem eventKey={2}>Movies</NavItem>
+              </LinkContainer>
+
               <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
                 <MenuItem eventKey={3.1}>Settings</MenuItem>
                 <MenuItem eventKey={3.2}>Help Center</MenuItem>
                 <MenuItem eventKey={3.3}>favorites</MenuItem>
                 <MenuItem divider />
-                <MenuItem eventKey={3.3}><Link to="/profile" className="btn btn-secundary">Profile</Link></MenuItem>
+                <LinkContainer to="/profile" onClick={this.handleLogoutUser} className="btn btn-secundary">
+                  <NavItem eventKey={3.4}>Profile</NavItem>
+                </LinkContainer>
               </NavDropdown>
             </Nav>
             <Nav pullRight>
-              <Navbar.Collapse eventKey={4} >
-                <Navbar.Form pullLeft  >
-                  <form className="buttonSubmit" action="" onSubmit={this.handleSubmit}>
+              {/* <Navbar.Collapse eventKey={4} >
+
+              </Navbar.Collapse> */}
+              {/* <FormGroup  role="form">
+              </FormGroup> */}
+
+
+              {/* <Navbar.Collapse eventKey={4} >
+                <Navbar.Form pullLeft  > */}
+                  {/* <form className="buttonSubmit" action="" onSubmit={this.handleSubmit}>
                     <FormGroup  role="form">
                       <FormControl onSubmit={this.handleSubmit} onChange={this.handleChange} value={this.state.value} type="text" placeholder="Search" />
                     </FormGroup>
-                  </form>
-                  <Button type="submit">Submit</Button>
-                </Navbar.Form>
-              </Navbar.Collapse>
-              <NavItem eventKey={2} href="#">
-                <p>
-                  <Link to="/" onClick={this.handleLogoutUser}>Logout</Link>
-                </p>
-              </NavItem>
+                  </form> */}
+                  {/* <Button type="submit">Submit</Button> */}
+                {/* </Navbar.Form>
+              </Navbar.Collapse> */}
+
+              <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                <NavItem eventKey={2}>Logout</NavItem>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -102,7 +111,7 @@ class HomePage extends Component {
             {this.state.movies.results && (
               this.state.movies.results.map(movie => {
                 return (
-                  <Col xs={12} sm={6} md={3}>
+                  <Col xs={12} sm={6} md={3} key={movie.id}>
                     <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
                       <h3>Thumbnail label</h3>
                       <p>Description</p>
