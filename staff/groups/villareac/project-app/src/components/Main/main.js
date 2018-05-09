@@ -6,10 +6,7 @@ import Register from '../Register/Register'
 import Login from '../Login/Login'
 import Profile from '../Profile/Profile'
 
-
-
 class Main extends Component {
-
 
     constructor() {
         super();
@@ -35,19 +32,47 @@ class Main extends Component {
                 username: '',
                 age: '',
                 gender: '',
-                newPassword: '',
-                newUsername: '' 
-            }  
+            }
         }
     }
 
-    componentDidMount(){
+    /**
+     * This componentDiMount receives the data from the sessionStorage of the browser if this exists.
+     */
+
+    componentDidMount() {
         const sessionData = sessionStorage.getItem('key');
-        if(sessionData) {
+        if (sessionData) {
             this.setState({ sessionInfo: JSON.parse(sessionData) })
         }
     }
- 
+
+    // INPUTS
+
+    _handlerWriteUsername = (e) => {
+        this.setState({ username: e.target.value })
+    }
+
+    _handlerWritePassword = (e) => {
+        this.setState({ password: e.target.value })
+    }
+
+    _handlerWriteAge = (e) => {
+        this.setState({ age: e.target.value })
+    }
+
+    _handlerWriteGender = (e) => {
+        this.setState({ gender: e.target.value })
+    }
+
+    _handlerWriteNewUsername = (e) => {
+        this.setState({ newUsername: e.target.value })
+    }
+
+    _handlerWriteNewPassword = (e) => {
+        this.setState({ newPassword: e.target.value })
+    }
+
     // REGISTER
 
     _handlerRegister = (e) => {
@@ -65,35 +90,6 @@ class Main extends Component {
                 this.setState({ id: data.data.id, username: '', password: '' })
             )
     }
-
-    _handlerWriteUsername = (e) => {
-        this.setState({ username: e.target.value })
-    }
-
-    _handlerWritePassword = (e) => {
-        this.setState({ password: e.target.value})
-        this.setState({bodyUpdate:{password: e.target.value, username: this.state.publicData.username}})
-    }
-
-
-    _handlerWriteAge = (e) => {
-        this.setState({ age: e.target.value })
-        this.setState({bodyUpdate:{age: e.target.value}})
-    }
-
-    _handlerWriteGender = (e) => {
-        this.setState({ gender: e.target.value, bodyUpdate:{gender: e.target.value} })
-        console.log(this.state.bodyUpdate)
-    }
-
-    _handlerWriteNewUsername = (e) => {
-        this.setState({ newUsername: e.target.value, bodyUpdate:{newUsername: e.target.value} })
-    }
-
-    _handlerWriteNewPassword = (e) => {
-        this.setState({ newPassword: e.target.value, bodyUpdate:{newPassword: e.target.value} })
-    }
-
 
     // LOGIN
 
@@ -126,7 +122,6 @@ class Main extends Component {
             .then(data =>
                 this.setState({ publicData: data.data })
             )
-            console.log(this.state.publicData)
     }
 
     // UPDATE
@@ -136,19 +131,28 @@ class Main extends Component {
         logic.id = this.state.sessionInfo.id;
         logic.token = this.state.sessionInfo.token;
 
-        let userData = this.state.bodyUpdate;
-
-        console.log("this is userdata")
-        console.log(userData)
-
-        logic.update(userData)
-            .then(data => console.log(data))
-
-        for (const prop of Object.getOwnPropertyNames(this.state.bodyUpdate)) {
-            delete this.state.bodyUpdate[prop];
-          }
+        /* We need to set the body before using the API -> because setState and the API calling are asyncronous */
+        Promise.resolve()
+            .then(() => {
+                this.setState({
+                    bodyUpdate: {
+                        password: this.state.password,
+                        username: this.state.publicData.username,
+                        age: this.state.age,
+                        gender: this.state.gender,
+                        newPassword: (this.state.newPassword) ? this.state.newPassword : null
+                    }
+                })
+            })
+            .then(() => {
+                let userData = this.state.bodyUpdate;
+                logic.update(userData)
+                    .then(data => console.log(data))
+                for (const prop of Object.getOwnPropertyNames(this.state.bodyUpdate)) {
+                    this.state.bodyUpdate[prop] = '';
+                }
+            })
     }
-  
 
     // DELETE
 
@@ -168,14 +172,9 @@ class Main extends Component {
     }
 
 
-
     render() {
         return (
             <div className="container">
-
-
-
-
                 <Switch>
                     <Route path="/register" render={() => (
 
@@ -186,7 +185,6 @@ class Main extends Component {
                             username={this.state.username}
                             password={this.state.password}
                         />
-
                     )} />
                     <Route path="/login" render={() => (
                         <Login
@@ -217,9 +215,6 @@ class Main extends Component {
                     )
                     } />
                 </Switch>
-
-
-
             </div>
         )
     }
