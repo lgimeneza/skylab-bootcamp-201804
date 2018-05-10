@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, withRouter, Switch } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import logo from './logo.svg';
 import logic from './logic';
 import './App.css';
@@ -8,6 +8,7 @@ import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Profile from './components/Profile/Profile'
 import RegisterUser from './components/RegisterUser/RegisterUser'
+import Xtorage from './Xtorage'
 
 class App extends Component {
 
@@ -25,10 +26,10 @@ class App extends Component {
             <Route path="/register" component={RegisterUser} />
           </div>
           <div className="App">
-            <Route path="/home" component={Home}/>
+            <Route path="/home" render={()=> ((Xtorage.session.get("user") === null)? (<Redirect to="/"/>):(<Home/>))}/>
           </div>
           <div>
-            <Route path="/profile" component={Profile}/>
+            <Route path="/profile" render={()=> ((Xtorage.session.get("user") === null)? (<Redirect to="/"/>):(<Profile/>))}/>
             </div>
         </main>
       </Switch>
@@ -37,3 +38,11 @@ class App extends Component {
 }
 
 export default withRouter(App);
+
+//<Route exact path="/" render={() => (
+//   loggedIn ? (
+//     <Redirect to="/dashboard"/>
+//   ) : (
+//     <PublicHomePage/>
+//   )
+// )}/>

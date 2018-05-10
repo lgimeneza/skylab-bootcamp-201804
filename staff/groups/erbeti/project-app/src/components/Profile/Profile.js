@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom';
 import logic from '../../logic'
 import swal from 'sweetalert2'
 import Xtorage from '../../Xtorage'
@@ -8,6 +9,7 @@ class Profile extends Component {
     state = {
         username: "",
         password: "",
+        deletionPassword: "",
         name: "",
         surname: "",
         birth: "",
@@ -17,9 +19,10 @@ class Profile extends Component {
     }
 
     
-
      componentDidMount() {
-         const { id, token } = Xtorage.local.get("user")
+
+        
+         const { id, token } = Xtorage.session.get("user")
          logic.retrieveInfo(id, token)
              .then(user => {
                  this.setState({
@@ -31,6 +34,7 @@ class Profile extends Component {
                      additional: user.data.additional
                  })
              })
+        
      }
 
     
@@ -38,8 +42,8 @@ class Profile extends Component {
     updateInfoAndPrint = (e) => {
         e.preventDefault()
         
-        console.log(Xtorage.local.get("user"))
-        const { userName, id, token } = Xtorage.local.get("user")
+        
+        const { userName, id, token } = Xtorage.session.get("user")
         
         Promise.resolve()
         .then(()=> this.setState({username: userName}) )
@@ -55,20 +59,78 @@ class Profile extends Component {
             }
             return body
         })
-        .then(body => 
+        .then(body => {
+
+            
             logic.updateInfo(id, body, token)
-            .then(logic.retrieveInfo(id, token)
-            .then(resp => this.setState({
-                name: resp.data.name,
-                surname: resp.data.surname,
-                birth: resp.data.birth,
-                location: resp.data.location,
-                additional: resp.data.additional
-            })
+            // .then(logic.retrieveInfo(id, token)
+            // .then(resp => this.setState({
+            //     name: resp.data.name,
+            //     surname: resp.data.surname,
+            //     birth: resp.data.birth,
+            //     location: resp.data.location,
+            //     additional: resp.data.additional
+            // })
+            // ))
+            .then(()=> swal(
+                'Changes saved!'
             ))
+            .catch(err => swal(
+                err.message
+            ))
+        })
+        .then(()=> this.setState({password: ''}) )
         
+        
+        
+    }
+
+
+    deleteUser= (e) => {
+
+        e.preventDefault()
+
+        const { userName, id, token } = Xtorage.session.get("user")
+        
+        Promise.resolve()
+        .then(()=> this.setState({username: userName}) )
+        .then(()=> {
+            let body= {
+                username: this.state.username,
+                password: this.state.deletionPassword,
+            }
+            return body
+        })
+        .then(body => 
+            logic.unregisterUser(id, body, token)
+            .then(()=> swal(
+                'User deleted!'
+            ).then(() => this.props.history.push('/')))
+            .then(()=> Xtorage.session.clear())
+            .catch(err => swal(
+                err.message
+            ))
         )
         
+        
+        
+
+
+
+    }
+
+
+    redirect = (e) => {
+        this.props.history.push('/home')
+    }
+
+    redirectLanding = (e) => {
+        this.props.history.push('/')
+    }
+
+    logOut= (e) => {
+        Xtorage.session.clear()
+        this.props.history.push('/')
     }
 
 
@@ -97,30 +159,55 @@ class Profile extends Component {
         this.setState({ password })
      }
 
+    receiveDeletionPassword = (e) => {
+        const deletionPassword = e.target.value
+        this.setState({ deletionPassword })
+    }
+
     render() {
-        return (
-            <div>
-                <h1 className="Profile-title">Profile info</h1>
-                <form className="App" onSubmit={this.updateInfoAndPrint}>
-                    <p>NAME: </p>
-                    <input type="text" name="name" value={this.state.name} onChange={this.updateName} />
-                    <p>SURNAME: </p>
-                    <input type="text" name="surname" value={this.state.surname} onChange={this.updateSurname} />
-                    <p>BIRTH: </p>
-                    <input name="birth" type="tel" placeholder="     /      /        " pattern="[0-9]*" autocomplete="off" novalidate="" maxlength="10" value={this.state.birth} onChange={this.updateBirth} />
-                    <p>LOCATION: </p>
-                    <input type="text" name="location" value={this.state.location} onChange={this.updateLocation} />
-                    <p>ADDITIONAL: </p>
-                    <input type="textarea" rows="20" cols="50" name="message" value={this.state.additional} onChange={this.updateAdditional} />
-
-                    <p>Type your password to save changes: </p>
-                    <input type="password" name="password" onChange={this.receivePassword} />
-
-                    <button type="submit">Save changes</button>
-                </form>
-
-            </div>
-        )
+        
+            return (
+                <div>
+                <div>
+                    <button type="button" onClick={this.redirect}>Home</button>
+                </div>
+                <div>
+                    <button type="button" onClick={this.logOut}>Log out</button>
+                </div>
+                <div>
+                    <h1 className="Profile-title">Profile info</h1>
+                    <form className="App" onSubmit={this.updateInfoAndPrint}>
+                        <p>NAME: </p>
+                        <input type="text" name="name" value={this.state.name} onChange={this.updateName} />
+                        <p>SURNAME: </p>
+                        <input type="text" name="surname" value={this.state.surname} onChange={this.updateSurname} />
+                        <p>BIRTH: </p>
+                        <input name="birth" type="date"   value={this.state.birth} onChange={this.updateBirth} />
+                        <p>LOCATION: </p>
+                        <input type="text" name="location" value={this.state.location} onChange={this.updateLocation} />
+                        <p>ADDITIONAL: </p>
+                        <input type="textarea" rows="20" cols="50" name="message" value={this.state.additional} onChange={this.updateAdditional} />
+    
+                        <p>Type your password to save changes: </p>
+                        <input type="password" name="password" value={this.state.password} onChange={this.receivePassword} />
+    
+                        <button type="submit">Save changes</button>
+                        
+    
+                    </form>
+    
+                    <form onSubmit={this.deleteUser}>
+                    <p>Type your password to unregister: </p>
+                    <input type="password" name="deletionPassword" onChange={this.receiveDeletionPassword} />
+                    <button type="submit">Delete</button>
+                    </form>
+                    
+    
+                </div>
+                </div>
+            )
+        
+        
     }
 
 }
@@ -132,4 +219,4 @@ class Profile extends Component {
 
 
 
-export default Profile
+export default withRouter(Profile)
