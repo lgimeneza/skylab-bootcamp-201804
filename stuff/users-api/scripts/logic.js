@@ -10,11 +10,14 @@ const logic = {
 
         if (withToken) headers.authorization = `bearer ${this.token}`
 
-        return fetch(`${this.url}/${path}`, {
+        const config = {
             method,
-            headers,
-            body: JSON.stringify(body)
-        })
+            headers
+        }
+
+        if (body) config.body = JSON.stringify(body)
+
+        return fetch(`${this.url}/${path}`, config)
             .then(res => res.json())
     },
 
@@ -36,9 +39,27 @@ const logic = {
             })
     },
 
+    retrieve(id) {
+        return this._call(`/user/${id}`, 'get', undefined, true)
+            .then(({ status, data, error }) => {
+                if (status === 'OK') return data
+
+                throw Error(error)
+            })
+    },
+
+    update(user) {
+        return this._call(`/user/${user.id}`, 'put', user, true)
+            .then(({ status, error }) => {
+                if (status === 'OK') return true
+
+                throw Error(error)
+            })
+    },
+
     unregister(user) {
         return this._call(`/user/${user.id}`, 'delete', user, true)
-            .then(({ status, data, error }) => {
+            .then(({ status, error }) => {
                 if (status === 'OK') return true
 
                 throw Error(error)
