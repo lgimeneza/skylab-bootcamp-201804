@@ -31,7 +31,6 @@ class Update extends Component {
             }
         });
         console.log("handler-> ", this.state.user)
-
     }
 
     componentDidMount = () => {
@@ -76,10 +75,10 @@ class Update extends Component {
         }).then((result) => {
             if (result.value.status === 'OK') {
                 logic.updateUser(this.state.user, localStorage.getItem('id'), localStorage.getItem('token'))
-                .then(res => res)
-                .catch(error => { swal.showValidationError(`Request failed: ${error}`) })
+                    .then(res => res)
+                    .catch(error => { swal.showValidationError(`Request failed: ${error}`) })
                 console.log("paso por aqui")
-                
+
             } else {
                 //throw Error("wrong token or body")
                 //console.log("wrong way")
@@ -90,7 +89,7 @@ class Update extends Component {
                     user: {
                         ...this.state.user,
                         password: res.value.password,
-                        username: res.value.username
+                        username: res.value.username,
                     }
                 })
                 logic.loginUser(res.value)
