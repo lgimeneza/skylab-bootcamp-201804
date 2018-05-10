@@ -102,8 +102,8 @@ class Home extends Component {
 
         if (this.props.isLogged()) {
             return <div>
-                <img src={this.state.picture_url}/>
-                <img src={this.state.candidate}/>
+                <img className="w-25"  src={this.state.picture_url}/>
+                <img className="w-25"  src={this.state.candidate}/>
                 <button onClick={this.retrieveFaceInfo}>retrieve!</button>                
                 <button onClick={this.comparePics}>Compare!</button>
             </div>
