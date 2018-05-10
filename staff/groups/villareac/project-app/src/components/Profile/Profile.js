@@ -14,7 +14,7 @@ class Profile extends Component {
         super();
 
         this.state = {
-            visible: false
+            visible: false,
         }
     }
 
@@ -27,6 +27,10 @@ class Profile extends Component {
      * 
      * @returns {boolean} - sets the property visibility into true or false
      */
+
+
+  
+
     _handlerVisibility = () => {
         this.setState({ visible: true })
     }
@@ -42,21 +46,21 @@ class Profile extends Component {
             <div className="container">
 
 
-                <section className="firstSection" id="meetingPic">
-                <h2 className="big">¡Has vuelto! Debe ser época de productividad.
+                <section className="firstSection" id="">
+                <h2 className="big">¡Has vuelto! Debe ser época de emborracharse.
                 </h2>
-                    <button className="button">Open Fevernote</button>
+                    <button className="button">Open Tropic VilaReac</button>
                     <p className="inicia">You've already logged in.
                         <a className="sesion" href=""> Log Out</a>
                     </p>
                 </section>
-
-                <section className="secondSection">
+                
+                <section className="secondSection profile">
                     <h2>Profile</h2>
                     <input type="text" placeholder={this.props.username} onChange={this.props._handlerWriteNewUsername} />
                     <input type="text" placeholder={(this.props.age) ? this.props.age : ''} onChange={this.props._handlerWriteAge} />
                     <input type="text" placeholder={(this.props.gender) ? this.props.gender : ''} onChange={this.props._handlerWriteGender} />
-                    <input type="text" placeholder='password required' onChange={this.props._handlerWritePassword} />
+                    <input type="password" placeholder='password required' onChange={this.props._handlerWritePassword} />
                     <button onClick={this.props._handlerUpdate}>Update profile</button>
 
 
@@ -69,6 +73,7 @@ class Profile extends Component {
                         {<button onClick={this._deleteButton}>confirm</button>}
                     </div>}
                 </section>
+           
             </div>
 
         )

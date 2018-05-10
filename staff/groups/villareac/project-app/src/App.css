@@ -8,7 +8,7 @@
 
  .navbar{
   /* overflow: hidden; */
-  background-color: #fff;
+  background: linear-gradient(to right,rgb(241, 80, 134), orange);
   position: fixed;
   top: 0;
   width: 100%;
@@ -18,9 +18,12 @@
   justify-content: space-around;
   align-items: center;
   padding-left: 2%;
-  border-bottom: 0.5px gray solid;
 
 } 
+
+.appName{
+  display: inline-block;
+}
 
 body, html{
   width: 100%;
@@ -32,22 +35,36 @@ body, html{
 .navbar a{
   float:left;
   display:block;
-  color:black;
+  color:white;
   text-align:center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
 }
 
+a:hover{
+  text-shadow:2px 2px mediumvioletred
+}
+
+a:active{
+  transform: translateY(1px);
+  text-shadow:1px 1px mediumvioletred
+
+}
+
 .navbar li{
  
   display: inline;
-  list-style-type: none;
+  list-style-type: underline;
 }
 
 .navbar ul{
   margin-left: 50px;
 
+}
+
+.navbar h1{
+  color:white;
 }
 
 

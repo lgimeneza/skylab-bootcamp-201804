@@ -24,22 +24,28 @@ button {
     font-size: 20px;
     border-radius: 5px;
     border: none;
-    background-color: #2dbe60;
+    background-color: rgb(241, 80, 134);
     color: white;
 }
 
 button:hover {
-    background-color: #248d49;
+    background-color: rgb(241, 80, 88);
     cursor: pointer;
 }
 
 h2 {
+    color: rgb(192, 43, 112);
     font-size: 35px;
     padding: 5% 0% 5%;
 }
 
 h3{
+    color: rgb(192, 43, 112);
     font-size: 30px;
+}
+
+h5{
+    color: rgb(192, 43, 112);
 }
 
 input {
@@ -52,9 +58,30 @@ input {
     padding: 4%;
 }
 
+input[text]{
+    font-size: 50px;
+}
+
+input[type=text]:active, input[type=password]:active, input[type=text]:focus, input[type=password]:focus {
+    box-shadow: 0 0 5px rgb(126, 19, 103) !important;
+    border: 1px solid rgb(192, 43, 112) !important;
+    outline: none;
+  }
+
+
+
+.profile input[type=text] {
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid orange;
+} 
+
+
 ::-webkit-input-placeholder {
     padding: 5%;
     font-size: 120%;
+    color: palevioletred
 }
 
 .list {
@@ -62,7 +89,7 @@ input {
 }
 
 .list li:before {
-    content: '✓ ';
+    content: '🍍 ';
 }
 
 .list li {
@@ -102,6 +129,11 @@ input {
 
 }
 
+label{
+    color: rgb(223, 108, 66);
+    font-size:15px;
+}
+
 .container h2{
     padding:0;
 }
@@ -109,9 +141,20 @@ input {
 .container2 form {
     width: 50%;
 }
+
+
+
+
+
 /* style="background-image: url(images/meeting.jpg); background-size: 150%; background-repeat: no-repeat;" */
 #meetingPic{
     background-image: url(../Profile/meeting.jpg);
     background-size: 150%;
     background-repeat: no-repeat;
+}
+
+
+
+.cocktailImg{
+    width: 100%;
 }

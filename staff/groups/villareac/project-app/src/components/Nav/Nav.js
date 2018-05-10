@@ -1,30 +1,32 @@
 import React,{ Component } from 'react'
 import '../../App.css'
 import { Link } from 'react-router-dom'
-import Logout from '../Logout/Logout'
+import logo from '../../static/images/pineapple.svg'
 
 
 class Nav extends Component{
 
-    constructor(){
-        super();
-   
  
+  
+    
+
+    _logout=()=>{
+            this.props.logged(false)
+            sessionStorage.clear();
     }
- 
+
 
     render(){
-        {
-            console.log(this.props)
-        }
         return(
 
             <nav className="navbar">
-              <h1>VilaReac</h1>
-              {!(this.props.logged) ?
+            <div>
+            <img src={logo}/>
+              <h1 className="appName">Tropic VilaReac</h1>
+              </div>
+              {!(this.props.logState) ?
 
                 <ul>
-                  <li><Link to='/landing'>Landing</Link></li>
                   <li><Link to='/register'>Register</Link></li>
                   <li><Link to='/login'>Login</Link></li>
                 </ul>
@@ -33,7 +35,7 @@ class Nav extends Component{
                 <ul>
                   <li><Link to='/home'>Home</Link></li>
                   <li><Link to='/profile'>Profile</Link></li>
-                  <li><Link to='/landing'><Logout /></Link></li>
+                  <li onClick={this._logout}><Link to='/'>Logout</Link></li>
                 </ul>}
             </nav>
 

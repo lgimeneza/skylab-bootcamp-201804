@@ -7,10 +7,11 @@ import Login from '../Login/Login'
 import Profile from '../Profile/Profile'
 import Landing from '../Landing/Landing'
 import Home from '../Home/Home'
+import logic2 from '../../logic/cocktaillogic'
 /**
- * The main App.
+ * The main component.
  * 
- * @class App
+ * @class Main
  * @extends {Component}
  */
 class Main extends Component {
@@ -18,18 +19,17 @@ class Main extends Component {
     constructor() {
         super();
 
-        this.state = {
+        this.state = {    
             username: '',
             password: '',
-            publicData: [],
             id: '',
+            token: '',
             age: '',
             gender: '',
-            onError: false,
-            token: '',
-            disabled: "disabled",
             newUsername: "",
             newPassword: "",
+            onError: false,
+            publicData: [],
             sessionInfo: {
                 id: "",
                 token: ""
@@ -39,7 +39,9 @@ class Main extends Component {
                 username: '',
                 age: '',
                 gender: '',
-            }
+            },
+            cocktailRandomData:{}
+
         }
     }
 
@@ -56,15 +58,15 @@ class Main extends Component {
         }
     }
 
-    // INPUTS 
-
     /**
+     * INPUTS 
+     * 
     * This handlers target input text and they set it to whatever the user introduces when
-    * updating profile settings.
+    * updating profile settings or register/login form.
     * 
     * @param {string} text - a parameter to target the event capturing.
     * 
-    * @returns {string | number} - The string or number introduced by the user.
+    * @function this.setState - Change the state of the component with the value of the input.
     */
     _handlerWriteUsername = (e) => {
         this.setState({ username: e.target.value })
@@ -90,11 +92,12 @@ class Main extends Component {
         this.setState({ newPassword: e.target.value })
     }
 
-    // REGISTER
-
     /**
-     * This handler receives the new info of the user in order to create a profile, username and password.
+     * REGISTER
+     * 
+     * This handler send the info to the api in order to create a new user and resolve a promise setting a new state.
      */
+
     _handlerRegister = (e) => {
         e.preventDefault();
 
@@ -104,40 +107,55 @@ class Main extends Component {
             age: this.state.age,
             gender: this.state.gender
         }
-
+console.log(userData)
         logic.register(userData)
-            .then(data =>
-                this.setState({ id: data.data.id, username: '', password: '' })
-            )
+            .then(data =>{
+                console.log(data)
+                this.setState({ id: data.data.id, username: '', password: '', age: '', gender:'' })
+                this.props.history.push('/login')
+            })
     }
 
-    // LOGIN
+    /**
+     * LOGIN
+     * 
+     * This handler send the info to the api in order to login an user and resolve a promise setting a sesionStorage.
+     * Change the father state "logged" to true, switching the navbar.
+     */
 
     _handlerLogin = (e) => {
 
         e.preventDefault;
         
-   
         let userData = {
             username: this.state.username,
             password: this.state.password
         }
-
+        
         logic.login(userData)
             .then(data => {
                 if(data.status === 'OK'){
+                    this.props.history.push('/home')
                     this.onSetSession(data, 'key')
+                    this.props.logged(true)
                 }else{console.log("BAD LOGIN")}
-            })
-            
+            })         
     }
+
+    /**
+     * This function storage our data in the sesionStorage and set our status.
+     */
 
     onSetSession = (data, key) => {
         sessionStorage.setItem(key, JSON.stringify(data.data))
         this.setState({ id: data.data.id, token: data.data.token, username: '', sessionInfo: { id: data.data.id, token: data.data.token } })
     }
 
-    // RETRIEVE
+    /** 
+     * RETRIEVE
+     * 
+     * This handler get the info of our user calling the api and set de state.
+     */
 
     _handlerRetrieve = () => {
 
@@ -145,12 +163,18 @@ class Main extends Component {
         logic.token = this.state.sessionInfo.token;
 
         logic.retrieve()
-            .then(data =>
+            .then(data =>{
                 this.setState({ publicData: data.data })
+                console.log(this.state.publicData)
+            }
             )
     }
 
-    // UPDATE
+    /** 
+     * UPDATE
+     * 
+     * This handler catch all the changes made in the state and set it in a body (first then of the Promise), then send it to api.
+     */
 
     _handlerUpdate = (e) => {
 
@@ -164,8 +188,8 @@ class Main extends Component {
                     bodyUpdate: {
                         password: this.state.password,
                         username: this.state.publicData.username,
-                        age: this.state.age,
-                        gender: this.state.gender,
+                        age: this.state.publicData.age,
+                        gender: this.state.publicData.gender,
                         newPassword: (this.state.newPassword) ? this.state.newPassword : null
                     }
                 })
@@ -180,7 +204,11 @@ class Main extends Component {
             })
     }
 
-    // DELETE
+    /** 
+     * DELETE
+     * 
+     * This handler allow us to manage the necessary info for send it to our api and delete an user.
+     */
 
     _handlerDelete = () => {
 
@@ -197,28 +225,30 @@ class Main extends Component {
 
     }
 
+    _handlerShowCocktail=()=>{
+        logic2.randomCocktail()
+        .then(cocktailRandomData => this.setState({cocktailRandomData: cocktailRandomData.drinks[0]}))
+    }
+
 
     render() {
         return (
             <div className="container">
                 <Switch>
                     <Route path="/home" render={() => (
-
-                        <Home
-
-                        />
+                        <Home _handlerShowCocktail={this._handlerShowCocktail} 
+                        cocktailRandomData={this.state.cocktailRandomData}/>
                     )} />
-                    <Route path="/landing" render={() => (
-
-                        <Landing
-
-                        />
+                    <Route exact path="/" render={() => (
+                        <Landing/>
                     )} />
                     <Route path="/register" render={() => (
 
                         <Register
                             _handlerWriteUsername={this._handlerWriteUsername}
                             _handlerWritePassword={this._handlerWritePassword}
+                            _handlerWriteAge={this._handlerWriteAge}
+                            _handlerWriteGender={this._handlerWriteGender}
                             _handlerRegister={this._handlerRegister}
                             username={this.state.username}
                             password={this.state.password}
@@ -260,4 +290,4 @@ class Main extends Component {
 
 }
 
-export default Main
+export default withRouter(Main)

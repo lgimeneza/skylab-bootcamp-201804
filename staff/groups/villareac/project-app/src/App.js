@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
+import { HashRouter } from 'react-router-dom'
 import './App.css';
-import Main from './components/Main/main'
-import { HashRouter, Link } from 'react-router-dom'
-import Logout from './components/Logout/Logout'
+import Main from './components/Main/Main'
 import Nav from './components/Nav/Nav'
 
 
@@ -17,26 +16,20 @@ class App extends Component {
     }
   }
 
-
-
-// } 
-//     const sessionData = sessionStorage.getItem('key');
-//     (sessionData) ? this.setState({ logged: true }) : this.setState({ logged: false })
-// }    
+  _isLogged = (logged) =>{
+    (logged) ? this.setState({logged:true}) : this.setState({logged:false});
+  }
 
 
     render() {
-   
       return (
         <HashRouter>
           <div>
-
-            <Nav logged={this.state.logged} />
-            <Main />
-
+            <Nav logState={this.state.logged} logged={this._isLogged}/>
+            <Main logged={this._isLogged}/>
           </div>
         </HashRouter>
-      );
+      )
     }
   }
 
