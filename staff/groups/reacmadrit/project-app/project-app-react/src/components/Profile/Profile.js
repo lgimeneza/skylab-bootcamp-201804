@@ -52,7 +52,6 @@ class Profile extends Component {
                 })
             })
         }
-
     }
 
     _handleName = (e) => {

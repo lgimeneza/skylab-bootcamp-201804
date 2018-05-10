@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logic from '../../logic'
+import celebrities from "../../data/data"
 
 class Home extends Component {
 
