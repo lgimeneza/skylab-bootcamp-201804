@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import './App.css';
 import 'animate.css';
 
 import Landing from './landing/Landing';
@@ -13,6 +10,7 @@ import Login from './login/Login';
 import Home from './home/Home';
 import Profile from './profile/Profile';
 import UpdateProfile from './updateProfile/UpdateProfile';
+import MoviesService from './../logic/movies';
 
 class App extends Component {
     state = {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link, Redirect} from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom';
 import logic from './../../logic/';
 
 import Header from '../header/Header';
@@ -17,7 +17,7 @@ class Profile extends Component {
     componentDidMount() {
         if (localStorage.getItem('user')) {
             const user = JSON.parse(localStorage.getItem('user'));
-            
+
             logic.token = user.token;
 
             logic.retrieveUser(user.id).then(res => {
@@ -26,17 +26,16 @@ class Profile extends Component {
                         user: res.data,
                         isLoading: false
                     });
-                
                 } else {
-                     this.setState({
+                    this.setState({
                         tokenExpired: true
-                     })
-                 }
+                    });
+                }
             });
         } else {
             this.setState({
                 isLogged: false
-            })
+            });
         }
     }
 
@@ -47,86 +46,123 @@ class Profile extends Component {
             title: 'Are you sure you want to delete your account?',
             text: 'Enter your password to confirm',
             input: 'password',
-            type: "warning",
+            type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes, delete!',
             showLoaderOnConfirm: true,
-            preConfirm: (password) => {
+            preConfirm: password => {
                 const unregisterUser = {
-                    "username": this.state.user.username,
-                    "password": password
-                }
+                    username: this.state.user.username,
+                    password: password
+                };
 
-                return logic.unregisterUser(userId, unregisterUser).then(res => res);
+                return logic
+                    .unregisterUser(userId, unregisterUser)
+                    .then(res => res);
             },
             allowOutsideClick: () => !swal.isLoading()
-          }).then((result) => {
+        }).then(result => {
+            if (result.dismiss) return;
 
-            if(result.value.status === 'OK') {
+            if (result.value.status === 'OK') {
                 swal({
-                    title: "Account deleted!",
+                    title: 'Account deleted!',
                     type: 'success'
                 }).then(result => {
-                    localStorage.removeItem("user");
+                    localStorage.removeItem('user');
 
                     this.setState({
                         isUserRemoved: true
-                    }); 
-                })
-            }
-            else {
+                    });
+                });
+            } else {
                 swal({
-                    title: "Invalid Password!",
-                    type: "error"
+                    title: 'Invalid Password!',
+                    type: 'error'
                 });
             }
-          });
-    }
-    
+        });
+    };
+
     renderProfile = () => {
+        if (
+            this.state.tokenExpired ||
+            !this.state.isLogged ||
+            this.state.isUserRemoved
+        )
+            return <Redirect to="/login" />;
 
-        if (this.state.tokenExpired || !this.state.isLogged || this.state.isUserRemoved) return <Redirect to='/login' />
+        if (this.state.isLoading) return <span>Loading user data...</span>;
 
-        if (this.state.isLoading) return <span>Loading user data...</span>
-        
         return (
             <div>
                 <Header isLogged={this.state.isLogged} />
-                <section>
-                    <p>Username: {this.state.user.username}</p>
-                    <p>
-                        {this.state.user.email
-                            ? `Email: ${this.state.user.email}`
-                            : ''}
-                    </p>
-                    <p>
-                        {this.state.user.age ? `Age: ${this.state.user.age}` : ''}
-                    </p>
-                    <p>
-                        {this.state.user.country
-                            ? `Country: ${this.state.user.country}`
-                            : ''}
-                    </p>
-                    <p>
-                        {this.state.user.gender
-                            ? `Gender: ${this.state.user.gender}`
-                            : ''}
-                    </p>
-                    <p>
-                        {this.state.user.number
-                            ? `Tel. Number: ${this.state.user.number}`
-                            : ''}
-                    </p>
 
-                    <button><Link to='/profile/update'>Edit Profile</Link></button>
-                    <button onClick={this.handleUnregisterUser} >Delete Account</button>
-                </section>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-10">
+                            <div className="card mt-4">
+                                <div className="card-header bg-primary text-white">
+                                    <h5 className="card-title">YOUR PROFILE</h5>
+                                </div>
+                                <div className="card-body">
+                                    <p>
+                                        <span className="font-weight-bold">
+                                            Username:
+                                        </span>{' '}
+                                        {this.state.user.username}
+                                    </p>
+                                    <p>
+                                        {this.state.user.email &&
+                                            `Email: ${this.state.user.email}`}
+                                    </p>
+                                    <p>
+                                        {this.state.user.age &&
+                                            `Age: ${this.state.user.age}`}
+                                    </p>
+                                    <p>
+                                        {this.state.user.country &&
+                                            `Country: ${
+                                                this.state.user.country
+                                            }`}
+                                    </p>
+                                    <p>
+                                        {this.state.user.gender &&
+                                            `Gender: ${this.state.user.gender}`}
+                                    </p>
+                                    <p>
+                                        {this.state.user.number &&
+                                            `Telephone: ${
+                                                this.state.user.number
+                                            }`}
+                                    </p>
+                                </div>
+                                <div className="card-footer">
+                                    <span className="float-right">
+                                        <Link
+                                            to="/profile/update"
+                                            className="btn btn-outline-success"
+                                        >
+                                            Edit Profile
+                                        </Link>
+                                        <button
+                                            onClick={this.handleUnregisterUser}
+                                            className="btn btn-outline-danger ml-2"
+                                        >
+                                            Delete Account
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
-    }
+    };
 
     render() {
-        return this.renderProfile()
+        return this.renderProfile();
     }
 }
 

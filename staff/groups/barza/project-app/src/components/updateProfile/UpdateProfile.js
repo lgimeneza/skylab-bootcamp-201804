@@ -71,6 +71,7 @@ class UpdateProfile extends Component {
 
     handleWriteInputEmail = e => {
         let value = e.target.value;
+
         this.setState({
             email: value
         });
@@ -78,6 +79,7 @@ class UpdateProfile extends Component {
 
     handleWriteInputAge = e => {
         let value = e.target.value;
+
         this.setState({
             age: value
         });
@@ -85,6 +87,7 @@ class UpdateProfile extends Component {
 
     handleWriteInputCountry = e => {
         let value = e.target.value;
+
         this.setState({
             country: value
         });
@@ -92,6 +95,7 @@ class UpdateProfile extends Component {
 
     handleWriteInputGender = e => {
         let value = e.target.value;
+
         this.setState({
             gender: value
         });
@@ -99,6 +103,7 @@ class UpdateProfile extends Component {
 
     handleWriteInputTelNumber = e => {
         let value = e.target.value;
+
         this.setState({
             telNumber: value
         });
@@ -106,6 +111,7 @@ class UpdateProfile extends Component {
 
     handleWriteInputPassword = e => {
         let value = e.target.value;
+
         this.setState({
             password: value
         });
@@ -113,6 +119,7 @@ class UpdateProfile extends Component {
 
     handleWriteInputNewPassword = e => {
         let value = e.target.value;
+
         this.setState({
             newPassword: value
         });
@@ -120,6 +127,7 @@ class UpdateProfile extends Component {
 
     handleSubmitUpdateProfile = e => {
         e.preventDefault();
+
         const {
             username,
             newUsername,
@@ -188,67 +196,134 @@ class UpdateProfile extends Component {
         return (
             <div>
                 <Header isLogged={this.state.isLogged} />
-                <section>
-                    <form onSubmit={this.handleSubmitUpdateProfile}>
-                        <p>Username</p>
-                        <input
-                            type="text"
-                            placeholder="New username"
-                            value={newUsername}
-                            onChange={this.handleWriteInputNewUsername}
-                        />
-                        <p>Email</p>
-                        <input
-                            type="email"
-                            placeholder="email"
-                            value={email}
-                            onChange={this.handleWriteInputEmail}
-                        />
-                        <p>Age</p>
-                        <input
-                            type="number"
-                            placeholder="Age"
-                            value={age}
-                            onChange={this.handleWriteInputAge}
-                        />
-                        <p>Country</p>
-                        <input
-                            type="text"
-                            placeholder="Country"
-                            value={country}
-                            onChange={this.handleWriteInputCountry}
-                        />
-                        <p>Gender</p>
-                        <input
-                            type="text"
-                            placeholder="Gender"
-                            value={gender}
-                            onChange={this.handleWriteInputGender}
-                        />
-                        <p>Telephone number</p>
-                        <input
-                            type="number"
-                            placeholder="Telephone number"
-                            value={telNumber}
-                            onChange={this.handleWriteInputTelNumber}
-                        />
-                        <p>Password</p>
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={this.handleWriteInputPassword}
-                        />
-                        <p>New password</p>
-                        <input
-                            type="password"
-                            placeholder="New Password"
-                            value={newPassword}
-                            onChange={this.handleWriteInputNewPassword}
-                        />
-                        <button type="submit">Update Profile</button>
-                    </form>
-                </section>
+
+                <div className="row justify-content-center mb-5">
+                    <div className="col-10">
+                        <div className="card mt-4">
+                            <div className="card-header bg-dark text-white">
+                                <h5 className="card-title no-margin">
+                                    EDIT YOUR PROFILE
+                                </h5>
+                            </div>
+                            <div className="card-body">
+                                <form onSubmit={this.handleSubmitUpdateProfile}>
+                                    <div className="form-group">
+                                        <label>* Username</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Enter your username"
+                                            value={newUsername}
+                                            onChange={
+                                                this.handleWriteInputNewUsername
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>* Password</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            placeholder="Enter your actual password"
+                                            value={password}
+                                            onChange={
+                                                this.handleWriteInputPassword
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Email</label>
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            placeholder="Enter your email"
+                                            value={email}
+                                            onChange={
+                                                this.handleWriteInputEmail
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Age</label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            placeholder="Enter your age"
+                                            value={age}
+                                            onChange={this.handleWriteInputAge}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Country</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Enter your country"
+                                            value={country}
+                                            onChange={
+                                                this.handleWriteInputCountry
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Gender</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Enter your gender"
+                                            value={gender}
+                                            onChange={
+                                                this.handleWriteInputGender
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Telephone</label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            placeholder="Enter your telephone"
+                                            value={telNumber}
+                                            onChange={
+                                                this.handleWriteInputTelNumber
+                                            }
+                                        />
+                                    </div>
+
+                                    <hr />
+                                    <p className="text-danger">
+                                        Only if you want to change your Password
+                                    </p>
+                                    <div className="form-group">
+                                        <label>New Password</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            placeholder="Enter a new password"
+                                            value={newPassword}
+                                            onChange={
+                                                this.handleWriteInputNewPassword
+                                            }
+                                        />
+                                    </div>
+
+                                    <p className="font-weight-bold">
+                                        * Required fields
+                                    </p>
+
+                                    <span className="float-right">
+                                        <button
+                                            type="submit"
+                                            className="btn btn-outline-success btn-lg"
+                                        >
+                                            Update Profile
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     };
