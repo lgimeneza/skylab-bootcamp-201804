@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
-import login from './Login.css'
+import './Login.css'
 
 
 class Login extends Component {
@@ -52,48 +52,22 @@ class Login extends Component {
             <div className="container login-form">
                     <form onSubmit={this._handleLogin}>
                         <div className="row justify-content-center ">
-                            <div className="row form-group col-sm-5 col-sm-offset-3">
-                                <input className="form-control name-input" value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name"/>
-                            </div>
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name"/>
                         </div>
                         <div className="row justify-content-center ">
-                            <div className="row form-group col-sm-5 col-sm-offset-3">
-                                <input className="form-control"value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
-                            </div>
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
                         </div>
                 
                 <div className="row justify-content-center ">
 
                     <div className="form-group">
                         <p className="text-danger"></p>
-                        <input className="btn btn-primary " type="submit" value="Send" type="submit" value="Send" />
+                        <input className="btn bg-darkcyan " type="submit" value="Log me in" />
                     </div>
                 </div>
 
                 </form>
             </div>
-
-           
-            /* // <div className="container" >
-
-            //     <form onSubmit={this._handleLogin}>
-                   
-            //         <div className="form-group col-sm-4 col-sm-offset-4">
-            //             <input className="form-control" value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name" />
-            //         </div>
-            //         <div className="form-group col-sm-4 col-sm-offset-4">
-            //             <input className="form-control" value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
-            //         </div>
-            //         <div className="form-group">
-            //             <p className="text-danger">{this.state.loginFailedMessage}</p>
-            //             <input className="btn btn-primary " type="submit" value="Send" />
-                 
-            //         </div>
-
-
-            //     </form>
-            // </div> */
-
         )
     }
 }

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import logic from "../../logic";
 import { Route, Switch } from 'react-router-dom';
 import { Landing, Home, Profile, Register, Login, Error404, Unregister } from "../index";
-import main from './Main'
+import './Main'
 
 class Main extends Component {
 

@@ -3,7 +3,6 @@ import './App.css';
 import Main from "./components/Main/Main"
 import Header from "./components/Header/Header"
 
-
 class App extends Component {
 
   isLogged = () => {

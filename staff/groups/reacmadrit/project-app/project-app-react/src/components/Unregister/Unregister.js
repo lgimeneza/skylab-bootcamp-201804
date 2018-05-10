@@ -6,7 +6,7 @@ function _handleUnregister() {
 
     let id = localStorage.getItem('id-app')
     let token = localStorage.getItem('token-app')
-    let pass=document.getElementById('passUser')
+    let pass=document.getElementById('passUser').value
 
     logic.retrieve(id, token).then(resp => {
         if (resp.status === "OK") {
@@ -29,11 +29,12 @@ function Unregister(props) {
     return <div>
         {
             props.isLogged() ?
-                <div>
-                    <h1>Unregister:</h1>
+                <div class="container">
+
+                    <h1>Unregister</h1>
                     <form onSubmit={_handleUnregister}  >
                         <input type="password" id='passUser' placeholder="type your password here" />
-                        <input type="submit" value="Send" />
+                        <input className="  btn btn-primary bg-darkcyan" type="submit" value="Send" />
                     </form>
                 </div>
                 :
@@ -43,3 +44,15 @@ function Unregister(props) {
 }
 
 export default Unregister
+
+
+// props.isLogged() ?
+// <div>
+//     <h1>Unregister:</h1>
+//     <form onSubmit={_handleUnregister}  >
+//         <input type="password" id='passUser' placeholder="type your password here" />
+//         <input type="submit" value="Send" />
+//     </form>
+// </div>
+// :
+// <h2> You are not allowed </h2>

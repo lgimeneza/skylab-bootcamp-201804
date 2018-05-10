@@ -67,17 +67,17 @@ class Register extends Component {
     render() {
         return <div className="container">
 
-            <form className="form-control" onSubmit={this._handleRegister}>
-                <div className="row justify-content-center ">
-                    <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.userName} onChange={this._handleKeepName} type="text"
+            <form onSubmit={this._handleRegister}>
+                <div className="row justify-content-center  ">
+                    <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.userName} onChange={this._handleKeepName} type="text"
                         placeholder="User name" />
                 </div>
                 <div className="row justify-content-center ">
-                    <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.password} onChange={this._handleKeepPassword} type="password"
+                    <input className="form-group col-xs-4 border pl-3" value={this.state.password} onChange={this._handleKeepPassword} type="password"
                         placeholder="Password" />
                 </div>
                 <div className="row justify-content-center ">
-                    <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword}
+                    <input className="form-group col-xs-4 border pl-3" value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword}
                         type="password" placeholder="Repeat Password" />
                 </div>
                 <div className="row justify-content-center ">
@@ -91,7 +91,7 @@ class Register extends Component {
                 </div>
                 <div className="row justify-content-center ">
 
-                    <input className="row justify-content-center " type="submit" value="Send" />
+                    <input className="row justify-content-center mb-3 btn bg-darkcyan" type="submit" value="Register" />
                 </div>
             </form>
 

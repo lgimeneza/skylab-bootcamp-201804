@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -7,8 +7,8 @@
   height: 80px;
 }
 
-.App-header {
-  background-color: #222;
+_.App-header {
+  background-color: rgb(171, 178, 243);
   height: 200px;
   padding: 20px;
   color: white;
@@ -25,4 +25,59 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+} */
+
+
+.form-group {
+ margin-bottom: 0
+}
+
+body {
+  background-image: url("manhattan.jpg")
+}
+
+.bg-darkcyan {
+  background: darkcyan;
+  color: white
+}
+
+.bar-item {
+  display: inline-block;
+  margin: 5px;
+  
+}
+
+header ul {
+height: 40px;
+margin-right: 20px
+
+}
+
+header li {
+  float: right;
+  
+}
+
+header li::before {
+  content: "| ";
+  padding: 8px;
+  color: white;
+}
+
+
+header li:last-child::before {
+  content: " ";
+  padding: 8px;
+  color: white;
+}
+
+header a {
+  color: white;
+  text-decoration: none
+}
+
+header a:hover {
+  color: rgb(221, 219, 219);
+  text-decoration: none
+  
 }

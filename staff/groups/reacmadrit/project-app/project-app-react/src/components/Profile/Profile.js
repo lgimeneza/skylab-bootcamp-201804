@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import { Modal } from "../index"
 import { withRouter, Link } from 'react-router-dom'
-import profile from './Profile.css'
+import './Profile.css'
 
 class Profile extends Component {
 
@@ -30,14 +30,25 @@ class Profile extends Component {
 
             logic.retrieve(userId, token).then(resp => {
                 Promise.resolve().then(() => {
-                    this.setState({
-                        userName: resp.data.username,
-                        name: resp.data.name,
-                        lastName: resp.data.lastName,
-                        age: resp.data.age,
-                        location: resp.data.location,
-                        picture_url: resp.data.picture_url,
-                    })
+                    if (resp.data.picture_url) {
+                        this.setState({
+                            userName: resp.data.username,
+                            name: resp.data.name,
+                            lastName: resp.data.lastName,
+                            age: resp.data.age,
+                            location: resp.data.location,
+                            picture_url: resp.data.picture_url
+                        })
+                    }
+                    else {
+                        this.setState({
+                            userName: resp.data.username,
+                            name: resp.data.name,
+                            lastName: resp.data.lastName,
+                            age: resp.data.age,
+                            location: resp.data.location
+                        })
+                    }
                 })
             })
         }
@@ -129,7 +140,7 @@ class Profile extends Component {
                         <img className='w-25 h-25 img-thumbnail' src={this.state.picture_url}
                             alt="profile pic" />
                     </div>
-                    <div className="form-control">
+                    <div className="">
                         <form onSubmit={this._handleUpdate}>
                             <div className="row justify-content-center ">
                                 <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.name} onChange={this._handleName} id="name" type="text" placeholder="Your name" />
@@ -162,7 +173,7 @@ class Profile extends Component {
 
                             <div className="row justify-content-center ">
 
-                                <input id="button" className="form-group col-sm-4 col-sm-offset-4" type="submit" value='update' />
+                                <input id="button" className="form-group col-sm-4 col-sm-offset-4" type="submit" value='Update' />
                             </div>
                             <div className="row justify-content-center ">
 
@@ -172,7 +183,7 @@ class Profile extends Component {
                         <Link to="/unregister">
                             <div className="row justify-content-center ">
 
-                                <button className="form-group col-sm-4 col-sm-offset-4">Unergister</button>
+                                <button className="form-group col-sm-4 col-sm-offset-4">Unregister</button>
                             </div>
                         </Link>
                     </div>
