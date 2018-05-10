@@ -47,28 +47,7 @@ h2 {
   width:90px;
 }
 
-.login-box {
-  margin-top: 70px !important;
-  background: white;
-  width: 400px;
-  box-shadow: 3px 3px 3px black;
-  margin: 0 auto;
-  border-radius: 20px;
-  padding: 20px;
-}
-.login-box h2 {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  background: #009688;
-  padding: 13px 20px 10px 20px;
-  margin: -20px 0px 0px -20px;
-}
-.login-box p{
-  font-family: 'Gothic A1';
-  font-weight: bold;
-  color: #026e64;
-  margin-top:35px;
-}
+
 
 .register-box {
   margin-top: 70px !important;
@@ -190,8 +169,8 @@ h2 {
   text-align: center;
 }
 .title {
-  background-image: url(/static/media/background-.40565e3c.jpg);
-  background-size: cover;
+  background-image: url(images/background-.jpg);
+  background-size: cover; 
   height: 40vw;
 }
 .App-header {
