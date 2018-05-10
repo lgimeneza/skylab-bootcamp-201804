@@ -33,10 +33,7 @@ class Login extends Component {
                     Xtorage.local.clear()
                     Xtorage.local.set('user', { userName: this.state.username ,id: res.data.id, token: res.data.token })
                     console.log(Xtorage.local.get("user"))
-                    }
-
-                    
-                
+                    }            
             )
             .then(resp => {
 
@@ -62,10 +59,11 @@ class Login extends Component {
 
     render() {
         return (
-
+            
             <div>
-                <form onSubmit={this.acceptLogin}>
+                <form className="login-box" onSubmit={this.acceptLogin}>
 
+                    <h2>Login</h2>
                     <p>Username</p>
                     <input type="text" name="username" value={this.state.username} onChange={this.loginUsername} />
                     <p>Password</p>

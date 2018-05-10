@@ -18,40 +18,46 @@ class Profile extends Component {
 
     
 
-    // componentDidMount() {
-    //     const { id, token } = Xtorage.session.get("user")
-    //     logic.retrieveInfo(id, token)
-    //         .then(user => {
-    //             this.setState({
-    //                 username: user.data.username,
-    //                 name: user.data.name,
-    //                 surname: user.data.surname,
-    //                 birth: user.data.birth,
-    //                 location: user.data.location,
-    //                 additional: user.data.additional
-    //             })
-    //         })
-    // }
+     componentDidMount() {
+         const { id, token } = Xtorage.local.get("user")
+         logic.retrieveInfo(id, token)
+             .then(user => {
+                 this.setState({
+                     username: user.data.username,
+                     name: user.data.name,
+                     surname: user.data.surname,
+                     birth: user.data.birth,
+                     location: user.data.location,
+                     additional: user.data.additional
+                 })
+             })
+     }
 
     
 
     updateInfoAndPrint = (e) => {
-
         e.preventDefault()
-
         
-
         console.log(Xtorage.local.get("user"))
         const { userName, id, token } = Xtorage.local.get("user")
         
         Promise.resolve()
         .then(()=> this.setState({username: userName}) )
-        .then(() =>{
-            const { username, password, name, surname, birth, location, additional } = this.state
+        .then(()=> {
+            let body= {
+                username: this.state.username,
+                password: this.state.password,
+                name: this.state.name,
+                surname: this.state.surname,
+                birth: this.state.birth,
+                location: this.state.location,
+                additional: this.state.additional
+            }
+            return body
         })
-        //arreglar assignacio de sobrats
-        logic.updateInfo(id, { username, password, name, surname, birth, location, additional }, token)
-        .then(logic.retrieveInfo(id, token)
+        .then(body => 
+            logic.updateInfo(id, body, token)
+            .then(logic.retrieveInfo(id, token)
             .then(resp => this.setState({
                 name: resp.data.name,
                 surname: resp.data.surname,
@@ -59,8 +65,10 @@ class Profile extends Component {
                 location: resp.data.location,
                 additional: resp.data.additional
             })
-
             ))
+        
+        )
+        
     }
 
 
@@ -92,8 +100,8 @@ class Profile extends Component {
     render() {
         return (
             <div>
-                <h1>Profile info</h1>
-                <form onSubmit={this.updateInfoAndPrint}>
+                <h1 className="Profile-title">Profile info</h1>
+                <form className="App" onSubmit={this.updateInfoAndPrint}>
                     <p>NAME: </p>
                     <input type="text" name="name" value={this.state.name} onChange={this.updateName} />
                     <p>SURNAME: </p>
