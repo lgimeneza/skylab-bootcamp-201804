@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 
 function Landing(props) {
   return (
+
+
     <div>
+    <div className="title">
       <div className="landing-buttons">
         <Link to="/login">
           <button className="login-button">Login</button>
@@ -14,12 +17,14 @@ function Landing(props) {
           <button className="register-button">Register</button>
         </Link>
       </div>
-      <div>
-        <h1>Welcome to ErBeti</h1>
-        
-      </div>
+
     </div>
-  );
+    <div className="anounce">
+      <h1>Welcome to ErBeti's Marvel Database</h1>
+      <h2>Sign up for free</h2>
+    </div>
+</div>
+      );
 }
 
 export default Landing;

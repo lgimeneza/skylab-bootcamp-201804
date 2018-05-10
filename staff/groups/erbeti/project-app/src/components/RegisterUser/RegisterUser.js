@@ -107,8 +107,8 @@ class RegisterUser extends Component {
         return (
 
             <div>
-                <form onSubmit={this.acceptRegister}>
-                    
+                <form className="register-box" onSubmit={this.acceptRegister}>
+                    <h2>Register</h2>
                     <p>Username</p>
                     <input type="text" name="username" value={this.state.username}onChange={this.registerUsername}/>
                     <p>E-mail</p>
@@ -118,10 +118,9 @@ class RegisterUser extends Component {
                     <p>Repeat Password</p>
                     <input type="password" value={this.state.repeatpassword} name="password" onChange={this.registerRepeatPassword}/>
                     <p>
-                    <button type="submit">Register</button>
-                    
+                    <button className="signup-button" type="submit">Register</button>
                     </p>
-                    <p>Al registrarte, aceptas las Condiciones de Servicio y la Política de Privacidad </p>
+                    <p className="privacy-text">Al registrarte, aceptas las Condiciones de Servicio y la Política de Privacidad </p>
                 </form>
                 
                 <p>
