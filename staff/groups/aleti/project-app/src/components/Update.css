@@ -1,0 +1,12 @@
+#swal2 {
+    background-color: blue;
+}
+
+#swal2-content {
+    color: green;
+    text-align: left;
+    padding: 15%;
+    align-items: initial;
+    display: inline-block;
+    background-color: red;
+}

@@ -9,8 +9,6 @@ class LoginPage extends Component {
     constructor(props) {
         super(props);
 
-        // reset login statu
-
         this.state = {
             username: '',
             password: '',
