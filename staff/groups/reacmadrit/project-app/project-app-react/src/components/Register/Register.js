@@ -14,7 +14,7 @@ class Register extends Component {
 
     _comparePassword() {
 
-        if (this.state.password !== this.state.repeatPassword) {
+        if ((this.state.password !== this.state.repeatPassword) && this.state.repeatPassword.length) {
             this.setState({
                 notMatchingMessage: "Passwords don't match"
 
@@ -81,7 +81,6 @@ class Register extends Component {
                 title: 'Oops...',
                 text: 'Passwords don\'t match',
             })
-            //   this.setState({ registerFailedMessage: res.error })
         }
     }
 
@@ -123,18 +122,3 @@ class Register extends Component {
 }
 
 export default withRouter(Register);
-
-
-
-// <div>
-
-//     <form onSubmit={this._handleRegister}>
-//         <input value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name" />
-//         <input value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
-//         <input value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
-//         <p className="text-danger">{this.state.notMatchingMessage}</p>
-//         <p className="text-warning">{this.state.registerFailedMessage}</p>
-//         <input type="submit" value="Send" />
-//     </form>
-
-// </div>

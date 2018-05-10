@@ -43,17 +43,34 @@ class Home extends Component {
                 "app_key": "3d5e1fd27468674bfd2f6c0cddde59aa"
             })
         }
+        if (this.state.picture_url!=='https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_8.png' && this.state.picture_url.length) {
         fetch('http://api.kairos.com/detect', dataPackage)
             .then(res => res.json())
             .then(res => {
+                if (!res.Errors) {
                 Promise.resolve()
                     .then(() => {
                         this.setState({
-                            userFaceInfo: res.images[0].faces[0].attributes //no face detected
+                            userFaceInfo: res.images[0].faces[0].attributes
                         })
                     })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oopsies!',
+                        text: 'Please input a valid face'
+                    })
+                }
             })
             .catch(err => err.message)
+        }
+        else {
+            swal({
+                type: 'error',
+                title: 'Oopsies!',
+                text: 'Please click on "Profile" and upload a picture first'
+            })
+        }
     }
 
 
@@ -112,7 +129,7 @@ class Home extends Component {
                 <h4> #1 - Go to profile and paste a picture url there. </h4>
                 <h4> #2 - Come back to Home and hit 'retrieve'. </h4>
                 <h4> #3 - After 'retrieve' you should now be able to Compare and see who your match is. </h4>
-                <button className="btn" onClick={this.retrieveFaceInfo}>retrieve!</button>
+                <button className="btn" onClick={this.retrieveFaceInfo}>Retrieve!</button>
                 <button className="btn bg-darkcyan" onClick={this.comparePics}>Compare!</button>
             </div>
         } else {
