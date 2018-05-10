@@ -73,11 +73,11 @@ class Register extends Component {
                         placeholder="User name" />
                 </div>
                 <div className="row justify-content-center ">
-                    <input className="form-group col-xs-4 border pl-3" value={this.state.password} onChange={this._handleKeepPassword} type="password"
+                    <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.password} onChange={this._handleKeepPassword} type="password"
                         placeholder="Password" />
                 </div>
                 <div className="row justify-content-center ">
-                    <input className="form-group col-xs-4 border pl-3" value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword}
+                    <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword}
                         type="password" placeholder="Repeat Password" />
                 </div>
                 <div className="row justify-content-center ">

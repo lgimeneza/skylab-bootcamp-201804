@@ -2,21 +2,21 @@ import React from 'react'
 import logic from '../../logic'
 
 function _handleUnregister() {
-    
+
 
     let id = localStorage.getItem('id-app')
     let token = localStorage.getItem('token-app')
-    let pass=document.getElementById('passUser').value
+    let pass = document.getElementById('passUser').value
 
     logic.retrieve(id, token).then(resp => {
         if (resp.status === "OK") {
             return resp.data.username
         } else {
-             // todo sweet alert
+            // todo sweet alert
         }
     })
         .then(resp => {
-            logic.Unregister(resp,pass,token,id)  //sweetalert
+            logic.Unregister(resp, pass, token, id)  //sweetalert
         })
 
     // DOING HERE.
@@ -31,10 +31,16 @@ function Unregister(props) {
             props.isLogged() ?
                 <div class="container">
 
-                    <h1>Unregister</h1>
+                    <h1 className="text-center">Unregister</h1>
                     <form onSubmit={_handleUnregister}  >
-                        <input type="password" id='passUser' placeholder="type your password here" />
-                        <input className="  btn btn-primary bg-darkcyan" type="submit" value="Send" />
+                        <div className="row justify-content-center ">
+                            <input className="form-group col-xs-4 m-4 border pl-3" type="password" id='passUser' placeholder="type your password here" />
+                        </div>
+                        <div className="row justify-content-center ">
+
+                            <input className="  btn btn-primary bg-darkcyan" type="submit" value="Send" />
+                        </div>
+
                     </form>
                 </div>
                 :

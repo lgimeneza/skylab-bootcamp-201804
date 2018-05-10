@@ -27,6 +27,9 @@ _.App-header {
   to { transform: rotate(360deg); }
 } */
 
+h1 , h2{
+  color: white
+}
 
 .form-group {
  margin-bottom: 0
@@ -39,6 +42,11 @@ body {
 .bg-darkcyan {
   background: darkcyan;
   color: white
+}
+input{
+  background: white;
+  border-radius: 5px;
+  padding: 4px;
 }
 
 .bar-item {

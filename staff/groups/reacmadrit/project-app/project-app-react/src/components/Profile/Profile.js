@@ -137,33 +137,33 @@ class Profile extends Component {
 
                 <div className="container profile-form">
                     <div className="row justify-content-center ">
-                        <img className='w-25 h-25 img-thumbnail' src={this.state.picture_url}
+                        <img className='w-25 h-25 img-thumbnail rounded-circle' src={this.state.picture_url}
                             alt="profile pic" />
                     </div>
                     <div className="">
                         <form onSubmit={this._handleUpdate}>
                             <div className="row justify-content-center ">
-                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.name} onChange={this._handleName} id="name" type="text" placeholder="Your name" />
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.name} onChange={this._handleName} id="name" type="text" placeholder="Your name" />
                             </div>
                             <div className="row justify-content-center ">
 
-                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.lastName} onChange={this._handleLastName} id="lastName" type="text" placeholder="Your last name"
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.lastName} onChange={this._handleLastName} id="lastName" type="text" placeholder="Your last name"
                                 />
                             </div>
                             <div className="row justify-content-center ">
-                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.age} onChange={this._handleAge} id="age" type="text" placeholder="What's your age?" />
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.age} onChange={this._handleAge} id="age" type="text" placeholder="What's your age?" />
                             </div>
                             <div className="row justify-content-center ">
 
-                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.location} onChange={this._handleLocation} id="location" type="text" placeholder="What city do you live in?"
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.location} onChange={this._handleLocation} id="location" type="text" placeholder="What city do you live in?"
                                 />
                             </div>
                             <div className="row justify-content-center ">
-                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.profile_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?"
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.profile_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?"
                                 />
                             </div>
                             <div className="row justify-content-center ">
-                                <input className="form-group col-sm-4 col-sm-offset-4" value={this.state.password} onChange={this._handlePassword} id="password" type="password" placeholder="Confirm password"
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.password} onChange={this._handlePassword} id="password" type="password" placeholder="Confirm password"
                                 />
                             </div>
                             <div className="row justify-content-center ">
@@ -172,8 +172,8 @@ class Profile extends Component {
                             </div>
 
                             <div className="row justify-content-center ">
-
-                                <input id="button" className="form-group col-sm-4 col-sm-offset-4" type="submit" value='Update' />
+                          
+                              <input /*id="button"*/ className="row justify-content-center mb-3 btn bg-darkcyan" type="submit" value='Update' />
                             </div>
                             <div className="row justify-content-center ">
 
@@ -183,40 +183,14 @@ class Profile extends Component {
                         <Link to="/unregister">
                             <div className="row justify-content-center ">
 
-                                <button className="form-group col-sm-4 col-sm-offset-4">Unregister</button>
+                                <button className="mb-5 btn btn-danger">Unregister</button>
                             </div>
                         </Link>
                     </div>
 
                 </div>
 
-                //    <div>
 
-                //         <img className='w-25' src={this.state.picture_url} alt="profile pic" />
-
-                //         <form onSubmit={this._handleUpdate}>
-                //             <input value={this.state.name} onChange={this._handleName} id="name" type="text" placeholder="Your name" />
-                //             <input value={this.state.lastName} onChange={this._handleLastName} id="lastName" type="text" placeholder="Your last name" />
-                //             <input value={this.state.age} onChange={this._handleAge} id="age" type="text" placeholder="What's your age?" />
-                //             <input value={this.state.location} onChange={this._handleLocation} id="location" type="text" placeholder="What city do you live in?" />
-                //             <input value={this.state.profile_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?" />
-
-                //             <input value={this.state.password} onChange={this._handlePassword}
-                //                 id="password" type="password" placeholder="Confirm password" />
-
-                //             <p className="text-danger">{this.state.serverErrorMessage}</p>
-                //             <input type="submit" value='update' />
-
-
-                //             <Modal viewModal={this.state.viewModal} closeModal={this._closeModal} />
-
-                //         </form>
-
-                //         <Link to="/unregister">
-                //         <button >Unergister</button>
-                //         </Link>
-
-                //     </div>
 
             )
         }
