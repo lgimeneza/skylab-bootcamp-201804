@@ -13,7 +13,7 @@ describe('users api', () => {
         }
 
         return sessionStorage.getItem('token')
-    } 
+    }
 
     beforeEach(() => data = { name: 'John', surname: 'Doe', age: 40 })
 
@@ -32,8 +32,11 @@ describe('users api', () => {
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
+
+                            return usersApi.authenticate(username, password)
                         })
                 })
+                .catch(err => expect(err).toBeDefined())
         )
     })
 
@@ -62,8 +65,11 @@ describe('users api', () => {
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
+
+                            return usersApi.authenticate(username, password)
                         })
                 })
+                .catch(err => expect(err).toBeDefined())
         )
     })
 
@@ -103,8 +109,11 @@ describe('users api', () => {
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
+
+                            return usersApi.authenticate(username, password)
                         })
                 })
+                .catch(err => expect(err).toBeDefined())
         )
     })
 })
