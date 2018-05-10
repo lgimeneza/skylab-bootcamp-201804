@@ -1,17 +1,17 @@
 'use strict'
 
-describe('logic (users api)', () => {
+describe('users api', () => {
     let user
 
     beforeEach(() => user = { username: 'u', password: 'p' })
 
     describe('register > login > unregister', () => {
         it('should succeed on valid user', () =>
-            logic.register(user)
+            usersApi.register(user)
                 .then(id => {
                     expect(id).toBeDefined()
 
-                    return logic.login(user)
+                    return usersApi.login(user)
                         .then(data => {
                             expect(data).toBeDefined()
 
@@ -20,11 +20,11 @@ describe('logic (users api)', () => {
 
                             expect(data.token).toBeDefined()
 
-                            logic.token = data.token
+                            usersApi.token = data.token
 
                             user.id = id
 
-                            return logic.unregister(user)
+                            return usersApi.unregister(user)
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
@@ -35,11 +35,11 @@ describe('logic (users api)', () => {
 
     describe('register > login > retrieve > unregister', () => {
         it('should succeed on valid user', () =>
-            logic.register(user)
+            usersApi.register(user)
                 .then(id => {
                     expect(id).toBeDefined()
 
-                    return logic.login(user)
+                    return usersApi.login(user)
                         .then(data => {
                             expect(data).toBeDefined()
 
@@ -48,9 +48,9 @@ describe('logic (users api)', () => {
 
                             expect(data.token).toBeDefined()
 
-                            logic.token = data.token
+                            usersApi.token = data.token
 
-                            return logic.retrieve(id)
+                            return usersApi.retrieve(id)
                         })
                         .then(_user => {
                             expect(_user).toBeDefined()
@@ -59,7 +59,7 @@ describe('logic (users api)', () => {
 
                             _user.password = user.password
 
-                            return logic.unregister(_user)
+                            return usersApi.unregister(_user)
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
@@ -70,11 +70,11 @@ describe('logic (users api)', () => {
 
     describe('register > login > update > retrieve > unregister', () => {
         it('should succeed on valid user', () =>
-            logic.register(user)
+            usersApi.register(user)
                 .then(id => {
                     expect(id).toBeDefined()
 
-                    return logic.login(user)
+                    return usersApi.login(user)
                         .then(data => {
                             expect(data).toBeDefined()
 
@@ -83,18 +83,18 @@ describe('logic (users api)', () => {
 
                             expect(data.token).toBeDefined()
 
-                            logic.token = data.token
+                            usersApi.token = data.token
 
                             user.id = id
 
                             user.newUsername = 'u2'
 
-                            return logic.update(user)
+                            return usersApi.update(user)
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
 
-                            return logic.retrieve(id)
+                            return usersApi.retrieve(id)
                         })
                         .then(_user => {
                             expect(_user).toBeDefined()
@@ -103,7 +103,7 @@ describe('logic (users api)', () => {
 
                             _user.password = user.password
 
-                            return logic.unregister(_user)
+                            return usersApi.unregister(_user)
                         })
                         .then(res => {
                             expect(res).toBeTruthy()

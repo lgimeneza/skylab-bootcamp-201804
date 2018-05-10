@@ -1,6 +1,14 @@
 'use strict'
 
-const logic = {
+/**
+ * Users API (client)
+ * 
+ * Provides a singleton client for Users API
+ * 
+ * @author manuelbarzi
+ * @version 1.0.0
+ */
+const usersApi = {
     url: 'https://skylabcoders.herokuapp.com/api',
 
     _call(path, method, body, withToken) {
@@ -66,3 +74,5 @@ const logic = {
             })
     }
 }
+
+if (typeof module !== 'undefined') module.exports = usersApi
