@@ -43,7 +43,7 @@ class HomePage extends Component {
   }
 
   handleLogoutUser() {
-    localStorage.setItem('token', '')
+    //localStorage.setItem('token', '')
   }
 
   handleDeleteUser(id) {
