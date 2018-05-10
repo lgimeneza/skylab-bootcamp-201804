@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { NavLink, withRouter, Route, Switch } from 'react-router-dom'
 import logic from '../../logic'
 import './main.css'
 import Register from '../Register/Register'
 import Login from '../Login/Login'
 import Profile from '../Profile/Profile'
-
+import Landing from '../Landing/Landing'
+import Home from '../Home/Home'
 /**
  * The main App.
  * 
@@ -66,7 +67,6 @@ class Main extends Component {
     * @returns {string | number} - The string or number introduced by the user.
     */
     _handlerWriteUsername = (e) => {
-        console.log(e)
         this.setState({ username: e.target.value })
     }
 
@@ -114,15 +114,22 @@ class Main extends Component {
     // LOGIN
 
     _handlerLogin = (e) => {
-        e.preventDefault();
 
+        e.preventDefault;
+        
+   
         let userData = {
             username: this.state.username,
             password: this.state.password
         }
 
         logic.login(userData)
-            .then(data => this.onSetSession(data, 'key'));
+            .then(data => {
+                if(data.status === 'OK'){
+                    this.onSetSession(data, 'key')
+                }else{console.log("BAD LOGIN")}
+            })
+            
     }
 
     onSetSession = (data, key) => {
@@ -132,8 +139,7 @@ class Main extends Component {
 
     // RETRIEVE
 
-    _handlerRetrieve = (e) => {
-        e.preventDefault();
+    _handlerRetrieve = () => {
 
         logic.id = this.state.sessionInfo.id;
         logic.token = this.state.sessionInfo.token;
@@ -196,6 +202,18 @@ class Main extends Component {
         return (
             <div className="container">
                 <Switch>
+                    <Route path="/home" render={() => (
+
+                        <Home
+
+                        />
+                    )} />
+                    <Route path="/landing" render={() => (
+
+                        <Landing
+
+                        />
+                    )} />
                     <Route path="/register" render={() => (
 
                         <Register
@@ -235,6 +253,7 @@ class Main extends Component {
                     )
                     } />
                 </Switch>
+                
             </div>
         )
     }

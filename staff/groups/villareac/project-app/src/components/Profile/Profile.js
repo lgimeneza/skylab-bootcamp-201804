@@ -18,6 +18,10 @@ class Profile extends Component {
         }
     }
 
+    componentDidMount(){
+           this.props._handlerRetrieve()
+    }
+
      /**
      * A handler that allows the user to change the text when the value is true.
      * 
@@ -38,7 +42,7 @@ class Profile extends Component {
             <div className="container">
 
 
-                <section className="firstSection">
+                <section className="firstSection" id="meetingPic">
                 <h2 className="big">¡Has vuelto! Debe ser época de productividad.
                 </h2>
                     <button className="button">Open Fevernote</button>
@@ -47,17 +51,13 @@ class Profile extends Component {
                     </p>
                 </section>
 
-
                 <section className="secondSection">
-                    {/* UPDATE */}
-                    <h2>Update</h2>
-                    <button onClick={this.props._handlerRetrieve}>Conseguir datos</button><br />
-                    {/* <button onClick={this.props.state.disabled = ""}>Enable changes</button><br/> */}
-                    <button onClick={this.props._handlerUpdate}>Submit changes</button><br />
+                    <h2>Profile</h2>
                     <input type="text" placeholder={this.props.username} onChange={this.props._handlerWriteNewUsername} />
                     <input type="text" placeholder={(this.props.age) ? this.props.age : ''} onChange={this.props._handlerWriteAge} />
                     <input type="text" placeholder={(this.props.gender) ? this.props.gender : ''} onChange={this.props._handlerWriteGender} />
                     <input type="text" placeholder='password required' onChange={this.props._handlerWritePassword} />
+                    <button onClick={this.props._handlerUpdate}>Update profile</button>
 
 
                     <button onClick={this._handlerVisibility}>delete profile</button>
@@ -70,11 +70,6 @@ class Profile extends Component {
                     </div>}
                 </section>
             </div>
-
-
-
-
-
 
         )
     }

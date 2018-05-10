@@ -2,35 +2,42 @@ import React, { Component } from 'react';
 import './App.css';
 import Main from './components/Main/main'
 import { HashRouter, Link } from 'react-router-dom'
+import Logout from './components/Logout/Logout'
+import Nav from './components/Nav/Nav'
 
 
 
 class App extends Component {
 
+  constructor() {
+    super();
 
-
-  render() {
-    return (
-      <HashRouter> 
-      <div>
-      
-        
-            <nav className="navbar">
-            <h1>VilaReac</h1>
-              <ul>
-                <li><Link to='/register'>Register</Link></li>
-                <li><Link to='/login'>Login</Link></li>
-                <li><Link to='/profile'>Profile</Link></li>
-              </ul>
-
-            </nav>
-            <Main />
-         
-           
-      </div>
-      </HashRouter>
-    );
+    this.state={
+      logged: false
+    }
   }
-}
 
-export default App;
+
+
+// } 
+//     const sessionData = sessionStorage.getItem('key');
+//     (sessionData) ? this.setState({ logged: true }) : this.setState({ logged: false })
+// }    
+
+
+    render() {
+   
+      return (
+        <HashRouter>
+          <div>
+
+            <Nav logged={this.state.logged} />
+            <Main />
+
+          </div>
+        </HashRouter>
+      );
+    }
+  }
+
+  export default App;
