@@ -6,13 +6,15 @@ import { FormGroup, FormControl } from 'react-bootstrap'
 import logic from '../logic'
 import { LinkContainer } from 'react-router-bootstrap';
 
+
 //import { userActions } from '../_actions';
 
 class HomePage extends Component {
 
   state = {
     movies: {},
-    value: ''
+    value: '',
+
   }
 
   componentDidMount() {
@@ -33,13 +35,21 @@ class HomePage extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(e)
-    logic.movie.searchMulti('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.value)
+    if(this.state.value){
+      logic.movie.searchMulti('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.value)
       .then(data => {
         this.setState({
           movies: data
         })
       })
+    } else {
+      logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc')
+      .then(data => {
+        this.setState({
+          movies: data
+        })
+      })
+    }
   }
 
   handleLogoutUser() {
@@ -88,9 +98,11 @@ class HomePage extends Component {
                   <FormControl type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
               </FormGroup>{' '}
               <Button onClick={this.handleSubmit} type="submit">Submit</Button>
+
               <LinkContainer to="/" onClick={this.handleLogoutUser}>
                 <NavItem eventKey={2}>Logout</NavItem>
               </LinkContainer>
+
             </Navbar.Form>
 
           </Navbar.Collapse>
@@ -100,18 +112,23 @@ class HomePage extends Component {
           <Row>
             {this.state.movies.results && (
               this.state.movies.results.map(movie => {
-                return (
-                  <Col xs={12} sm={6} md={3} key={movie.id}>
-                    <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
-                      <h3>Thumbnail label</h3>
-                      <p>Description</p>
-                      <p>
-                        <Button bsStyle="primary">Button</Button>&nbsp;
-                        <Button bsStyle="default">Button</Button>
-                      </p>
-                    </Thumbnail>
-                  </Col>
-                )
+                if(movie.poster_path){
+                  return (
+                    <Col xs={12} sm={6} md={3} key={movie.id}>
+                      <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
+                        <h3>Thumbnail label</h3>
+                        <p>Description</p>
+                        <p>
+                          <Button bsStyle="primary">Button</Button>&nbsp;
+                          <Button bsStyle="default">Button</Button>
+
+                        </p>
+                      </Thumbnail>
+                    </Col>
+                  )
+                } else {
+                  return null
+                }
               })
             )}
           </Row>
