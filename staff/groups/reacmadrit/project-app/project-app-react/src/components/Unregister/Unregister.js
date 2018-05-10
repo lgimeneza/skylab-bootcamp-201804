@@ -1,6 +1,7 @@
 import React from 'react'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
+import swal from 'sweetalert2'
 
 
 function _handleUnregister(e) {
@@ -13,13 +14,17 @@ function _handleUnregister(e) {
 
     logic.retrieve(id, token).then(resp => {
         if (resp.status === "OK") {
+            swal(
+                'You unregistered correctly.',
+                'Sorry to see you go..',
+                'success'
+            )
             return resp.data.username
-        } else {
-            // todo sweet alert
         }
     })
         .then(resp => {
-            logic.unregister(resp, pass, token, id)  //sweetalert
+            logic.unregister(resp, pass, token, id)
+
         }).then((r) => {
             localStorage.removeItem("id-app")
             localStorage.removeItem("token-app")
@@ -27,8 +32,6 @@ function _handleUnregister(e) {
         }
 
         )
-    // DOING HERE.
-
 }
 
 function Unregister(props) {
@@ -37,7 +40,7 @@ function Unregister(props) {
     return <div>
         {
             props.isLogged() ?
-                <div class="container">
+                <div className="container">
 
                     <h1 className="text-center">Unregister</h1>
                     <form onSubmit={_handleUnregister.bind(props)}  >
