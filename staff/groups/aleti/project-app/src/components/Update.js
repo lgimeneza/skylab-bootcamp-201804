@@ -32,9 +32,10 @@ class Update extends Component {
     }
 
     componentDidMount = () => {
-        logic.retrieveUser(localStorage.getItem('id'), localStorage.getItem('token'))
+        logic.retrieveUser(localStorage.getItem('id'), localStorage.getItem("token"))
             .then(data => {
-                console.log(data)
+                console.log("token",localStorage.getItem("token"))
+                console.log("entra en el login el sig token :" ,localStorage.getItem("token") )
                 if (data.status === 'OK') {
                     const { name, value } = data;
                     this.setState({
@@ -44,7 +45,7 @@ class Update extends Component {
                         }
                     })
                 } else {
-                    throw Error("wrong token")
+                    //throw Error("wrong token")
                 }
             });
     }

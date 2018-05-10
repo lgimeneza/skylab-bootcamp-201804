@@ -1,7 +1,7 @@
 const movieLogic = {
 
     url: 'http://api.themoviedb.org/3',
-    
+
     getTvPopular(key){
         return Promise.resolve()
         .then(()=>{
@@ -9,11 +9,11 @@ const movieLogic = {
             .then(resp => resp.json())
         })
     },
-    
-    getMoviesPopular(key){
+
+    getMoviesPopular(key, page = 1){
         return Promise.resolve()
         .then(()=>{
-            return  fetch(`${this.url}/movie/popular?api_key=${key}&language=en-US&page=1`)
+            return fetch(`${this.url}/movie/popular?api_key=${key}&language=en-US&page=${page}`)
             .then(resp => resp.json())
         })
     },
