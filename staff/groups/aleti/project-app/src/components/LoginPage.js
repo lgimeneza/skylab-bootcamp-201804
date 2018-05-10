@@ -38,7 +38,7 @@ class LoginPage extends Component {
             logic.user.loginUser(body).then(result => {
                 if (result.status === 'OK') {
                     this.storageUserData(result)
-                    this.props.history.push('/home')
+                    this.props.history.push('/')
                 } else {
                     swal({
                         type: 'error',
