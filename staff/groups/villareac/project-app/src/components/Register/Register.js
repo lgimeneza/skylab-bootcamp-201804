@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import '../Main/main.css'
 
+
+/**
+ * The page where the user can create a new user and password
+ * 
+ * @class Register
+ * @extends {Component}
+ */
 class Register extends Component {
 
     render() {

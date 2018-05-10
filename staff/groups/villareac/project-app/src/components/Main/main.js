@@ -6,7 +6,12 @@ import Register from '../Register/Register'
 import Login from '../Login/Login'
 import Profile from '../Profile/Profile'
 
-
+/**
+ * The main App.
+ * 
+ * @class App
+ * @extends {Component}
+ */
 class Main extends Component {
 
     constructor() {
@@ -40,10 +45,6 @@ class Main extends Component {
     /**
      * This componentDiMount receives the data from the sessionStorage of the browser in case it exists.
      * The 'key' string allows you to unlock the data stored in sessionStorage
-     * 
-     * @example
-     * 
-     * componentDidMount() --> insert example
      * 
      * @returns {Object | null} - returns an object with the data stored in sessionStorage
      */
@@ -92,13 +93,7 @@ class Main extends Component {
     // REGISTER
 
     /**
-     * This handler
-     * 
-     * @example
-     * 
-     * componentDidMount() --> insert example
-     * 
-     * @returns {Object | null} - returns an object with the data stored in sessionStorage
+     * This handler receives the new info of the user in order to create a profile, username and password.
      */
     _handlerRegister = (e) => {
         e.preventDefault();

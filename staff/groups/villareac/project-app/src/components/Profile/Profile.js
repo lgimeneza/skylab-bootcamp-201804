@@ -1,6 +1,13 @@
 import React, { Component } from "react"
 import '../Main/main.css'
 
+
+/**
+ * The Profile with the userdata.
+ * 
+ * @class Profile
+ * @extends {Component}
+ */
 class Profile extends Component {
 
     constructor() {
@@ -11,6 +18,11 @@ class Profile extends Component {
         }
     }
 
+     /**
+     * A handler that allows the user to change the text when the value is true.
+     * 
+     * @returns {boolean} - sets the property visibility into true or false
+     */
     _handlerVisibility = () => {
         this.setState({ visible: true })
     }

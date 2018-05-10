@@ -1,7 +1,12 @@
 import React, { Component } from "react"
 import '../Main/main.css'
 
-
+/**
+ * The Login component that allows the user to login into his/her profile.
+ * 
+ * @class Login
+ * @extends {Component}
+ */
 class Login extends Component {
 
     render() {
