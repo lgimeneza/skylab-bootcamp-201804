@@ -1,8 +1,11 @@
 import React from 'react'
 import logic from '../../logic'
+import { withRouter } from 'react-router-dom'
 
-function _handleUnregister() {
 
+function _handleUnregister(e) {
+
+    e.preventDefault();
 
     let id = localStorage.getItem('id-app')
     let token = localStorage.getItem('token-app')
@@ -16,9 +19,14 @@ function _handleUnregister() {
         }
     })
         .then(resp => {
-            logic.Unregister(resp, pass, token, id)  //sweetalert
-        })
+            logic.unregister(resp, pass, token, id)  //sweetalert
+        }).then((r) => {
+            localStorage.removeItem("id-app")
+            localStorage.removeItem("token-app")
+            this.history.push('/')
+        }
 
+        )
     // DOING HERE.
 
 }
@@ -32,7 +40,7 @@ function Unregister(props) {
                 <div class="container">
 
                     <h1 className="text-center">Unregister</h1>
-                    <form onSubmit={_handleUnregister}  >
+                    <form onSubmit={_handleUnregister.bind(props)}  >
                         <div className="row justify-content-center ">
                             <input className="form-group col-xs-4 m-4 border pl-3" type="password" id='passUser' placeholder="type your password here" />
                         </div>
@@ -49,16 +57,5 @@ function Unregister(props) {
     </div>
 }
 
-export default Unregister
+export default withRouter(Unregister)
 
-
-// props.isLogged() ?
-// <div>
-//     <h1>Unregister:</h1>
-//     <form onSubmit={_handleUnregister}  >
-//         <input type="password" id='passUser' placeholder="type your password here" />
-//         <input type="submit" value="Send" />
-//     </form>
-// </div>
-// :
-// <h2> You are not allowed </h2>

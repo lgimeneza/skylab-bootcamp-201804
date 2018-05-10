@@ -10,7 +10,7 @@ class Main extends Component {
     }
 
     render() {
-        return <div className ="main-background">
+        return <div className ="container main-background">
             <Switch>
                 <Route exact path="/" component={Landing} />
                 <Route path="/home" render={props => <Home isLogged={this.isLogged} />} />

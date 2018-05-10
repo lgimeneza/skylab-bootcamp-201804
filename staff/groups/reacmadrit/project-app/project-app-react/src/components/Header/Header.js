@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import home from "../../images/home-icon.png"
 
 
 function _handleLogout() {
@@ -12,30 +13,32 @@ function Header(props) {
     return <header className="App-header bg-darkcyan">
 
         <nav className="bar">
-
-                {!props.isLogged ?
-                    <ul className="bar-ul ">
-                        <li className="bar-item">
-                            <Link className="bar-link" to="/login">Login</Link>
-                        </li>
-                        {/* <span className="bar-item"> | </span> */}
-                        <li className="bar-item">
-                            <Link className="bar-link" to="/register">Register</Link>
-                        </li>
-                    </ul>
-                    :
-                    <ul className="bar-ul">
-                        <li className="bar-item">
-                            <Link className="bar-link" to="/profile">Profile</Link>
-                        </li>
-                        <li className="bar-item">
-                            <Link className="bar-link" onClick={_handleLogout} to="/">Logout</Link>
-                        </li>
-                        <li className="bar-item">
-                            <Link className="bar-link" to="/home">Home</Link>
-                        </li>
-                    </ul>
-                }
+            <Link to="/">
+                <img src={home} />
+            </Link>
+            {!props.isLogged ?
+                <ul className="bar-ul ">
+                    <li className="bar-item">
+                        <Link className="bar-link" to="/login">Login</Link>
+                    </li>
+                    {/* <span className="bar-item"> | </span> */}
+                    <li className="bar-item">
+                        <Link className="bar-link" to="/register">Register</Link>
+                    </li>
+                </ul>
+                :
+                <ul className="bar-ul">
+                    <li className="bar-item">
+                        <Link className="bar-link" to="/profile">Profile</Link>
+                    </li>
+                    <li className="bar-item">
+                        <Link className="bar-link" onClick={_handleLogout} to="/">Logout</Link>
+                    </li>
+                    <li className="bar-item">
+                        <Link className="bar-link" to="/home">Home</Link>
+                    </li>
+                </ul>
+            }
         </nav>
 
     </header>

@@ -61,7 +61,7 @@ class Login extends Component {
                 <div className="row justify-content-center ">
 
                     <div className="form-group">
-                        <p className="text-danger"></p>
+                        <p className="text-danger">{this.state.loginFailedMessage}</p>
                         <input className="btn bg-darkcyan " type="submit" value="Log me in" />
                     </div>
                 </div>
