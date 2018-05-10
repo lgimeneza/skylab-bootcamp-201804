@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Link, Route, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import './App.css';
 import 'animate.css';
 
 import Landing from './landing/Landing';
 import Register from './register/Register';
-import Login from './Login/login';
+import Login from './login/Login';
+
 import Home from './home/Home';
 import Profile from './profile/Profile';
-import Header from './header/Header';
-import UpdateProfile from './updateProfile/UpdateProfile'
+import UpdateProfile from './updateProfile/UpdateProfile';
 
 class App extends Component {
     state = {
@@ -18,7 +18,6 @@ class App extends Component {
     };
 
     componentDidMount() {
-        console.log("hola app")
         if (localStorage.getItem('user')) {
             const user = JSON.parse(localStorage.getItem('user'));
             const token = user.token;
@@ -32,8 +31,6 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-          
-
                 <Route
                     exact
                     path="/"
