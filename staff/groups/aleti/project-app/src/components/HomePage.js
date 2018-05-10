@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
 import { render } from "react-dom";
 import './HomePage.css';
-// import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem,  Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
 import { FormGroup, FormControl } from 'react-bootstrap'
 import logic from '../logic'
 import { LinkContainer } from 'react-router-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-
-
-//import { userActions } from '../_actions';
-
 class HomePage extends Component {
 
   state = {
     movies: {},
     value: '',
-    page: 2,
+    page: 1,
+    username: '',
+    key: 'c9e81d7384a0e7aa9d0deecb8c80c2cc'
   }
 
   fetchMoreData = () => {
-    logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.page)
+    logic.movie.getMoviesPopular(this.state.key, this.state.page)
       .then(data => {
         this.setState({
           page: this.state.page + 1,
@@ -37,12 +34,19 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc')
-      .then(data => {
+
+    if (localStorage.getItem('userName')){
+        this.setState({
+          username: localStorage.getItem('userName')
+        })
+    }
+
+    logic.movie.getMoviesPopular(this.state.key)
+    .then(data => {
         this.setState({
           movies: data
         })
-      })
+    })
   }
 
   handleChange = (e) => {
@@ -55,14 +59,14 @@ class HomePage extends Component {
     e.preventDefault();
 
     if(this.state.value){
-      logic.movie.searchMulti('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.value)
+      logic.movie.searchMulti(this.state.key, this.state.value)
       .then(data => {
         this.setState({
           movies: data
         })
       })
     } else {
-      logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc')
+      logic.movie.getMoviesPopular(this.state.key)
       .then(data => {
         this.setState({
           movies: data
@@ -71,18 +75,14 @@ class HomePage extends Component {
     }
   }
 
-  handleLogoutUser(e) {
-    console.log('logout')
+  handleLogoutUser() {
     localStorage.setItem('token', '')
     localStorage.setItem('id', '')
     localStorage.setItem('userName', '')
-    console.log(localStorage.getItem('token'))
+    this.setState({
+      username: ''
+    })
   }
-
-  handleDeleteUser(id) {
-    //return (e) => this.props.dispatch(userActions.delete(id));
-  }
-
 
   render() {
     return (
@@ -105,28 +105,32 @@ class HomePage extends Component {
               <LinkContainer to="/" onClick={this.handleLogoutUser}>
                 <NavItem eventKey={2}>Movies</NavItem>
               </LinkContainer>
-
-              <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                <MenuItem eventKey={3.1}>Settings</MenuItem>
-                <MenuItem eventKey={3.2}>Help Center</MenuItem>
-                <MenuItem eventKey={3.3}>favorites</MenuItem>
-                <MenuItem divider />
-                <LinkContainer to="/profile" className="btn btn-secundary">
-                  <NavItem eventKey={3.4}>Profile</NavItem>
-                </LinkContainer>
-              </NavDropdown>
+              { this.state.username ?
+                <NavDropdown eventKey={3} title={localStorage.getItem('userName')} id="basic-nav-dropdown">
+                  <LinkContainer to="/profile">
+                    <NavItem eventKey={3.1}>Profile</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                    <NavItem eventKey={3.2}>Logout</NavItem>
+                  </LinkContainer>
+                </NavDropdown>
+                : 
+                <Nav>
+                  <LinkContainer to="/login" onClick={this.handleLogoutUser}>
+                    <NavItem eventKey={3}>login</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/register" onClick={this.handleLogoutUser}>
+                    <NavItem eventKey={4}>register</NavItem>
+                  </LinkContainer>
+                </Nav>
+              }
             </Nav>
             <Navbar.Form pullRight>
               <FormGroup>
                   <FormControl type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
               </FormGroup>{' '}
               <Button onClick={this.handleSubmit} type="submit">Submit</Button>
-              <LinkContainer to="/" onClick={this.handleLogoutUser}>
-                <NavItem eventKey={2}>Logout</NavItem>
-              </LinkContainer>
-
             </Navbar.Form>
-
           </Navbar.Collapse>
         </Navbar>
 
@@ -160,11 +164,6 @@ class HomePage extends Component {
                 )}
               </Row>
             </Grid>
-            {/* {this.state.items.map((i, index) => (
-              <div style={style} key={index}>
-                div - #{index}
-              </div>
-            ))} */}
           </InfiniteScroll>
         </div>
 
