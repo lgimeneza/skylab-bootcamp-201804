@@ -7,7 +7,7 @@ class Home extends Component {
     state = {
         picture_url: '',
         userFaceInfo: {},
-        famousPeopleInfo:[]
+        famousPeopleInfo: []
     }
 
     componentDidMount() {
@@ -40,7 +40,8 @@ class Home extends Component {
         }
         fetch('http://api.kairos.com/detect', dataPackage)
             .then(res => res.json())
-            .then(res => {Promise.resolve()
+            .then(res => {
+                Promise.resolve()
                 .then(() => {
                     this.setState({
                         userFaceInfo: res.images[0].faces[0].attributes
@@ -50,12 +51,19 @@ class Home extends Component {
             .catch(err => err.message)
     }
 
+    comparePics = () => {
+        console.log("hola")
+    }
+
     render() {
+
+        console.log("fadsfdas")
 
         if (this.props.isLogged()) {
             return <div>
                 <p>{this.state.userFaceInfo.age}</p>
-                <button onClick={this.retrieveFaceInfo}>retrieve!</button>
+                <button onClick={this.retrieveFaceInfo}>retrieve!</button>                
+                <button onClick={this.comparePics}>Compare!</button>
             </div>
         }
         else {
