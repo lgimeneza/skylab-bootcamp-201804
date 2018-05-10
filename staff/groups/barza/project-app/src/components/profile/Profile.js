@@ -102,8 +102,10 @@ class Profile extends Component {
                     <div className="row justify-content-center">
                         <div className="col-10">
                             <div className="card mt-4">
-                                <div className="card-header bg-primary text-white">
-                                    <h5 className="card-title">YOUR PROFILE</h5>
+                                <div className="card-header bg-dark text-white">
+                                    <h5 className="card-title no-margin">
+                                        YOUR PROFILE
+                                    </h5>
                                 </div>
                                 <div className="card-body">
                                     <p>
@@ -141,7 +143,7 @@ class Profile extends Component {
                                     <span className="float-right">
                                         <Link
                                             to="/profile/update"
-                                            className="btn btn-outline-success"
+                                            className="btn btn-outline-info"
                                         >
                                             Edit Profile
                                         </Link>

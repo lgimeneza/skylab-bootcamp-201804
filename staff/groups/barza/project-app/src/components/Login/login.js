@@ -103,7 +103,7 @@ class Login extends Component {
                                         <span className="float-right">
                                             <button
                                                 type="submit"
-                                                className="btn btn-outline-success btn-lg"
+                                                className="btn btn-outline-info btn-lg"
                                             >
                                                 Login
                                             </button>

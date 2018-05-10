@@ -13,7 +13,7 @@ const Landing = () => {
                     <div className="col-4">
                         <Link
                             to="/login"
-                            className="btn btn-success btn-lg btn-block"
+                            className="btn btn-info btn-lg btn-block"
                         >
                             Login
                         </Link>
@@ -21,7 +21,7 @@ const Landing = () => {
                     <div className="col-4">
                         <Link
                             to="/register"
-                            className="btn btn-primary btn-lg btn-block"
+                            className="btn btn-secondary btn-lg btn-block"
                         >
                             Register
                         </Link>

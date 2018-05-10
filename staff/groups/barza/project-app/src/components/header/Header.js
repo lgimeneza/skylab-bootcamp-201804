@@ -25,7 +25,7 @@ const Header = props => {
                 <header>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                         <a className="navbar-brand disabled" href="#">
-                            CinemaQuiz
+                            Cinema<span className="text-warning">Quiz</span>
                         </a>
 
                         <div className="" id="navbarNavDropdown">
@@ -39,9 +39,9 @@ const Header = props => {
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">
+                                    <Link className="nav-link" to="/home">
                                         Play
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/profile">
@@ -65,7 +65,9 @@ const Header = props => {
         } else {
             return (
                 <div className="jumbotron text-center">
-                    <h1 className="display-4">CinemaQuiz</h1>
+                    <h1 className="display-4">
+                        Cinema<span className="text-warning">Quiz</span>
+                    </h1>
                     <p className="lead">
                         Answer questions about your favorites actors and actress
                     </p>

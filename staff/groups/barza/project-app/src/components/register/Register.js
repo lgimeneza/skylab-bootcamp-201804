@@ -155,7 +155,7 @@ class Register extends Component {
                                         <span className="float-right">
                                             <button
                                                 type="submit"
-                                                className="btn btn-outline-success btn-lg"
+                                                className="btn btn-outline-secondary btn-lg"
                                             >
                                                 Register
                                             </button>

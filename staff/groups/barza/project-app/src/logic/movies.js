@@ -1,11 +1,8 @@
 /**
- * TODO:
+ *
  * SERVICE ACTORES PARA EL PROYECTO REACT GROUP
  *
  * https://developers.themoviedb.org/3/movies/get-movie-details
- *
- *
- * IDEA: Que la pregunta no sea por nombre si no por el "conocido por"
  *
  */
 
@@ -18,7 +15,7 @@ const MoviesService = {
     // https://api.themoviedb.org/3/person/popular?api_key=f65f563dee54221848f232ef44394559&language=es-ES
 
     getQuestion() {
-        const numberPage = Math.floor(Math.random() * 30);
+        const numberPage = Math.floor(Math.random() * 30) + 1;
         return axios
             .get(
                 `${this.baseUrl}/popular?api_key=${
@@ -31,7 +28,9 @@ const MoviesService = {
                 const actor1 = {
                     name: actors[random1].name,
                     id: actors[random1].id,
-                    img: actors[random1].profile_path,
+                    img: `https://image.tmdb.org/t/p/w200${
+                        actors[random1].profile_path
+                    }`,
                     movies: actors[random1].known_for
                 };
 
@@ -51,15 +50,18 @@ const MoviesService = {
                         return actor2;
                     });
             });
-    }
+    },
 
-    // checkAnswer(actorName) {
-    //     // if (actorName === question.answer) {
-    //     //     // CORRECT!
-    //     // } else {
-    //     //     // INCORRECT!
-    //     // }
-    // },
+    checkAnswer(userInput, name) {
+        if (typeof userInput !== 'string') throw Error('input is not valid');
+        userInput = userInput.toLowerCase().trim();
+        name = name.toLowerCase();
+        if (userInput === name) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 };
 
 export default MoviesService;
