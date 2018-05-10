@@ -3,10 +3,11 @@ import { render } from "react-dom";
 import './HomePage.css';
 // import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem,  Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
-// import { FormGroup, FormControl } from 'react-bootstrap'
+import { FormGroup, FormControl } from 'react-bootstrap'
 import logic from '../logic'
 import { LinkContainer } from 'react-router-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
 
 
 //import { userActions } from '../_actions';
@@ -50,20 +51,28 @@ class HomePage extends Component {
     })
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleSubmit = (e) => {
+    e.preventDefault();
 
-    console.log(event)
-    // logic.movie.searchMulti('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.value)
-    //   .then(data => {
-    //     this.setState({
-    //       movies: data
-    //     })
-    //   })
+    if(this.state.value){
+      logic.movie.searchMulti('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.value)
+      .then(data => {
+        this.setState({
+          movies: data
+        })
+      })
+    } else {
+      logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc')
+      .then(data => {
+        this.setState({
+          movies: data
+        })
+      })
+    }
   }
 
   handleLogoutUser() {
-    localStorage.setItem('token', '')
+    //localStorage.setItem('token', '')
   }
 
   handleDeleteUser(id) {
@@ -76,12 +85,14 @@ class HomePage extends Component {
 
       <div className="content-home">
         <Navbar inverse collapseOnSelect>
+
           <Navbar.Header>
             <Navbar.Brand>
               <a href="#brand">Movies&TV-LAV</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
+
           <Navbar.Collapse>
             <Nav>
               <LinkContainer to="/" onClick={this.handleLogoutUser}>
@@ -101,30 +112,17 @@ class HomePage extends Component {
                 </LinkContainer>
               </NavDropdown>
             </Nav>
-            <Nav pullRight>
-            
-              {/* <Navbar.Collapse eventKey={4} >
-
-              </Navbar.Collapse> */}
-              {/* <FormGroup  role="form">
-              </FormGroup> */}
-
-
-              {/* <Navbar.Collapse eventKey={4} >
-                <Navbar.Form pullLeft  > */}
-                  {/* <form className="buttonSubmit" action="" onSubmit={this.handleSubmit}>
-                    <FormGroup  role="form">
-                      <FormControl onSubmit={this.handleSubmit} onChange={this.handleChange} value={this.state.value} type="text" placeholder="Search" />
-                    </FormGroup>
-                  </form> */}
-                  {/* <Button type="submit">Submit</Button> */}
-                {/* </Navbar.Form>
-              </Navbar.Collapse> */}
-
+            <Navbar.Form pullRight>
+              <FormGroup>
+                  <FormControl type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
+              </FormGroup>{' '}
+              <Button onClick={this.handleSubmit} type="submit">Submit</Button>
               <LinkContainer to="/" onClick={this.handleLogoutUser}>
                 <NavItem eventKey={2}>Logout</NavItem>
               </LinkContainer>
-            </Nav>
+
+            </Navbar.Form>
+
           </Navbar.Collapse>
         </Navbar>
 

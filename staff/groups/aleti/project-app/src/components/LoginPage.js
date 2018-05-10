@@ -3,6 +3,7 @@ import logic from '../logic'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
+import Clap from 'react-clap';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -13,7 +14,9 @@ class LoginPage extends Component {
         this.state = {
             username: '',
             password: '',
-            submitted: false
+            submitted: false,
+            clapsCount: 0,
+            totalClapCount: 100,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -54,6 +57,7 @@ class LoginPage extends Component {
 
     storageUserData(result) {
         localStorage.setItem('token', result.data.token)
+        console.log("entra en el login el sig token :" ,localStorage.getItem("token") )
         localStorage.setItem('id', result.data.id)
         logic.user.retrieveUser(result.data.id, result.data.token)
         .then(res => {
@@ -70,6 +74,14 @@ class LoginPage extends Component {
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
+                <Clap popupClapCount={this.state.clapsCount}
+                              maxClapCount={50}
+                              onChange={(newClapCount, diff) => {
+                              this.setState({
+                                clapsCount: newClapCount,
+                                totalClapCount: this.state.totalClapCount + diff,
+                              });
+                            }}/>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <InputUser type='text' name='username' helpText='Username is required' labelText='Username'
                         value={username} submitted={submitted} handleChange={this.handleChange} />
