@@ -1,31 +1,6 @@
-/* .App {
-  text-align: center;
-}
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+@import url('https://fonts.googleapis.com/css?family=Lekton');
 
-_.App-header {
-  background-color: rgb(171, 178, 243);
-  height: 200px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-} */
 
 h1 , h2{
   color: white
@@ -36,7 +11,10 @@ h1 , h2{
 }
 
 body {
-  background-image: url("./images/manhattan.jpg")
+  background-image: url("./images/manhattan.jpg");
+  font-family: 'Lekton', sans-serif;
+
+
 }
 
 .bg-darkcyan {

@@ -13,9 +13,11 @@ class Register extends Component {
     }
 
     _comparePassword() {
+
         if (this.state.password !== this.state.repeatPassword) {
             this.setState({
                 notMatchingMessage: "Passwords don't match"
+
             })
         } else {
             this.setState({
@@ -51,10 +53,17 @@ class Register extends Component {
 
     _handleRegister = (e) => {
         e.preventDefault();
-        if (!this.notMatchingMessage) {
+        if (this.state.notMatchingMessage === '') {
+
             logic.register(this.state.userName, this.state.password)
                 .then(res => {
+
                     if (res.status === 'OK') {
+                        swal({
+                            type: 'success',
+                            title: 'Awesome!',
+                            text: ' You registered correctly.',
+                        })
                         this.props.history.push('/login')
                     }
                     else {
@@ -62,16 +71,24 @@ class Register extends Component {
                             type: 'error',
                             title: 'Oops...',
                             text: res.error,
-                          })
-                        this.setState({ registerFailedMessage: res.error})
+                        })
+                        this.setState({ registerFailedMessage: res.error })
                     }
                 })
+        } else {
+            swal({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Passwords don\'t match',
+            })
+            //   this.setState({ registerFailedMessage: res.error })
         }
     }
 
 
     render() {
         return <div className="container">
+            <h2 className="text-center ">REGISTER </h2>
 
             <form onSubmit={this._handleRegister}>
                 <div className="row justify-content-center  ">
@@ -102,7 +119,7 @@ class Register extends Component {
 
         </div>
     }
-    
+
 }
 
 export default withRouter(Register);

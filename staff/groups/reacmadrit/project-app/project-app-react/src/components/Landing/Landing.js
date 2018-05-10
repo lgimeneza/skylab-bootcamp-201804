@@ -4,9 +4,10 @@ import React from "react";
 function Landing (){
 
 return <div>
-    <h1>Welcome to our page</h1>
+    <h1 className="mt-7">Hello. </h1>
+    <h2> This is Reacmadrit... </h2>
 
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem dolorum placeat vitae sapiente porro sed ipsum. Est mollitia nulla, quis soluta impedit iusto laborum sapiente veritatis excepturi libero, sequi doloribus.</p>
+    <p> We created a page that will tell you which celebrity you resemble. After you have updated a profile picture, you will be able to run a comparison to see who's the most similar face to yours.</p>
 </div>
 }
 

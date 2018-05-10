@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
-import './Login.css'
 import swal from 'sweetalert2' 
 
 class Login extends Component {
@@ -45,8 +44,6 @@ class Login extends Component {
                         loginFailedMessage: res.error
                     })
                 }
-
-
             })
     }
 
@@ -55,6 +52,8 @@ class Login extends Component {
         return (
            
             <div className="container login-form">
+            <h2 className="text-center ">LOGIN </h2>
+        
                     <form onSubmit={this._handleLogin}>
                         <div className="row justify-content-center ">
                                 <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.userName} onChange={this._handleKeepName} type="text" placeholder="User name"/>
