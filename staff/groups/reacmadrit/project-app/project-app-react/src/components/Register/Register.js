@@ -61,8 +61,8 @@ class Register extends Component {
                     if (res.status === 'OK') {
                         swal({
                             type: 'success',
-                            title: 'Awesome!',
-                            text: ' You registered correctly.',
+                            title: 'You registered awesomely!',
+                            text: 'Now please proceed to Sign In.',
                         })
                         this.props.history.push('/login')
                     }
