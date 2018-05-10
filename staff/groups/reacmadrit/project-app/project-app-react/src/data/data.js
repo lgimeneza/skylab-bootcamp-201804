@@ -96,7 +96,25 @@ let celebrities = {
         "other": 0.00161,
         "white": 0.85967
 
-    }
+    },
+
+    russell: {
+        "age": 45,
+        "asian": 0.00147,
+        "black": 0.00509,
+        "gender": {
+            "femaleConfidence": 0,
+            "maleConfidence": 1,
+            "type": "M"
+        },
+        "glasses": "None",
+        "hispanic": 0.21731,
+        "lips": "Apart",
+        "other": 0.0028,
+        "white": 0.77333
+    },
+
+    
 }
 
 export default celebrities;

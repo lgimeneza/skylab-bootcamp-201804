@@ -15,7 +15,7 @@ class Home extends Component {
         let userId = localStorage.getItem('id-app')
         let token = localStorage.getItem('token-app')
 
-        if (userId && token) {
+        if (userId && token) { 
 
             logic.retrieve(userId, token).then(resp => {
                 if (resp.data.picture_url) {
@@ -24,7 +24,11 @@ class Home extends Component {
                     })
                 }
                 else {
-                    alert('input pic')
+                    swal({
+                        type: 'success',
+                        title: 'You\'re in!',
+                        text: 'Ready for a face compare? Go to profile and upload your picture please :)'
+                    })
                 }
             })
         }
@@ -45,7 +49,7 @@ class Home extends Component {
                 Promise.resolve()
                 .then(() => {
                     this.setState({
-                        userFaceInfo: res.images[0].faces[0].attributes
+                        userFaceInfo: res.images[0].faces[0].attributes //no face detected
                     })
                 })
             })
@@ -67,6 +71,7 @@ class Home extends Component {
             let candidates =[]
             let candidate;
             let filteredByAge=[]
+            
             for (const key in celebrities) {
                 if (celebrities[key].gender.type===userGender) {
                     if(userEthnicity==='white' && (celebrities[key].white>celebrities[key].black)) {
@@ -77,12 +82,11 @@ class Home extends Component {
                     }
                 }
             }
+            
             filteredByAge=candidates.map(function(x) {
                 return Math.abs(x.key.age-userAge)
             })
-
             let position=filteredByAge.indexOf(Math.min(...filteredByAge))
-
             candidate=candidates[position].key.url
 
             this.setState({
@@ -93,7 +97,7 @@ class Home extends Component {
             swal({
                 type: 'error',
                 title: 'Oopsies!',
-                text: 'You should retrieve your data in the first place!'
+                text: 'Please hit the Retrieve button first'
             })
         }
     }
@@ -104,11 +108,11 @@ class Home extends Component {
             return <div>
                 <img className="w-25"  src={this.state.picture_url}/>
                 <img className="w-25"  src={this.state.candidate}/>
-                <button onClick={this.retrieveFaceInfo}>retrieve!</button>                
-                <button onClick={this.comparePics}>Compare!</button>
+                <h3> #1 - Go to profile and upload your profile picture. </h3>
+                <button className="btn" onClick={this.retrieveFaceInfo}>retrieve!</button>                
+                <button className="btn bg-darkcyan" onClick={this.comparePics}>Compare!</button>
             </div>
-        }
-        else {
+        } else {
             return <h2>You are not allowed</h2>
         }
     }
