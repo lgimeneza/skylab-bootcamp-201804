@@ -8,6 +8,7 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import LandingPage from './components/LandingPage'
 import ProfilePage from './components/ProfilePage'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 class App extends Component {
 

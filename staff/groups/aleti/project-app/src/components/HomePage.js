@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { render } from "react-dom";
 import './HomePage.css';
 // import { Navbar, MenuItem, NavItem, Nav, NavDropdown, Grid, Row, Col, Thumbnail, FormControl, FormGroup, Button } from 'react-bootstrap'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem,  Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
 import { FormGroup, FormControl } from 'react-bootstrap'
 import logic from '../logic'
 import { LinkContainer } from 'react-router-bootstrap';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 
 
 //import { userActions } from '../_actions';
@@ -14,8 +17,24 @@ class HomePage extends Component {
   state = {
     movies: {},
     value: '',
-
+    page: 2,
   }
+
+  fetchMoreData = () => {
+    logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc', this.state.page)
+      .then(data => {
+        this.setState({
+          page: this.state.page + 1,
+          movies: {
+            ...this.state.movies,
+            results: [
+              ...this.state.movies.results,
+              ...data.results
+            ]
+          }
+        })
+      })
+  };
 
   componentDidMount() {
     logic.movie.getMoviesPopular('c9e81d7384a0e7aa9d0deecb8c80c2cc')
@@ -98,7 +117,6 @@ class HomePage extends Component {
                   <FormControl type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
               </FormGroup>{' '}
               <Button onClick={this.handleSubmit} type="submit">Submit</Button>
-
               <LinkContainer to="/" onClick={this.handleLogoutUser}>
                 <NavItem eventKey={2}>Logout</NavItem>
               </LinkContainer>
@@ -108,31 +126,43 @@ class HomePage extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <Grid>
-          <Row>
-            {this.state.movies.results && (
-              this.state.movies.results.map(movie => {
-                if(movie.poster_path){
-                  return (
-                    <Col xs={12} sm={6} md={3} key={movie.id}>
-                      <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
-                        <h3>Thumbnail label</h3>
-                        <p>Description</p>
-                        <p>
-                          <Button bsStyle="primary">Button</Button>&nbsp;
-                          <Button bsStyle="default">Button</Button>
+        <div>
+          <InfiniteScroll
+            dataLength={this.state.movies.results ? this.state.movies.results.length : 0}
+            next={this.fetchMoreData}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+          >
+            <Grid>
+              <Row>
+                {this.state.movies.results && (
+                  this.state.movies.results.map(movie => {
+                    return (
 
-                        </p>
-                      </Thumbnail>
-                    </Col>
-                  )
-                } else {
-                  return null
-                }
-              })
-            )}
-          </Row>
-        </Grid>
+                      <Col xs={12} sm={6} md={3} key={movie.id}>
+                        <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
+                          <h3>Thumbnail label</h3>
+                          <p>Description</p>
+                          <p>
+                            <Button bsStyle="primary">Button</Button>&nbsp;
+                        <Button bsStyle="default">Button</Button>
+                          </p>
+                        </Thumbnail>
+
+                      </Col>
+
+                    )
+                  })
+                )}
+              </Row>
+            </Grid>
+            {/* {this.state.items.map((i, index) => (
+              <div style={style} key={index}>
+                div - #{index}
+              </div>
+            ))} */}
+          </InfiniteScroll>
+        </div>
 
 
       </div>
