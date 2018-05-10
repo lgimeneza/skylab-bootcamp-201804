@@ -30,9 +30,10 @@ class Login extends Component {
         logic.loginUser(this.state.username, this.state.password)
             .then(res =>
                     {
-                    Xtorage.local.clear()
-                    Xtorage.local.set('user', { userName: this.state.username ,id: res.data.id, token: res.data.token })
-                    console.log(Xtorage.local.get("user"))
+                    Xtorage.session.clear()
+                    
+                    Xtorage.session.set('user', { userName: this.state.username ,id: res.data.id, token: res.data.token })
+                    console.log(Xtorage.session.get("user"))
                     }            
             )
             .then(resp => {
@@ -44,22 +45,30 @@ class Login extends Component {
                 
             })
             .catch(err => 
-                swal(
-                    String(err),
-                    
-
-                ))
+                {
+                    swal(
+                        err.message,
+                        
+    
+                    )
+                }
+                )
                 
         }
 
-        
+    redirect= () => {
+        this.props.history.push('/register')
+    }
     
 
 
 
     render() {
         return (
-            
+            <div>
+            <div>
+                <button type="button" onClick={this.redirect}>First time? Register!</button>
+            </div>
             <div>
                 <form className="login-box" onSubmit={this.acceptLogin}>
 
@@ -76,6 +85,7 @@ class Login extends Component {
                 <p>
 
                 </p>
+            </div>
             </div>
         )
     }

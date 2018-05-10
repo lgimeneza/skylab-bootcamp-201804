@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 
 function Home(props) {
@@ -20,4 +20,4 @@ function Home(props) {
 
 }
 
-export default Home
+export default withRouter(Home)

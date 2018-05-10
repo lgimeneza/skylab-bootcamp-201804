@@ -92,7 +92,7 @@ const logic={
     },
 
     updateInfo(id,body,token){
-
+        
         let headers= {}
 
         headers.method="PUT"

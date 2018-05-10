@@ -69,7 +69,7 @@ class RegisterUser extends Component {
             logic.registerUser(this.state.username, this.state.password,this.state.email)
             .then(resp => {
                 swal(
-                    'Holi',
+                    'We are proud to have a new Avenger',
                     this.props.history.push("/login")
 
                 )
@@ -101,10 +101,17 @@ class RegisterUser extends Component {
         
     }
 
-
+    redirect= () => {
+        this.props.history.push('/')
+    }
 
     render() {
         return (
+            <div>
+
+            <div>
+                <button type="button" onClick={this.redirect}>Back</button>
+            </div>
 
             <div>
                 <form onSubmit={this.acceptRegister}>
@@ -127,6 +134,7 @@ class RegisterUser extends Component {
                 <p>
 
                 </p>
+            </div>
             </div>
         )
     }
