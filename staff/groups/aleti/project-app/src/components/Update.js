@@ -72,6 +72,7 @@ class Update extends Component {
                 .then(res => res)
                 .catch(error => { swal.showValidationError(`Request failed: ${error}`) })
                 console.log("paso por aqui")
+                
             } else {
                 //throw Error("wrong token or body")
                 console.log("wrong way")
@@ -96,7 +97,7 @@ class Update extends Component {
                         value={user.bio} submitted={submitted} handleChange={this.handleChange} />
                     <InputUser type='text' name='location' helpText='' labelText='Location'
                         value={user.location} submitted={submitted} handleChange={this.handleChange} />
-                    <ButtonInput name='Update' destination='home' nameLink='Go Home' condition={registering} />
+                    <ButtonInput name='Update' destination='' nameLink='Go Home' condition={registering} />
                 </form>
             </div>
 
