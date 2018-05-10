@@ -3,6 +3,7 @@ import logic from "../../logic";
 import { Modal } from "../index"
 import { withRouter, Link } from 'react-router-dom'
 import './Profile.css'
+import swal from 'sweetalert2' 
 
 class Profile extends Component {
 
@@ -115,6 +116,11 @@ class Profile extends Component {
                     viewModal: true
                 })
             } else {
+                swal({
+                    type: 'error',
+                    title: 'Oopsies!',
+                    text: resp.error,
+                  })
                 this.setState({ serverErrorMessage: resp.error })
             }
         })

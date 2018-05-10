@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
+import swal from 'sweetalert2'
 
 class Register extends Component {
     state = {
@@ -57,6 +58,11 @@ class Register extends Component {
                         this.props.history.push('/login')
                     }
                     else {
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: res.error,
+                          })
                         this.setState({ registerFailedMessage: res.error})
                     }
                 })
@@ -87,7 +93,6 @@ class Register extends Component {
 
                 <div className="row justify-content-center ">
 
-                    <p className="text-warning text-capitalize">{this.state.registerFailedMessage}</p>
                 </div>
                 <div className="row justify-content-center ">
 

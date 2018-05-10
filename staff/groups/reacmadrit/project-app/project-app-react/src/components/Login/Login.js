@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
 import './Login.css'
-
+import swal from 'sweetalert2' 
 
 class Login extends Component {
 
@@ -36,6 +36,11 @@ class Login extends Component {
                     this.props.history.push('/home')
 
                 } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oopsies!',
+                        text: res.error,
+                      })
                     this.setState({
                         loginFailedMessage: res.error
                     })
@@ -60,9 +65,8 @@ class Login extends Component {
                 
                 <div className="row justify-content-center ">
 
-                    <div className="form-group">
-                        <p className="text-danger">{this.state.loginFailedMessage}</p>
-                        <input className="btn bg-darkcyan " type="submit" value="Log me in" />
+                    <div className="form-group justify-content-center ">
+                        <input className="btn bg-darkcyan mt-4" type="submit" value="Log me in" />
                     </div>
                 </div>
 
