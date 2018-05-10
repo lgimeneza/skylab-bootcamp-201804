@@ -71,8 +71,12 @@ class HomePage extends Component {
     }
   }
 
-  handleLogoutUser() {
-    //localStorage.setItem('token', '')
+  handleLogoutUser(e) {
+    console.log('logout')
+    localStorage.setItem('token', '')
+    localStorage.setItem('id', '')
+    localStorage.setItem('userName', '')
+    console.log(localStorage.getItem('token'))
   }
 
   handleDeleteUser(id) {
@@ -107,7 +111,7 @@ class HomePage extends Component {
                 <MenuItem eventKey={3.2}>Help Center</MenuItem>
                 <MenuItem eventKey={3.3}>favorites</MenuItem>
                 <MenuItem divider />
-                <LinkContainer to="/profile" onClick={this.handleLogoutUser} className="btn btn-secundary">
+                <LinkContainer to="/profile" className="btn btn-secundary">
                   <NavItem eventKey={3.4}>Profile</NavItem>
                 </LinkContainer>
               </NavDropdown>
