@@ -142,13 +142,13 @@ h2 {
 
 .login-button {
   padding: 4px;
-  font-family: fantasy;
+  font-family: 'Fjalla One', sans serif;
   /* -webkit-box-shadow: 1px 1px 3px #232323; */
   /* box-shadow: 1px 1px 3px #232323; */
   color: #ffffffd9;
   padding-left: 10px;
   outline: none;
-  font-size: 120%;
+  font-size: 2vw;
   text-decoration: inherit;
   cursor: pointer;
   padding-right: 10px;
@@ -165,11 +165,11 @@ h2 {
 
 .register-button{
   padding: 4px;
-  font-family: fantasy;
+  font-family: 'Fjalla One', sans serif;
   margin: 2vw 1.5vw 0 0vw;
   color: #ffffffd9;
   outline: none;
-  font-size: 120%;
+  font-size: 2vw;
   text-decoration: inherit;
   cursor: pointer;
   padding-right: 10px;
@@ -190,7 +190,7 @@ h2 {
   text-align: center;
 }
 .title {
-  background-image: url(/static/media/background-.40565e3c.jpg);
+  background-image: url(images/background-.jpg);
   background-size: cover;
   height: 40vw;
 }
