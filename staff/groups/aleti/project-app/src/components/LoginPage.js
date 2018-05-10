@@ -4,6 +4,9 @@ import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
 import Clap from 'react-clap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
+import { FormGroup, FormControl } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -15,7 +18,6 @@ class LoginPage extends Component {
             username: '',
             password: '',
             submitted: false,
-            clapsCount: 0,
             totalClapCount: 100,
         };
 
@@ -72,16 +74,50 @@ class LoginPage extends Component {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
-                <Clap popupClapCount={this.state.clapsCount}
-                              maxClapCount={50}
-                              onChange={(newClapCount, diff) => {
-                              this.setState({
-                                clapsCount: newClapCount,
-                                totalClapCount: this.state.totalClapCount + diff,
-                              });
-                            }}/>
+            <div className="content-home">
+                <Navbar inverse collapseOnSelect>
+
+                    <Navbar.Header>
+                        <Navbar.Brand>
+                            <a href="#brand">Movies&TV-LAV</a>
+                        </Navbar.Brand>
+                        <Navbar.Toggle />
+                    </Navbar.Header>
+
+                    <Navbar.Collapse>
+                        <Nav>
+                            <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                                <NavItem eventKey={1}>Series</NavItem>
+                            </LinkContainer>
+                            <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                                <NavItem eventKey={2}>Movies</NavItem>
+                            </LinkContainer>
+
+                            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
+                                <MenuItem eventKey={3.1}>Settings</MenuItem>
+                                <MenuItem eventKey={3.2}>Help Center</MenuItem>
+                                <MenuItem eventKey={3.3}>favorites</MenuItem>
+                                <MenuItem divider />
+                                <LinkContainer to="/profile" className="btn btn-secundary">
+                                    <NavItem eventKey={3.4}>Profile</NavItem>
+                                </LinkContainer>
+                            </NavDropdown>
+                        </Nav>
+                        <Navbar.Form pullRight>
+                            <FormGroup>
+                                <FormControl type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
+                            </FormGroup>{' '}
+                            <Button onClick={this.handleSubmit} type="submit">Submit</Button>
+                            <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                                <NavItem eventKey={2}>Logout</NavItem>
+                            </LinkContainer>
+
+                        </Navbar.Form>
+
+                    </Navbar.Collapse>
+                </Navbar>
+
+
                 <form name="form" onSubmit={this.handleSubmit}>
                     <InputUser type='text' name='username' helpText='Username is required' labelText='Username'
                         value={username} submitted={submitted} handleChange={this.handleChange} />
