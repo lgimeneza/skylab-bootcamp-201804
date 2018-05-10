@@ -9,14 +9,23 @@
  * @version 1.0.0
  */
 const usersApi = {
+    // the API base URL
     url: 'https://skylabcoders.herokuapp.com/api',
 
+    /**
+     * Common method to make HTTP requests
+     * 
+     * @param {string} path - The path to the endpoint
+     * @param {string} method - The HTTP method (POST, GET, PUT, DELETE)
+     * @param {Object} body - The data to be sent (if any)
+     * @param {boolean} withToken - A flag to indicate if request is subject to token or not
+     */
     _call(path, method, body, withToken) {
         const headers = {
             'content-type': 'application/json'
         }
 
-        if (withToken) headers.authorization = `bearer ${this.token}`
+        if (withToken) headers.authorization = `bearer ${this.token()}`
 
         const config = {
             method,
@@ -29,8 +38,29 @@ const usersApi = {
             .then(res => res.json())
     },
 
-    register(user) {
-        return this._call('/user', 'post', user)
+    token(token) {
+        if (token) {
+            this._token = token
+
+            return
+        }
+
+        return this._token
+    },
+
+    /**
+     * Registers a user
+     * 
+     * @async
+     * 
+     * @param {string} username - The choosen new user's username
+     * @param {string} password - The choosen new user's password
+     * @param {Object} [data] - The new user's data to be registered
+     * 
+     * @returns {Promise<string>} - The registered new user id
+     */
+    register(username, password, data) {
+        return this._call('/user', 'post', { username, password, ...data })
             .then(({ status, data, error }) => {
                 if (status === 'OK') return data.id
 
@@ -38,15 +68,39 @@ const usersApi = {
             })
     },
 
-    login(user) {
-        return this._call('/auth', 'post', user, true)
+    /**
+     * Authenticates a user
+     * 
+     * @async
+     * 
+     * @param {string} username - The user's username
+     * @param {string} password - The user's password
+     * 
+     * @returns {Promise<string>} - The user id
+     */
+    authenticate(username, password) {
+        return this._call('/auth', 'post', { username, password }, true)
             .then(({ status, data, error }) => {
-                if (status === 'OK') return data
+                if (status === 'OK') {
+                    this.token(data.token)
+
+                    return data.id
+                }
 
                 throw Error(error)
             })
     },
 
+    /**
+     * Retrieves a user
+     * 
+     * @async
+     * 
+     * @param {string} id - The user's id
+     * @param {string} password - The user's password
+     * 
+     * @returns {Promise<string>} - The user id
+     */
     retrieve(id) {
         return this._call(`/user/${id}`, 'get', undefined, true)
             .then(({ status, data, error }) => {
@@ -56,8 +110,8 @@ const usersApi = {
             })
     },
 
-    update(user) {
-        return this._call(`/user/${user.id}`, 'put', user, true)
+    update(id, username, password, data) {
+        return this._call(`/user/${id}`, 'put', { username, password, ...data }, true)
             .then(({ status, error }) => {
                 if (status === 'OK') return true
 
@@ -65,8 +119,8 @@ const usersApi = {
             })
     },
 
-    unregister(user) {
-        return this._call(`/user/${user.id}`, 'delete', user, true)
+    unregister(id, username, password) {
+        return this._call(`/user/${id}`, 'delete', { username, password }, true)
             .then(({ status, error }) => {
                 if (status === 'OK') return true
 

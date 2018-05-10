@@ -1,30 +1,23 @@
 'use strict'
 
 describe('users api', () => {
-    let user
+    const username = 'u', password = 'p'
+    let data
 
-    beforeEach(() => user = { username: 'u', password: 'p' })
+    beforeEach(() => data = { name: 'John', surname: 'Doe', age: 40 })
 
-    describe('register > login > unregister', () => {
+    describe('register > authenticate > unregister', () => {
         it('should succeed on valid user', () =>
-            usersApi.register(user)
+            usersApi.register(username, password, data)
                 .then(id => {
                     expect(id).toBeDefined()
 
-                    return usersApi.login(user)
-                        .then(data => {
-                            expect(data).toBeDefined()
+                    return usersApi.authenticate(username, password)
+                        .then(_id => {
+                            expect(_id).toBeDefined()
+                            expect(_id).toBe(id)
 
-                            expect(data.id).toBeDefined()
-                            expect(data.id).toBe(id)
-
-                            expect(data.token).toBeDefined()
-
-                            usersApi.token = data.token
-
-                            user.id = id
-
-                            return usersApi.unregister(user)
+                            return usersApi.unregister(id, username, password)
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
@@ -33,33 +26,28 @@ describe('users api', () => {
         )
     })
 
-    describe('register > login > retrieve > unregister', () => {
+    describe('register > authenticate > retrieve > unregister', () => {
         it('should succeed on valid user', () =>
-            usersApi.register(user)
+            usersApi.register(username, password, data)
                 .then(id => {
                     expect(id).toBeDefined()
 
-                    return usersApi.login(user)
-                        .then(data => {
-                            expect(data).toBeDefined()
-
-                            expect(data.id).toBeDefined()
-                            expect(data.id).toBe(id)
-
-                            expect(data.token).toBeDefined()
-
-                            usersApi.token = data.token
+                    return usersApi.authenticate(username, password)
+                        .then(_id => {
+                            expect(_id).toBeDefined()
+                            expect(_id).toBe(id)
 
                             return usersApi.retrieve(id)
                         })
-                        .then(_user => {
-                            expect(_user).toBeDefined()
-                            expect(_user.id).toBe(id)
-                            expect(_user.username).toBe(user.username)
+                        .then(user => {
+                            expect(user).toBeDefined()
+                            expect(user.id).toBe(id)
+                            expect(user.username).toBe(username)
+                            expect(user.name).toBe(data.name)
+                            expect(user.surname).toBe(data.surname)
+                            expect(user.age).toBe(user.age)
 
-                            _user.password = user.password
-
-                            return usersApi.unregister(_user)
+                            return usersApi.unregister(id, username, password)
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
@@ -68,42 +56,39 @@ describe('users api', () => {
         )
     })
 
-    describe('register > login > update > retrieve > unregister', () => {
+    describe('register > authenticate > update > retrieve > unregister', () => {
         it('should succeed on valid user', () =>
-            usersApi.register(user)
+            usersApi.register(username, password, data)
                 .then(id => {
                     expect(id).toBeDefined()
 
-                    return usersApi.login(user)
-                        .then(data => {
-                            expect(data).toBeDefined()
+                    return usersApi.authenticate(username, password)
+                        .then(_id => {
+                            expect(_id).toBeDefined()
+                            expect(_id).toBe(id)
 
-                            expect(data.id).toBeDefined()
-                            expect(data.id).toBe(id)
+                            data.newUsername = 'u2'
+                            data.newPassword = 'p2'
+                            data.name = 'John'
+                            data.surname = 'Wayne'
+                            data.age = 50
 
-                            expect(data.token).toBeDefined()
-
-                            usersApi.token = data.token
-
-                            user.id = id
-
-                            user.newUsername = 'u2'
-
-                            return usersApi.update(user)
+                            return usersApi.update(id, username, password, data)
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
 
                             return usersApi.retrieve(id)
                         })
-                        .then(_user => {
-                            expect(_user).toBeDefined()
-                            expect(_user.id).toBe(id)
-                            expect(_user.username).toBe(user.newUsername)
+                        .then(user => {
+                            expect(user).toBeDefined()
+                            expect(user.id).toBe(id)
+                            expect(user.username).toBe(data.newUsername)
+                            expect(user.name).toBe(data.name)
+                            expect(user.surname).toBe(data.surname)
+                            expect(user.age).toBe(data.age)
 
-                            _user.password = user.password
-
-                            return usersApi.unregister(_user)
+                            return usersApi.unregister(id, user.username, data.newPassword)
                         })
                         .then(res => {
                             expect(res).toBeTruthy()
