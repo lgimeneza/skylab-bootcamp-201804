@@ -17,8 +17,21 @@ const Header = props => {
             if (result) props.history.push('/');
         });
     };
+
     return (
-        <header className="App-header">
+        <div className="jumbotron text-center">
+            <h1 className="display-4">CinemaQuiz</h1>
+            <p className="lead">
+                Answer questions about your favorites actors and actress
+            </p>
+            <hr className="my-4" />
+        </div>
+    );
+};
+
+export default withRouter(Header);
+
+/* <header className="App-header">
             <h1 className="App-title">Welcome to React</h1>
             {props.isLogged && (
                 <nav>
@@ -28,8 +41,4 @@ const Header = props => {
                     </a>
                 </nav>
             )}
-        </header>
-    );
-};
-
-export default withRouter(Header);
+        </header> */
