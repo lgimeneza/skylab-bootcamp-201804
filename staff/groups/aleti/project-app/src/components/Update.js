@@ -68,20 +68,11 @@ class Update extends Component {
             allowOutsideClick: () => !swal.isLoading()
         }).then((result) => {
             if (result.value.status === 'OK') {
-                //console.log('id: ', localStorage.getItem('id'), 'token: ', localStorage.getItem('token'))
-
-                let temp_body2 = { "username": localStorage.getItem('userName'), 
-                    "password": this.state.user.password, 
-                    "email": this.state.user.email,
-                    "firstname": this.state.user.firstname  }
-                console.log(this.state)
-                console.log(temp_body2)
-                logic.updateUser(temp_body2, localStorage.getItem('id'), localStorage.getItem('token'))
-                .then(res => {
-                    console.log('res', res, 'token', localStorage.getItem('token'))
-                })
-                //.catch(error => { swal.showValidationError(`Request failed: ${error}`) })
-                //console.log("paso por aqui")
+                logic.updateUser(this.state.user, localStorage.getItem('id'), localStorage.getItem('token'))
+                .then(res => res)
+                .catch(error => { swal.showValidationError(`Request failed: ${error}`) })
+                console.log("paso por aqui")
+                
             } else {
                 //throw Error("wrong token or body")
                 //console.log("wrong way")
@@ -106,7 +97,7 @@ class Update extends Component {
                         value={user.bio} submitted={submitted} handleChange={this.handleChange} />
                     <InputUser type='text' name='location' helpText='' labelText='Location'
                         value={user.location} submitted={submitted} handleChange={this.handleChange} />
-                    <ButtonInput name='Update' destination='home' nameLink='Go Home' condition={registering} />
+                    <ButtonInput name='Update' destination='' nameLink='Go Home' condition={registering} />
                 </form>
             </div>
 

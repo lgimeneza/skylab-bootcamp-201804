@@ -4,6 +4,9 @@ import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
 import Clap from 'react-clap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
+import { FormGroup, FormControl } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap';
 
 class LoginPage extends Component {
     constructor(props) {
