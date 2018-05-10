@@ -72,6 +72,18 @@ class Update extends Component {
                     password: document.getElementById('password').value
                 }
             },
+            allowOutsideClick: () => !swal.isLoading()
+        }).then((result) => {
+            if (result.value.status === 'OK') {
+                logic.updateUser(this.state.user, localStorage.getItem('id'), localStorage.getItem('token'))
+                .then(res => res)
+                .catch(error => { swal.showValidationError(`Request failed: ${error}`) })
+                console.log("paso por aqui")
+                
+            } else {
+                //throw Error("wrong token or body")
+                //console.log("wrong way")
+            }
         })
             .then(res => {
                 this.setState({
