@@ -4,6 +4,17 @@ describe('users api', () => {
     const username = 'u', password = 'p'
     let data
 
+    // use session storage for token
+    usersApi.token = token => {
+        if (token) {
+            sessionStorage.setItem('token', token)
+
+            return
+        }
+
+        return sessionStorage.getItem('token')
+    } 
+
     beforeEach(() => data = { name: 'John', surname: 'Doe', age: 40 })
 
     describe('register > authenticate > unregister', () => {
