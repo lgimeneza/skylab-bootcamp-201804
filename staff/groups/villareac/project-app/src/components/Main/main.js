@@ -8,6 +8,7 @@ import Profile from '../Profile/Profile'
 import Landing from '../Landing/Landing'
 import Home from '../Home/Home'
 import logic2 from '../../logic/cocktaillogic'
+import swal from 'sweetalert2'
 /**
  * The main component.
  * 
@@ -19,7 +20,7 @@ class Main extends Component {
     constructor() {
         super();
 
-        this.state = {    
+        this.state = {
             username: '',
             password: '',
             id: '',
@@ -40,7 +41,7 @@ class Main extends Component {
                 age: '',
                 gender: '',
             },
-            cocktailRandomData:{}
+            cocktailRandomData: {}
 
         }
     }
@@ -107,12 +108,26 @@ class Main extends Component {
             age: this.state.age,
             gender: this.state.gender
         }
-console.log(userData)
+        console.log(userData)
         logic.register(userData)
-            .then(data =>{
-                console.log(data)
-                this.setState({ id: data.data.id, username: '', password: '', age: '', gender:'' })
-                this.props.history.push('/login')
+            .then(data => {
+                this.setState({ id: data.data.id, username: '', password: '', age: '', gender: '' })
+                if (data.status === 'OK') {
+                    this.props.history.push('/login')
+                    swal({
+                        type: 'success',
+                        title: 'Registration successful',
+                        text: "Welcome! Don't be thirsty!"
+                    })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: 'Your user already exists! No more cocktails today sir...',
+                    })
+                }
+
             })
     }
 
@@ -126,20 +141,34 @@ console.log(userData)
     _handlerLogin = (e) => {
 
         e.preventDefault;
-        
+
         let userData = {
             username: this.state.username,
             password: this.state.password
         }
-        
+
         logic.login(userData)
             .then(data => {
-                if(data.status === 'OK'){
+                if (data.status === 'OK') {
                     this.props.history.push('/home')
                     this.onSetSession(data, 'key')
                     this.props.logged(true)
-                }else{console.log("BAD LOGIN")}
-            })         
+                    swal({
+                        type: 'success',
+                        title: 'Awesome :)',
+                        text: 'login was successful!',
+                        footer: 'Your daily cocktail is waiting...'
+                    })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: 'Be sure to write your username/password correctly',
+                    })
+                }
+            })
+
     }
 
     /**
@@ -163,11 +192,10 @@ console.log(userData)
         logic.token = this.state.sessionInfo.token;
 
         logic.retrieve()
-            .then(data =>{
+            .then(data => {
                 this.setState({ publicData: data.data })
                 console.log(this.state.publicData)
-            }
-            )
+            })
     }
 
     /** 
@@ -221,13 +249,27 @@ console.log(userData)
         }
 
         logic.unregister(userData)
-            .then(data => console.log(data))
-
+            .then(data => {
+                if (data.status === 'OK') {
+                    swal({
+                        type: 'success',
+                        title: 'Profile deleted',
+                        text: "It was nice to drink together!"
+                    })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: 'Be sure to write your username/password correctly',
+                    })
+                }
+            })
     }
 
-    _handlerShowCocktail=()=>{
+    _handlerShowCocktail = () => {
         logic2.randomCocktail()
-        .then(cocktailRandomData => this.setState({cocktailRandomData: cocktailRandomData.drinks[0]}))
+            .then(cocktailRandomData => this.setState({ cocktailRandomData: cocktailRandomData.drinks[0] }))
     }
 
 
@@ -236,11 +278,11 @@ console.log(userData)
             <div className="container">
                 <Switch>
                     <Route path="/home" render={() => (
-                        <Home _handlerShowCocktail={this._handlerShowCocktail} 
-                        cocktailRandomData={this.state.cocktailRandomData}/>
+                        <Home _handlerShowCocktail={this._handlerShowCocktail}
+                            cocktailRandomData={this.state.cocktailRandomData} />
                     )} />
                     <Route exact path="/" render={() => (
-                        <Landing/>
+                        <Landing />
                     )} />
                     <Route path="/register" render={() => (
 
@@ -283,7 +325,7 @@ console.log(userData)
                     )
                     } />
                 </Switch>
-                
+
             </div>
         )
     }
