@@ -32,7 +32,23 @@ class HomePage extends Component {
       })
   };
 
-  componentDidMount() {
+  componentDidMount(props) {
+
+    if (props.state.value) {
+      logic.movie.searchMulti(this.state.key, props.state.value)
+        .then(data => {
+          props.setState({
+            movies: data
+          })
+        })
+    } else {
+      logic.movie.getMoviesPopular(this.state.key)
+        .then(data => {
+          props.setState({
+            movies: data
+          })
+        })
+    }
 
     if (localStorage.getItem('userName')){
         this.setState({
@@ -57,21 +73,7 @@ class HomePage extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if(this.state.value){
-      logic.movie.searchMulti(this.state.key, this.state.value)
-      .then(data => {
-        this.setState({
-          movies: data
-        })
-      })
-    } else {
-      logic.movie.getMoviesPopular(this.state.key)
-      .then(data => {
-        this.setState({
-          movies: data
-        })
-      })
-    }
+    
   }
 
   handleLogoutUser() {

@@ -33,21 +33,6 @@ class App extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if (this.state.value) {
-      logic.movie.searchMulti(this.state.key, this.state.value)
-        .then(data => {
-          this.setState({
-            movies: data
-          })
-        })
-    } else {
-      logic.movie.getMoviesPopular(this.state.key)
-        .then(data => {
-          this.setState({
-            movies: data
-          })
-        })
-    }
   }
 
 
@@ -105,7 +90,7 @@ class App extends Component {
         <Router history={history}>
           <div className="content-api">
             {/* <PrivateRoute path="/home" component={ HomePage } /> */}
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/" render={} />
             {/* <Route path="/landing" component={ LandingPage } /> */}
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
