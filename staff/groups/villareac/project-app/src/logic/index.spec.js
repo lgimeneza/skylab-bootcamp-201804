@@ -25,7 +25,6 @@ describe('logic (project-app)', () => {
         logic.token = ''
 
         it('should return status "ok"', done => {
-            console.log('first test')
             logic.register(formData)
                 .then(data => {
                     expect(data).toBeDefined()
@@ -39,7 +38,6 @@ describe('logic (project-app)', () => {
         })
 
           it(`login should return status ("OK"), id (${logic.id}) and defined token`, done => {
-            console.log('second test')
             logic.login(formData)
                 .then(data => {
                     expect(data).toBeDefined()
@@ -84,7 +82,6 @@ describe('logic (project-app)', () => {
         it('should unregister --> return status ("OK"))', done => {
             logic.unregister(formData3)
                 .then(data => {
-                    console.log(data)
                     expect(data).toBeDefined()
                     expect(data instanceof Object).toBeTruthy()
                     expect(Object.keys(data).length).toBe(1)

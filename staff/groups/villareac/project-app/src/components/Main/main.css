@@ -1,50 +1,33 @@
+
+/*General estructure*/
+
 .container {
-    margin-top: 75px;
-    padding: 16px;
+    width: 100%;
+    height:100%;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
 }
 
-
-
 .firstSection, .secondSection {
     height: 100%;
-    margin: 0%;
-    width: 40%;
+    width: 50%;
     word-wrap: break-word;
-}
-
-
-.register .secondSection{
     padding: 4%;
-    background: linear-gradient(to bottom right, #4177c994, #19b95c98), url(../../static/images/mango.jpg);
-    background-size: cover;
-    background-position: left;
-    border-radius: 15px;
+    padding-top: 15%;
 }
 
-.register .secondSection h2, .register .secondSection h5 {
-    color: white;
-    letter-spacing: 0.1em;
-}
-
-.register .secondSection label{
-letter-spacing: 0.1em;
-color: rgb(255, 200, 97);
-}
-
-.linkRegister{
-    margin-bottom: 30px;
+.firstSection{
+    padding-left: 7%;
+    padding-right: 7%;
 }
 
 button {
     padding: 3%;
     width: 100%;
-    height: auto;
-    margin: 6% 0%;
+    margin: 5% 0%;
     font-size: 20px;
-    border-radius: 5px;
+    border-radius: 7px;
     border: none;
     background-color: rgb(241, 80, 134);
     color: white;
@@ -55,36 +38,38 @@ button:hover {
     cursor: pointer;
 }
 
-h2 {
+h2, h3, h5{
     color: rgb(192, 43, 112);
+}
+
+h2 {
     font-size: 35px;
     padding: 5% 0% 5%;
 }
 
 h3{
-    color: rgb(192, 43, 112);
     font-size: 30px;
-}
-
-h5{
-    color: rgb(192, 43, 112);
 }
 
 input {
     display: block;
     width: 100%;
     margin: 5% 0% 5%;
-    border-radius: 5px;
+    border-radius: 7px;
     border: none;
-    background: #eef2f3;
+    background: #dee3e6;
     padding: 4%;
+    font-size:60%;
 }
 
 input[text]{
-    font-size: 50px;
+    font-size:70%;
 }
 
-input[type=text]:active, input[type=password]:active, input[type=text]:focus, input[type=password]:focus {
+input[type=text]:active, 
+input[type=password]:active, 
+input[type=text]:focus, 
+input[type=password]:focus {
     box-shadow: 0 0 5px rgb(126, 19, 103) !important;
     border: 1px solid rgb(192, 43, 112) !important;
     outline: none;
@@ -92,18 +77,7 @@ input[type=text]:active, input[type=password]:active, input[type=text]:focus, in
 
 
 
-.profile input[type=text] {
-    margin-top: 5px;
-    border-radius: 0;
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid orange;
 
-} 
-
-.profile h2{
-    margin-bottom: 30px;
-}
 
 
 
@@ -152,16 +126,14 @@ input[type=text]:active, input[type=password]:active, input[type=text]:focus, in
     font-size: 14px;
 }
 
-/*login styles*/
+/*Solo Container style for Login and Home*/
 
-.container2{
-
+.soloContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top:100px;
-
+    padding-top: 15%;
 }
 
 label{
@@ -175,7 +147,7 @@ label{
     padding:0;
 }
 
-.container2 form {
+.soloContainer form {
     width: 50%;
 }
 
