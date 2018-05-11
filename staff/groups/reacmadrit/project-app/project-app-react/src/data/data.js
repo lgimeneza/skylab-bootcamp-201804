@@ -291,7 +291,7 @@ let celebrities = {
         "white": 0.9127
     },
     cameron: {
-        "url": "https://media.metrolatam.com/2018/03/13/camerondiaz-f7e383f2ed45712aba101afe1764a7a4-1200x600.jpg",
+        "url": "https://media.allure.com/photos/57719d7e3b5256713da4ab6b/3:4/w_570/beauty-trends-blogs-daily-beauty-reporter-2014-05-15-cameron-diaz.jpg",
         "age": 41,
         "asian": 0.00015,
         "black": 0.00003,
