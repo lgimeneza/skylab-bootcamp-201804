@@ -187,21 +187,21 @@ class HomePage extends Component {
                 <NavItem eventKey={2}>Movies</NavItem>
               </LinkContainer> */}
               { this.state.username ?
-                <NavDropdown eventKey={3} title={localStorage.getItem('userName')} id="basic-nav-dropdown">
+                <NavDropdown title={localStorage.getItem('userName')} id="basic-nav-dropdown">
                   <LinkContainer to="/profile">
-                    <NavItem eventKey={3.1}>Profile</NavItem>
+                    <NavItem>Profile</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/" onClick={this.handleLogoutUser}>
-                    <NavItem eventKey={3.2}>Logout</NavItem>
+                    <NavItem>Logout</NavItem>
                   </LinkContainer>
                 </NavDropdown>
                 : 
                 <Nav>
                   <LinkContainer to="/login" onClick={this.handleLogoutUser}>
-                    <NavItem eventKey={3}>login</NavItem>
+                    <NavItem>login</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/register" onClick={this.handleLogoutUser}>
-                    <NavItem eventKey={4}>register</NavItem>
+                    <NavItem>register</NavItem>
                   </LinkContainer>
                 </Nav>
               }
