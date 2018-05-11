@@ -16,26 +16,26 @@ Show it by playing our ...
 ### App Screens
 
 #### Landing
-![landing](/design/screens/landing.png)
+![landing](https://raw.githubusercontent.com/mikelpmc/skylab-bootcamp-201804/develop/staff/groups/barza/project-app/design/screens/landing.png)
 
 #### Login
-![landing](/design/screens/login.png)
+![login](https://raw.githubusercontent.com/mikelpmc/skylab-bootcamp-201804/develop/staff/groups/barza/project-app/design/screens/login.png)
 
 #### Register
-![landing](/design/screens/register.png)
+![register](https://raw.githubusercontent.com/mikelpmc/skylab-bootcamp-201804/develop/staff/groups/barza/project-app/design/screens/register.png)
 
 #### Home
-![landing](/design/screens/home.png)
+![home](https://raw.githubusercontent.com/mikelpmc/skylab-bootcamp-201804/develop/staff/groups/barza/project-app/design/screens/home.png)
 
 #### Play
-![landing](/design/screens/play.png)
+![play](https://raw.githubusercontent.com/mikelpmc/skylab-bootcamp-201804/develop/staff/groups/barza/project-app/design/screens/play.png)
 
 #### Game Over
-![landing](/design/screens/gameOver.png)
+![game over](https://raw.githubusercontent.com/mikelpmc/skylab-bootcamp-201804/develop/staff/groups/barza/project-app/design/screens/gameOver.png)
 
 #### Ranking
-![landing](/design/screens/ranking.png)
+![ranking](https://raw.githubusercontent.com/mikelpmc/skylab-bootcamp-201804/develop/staff/groups/barza/project-app/design/screens/ranking.png)
 
 
 #### Logout
-![landing](/design/screens/logout.png)
+![logout](https://raw.githubusercontent.com/mikelpmc/skylab-bootcamp-201804/develop/staff/groups/barza/project-app/design/screens/logout.png)
