@@ -7,7 +7,10 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import Landing from "../Landing/Landing";
 import Home from "../Home/Home";
+import NotFound from '../NotFound/NotFound'
 import logic2 from "../../logic/cocktaillogic";
+import swal from 'sweetalert2'
+
 /**
  * The main component.
  *
@@ -106,6 +109,8 @@ class Main extends Component {
       gender: this.state.gender
     };
     logic.register(userData).then(data => {
+      if (data.status === 'OK') {
+         
       this.setState({
         id: data.data.id,
         username: "",
@@ -114,8 +119,27 @@ class Main extends Component {
         gender: ""
       });
       this.props.history.push("/login");
+         swal({
+                        type: 'success',
+                        title: 'Registration successful',
+                        text: "Welcome! Don't be thirsty!"
+                    })
+           } else {
+        swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: 'Your user already exists! No more cocktails today sir...',
+                    })
+                }
     });
   };
+
+
+ 
+
+                  
+             
 
   /**
    * LOGIN
@@ -138,11 +162,23 @@ class Main extends Component {
         this.props.history.push("/home");
         this.onSetSession(data, "key");
         this.props.logged(true);
+         swal({
+                        type: 'success',
+                        title: 'Awesome :)',
+                        text: 'login was successful!',
+                        footer: 'Your daily cocktail is waiting...'
+                    })
       } else {
-        console.log("BAD LOGIN");
+        swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: 'Be sure to write your username/password correctly',
+                    });
       }
     });
   };
+
 
   /**
    * This function storage our data in the sesionStorage and set our status.
@@ -238,7 +274,23 @@ class Main extends Component {
       password: this.state.password
     };
 
-    logic.unregister(userData).then(data => console.log(data.status));
+      logic.unregister(userData)
+            .then(data => {
+                if (data.status === 'OK') {
+                    swal({
+                        type: 'success',
+                        title: 'Profile deleted',
+                        text: "It was nice to drink together!"
+                    })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: 'Be sure to write your username/password correctly',
+                    })
+                }
+            })
   };
 
   _handlerShowCocktail = () => {
@@ -307,11 +359,16 @@ class Main extends Component {
                 _handlerWritePassword={this._handlerWritePassword}
               />
             )}
+            
           />
+      <Route path="*" render={() => (
+                        <NotFound />
+                    )} />
         </Switch>
       </div>
     );
   }
+
 }
 
 export default withRouter(Main);
