@@ -36,7 +36,7 @@ class Home extends Component {
       
         return(
         <div>
-            <div className="profile">
+            <div>
                 <Link to="/profile">
                     <button>Profile</button>
                 </Link>
