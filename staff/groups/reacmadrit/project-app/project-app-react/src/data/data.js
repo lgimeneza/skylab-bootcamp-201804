@@ -487,7 +487,7 @@ let celebrities = {
         "white": 0.0322
     },
     eva: {
-        "url": "https://look.okdiario.com/img/2017/03/22/eva-mendes-1-655x368.jpg",
+        "url": "https://musicacinetv.files.wordpress.com/2011/03/eva_mendes.jpg",
         "age": 31,
         "asian": 0.06811,
         "black": 0.08248,
