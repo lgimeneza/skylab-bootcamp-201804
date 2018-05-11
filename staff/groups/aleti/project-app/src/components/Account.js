@@ -1,56 +1,102 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import logic from '../logic/userLogic'
+import swal from 'sweetalert2'
+import InputUser from './InputUser';
+import ButtonInput from './ButtonInput';
+import './Account.css';
 
 class Account extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
+    state = {
+        user: {
+            username: '',
+            password: '',
+            new_password: '',
+            conf_password: '',
+            new_username: '',
+            bio: '',
+            location: ''
+        },
+        submitted: false,
+    };
+
+    handleChange = (event) => {
+        event.preventDefault()
+        const { name, value } = event.target;
+        const { user } = this.state;
+        this.setState({
             user: {
-                firstName: '',
-                lastName: '',
-                username: '',
-                password: '',
-                confirmpw: ''
-            },
-            submitted: false,
-            registerResult: {}
-
-        };
+                ...user,
+                [name]: value
+            }
+        });
     }
 
-    handleSubmit(event) {
-        
+    componentDidMount = () => {
+        logic.retrieveUser(localStorage.getItem('id'), localStorage.getItem("token"))
+            .then(data => {
+                if (data.status === 'OK') {
+                    const { name, value } = data;
+                    this.setState({
+                        user: {
+                            ...data.data,
+                            [name]: value
+                        }
+                    })
+                } else {
+                    throw Error("wrong token")
+                }
+            });
+    }
+
+    /* handleSubmit = (event) => { } */
+
+    handleChangePass = (event) => {
+        event.preventDefault()
+        console.log("cambiando password , usare mi pas: "
+        +this.state.user.password + " y seteare una : "
+        +this.state.user.new_password+ " confirmo : "
+        +this.state.user.conf_password)
+        let old_pass = this.state.user.password
+        let new_pass = this.state.user.new_password
+        let conf_pass = this.state.user.conf_password
+
     }
 
     render() {
+        const { user, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
-                <form name="form" onSubmit={this.handleSubmit}>
+                <h3>Account</h3>
+                <form name="form" onSubmit={this.handleChangePass}>
                     <fieldset>
                         <legend><h3>Change Password</h3></legend>
-                        <label>old pass</label>
-                        <input type="text" /><br />
-                        <label>new pass</label>
-                        <input type="text" /><br />
-                        <label>confirm new pass</label>
-                        <input type="text" /><br/>
-                        <button>Update Password</button>
+                        <InputUser type='text' name='password' helpText='' labelText='Old password :'
+                            value={user.password} submitted={submitted} handleChange={this.handleChange} />
+                        <InputUser type='text' name='new_password' helpText='' labelText='New password :'
+                            value={user.new_password} submitted={submitted} handleChange={this.handleChange} />
+                        <InputUser type='text' name='conf_password' helpText='' labelText='Confirm new password :'
+                            value={user.conf_password} submitted={submitted} handleChange={this.handleChange} />
+                        <ButtonInput name='Update' destination='profile/account' nameLink='' condition={false/* registering */} />
                     </fieldset>
-
+                </form>
+                <form name="form2" onSubmit={this.handleSubmit}>
                     <fieldset>
                         <legend><h3>Change Username</h3></legend>
                         <p>Changing your username can have unintended side effects</p>
-                        <label>new user name : </label>
-                        <input type="text" /><br />
-                        <button>Change Username</button>
+                        <InputUser type='text' name='username' helpText='' labelText='Your user name :'
+                            value={user.username} submitted={submitted} handleChange={this.handleChange} disabled />
+                        <InputUser type='text' name='new_username' helpText='' labelText='New user name :'
+                            value={user.new_username} submitted={submitted} handleChange={this.handleChange} /> 
+                        <ButtonInput name='Change Username' destination='profile/account' nameLink='' condition={false/* registering */} />
                     </fieldset>
-
+                </form>
+                <form name="form3" onSubmit={this.handleSubmit}>
                     <fieldset>
                         <legend><h3>Delete Account</h3></legend>
-                        <span>Once you delete your account, there is no going back. Please be certain.<br/></span>
-                        <button>Delete Account</button>
-                    
+                        <span>Once you delete your account, there is no going back. Please be certain.<br /></span>
+                        <ButtonInput name='Delete Account' destination='profile/account' nameLink='' condition={false} />
                     </fieldset>
 
                 </form>

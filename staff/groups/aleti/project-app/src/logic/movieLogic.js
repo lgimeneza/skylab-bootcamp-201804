@@ -21,7 +21,7 @@ const movieLogic = {
     searchMulti(key, query){
         return Promise.resolve()
         .then(()=>{
-            return  fetch(`${this.url}/search/multi?api_key=${key}&query=${query}&language=en-US&page=1&include_adult=false`)
+            return  fetch(`${this.url}/search/multi?api_key=${key}&query=${query}&language=en-US&page=1&include_adult=true`)
             .then(resp => resp.json())
         })
     }
