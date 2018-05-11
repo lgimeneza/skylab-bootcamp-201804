@@ -30,7 +30,6 @@ class Update extends Component {
                 [name]: value
             }
         });
-        console.log("handler-> ", this.state.user)
     }
 
     componentDidMount = () => {
@@ -60,7 +59,6 @@ class Update extends Component {
                 `<label>password : </label>` +
                 `<input type="password" id="password" class="swal2-input" value="">`,
             showCancelButton: true,
-            /* backdrop: "rgba(43, 49, 54, 0.99)", */
             backdrop: "rgba(44, 50, 55, 0.92)",
             focusConfirm: false,
             confirmButtonText: 'Confirm',
@@ -72,17 +70,6 @@ class Update extends Component {
                 }
             },
             allowOutsideClick: () => !swal.isLoading()
-        }).then((result) => {
-            if (result.value.status === 'OK') {
-                logic.updateUser(this.state.user, localStorage.getItem('id'), localStorage.getItem('token'))
-                    .then(res => res)
-                    .catch(error => { swal.showValidationError(`Request failed: ${error}`) })
-                console.log("paso por aqui")
-
-            } else {
-                //throw Error("wrong token or body")
-                //console.log("wrong way")
-            }
         })
             .then(res => {
                 this.setState({

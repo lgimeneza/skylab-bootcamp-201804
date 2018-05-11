@@ -1,28 +1,57 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import logic from '../logic/userLogic'
+import swal from 'sweetalert2'
+import InputUser from './InputUser';
+import ButtonInput from './ButtonInput';
 import './Account.css';
 
 class Account extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
+    state = {
+        user: {
+            username: '',
+            password: '',
+            firstname: '',
+            lastname: '',
+            email: '',
+            bio: '',
+            location: ''
+        },
+        submitted: false,
+    };
+
+    handleChange = (event) => {
+        event.preventDefault()
+        const { name, value } = event.target;
+        const { user } = this.state;
+        this.setState({
             user: {
-                firstName: '',
-                lastName: '',
-                username: '',
-                password: '',
-                confirmpw: ''
-            },
-            submitted: false,
-            registerResult: {}
-
-        };
+                ...user,
+                [name]: value
+            }
+        });
     }
 
-    handleSubmit(event) {
-        
+    componentDidMount = () => {
+        logic.retrieveUser(localStorage.getItem('id'), localStorage.getItem("token"))
+            .then(data => {
+                if (data.status === 'OK') {
+                    const { name, value } = data;
+                    this.setState({
+                        user: {
+                            ...data.data,
+                            [name]: value
+                        }
+                    })
+                } else {
+                    throw Error("wrong token")
+                }
+            });
     }
+
+    handleSubmit = (event) => {}
+    
 
     render() {
         return (
@@ -35,7 +64,7 @@ class Account extends Component {
                         <label>new pass</label>
                         <input type="text" /><br />
                         <label>confirm new pass</label>
-                        <input type="text" /><br/>
+                        <input type="text" /><br />
                         <button>Update Password</button>
                     </fieldset>
 
@@ -49,9 +78,9 @@ class Account extends Component {
 
                     <fieldset>
                         <legend><h3>Delete Account</h3></legend>
-                        <span>Once you delete your account, there is no going back. Please be certain.<br/></span>
+                        <span>Once you delete your account, there is no going back. Please be certain.<br /></span>
                         <button>Delete Account</button>
-                    
+
                     </fieldset>
 
                 </form>
