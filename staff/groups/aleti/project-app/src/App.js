@@ -12,6 +12,7 @@ import LandingPage from './components/LandingPage'
 import ProfilePage from './components/ProfilePage'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LinkContainer } from 'react-router-bootstrap';
+import '../src/components/HomePage.css';
 
 class App extends Component {
 
@@ -26,13 +27,18 @@ class App extends Component {
 
   handleChange = (e) => {
     this.setState({
-      value: e.target.value
+      value: e.target.value,
     })
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({
+        query: this.state.value,
+        value:''
+    })
 
+    history.push('/home')
   }
 
 
@@ -80,7 +86,7 @@ class App extends Component {
             </Nav>
             <Navbar.Form pullRight>
               <FormGroup>
-                <FormControl type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
+                <FormControl className="input" type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
               </FormGroup>{' '}
               <Button onClick={this.handleSubmit} type="submit">Submit</Button>
             </Navbar.Form>
@@ -90,7 +96,8 @@ class App extends Component {
         <Router history={history}>
           <div className="content-api">
             {/* <PrivateRoute path="/home" component={ HomePage } /> */}
-            <Route exact path="/" render={} />
+            <Route exact path="/" render={props => <HomePage query={this.state.query} />} />
+            <Route exact path="/home" render={props => <HomePage query={this.state.query} />} />
             {/* <Route path="/landing" component={ LandingPage } /> */}
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />

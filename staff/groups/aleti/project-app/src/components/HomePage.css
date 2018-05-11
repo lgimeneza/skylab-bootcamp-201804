@@ -60,8 +60,9 @@ body {
   align-items: center;
 }
 
-input {
+.input {
   text-align: center;
+  margin-right: 10px;
 }
 
 .main {

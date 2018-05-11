@@ -33,48 +33,55 @@ class HomePage extends Component {
   };
 
   componentDidMount(props) {
+    //console.log('didmount')
+    this.retrieve()
+  }
 
-    if (props.state.value) {
-      logic.movie.searchMulti(this.state.key, props.state.value)
+  componentWillReceiveProps(props) {
+    //console.log(props)
+    this.retrieve(props)
+  }
+
+  retrieve(props){
+    
+    if (props) {
+      if(props.query !== '' && typeof props.query !== 'undefined'){
+        console.log(props.query)
+        logic.movie.searchMulti(this.state.key, props.query)
         .then(data => {
-          props.setState({
-            movies: data
-          })
+          console.log(data)
+          // this.setState({
+          //   movies: data
+          // })
         })
+      }
+
+      
+
+
     } else {
       logic.movie.getMoviesPopular(this.state.key)
         .then(data => {
-          props.setState({
+          this.setState({
             movies: data
           })
         })
     }
 
-    if (localStorage.getItem('userName')){
-        this.setState({
-          username: localStorage.getItem('userName')
-        })
+    if (localStorage.getItem('userName')) {
+      this.setState({
+        username: localStorage.getItem('userName')
+      })
     }
 
     logic.movie.getMoviesPopular(this.state.key)
-    .then(data => {
+      .then(data => {
         this.setState({
           movies: data
         })
-    })
+      })
   }
 
-  handleChange = (e) => {
-    this.setState({
-      value: e.target.value
-    })
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    
-  }
 
   handleLogoutUser() {
     localStorage.setItem('token', '')
@@ -101,19 +108,20 @@ class HomePage extends Component {
               <Row>
                 {this.state.movies.results && (
                   this.state.movies.results.map(movie => {
+                    console.log(movie)
                     return (
+                      <div></div>
+                      // <Col xs={12} sm={6} md={3} key={movie.id}>
+                      //   <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
+                      //     <h3>Thumbnail label</h3>
+                      //     <p>Description</p>
+                      //     <p>
+                      //       <Button bsStyle="primary">Button</Button>&nbsp;
+                      //   <Button bsStyle="default">Button</Button>
+                      //     </p>
+                      //   </Thumbnail>
 
-                      <Col xs={12} sm={6} md={3} key={movie.id}>
-                        <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
-                          <h3>Thumbnail label</h3>
-                          <p>Description</p>
-                          <p>
-                            <Button bsStyle="primary">Button</Button>&nbsp;
-                        <Button bsStyle="default">Button</Button>
-                          </p>
-                        </Thumbnail>
-
-                      </Col>
+                      // </Col>
 
                     )
                   })
