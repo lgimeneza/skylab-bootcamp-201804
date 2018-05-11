@@ -4,7 +4,7 @@ describe('logic (Project App)', () => {
 
     beforeEach(() => data = { name: 'John', surname: 'Doe', age: 40 })
 
-    describe('register > login > unregister', () => {
+    describe('register > login > check login > unregister', () => {
         it('should succeed on correct user data', () =>
             logic.register(username, password, data)
                 .then(res => {
@@ -20,6 +20,8 @@ describe('logic (Project App)', () => {
 
                     const id = Xtorage.session.get('id')
                     expect(id).toBeDefined()
+
+                    expect(logic.loggedIn).toBeTruthy()
 
                     return logic.unregister(username, password)
                 })
@@ -38,7 +40,7 @@ describe('logic (Project App)', () => {
         )
     })
 
-    describe('register > login > logout > login > unregister', () => {
+    describe('register > login > logout > check login > login > unregister', () => {
         it('should succeed on correct user data', () =>
             logic.register(username, password, data)
                 .then(res => {
@@ -62,6 +64,8 @@ describe('logic (Project App)', () => {
 
                     id = Xtorage.session.get('id')
                     expect(id).toBeNull()
+
+                    expect(logic.loggedIn).toBeFalsy()
 
                     return logic.login(username, password)
                 })

@@ -57,6 +57,17 @@ const logic = {
     },
 
     /**
+     * Checks wether user is logged in
+     * 
+     * @returns {boolean} - The login status (true -> logged in)
+     */
+    get loggedIn() {
+        const id = Xtorage.session.get('id'), token = usersApi.token()
+
+        return typeof id === 'string' && typeof token === 'string'
+    },
+
+    /**
      * Logs a user out
      * 
      * @param {string} username - The user's username
