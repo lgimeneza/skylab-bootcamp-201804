@@ -3,6 +3,7 @@ import logic from '../../logic'
 import swal from 'sweetalert2'
 import './Login.css'
 import Xtorage from '../../Xtorage'
+import './login.css';
 
 class Login extends Component {
 
