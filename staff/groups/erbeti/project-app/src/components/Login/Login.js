@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import swal from 'sweetalert2'
-import './Login.css'
 import Xtorage from '../../Xtorage'
 import './login.css';
 

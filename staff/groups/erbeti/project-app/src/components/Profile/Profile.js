@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import logic from '../../logic'
-import './Profile.css'
 import swal from 'sweetalert2'
 import Xtorage from '../../Xtorage'
 import './profile.css';
