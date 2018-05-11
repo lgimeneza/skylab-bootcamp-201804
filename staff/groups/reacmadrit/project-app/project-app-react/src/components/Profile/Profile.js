@@ -149,7 +149,7 @@ class Profile extends Component {
 
                     <div className="box-img rounded-circle  m-4 justify-content-center ">
                         <img className='w-100' src={this.state.picture_url}
-                            alt="profile pic" />
+                            alt=" " />
                     </div>
 
                     <div className="">

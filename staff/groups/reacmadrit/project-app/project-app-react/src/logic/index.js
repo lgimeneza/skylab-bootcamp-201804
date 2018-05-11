@@ -115,29 +115,34 @@ let logic;
             if (user) {
                 let userGender = user.gender.type
                 let userAge = user.age
-                let userEthnicities = [user.white, user.black, user.hispanic, user.asian];
-                let userEthnicity = userEthnicities.indexOf(Math.max(userEthnicities));
+                let userEthnicity;
+                if (user.white > user.black) {
+                    userEthnicity = 'white'
+                } else {
+                    userEthnicity = 'black'
+                }
                 let candidates = []
                 let winner;
                 let filteredByAge = []
-
+    
                 for (const key in celeb) {
                     if (celeb[key].gender.type === userGender) {
-                        let celebEthnicity = [celeb[key].white, celeb[key].black, celeb[key].hispanic, celeb[key].asian]
-                        if (userEthnicity === celebEthnicity.indexOf(Math.max(celebEthnicity))) {
+                        if (userEthnicity === 'white' && (celeb[key].white > celeb[key].black)) {
+                            candidates.push({ key: celeb[key] })
+                        }
+                        else if (userEthnicity === 'black' && (celeb[key].white < celeb[key].black)) {
                             candidates.push({ key: celeb[key] })
                         }
                     }
                 }
+    
                 filteredByAge = candidates.map(function (x) {
                     return Math.abs(x.key.age - userAge)
                 })
-                let positionWinner = filteredByAge.indexOf(Math.min(...filteredByAge))
-                winner = candidates[positionWinner].key.url
-
+                let position = filteredByAge.indexOf(Math.min(...filteredByAge))
+                winner = candidates[position].key.url
+    
                 return winner
-
-
             }
 
         }
