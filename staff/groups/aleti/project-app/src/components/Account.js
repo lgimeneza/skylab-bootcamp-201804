@@ -4,6 +4,7 @@ import logic from '../logic/userLogic'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
+import {withRouter} from 'react-router-dom'
 import './Account.css';
 
 class Account extends Component {
@@ -147,4 +148,4 @@ class Account extends Component {
 }
 
 
-export default Account
+export default withRouter(Account)

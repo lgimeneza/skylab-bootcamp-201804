@@ -7,6 +7,7 @@ import Clap from 'react-clap';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button, Grid, Row, Col, Thumbnail } from 'react-bootstrap'
 import { FormGroup, FormControl } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap';
+import {withRouter} from 'react-router-dom'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -93,4 +94,4 @@ class LoginPage extends Component {
 }
 
 
-export default LoginPage
+export default withRouter(LoginPage)

@@ -1,4 +1,5 @@
 import React from 'react'
+import {withRouter} from 'react-router-dom'
 
 function InputUser(props) {
 
@@ -25,4 +26,4 @@ function InputUser(props) {
     )
 }
 
-export default InputUser
+export default withRouter(InputUser)

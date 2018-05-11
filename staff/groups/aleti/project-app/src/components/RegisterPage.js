@@ -3,6 +3,7 @@ import logic from '../logic'
 import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
+import {withRouter} from 'react-router-dom'
 
 
 class RegisterPage extends Component {
@@ -115,4 +116,4 @@ class RegisterPage extends Component {
     }
 }
 
-export default RegisterPage
+export default withRouter(RegisterPage)

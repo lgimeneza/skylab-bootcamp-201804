@@ -2,20 +2,9 @@ import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
 import Account from '../components/Account'
 import Update from '../components/Update'
+import {withRouter} from 'react-router-dom'
 
 class ProfilePage extends Component {
-    componentDidMount() {
-        //this.props.dispatch(userActions.getAll());
-    }
-
-    handleLogoutUser() {
-        //localStorage.setItem('token', '')
-    }
-
-    handleDeleteUser(id) {
-        //return (e) => this.props.dispatch(userActions.delete(id));
-    }
-
     render() {
         return (
             <div className="jumbotron">
@@ -46,4 +35,4 @@ class ProfilePage extends Component {
     }
 }
 
-export default ProfilePage;
+export default withRouter(ProfilePage);
