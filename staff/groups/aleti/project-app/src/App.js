@@ -30,8 +30,8 @@ class App extends Component {
                     <Route exact path="/home" component={HomePage} />
                     <Route exact path="/" component={HomePage} />
                     {/* <Route path="/landing" component={ LandingPage } /> */}
-                    <Route path="/#/login" component={LoginPage} />
-                    <Route path="/register#" component={RegisterPage} />
+                    <Route exact path="/login" component={LoginPage} />
+                    <Route exact path="/register#" component={RegisterPage} />
                     <PrivateRoute path="/profile" component={ProfilePage} />
                 </div>
             </Router>
