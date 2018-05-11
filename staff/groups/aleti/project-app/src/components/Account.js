@@ -58,40 +58,34 @@ class Account extends Component {
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h3>Account</h3>
-                <form name="form" onSubmit={this.handleSubmit} >
-                    <InputUser type='text' name='firstname' helpText='First Name is required' labelText='First Name'
-                        value={user.firstname} submitted={submitted} handleChange={this.handleChange} />
-                    <InputUser type='text' name='lastname' helpText='Last Name is required' labelText='Last Name'
-                        value={user.lastname} submitted={submitted} handleChange={this.handleChange} />
-                    <ButtonInput name='Update' destination='' nameLink='Go Home' condition={false/* registering */} />
-                </form>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <fieldset>
                         <legend><h3>Change Password</h3></legend>
-                        <label>old pass</label>
-                        <input type="text" /><br />
-                        <label>new pass</label>
-                        <input type="text" /><br />
-                        <label>confirm new pass</label>
-                        <input type="text" /><br />
-                        <button>Update Password</button>
+                        <InputUser type='text' name='password' helpText='' labelText='Old password :'
+                            value={user.password} submitted={submitted} handleChange={this.handleChange} />
+                        <InputUser type='text' name='new_password' helpText='' labelText='New password :'
+                            value={user.new_password} submitted={submitted} handleChange={this.handleChange} />
+                        <InputUser type='text' name='conf_password' helpText='' labelText='Confirm new password :'
+                            value={user.conf_password} submitted={submitted} handleChange={this.handleChange} />
+                        <ButtonInput name='Update' destination='profile/account' nameLink='' condition={false/* registering */} />
                     </fieldset>
-
+                </form>
+                <form name="form2" onSubmit={this.handleSubmit}>
                     <fieldset>
                         <legend><h3>Change Username</h3></legend>
                         <p>Changing your username can have unintended side effects</p>
                         <InputUser type='text' name='username' helpText='' labelText='Your user name :'
-                            value={user.username} submitted={submitted} handleChange={this.handleChange} />
+                            value={user.username} submitted={submitted} handleChange={this.handleChange} disabled />
                         <InputUser type='text' name='new_username' helpText='' labelText='New user name :'
-                            value={user.new_username} submitted={submitted} handleChange={this.handleChange} />
-                        <button>Change Username</button>
+                            value={user.new_username} submitted={submitted} handleChange={this.handleChange} /> 
+                        <ButtonInput name='Change Username' destination='profile/account' nameLink='' condition={false/* registering */} />
                     </fieldset>
-
+                </form>
+                <form name="form3" onSubmit={this.handleSubmit}>
                     <fieldset>
                         <legend><h3>Delete Account</h3></legend>
                         <span>Once you delete your account, there is no going back. Please be certain.<br /></span>
-                        <button>Delete Account</button>
-
+                        <ButtonInput name='Delete Account' destination='profile/account' nameLink='' condition={false} />
                     </fieldset>
 
                 </form>
