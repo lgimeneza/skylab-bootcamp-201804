@@ -15,7 +15,7 @@ class Home extends Component {
         let userId = localStorage.getItem('id-app')
         let token = localStorage.getItem('token-app')
 
-        if (userId && token) { 
+        if (userId && token) {
 
             logic.retrieve(userId, token).then(resp => {
                 if (resp.data.picture_url) {
@@ -43,51 +43,68 @@ class Home extends Component {
                 "app_key": "3d5e1fd27468674bfd2f6c0cddde59aa"
             })
         }
+        if (this.state.picture_url!=='https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_8.png' && this.state.picture_url.length) {
         fetch('http://api.kairos.com/detect', dataPackage)
             .then(res => res.json())
             .then(res => {
+                if (!res.Errors) {
                 Promise.resolve()
-                .then(() => {
-                    this.setState({
-                        userFaceInfo: res.images[0].faces[0].attributes //no face detected
+                    .then(() => {
+                        this.setState({
+                            userFaceInfo: res.images[0].faces[0].attributes
+                        })
                     })
-                })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oopsies!',
+                        text: 'Please input a valid face'
+                    })
+                }
             })
             .catch(err => err.message)
+        }
+        else {
+            swal({
+                type: 'error',
+                title: 'Oopsies!',
+                text: 'Please click on "Profile" and upload a picture first'
+            })
+        }
     }
 
 
     comparePics = () => {
-        let user=this.state.userFaceInfo
+        let user = this.state.userFaceInfo
         if (user) {
-            let userGender=user.gender.type
-            let userAge=user.age
+            let userGender = user.gender.type
+            let userAge = user.age
             let userEthnicity;
-            if (user.white>user.black) {
-                userEthnicity='white'
+            if (user.white > user.black) {
+                userEthnicity = 'white'
             } else {
-                userEthnicity='black'
+                userEthnicity = 'black'
             }
-            let candidates =[]
+            let candidates = []
             let candidate;
-            let filteredByAge=[]
-            
+            let filteredByAge = []
+
             for (const key in celebrities) {
-                if (celebrities[key].gender.type===userGender) {
-                    if(userEthnicity==='white' && (celebrities[key].white>celebrities[key].black)) {
-                        candidates.push({key:celebrities[key]})
+                if (celebrities[key].gender.type === userGender) {
+                    if (userEthnicity === 'white' && (celebrities[key].white > celebrities[key].black)) {
+                        candidates.push({ key: celebrities[key] })
                     }
-                    else if (userEthnicity==='black' && (celebrities[key].white<celebrities[key].black)) {
-                        candidates.push({key:celebrities[key]})
+                    else if (userEthnicity === 'black' && (celebrities[key].white < celebrities[key].black)) {
+                        candidates.push({ key: celebrities[key] })
                     }
                 }
             }
-            
-            filteredByAge=candidates.map(function(x) {
-                return Math.abs(x.key.age-userAge)
+
+            filteredByAge = candidates.map(function (x) {
+                return Math.abs(x.key.age - userAge)
             })
-            let position=filteredByAge.indexOf(Math.min(...filteredByAge))
-            candidate=candidates[position].key.url
+            let position = filteredByAge.indexOf(Math.min(...filteredByAge))
+            candidate = candidates[position].key.url
 
             this.setState({
                 candidate
@@ -113,8 +130,10 @@ class Home extends Component {
                 <img className="w-100 "  src="http://ishushkanov.com/blogs/wp-content/uploads/%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B.jpg"/>
                 <img className="w-100 "  src={this.state.candidate}/>
                 </div>
-                <h3> #1 - Go to profile and upload your profile picture. </h3>
-                <button className="btn bg-lightcyan m-2" onClick={this.retrieveFaceInfo}>retrieve!</button>                
+                <h3>Steps to follow:</h3>
+                <h4> #1 - Go to profile and paste a picture url there. </h4>
+                <h4> #2 - Come back to Home and hit 'retrieve'. </h4>
+                <h4> #3 - After 'retrieve' you should now be able to Compare and see who your match is. </h4>                <button className="btn bg-lightcyan m-2" onClick={this.retrieveFaceInfo}>retrieve!</button>                
                 <button className="btn bg-darkcyan m-2" onClick={this.comparePics}>Compare!</button>
             </div>
         } else {
