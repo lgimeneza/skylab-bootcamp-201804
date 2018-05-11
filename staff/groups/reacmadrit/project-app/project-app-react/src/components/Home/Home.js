@@ -101,7 +101,7 @@ class Home extends Component {
                 </div>
                 <div className="box-img rounded-circle m-4"  >
                 <img className="w-100 " alt="question mark pic"  src="http://ishushkanov.com/blogs/wp-content/uploads/%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B.jpg"/>
-                <img className="w-100 " alt="celebrity match" src={this.state.winner}/>
+                <img className="w-100 " src={this.state.winner}/>
                 </div>
                 <h3>Steps to follow:</h3>
                 <h4> #1 - Go to profile and paste a picture url there. </h4>
