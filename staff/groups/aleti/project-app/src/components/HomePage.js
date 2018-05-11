@@ -10,6 +10,7 @@ import fav2  from '../images/favorite-2.png'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button } from 'react-bootstrap'
 import { FormGroup, FormControl } from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
+import swal from 'sweetalert2'
 
 class HomePage extends Component {
 
@@ -84,7 +85,9 @@ class HomePage extends Component {
 
     //TODO if is not logged in redirect to login
 
-    if (isFavorite < 0) {
+    if(this.state.token){
+
+      if (isFavorite < 0) {
         e.target.src = fav2
         let body = {}
         if (typeof this.state.user.favoriteMovies !== 'undefined') {
@@ -115,11 +118,21 @@ class HomePage extends Component {
             }
           });
         }
-        console.log(body, movieId)
 
         logic.user.updateUser(body, this.state.id, this.state.token)
-        .then(data => console.log(data))
-    } 
+        .then(data => data)
+      } 
+
+    } else {
+
+      swal({
+        type: 'warning',
+        title: 'You must be loged first!',
+        text: ''
+      })
+
+    }
+
 
   }
 
