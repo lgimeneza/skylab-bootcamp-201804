@@ -306,7 +306,7 @@ let celebrities = {
         "other": 0.00013,
         "white": 0.99528
     },
-    ryan:  {
+    ryan: {
         "url": "http://www.fotogramas.es/var/ezflow_site/storage/images/noticias-cine/ryan-gosling-te-invita-a-ver-el-set-de-blade-runner-2/116088426-1-esl-ES/Ryan-Gosling-te-invita-a-ver-el-set-de-Blade-Runner-2_landscape.jpg",
         "age": 41,
         "asian": 0.00039,
@@ -353,7 +353,189 @@ let celebrities = {
         "lips": "Apart",
         "other": 0.01519,
         "white": 0.84228
+    },
+    daddy: {
+        "url": "https://cdn0.celebritax.com/sites/default/files/styles/watermark_100/public/daddy-yankee-rey-regueton_0.jpg",
+        "age": 38,
+        "asian": 0.00283,
+        "black": 0.00187,
+        "gender": {
+            "femaleConfidence": 0.0039,
+            "maleConfidence": 0.9961,
+            "type": "M"
+        },
+        "glasses": "None",
+        "hispanic": 0.2476,
+        "lips": "Apart",
+        "other": 0.00581,
+        "white": 0.74189
+    },
+    king: {
+        "url": "http://3.bp.blogspot.com/_pvIAtvhtSdY/R9gXgWEvaJI/AAAAAAAAA54/q2Id2zs70v0/w1200-h630-p-k-no-nu/KING_AFRICA2.jpg",
+        "age": 39,
+        "asian": 0.08291,
+        "black": 0.07423,
+        "gender": {
+            "femaleConfidence": 0.99013,
+            "maleConfidence": 0.00987,
+            "type": "F"
+        },
+        "glasses": "None",
+        "hispanic": 0.71214,
+        "lips": "Together",
+        "other": 0.11242,
+        "white": 0.0183
+    },
+
+    rihanna:
+        {
+            "url": "http://www.24horas.cl/incoming/rihannajpg-2702929/ALTERNATES/BASE_LANDSCAPE/rihanna.JPG",
+            "age": 26,
+            "asian": 0.00779,
+            "black": 0.93047,
+            "gender": {
+                "femaleConfidence": 0.99998,
+                "maleConfidence": 0.00002,
+                "type": "F"
+            },
+            "glasses": "None",
+            "hispanic": 0.05553,
+            "lips": "Together",
+            "other": 0.00568,
+            "white": 0.00054
+        },
+
+    jackie: {
+        "url": "https://i.mydramalist.com/XAW4pc.jpg",
+        "age": 57,
+        "asian": 0.97792,
+        "black": 0.00005,
+        "gender": {
+            "femaleConfidence": 0.00045,
+            "maleConfidence": 0.99955,
+            "type": "M"
+        },
+        "glasses": "None",
+        "hispanic": 0.01136,
+        "lips": "Apart",
+        "other": 0.00759,
+        "white": 0.00308
+    },
+    lucy: {
+        "url": "http://images.totalbeauty.com/content/photos/makeup-for-asian-faces-Lucy-Liu_02.jpg",
+        "age": 36,
+        "asian": 0.99578,
+        "black": 0.00009,
+        "gender": {
+            "femaleConfidence": 0.99946,
+            "maleConfidence": 0.00054,
+            "type": "F"
+        },
+        "glasses": "None",
+        "hispanic": 0.00282,
+        "lips": "Apart",
+        "other": 0.00082,
+        "white": 0.00048
+    },
+    pedro: {
+        "url": "https://i.pinimg.com/originals/4a/93/20/4a9320a141de6f3d780cd67557fd62cb.jpg",
+        "age": 41,
+        "asian": 0.02561,
+        "black": 0.0029,
+        "gender": {
+            "femaleConfidence": 0.00002,
+            "maleConfidence": 0.99998,
+            "type": "M"
+        },
+        "glasses": "None",
+        "hispanic": 0.34324,
+        "lips": "Together",
+        "other": 0.04659,
+        "white": 0.58166
+    },
+
+    hispanica: {
+        "url": "https://hips.hearstapps.com/cos.h-cdn.co/assets/cm/14/29/640x360/53a008efe9c96_-_cos-01-joan-smalls-xl-97594305.jpg",
+        "age": 33,
+        "asian": 0.07394,
+        "black": 0.22098,
+        "gender": {
+            "femaleConfidence": 0.99974,
+            "maleConfidence": 0.00026,
+            "type": "F"
+        },
+        "glasses": "None",
+        "hispanic": 0.60955,
+        "lips": "Together",
+        "other": 0.07948,
+        "white": 0.01605
+    },
+    drake: {
+        "url":"https://www.biography.com/.image/t_share/MTQ3NTI2OTA4NzY5MjE2MTI4/drake_photo_by_prince_williams_wireimage_getty_479503454.jpg",
+        "age": 32,
+        "asian": 0.01164,
+        "black": 0.29044,
+        "gender": {
+            "femaleConfidence": 0,
+            "maleConfidence": 1,
+            "type": "M"
+        },
+        "glasses": "None",
+        "hispanic": 0.60442,
+        "lips": "Together",
+        "other": 0.0613,
+        "white": 0.0322
+    },
+    eva: {
+        "url": "https://look.okdiario.com/img/2017/03/22/eva-mendes-1-655x368.jpg",
+        "age": 31,
+        "asian": 0.06811,
+        "black": 0.08248,
+        "gender": {
+            "femaleConfidence": 0.99993,
+            "maleConfidence": 0.00007,
+            "type": "F"
+        },
+        "glasses": "None",
+        "hispanic": 0.63254,
+        "lips": "Together",
+        "other": 0.17681,
+        "white": 0.04007
+    },
+    liu: {
+        "url": "http://phongthuythienviet.com/wp-content/uploads/2017/05/mat-b.jpg",
+        "age": 24,
+        "asian": 0.99888,
+        "black": 0.00001,
+        "gender": {
+            "femaleConfidence": 0.96559,
+            "maleConfidence": 0.03441,
+            "type": "F"
+        },
+        "glasses": "None",
+        "hispanic": 0.0003,
+        "lips": "Together",
+        "other": 0.00077,
+        "white": 0.00004
+    },
+    daniel: 
+    {
+        "url": "https://i.pinimg.com/originals/26/b7/6c/26b76c6b26dd8c77aae7518b400e7040.jpg",
+        "age": 31,
+        "asian": 0.99996,
+        "black": 0,
+        "gender": {
+            "femaleConfidence": 0.00033,
+            "maleConfidence": 0.99967,
+            "type": "M"
+        },
+        "glasses": "None",
+        "hispanic": 0,
+        "lips": "Together",
+        "other": 0.00004,
+        "white": 0
     }
+
 }
 
 export default celebrities;
