@@ -16,6 +16,11 @@ class App extends Component {
     }
   }
 
+  componentDidMount(){
+    const sessionData = sessionStorage.getItem('key');
+    (sessionData) ? this.setState({logged:true}) : this.setState({logged:false});
+  }
+
   _isLogged = (logged) =>{
     (logged) ? this.setState({logged:true}) : this.setState({logged:false});
   }

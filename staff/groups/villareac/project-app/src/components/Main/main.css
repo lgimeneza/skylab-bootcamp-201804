@@ -6,10 +6,13 @@
     justify-content: space-around;
 }
 
+
+
 .firstSection, .secondSection {
     height: 100%;
     margin: 0%;
     width: 40%;
+    word-wrap: break-word;
 }
 
 .linkRegister{
@@ -71,11 +74,18 @@ input[type=text]:active, input[type=password]:active, input[type=text]:focus, in
 
 
 .profile input[type=text] {
+    margin-top: 5px;
     border-radius: 0;
     background-color: transparent;
     border: none;
     border-bottom: 2px solid orange;
+
 } 
+
+.profile h2{
+    margin-bottom: 30px;
+}
+
 
 
 ::-webkit-input-placeholder {
@@ -108,9 +118,15 @@ input[type=text]:active, input[type=password]:active, input[type=text]:focus, in
     padding-top: 4%;
 }
 
-.sesion {
+.session {
     text-decoration: none;
-    color: #2dbe60;
+    font-weight: 700;
+    color:rgb(241, 80, 134);
+}
+
+.session:hover{
+    color:rgb(241, 80, 88);
+    text-shadow: 0px 1px orange
 }
 
 .inicia {
@@ -132,7 +148,9 @@ input[type=text]:active, input[type=password]:active, input[type=text]:focus, in
 label{
     color: rgb(223, 108, 66);
     font-size:15px;
+    font-weight: 700;
 }
+
 
 .container h2{
     padding:0;
@@ -153,8 +171,21 @@ label{
     background-repeat: no-repeat;
 }
 
+.cocktail{
+   width:80%
+}
 
 
-.cocktailImg{
+.cocktail img{
+    margin-top:30px;
     width: 100%;
+}
+
+.cocktail .firstSection{
+    line-height: 2em
+}
+
+.cocktail h2{
+    margin-top:30px;
+    margin-bottom: 15px;
 }

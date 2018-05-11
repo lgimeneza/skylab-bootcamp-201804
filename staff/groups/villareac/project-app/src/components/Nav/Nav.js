@@ -13,6 +13,7 @@ class Nav extends Component{
     _logout=()=>{
             this.props.logged(false)
             sessionStorage.clear();
+
     }
 
 
@@ -20,15 +21,15 @@ class Nav extends Component{
         return(
 
             <nav className="navbar">
-            <div>
-            <img src={logo}/>
+            <div className="logo">
+            <img src={logo} alt="logo"/>
               <h1 className="appName">Tropic VilaReac</h1>
               </div>
               {!(this.props.logState) ?
 
                 <ul>
-                  <li><Link to='/register'>Register</Link></li>
-                  <li><Link to='/login'>Login</Link></li>
+                  <li><Link to='/register'>Sign in</Link></li>
+                  <li><Link to='/login'>Log in</Link></li>
                 </ul>
                 :
                 
