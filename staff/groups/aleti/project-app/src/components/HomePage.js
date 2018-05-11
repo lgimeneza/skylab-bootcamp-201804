@@ -187,7 +187,7 @@ class HomePage extends Component {
                   <LinkContainer to="/profile">
                     <NavItem>Profile</NavItem>
                   </LinkContainer>
-                  <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                  <LinkContainer to="/login" onClick={this.handleLogoutUser}>
                     <NavItem>Logout</NavItem>
                   </LinkContainer>
                 </NavDropdown>
