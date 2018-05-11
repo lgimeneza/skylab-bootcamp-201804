@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import logic from '../../logic'
+import './Profile.css'
 import swal from 'sweetalert2'
 import Xtorage from '../../Xtorage'
 
@@ -162,10 +163,12 @@ class Profile extends Component {
     render() {
         
             return (
+
                 <div  className="backgroundprofile">
                 <div className="boxLogOut">
                     <button className="login-button"  type="button" onClick={this.redirect}>Home</button>
                     <button className="register-button" type="button" onClick={this.logOut}>Log out</button>
+
                 </div>
                 <div className="profile">
                 </div>

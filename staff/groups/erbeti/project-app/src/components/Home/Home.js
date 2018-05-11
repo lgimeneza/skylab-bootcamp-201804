@@ -8,7 +8,7 @@ class Home extends Component {
 
     state= {
         query: "",
-        list: ""
+        list: []
     }
 
     keepQuery=(e)=>{
@@ -20,6 +20,7 @@ class Home extends Component {
     getList=(e) =>{
         e.preventDefault()
         
+
         logic.fetchCharacters(this.state.query)
         .then(resp => this.setState({
             list: resp,
@@ -48,7 +49,7 @@ class Home extends Component {
                 <button type="submit">Search Character</button>
             </form>
 
-            {/* <CharacterSearch list={this.state.list} /> */}
+             <CharacterSearch list={this.state.list} />
 
         </div>
 

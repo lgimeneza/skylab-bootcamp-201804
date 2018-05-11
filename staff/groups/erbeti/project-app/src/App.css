@@ -48,6 +48,7 @@ h2 {
 }
 
 
+
 @media screen and (max-width: 700px) {
   
   .backgroundlogin{
@@ -170,6 +171,7 @@ h2 {
 .login-box p{
   font-size: 1.5vw;
 }
+
 
 .backgroundregister{
   background-color: rgb(251,185,91);
@@ -420,7 +422,9 @@ h2 {
 }
 .title {
   background-image: url(images/background-.jpg);
+
   background-size: cover;
+
   height: 40vw;
 }
 .App-header {

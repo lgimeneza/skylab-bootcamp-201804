@@ -137,15 +137,15 @@ const logic={
 
 
     fetchCharacters(query){
-
-        return fetch("http://gateway.marvel.com/v1/public/characters?ts=1&apikey=8a45092cd1ed514830f450eff194ffc2&hash=e66d8e2fb406b18079056e3bdb64fcd3")
+        let particular=[]
+        return fetch("http://gateway.marvel.com/v1/public/characters?nameStartsWith="+query+"&ts=1&apikey=8a45092cd1ed514830f450eff194ffc2&hash=e66d8e2fb406b18079056e3bdb64fcd3")
         .then(resp => resp.json())
         .then(resp => resp.data.results)
         .then(resp => {
-            console.log(resp)
-            let particular =[]
+            
+          
             for (let i=0; i<resp.length; i++){
-                if (resp[i].name.startsWith(query)) particular.push(resp[i])
+                 particular.push(resp[i])
             }
             return particular
         })
