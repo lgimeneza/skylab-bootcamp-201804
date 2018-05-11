@@ -25,11 +25,14 @@ class Register extends Component {
     }
 
     render() {
-        return <form onSubmit={this.register}>
-            <input type="text" onChange={this.updateUsername} />
-            <input type="password" onChange={this.updatePassword} />
-            <button type="submit">Register</button>
-        </form>
+        return <main>
+            <h1>Register</h1>
+            <form onSubmit={this.register}>
+                <input type="text" onChange={this.updateUsername} />
+                <input type="password" onChange={this.updatePassword} />
+                <button type="submit">Register</button>
+            </form>
+        </main>
     }
 }
 

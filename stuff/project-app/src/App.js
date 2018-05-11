@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Register, Login, Home } from './components'
+import { Register, Login, Landing, Home } from './components'
 import { Link, Route, withRouter } from 'react-router-dom'
 import logic from './logic'
 
@@ -47,12 +47,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
 
-        <Route exact path="/" render={() => <p>
-          <Link to="/register">Register</Link>
-          &nbsp;|&nbsp;
-            <Link to="/login">Login</Link>
-        </p>
-        } />
+        <Route exact path="/" render={() => <Landing /> } />
         {
           <Route exact path="/register" render={() => {
             return this.state.registered ?

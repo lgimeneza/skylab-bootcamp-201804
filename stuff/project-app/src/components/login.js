@@ -21,11 +21,14 @@ class Login extends Component {
     }
 
     render() {
-        return <form onSubmit={this.login}>
-            <input type="text" onChange={this.updateUsername} />
-            <input type="password" onChange={this.updatePassword} />
-            <button type="submit">Login</button>
-        </form>
+        return <main>
+            <h1>Login</h1>
+            <form onSubmit={this.login}>
+                <input type="text" onChange={this.updateUsername} />
+                <input type="password" onChange={this.updatePassword} />
+                <button type="submit">Login</button>
+            </form>
+        </main>
     }
 }
 
