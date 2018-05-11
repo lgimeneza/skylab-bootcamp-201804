@@ -1,5 +1,6 @@
 let logic;
 
+
 (function () {
     logic = {
         url: 'https://skylabcoders.herokuapp.com/api/',
@@ -106,6 +107,39 @@ let logic;
             return fetch(this.url + `user/${id}`, dataPackage)
                 .then(res => res.json())
                 .catch(err => err.message)
+        },
+
+
+        compare(user, celeb) {
+
+            if (user) {
+                let userGender = user.gender.type
+                let userAge = user.age
+                let userEthnicities = [user.white, user.black, user.hispanic, user.asian];
+                let userEthnicity = userEthnicities.indexOf(Math.max(userEthnicities));
+                let candidates = []
+                let winner;
+                let filteredByAge = []
+
+                for (const key in celeb) {
+                    if (celeb[key].gender.type === userGender) {
+                        let celebEthnicity = [celeb[key].white, celeb[key].black, celeb[key].hispanic, celeb[key].asian]
+                        if (userEthnicity === celebEthnicity.indexOf(Math.max(celebEthnicity))) {
+                            candidates.push({ key: celeb[key] })
+                        }
+                    }
+                }
+                filteredByAge = candidates.map(function (x) {
+                    return Math.abs(x.key.age - userAge)
+                })
+                let positionWinner = filteredByAge.indexOf(Math.min(...filteredByAge))
+                winner = candidates[positionWinner].key.url
+
+                return winner
+
+
+            }
+
         }
 
     }

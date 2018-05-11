@@ -76,38 +76,11 @@ class Home extends Component {
 
     comparePics = () => {
         let user = this.state.userFaceInfo
-        if (user) {
-            let userGender = user.gender.type
-            let userAge = user.age
-            let userEthnicity;
-            if (user.white > user.black) {
-                userEthnicity = 'white'
-            } else {
-                userEthnicity = 'black'
-            }
-            let candidates = []
-            let candidate;
-            let filteredByAge = []
+        let winner=logic.compare(user,celebrities)
 
-            for (const key in celebrities) {
-                if (celebrities[key].gender.type === userGender) {
-                    if (userEthnicity === 'white' && (celebrities[key].white > celebrities[key].black)) {
-                        candidates.push({ key: celebrities[key] })
-                    }
-                    else if (userEthnicity === 'black' && (celebrities[key].white < celebrities[key].black)) {
-                        candidates.push({ key: celebrities[key] })
-                    }
-                }
-            }
-
-            filteredByAge = candidates.map(function (x) {
-                return Math.abs(x.key.age - userAge)
-            })
-            let position = filteredByAge.indexOf(Math.min(...filteredByAge))
-            candidate = candidates[position].key.url
-
+        if (winner) {
             this.setState({
-                candidate
+                winner
             })
         }
         else {
@@ -128,7 +101,7 @@ class Home extends Component {
                 </div>
                 <div className="box-img rounded-circle m-4"  >
                 <img className="w-100 "  src="http://ishushkanov.com/blogs/wp-content/uploads/%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B.jpg"/>
-                <img className="w-100 "  src={this.state.candidate}/>
+                <img className="w-100 "  src={this.state.winner}/>
                 </div>
                 <h3>Steps to follow:</h3>
                 <h4> #1 - Go to profile and paste a picture url there. </h4>
