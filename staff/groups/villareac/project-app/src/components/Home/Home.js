@@ -15,21 +15,63 @@ function Home(props) {
           Get Your Cocktail of The Day
         </button>
         <h2>{props.cocktailRandomData.strDrink}</h2>
-        <p>{props.cocktailRandomData.strInstructions}</p> 
-        <h4>{props.cocktailRandomData.strCategory}</h4> 
+        <p>{props.cocktailRandomData.strInstructions}</p>
+        <h4>{props.cocktailRandomData.strCategory}</h4>
         <h4>{props.cocktailRandomData.strAlcoholic}</h4>
-        <h4>{props.cocktailRandomData.strGlass}</h4> 
-        <br/>
-        {(props.cocktailRandomData.strIngredient1) ? <h3>Cocktail ingredients:</h3> : ''} 
-        {(props.cocktailRandomData.strIngredient1) ? <p>{props.cocktailRandomData.strIngredient1}: {props.cocktailRandomData.strMeasure1}</p> : ''}
-        {(props.cocktailRandomData.strIngredient2) ? <p>{props.cocktailRandomData.strIngredient2}: {props.cocktailRandomData.strMeasure2}</p> : ''}
-        {(props.cocktailRandomData.strIngredient3) ? <p>{props.cocktailRandomData.strIngredient3}: {props.cocktailRandomData.strMeasure3}</p> : ''}
-        {(props.cocktailRandomData.strIngredient4) ? <p>{props.cocktailRandomData.strIngredient4}: {props.cocktailRandomData.strMeasure4}</p> : ''}
-        {(props.cocktailRandomData.strIngredient5) ? <p>{props.cocktailRandomData.strIngredient5}: {props.cocktailRandomData.strMeasure5}</p> : ''}
-        </section>
-        <section className="secondSection">
-          <img src={props.cocktailRandomData.strDrinkThumb} alt={props.cocktailRandomData.strDrink}/>
-        </section>
+        <h4>{props.cocktailRandomData.strGlass}</h4>
+        <br />
+        {props.cocktailRandomData.strIngredient1 ? (
+          <h3>Cocktail ingredients:</h3>
+        ) : (
+          ""
+        )}
+        {props.cocktailRandomData.strIngredient1 ? (
+          <p>
+            {props.cocktailRandomData.strIngredient1}:{" "}
+            {props.cocktailRandomData.strMeasure1}
+          </p>
+        ) : (
+          ""
+        )}
+        {props.cocktailRandomData.strIngredient2 ? (
+          <p>
+            {props.cocktailRandomData.strIngredient2}:{" "}
+            {props.cocktailRandomData.strMeasure2}
+          </p>
+        ) : (
+          ""
+        )}
+        {props.cocktailRandomData.strIngredient3 ? (
+          <p>
+            {props.cocktailRandomData.strIngredient3}:{" "}
+            {props.cocktailRandomData.strMeasure3}
+          </p>
+        ) : (
+          ""
+        )}
+        {props.cocktailRandomData.strIngredient4 ? (
+          <p>
+            {props.cocktailRandomData.strIngredient4}:{" "}
+            {props.cocktailRandomData.strMeasure4}
+          </p>
+        ) : (
+          ""
+        )}
+        {props.cocktailRandomData.strIngredient5 ? (
+          <p>
+            {props.cocktailRandomData.strIngredient5}:{" "}
+            {props.cocktailRandomData.strMeasure5}
+          </p>
+        ) : (
+          ""
+        )}
+      </section>
+      <section className="secondSection">
+        <img
+          src={props.cocktailRandomData.strDrinkThumb}
+          alt={props.cocktailRandomData.strDrink}
+        />
+      </section>
     </div>
   );
 }
