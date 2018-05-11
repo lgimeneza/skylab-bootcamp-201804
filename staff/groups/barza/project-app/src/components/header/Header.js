@@ -4,43 +4,33 @@ import { Link, withRouter } from 'react-router-dom';
 import swal from 'sweetalert2';
 
 const Header = props => {
-    const handleLogout = e => {
-        e.preventDefault();
-
-        localStorage.removeItem('user');
-
-        swal({
-            title: 'Logged out!',
-            type: 'success',
-            animation: false,
-            customClass: 'animated flipInX'
-        }).then(result => {
-            props.history.push('/');
-        });
-    };
-
     const renderHeader = () => {
         if (props.isLogged) {
             return (
                 <header>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                        <a className="navbar-brand disabled" href="#">
+                        <Link className="navbar-brand disabled" to="/home">
                             Cinema<span className="text-warning">Quiz</span>
-                        </a>
+                        </Link>
 
                         <div className="" id="navbarNavDropdown">
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">
+                                    <Link className="nav-link" to="/home">
                                         Home
                                         <span className="sr-only">
                                             (current)
                                         </span>
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/home">
+                                    <Link className="nav-link" to="/play">
                                         Play
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/ranking">
+                                        Ranking
                                     </Link>
                                 </li>
                                 <li className="nav-item">
@@ -49,13 +39,12 @@ const Header = props => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a
-                                        className="nav-link"
-                                        href="#"
-                                        onClick={handleLogout}
+                                    <Link
+                                        to="/logout"
+                                        className="nav-link btn btn-link"
                                     >
                                         Logout
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>

@@ -5,10 +5,23 @@ import Header from '../header/Header';
 
 const Landing = () => {
     return (
-        <div>
+        <div className="animated fadeIn">
             <Header isLogged={false} />
 
             <div className="container">
+                <div className="row justify-content-center mt-5">
+                    <h1>
+                        🎬 Do you think you know everything about film actors?🎭
+                    </h1>
+                </div>
+                <div className="row justify-content-center mt-4 mb-3">
+                    <h2 className="font-italic">Show it by playing our ...</h2>
+                </div>
+                <div className="row justify-content-center mt-1">
+                    <h2 className="font-weight-bold">
+                        Cinema<span className="text-warning">Quiz</span>
+                    </h2>
+                </div>
                 <div className="row justify-content-center mt-5">
                     <div className="col-4">
                         <Link

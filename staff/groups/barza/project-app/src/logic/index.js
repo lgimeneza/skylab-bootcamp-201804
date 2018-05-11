@@ -15,9 +15,6 @@ const logic = {
             if (user.username === undefined || user.password === undefined)
                 throw Error('Username and password are required');
 
-            // if (user.username === '' || user.password === '')
-            //     throw Error('username and password cannot be empty');
-
             return axios.post(`${this.url}/user`, user).then(res => res.data);
         });
     },
@@ -29,9 +26,6 @@ const logic = {
 
             if (user.username === undefined || user.password === undefined)
                 throw Error('Username and password are required');
-
-            // if (user.username === '' || user.password === '')
-            //     throw Error('username and password cannot be empty');
 
             return axios.post(`${this.url}/auth`, user).then(res => res.data);
         });
@@ -47,6 +41,12 @@ const logic = {
                 .get(`${this.url}/user/${id}`, this.headers())
                 .then(res => res.data);
         });
+    },
+
+    retrieveUsers() {
+        return axios
+            .get(`${this.url}/users`, this.headers())
+            .then(res => res.data);
     },
 
     updateUser(id, user) {
@@ -72,16 +72,6 @@ const logic = {
 
             if (user.username === undefined || user.password === undefined)
                 throw Error('Username and password are required');
-
-            // if (user.username === '' || user.password === '')
-            //     throw Error('username and password cannot be empty');
-
-            // return axios
-            //     .delete(`${this.url}/user/${id}`, user, this.headers())
-            //     .then(res => {
-            //         debugger;
-            //         return res.data;
-            //     });
 
             return fetch(`${this.url}/user/${id}`, {
                 method: 'delete',

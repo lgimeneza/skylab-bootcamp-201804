@@ -12,10 +12,9 @@ const MoviesService = {
     baseUrl: 'https://api.themoviedb.org/3/person',
     apiKey: 'f65f563dee54221848f232ef44394559',
 
-    // https://api.themoviedb.org/3/person/popular?api_key=f65f563dee54221848f232ef44394559&language=es-ES
-
     getQuestion() {
         const numberPage = Math.floor(Math.random() * 30) + 1;
+
         return axios
             .get(
                 `${this.baseUrl}/popular?api_key=${
@@ -47,6 +46,7 @@ const MoviesService = {
                             birthday: infoActor.birthday,
                             born: infoActor.place_of_birth
                         };
+
                         return actor2;
                     });
             });
@@ -54,14 +54,20 @@ const MoviesService = {
 
     checkAnswer(userInput, name) {
         if (typeof userInput !== 'string') throw Error('input is not valid');
+
         userInput = userInput.toLowerCase().trim();
         name = name.toLowerCase();
+
         if (userInput === name) {
             return true;
         } else {
             return false;
         }
-    }
+    },
+
+    saveRanking() {},
+
+    getRanking() {}
 };
 
 export default MoviesService;

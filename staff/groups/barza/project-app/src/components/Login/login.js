@@ -54,7 +54,7 @@ class Login extends Component {
         if (this.state.isLogged) return <Redirect to="/home" />;
 
         return (
-            <div>
+            <div className="animated fadeIn">
                 <Header isLogged={false} />
 
                 <div className="container">

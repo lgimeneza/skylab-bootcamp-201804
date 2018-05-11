@@ -95,7 +95,7 @@ class Profile extends Component {
         if (this.state.isLoading) return <span>Loading user data...</span>;
 
         return (
-            <div>
+            <div className="animated fadeIn">
                 <Header isLogged={this.state.isLogged} />
 
                 <div className="container">

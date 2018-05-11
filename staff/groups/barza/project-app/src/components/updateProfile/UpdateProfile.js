@@ -194,7 +194,7 @@ class UpdateProfile extends Component {
         } = this.state;
 
         return (
-            <div>
+            <div className="animated fadeIn">
                 <Header isLogged={this.state.isLogged} />
 
                 <div className="row justify-content-center mb-5">
