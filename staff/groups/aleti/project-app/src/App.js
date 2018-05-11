@@ -16,7 +16,7 @@ class App extends Component {
     return (
         <Router history={history}>
             <div className="content-api">
-                {/* <PrivateRoute path="/home" component={ HomePage } /> */}
+                <Route path="/home" component={ HomePage } />
                 <Route exact path="/" component={ HomePage } />
                 {/* <Route path="/landing" component={ LandingPage } /> */}
                 <Route path="/login" component={ LoginPage } />

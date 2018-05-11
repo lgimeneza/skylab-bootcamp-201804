@@ -6,15 +6,20 @@ import { FormGroup, FormControl } from 'react-bootstrap'
 import logic from '../logic'
 import { LinkContainer } from 'react-router-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import fav1  from '../images/favorite-1.png'
+import fav2  from '../images/favorite-2.png'
 
 class HomePage extends Component {
 
   state = {
     movies: {},
     value: '',
-    page: 1,
+    page: 2,
     username: '',
-    key: 'c9e81d7384a0e7aa9d0deecb8c80c2cc'
+    id: '',
+    token: '',
+    user: {},
+    key: 'c9e81d7384a0e7aa9d0deecb8c80c2cc',
   }
 
   fetchMoreData = () => {
@@ -35,9 +40,25 @@ class HomePage extends Component {
 
   componentDidMount() {
 
+    const username = localStorage.getItem('userName')
+    const id = localStorage.getItem('id')
+    const token = localStorage.getItem('token')
+
+    console.log(token)
+
     if (localStorage.getItem('userName')){
         this.setState({
-          username: localStorage.getItem('userName')
+          username: username,
+          id: id,
+          token: token
+        })
+
+        logic.user.retrieveUser(id, token)
+        .then(res => {
+          this.setState({
+            user: res.data
+          })
+          console.log(res.data)
         })
     }
 
@@ -47,12 +68,56 @@ class HomePage extends Component {
           movies: data
         })
     })
+
   }
 
   handleChange = (e) => {
     this.setState({
       value: e.target.value
     })
+  }
+
+  handleChangeFav = (e, movieId, isFavorite) => {
+
+    //TODO if is not logged in redirect to login
+
+    if (isFavorite < 0) {
+        e.target.src = fav2
+        let body = {}
+        if (typeof this.state.user.favoriteMovies !== 'undefined') {
+          body = {
+            username: this.state.username, 
+            password: localStorage.getItem('password'), 
+            favoriteMovies: [...this.state.user.favoriteMovies, movieId]
+          }
+          const { user } = this.state;
+          this.setState({
+            user: {
+                ...user,
+                favoriteMovies: [...this.state.user.favoriteMovies, movieId]
+            }
+          });
+
+        } else {
+          body = {
+            username: this.state.username, 
+            password: localStorage.getItem('password'), 
+            favoriteMovies: [movieId]
+          }
+          const { user } = this.state;
+          this.setState({
+            user: {
+                ...user,
+                favoriteMovies: [movieId]
+            }
+          });
+        }
+        console.log(body, movieId)
+
+        logic.user.updateUser(body, this.state.id, this.state.token)
+        .then(data => console.log(data))
+    } 
+
   }
 
   handleSubmit = (e) => {
@@ -89,7 +154,6 @@ class HomePage extends Component {
 
       <div className="content-home">
         <Navbar inverse collapseOnSelect>
-
           <Navbar.Header>
             <Navbar.Brand>
               <a href="#brand">Movies&TV-LAV</a>
@@ -99,12 +163,12 @@ class HomePage extends Component {
 
           <Navbar.Collapse>
             <Nav>
-              <LinkContainer to="/" onClick={this.handleLogoutUser}>
+              {/* <LinkContainer to="/" onClick={this.handleLogoutUser}>
                 <NavItem eventKey={1}>Series</NavItem>
               </LinkContainer>
               <LinkContainer to="/" onClick={this.handleLogoutUser}>
                 <NavItem eventKey={2}>Movies</NavItem>
-              </LinkContainer>
+              </LinkContainer> */}
               { this.state.username ?
                 <NavDropdown eventKey={3} title={localStorage.getItem('userName')} id="basic-nav-dropdown">
                   <LinkContainer to="/profile">
@@ -127,7 +191,7 @@ class HomePage extends Component {
             </Nav>
             <Navbar.Form pullRight>
               <FormGroup>
-                  <FormControl type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
+                  <FormControl className='input' type="text" placeholder="Search" onChange={this.handleChange} value={this.state.value} />
               </FormGroup>{' '}
               <Button onClick={this.handleSubmit} type="submit">Submit</Button>
             </Navbar.Form>
@@ -145,20 +209,25 @@ class HomePage extends Component {
               <Row>
                 {this.state.movies.results && (
                   this.state.movies.results.map(movie => {
+                    let isFavorite = -1
+                    let image
+
+                    if (typeof this.state.user !== 'undefined' && typeof this.state.user.favoriteMovies !== 'undefined') {
+                      isFavorite = this.state.user.favoriteMovies.indexOf(movie.id)
+                      isFavorite > 0 ? image = fav2 : image = fav1
+                    } else {
+                      image = fav1
+                    }
+                    
                     return (
-
-                      <Col xs={12} sm={6} md={3} key={movie.id}>
-                        <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
-                          <h3>Thumbnail label</h3>
-                          <p>Description</p>
-                          <p>
-                            <Button bsStyle="primary">Button</Button>&nbsp;
-                        <Button bsStyle="default">Button</Button>
-                          </p>
+                      <Col xs={12} sm={6} md={3} key={movie.id} >
+                        <Thumbnail src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} >
+                          <h4>{movie.original_title} 
+                          <span className='fav'>
+                          <img onClick={ (e) => this.handleChangeFav(e, movie.id, isFavorite)} 
+                           src={image} className='favorite'/></span></h4>
                         </Thumbnail>
-
                       </Col>
-
                     )
                   })
                 )}
@@ -166,8 +235,6 @@ class HomePage extends Component {
             </Grid>
           </InfiniteScroll>
         </div>
-
-
       </div>
     );
   }
