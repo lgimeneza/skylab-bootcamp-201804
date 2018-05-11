@@ -121,13 +121,13 @@ h2 {
 
 .login-button {
   padding: 4px;
-  font-family: fantasy;
+  font-family: 'Fjalla One', sans serif;
   /* -webkit-box-shadow: 1px 1px 3px #232323; */
   /* box-shadow: 1px 1px 3px #232323; */
   color: #ffffffd9;
   padding-left: 10px;
   outline: none;
-  font-size: 120%;
+  font-size: 2vw;
   text-decoration: inherit;
   cursor: pointer;
   padding-right: 10px;
@@ -144,11 +144,11 @@ h2 {
 
 .register-button{
   padding: 4px;
-  font-family: fantasy;
+  font-family: 'Fjalla One', sans serif;
   margin: 2vw 1.5vw 0 0vw;
   color: #ffffffd9;
   outline: none;
-  font-size: 120%;
+  font-size: 2vw;
   text-decoration: inherit;
   cursor: pointer;
   padding-right: 10px;
@@ -170,7 +170,11 @@ h2 {
 }
 .title {
   background-image: url(images/background-.jpg);
+<<<<<<< HEAD
   background-size: cover; 
+=======
+  background-size: cover;
+>>>>>>> develop
   height: 40vw;
 }
 .App-header {
