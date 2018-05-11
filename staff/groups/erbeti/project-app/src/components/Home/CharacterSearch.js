@@ -1,21 +1,35 @@
 import React, { Component } from 'react'
+import logic from '../../logic'
+import './Home.css'
 
-function CharacterSearch (props) {
-    
+function CharacterSearch(props) {
+
+
     return (
-        
+
         <section>
-            <div className="ulList">
-            {(props.list.length>0) &&
-            <h1 className="h1Title" >Characters found</h1>
+            {
+                (props.list.length > 0) &&
+                <h1 className="h1Title" >Characters found</h1>
             }
-            <ul>
-                {props.list.map(function(e){
-                    return (<li key={e.id}> <img src={e.thumbnail.path} /> <p > {e.name} </p> </li>)
-                })}
-            </ul>
+            <div className="ulList">
+                {
+                    props.list.map(function (key) {
+                        return (
+
+                            <div className="card">
+                                <img src={key.thumbnail.path + "." + key.thumbnail.extension} />
+                                <h3> {key.name} </h3>
+                                <p>{key.description}</p>
+                                
+
+                            </div>
+                        )
+                    })}
+
             </div>
         </section>
+
 
 
     )
