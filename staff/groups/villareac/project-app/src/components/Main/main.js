@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
 import logic from "../../logic";
+import logic2 from "../../logic/cocktaillogic";
 import "./main.css";
+
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import Landing from "../Landing/Landing";
 import Home from "../Home/Home";
-import NotFound from '../NotFound/NotFound'
-import logic2 from "../../logic/cocktaillogic";
-import swal from 'sweetalert2'
+import NotFound from "../NotFound/NotFound";
+import swal from "sweetalert2";
 
 /**
  * The main component.
@@ -109,8 +110,7 @@ class Main extends Component {
       gender: this.state.gender
     };
     logic.register(userData).then(data => {
-      if (data.status === 'OK') {
-
+      if (data.status === "OK") {
         this.setState({
           id: data.data.id,
           username: "",
@@ -120,26 +120,20 @@ class Main extends Component {
         });
         this.props.history.push("/login");
         swal({
-          type: 'success',
-          title: 'Registration successful',
+          type: "success",
+          title: "Registration successful",
           text: "Welcome! Don't be thirsty!"
-        })
+        });
       } else {
         swal({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-          footer: 'Your user already exists! No more cocktails today sir...',
-        })
+          type: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: "Your user already exists! No more cocktails today sir..."
+        });
       }
     });
   };
-
-
-
-
-
-
 
   /**
    * LOGIN
@@ -163,22 +157,21 @@ class Main extends Component {
         this.onSetSession(data, "key");
         this.props.logged(true);
         swal({
-          type: 'success',
-          title: 'Awesome :)',
-          text: 'login was successful!',
-          footer: 'Your daily cocktail is waiting...'
-        })
+          type: "success",
+          title: "Awesome :)",
+          text: "login was successful!",
+          footer: "Your daily cocktail is waiting..."
+        });
       } else {
         swal({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-          footer: 'Be sure to write your username/password correctly',
+          type: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: "Be sure to write your username/password correctly"
         });
       }
     });
   };
-
 
   /**
    * This function storage our data in the sesionStorage and set our status.
@@ -237,24 +230,40 @@ class Main extends Component {
         this.setState({
           bodyUpdate: {
             password: this.state.password,
-            username: this.state.publicData.username,
-            age: this.state.publicData.age,
-            gender: this.state.publicData.gender,
+            username: this.state.username
+              ? this.state.username
+              : this.state.publicData.username,
+            age: this.state.age ? this.state.age : this.state.publicData.age,
+            gender: this.state.gender
+              ? this.state.gender
+              : this.state.publicData.gender,
             newPassword: this.state.newPassword ? this.state.newPassword : null
           }
         });
       })
       .then(() => {
         let userData = this.state.bodyUpdate;
+
         logic.update(userData).then(data => {
-          this.setState({
-            bodyUpdate: {
-              password: "",
-              username: "",
-              age: "",
-              gender: ""
-            }
-          });
+          if (data.status === "OK") {
+            this.setState({
+              bodyUpdate: {
+                password: "",
+                username: "",
+                age: "",
+                gender: ""
+              }
+            });
+            swal({
+              type: "success",
+              title: "Update successful"
+            });
+          } else {
+            swal({
+              type: "error",
+              title: "Nothing was updated"
+            });
+          }
         });
       });
   };
@@ -274,23 +283,31 @@ class Main extends Component {
       password: this.state.password
     };
 
-    logic.unregister(userData)
-      .then(data => {
-        if (data.status === 'OK') {
-          swal({
-            type: 'success',
-            title: 'Profile deleted',
-            text: "It was nice to drink together!"
+    logic.unregister(userData).then(data => {
+      if (data.status === "OK") {
+        Promise.resolve()
+          .then(() => {
+            swal({
+              type: "success",
+              title: "Profile deleted",
+              text: "It was nice to drink together!"
+            });
           })
-        } else {
-          swal({
-            type: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            footer: 'Be sure to write your username/password correctly',
+          .then(() => {
+            this.props.logged(false);
           })
-        }
-      })
+          .then(() => {
+            this.props.history.push("/");
+          });
+      } else {
+        swal({
+          type: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: "Be sure to write your username/password correctly"
+        });
+      }
+    });
   };
 
   _handlerShowCocktail = () => {
@@ -359,16 +376,12 @@ class Main extends Component {
                 _handlerWritePassword={this._handlerWritePassword}
               />
             )}
-
           />
-          <Route path="*" render={() => (
-            <NotFound />
-          )} />
+          <Route path="*" render={() => <NotFound />} />
         </Switch>
       </div>
     );
   }
-
 }
 
 export default withRouter(Main);
