@@ -38,15 +38,14 @@ class Home extends Component {
         <div>
             <div>
                 <Link to="/profile">
-                    <button>Profile</button>
+                    <button className="profile-button">Profile</button>
                 </Link>
             </div>
-            <p>Bienvenidos</p>
-            <p>la "home"</p>
+            <h1>Find your character</h1>
 
             <form onSubmit={this.getList}>
-                <input type="text" onChange={this.keepQuery} value={this.state.query}/>
-                <button type="submit">Search Character</button>
+                <input className="input-char" type="text" onChange={this.keepQuery} value={this.state.query}/>
+                <button type="submit" className="search-char">Search Character</button>
             </form>
 
              <CharacterSearch list={this.state.list} />
