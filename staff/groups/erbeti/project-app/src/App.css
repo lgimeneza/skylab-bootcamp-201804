@@ -54,7 +54,7 @@ h2 {
   background-color: rgb(255, 217, 48);
   height:100vw;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   
   }
   
@@ -70,6 +70,26 @@ h2 {
    text-align: center;
    margin: 1% 20% 5% 20%;
 
+  }
+  .register{
+    order:1;
+    height: 40%;
+    margin: 20% 20% 5% 1%;
+  
+  }
+  .backgroundregister{
+    background-color: rgb(251,185,91);
+    height:100vw;
+    display: flex;
+    flex-direction: column-reverse;
+   
+  }
+  .form2{
+    order:2;
+    width:40%;
+    text-align: center;
+    margin: 1% 20% 5% 20%;
+    position: bottom;
   }
 }
 
@@ -196,12 +216,95 @@ h2 {
 
 }
 
+.backgroundprofile{
+  background-color: #1a323c;
+  height:100%;
+  display: flex;
+  color:white;
+ 
+}
+.profile{
+  order: 1;
+  background-image: url(images/spiderman.jpg);
+  width: 30%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 53vw;
+}
+.form3{
+  order:2;
+  width:70%;
+  text-align: center;
+  margin-right: 15%;
+}
+.boxLogOut{
+  position: absolute;
+  order:3;
+  margin: 2% 2%;
+  
+}
+.butprofile{
+ order:1;
+  padding: 10px;
+  margin:0 2%;
+  background: linear-gradient(#e52d2d,#7d1418);
+  border: 1px;
+  color: white;
+  font-weight: 500;
+  animation-duration: 0.3s;
+  border-radius: 5px;
+  font-family: calibri;
+  font-size: 90%;
+}
+.login-button {
+  order: 2;
+  padding: 4px;
+  font-family: fantasy;
+  /* -webkit-box-shadow: 1px 1px 3px #232323; */
+  /* box-shadow: 1px 1px 3px #232323; */
+  color: #ffffffd9;
+  padding-left: 10px;
+  outline: none;
+  font-size: 120%;
+  text-decoration: inherit;
+  cursor: pointer;
+  padding-right: 10px;
+  background: -webkit-gradient(linear,left top, left bottom,from(#027469),to(#009688));
+  background: -webkit-linear-gradient(#027469,#009688);
+  background: -o-linear-gradient(#027469,#009688);
+  background: transparent;
+  border: 1px gray;
+  /* border-radius: 5px; */
+  
+  margin: 2vw 0 0 0;
+}
+
+
+.register-button{
+  padding: 4px;
+  font-family: fantasy;
+  margin: 2vw 1.5vw 0 0vw;
+  color: #ffffffd9;
+  outline: none;
+  font-size: 120%;
+  text-decoration: inherit;
+  cursor: pointer;
+  padding-right: 10px;
+  background: -webkit-gradient(linear,left top, left bottom,from(#027469),to(#009688));
+  background: -webkit-linear-gradient(#027469,#009688);
+  background: -o-linear-gradient(#027469,#009688);
+  background: transparent;
+  border: 1px gray;
+
+}
 .privacy-text{
   font-size:30%;
   
 }
-
-
 .signup-button{
   padding: 10px;
   width: 85px;
