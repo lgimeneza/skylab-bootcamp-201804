@@ -50,9 +50,9 @@
     background: white;
     margin: 1vw;
     box-shadow: 2px 2px 3px black;
-    height: 90%;
+    height: 40vw;
     border-radius: 1.5vw;
-   
+    padding-bottom: 2vw;
 }
 .ulList a{
     text-decoration:none;
@@ -62,7 +62,9 @@
 ::-webkit-scrollbar {
     display: none;
 }
-
+h3{
+    font-size:1.7vw;
+}
 .card p {
     margin: 1vw 1vw 4vw 1vw;
     height: 13vw;
