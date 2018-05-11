@@ -47,7 +47,7 @@ logic.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZjFjNTRjNzQ3OTI1
 
 // })
 
-describe("login", () => {
+// describe("login", () => {
 
 //     let originalTimeout
 
@@ -70,17 +70,17 @@ describe("login", () => {
 
 
     // })
-    it('should login correctly', done =>{
+    // it('should login correctly', done =>{
 
-        logic.loginUser("lele" , "lele")
-        .then (login => {
+    //     logic.loginUser("lele" , "lele")
+    //     .then (login => {
 
-            expect(login.status).toBe("OK")
-            expect(login.data.id).toBeDefined()
-            expect(login.data.token).toBeDefined()
-            done()
-        })
-        .catch(done)
+    //         expect(login.status).toBe("OK")
+    //         expect(login.data.id).toBeDefined()
+    //         expect(login.data.token).toBeDefined()
+    //         done()
+    //     })
+    //     .catch(done)
 
 
     // })
@@ -114,7 +114,7 @@ describe("login", () => {
     // })
 
     // })
-})
+//})
 
 
 
@@ -206,4 +206,21 @@ describe("login", () => {
 
 
 //     })
-})
+//})
+
+
+describe("fetchList", () => {
+
+    
+        it('should return a list of avengers', done =>{
+    
+            logic.fetchCharacters("A")
+            .then (list => {
+    
+                expect(list).toBeDefined()
+                expect(list instanceof Array).toBeTruthy()
+                expect(list.length>0).toBeTruthy()
+                done()
+            })
+            .catch(done)
+        })})
