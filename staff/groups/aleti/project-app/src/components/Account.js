@@ -50,12 +50,21 @@ class Account extends Component {
             });
     }
 
-    handleSubmit = (event) => {}
-    
+    handleSubmit = (event) => { }
+
 
     render() {
+        const { user, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
+                <h3>Account</h3>
+                <form name="form" onSubmit={this.handleSubmit} >
+                    <InputUser type='text' name='firstname' helpText='First Name is required' labelText='First Name'
+                        value={user.firstname} submitted={submitted} handleChange={this.handleChange} />
+                    <InputUser type='text' name='lastname' helpText='Last Name is required' labelText='Last Name'
+                        value={user.lastname} submitted={submitted} handleChange={this.handleChange} />
+                    <ButtonInput name='Update' destination='' nameLink='Go Home' condition={false/* registering */} />
+                </form>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <fieldset>
                         <legend><h3>Change Password</h3></legend>
@@ -71,8 +80,10 @@ class Account extends Component {
                     <fieldset>
                         <legend><h3>Change Username</h3></legend>
                         <p>Changing your username can have unintended side effects</p>
-                        <label>new user name : </label>
-                        <input type="text" /><br />
+                        <InputUser type='text' name='username' helpText='' labelText='Your user name :'
+                            value={user.username} submitted={submitted} handleChange={this.handleChange} />
+                        <InputUser type='text' name='new_username' helpText='' labelText='New user name :'
+                            value={user.new_username} submitted={submitted} handleChange={this.handleChange} />
                         <button>Change Username</button>
                     </fieldset>
 
