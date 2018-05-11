@@ -7,6 +7,7 @@ import Login from '../Login/Login'
 import Profile from '../Profile/Profile'
 import Landing from '../Landing/Landing'
 import Home from '../Home/Home'
+import NotFound from '../NotFound/NotFound'
 import logic2 from '../../logic/cocktaillogic'
 import swal from 'sweetalert2'
 /**
@@ -277,6 +278,7 @@ class Main extends Component {
         return (
             <div className="container">
                 <Switch>
+                    
                     <Route path="/home" render={() => (
                         <Home _handlerShowCocktail={this._handlerShowCocktail}
                             cocktailRandomData={this.state.cocktailRandomData} />
@@ -324,6 +326,9 @@ class Main extends Component {
                         />
                     )
                     } />
+                    <Route path="*" render={() => (
+                        <NotFound />
+                    )} />
                 </Switch>
 
             </div>
