@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import './Home.css'
+import './home.css'
 
 function CharacterSearch(props) {
 
