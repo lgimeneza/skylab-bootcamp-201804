@@ -9,14 +9,29 @@
 .card img {
     width: 100%;
     height: 19vw;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
 }
-.card{
-   background:white;
-   margin:1vw; 
+
+.card {
+    background: white;
+    margin: 1vw;
+    box-shadow: 2px 2px 3px black;
+    height: 90%;
+    border-radius: 1.5vw;
 }
-.card p{
-    margin: 1.5vw;
-    height: 15vw;
+.card :hover{
+    margin:0.6vw;
+}
+::-webkit-scrollbar{
+    display:none;
+}
+
+.card p {
+    margin: 1vw 1vw 2vw 1vw;
+    height: 13vw;
     overflow: scroll;
+    font-size: 1.6vw;
+    -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
 }

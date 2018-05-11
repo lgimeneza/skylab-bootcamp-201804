@@ -170,11 +170,7 @@ h2 {
 }
 .title {
   background-image: url(images/background-.jpg);
-<<<<<<< HEAD
   background-size: cover; 
-=======
-  background-size: cover;
->>>>>>> develop
   height: 40vw;
 }
 .App-header {
