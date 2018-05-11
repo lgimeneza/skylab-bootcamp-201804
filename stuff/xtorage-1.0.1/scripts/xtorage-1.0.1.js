@@ -1,3 +1,5 @@
+'use strict'
+
 /**
  * Common interface for session and local storage
  * 
