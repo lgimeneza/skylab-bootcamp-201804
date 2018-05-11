@@ -42,33 +42,44 @@ class Weather extends Component {
     handleSubmitWeather = e => {
         e.preventDefault();
 
-        WeatherService.getWeather(this.state.city).then(
-            ({ name, main, weather }) => {
-                console.log(weather);
-                console.log(main);
+        if (this.state.city !== '') {
+            this.setState(
+                {
+                    search: true,
+                    isLoaded: false
+                },
+                () => {
+                    setTimeout(() => {
+                        WeatherService.getWeather(this.state.city).then(
+                            ({ name, main, weather }) => {
+                                const myWeather = {
+                                    temp: main.temp,
+                                    icon: `https://openweathermap.org/img/w/${
+                                        weather[0].icon
+                                    }.png`,
+                                    desc: weather[0].description,
+                                    cityName: name
+                                };
 
-                const myWeather = {
-                    temp: main.temp,
-                    icon: `https://openweathermap.org/img/w/${
-                        weather[0].icon
-                    }.png`,
-                    desc: weather[0].description,
-                    cityName: name
-                };
-
-                this.setState({
-                    isLoaded: true,
-                    weather: myWeather,
-                    city: ''
-                });
-            }
-        );
+                                this.setState({
+                                    isLoaded: true,
+                                    weather: myWeather,
+                                    city: ''
+                                });
+                            }
+                        );
+                    }, 1000);
+                }
+            );
+        }
     };
 
     renderWeather() {
+        if (this.state.search === false) return null;
+
         if (this.state.isLoaded === false) {
             return (
-                <div className="container">
+                <div className="container mt-2">
                     <div className="row justify-content-center">
                         <div className="col-6">
                             <h1 className="text-info">
@@ -83,12 +94,6 @@ class Weather extends Component {
 
             return (
                 <div className="container mt-5 mb-5">
-                    <h1 className="text-center">
-                        Sergio the{' '}
-                        <span className="text-warning">WeatherMan</span> Brings
-                        you....
-                    </h1>
-                    <hr />
                     <div className="row justify-content-center">
                         <div className="col-4">
                             <div className="card">
@@ -110,11 +115,11 @@ class Weather extends Component {
                                     </h5>
                                 </div>
                                 <div className="card-body">
-                                    <p>🌡 {temp}</p>
                                     <p>
+                                        🌡 {temp}
                                         <img src={icon} alt="Weatherrrrr" />
+                                        {desc}
                                     </p>
-                                    <p>{desc}</p>
                                 </div>
                             </div>
                         </div>
@@ -131,6 +136,13 @@ class Weather extends Component {
             <div>
                 <Header isLogged={true} />
                 <div className="container mt-5 mb-5">
+                    <h1 className="text-center">
+                        Sergio the{' '}
+                        <span className="text-warning">WeatherMan</span> Brings
+                        you....
+                    </h1>
+                    <hr />
+
                     <div className="row justify-content-center">
                         <div className="col-6">
                             <form onSubmit={this.handleSubmitWeather}>
