@@ -12,9 +12,9 @@ class Account extends Component {
         user: {
             username: '',
             password: '',
-            firstname: '',
-            lastname: '',
-            email: '',
+            new_password: '',
+            conf_password: '',
+            new_username: '',
             bio: '',
             location: ''
         },
@@ -50,15 +50,26 @@ class Account extends Component {
             });
     }
 
-    handleSubmit = (event) => { }
+    /* handleSubmit = (event) => { } */
 
+    handleChangePass = (event) => {
+        event.preventDefault()
+        console.log("cambiando password , usare mi pas: "
+        +this.state.user.password + " y seteare una : "
+        +this.state.user.new_password+ " confirmo : "
+        +this.state.user.conf_password)
+        let old_pass = this.state.user.password
+        let new_pass = this.state.user.new_password
+        let conf_pass = this.state.user.conf_password
+
+    }
 
     render() {
         const { user, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h3>Account</h3>
-                <form name="form" onSubmit={this.handleSubmit}>
+                <form name="form" onSubmit={this.handleChangePass}>
                     <fieldset>
                         <legend><h3>Change Password</h3></legend>
                         <InputUser type='text' name='password' helpText='' labelText='Old password :'
