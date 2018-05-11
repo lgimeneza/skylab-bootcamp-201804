@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import logic from '../../logic'
 import CharacterSearch from './CharacterSearch'
+import './home.css'
 
 class Home extends Component {
 
