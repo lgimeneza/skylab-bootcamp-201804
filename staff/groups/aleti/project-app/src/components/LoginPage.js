@@ -40,7 +40,7 @@ class LoginPage extends Component {
                 if (result.status === 'OK') {
 
                     this.storageUserData(result)
-                    
+                    localStorage.setItem('password', password)
                 } else {
 
                     swal({
