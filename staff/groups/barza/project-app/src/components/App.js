@@ -8,6 +8,7 @@ import Login from './login/Login';
 import Home from './home/Home';
 import Play from './play/Play';
 import Ranking from './ranking/Ranking';
+import Weather from './weather/Weather';
 import Profile from './profile/Profile';
 import UpdateProfile from './updateProfile/UpdateProfile';
 import Logout from './logout/Logout';
@@ -51,6 +52,7 @@ class App extends Component {
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/play" component={Play} />
                     <Route exact path="/ranking" component={Ranking} />
+                    <Route exact path="/weather" component={Weather} />
                     <Route exact path="/profile" component={Profile} />
                     <Route exact path="/logout" component={Logout} />
                     <Route
