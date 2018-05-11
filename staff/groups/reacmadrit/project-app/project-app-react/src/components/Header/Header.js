@@ -14,7 +14,7 @@ function Header(props) {
 
         <nav className="bar">
             <Link to="/">
-                <img src={home} />
+                <img src={home} alt="home icon" />
             </Link>
             {!props.isLogged ?
                 <ul className="bar-ul ">

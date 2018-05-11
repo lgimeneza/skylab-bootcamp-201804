@@ -324,7 +324,7 @@ let celebrities = {
     },
     chris: {
         "url": "https://i.pinimg.com/originals/ec/cf/78/eccf78645ca27d0029dbdf6e34f9f163.jpg",
-        "age": 31,
+        "age": 33,
         "asian": 0.00035,
         "black": 0.00001,
         "gender": {
@@ -503,7 +503,7 @@ let celebrities = {
         "white": 0.04007
     },
     liu: {
-        "url": "http://phongthuythienviet.com/wp-content/uploads/2017/05/mat-b.jpg",
+        "url": "http://image.chinatopix.com/data/thumbs/full/54567/600/0/0/0/premiere-of-sony-pictures-hancock-arrivals.jpg",
         "age": 24,
         "asian": 0.99888,
         "black": 0.00001,
