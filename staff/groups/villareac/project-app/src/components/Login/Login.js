@@ -13,11 +13,11 @@ class Login extends Component {
         return (
 
             <div className="container2">
-                <h2>login</h2>
+                <h3>Log in to your Tropic VilaReac account</h3>
                 <form onSubmit={this.props._handlerLogin}>
                     <input type="text" placeholder="Insert your username" onChange={this.props._handlerWriteUsername} />
                     <input type="password" placeholder="Insert your password" onChange={this.props._handlerWritePassword} />
-                    <button type="submit">Login</button>
+                    <button type="submit">Login!</button>
                 </form>
             </div>
         )

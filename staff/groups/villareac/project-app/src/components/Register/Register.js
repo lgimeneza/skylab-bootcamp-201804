@@ -28,7 +28,7 @@ class Register extends Component {
             <br/>
                 <form onSubmit={this.props._handlerRegister}>
                 <label htmlFor="inputUsername">Username:</label>
-                <input id="inputUsername" type="text" value={this.props.username} placeholder="Choose username" onChange={this.props._handlerWriteUsername} />
+                <input id="inputUsername" type="text" placeholder="Choose username" onChange={this.props._handlerWriteUsername} />
                 <label htmlFor="inputPassword">Password:</label>
                     <input id="inputPassword"  type="password" placeholder="Choose password" onChange={this.props._handlerWritePassword} />
                     <br/>

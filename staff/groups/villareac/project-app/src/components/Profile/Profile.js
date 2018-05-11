@@ -51,15 +51,18 @@ class Profile extends Component {
                 </h2>
                     <button className="button">Open Tropic VilaReac</button>
                     <p className="inicia">You've already logged in.
-                        <a className="sesion" href=""> Log Out</a>
+                        <a className="session" href=""> Log Out</a>
                     </p>
                 </section>
                 
                 <section className="secondSection profile">
                     <h2>Profile</h2>
-                    <input type="text" placeholder={this.props.username} onChange={this.props._handlerWriteNewUsername} />
-                    <input type="text" placeholder={(this.props.age) ? this.props.age : ''} onChange={this.props._handlerWriteAge} />
-                    <input type="text" placeholder={(this.props.gender) ? this.props.gender : ''} onChange={this.props._handlerWriteGender} />
+                    <label htmlFor="inputUsername">Username:</label>
+                    <input id="inputUsername" type="text" placeholder={this.props.username} onChange={this.props._handlerWriteNewUsername} />
+                    <label htmlFor="inputAge">Age:</label>
+                    <input id="inputAge" type="text" placeholder={(this.props.age) ? this.props.age : ''} onChange={this.props._handlerWriteAge} />
+                    <label htmlFor="inputGender">Gender:</label>
+                    <input id="inputGender" type="text" placeholder={(this.props.gender) ? this.props.gender : ''} onChange={this.props._handlerWriteGender} />
                     <input type="password" placeholder='password required' onChange={this.props._handlerWritePassword} />
                     <button onClick={this.props._handlerUpdate}>Update profile</button>
 

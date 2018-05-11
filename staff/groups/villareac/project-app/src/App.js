@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { HashRouter } from 'react-router-dom'
 import './App.css';
-import Main from './components/Main/Main'
+import Main from './components/Main/main'
 import Nav from './components/Nav/Nav'
 
 
@@ -14,6 +14,11 @@ class App extends Component {
     this.state={
       logged: false
     }
+  }
+
+  componentDidMount(){
+    const sessionData = sessionStorage.getItem('key');
+    (sessionData) ? this.setState({logged:true}) : this.setState({logged:false});
   }
 
   _isLogged = (logged) =>{
