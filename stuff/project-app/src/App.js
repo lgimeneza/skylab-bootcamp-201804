@@ -1,15 +1,39 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Register from './components/register'
+import { Register, Login, Home } from './components'
+import { Link, Route, withRouter } from 'react-router-dom'
+import logic from './logic'
 
 class App extends Component {
-  onRegister() {
+  state = { registered: false }
+
+  componentDidMount() {
+    if (logic.loggedIn) this.props.history.push('/home')
+  }
+
+  onRegister = () => {
     console.log('register')
+
+    this.setState({ registered: true })
   }
 
   onRegisterError(message) {
     console.error('register error', message)
+  }
+
+  onLogin = () => {
+    console.log('login')
+
+    this.props.history.push('/home')
+  }
+
+  onLoginError(message) {
+    console.error('login error', message)
+  }
+
+  onLogout = () => {
+    this.props.history.push('/')
   }
 
   render() {
@@ -22,10 +46,26 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <Register onRegister={this.onRegister} onRegisterError={this.onRegisterError} />
+
+        <Route exact path="/" render={() => <p>
+          <Link to="/register">Register</Link>
+          &nbsp;|&nbsp;
+            <Link to="/login">Login</Link>
+        </p>
+        } />
+        {
+          <Route exact path="/register" render={() => {
+            return this.state.registered ?
+              <Link to="/login">Login</Link>
+              :
+              <Register onRegister={this.onRegister} onRegisterError={this.onRegisterError} />
+          }} />
+        }
+        <Route exact path="/login" render={() => !logic.loggedIn && <Login onLogin={this.onLogin} onLoginError={this.onLoginError} />} />
+        <Route path="/home" render={() => <Home onLogout={this.onLogout} />} />
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
