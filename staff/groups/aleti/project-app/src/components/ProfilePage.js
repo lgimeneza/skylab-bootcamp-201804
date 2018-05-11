@@ -6,7 +6,6 @@ import Update from '../components/Update'
 class ProfilePage extends Component {
     componentDidMount() {
         //this.props.dispatch(userActions.getAll());
-        //console.log('token',localStorage.getItem('token'))
     }
 
     handleLogoutUser() {
@@ -35,7 +34,7 @@ class ProfilePage extends Component {
                             <Route exact path="/profile/account" component={Account} />
                         </div>
 
-                        {/* <Link to="/home" className="btn btn-link">Home</Link> */}
+                        {<Link to="/" className="btn btn-link">Home</Link>}
 
                     </div>
                     

@@ -54,13 +54,53 @@ class Account extends Component {
 
     handleChangePass = (event) => {
         event.preventDefault()
-        console.log("cambiando password , usare mi pas: "
-        +this.state.user.password + " y seteare una : "
-        +this.state.user.new_password+ " confirmo : "
-        +this.state.user.conf_password)
+        
         let old_pass = this.state.user.password
         let new_pass = this.state.user.new_password
         let conf_pass = this.state.user.conf_password
+
+        let body = {
+            username: this.state.user.username,
+            password: this.state.user.password,
+        }
+        if (new_pass === conf_pass) {
+            logic.loginUser(body)
+                .then(res => {
+                    if (res.status === 'OK') {
+                        body = {
+                            ...body,
+                            newPassword : new_pass
+                        }
+                        logic.updateUser(body, localStorage.getItem('id'), localStorage.getItem('token'))
+                        this.setState({
+                            user: {
+                                ...this.user,
+                                password: '',
+                                new_password: '',
+                                conf_password:''
+                            }
+                        });
+                        swal({
+                            text: 'Success!',
+                            title: 'Update was done',
+                            type: 'success'
+                        })
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Something went wrong!',
+                            text: '',
+                        })
+                    }
+                })
+        } else {
+            swal({
+                type: 'error',
+                title: 'nueva password no confirmada',
+                text: '',
+            })
+        }
+
 
     }
 
@@ -72,11 +112,11 @@ class Account extends Component {
                 <form name="form" onSubmit={this.handleChangePass}>
                     <fieldset>
                         <legend><h3>Change Password</h3></legend>
-                        <InputUser type='text' name='password' helpText='' labelText='Old password :'
+                        <InputUser type='password' name='password' helpText='' labelText='Old password :'
                             value={user.password} submitted={submitted} handleChange={this.handleChange} />
-                        <InputUser type='text' name='new_password' helpText='' labelText='New password :'
+                        <InputUser type='password' name='new_password' helpText='' labelText='New password :'
                             value={user.new_password} submitted={submitted} handleChange={this.handleChange} />
-                        <InputUser type='text' name='conf_password' helpText='' labelText='Confirm new password :'
+                        <InputUser type='password' name='conf_password' helpText='' labelText='Confirm new password :'
                             value={user.conf_password} submitted={submitted} handleChange={this.handleChange} />
                         <ButtonInput name='Update' destination='profile/account' nameLink='' condition={false/* registering */} />
                     </fieldset>
@@ -88,7 +128,7 @@ class Account extends Component {
                         <InputUser type='text' name='username' helpText='' labelText='Your user name :'
                             value={user.username} submitted={submitted} handleChange={this.handleChange} disabled />
                         <InputUser type='text' name='new_username' helpText='' labelText='New user name :'
-                            value={user.new_username} submitted={submitted} handleChange={this.handleChange} /> 
+                            value={user.new_username} submitted={submitted} handleChange={this.handleChange} />
                         <ButtonInput name='Change Username' destination='profile/account' nameLink='' condition={false/* registering */} />
                     </fieldset>
                 </form>
@@ -100,7 +140,7 @@ class Account extends Component {
                     </fieldset>
 
                 </form>
-                <Link to="/home" className="btn btn-link">Go Home</Link>
+                
             </div>
         );
     }

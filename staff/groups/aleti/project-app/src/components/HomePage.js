@@ -47,8 +47,6 @@ class HomePage extends Component {
     const id = localStorage.getItem('id')
     const token = localStorage.getItem('token')
 
-    console.log(token)
-
     if (localStorage.getItem('userName')){
         this.setState({
           username: username,
@@ -61,7 +59,6 @@ class HomePage extends Component {
           this.setState({
             user: res.data
           })
-          console.log(res.data)
         })
     }
     logic.movie.getMoviesPopular(this.state.key)

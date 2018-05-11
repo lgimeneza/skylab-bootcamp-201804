@@ -117,7 +117,7 @@ class Update extends Component {
                         value={user.bio} submitted={submitted} handleChange={this.handleChange} />
                     <InputUser type='text' name='location' helpText='' labelText='Location'
                         value={user.location} submitted={submitted} handleChange={this.handleChange} />
-                    <ButtonInput name='Update' destination='' nameLink='Go Home' condition={false/* registering */} />
+                    <ButtonInput name='Update' destination='' nameLink='' condition={false/* registering */} />
                 </form>
             </div>
 
