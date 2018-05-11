@@ -105,12 +105,17 @@ class Home extends Component {
     render() {
 
         if (this.props.isLogged()) {
-            return <div>
-                <img className="w-25"  src={this.state.picture_url}/>
-                <img className="w-25"  src={this.state.candidate}/>
+            return <div className="text-center">
+                <div className="box-img rounded-circle m-4"  >
+                <img className="w-100 "  src={this.state.picture_url}/>
+                </div>
+                <div className="box-img rounded-circle m-4"  >
+                <img className="w-100 "  src="http://ishushkanov.com/blogs/wp-content/uploads/%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B.jpg"/>
+                <img className="w-100 "  src={this.state.candidate}/>
+                </div>
                 <h3> #1 - Go to profile and upload your profile picture. </h3>
-                <button className="btn" onClick={this.retrieveFaceInfo}>retrieve!</button>                
-                <button className="btn bg-darkcyan" onClick={this.comparePics}>Compare!</button>
+                <button className="btn bg-lightcyan m-2" onClick={this.retrieveFaceInfo}>retrieve!</button>                
+                <button className="btn bg-darkcyan m-2" onClick={this.comparePics}>Compare!</button>
             </div>
         } else {
             return <h2>You are not allowed</h2>

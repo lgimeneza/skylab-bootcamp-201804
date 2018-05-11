@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter, Link } from 'react-router-dom'
 import './Profile.css'
-import swal from 'sweetalert2' 
+import swal from 'sweetalert2'
 
 class Profile extends Component {
 
@@ -115,7 +115,7 @@ class Profile extends Component {
                     type: 'success',
                     title: 'Success!',
                     text: 'Profile updated correctly',
-                  })
+                })
 
                 this.setState({
                     viewModal: true
@@ -125,7 +125,7 @@ class Profile extends Component {
                     type: 'error',
                     title: 'Oopsies!',
                     text: resp.error,
-                  })
+                })
                 this.setState({ serverErrorMessage: resp.error })
             }
         })
@@ -145,11 +145,13 @@ class Profile extends Component {
         } else {
             return (
 
-                <div className="container profile-form">
-                    <div className="row justify-content-center ">
-                        <img className='w-25 h-25 img-thumbnail rounded-circle' src={this.state.picture_url}
+                <div className="container profile-form text-center">
+
+                    <div className="box-img rounded-circle  m-4 justify-content-center ">
+                        <img className='w-100' src={this.state.picture_url}
                             alt="profile pic" />
                     </div>
+
                     <div className="">
                         <form onSubmit={this._handleUpdate}>
                             <div className="row justify-content-center ">
@@ -182,8 +184,8 @@ class Profile extends Component {
                             </div>
 
                             <div className="row justify-content-center ">
-                          
-                              <input /*id="button"*/ className="row justify-content-center mb-3 btn bg-darkcyan" type="submit" value='Update' />
+
+                                <input /*id="button"*/ className="row justify-content-center mb-3 btn bg-darkcyan" type="submit" value='Update' />
                             </div>
                             <div className="row justify-content-center ">
                             </div>

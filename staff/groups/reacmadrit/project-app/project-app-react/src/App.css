@@ -21,6 +21,10 @@ body {
   background: darkcyan;
   color: white
 }
+
+.bg-lightcyan{
+  background: #d3e2e1;
+}
 input{
   background: white;
   border-radius: 5px;
@@ -79,3 +83,20 @@ header a:hover {
   text-decoration: none
   
 }
+
+
+.box-img{
+  background: darkcyan;
+  width: 18vw;
+  height: 18vw;
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  border:3px solid white;
+
+}
+.box-img img{
+  margin: 0;
+  position: absolute;
+  left: 0;}
+
