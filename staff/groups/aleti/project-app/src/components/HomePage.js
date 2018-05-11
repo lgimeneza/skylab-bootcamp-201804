@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from "react-dom";
 import './HomePage.css';
 import { Grid, Row, Col, Thumbnail} from 'react-bootstrap'
-
+import {withRouter} from 'react-router-dom'
 import logic from '../logic'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import fav1  from '../images/favorite-1.png'
@@ -255,4 +255,4 @@ class HomePage extends Component {
 
 }
 
-export default HomePage;
+export default withRouter(HomePage);

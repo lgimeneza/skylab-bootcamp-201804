@@ -4,6 +4,7 @@ import swal from 'sweetalert2'
 import InputUser from './InputUser';
 import ButtonInput from './ButtonInput';
 import './Update.css';
+import {withRouter} from 'react-router-dom'
 
 class Update extends Component {
 
@@ -126,4 +127,4 @@ class Update extends Component {
 }
 
 
-export default Update
+export default withRouter(Update)
