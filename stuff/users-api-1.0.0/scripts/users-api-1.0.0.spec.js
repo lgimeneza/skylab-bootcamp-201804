@@ -15,7 +15,16 @@ describe('users api', () => {
         return sessionStorage.getItem('token')
     }
 
-    beforeEach(() => data = { name: 'John', surname: 'Doe', age: 40 })
+    beforeEach(done => {
+        data = { name: 'John', surname: 'Doe', age: 40 }
+
+        return usersApi.authenticate(username, password)
+            .then(id => {
+                return usersApi.unregister(id, username, password)
+            })
+            .then(() => done())
+            .catch(() => done())
+    })
 
     describe('register > authenticate > unregister', () => {
         it('should succeed on valid user', () =>
@@ -35,8 +44,10 @@ describe('users api', () => {
 
                             return usersApi.authenticate(username, password)
                         })
+                        .catch(err => {
+                            expect(err).toBeDefined()
+                        })
                 })
-                .catch(err => expect(err).toBeDefined())
         )
     })
 
@@ -59,7 +70,7 @@ describe('users api', () => {
                             expect(user.username).toBe(username)
                             expect(user.name).toBe(data.name)
                             expect(user.surname).toBe(data.surname)
-                            expect(user.age).toBe(user.age)
+                            expect(user.age).toBe(data.age)
 
                             return usersApi.unregister(id, username, password)
                         })
@@ -68,8 +79,8 @@ describe('users api', () => {
 
                             return usersApi.authenticate(username, password)
                         })
+                        .catch(err => expect(err).toBeDefined())
                 })
-                .catch(err => expect(err).toBeDefined())
         )
     })
 
@@ -112,8 +123,8 @@ describe('users api', () => {
 
                             return usersApi.authenticate(username, password)
                         })
+                        .catch(err => expect(err).toBeDefined())
                 })
-                .catch(err => expect(err).toBeDefined())
         )
     })
 })

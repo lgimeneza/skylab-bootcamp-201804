@@ -79,7 +79,7 @@ const usersApi = {
      * @returns {Promise<string>} - The user id
      */
     authenticate(username, password) {
-        return this._call('/auth', 'post', { username, password }, true)
+        return this._call('/auth', 'post', { username, password })
             .then(({ status, data, error }) => {
                 if (status === 'OK') {
                     this.token(data.token)

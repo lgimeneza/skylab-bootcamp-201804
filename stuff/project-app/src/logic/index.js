@@ -9,12 +9,14 @@ if (typeof require === 'function') {
 // use session storage for token
 usersApi.token = token => {
     if (token) {
-        sessionStorage.setItem('token', token)
+        Xtorage.session.set('token', token)
+        //sessionStorage.setItem('token', token)
 
         return
     }
 
-    return sessionStorage.getItem('token')
+    return Xtorage.session.get('token')
+    //return sessionStorage.getItem('token')
 }
 
 /**
@@ -127,9 +129,7 @@ const logic = {
 
         return usersApi.unregister(id, username, password)
             .then(() => {
-                this.logout()
-
-                return true
+                return this.logout()
             })
     }
 }
