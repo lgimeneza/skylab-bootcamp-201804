@@ -110,36 +110,36 @@ class Main extends Component {
     };
     logic.register(userData).then(data => {
       if (data.status === 'OK') {
-         
-      this.setState({
-        id: data.data.id,
-        username: "",
-        password: "",
-        age: "",
-        gender: ""
-      });
-      this.props.history.push("/login");
-         swal({
-                        type: 'success',
-                        title: 'Registration successful',
-                        text: "Welcome! Don't be thirsty!"
-                    })
-           } else {
+
+        this.setState({
+          id: data.data.id,
+          username: "",
+          password: "",
+          age: "",
+          gender: ""
+        });
+        this.props.history.push("/login");
         swal({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                        footer: 'Your user already exists! No more cocktails today sir...',
-                    })
-                }
+          type: 'success',
+          title: 'Registration successful',
+          text: "Welcome! Don't be thirsty!"
+        })
+      } else {
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: 'Your user already exists! No more cocktails today sir...',
+        })
+      }
     });
   };
 
 
- 
 
-                  
-             
+
+
+
 
   /**
    * LOGIN
@@ -162,19 +162,19 @@ class Main extends Component {
         this.props.history.push("/home");
         this.onSetSession(data, "key");
         this.props.logged(true);
-         swal({
-                        type: 'success',
-                        title: 'Awesome :)',
-                        text: 'login was successful!',
-                        footer: 'Your daily cocktail is waiting...'
-                    })
+        swal({
+          type: 'success',
+          title: 'Awesome :)',
+          text: 'login was successful!',
+          footer: 'Your daily cocktail is waiting...'
+        })
       } else {
         swal({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                        footer: 'Be sure to write your username/password correctly',
-                    });
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: 'Be sure to write your username/password correctly',
+        });
       }
     });
   };
@@ -274,23 +274,23 @@ class Main extends Component {
       password: this.state.password
     };
 
-      logic.unregister(userData)
-            .then(data => {
-                if (data.status === 'OK') {
-                    swal({
-                        type: 'success',
-                        title: 'Profile deleted',
-                        text: "It was nice to drink together!"
-                    })
-                } else {
-                    swal({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                        footer: 'Be sure to write your username/password correctly',
-                    })
-                }
-            })
+    logic.unregister(userData)
+      .then(data => {
+        if (data.status === 'OK') {
+          swal({
+            type: 'success',
+            title: 'Profile deleted',
+            text: "It was nice to drink together!"
+          })
+        } else {
+          swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: 'Be sure to write your username/password correctly',
+          })
+        }
+      })
   };
 
   _handlerShowCocktail = () => {
@@ -359,11 +359,11 @@ class Main extends Component {
                 _handlerWritePassword={this._handlerWritePassword}
               />
             )}
-            
+
           />
-      <Route path="*" render={() => (
-                        <NotFound />
-                    )} />
+          <Route path="*" render={() => (
+            <NotFound />
+          )} />
         </Switch>
       </div>
     );
