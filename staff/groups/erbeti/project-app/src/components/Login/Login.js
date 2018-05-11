@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import swal from 'sweetalert2'
-import './Login.css'
 import Xtorage from '../../Xtorage'
+import './login.css';
 
 class Login extends Component {
 
@@ -66,11 +66,11 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
-            <div>
-                <button type="button" onClick={this.redirect}>First time? Register!</button>
+            <div className="backgroundlogin">
+            <div className="login">
             </div>
-            <div>
+           <div className="form">
+       
                 <form className="login-box" onSubmit={this.acceptLogin}>
 
                     <h2>Login</h2>
@@ -79,13 +79,11 @@ class Login extends Component {
                     <p>Password</p>
                     <input type="password" name="password" value={this.state.password} onChange={this.loginPassword} />
                     <p>
-                        <button className="enter-button" type="submit">Enter</button>
+                        <button className="goRegister" type="submit">Enter</button>
                     </p>
+                    <button className="goRegister" type="button" onClick={this.redirect}>First time? Register!</button>
                 </form>
-
-                <p>
-
-                </p>
+             
             </div>
             </div>
         )

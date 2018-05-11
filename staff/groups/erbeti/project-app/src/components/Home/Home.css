@@ -20,9 +20,7 @@
     height: 90%;
     border-radius: 1.5vw;
 }
-.card :hover{
-    margin:0.6vw;
-}
+
 ::-webkit-scrollbar{
     display:none;
 }

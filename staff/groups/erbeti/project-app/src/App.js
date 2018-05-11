@@ -20,15 +20,12 @@ class App extends Component {
         <main>
           <div className="App">
             <Route exact path="/" component={Landing} />
-          </div>
-          <div className="App">
+          
             <Route path="/login" component={Login} />
             <Route path="/register" component={RegisterUser} />
-          </div>
-          <div className="App">
+          
             <Route path="/home" render={()=> ((Xtorage.session.get("user") === null)? (<Redirect to="/"/>):(<Home/>))}/>
-          </div>
-          <div>
+          
             <Route path="/profile" render={()=> ((Xtorage.session.get("user") === null)? (<Redirect to="/"/>):(<Profile/>))}/>
             </div>
         </main>

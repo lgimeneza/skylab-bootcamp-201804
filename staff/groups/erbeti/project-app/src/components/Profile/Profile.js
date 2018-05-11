@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import logic from '../../logic'
-import './Profile.css'
 import swal from 'sweetalert2'
 import Xtorage from '../../Xtorage'
+import './profile.css';
 
 class Profile extends Component {
 
@@ -163,14 +163,16 @@ class Profile extends Component {
     render() {
         
             return (
-                <div className="background-profile">
-                <div>
-                    <button type="button" onClick={this.redirect}>Home</button>
+
+                <div  className="backgroundprofile">
+                <div className="boxLogOut">
+                    <button className="login-button"  type="button" onClick={this.redirect}>Home</button>
+                    <button className="register-button" type="button" onClick={this.logOut}>Log out</button>
+
                 </div>
-                <div>
-                    <button type="button" onClick={this.logOut}>Log out</button>
+                <div className="profile">
                 </div>
-                <div>
+                <div className="form3">
                     <h1 className="Profile-title">Profile info</h1>
                     <form className="App" onSubmit={this.updateInfoAndPrint}>
                         <p>NAME: </p>
@@ -187,19 +189,14 @@ class Profile extends Component {
                         <p>Type your password to save changes: </p>
                         <input type="password" name="password" value={this.state.password} onChange={this.receivePassword} />
     
-                        <button type="submit">Save changes</button>
-                        
-    
+                        <button className="butprofile" type="submit">Save changes</button>
                     </form>
-    
                     <form onSubmit={this.deleteUser}>
                     <p>Type your password to unregister: </p>
                     <input type="password" name="deletionPassword" onChange={this.receiveDeletionPassword} />
-                    <button type="submit">Delete</button>
+                    <button className="butprofile" type="submit">Delete</button>
                     </form>
-                    
-    
-                </div>
+                    </div>
                 </div>
             )
         

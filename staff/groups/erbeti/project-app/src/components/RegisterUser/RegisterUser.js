@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import {Link} from 'react-router-dom'
 import swal from 'sweetalert2'
+import './register.css';
 
 class RegisterUser extends Component {
     
@@ -107,13 +108,13 @@ class RegisterUser extends Component {
 
     render() {
         return (
-            <div>
-
-            <div>
-                <button type="button" onClick={this.redirect}>Back</button>
+            <div className="backgroundregister">
+            <div className="register">
             </div>
-
             <div>
+                <button className="registerback" type="button" onClick={this.redirect}>Back</button>
+            </div>
+            <div className="form2">
                 <form className="register-box" onSubmit={this.acceptRegister}>
                     <h2>Register</h2>
                     <p>Username</p>
@@ -125,14 +126,11 @@ class RegisterUser extends Component {
                     <p>Repeat Password</p>
                     <input type="password" value={this.state.repeatpassword} name="password" onChange={this.registerRepeatPassword}/>
                     <p>
-                    <button className="signup-button" type="submit">Register</button>
+                    <button className="registeraccept" type="submit">Register</button>
                     </p>
                     <p className="privacy-text">Al registrarte, aceptas las Condiciones de Servicio y la Política de Privacidad </p>
                 </form>
                 
-                <p>
-
-                </p>
             </div>
             </div>
         )

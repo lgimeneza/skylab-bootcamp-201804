@@ -49,37 +49,51 @@ h2 {
 
 
 
-.register-box {
-  margin-top: 70px !important;
-  background: white;
-  width: 400px;
-  box-shadow: 3px 3px 3px black;
-  margin: 0 auto;
-  border-radius: 20px;
-  padding: 20px;
+.login-button {
+  order: 2;
+  padding: 4px;
+  font-family: fantasy;
+  /* -webkit-box-shadow: 1px 1px 3px #232323; */
+  /* box-shadow: 1px 1px 3px #232323; */
+  color: #ffffffd9;
+  padding-left: 10px;
+  outline: none;
+  font-size: 120%;
+  text-decoration: inherit;
+  cursor: pointer;
+  padding-right: 10px;
+  background: -webkit-gradient(linear,left top, left bottom,from(#027469),to(#009688));
+  background: -webkit-linear-gradient(#027469,#009688);
+  background: -o-linear-gradient(#027469,#009688);
+  background: transparent;
+  border: 1px gray;
+  /* border-radius: 5px; */
+  
+  margin: 2vw 0 0 0;
 }
-.register-box h2 {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  background: rgb(231, 104, 0);
-  padding: 13px 20px 10px 20px;
-  margin: -20px 0px 0px -20px;
-}
-.register-box input{
-  width:200px;
-}
-.register-box p{
-  font-family: 'Gothic A1';
-  font-weight: bold;
-  color: #535353;
-  letter-spacing:2px;
-  margin-top:35px;
+
+
+.register-button{
+  padding: 4px;
+  font-family: fantasy;
+  margin: 2vw 1.5vw 0 0vw;
+  color: #ffffffd9;
+  outline: none;
+  font-size: 120%;
+  text-decoration: inherit;
+  cursor: pointer;
+  padding-right: 10px;
+  background: -webkit-gradient(linear,left top, left bottom,from(#027469),to(#009688));
+  background: -webkit-linear-gradient(#027469,#009688);
+  background: -o-linear-gradient(#027469,#009688);
+  background: transparent;
+  border: 1px gray;
+
 }
 .privacy-text{
-  font-size:60%;
+  font-size:30%;
+  
 }
-
-
 .signup-button{
   padding: 10px;
   width: 85px;
@@ -170,7 +184,9 @@ h2 {
 }
 .title {
   background-image: url(images/background-.jpg);
-  background-size: cover; 
+
+  background-size: cover;
+
   height: 40vw;
 }
 .App-header {
