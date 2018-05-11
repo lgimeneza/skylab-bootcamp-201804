@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Route } from 'react-router-dom';
-
+import { Switch, Route } from 'react-router-dom';
 
 import history from './components/history'
 import { PrivateRoute } from './components/PrivateRoute';
@@ -25,16 +24,16 @@ class App extends Component {
 
     render() {
         return (
-            <Router history={history}>
+            <Switch>
                 <div className="content-api">
                     <Route exact path="/home" component={HomePage} />
                     <Route exact path="/" component={HomePage} />
                     {/* <Route path="/landing" component={ LandingPage } /> */}
                     <Route exact path="/login" component={LoginPage} />
-                    <Route exact path="/register#" component={RegisterPage} />
+                    <Route exact path="/register" component={RegisterPage} />
                     <PrivateRoute path="/profile" component={ProfilePage} />
                 </div>
-            </Router>
+            </Switch>
         );
     }
 }
