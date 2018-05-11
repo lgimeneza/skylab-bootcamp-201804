@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <Switch>
         <main>
-          <div >
+          <div className="App">
             <Route exact path="/" component={Landing} />
           
             <Route path="/login" component={Login} />

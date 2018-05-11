@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import logic from '../../logic'
 import swal from 'sweetalert2'
 import Xtorage from '../../Xtorage'
+import './profile.css';
 
 class Profile extends Component {
 

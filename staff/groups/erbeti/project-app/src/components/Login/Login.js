@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import swal from 'sweetalert2'
 import Xtorage from '../../Xtorage'
+import './login.css';
 
 class Login extends Component {
 
