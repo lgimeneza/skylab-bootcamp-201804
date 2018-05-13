@@ -211,7 +211,7 @@ let celebrities = {
         "white": 0.97783
     },
     whoopi: {
-        "url": "http://leblogdubledard.fr/wp-content/uploads/2017/04/whoopigoldberg.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Whoopi_Goldberg_at_a_NYC_No_on_Proposition_8_Rally.jpg/1200px-Whoopi_Goldberg_at_a_NYC_No_on_Proposition_8_Rally.jpg",
         "age": 51,
         "asian": 0.00088,
         "black": 0.97842,
@@ -307,7 +307,7 @@ let celebrities = {
         "white": 0.99528
     },
     ryan: {
-        "url": "http://www.fotogramas.es/var/ezflow_site/storage/images/noticias-cine/ryan-gosling-te-invita-a-ver-el-set-de-blade-runner-2/116088426-1-esl-ES/Ryan-Gosling-te-invita-a-ver-el-set-de-Blade-Runner-2_landscape.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ryan_Gosling_2017_by_Gage_Skidmore.jpg/800px-Ryan_Gosling_2017_by_Gage_Skidmore.jpg",
         "age": 41,
         "asian": 0.00039,
         "black": 0.00026,
@@ -339,7 +339,7 @@ let celebrities = {
         "white": 0.9975
     },
     arnold: {
-        "url": "http://www.fotogramas.es/var/ezflow_site/storage/images/noticias-cine/arnold-schwarzenegger-ataque-corazon-estoy-bien/137986324-1-esl-ES/Arnold-Schwarzenegger-sobre-sus-ataque-al-corazon-Estoy-mucho-mejor-pero-no-del-todo_landscape.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/SchwarzeneggerJan2010.jpg/375px-SchwarzeneggerJan2010.jpg",
         "age": 47,
         "asian": 0.02772,
         "black": 0.00178,
@@ -354,42 +354,12 @@ let celebrities = {
         "other": 0.01519,
         "white": 0.84228
     },
-    daddy: {
-        "url": "https://cdn0.celebritax.com/sites/default/files/styles/watermark_100/public/daddy-yankee-rey-regueton_0.jpg",
-        "age": 38,
-        "asian": 0.00283,
-        "black": 0.00187,
-        "gender": {
-            "femaleConfidence": 0.0039,
-            "maleConfidence": 0.9961,
-            "type": "M"
-        },
-        "glasses": "None",
-        "hispanic": 0.2476,
-        "lips": "Apart",
-        "other": 0.00581,
-        "white": 0.74189
-    },
-    king: {
-        "url": "http://3.bp.blogspot.com/_pvIAtvhtSdY/R9gXgWEvaJI/AAAAAAAAA54/q2Id2zs70v0/w1200-h630-p-k-no-nu/KING_AFRICA2.jpg",
-        "age": 39,
-        "asian": 0.08291,
-        "black": 0.07423,
-        "gender": {
-            "femaleConfidence": 0.99013,
-            "maleConfidence": 0.00987,
-            "type": "F"
-        },
-        "glasses": "None",
-        "hispanic": 0.71214,
-        "lips": "Together",
-        "other": 0.11242,
-        "white": 0.0183
-    },
+
+
 
     rihanna:
         {
-            "url": "http://www.24horas.cl/incoming/rihannajpg-2702929/ALTERNATES/BASE_LANDSCAPE/rihanna.JPG",
+            "url": "https://s3.amazonaws.com/hiphopdx-production/2015/11/rihanna-3001.jpg",
             "age": 26,
             "asian": 0.00779,
             "black": 0.93047,
@@ -455,7 +425,7 @@ let celebrities = {
     },
 
     hispanica: {
-        "url": "https://hips.hearstapps.com/cos.h-cdn.co/assets/cm/14/29/640x360/53a008efe9c96_-_cos-01-joan-smalls-xl-97594305.jpg",
+        "url": "http://images.latin-wife.com/affectionate-latin-women.jpg",
         "age": 33,
         "asian": 0.07394,
         "black": 0.22098,
@@ -487,7 +457,7 @@ let celebrities = {
         "white": 0.0322
     },
     eva: {
-        "url": "https://musicacinetv.files.wordpress.com/2011/03/eva_mendes.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/EvaMendescropped.jpg/330px-EvaMendescropped.jpg",
         "age": 31,
         "asian": 0.06811,
         "black": 0.08248,
@@ -517,24 +487,8 @@ let celebrities = {
         "lips": "Together",
         "other": 0.00077,
         "white": 0.00004
-    },
-    daniel: 
-    {
-        "url": "https://i.pinimg.com/originals/26/b7/6c/26b76c6b26dd8c77aae7518b400e7040.jpg",
-        "age": 31,
-        "asian": 0.99996,
-        "black": 0,
-        "gender": {
-            "femaleConfidence": 0.00033,
-            "maleConfidence": 0.99967,
-            "type": "M"
-        },
-        "glasses": "None",
-        "hispanic": 0,
-        "lips": "Together",
-        "other": 0.00004,
-        "white": 0
     }
+   
 
 }
 
