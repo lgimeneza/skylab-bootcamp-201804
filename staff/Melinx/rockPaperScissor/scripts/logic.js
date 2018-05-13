@@ -108,9 +108,10 @@ class RockPaperScissors {
 
 }
 
-status() return this._status
-ListeningStateChangedEvent() return this._rounds
-winner() return this._roundWinner 
+function status() { return this._status }
+
+function ListeningStateChangedEvent() {return this._rounds}
+function winner() { return this._roundWinner }
 
 
 
