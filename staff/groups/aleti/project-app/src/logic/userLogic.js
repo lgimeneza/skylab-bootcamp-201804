@@ -5,12 +5,13 @@ const userLogic = {
     loginUser(body){
         return Promise.resolve()
         .then(()=>{
+            console.log(body)
 
             if (!body) throw Error('Input body not valid1')
 
             if( typeof body.username !== 'string' || typeof body.password !== 'string' ) 
                 throw Error('Input body not valid2')
-    
+
             return  fetch(`${this.url}/auth`, { 
                 body: JSON.stringify(body),
                 headers: {
@@ -19,7 +20,6 @@ const userLogic = {
                 method: 'POST'
             })
             .then(resp => resp.json())
-
         })
     },
 
