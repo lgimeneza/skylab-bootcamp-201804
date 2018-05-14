@@ -1,8 +1,15 @@
+var fs = require('fs')
 var path = require('path')
 
-function myFun (files, extension) {
-    
-    files.filter(file => path.extname(file) ===  `.${extension}`).forEach(file => { console.log(file)})
-}
+module.exports = function(_dir, _ext, callback){
 
-module.exports = myFun
+    fs.readdir(_dir, (err, files) => {
+
+        if (err) return callback(err)
+
+        var data = files.filter(file => path.extname(file) ===  `.${_ext}`)
+
+        callback(null, data)
+
+    })
+}

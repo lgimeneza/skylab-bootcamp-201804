@@ -1,16 +1,13 @@
-var fs = require('fs')
-var fi = require('./module-excercise6')
+const filterFiles = require('./module-excercise6')
 
+const [_node, _path, _dir, _ext] = process.argv
 
-fs.readdir(process.argv[2], (err, files)=>{
+filterFiles(_dir, _ext, (err, data) => {
 
-    fi(files, process.argv[3])      
-    
+    if (err) throw err
+
+    data.forEach(file => {
+        console.log(file)
+    });
+
 })
-
-//TODO: process.argv[2] => dir name
-
-//TODO: process.argv[3] => ext filter
-
-
-
