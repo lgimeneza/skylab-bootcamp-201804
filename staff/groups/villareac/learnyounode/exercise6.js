@@ -1,25 +1,13 @@
-var fs = require('fs')
-var path = require('path');
-var mymodule = require('./mymodule.js') 
+// var fs = require('fs')
+// var path = require('path');
+var filter = require('./mymodule') 
 
-// let folder = process.argv[2]
-// let ext = '.' + process.argv[3]
+let folder = process.argv[2]
+let ext = '.' + process.argv[3]
 
-// let buf = fs.readdir(folder, (error, list) => {
-//     result = list.filter(file => path.extname(file) === ext)
-//     result.forEach(result => console.log(result))
-// })
+filter(folder, ext, (err, list) => {
+    if(err) return process.exit(1)
 
-function bar (callback) {  
-    foo(function (err, data) {  
-      if (err)  
-        return callback(err) // devolver el error  
-    
-      // ... no hay error, continuar con los cálculos.  
-    
-      // si todo termina bien, llamar el callback con `null` como parámetro de error  
-    
-      callback(null, data)  
-    })  
-  } 
+    list.forEach(file => console.log(file))
+})
 
