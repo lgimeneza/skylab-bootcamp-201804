@@ -1,6 +1,6 @@
-describe('logic (project-app)', function() {
+describe('logic (project-app)', () => {
 
-    it('should create, login and unregister user', function(done) {
+    it('should create, login and unregister user', () => {
 
         let user = 'user' + Date.now()
         let password = 'pw1'
@@ -12,20 +12,18 @@ describe('logic (project-app)', function() {
             expect(registerUserRes).toBeDefined();
             expect(registerUserRes.status).toEqual('OK');
             expect(registerUserRes.data.id.length).toBe(24);
-            logic.loginUser(body)
-            .then((loginUserRes)=>{
-                expect(loginUserRes).toBeDefined();
-                expect(loginUserRes.status).toEqual('OK');
-                expect(loginUserRes.data.token.length).toBe(171)
-                logic.unregisterUser(body, loginUserRes.data.id, loginUserRes.data.token)
-                .then((unregisterUserRes) => {
-                    expect(unregisterUserRes).toBeDefined();
-                    expect(unregisterUserRes.status).toEqual('OK')
-                    done()
-                });
-            });
+            return logic.loginUser(body)
         })
-        .catch(done)
+        .then((loginUserRes)=>{
+            expect(loginUserRes).toBeDefined();
+            expect(loginUserRes.status).toEqual('OK');
+            expect(loginUserRes.data.token.length).toBe(171)
+            return logic.unregisterUser(body, loginUserRes.data.id, loginUserRes.data.token)
+        })
+        .then((unregisterUserRes) => {
+            expect(unregisterUserRes).toBeDefined();
+            expect(unregisterUserRes.status).toEqual('OK')
+        });
     });
 
     it('should not create user with password empty', function(done) {
