@@ -3,7 +3,7 @@
 
 if (typeof require === 'function') {
     var usersApi = require('../utils/users-api-1.0.0')
-    var Xtorage = require('../utils/xtorage-1.0.1')
+    var Xtorage = require('../utils/xtorage-1.1.0')
 }
 
 /**
