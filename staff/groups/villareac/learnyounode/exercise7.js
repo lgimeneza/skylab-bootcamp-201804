@@ -1,7 +1,18 @@
-const[_node, _process, ...oper] = process.argv
+var http = require('http');
 
-var sum = oper.reduce((acc, v) => parseInt(acc) + parseInt(v))
+let url = process.argv[2]
 
-console.log(sum)
+http.get(url, (response) => {
+    response.setEncoding('utf8')
+    
+    // response.on("error", function (error) {
+    //     console.log(error)
+    // })
+
+    response.on("data", function (data) {
+        console.log(data)
+    })
+
+})
 
 
