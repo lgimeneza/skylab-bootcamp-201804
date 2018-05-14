@@ -1,4 +1,6 @@
 describe('logic (Project App)', () => {
+    logic.init(Xtorage.local)
+
     const username = 'u', password = 'p'
     let data
 
@@ -40,7 +42,7 @@ describe('logic (Project App)', () => {
         )
     })
 
-    describe('register > login > logout > check login > login > unregister', () => {
+    describe('register > login > check login > logout > check login > login > check login > unregister > check login', () => {
         it('should succeed on correct user data', () =>
             logic.register(username, password, data)
                 .then(res => {
@@ -56,6 +58,8 @@ describe('logic (Project App)', () => {
 
                     let id = Xtorage.session.get('id')
                     expect(id).toBeDefined()
+
+                    expect(logic.loggedIn).toBeTruthy()
 
                     logic.logout()
 
@@ -78,6 +82,8 @@ describe('logic (Project App)', () => {
                     let id = Xtorage.session.get('id')
                     expect(id).toBeDefined()
 
+                    expect(logic.loggedIn).toBeTruthy()
+
                     return logic.unregister(username, password)
                 })
                 .then(res => {
@@ -88,6 +94,8 @@ describe('logic (Project App)', () => {
 
                     const token = Xtorage.session.get('token')
                     expect(token).toBeNull()
+
+                    expect(logic.loggedIn).toBeFalsy()
 
                     return logic.login(username, password)
                 })

@@ -34,7 +34,7 @@ var Xtorage = class {
 	 * @param {Storage} storage - An instance of Storage class (e.g. session or local storage in browser)
 	 */
 	constructor(storage) {
-		if (!(storage instanceof Storage)) throw TypeError('provided storage is not an instance of Storage')
+		//if (!(storage instanceof Storage)) throw TypeError('provided storage is not an instance of Storage')
 
 		this.storage = storage
 	}
