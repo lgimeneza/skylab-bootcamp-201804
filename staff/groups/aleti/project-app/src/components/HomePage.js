@@ -13,7 +13,6 @@ import {LinkContainer} from 'react-router-bootstrap'
 import swal from 'sweetalert2'
 
 class HomePage extends Component {
-
   state = {
     movies: {},
     value: '',
@@ -188,16 +187,16 @@ class HomePage extends Component {
                   <LinkContainer to="/profile">
                     <NavItem>Profile</NavItem>
                   </LinkContainer>
-                  <LinkContainer to="/" onClick={this.handleLogoutUser}>
+                  <LinkContainer to="/login" onClick={this.handleLogoutUser}>
                     <NavItem>Logout</NavItem>
                   </LinkContainer>
                 </NavDropdown>
                 : 
                 <Nav>
-                  <LinkContainer to="/login" onClick={this.handleLogoutUser}>
+                  <LinkContainer to="/login" >
                     <NavItem>login</NavItem>
                   </LinkContainer>
-                  <LinkContainer to="/register" onClick={this.handleLogoutUser}>
+                  <LinkContainer to="/register" >
                     <NavItem>register</NavItem>
                   </LinkContainer>
                 </Nav>

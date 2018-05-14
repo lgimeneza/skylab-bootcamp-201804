@@ -14,8 +14,9 @@ class ProfilePage extends Component {
                         {<h1> {localStorage.getItem('userName')}'s Profile </h1>}
 
                         <div>
-                            <Link to="/profile/update" className="btn btn-link">Public</Link><br />
+                            <Link to="/profile/update" className="btn btn-link">Public</Link>
                             <Link to="/profile/account" className="btn btn-link">Account</Link>
+                            <Link to="/" className="btn btn-link">Home</Link>
                         </div>
 
                         <div>
@@ -23,7 +24,7 @@ class ProfilePage extends Component {
                             <Route exact path="/profile/account" component={Account} />
                         </div>
 
-                        {<Link to="/" className="btn btn-link">Home</Link>}
+                        
 
                     </div>
                     

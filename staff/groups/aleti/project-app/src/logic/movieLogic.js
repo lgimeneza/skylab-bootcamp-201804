@@ -5,7 +5,7 @@ const movieLogic = {
     getTvPopular(key){
         return Promise.resolve()
         .then(()=>{
-            return  fetch(`${this.url}/tv/popular?api_key=${key}&language=en-US&page=1`)
+            return  fetch(`${this.url}/tv/popular?api_key=${key}&language=en-US&page=1&include_adult=false`)
             .then(resp => resp.json())
         })
     },
@@ -13,7 +13,7 @@ const movieLogic = {
     getMoviesPopular(key, page = 1){
         return Promise.resolve()
         .then(()=>{
-            return fetch(`${this.url}/movie/popular?api_key=${key}&language=en-US&page=${page}`)
+            return fetch(`${this.url}/movie/popular?api_key=${key}&language=en-US&page=${page}&include_adult=false`)
             .then(resp => resp.json())
         })
     },
@@ -21,7 +21,7 @@ const movieLogic = {
     searchMulti(key, query){
         return Promise.resolve()
         .then(()=>{
-            return  fetch(`${this.url}/search/multi?api_key=${key}&query=${query}&language=en-US&page=1&include_adult=true`)
+            return  fetch(`${this.url}/search/multi?api_key=${key}&query=${query}&language=en-US&page=1&include_adult=false`)
             .then(resp => resp.json())
         })
     }
