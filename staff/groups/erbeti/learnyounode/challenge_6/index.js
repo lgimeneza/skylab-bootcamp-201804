@@ -1,3 +1,4 @@
+var mymodule = require('./mymodule')
 
 var fs = require('fs') 
 var path= require('path')
