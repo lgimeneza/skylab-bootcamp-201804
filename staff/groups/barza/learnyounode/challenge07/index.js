@@ -10,6 +10,10 @@ http.get(URL, response => {
         resData += data + '\n';
     });
 
+    response.on('error', err => {
+        console.log(err);
+    });
+
     response
         .on('end', () => {
             console.log(resData);

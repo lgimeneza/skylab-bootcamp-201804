@@ -9,6 +9,6 @@ module.exports = function filterFiles(directory, extension, callback) {
             file => path.extname(file) === '.' + extension
         );
 
-        return callback(null, filteredFiles);
+        callback(null, filteredFiles);
     });
 };

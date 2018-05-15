@@ -1,7 +1,6 @@
 const filterFiles = require('./function');
 
-const pathDir = process.argv[2];
-const filterBy = process.argv[3];
+const [pathDir, filterBy] = process.argv.slice(2);
 
 filterFiles(pathDir, filterBy, (err, files) => {
     if (err) throw Error('hay errrrorrrrrrrr!');
