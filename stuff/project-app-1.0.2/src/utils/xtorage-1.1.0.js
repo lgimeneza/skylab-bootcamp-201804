@@ -24,16 +24,20 @@
  * console.log(user.id) // -> "abc123"
  * 
  * @author manuelbarzi
- * @version 1.0.1
+ * @version 1.1.0
  */
-class Xtorage {
+//class Xtorage {
+var Xtorage = class {
 	/**
 	 * Creates an instance
 	 * 
-	 * @param {Storage} storage - An instance of Storage class (e.g. session or local storage in browser)
+	 * @param {Storage} storage - An instance of Storage class (e.g. session or local storage in browser) or a compliance object (satisfying the methods defined in Storage class)
 	 */
 	constructor(storage) {
-		if (!(storage instanceof Storage)) throw TypeError('provided storage is not an instance of Storage')
+		if (!(storage instanceof Storage) && !(() => {
+			// checks if provided storage object is compliance with the methods defined in Storage and required in Xtorage
+			return ['setItem', 'getItem', 'removeItem', 'length', 'clear'].every(member => Reflect.has(storage, member))
+		})()) throw TypeError('provided storage is not an instance of Storage or an object compliance with it')
 
 		this.storage = storage
 	}
