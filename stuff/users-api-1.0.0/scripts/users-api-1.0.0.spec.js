@@ -7,12 +7,14 @@ describe('users api', () => {
     // use session storage for token
     usersApi.token = token => {
         if (token) {
-            sessionStorage.setItem('token', token)
+            //sessionStorage.setItem('token', token)
+            localStorage.setItem('token', token)
 
             return
         }
 
-        return sessionStorage.getItem('token')
+        //return sessionStorage.getItem('token')
+        return localStorage.getItem('token')
     }
 
     beforeEach(done => {
