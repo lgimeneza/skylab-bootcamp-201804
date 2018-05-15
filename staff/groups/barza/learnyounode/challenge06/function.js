@@ -5,9 +5,10 @@ module.exports = function filterFiles(directory, extension, callback) {
     fs.readdir(directory, (err, files) => {
         if (err) return callback(err);
 
-        return callback(
-            null,
-            files.filter(file => path.extname(file) === '.' + extension)
+        const filteredFiles = files.filter(
+            file => path.extname(file) === '.' + extension
         );
+
+        return callback(null, filteredFiles);
     });
 };
