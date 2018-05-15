@@ -64,6 +64,7 @@ class Account extends Component {
             username: this.state.user.username,
             password: this.state.user.password,
         }
+        console.log("body en account : ", body)
         if (new_pass === conf_pass) {
             logic.loginUser(body)
                 .then(res => {
