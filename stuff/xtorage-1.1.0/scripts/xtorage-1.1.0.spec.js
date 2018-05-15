@@ -243,4 +243,75 @@ describe('Xtorage', () => {
             expect(Xtorage.session.length).toBe(3)
         })
     })
+
+    describe('constructor', () => {
+        /**
+         * Demo storage that does not extend Storage (it cannot be extended, see https://stackoverflow.com/questions/17912703/create-a-storage-subclass-with-proto), but it implements the same methods defined in Storage and required in Xtorage.
+         */
+        class ComplianceStorage {
+            constructor() {
+                this.data = {}
+            }
+
+            setItem(key, value) {
+                this.data[key] = value
+            }
+
+            getItem(key) {
+                return this.data[key]
+            }
+
+            removeItem(key) {
+                return this.data[key]
+            }
+
+            get length() {
+                return Object.keys(this.data).length
+            }
+
+            clear() {
+                this.data = {}
+            }
+        }
+
+        it('should succeed with Storage-compliance storage', () => {
+            expect(() => new Xtorage(new ComplianceStorage())).not.toThrow()
+        })
+
+        /**
+         * Non-Storage-compliance storage
+         */
+        class NonComplianceStorage {
+            constructor() {
+                this.data = {}
+            }
+
+            // non-Storage-compliance method
+            setData(key, value) {
+                this.data[key] = value
+            }
+
+            // non-Storage-compliance method
+            getData(key) {
+                return this.data[key]
+            }
+
+            // non-Storage-compliance method
+            removeData(key) {
+                return this.data[key]
+            }
+
+            get length() {
+                return Object.keys(this.data).length
+            }
+
+            clear() {
+                this.data = {}
+            }
+        }
+
+        it('should fail with non-Storage-compliance storage', () => {
+            expect(() => new Xtorage(new NonComplianceStorage())).toThrow()
+        })
+    })
 })
