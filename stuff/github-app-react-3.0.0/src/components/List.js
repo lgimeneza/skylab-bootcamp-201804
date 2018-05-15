@@ -13,7 +13,7 @@ class UsersList extends Component {
     search(props) {
         logic.searchUsers(props.query)
             .then(users => this.setState({ users }))
-            .catch(props.showError)
+            .catch(props.onError)
     }
 
     componentWillReceiveProps(props) {
