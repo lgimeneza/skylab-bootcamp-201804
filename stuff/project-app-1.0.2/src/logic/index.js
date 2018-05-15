@@ -3,26 +3,35 @@
 
 if (typeof require === 'function') {
     var usersApi = require('../utils/users-api-1.0.0')
-    var Xtorage = require('../utils/xtorage-1.0.1')
-}
-
-// use session storage for token
-usersApi.token = token => {
-    if (token) {
-        Xtorage.session.set('token', token)
-        //sessionStorage.setItem('token', token)
-
-        return
-    }
-
-    return Xtorage.session.get('token')
-    //return sessionStorage.getItem('token')
+    var Xtorage = require('../utils/xtorage-1.1.0')
 }
 
 /**
  * Project App logic
  */
 const logic = {
+    /**
+     * Initializes logic's storage
+     * 
+     * @param {Xtorage} storage - The storage to use (session or local)
+     */
+    init(storage = Xtorage.session) {
+        if (!(storage instanceof Xtorage)) throw Error('storage not an instance of Xtorage')
+
+        this.storage = storage
+
+        // use session storage for token
+        usersApi.token = token => {
+            if (token) {
+                this.storage.set('token', token)
+
+                return
+            }
+
+            return this.storage.get('token')
+        }
+    },
+
     /**
      * Registers a user
      * 
@@ -52,7 +61,7 @@ const logic = {
     login(username, password) {
         return usersApi.authenticate(username, password)
             .then(id => {
-                Xtorage.session.set('id', id)
+                this.storage.set('id', id)
 
                 return true
             })
@@ -64,7 +73,7 @@ const logic = {
      * @returns {boolean} - The login status (true -> logged in)
      */
     get loggedIn() {
-        const id = Xtorage.session.get('id'), token = usersApi.token()
+        const id = this.storage.get('id'), token = usersApi.token()
 
         return typeof id === 'string' && typeof token === 'string'
     },
@@ -78,7 +87,7 @@ const logic = {
      * @returns {boolean} - Confirms log-out 
      */
     logout() {
-        Xtorage.session.clear()
+        this.storage.clear()
 
         return true
     },
@@ -91,7 +100,7 @@ const logic = {
      * @returns {Promise<Object>} - The user's data 
      */
     retrieve() {
-        const id = Xtorage.session.get('id')
+        const id = this.storage.get('id')
 
         return usersApi.retrieve(id)
     },
@@ -108,7 +117,7 @@ const logic = {
      * @returns {Promise<boolean>} - Confirms update 
      */
     update(username, password, data) {
-        const id = Xtorage.session.get('id')
+        const id = this.storage.get('id')
 
         return usersApi.update(id, username, password, data)
             .then(() => true)
@@ -125,12 +134,10 @@ const logic = {
      * @returns {Promise<boolean>} - Confirms unregistration 
      */
     unregister(username, password) {
-        const id = Xtorage.session.get('id')
+        const id = this.storage.get('id')
 
         return usersApi.unregister(id, username, password)
-            .then(() => {
-                return this.logout()
-            })
+            .then(() => this.logout())
     }
 }
 

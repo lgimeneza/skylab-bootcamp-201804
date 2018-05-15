@@ -1,5 +1,6 @@
 
 var fs = require('fs') 
+
 let file = process.argv[2]
 
 let text=fs.readFileSync(file)
