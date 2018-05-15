@@ -1,15 +1,15 @@
-var fs = require('fs')
-var path = require('path')
+const fs = require('fs')
+const path = require('path')
 
-module.exports = function(_dir, _ext, callback){
+module.exports = (_dir, _ext, callback) => {
 
     fs.readdir(_dir, (err, files) => {
 
         if (err) return callback(err)
 
-        var data = files.filter(file => path.extname(file) ===  `.${_ext}`)
+        const data = files.filter(file => path.extname(file) ===  `.${_ext}`)
 
-        callback(null, data)
+        setTimeout(callback(null, data),0)
 
     })
 }

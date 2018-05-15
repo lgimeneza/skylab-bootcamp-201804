@@ -31,6 +31,3 @@ function printResults(){
 for (let i=0; i<3; i++){
     getData(i)
 }
-
-
-kjf

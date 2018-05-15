@@ -1,4 +1,5 @@
-const filterFiles = require('./module-excercise6')
+//import path from "path";
+const path = require('./module-excercise6')
 
 const [_node, _path, _dir, _ext] = process.argv
 
