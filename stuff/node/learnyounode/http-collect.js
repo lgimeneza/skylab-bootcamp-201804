@@ -17,7 +17,7 @@ http.get(url, res => {
         console.log(text.length)
         console.log(text)
 
-        // how many chunks of data did i receive?
+        // how many chunks of data have i received?
         //console.log(chunks.length)
     })
 })
