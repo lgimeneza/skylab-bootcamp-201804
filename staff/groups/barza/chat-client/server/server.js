@@ -1,19 +1,16 @@
 const http = require('http');
-const queryString = require('query-string');
+const url = require('url');
 
 const PORT = 3000;
 
 let messages = 'Chat history\n';
 
 const server = http.createServer((req, res) => {
-    const index = req.url.indexOf('?') + 1;
+    const urlObj = url.parse(req.url, true);
+    const { from, message } = urlObj.query;
 
-    if (index > -1) {
-        const parsedURL = req.url.substring(index);
-        const parsedObj = queryString.parse(parsedURL);
-
-        messages += `${parsedObj.from}: ${parsedObj.message}\n`;
-
+    if (from && message) {
+        messages += `${from}: ${message}\n`;
         res.end(messages);
     }
 });
