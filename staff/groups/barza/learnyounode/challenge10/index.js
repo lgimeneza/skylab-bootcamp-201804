@@ -3,8 +3,6 @@ const net = require('net');
 const PORT = process.argv[2];
 
 const server = net.createServer(socket => {
-    console.log('client connected');
-
     let date = new Date();
     let dd = date.getDate();
     let mm = date.getMonth() + 1;
