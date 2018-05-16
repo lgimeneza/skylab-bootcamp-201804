@@ -2,10 +2,10 @@ const http = require('http')
 
 const urls = process.argv.slice(2)
 
-let contents = urls.map(() => '')
+const contents = urls.map(() => '')
 let finishes = 0
 
-// $ node juggling-async.js http://google.com http://google.es http://google.co.uk
+// $ node juggling-async-2.0.0.js http://google.com http://google.es http://google.co.uk http://google.it http://google.fr
 
 for (let i = 0; i < contents.length; i++) {
     http.get(urls[i], res => {
@@ -16,6 +16,8 @@ for (let i = 0; i < contents.length; i++) {
         res.on('data', chunk => contents[i] += chunk)
 
         res.on('end', () => {
+            console.log(`resp ${i + 1}`)
+            
             finishes++
 
             if (finishes === contents.length) contents.forEach(content => console.log(content))
