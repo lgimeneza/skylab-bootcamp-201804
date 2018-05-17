@@ -3,6 +3,7 @@
 // $ curl http://localhost:3000?from=pepito&message=whatever
 
 const http = require('http')
+const fs = require('fs')
 
 const qs = require('querystring')
 // const url = require('url')
@@ -12,7 +13,13 @@ const [port, file] = process.argv.slice(2)
 
 let messages = 'chat history:\n'
 
+const logs = fs.createWriteStream('./server.log')
+
 const server = http.createServer((req, res) => {
+    const ip = req.connection.remoteAddress
+    const log = `CONNECTION from ${ip} (${new Date()}) with params ${req.url}`
+    console.log(log)
+    logs.write(`${log}\n`)
 
     // with querystring
     const { url } = req
@@ -46,6 +53,8 @@ process.on('SIGINT', () => {
     console.log('\nstopping server')
 
     server.close()
+
+    logs.close()
 
     process.exit()
 })
