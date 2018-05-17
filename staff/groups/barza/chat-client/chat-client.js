@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-const [URL, PORT, from, message] = process.argv.slice(2);
+const [HOST, PORT, from, message] = process.argv.slice(2);
 
 axios
-    .get(`http://${URL}:${PORT}`, {
+    .get(`http://${HOST}:${PORT}`, {
         params: {
             from,
             message
@@ -14,4 +14,4 @@ axios
 
         console.log(data);
     })
-    .catch(console.log);
+    .catch(console.error);
