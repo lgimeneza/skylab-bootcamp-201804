@@ -6,6 +6,8 @@ let count = 0
 function getData(n){
     http.get(process.argv[2 + n], (res) =>{
 
+        res.on("error", console.error)
+
         let str = ''
 
         res.setEncoding('utf8')

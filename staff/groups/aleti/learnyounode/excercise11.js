@@ -4,10 +4,9 @@ const http = require('http')
 const [port, file] = process.argv.splice(2)
 
 var server = http.createServer(function (req, res) {
-    // manejar cada petición aquí.
+    res.writeHead(200, { 'content-type': 'text/plain' })
 
-    res = fs.createReadStream(file)
-    req.pipe(res)
-
+    const a = fs.createReadStream(file)
+    a.pipe(res)
 
 }).listen(port)
