@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 
 const app = express()
 
-const port = process.argv[2]
+const port = process.argv[2] || 3000
 
 app.use(bodyParser.urlencoded({ extended: false })) // middleware
 
