@@ -1,9 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const logic = require('./logic')
 
-// const port = process.argv[2]
-const port = 3000
+const port = process.argv[2]
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false })) // middleware
@@ -16,53 +14,64 @@ app.get('/', (req, res) => {
     res.send(`${renderfun()}`)
 })
 
-app.post('/add-done/:id', (req, res) => {
+app.post('/add-task', (req, res) => {
     const { body: { task } } = req
-    tasks.push(task)
+    
+    tasks.push(task) 
+
+    res.send(`${renderfun()}`)
+})
+
+app.post(`/add-done/:id`, (req, res) => {
+    let idx = req.params.id
+
+    dones.push(tasks[idx])
+    tasks.splice(idx, 1);
+
     res.send(`${renderfun()}`)
 })
 
 app.post(`/remove-done/:id`, (req, res) => {
-    let id = req.params.id
-    dones.push(tasks[id])
-    tasks.splice(id, 1)
+    let idx = req.params.id
+
+    dones.splice(idx, 1);
+
     res.send(`${renderfun()}`)
 })
 
 renderfun = () => {
     const listToDo = []
     const listDone = []
-    let rendering = ''
+    let rendering = ""
 
     if(tasks && tasks.length){
         for(let i = 0; i < tasks.length; i++){
-            listToDo.push(`<form action="/add-done/${id}" method="POST">
-            ${tasks[i]}<button type="submit">done</button></form>`)
+            listToDo.push(`<form action="/add-done/${i}" method="POST">
+            ${tasks[i]}<button type="submit">✔</button></form>`)
         }
         rendering += `<h3>TO DO</h3>\n${listToDo.join("")}`
     }
-
-    if(dones && dones.length){
-        for (let n = 0; n < dones.length; n++) {
-            listDones.push(`<form action="/remove-done/${n}" method="POST">
-            ${dones[n]}<button type="submit">X</button></form>`)
+    if (dones && dones.length){
+        for(let n = 0; n < dones.length; n++){
+            listDone.push(`<form action="/remove-done/${n}" method="POST">
+            ${dones[n]}<button type="submit">❌</button></form>`)
         }
         rendering += `<h3>DONE</h3>\n${listDone.join("")}`
     }
-    
-    return(`<html>
+
+    return (
+        `<html>
             <head>
-                <title>Notes App</title>
+                <title>Task-App</title>
             </head>
             <body>
                 <form action="/add-task" method="POST">
-                    <textarea name="note" placeholder="write a taks"></textarea>
-                    <button type="submit">keep</button>
+                    <input type="text" name="task" placeholder="write a task"></input>
+                    <button type="submit">+</button>
                 </form>
                 ${rendering}
             </body>
         </html>`)
-
 }
 
 app.listen(port, () => console.log(`server running on port ${port}`))
@@ -72,3 +81,4 @@ process.on('SIGINT', () => {
 
     process.exit()
 })
+
