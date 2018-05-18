@@ -13,7 +13,7 @@ if (typeof Array.prototype.toRandomCase !== "function") {
  * 
  */
   Array.prototype.toRandomCase = function() {
-    if (typeof this !== 'array') throw Error('input is not a array!');
+    if (! Array.isArray(this)) throw Error('input is not a array!');
     var array = [];
     var letter = this.toString();
     var value = '';

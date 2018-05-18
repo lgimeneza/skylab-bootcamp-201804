@@ -19,8 +19,8 @@ var array2 = [2, 30, 1, 4];
  */
 
 function arrayMerger(array1, array2) {
-  if (!(array1 instanceof array)) throw Error('parameter not valid');
-  if (!(array2 instanceof array)) throw Error('parameter not valid');
+  if (!(array1 instanceof Array)) throw Error('parameter not valid');
+  if (!(array2 instanceof Array)) throw Error('parameter not valid');
     
   var arrayB = array2;
   var arrayA = array1;
