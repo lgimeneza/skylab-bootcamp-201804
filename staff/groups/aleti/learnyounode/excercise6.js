@@ -1,13 +1,9 @@
-const filterFiles = require('./module-excercise6')
+var mymodule = require('./module-excercise6')
 
-const [_node, _path, _dir, _ext] = process.argv
+mymodule(process.argv[2], process.argv[3], function(err, files) {
+  
+  if(err) throw err
 
-filterFiles(_dir, _ext, (err, data) => {
+  files.forEach(file => { console.log(file) })
 
-    if (err) throw err
-
-    data.forEach(file => {
-        console.log(file)
-    });
-
-})
+  });
