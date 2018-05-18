@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var fs = require('fs');
 var path = require('path');
 
@@ -10,6 +11,12 @@ module.exports = function (dirname, ext, callback) {
     if (err) {
       return callback(err);
     }
+=======
+const fs = require('fs')
+const path = require('path')
+
+module.exports = (_dir, _ext, callback) => {
+>>>>>>> e350543837abd63bd395fbed1624e13f4245dee8
 
     var result = [];
     
@@ -20,8 +27,14 @@ module.exports = function (dirname, ext, callback) {
 
     });
 
+<<<<<<< HEAD
     callback(null, result);
 
   });
+=======
+        const data = files.filter(file => path.extname(file) ===  `.${_ext}`)
+
+        setTimeout(callback(null, data),0)
+>>>>>>> e350543837abd63bd395fbed1624e13f4245dee8
 
 };

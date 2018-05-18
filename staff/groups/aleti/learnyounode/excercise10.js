@@ -1,38 +1,34 @@
-const net = require('net');
+//Escuchar conexiones TCP en el puerto indicado por e primer argumento
+const net = require('net')
 
-function twoDigits(n) { return n < 10 ? '0' + n : n }
-
-var server = net.createServer(function(socket) {
-  let d = new Date();
-  let formatedDate = d.getFullYear() + "-"
-    + twoDigits(d.getMonth() + 1) + "-"
-    + twoDigits(d.getDate()) + " "
-    + twoDigits(d.getHours()) + ":"
-    + twoDigits(d.getMinutes()) + "\n";
-  socket.end(formatedDate);
-});
-server.listen(process.argv[2], () => console.log("server active"));
-
-
-// FROM LEARNYOUNODE SOLUTION :
-
-/* var net = require('net')
-
-function zeroFill (i) {
-  return (i < 10 ? '0' : '') + i
-}
-
-function now () {
-  var d = new Date()
-  return d.getFullYear() + '-' +
-    zeroFill(d.getMonth() + 1) + '-' +
-    zeroFill(d.getDate()) + ' ' +
-    zeroFill(d.getHours()) + ':' +
-    zeroFill(d.getMinutes())
-}
+const [port] = process.argv.splice(2)
 
 var server = net.createServer(function (socket) {
-  socket.end(now() + '\n')
+
+    let _date = new Date()
+
+    let res = formatDate(_date)
+    
+    socket.write(res + '\n');
+
+    socket.end()
+
 })
 
-server.listen(Number(process.argv[2])) */
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear(),
+        hours = '' + d.getHours(),
+        minutes = '' + d.getMinutes()
+
+    if (month.length < 2) month = '0' + month
+    if (day.length < 2) day = '0' + day
+    if (hours.length < 2) hours = '0' + hours
+    if (minutes.length < 2) minutes = '0' + minutes
+
+    return [year, month, day].join('-') + ' ' + [hours, minutes].join(':')
+}
+
+server.listen(port)

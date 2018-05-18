@@ -1,10 +1,10 @@
-var fs = require('fs')
+const fs = require('fs')
+const path = process.argv[2]
 
-var buf = fs.readFileSync(process.argv[2])
+const buf = fs.readFileSync(path)
 
-var srt = buf.toString()
-
-var strArr = srt.split('\n')
+var str = buf.toString()
+var strArr = str.split('\n')
 
 console.log(strArr.length - 1)
 
