@@ -20,36 +20,30 @@ app.get('/', (req, res) => {
                 <textarea name="note" placeholder="write a note"></textarea>
                 <button type="submit">keep</button>
             </form>
+            <h1>ToDo</h1>
+            <ul>
+            ${notes.map((note, index) => `<li>${note}<button><a href=/dones?id=${note}>V</a></button></li>`)}
+             </ul>
+             <h1>Dones</h1>
+            <ul>
+          
+             </ul>
         </body>
     </html>`)
 })
 
 app.post('/add-note', (req, res) => {
     const { body: { note } } = req
-
     notes.push(note)
-
-    res.send(`<html>
-        <head>
-            <title>Notes App</title>
-        </head>
-        <body>
-            <form action="/add-note" method="POST">
-                <textarea name="note" placeholder="write a note"></textarea>
-                <button type="submit">keep</button>
-            </form>
-            <ul>
-                ${notes.map((note, index) => `<li data=${index}>${note}</li>`)}
-            </ul>
-        </body>
-    </html>`)
+    res.redirect('/')
 })
 
 
-
-app.delete('/', function (req, res) {
-    res.send('DELETE request to homepage');
-});
+app.get('/dones', (req, res) => {
+    const { body: { note } } = req
+    notes.pop(note)
+    res.redirect('/')
+})
 
 app.listen(port, () => console.log(`server running on port ${port}`))
 
