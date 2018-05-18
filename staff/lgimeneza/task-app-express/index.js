@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 app.get('/', (req, res) => {
 
-    console.log(logic.listTodos())
+    const todos = 
 
     res.status(200).send(`
     
@@ -36,6 +36,7 @@ app.get('/', (req, res) => {
             <button type="submit">add</button>
         </form>
     
+        ${todos}
         <h2>todo\'s</h2>
     
         <ul>
@@ -84,6 +85,6 @@ app.get('/remove-task/:taskId', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`API REST corriendo en http://localhost:${port}`)
+    console.log(`Server corriendo en http://localhost:${port}`)
 })
 
