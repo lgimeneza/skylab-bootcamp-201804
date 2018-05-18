@@ -28,8 +28,8 @@ class App extends Component {
         </header>
         <Search onSearch={this.search} />
         <div>
-          <Route path="/search/:query" render={props => <List query={props.match.params.query} showInfo={this.showInfo} showError={this.showError} className="left" />} />
-          <Route path="/user/:username" render={props => <Info username={props.match.params.username} showError={this.showError} className="right" />} />
+          <Route path="/search/:query" render={props => <List query={props.match.params.query} onError={this.showError} className="left" />} />
+          <Route path="/user/:username" render={props => <Info username={props.match.params.username} onError={this.showError} className="right" />} />
         </div>
       </main>
     )
