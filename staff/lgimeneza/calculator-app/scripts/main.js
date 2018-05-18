@@ -1,3 +1,4 @@
+'use strict'
 
 var calculator = new Calculator();
 

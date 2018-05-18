@@ -13,7 +13,7 @@ class App extends Component {
     query: '',
   }
 
-  _searchUsers = e => {
+  searchUsers = e => {
     e.preventDefault();
     if (this.state.query.length > 0) {
       logic.searchUsers(this.state.query)
@@ -27,7 +27,7 @@ class App extends Component {
     }
   }
 
-  _retrieveUser = username => {
+  retrieveUser = username => {
     logic.retrieveUser(username)
       .then(user => {
         this.setState({
@@ -37,9 +37,6 @@ class App extends Component {
       });
   }
 
-  handleChange = e => {
-    this.setState({ query: e.target.value })
-  }
 
   render() {
     return (
@@ -47,7 +44,7 @@ class App extends Component {
         <section className="search-container">
           <SearchUsers
             handleWriteUser={this.handleChange}
-            searchUsers={this._searchUsers}
+            searchUsers={this.searchUsers}
             query={this.state.query}
           />
         </section>
@@ -55,7 +52,7 @@ class App extends Component {
           <div className="user-list">
             <UsersList
               users={this.state.users}
-              handleUsers={this._retrieveUser}
+              handleUsers={this.retrieveUser}
             />
           </div>
           <div className="user-detail">
