@@ -11,7 +11,7 @@ class Info extends Component {
     retrieve(props) {
         logic.retrieveUser(props.username)
             .then(user => this.setState({ user }))
-            .catch(props.showError)
+            .catch(props.onError)
     }
 
     componentWillReceiveProps(props) {
