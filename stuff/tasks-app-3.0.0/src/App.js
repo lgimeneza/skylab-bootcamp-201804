@@ -46,6 +46,7 @@ class App extends Component {
 
   render() {
     return (
+      <BrowserRouter>
       <div className="App">
         <h1>tasks app</h1>
 
@@ -60,6 +61,7 @@ class App extends Component {
 
         <TasksList title={'DONE list'} tasks={this.state.dones} handleTask={this.removeTask} buttonTitle={'X'}/>
       </div>
+      </BrowserRouter>
     );
   }
 }
