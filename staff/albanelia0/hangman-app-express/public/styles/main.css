@@ -21,3 +21,12 @@ img {
 .letter {
   padding-right: 5px;
 }
+
+.form {
+  display: flex;
+  justify-content: space-between
+}
+
+.guesses {
+  margin:20px 0 30px;
+}
