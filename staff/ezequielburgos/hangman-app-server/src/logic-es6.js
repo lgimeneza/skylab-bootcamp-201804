@@ -103,3 +103,4 @@ const Hangman = (function () {
     return Hangman
 })()
 
+module.exports = Hangman;
