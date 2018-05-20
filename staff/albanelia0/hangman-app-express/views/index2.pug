@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible" content="ie=edge")
+		title Document
+		link(rel="stylesheet" href="styles/main.css")
+		link(href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet")
+	body
+		main
+			h1 hangman
+			form(action='/try-word' method="POST")
+				input(type="text" name="text")
+				button(type="submit") Submit
+			form(action='/guess' method="POST")
+				input(type="password" name="word")
+				button(type="submit") Word to guess
+			each letter in guessed
+				span.letter #{letter}
+			if status === Hangman.WIN
+				img(src='/image/win.png')
+			else
+				img(src=`/image/${attemptsDone}.png`)
+			form(action='/new-game' method="GET")
+				button(type="submit") Restart
+			
+
+
