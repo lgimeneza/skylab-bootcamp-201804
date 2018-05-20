@@ -17,3 +17,22 @@ img {
   height: 500px;
   width: 300px;
 }
+
+.form {
+  display: flex;
+  justify-content: space-between
+}
+
+.guesses {
+  margin: 20px 0 30px;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: column;
+  width: 30%
+}
+
+.btn-primary {
+  width: 100px;
+}

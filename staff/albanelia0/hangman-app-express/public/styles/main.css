@@ -2,7 +2,7 @@ body {
   padding: 10px;
   margin: 10px;
   font-family: 'Abel', sans-serif;
-  background: rgb(21, 128, 122)
+  background: #E0F2F1
 }
 
 .letters {
@@ -28,5 +28,5 @@ img {
 }
 
 .guesses {
-  margin:20px 0 30px;
+  margin: 20px 0 30px;
 }
