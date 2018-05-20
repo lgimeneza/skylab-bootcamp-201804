@@ -6,7 +6,7 @@ http.get(url, (res) =>{
     res.on('error', res => console.error)
 
     let str = ''
-
+    res.on("error", console.error)
     res.setEncoding('utf8')
 
     res.on("data", (data) => {str += data})
@@ -16,3 +16,19 @@ http.get(url, (res) =>{
     })
 
 })
+
+// LEARNYOUNODE solution : 
+
+/* var http = require('http')
+    var bl = require('bl')
+
+    http.get(process.argv[2], function (response) {
+      response.pipe(bl(function (err, data) {
+        if (err) {
+          return console.error(err)
+        }
+        data = data.toString()
+        console.log(data.length)
+        console.log(data)
+      }))
+    }) */
