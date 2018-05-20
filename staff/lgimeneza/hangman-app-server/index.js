@@ -2,7 +2,7 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const Hangman = require('./src/logic')
+const Hangman = require('./src/hangman-random')
 
 const app = express()
 const port = process.env.PORT || 3000
