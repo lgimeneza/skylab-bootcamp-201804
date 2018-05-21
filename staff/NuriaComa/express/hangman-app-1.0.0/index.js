@@ -45,15 +45,15 @@ app.get('/', (req, res) => {
                    </section>
                    <section class='box2'>
                        <article class="ord1">  
-                       ${newGame ? `<p class='letters'>${letters.join(' ')}</p> `:''}
+                       ${newGame ? `<p class='letters'>Letters</p><p class='letters'>${letters.join(' ')}</p> `:''}
                        </article>
                        <article class="ord2">
-                       ${newGame ? `<p class='guessed'> ${newGame._guessed.join(' ')}</p> `:''}
+                       ${newGame ? `<p class='guessed'> ${newGame._guessed.join(' ')}</p>
                        <p class="text" >Insert the letter or the word that you think are correct</p> 
                         <form action='/insert-letter' method='POST'>
                         <input class='inpIndex'autocomplete="off" type='text' name='letter' placeholder="letter or word">
                         
-                        <button class="btn btn-outline-info">TRY</button>
+                        <button class="btn btn-outline-info">TRY</button>`:''}
                         
                         </form>
                        </article>
