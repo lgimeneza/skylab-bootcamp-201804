@@ -7,7 +7,7 @@ const Hangman = (function () {
 
             this._word = word.trim()
 
-            if (!this._word.length) throw Error('word cannot empty or blank')
+            if (!this._word.length) throw Error('word cannot be empty or blank')
 
             this._attempts = attempts
 
@@ -103,3 +103,4 @@ const Hangman = (function () {
     return Hangman
 })()
 
+module.exports = Hangman
