@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 const attempts = 7
 
+let hangmans = []
+
 let hangman = new Hangman('hello', attempts)
 
 app.listen(port, () => {
@@ -20,7 +22,9 @@ app.listen(port, () => {
 })
 
 app.get('/', function(req, res) {
+
     res.render('home', { guessed: hangman.guessed().join(' '), status: hangman.status(), attempts: attempts - hangman.attempts() });
+
 });
 
 app.post('/try-letter', function(req, res) {
