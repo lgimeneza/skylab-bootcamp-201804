@@ -16,11 +16,9 @@ block content
                     input.form-control.mr-sm-2(type="text" name="text" autofocus placeholder="Enter a letter or Word")
                     button.btn.btn-outline-info.my-2.my-sm-0(type="submit") Try
             .row.justify-content-center
-                h4.text-center.mt-5
-                    b
-                        i
-                            | Remaining attempts: 
-                            span.attempts.text-info #{attempts}
+                h4.text-center.mt-5.font-italic.font-weight-bold
+                    | Remaining attempts: 
+                    span.attempts.text-info #{attempts}
         .row.justify-content-center.mt-4
             if error
                 h5(class="error") #{error}
