@@ -1,6 +1,6 @@
 'user strict'
 
-const Hangman = require('./logic-1.0.0')
+const Hangman = require('./logic-1.0.1')
 
 class HangmanRandom extends Hangman{
 

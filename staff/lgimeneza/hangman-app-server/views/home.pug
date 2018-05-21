@@ -38,10 +38,10 @@ html(lang="en")
           .modal-header
             h5#exampleModalCenterTitle.modal-title Hangman
           .modal-body.text-center
-            if status === 2
+            if status === 1
               img(src="images/won.jpg" alt="image")      
               h1 You WON!!!
-            if status === 1
+            if status === 2
               img(src="images/transparent.png" class="hangman-7" alt="image")      
               h1 Game over!
           .modal-footer
@@ -51,9 +51,9 @@ html(lang="en")
     script(src="vendor/popper/1.14.3/popper.min.js")
     script(src="vendor/bootstrap/4.1.0/js/bootstrap.min.js")
     script.
-      if (#{status} === 2){
+      if (#{status} === 1){
         $('#exampleModalCenter').modal('show')
       }
-      if (#{status} === 1){
+      if (#{status} === 2){
         $('#exampleModalCenter').modal('show')
       }
