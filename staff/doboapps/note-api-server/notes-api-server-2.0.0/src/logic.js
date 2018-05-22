@@ -79,6 +79,16 @@ const logic = {
         if (!note) throw Error(`note with id ${id} does not exist`)
 
         note.text = text
+    },
+
+    findNotes(text){
+
+        if (typeof text !== 'string') throw Error('text is not a string')
+        if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+
+        return  this._notes.filter(v=>{
+            return v.text.search(text)>-1
+            })
     }
 }
 

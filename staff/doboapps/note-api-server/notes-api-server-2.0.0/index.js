@@ -27,6 +27,24 @@ app.post('/api/notes', (req, res) => {
     }
 })
 
+
+
+
+app.get('/api/find/:text', (req, res) => {
+    const { params: { text } } = req
+
+    try {
+        const note = logic.findNotes(text)
+
+        res.json({ status: 'OK', data: note })
+    } catch ({ message }) {
+        res.status(400)
+
+        res.json({ status: 'KO', error: message })
+    }
+})
+
+
 app.get('/api/notes/:id', (req, res) => {
     const { params: { id } } = req
 
