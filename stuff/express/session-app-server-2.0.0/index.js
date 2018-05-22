@@ -1,9 +1,9 @@
+'use strict'
+
 const express = require('express')
-const bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
 
 const app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieSession({
     name: 'my-session',
     keys: ['secret-phrase']

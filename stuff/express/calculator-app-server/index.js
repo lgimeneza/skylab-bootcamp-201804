@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express')
 
 const port = process.argv[2]

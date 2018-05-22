@@ -1,3 +1,5 @@
+'use strict'
+
 /*
 .../add?n=1 => 1
 .../add?n=3 => 4
