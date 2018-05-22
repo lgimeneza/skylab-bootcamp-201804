@@ -68,10 +68,11 @@ describe('logic (notes)', () => {
 
         expect(_notes.length).toBe(3)
 
-        const notes = logic.listNotes()
+        const notes = logic.listNotes('123')
 
         expect(notes.length).toBe(_notes.length)
-        expect(notes).toBe(_notes)
+        expect(notes).toEqual(_notes)
+        expect(notes.toString()).toBe(_notes.toString())
     })
 
     describe('retrieve note', () => {
