@@ -18,8 +18,7 @@ const logic = {
     },
 
     listNotes() {
-        let _listNotes = this._notes.map(v => v.text )
-        return _listNotes
+        return this._notes
     },
 
     removeNote(id) {

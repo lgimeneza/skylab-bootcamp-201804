@@ -13,10 +13,10 @@ describe('notes (logic)', () => {
 
         expect(logic._notes.length).toBe(1)
 
-        // let [note] = logic._notes
+         let [note] = logic._notes
 
-        expect(logic._notes[0].text).toBe('my note')
-        expect(logic._notes[0].id).toBeDefined()
+        expect(note.text).toBe('my note')
+        expect(note.id).toBeDefined()
     })
 
     it('should list notes', () => {
@@ -24,7 +24,7 @@ describe('notes (logic)', () => {
         let listNotes = logic.listNotes()
 
         expect(listNotes.length).toBe(1) 
-        expect(listNotes[0]).toBe('my note')
+        expect(listNotes[0].text).toBe('my note')
     })
 
     it('should remove a note', () => {
