@@ -1,4 +1,3 @@
-//logic.js Melinx
 'use strict'
 
 class Note {
@@ -22,7 +21,7 @@ const logic = {
     },
 
     removeNote(id) {
-        this._notes = this._notes.filter(n => n.id!== id)
+        this._notes = this._notes.filter(n => n.id!= id)
     }
 }
 
