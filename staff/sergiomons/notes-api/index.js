@@ -11,15 +11,22 @@ app.use(bodyParser.json())
 app.post('/api/notes', (req, res) => {
     const { body: { text } } = req
 
-    logic.addNote(text)
+try {
+    const id = logic.addNote(text)
 
     res.status(201)
-    res.json({ status: 'OK' })
+    res.json({ status: 'OK', data : {id}})
+
+} catch ({message}) {
+    res.status(400)
+    res.json({ status: 'KO', message})
+}
+
 })
 
 app.get('/api/notes', (req, res) => {
 
-    logic.listNotes()
+    const notes = logic._notes
 
     res.json({
         status: 'OK',
@@ -30,15 +37,19 @@ app.get('/api/notes', (req, res) => {
 app.delete('/api/notes/:id', (req, res) => {
     const { params: { id } } = req
 
-    const matchId = logic.removeNote(id)
-
-    if (matchId) {
-
-        res.json({ status: 'OK' })
-    } else {
-        res.status(404)
-
-        res.json({ status: 'KO', error: `note with id ${id} not found` })
+    
+    try {
+        const note = logic.removeNote(id)
+        
+        if (note) {
+    
+            res.json({ status: 'OK' })
+        } else {
+            res.status(404)
+            res.json({ status: 'KO', error: `note with id ${id} not found` })
+        }
+    } catch ({message}) {
+            res.json({ status : 'KO', message })
     }
 })
 

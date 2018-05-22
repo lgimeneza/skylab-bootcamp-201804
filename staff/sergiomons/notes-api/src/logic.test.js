@@ -1,5 +1,6 @@
 const logic = require('./logic')
 const expect = require('expect')
+const expectJS = require('expect.js')
 
 describe('testing notes-api', () => {
     beforeEach(() => {
@@ -20,8 +21,9 @@ describe('testing notes-api', () => {
 
         logic.addNote('my note2');
         const note = logic._notes;
-        logic.listNotes();
+        const arrayNotes= logic.listNotes();
         expect(note.length).toBe(2);
+        expectJS(arrayNotes).to.be.an('array');;
         expect(note[0].text).toBe('my note');
         expect(note[1].text).toBe('my note2');
         expect(note[0].id).toBeDefined();
@@ -31,6 +33,7 @@ describe('testing notes-api', () => {
     })
 
     it('test delete notes', () => {
+        expect(logic._notes.length).toBe(0)
         logic.addNote('my note');
         logic.addNote('my note2');
         const id = logic._notes[0].id
@@ -49,7 +52,7 @@ describe('handler error addNotes', () => {
 
         expect(() => {
             logic.addNote(7)
-        }).toThrow(Error('Invalid input text'))
+        }).toThrow(Error('Invalid input text, it must a string'))
     })
 
     it('addNote(7) should throw Error ', () => {
@@ -58,15 +61,12 @@ describe('handler error addNotes', () => {
             logic.addNote('')
         }).toThrow(Error('Text cannot blank or empty'))
     })
-})
 
-describe('handler error removeNote', () => {
-
-    it('removeNote("note") should throw Error ', () => {
+    it('removeNote(7) should throw Error ', () => {
 
         expect(() => {
-            logic.removeNote('note')
-        }).toThrow(Error('Invalid id'))
+            logic.removeNote(7)
+        }).toThrow(Error('Invalid id, it must a string'))
     })
 })
 
