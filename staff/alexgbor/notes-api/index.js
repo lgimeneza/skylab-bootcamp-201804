@@ -1,7 +1,10 @@
+'use strict'
+
 const express = require('express')
 const bodyParser = require('body-parser')
+const logic = require('./src/logic')
 
-const port = process.argv[2]
+const port = process.argv[2] || 3000
 
 const app = express()
 app.use(bodyParser.json()) // middleware
@@ -11,46 +14,57 @@ let notes = []
 app.post('/api/notes', (req, res) => {
     const { body: { text } } = req
 
-    // ?
+    try {
+        const id = logic.addNote(text)
 
-    // res.setHeader('content-type', 'application/json')
+        res.status(201)
 
-    // res.send(JSON.stringify({
-    //     status: 'OK'
-    // }))
+        res.json({ status: 'OK', data: { id } })
+    } catch ({ message }) {
+        res.status(400)
 
-    res.status(201)
-    res.json({ status: 'OK' })
+        res.json({ status: 'KO', error: message })
+    }
+})
+
+app.get('/api/notes/:id', (req, res) => {
+    const { params: { id } } = req
+
+    try {
+        const note = logic.retrieveNote(id)
+
+        res.json({ status: 'OK', data: note })
+    } catch ({ message }) {
+        res.status(400)
+
+        res.json({ status: 'KO', error: message })
+    }
 })
 
 app.get('/api/notes', (req, res) => {
-    // res.setHeader('content-type', 'application/json')
-
-    // res.send(JSON.stringify({
-    //     status: 'OK',
-    //     notes
-    // }))
-
-    res.json({
-        status: 'OK',
-        notes
-    })
+    const { query: { str } } = req
+    if (str) {
+        try {
+            res.json({ status: 'OK', data: logic.listNotes(str) })
+        } catch ({ message }) {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        }
+    } else
+        res.json({ status: 'OK', data: logic.listNotes() })
 })
 
 app.delete('/api/notes/:id', (req, res) => {
     const { params: { id } } = req
 
-    const note = notes.find(note => note.id == id)
-
-    if (note) {
-        //notes = notes.filter(note => note.id !== parseInt(id))
-        notes = notes.filter(note => note.id != id)
+    try {
+        logic.removeNote(id)
 
         res.json({ status: 'OK' })
-    } else {
-        res.status(404)
+    } catch ({ message }) {
+        res.status(400)
 
-        res.json({ status: 'KO', error: `note with id ${id} not found` })
+        res.json({ status: 'KO', error: message })
     }
 })
 
