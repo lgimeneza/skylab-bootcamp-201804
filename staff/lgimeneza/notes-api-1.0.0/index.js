@@ -21,11 +21,22 @@ app.post('/api/notes', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
+    const { query: { q }} = req
 
-    res.json({
-        status: 'OK',
-        notes: logic.listNotes()
-    })
+    if (q){
+        try {
+            res.status(200).json({ status: 'OK', data: logic.findNotes(q)}) 
+        } catch (message) {
+            res.status(400).json({ status: 'KO', data: message})
+        }
+        
+    } else {
+        res.json({
+            status: 'OK',
+            notes: logic.listNotes()
+        })
+    }
+
 })
 
 app.delete('/api/notes/:id', (req, res) => {
@@ -43,6 +54,18 @@ app.delete('/api/notes/:id', (req, res) => {
         res.json({ status: 'KO', error: `note with id ${id} not found` })
     }
     
+})
+
+app.put('/api/notes/:id', (req, res) => {
+    const { params: { id }, body: { text }} = req
+
+    try {
+        
+        logic.updateNote(id, text)
+    } catch {
+        res.status(400).json()
+    }
+
 })
 
 app.listen(port, () => console.log(`server running on port ${port}`))
