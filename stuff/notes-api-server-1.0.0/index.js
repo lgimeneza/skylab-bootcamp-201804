@@ -18,7 +18,7 @@ app.post('/api/notes', (req, res) => {
         const id = logic.addNote(text)
 
         res.status(201)
-        
+
         res.json({ status: 'OK', data: { id } })
     } catch ({ message }) {
         res.status(400)
@@ -42,7 +42,18 @@ app.get('/api/notes/:id', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-    res.json({ status: 'OK', data: logic.listNotes() })
+    const { query: { q } } = req
+
+    if (q) {
+        try {
+            res.json({ status: 'OK', data: logic.findNotes(q) })
+        } catch ({ message }) {
+            res.status(400)
+
+            res.json({ status: 'KO', error: message })
+        }
+    } else
+        res.json({ status: 'OK', data: logic.listNotes() })
 })
 
 app.delete('/api/notes/:id', (req, res) => {
@@ -50,6 +61,20 @@ app.delete('/api/notes/:id', (req, res) => {
 
     try {
         logic.removeNote(id)
+
+        res.json({ status: 'OK' })
+    } catch ({ message }) {
+        res.status(400)
+
+        res.json({ status: 'KO', error: message })
+    }
+})
+
+app.put('/api/notes/:id', (req, res) => {
+    const { params: { id }, body: { text } } = req
+
+    try {
+        logic.updateNote(id, text)
 
         res.json({ status: 'OK' })
     } catch ({ message }) {

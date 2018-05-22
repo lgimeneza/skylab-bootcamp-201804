@@ -53,6 +53,12 @@ const logic = {
         return this._notes
     },
 
+    /**
+     * 
+     * @param {*} id 
+     *
+     * @throws
+     */
     removeNote(id) {
         if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -65,6 +71,13 @@ const logic = {
         this._notes.splice(index, 1)
     },
 
+    /**
+     * 
+     * @param {*} id 
+     * @param {*} text 
+     * 
+     * @throws
+     */
     updateNote(id, text) {
         if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -79,6 +92,20 @@ const logic = {
         if (!note) throw Error(`note with id ${id} does not exist`)
 
         note.text = text
+    },
+
+    /**
+     * 
+     * @param {*} text 
+     * 
+     * @throws
+     */
+    findNotes(text) {
+        if (typeof text !== 'string') throw Error('text is not a string')
+
+        if (!text.length) throw Error('text is empty')
+
+        return this._notes.filter(note => note.text.includes(text))
     }
 }
 

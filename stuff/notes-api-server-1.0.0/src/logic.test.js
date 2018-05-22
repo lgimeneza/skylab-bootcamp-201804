@@ -206,7 +206,7 @@ describe('logic (notes)', () => {
             expect(res.length).toBe(2)
 
             const [note1, note2] = res
-            
+
             expect(note1).toBeDefined()
             expect(note1.id).toBe(id2)
             expect(note1.text).toBe('my note 11')
@@ -214,6 +214,37 @@ describe('logic (notes)', () => {
             expect(note2).toBeDefined()
             expect(note2.id).toBe(id3)
             expect(note2.text).toBe('my note 111')
+        })
+
+        it('should return results on matching text case', () => {
+            expect(_notes.length).toBe(0)
+
+            const id1 = logic.addNote('my note a')
+            const id2 = logic.addNote('my note aA')
+            const id3 = logic.addNote('my note aAa')
+
+            const res = logic.findNotes('aA')
+
+            expect(res).toBeDefined()
+            expect(res.length).toBe(2)
+
+            const [note1, note2] = res
+
+            expect(note1).toBeDefined()
+            expect(note1.id).toBe(id2)
+            expect(note1.text).toBe('my note aA')
+
+            expect(note2).toBeDefined()
+            expect(note2.id).toBe(id3)
+            expect(note2.text).toBe('my note aAa')
+        })
+
+        it('should throw error on no text', () => {
+            expect(() => logic.findNotes()).toThrowError('text is not a string')
+        })
+
+        it('should throw error on empty text', () => {
+            expect(() => logic.findNotes('')).toThrowError('text is empty')
         })
     })
 })
