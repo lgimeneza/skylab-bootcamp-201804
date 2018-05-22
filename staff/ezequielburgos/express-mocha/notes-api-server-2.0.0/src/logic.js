@@ -51,8 +51,11 @@ const logic = {
      * 
      * @throws
      */
-    retrieveNote(userdId, id) {
+    retrieveNote(userId, id) {
         // TODO check userId in note
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
         if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -82,7 +85,10 @@ const logic = {
      */
     removeNote(userId, id) {
         // TODO check user id
-        
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+
         if (typeof id !== 'string') throw Error('id is not a string')
 
         if (!(id = id.trim())) throw Error('id is empty or blank')
@@ -104,6 +110,9 @@ const logic = {
      */
     updateNote(userId, id, text) {
         // TODO check user id
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
         if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -129,6 +138,9 @@ const logic = {
      */
     findNotes(userId, text) {
         // TODO filter by user id too
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
         if (typeof text !== 'string') throw Error('text is not a string')
 
