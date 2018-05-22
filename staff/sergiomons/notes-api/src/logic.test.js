@@ -4,18 +4,20 @@ const expect = require('expect')
 describe('testing notes-api', () => {
     beforeEach(() => {
         logic._notes.length = 0;
-        logic.addNote('my note');
     })
     
     it('test add notes', () => {
-        
-        const [note] = logic._notes;
+        logic.addNote('my note');
+
+        const [note] = logic._notes; 
         expect(logic._notes.length).toBe(1);
         expect(note.text).toBe('my note');
         expect(note.id).toBeDefined();   
     })
 
     it('test show notes', () => {
+        logic.addNote('my note');
+
         logic.addNote('my note2');
         const note = logic._notes;
         logic.listNotes();
@@ -23,11 +25,13 @@ describe('testing notes-api', () => {
         expect(note[0].text).toBe('my note');
         expect(note[1].text).toBe('my note2');
         expect(note[0].id).toBeDefined();
-        expect(note[1].id).toBeDefined(); 
+        expect(note[1].id).toBeDefined();
+        expect(note[0].id).not.toBe(note[1].id)
         
     })
 
     it('test delete notes', () => {
+        logic.addNote('my note');
         logic.addNote('my note2');
         const id = logic._notes[0].id
         logic.removeNote(id)

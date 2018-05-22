@@ -1,9 +1,10 @@
 class Note {
     constructor(text) {
-        this.id = Date.now()
+        this.id = ++i
         this.text = text
     }
 }
+var i = 0
 
 const logic = {
     _notes: [],
@@ -28,7 +29,7 @@ const logic = {
         const note = this._notes.find(note => note.id == id)
 
         if(note) {
-            this._notes = this._notes.filter((note => note.id != id))
+            this._notes = this._notes.filter(note => note.id != id)
 
             return true
         }
