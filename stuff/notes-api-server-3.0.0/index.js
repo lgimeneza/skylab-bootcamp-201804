@@ -9,8 +9,6 @@ const port = process.argv[2] || 3000
 const app = express()
 app.use(bodyParser.json()) // middleware
 
-let notes = []
-
 app.use('/api', router)
 
 app.listen(port, () => console.log(`server running on port ${port}`))
