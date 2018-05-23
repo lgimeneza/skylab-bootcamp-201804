@@ -12,6 +12,7 @@ class Note {
      * @param {string} text 
      */
     constructor(userId, text) {
+        // creates a random number
         this.id = uuidv4()
         this.userId = userId
         this.text = text
@@ -29,6 +30,7 @@ const logic = {
      * @throws
      */
     addNote(userId, text) {
+
         if (typeof userId !== 'string') throw Error('userId is not a string')
 
         if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
@@ -73,6 +75,10 @@ const logic = {
      */
     listNotes(userId) {
         // TODO filter by user id
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+
         return this._notes.filter(note => note.userId === userId)
     },
 
