@@ -1,6 +1,7 @@
 'use strict'
 
 const uuidv4 = require('uuid/v4')
+const fs = require('fs')
 
 /**
  * Note abstraction
@@ -18,8 +19,18 @@ class Note {
     }
 }
 
+const path = './data/notes.json'
+
+const notes = JSON.parse(fs.readFileSync(path))
+
+function save() {
+    fs.writeFileSync(path, JSON.stringify(notes, null, 4))
+}
+
 const logic = {
-    _notes: [],
+    get _notes() {
+        return notes
+    },
 
     /**
      * 
@@ -40,6 +51,8 @@ const logic = {
         const note = new Note(userId, text)
 
         this._notes.push(note)
+
+        save()
 
         return note.id
     },
@@ -101,6 +114,8 @@ const logic = {
         if (index < 0) throw Error(`note with id ${id} does not exist for userId ${userId}`)
 
         this._notes.splice(index, 1)
+
+        save()
     },
 
     /**
@@ -129,6 +144,8 @@ const logic = {
         if (!note) throw Error(`note with id ${id} does not exist for userId ${userId}`)
 
         note.text = text
+
+        save()
     },
 
     /**
