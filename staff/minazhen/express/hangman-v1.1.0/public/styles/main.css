@@ -19,3 +19,7 @@ html, body{
     font-family: Consolas, monaco, monospace;
     letter-spacing: 0.5em;
 }
+
+.close{
+    text-align: right;
+}

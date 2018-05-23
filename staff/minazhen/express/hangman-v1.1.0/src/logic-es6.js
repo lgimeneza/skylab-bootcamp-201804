@@ -88,6 +88,14 @@ const Hangman = (function () {
         return match
     }
 
+    function normalize(str){
+        str = str.toLowerCase().split(""); 
+        let from = "àáäâèéëìíïòóöùúü" 
+        let to   = "aaaaeeeiiiooouuu"
+
+        return str.join("")
+    }
+
     function update(inst) {
         if (!inst._attempts)
             inst._status = Hangman.LOSE
