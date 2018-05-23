@@ -51,16 +51,18 @@ const logic = {
      * 
      * @throws
      */
-    retrieveNote(userdId, id) {
-        // TODO check userId in note
+    retrieveNote(userId, id) {
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
         if (typeof id !== 'string') throw Error('id is not a string')
 
         if (!(id = id.trim())) throw Error('id is empty or blank')
 
-        const index = this._notes.findIndex(note => note.id === id)
+        const index = this._notes.findIndex(note => note.id === id && note.userId === userId)
 
-        if (index < 0) throw Error(`note with id ${id} does not exist`)
+        if (index < 0) throw Error(`note with id ${id} does not exist for userId ${userId}`)
 
         return this._notes[index]
     },
@@ -69,8 +71,11 @@ const logic = {
      * @param {string} userId
      */
     listNotes(userId) {
-        // TODO filter by user id
-        return this._notes
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+
+        return this._notes.filter(note => note.userId === userId)
     },
 
     /**
@@ -81,15 +86,17 @@ const logic = {
      * @throws
      */
     removeNote(userId, id) {
-        // TODO check user id
-        
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+
         if (typeof id !== 'string') throw Error('id is not a string')
 
         if (!(id = id.trim())) throw Error('id is empty or blank')
 
-        const index = this._notes.findIndex(note => note.id === id)
+        const index = this._notes.findIndex(note => note.id === id && note.userId === userId)
 
-        if (index < 0) throw Error(`note with id ${id} does not exist`)
+        if (index < 0) throw Error(`note with id ${id} does not exist for userId ${userId}`)
 
         this._notes.splice(index, 1)
     },
@@ -103,7 +110,9 @@ const logic = {
      * @throws
      */
     updateNote(userId, id, text) {
-        // TODO check user id
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
         if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -113,9 +122,9 @@ const logic = {
 
         if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
 
-        const note = this._notes.find(note => note.id === id)
+        const note = this._notes.find(note => note.id === id && note.userId === userId)
 
-        if (!note) throw Error(`note with id ${id} does not exist`)
+        if (!note) throw Error(`note with id ${id} does not exist for userId ${userId}`)
 
         note.text = text
     },
