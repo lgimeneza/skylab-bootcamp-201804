@@ -3,5 +3,7 @@ let wordsArray = [
 
 randomWord = () => {
     let x = Math.floor(Math.random() * wordsArray.length);
-    return wordsArray[x]
+    return wordsArray[x].toUpperCase()
 }
+
+module.exports = randomWord()
