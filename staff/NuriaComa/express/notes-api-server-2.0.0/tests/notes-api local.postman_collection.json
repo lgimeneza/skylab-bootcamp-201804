@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "854f5db8-68ea-400e-8527-500776b04a1b",
+		"_postman_id": "286a265e-82b3-487d-b6dc-d65ff985baa8",
 		"name": "notes-api local",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -20,7 +20,7 @@
 					"raw": "{ \"text\": \"my note aAb\" }"
 				},
 				"url": {
-					"raw": "http://localhost:3000/api//api/users/:userId/notes",
+					"raw": "http://localhost:3000/api/notes",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -28,17 +28,7 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"",
-						"api",
-						"users",
-						":userId",
 						"notes"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": ""
-						}
 					]
 				}
 			},
@@ -49,12 +39,8 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/:userId/notes/1526986522590-0.870965673870832",
+					"raw": "http://localhost:3000/api/notes/1526986522590-0.870965673870832",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -62,16 +48,8 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						":userId",
 						"notes",
 						"1526986522590-0.870965673870832"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": ""
-						}
 					]
 				}
 			},
@@ -82,12 +60,8 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/:userId/notes?q=new",
+					"raw": "http://localhost:3000/api/notes?q=new",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -95,20 +69,12 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						":userId",
 						"notes"
 					],
 					"query": [
 						{
 							"key": "q",
 							"value": "new"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": ""
 						}
 					]
 				}
@@ -120,12 +86,8 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/:userId/notes/1526986697131-0.4052847693662016",
+					"raw": "http://localhost:3000/api/notes/1526986697131-0.4052847693662016",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -133,16 +95,8 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						":userId",
 						"notes",
 						"1526986697131-0.4052847693662016"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": ""
-						}
 					]
 				}
 			},
@@ -163,7 +117,7 @@
 					"raw": "{ \"text\": \"my new note\" }"
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/:userId/notes/1526995963225-0.21361808339416166",
+					"raw": "http://localhost:3000/api/notes/1526995963225-0.21361808339416166",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -171,16 +125,8 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						":userId",
 						"notes",
 						"1526995963225-0.21361808339416166"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": ""
-						}
 					]
 				}
 			},
