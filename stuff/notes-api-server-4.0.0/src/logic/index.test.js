@@ -70,9 +70,10 @@ describe('logic (notes)', () => {
             expect(note3.userId).toBe(userId)
         })
 
-        false && it('should throw error on no userId', () => {
-            expect(() => logic.addNote()).toThrowError('userId is not a string')
-        })
+        it('should throw error on no userId', () =>
+            logic.addNote()
+                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+        )
 
         false && it('should throw error on empty userId', () => {
             expect(() => logic.addNote('')).toThrowError('userId is empty or blank')
