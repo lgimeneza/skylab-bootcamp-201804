@@ -7,6 +7,8 @@ const logic = require('.')
 describe('logic (notes)', () => {
     let cn, db, cl
     const _userId = '123'
+    const noteText = 'my note'
+    const indexes = []
 
     before(done => {
         MongoClient.connect('mongodb://localhost:27017/skylab-bootcamp-201804-test', { useNewUrlParser: true }, (err, conn) => {
@@ -22,18 +24,19 @@ describe('logic (notes)', () => {
         })
     })
 
-    // beforeEach(done => {
-    //     cl.deleteMany()
-    //         .then(() => done())
-    // })
+    beforeEach(() => {
+        let count = 3 + Math.round(Math.random() * 10)
+        indexes.length = 0
+        while (count--) indexes.push(count)
 
-    beforeEach(() => cl.deleteMany())
+        return cl.deleteMany()
+    })
 
     after(done => db.dropDatabase(() => cn.close(done)))
 
     describe('add note', () => {
         it('should add on correct data', () =>
-            logic.addNote(_userId, 'my note')
+            logic.addNote(_userId, noteText)
                 .then(id => {
                     expect(id).toBeDefined()
 
@@ -42,18 +45,13 @@ describe('logic (notes)', () => {
                             expect(_id).toBeDefined()
                             expect(_id.toString()).toBe(id)
                             expect(userId).toBe(_userId)
-                            expect(text).toBe('my note')
+                            expect(text).toBe(noteText)
                         })
                 })
         )
 
         it('should add notes with different ids', () => {
-            const notePrefix = 'my note'
-            let count = 3 + Math.round(Math.random() * 10)
-            const indexes = []
-            while(count--) indexes.push(count)
-
-            const additions = indexes.map(index => logic.addNote(_userId, `${notePrefix} ${index}`))
+            const additions = indexes.map(index => logic.addNote(_userId, `${noteText} ${index}`))
 
             return Promise.all(additions)
                 .then(ids => {
@@ -75,7 +73,7 @@ describe('logic (notes)', () => {
                             notes.forEach(({ _id, userId, text }, index) => {
                                 expect(_id.toString()).toBe(ids[index])
                                 expect(userId).toBe(_userId)
-                                expect(text).toBe(`${notePrefix} ${indexes[index]}`)
+                                expect(text).toBe(`${noteText} ${indexes[index]}`)
                             })
                         })
                 })
@@ -112,61 +110,48 @@ describe('logic (notes)', () => {
         })
     })
 
-    false && describe('list notes', () => {
+    describe('list notes', () => {
         it('should succeed on correct data', () => {
-            expect(_notes.length).toBe(0)
+            let additions = indexes.map(index => logic.addNote(_userId, `${noteText} ${index}`))
 
-            const ids = []
-            ids.push(logic.addNote(_userId, 'my note 1'))
-            ids.push(logic.addNote(_userId, 'my note 2'))
-            ids.push(logic.addNote(_userId, 'my note 3'))
+            const _userId2 = '456'
 
-            const userId2 = '456'
+            additions = additions.concat(indexes.map(index => logic.addNote(_userId2, `${noteText} ${index + indexes.length}`)))
 
-            const ids2 = []
-            ids2.push(logic.addNote(userId2, 'my note 4'))
-            ids2.push(logic.addNote(userId2, 'my note 5'))
-            ids2.push(logic.addNote(userId2, 'my note 6'))
-            ids2.push(logic.addNote(userId2, 'my note 7'))
+            return Promise.all(additions)
+                .then(ids => {
+                    return logic.listNotes(_userId)
+                        .then(notes => {
+                            expect(notes.length).toBe(indexes.length)
 
-            expect(_notes.length).toBe(7)
+                            const validIds = ids.slice(0, indexes.length)
+                            const validTexts = indexes.map(index => `${noteText} ${index}`)
 
-            const notes = logic.listNotes(_userId)
-
-            expect(notes.length).toBe(3)
-
-            notes.forEach((note, index) => {
-                expect(note.id).toBe(ids[index])
-                expect(note.userId).toBe(_userId)
-                expect(note.text).toBe(`my note ${index + 1}`)
-            })
-
-            const notes2 = logic.listNotes(userId2)
-
-            expect(notes2.length).toBe(4)
-
-            notes2.forEach((note, index) => {
-                expect(note.id).toBe(ids2[index])
-                expect(note.userId).toBe(userId2)
-                expect(note.text).toBe(`my note ${index + 4}`)
-            })
+                            notes.forEach(({ _id, userId, text }) => {
+                                debugger
+                                expect(validIds.includes(_id.toString())).toBeTruthy()
+                                expect(userId).toBe(_userId)
+                                expect(validTexts.includes(text)).toBeTruthy()
+                            })
+                        })
+                })
         })
 
-        it('should throw error on non userId', () => {
+        false && it('should throw error on non userId', () => {
             expect(() => logic.listNotes()).toThrowError('userId is not a string')
         })
 
-        it('should throw error on empty userId', () => {
+        false && it('should throw error on empty userId', () => {
             expect(() => logic.listNotes('')).toThrowError('userId is empty or blank')
         })
 
-        it('should throw error on blank userId', () => {
+        false && it('should throw error on blank userId', () => {
             expect(() => logic.listNotes('      ')).toThrowError('userId is empty or blank')
         })
     })
 
     false && describe('retrieve note', () => {
-        it('should succeed on correct data', () => {
+        false && it('should succeed on correct data', () => {
             expect(_notes.length).toBe(0)
 
             const id = logic.addNote(_userId, 'my note')
@@ -183,37 +168,37 @@ describe('logic (notes)', () => {
             expect(() => logic.retrieveNote('456', id)).toThrowError(`note with id ${id} does not exist`)
         })
 
-        it('should throw error on non userId', () => {
+        false && it('should throw error on non userId', () => {
             expect(() => logic.retrieveNote()).toThrowError('userId is not a string')
         })
 
-        it('should throw error on empty userId', () => {
+        false && it('should throw error on empty userId', () => {
             expect(() => logic.retrieveNote('')).toThrowError('userId is empty or blank')
         })
 
-        it('should throw error on blank userId', () => {
+        false && it('should throw error on blank userId', () => {
             expect(() => logic.retrieveNote('      ')).toThrowError('userId is empty or blank')
         })
 
-        it('should throw error on wrong userId', () => {
+        false && it('should throw error on wrong userId', () => {
             const id = logic.addNote(_userId, 'my note')
 
             expect(() => logic.retrieveNote('wrong-id', id)).toThrowError(`note with id ${id} does not exist for userId wrong-id`)
         })
 
-        it('should throw error on no id', () => {
+        false && it('should throw error on no id', () => {
             expect(() => logic.retrieveNote(_userId)).toThrowError('id is not a string')
         })
 
-        it('should throw error on empty id', () => {
+        false && it('should throw error on empty id', () => {
             expect(() => logic.retrieveNote(_userId, '')).toThrowError('id is empty or blank')
         })
 
-        it('should throw error on blank id', () => {
+        false && it('should throw error on blank id', () => {
             expect(() => logic.retrieveNote(_userId, '             ')).toThrowError('id is empty or blank')
         })
 
-        it('should throw error on wrong id', () => {
+        false && it('should throw error on wrong id', () => {
             const id = logic.addNote(_userId, 'my note')
 
             expect(() => logic.retrieveNote(_userId, 'wrong-id')).toThrowError(`note with id wrong-id does not exist for userId ${_userId}`)
