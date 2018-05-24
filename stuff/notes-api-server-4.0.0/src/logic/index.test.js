@@ -128,7 +128,6 @@ describe('logic (notes)', () => {
                             const validTexts = indexes.map(index => `${noteText} ${index}`)
 
                             notes.forEach(({ _id, userId, text }) => {
-                                debugger
                                 expect(validIds.includes(_id.toString())).toBeTruthy()
                                 expect(userId).toBe(_userId)
                                 expect(validTexts.includes(text)).toBeTruthy()
@@ -153,22 +152,21 @@ describe('logic (notes)', () => {
         )
     })
 
-    false && describe('retrieve note', () => {
-        false && it('should succeed on correct data', () => {
-            expect(_notes.length).toBe(0)
+    describe('retrieve note', () => {
+        it('should succeed on correct data', () => {
+            const _note = { text: noteText, userId: _userId }
+            const invalidUserId = '456'
 
-            const id = logic.addNote(_userId, 'my note')
+            return cl.insertOne(_note)
+                .then(() => logic.retrieveNote(_userId, _note._id.toString()))
+                .then(({ _id, userId, text }) => {
+                    expect(_id.toString()).toBe(_note._id.toString())
+                    expect(userId).toBe(_userId)
+                    expect(text).toBe(noteText)
 
-            expect(_notes.length).toBe(1)
-
-            const note = logic.retrieveNote(_userId, id)
-
-            expect(note).toBeDefined()
-            expect(note.id).toBe(id)
-            expect(note.userId).toBe(_userId)
-            expect(note.text).toBe('my note')
-
-            expect(() => logic.retrieveNote('456', id)).toThrowError(`note with id ${id} does not exist`)
+                    return logic.retrieveNote(invalidUserId, _id.toString())
+                        .catch(({ message }) => expect(message).toBe(`note with id ${_id} does not exist for userId ${invalidUserId}`))
+                })
         })
 
         false && it('should throw error on non userId', () => {

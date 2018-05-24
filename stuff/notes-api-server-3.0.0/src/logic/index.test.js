@@ -142,7 +142,7 @@ describe('logic (notes)', () => {
             expect(note.userId).toBe(userId)
             expect(note.text).toBe('my note')
 
-            expect(() => logic.retrieveNote('456', id)).toThrowError(`note with id ${id} does not exist`)
+            expect(() => logic.retrieveNote('456', id)).toThrow(Error(`note with id ${id} does not exist for userId 456`))
         })
 
         it('should throw error on non userId', () => {

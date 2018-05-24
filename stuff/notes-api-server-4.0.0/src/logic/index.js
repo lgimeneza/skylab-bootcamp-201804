@@ -1,5 +1,7 @@
 'use strict'
 
+const { ObjectId } = require('mongodb')
+
 /**
  * Note abstraction
  */
@@ -53,19 +55,23 @@ const logic = {
      * @throws
      */
     retrieveNote(userId, id) {
-        if (typeof userId !== 'string') throw Error('userId is not a string')
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('userId is not a string')
 
-        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
-        if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof id !== 'string') throw Error('id is not a string')
 
-        if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(id = id.trim())) throw Error('id is empty or blank')
 
-        const index = this._notes.findIndex(note => note.id === id && note.userId === userId)
+                return this._notes.findOne({ _id: ObjectId(id), userId })
+                    .then(note => {
+                        if (!note) throw Error(`note with id ${id} does not exist for userId ${userId}`)
 
-        if (index < 0) throw Error(`note with id ${id} does not exist for userId ${userId}`)
-
-        return this._notes[index]
+                        return note
+                    })
+            })
     },
 
     /**
