@@ -220,57 +220,69 @@ describe('logic (notes)', () => {
         )
     })
 
-    false && describe('remove note', () => {
+    describe('remove note', () => {
         it('should remove a note', () => {
-            expect(_notes.length).toBe(0)
+            const _note = { text: noteText, userId: _userId }
+            const invalidUserId = '456'
 
-            const id = logic.addNote(_userId, 'my note')
+            return cl.insertOne(_note)
+                .then(() => logic.removeNote(invalidUserId, _note._id.toString()))
+                .catch(({ message }) => expect(message).toBe(`note with id ${_note._id} does not exist for userId ${invalidUserId}`))
+                .then(() => logic.removeNote(_userId, _note._id.toString()))
+                .then(() => cl.findOne({ _id: _note._id, userId: _userId }))
+                .then(note => expect(note).toBeNull())
 
-            expect(_notes.length).toBe(1)
-
-            expect(() => logic.removeNote('wrong-id', id)).toThrowError(`note with id ${id} does not exist for userId wrong-id`)
-
-            logic.removeNote(_userId, id)
-
-            expect(_notes.length).toBe(0)
-            expect(_notes).toBe(logic._notes)
         })
 
-        it('should throw error on non userId', () => {
-            expect(() => logic.removeNote()).toThrowError('userId is not a string')
-        })
+        it('should throw error on non userId', () =>
+            logic.removeNote()
+                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+        )
 
-        it('should throw error on empty userId', () => {
-            expect(() => logic.removeNote('')).toThrowError('userId is empty or blank')
-        })
+        it('should throw error on empty userId', () =>
+            logic.removeNote('')
+                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+        )
 
-        it('should throw error on blank userId', () => {
-            expect(() => logic.removeNote('      ')).toThrowError('userId is empty or blank')
-        })
+        it('should throw error on blank userId', () =>
+            logic.removeNote('      ')
+                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+        )
 
-        it('should throw error on wrong userId', () => {
-            const id = logic.addNote(_userId, 'my note')
+        it('should throw error on wrong userId', () =>
+            logic.addNote(_userId, 'my note')
+                .then(id => {
+                    const invalidUserId = 'wrong-id'
 
-            expect(() => logic.removeNote('wrong-id', id)).toThrowError(`note with id ${id} does not exist for userId wrong-id`)
-        })
+                    return logic.removeNote(invalidUserId, id)
+                        .catch(({ message }) => expect(message).toBe(`note with id ${id} does not exist for userId ${invalidUserId}`))
+                })
+        )
 
-        it('should throw error on no id', () => {
-            expect(() => logic.removeNote(_userId)).toThrowError('id is not a string')
-        })
+        it('should throw error on no id', () =>
+            logic.removeNote(_userId)
+                .catch(({ message }) => expect(message).toBe('id is not a string'))
+        )
 
-        it('should throw error on empty id', () => {
-            expect(() => logic.removeNote(_userId, '')).toThrowError('id is empty or blank')
-        })
+        it('should throw error on empty id', () =>
+            logic.removeNote(_userId, '')
+                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        )
 
-        it('should throw error on blank id', () => {
-            expect(() => logic.removeNote(_userId, '             ')).toThrowError('id is empty or blank')
-        })
+        it('should throw error on blank id', () =>
+            logic.removeNote(_userId, '       ')
+                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        )
 
-        it('should throw error on wrong id', () => {
-            const id = logic.addNote(_userId, 'my note')
+        it('should throw error on wrong id', () =>
+            logic.addNote(_userId, 'my note')
+                .then(id => {
+                    const invalidNoteId = '123456781234567812345678'
 
-            expect(() => logic.removeNote(_userId, 'wrong-id')).toThrowError(`note with id wrong-id does not exist for userId ${_userId}`)
-        })
+                    return logic.removeNote(_userId, invalidNoteId)
+                        .catch(({ message }) => expect(message).toBe(`note with id ${invalidNoteId} does not exist for userId ${_userId}`))
+                })
+        )
     })
 
     false && describe('update note', () => {
