@@ -142,13 +142,15 @@ describe('logic (notes)', () => {
                 .catch(({ message }) => expect(message).toBe('userId is not a string'))
         )
 
-        false && it('should throw error on empty userId', () => {
-            expect(() => logic.listNotes('')).toThrowError('userId is empty or blank')
-        })
+        it('should throw error on empty userId', () =>
+            logic.listNotes('')
+                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+        )
 
-        false && it('should throw error on blank userId', () => {
-            expect(() => logic.listNotes('      ')).toThrowError('userId is empty or blank')
-        })
+        it('should throw error on blank userId', () =>
+            logic.listNotes('      ')
+                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+        )
     })
 
     false && describe('retrieve note', () => {
