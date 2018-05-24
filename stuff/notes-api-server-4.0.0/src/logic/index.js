@@ -108,7 +108,7 @@ const logic = {
 
                 if (!(id = id.trim())) throw Error('id is empty or blank')
 
-                return this._notes.findAndRemove({ _id: ObjectId(id), userId })
+                return this._notes.findOneAndDelete({ _id: ObjectId(id), userId })
                     .then(res => {
                         if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
                     })
@@ -124,21 +124,24 @@ const logic = {
      * @throws
      */
     updateNote(userId, id, text) {
-        if (typeof userId !== 'string') throw Error('userId is not a string')
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('userId is not a string')
 
-        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
-        if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof id !== 'string') throw Error('id is not a string')
 
-        if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(id = id.trim())) throw Error('id is empty or blank')
 
-        if (typeof text !== 'string') throw Error('text is not a string')
+                if (typeof text !== 'string') throw Error('text is not a string')
 
-        if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
 
-        return this._notes.findAndModify({ _id: ObjectId(id), userId }, { text })
-            .then(res => {
-                if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                return this._notes.findOneAndUpdate({ _id: ObjectId(id), userId }, { $set: { text } })
+                    .then(res => {
+                        if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                    })
             })
     },
 

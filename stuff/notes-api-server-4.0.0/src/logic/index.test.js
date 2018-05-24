@@ -185,7 +185,7 @@ describe('logic (notes)', () => {
         )
 
         it('should throw error on wrong userId', () =>
-            logic.addNote(_userId, 'my note')
+            logic.addNote(_userId, noteText)
                 .then(id => {
                     const invalidUserId = 'wrong-id'
 
@@ -210,7 +210,7 @@ describe('logic (notes)', () => {
         )
 
         it('should throw error on wrong id', () =>
-            logic.addNote(_userId, 'my note')
+            logic.addNote(_userId, noteText)
                 .then(id => {
                     const invalidNoteId = '123456781234567812345678'
 
@@ -250,7 +250,7 @@ describe('logic (notes)', () => {
         )
 
         it('should throw error on wrong userId', () =>
-            logic.addNote(_userId, 'my note')
+            logic.addNote(_userId, noteText)
                 .then(id => {
                     const invalidUserId = 'wrong-id'
 
@@ -275,7 +275,7 @@ describe('logic (notes)', () => {
         )
 
         it('should throw error on wrong id', () =>
-            logic.addNote(_userId, 'my note')
+            logic.addNote(_userId, noteText)
                 .then(id => {
                     const invalidNoteId = '123456781234567812345678'
 
@@ -303,53 +303,70 @@ describe('logic (notes)', () => {
                 })
         })
 
-        false && it('should throw error on non userId', () => {
-            expect(() => logic.updateNote()).toThrowError('userId is not a string')
-        })
+        it('should throw error on non userId', () =>
+            logic.updateNote()
+                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+        )
 
-        false && it('should throw error on empty userId', () => {
-            expect(() => logic.updateNote('')).toThrowError('userId is empty or blank')
-        })
+        it('should throw error on empty userId', () =>
+            logic.updateNote('')
+                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+        )
 
-        false && it('should throw error on blank userId', () => {
-            expect(() => logic.updateNote('      ')).toThrowError('userId is empty or blank')
-        })
+        it('should throw error on blank userId', () =>
+            logic.updateNote('      ')
+                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+        )
 
-        false && it('should throw error on wrong userId', () => {
-            const id = logic.addNote(_userId, 'my note')
+        it('should throw error on wrong userId', () =>
+            logic.addNote(_userId, noteText)
+                .then(id => {
+                    const invalidUserId = 'wrong-id'
 
-            expect(() => logic.updateNote('wrong-id', id, 'my new note')).toThrowError(`note with id ${id} does not exist for userId wrong-id`)
-        })
+                    return logic.updateNote(invalidUserId, id, 'my new note')
+                        .catch(({ message }) => expect(message).toBe(`note with id ${id} does not exist for userId ${invalidUserId}`))
+                })
+        )
 
-        false && it('should throw error on no id', () => {
-            expect(() => logic.updateNote(_userId)).toThrowError('id is not a string')
-        })
+        it('should throw error on no id', () =>
+            logic.updateNote(_userId)
+                .catch(({ message }) => expect(message).toBe('id is not a string'))
+        )
 
-        false && it('should throw error on empty id', () => {
-            expect(() => logic.updateNote(_userId, '')).toThrowError('id is empty or blank')
-        })
+        it('should throw error on empty id', () =>
+            logic.updateNote(_userId, '')
+                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        )
 
-        false && it('should throw error on blank id', () => {
-            expect(() => logic.updateNote(_userId, '             ')).toThrowError('id is empty or blank')
-        })
+        it('should throw error on blank id', () =>
+            logic.updateNote(_userId, '       ')
+                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        )
 
-        false && it('should throw error on wrong id', () => {
-            const id = logic.addNote(_userId, 'my note')
+        it('should throw error on wrong id', () =>
+            logic.addNote(_userId, noteText)
+                .then(id => {
+                    const invalidNoteId = '123456781234567812345678'
 
-            expect(() => logic.updateNote(_userId, 'wrong-id', 'my new note')).toThrowError(`note with id wrong-id does not exist for userId ${_userId}`)
-        })
+                    return logic.updateNote(_userId, invalidNoteId, 'my new note')
+                        .catch(({ message }) => expect(message).toBe(`note with id ${invalidNoteId} does not exist for userId ${_userId}`))
+                })
+        )
 
-        false && it('should throw error on no text', () => {
-            expect(() => logic.updateNote(_userId, '123')).toThrowError('text is not a string')
-        })
+        it('should throw error on no text', () =>
+            logic.updateNote(_userId, '123')
+                .catch(({ message }) => expect(message).toBe('text is not a string'))
+        )
 
-        false && it('should throw error on empty text', () => {
-            expect(() => logic.updateNote(_userId, '123', '')).toThrowError('text is empty or blank')
-        })
+        it('should throw error on empty text', () =>
+            logic.updateNote(_userId, '123', '')
+                .catch(({ message }) => expect(message).toBe('text is empty or blank'))
+        )
 
-        false && it('should throw error on blank text', () => {
-            expect(() => logic.updateNote(_userId, '123', '             ')).toThrowError('text is empty or blank')
-        })
+        it('should throw error on blank text', () =>
+            logic.updateNote(_userId, '123', '             ')
+                .catch(({ message }) => expect(message).toBe('text is empty or blank'))
+        )
     })
 
     false && describe('search notes', () => {
