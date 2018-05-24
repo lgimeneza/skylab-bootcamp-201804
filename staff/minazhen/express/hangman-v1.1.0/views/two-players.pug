@@ -1,0 +1,57 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    title Hangman App
+    link(rel='stylesheet', href='vendor/bootstrap/4.1.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='styles/main.css')
+  body.text-center
+    .cover-container.d-flex.h-100.p-3.mx-auto.flex-column
+      header.masthead.mb-auto
+        .inner
+          h1.masthead-brand.display-3 Hangman
+      main.inner.cover(role='main')
+        p.lead
+          | Choose a word for your mate.
+          br
+          | Also you can select the number of attempts.
+        br
+        br
+        |  ${error? `
+        .alert.alert-warning.alert-dismissible
+          a.close(href='/two-players', data-dismiss='alert', aria-label='close') ×
+          strong Warning!
+          |  ${error}
+        | ` : '
+        br
+        br
+        | '}
+        form(action='/initial-word', method='POST')
+          label(for='attm')
+            | Attempts:
+            span#val-range(name='attempts')
+          br
+          input#attm(type='range', value='10', step='1', min='5', max='15', data-show-value='true')
+          p
+            br
+          .form-inline.input-group.mx-auto
+            input#desc.form-control(type='text', placeholder='Word to guess', name='word', autofocus='')
+            .input-group-append
+              input.btn.btn-outline-secondary(type='submit', value='Send!')
+      footer.mastfoot.mt-auto
+        .inner
+          p.text-muted.text-center
+            | Hangman for
+            a(href='https://http://www.skylabcoders.com/es/') SkylabCoders
+            | , by
+            a(href='https://github.com/MinaZhen') MinaZhen
+            | .
+    script(src='../public/vendor/jquery/3.3.1/jquery-3.3.1.min.js')
+    script(src='../public/vendor/popper/1.14.3/popper.min.js')
+    script(src='../public/vendor/bootstrap/4.1.0/js/bootstrap.min.js')
+    script.
+      var slider = document.getElementById("attm");
+      var output = document.getElementById("val-range");
+      output.innerHTML = slider.value;

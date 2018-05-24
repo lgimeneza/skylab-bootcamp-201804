@@ -8,21 +8,25 @@ const port = process.argv[2] || 3000
 const app = express()
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: false })) 
+app.set('view engine', 'pug')
 
 let hangman;
+let error;
 
 app.get('/', (req, res) => {
     hangman = undefined
-    res.send(renderfun(req))
+    // res.send(renderfun(req))
+    res.render('index', {error})
 })
 
 app.get('/game', (req, res) => {
+    const {  query : { error } } = req
     if (hangman === undefined) hangman = new Hangman()
 
     let guessed = hangman.guessed().join("")
     let attempts = hangman.attempts()
 
-    res.send(rendergame(req))
+    res.render('game', {error, hangman})
 })
 
 

@@ -9,9 +9,9 @@ const port = process.argv[2] || 3000
 const app = express()
 app.use(bodyParser.json()) // middleware
 
-const userTemp = "Mina"
+const router = express.Router()
 
-app.post('/api/users/:userId/notes', (req, res) => {
+router.post('/users/:userId/notes', (req, res) => {
     const { body: { text }, params : { userId } } = req
 
     try {
@@ -26,7 +26,7 @@ app.post('/api/users/:userId/notes', (req, res) => {
 
 })
 
-app.get('/api/users/:userId/notes', (req, res) => {
+router.get('/users/:userId/notes', (req, res) => {
     const { params: { userId }, query : { q } } = req
 
     if (q) {
@@ -47,7 +47,7 @@ app.get('/api/users/:userId/notes', (req, res) => {
     } 
 })
 
-app.get('/api/users/:userId/notes/:id', (req, res) => {
+router.get('/users/:userId/notes/:id', (req, res) => {
     const { params: { userId, id } } = req
 
     try {
@@ -61,7 +61,7 @@ app.get('/api/users/:userId/notes/:id', (req, res) => {
     }
 })
 
-app.delete('/api/users/:userId/notes/:id', (req, res) => {
+router.delete('/users/:userId/notes/:id', (req, res) => {
     const { params: { userId, id } } = req
 
     try {
@@ -74,7 +74,7 @@ app.delete('/api/users/:userId/notes/:id', (req, res) => {
     }
 })
 
-app.patch('/api/users/:userId/notes/:id', (req, res) => {
+router.patch('/users/:userId/notes/:id', (req, res) => {
     const { params: { userId, id }, body: { text } } = req
 
     try{
@@ -86,6 +86,8 @@ app.patch('/api/users/:userId/notes/:id', (req, res) => {
         res.json({ status: 'KO', error: {message: `${err}`}})
     }
 })
+
+app.use('/api', router)
 
 app.listen(port, () => console.log(`server running on port ${port}`))
 

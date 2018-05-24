@@ -90,8 +90,14 @@ const Hangman = (function () {
 
     function normalize(str){
         str = str.toLowerCase().split(""); 
-        let from = "àáäâèéëìíïòóöùúü" 
-        let to   = "aaaaeeeiiiooouuu"
+        let from = "àáäâèéëìíïòóöùúü"
+        let to   = "aaaaeeeiiiooouuu".split("") 
+
+        for(let i = 0; i < str.length; i++){
+            if (from.indexOf(str[i]) > -1) {
+                str[i] = to[from.indexOf(str[i])]
+            } 
+        }
 
         return str.join("")
     }
