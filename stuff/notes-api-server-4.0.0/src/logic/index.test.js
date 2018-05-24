@@ -48,19 +48,23 @@ describe('logic (notes)', () => {
         )
 
         it('should add notes with different ids', () => {
-            const indexes = [1, 2, 3]
+            const notePrefix = 'my note'
+            let count = 3 + Math.round(Math.random() * 10)
+            const indexes = []
+            while(count--) indexes.push(count)
 
-            const additions = indexes.map(index => logic.addNote(_userId, `my note ${index}`))
+            const additions = indexes.map(index => logic.addNote(_userId, `${notePrefix} ${index}`))
 
             return Promise.all(additions)
                 .then(ids => {
                     expect(ids.length).toBe(indexes.length)
 
-                    const [id1, id2, id3] = ids
-
-                    expect(id1).not.toBe(id2)
-                    expect(id2).not.toBe(id3)
-                    expect(id3).not.toBe(id1)
+                    ids.forEach((id, index) => {
+                        if (index < ids.length - 1)
+                            expect(id).not.toBe(ids[index + 1])
+                        else
+                            expect(id).not.toBe(ids[0])
+                    })
 
                     const retrievals = ids.map(id => cl.findOne({ _id: ObjectId(id) }))
 
@@ -71,7 +75,7 @@ describe('logic (notes)', () => {
                             notes.forEach(({ _id, userId, text }, index) => {
                                 expect(_id.toString()).toBe(ids[index])
                                 expect(userId).toBe(_userId)
-                                expect(text).toBe(`my note ${indexes[index]}`)
+                                expect(text).toBe(`${notePrefix} ${indexes[index]}`)
                             })
                         })
                 })
