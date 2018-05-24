@@ -9,13 +9,11 @@ const port = process.argv[2] || 3000
 const app = express()
 app.use(bodyParser.json()) // middleware
 
-let notes = []
-
-app.post('/api/notes', (req, res) => {
-    const { body: { text } } = req
+app.post('/api/users/:userId/notes', (req, res) => {
+    const { params: { userId }, body: { text } } = req
 
     try {
-        const id = logic.addNote(text)
+        const id = logic.addNote(userId, text)
 
         res.status(201)
 
@@ -27,11 +25,11 @@ app.post('/api/notes', (req, res) => {
     }
 })
 
-app.get('/api/notes/:id', (req, res) => {
-    const { params: { id } } = req
+app.get('/api/users/:userId/notes/:id', (req, res) => {
+    const { params: { userId, id } } = req
 
     try {
-        const note = logic.retrieveNote(id)
+        const note = logic.retrieveNote(userId, id)
 
         res.json({ status: 'OK', data: note })
     } catch ({ message }) {
@@ -41,26 +39,26 @@ app.get('/api/notes/:id', (req, res) => {
     }
 })
 
-app.get('/api/notes', (req, res) => {
-    const { query: { q } } = req
+app.get('/api/users/:userId/notes', (req, res) => {
+    const { params: { userId }, query: { q } } = req
 
     if (q) {
         try {
-            res.json({ status: 'OK', data: logic.findNotes(q) })
+            res.json({ status: 'OK', data: logic.findNotes(userId, q) })
         } catch ({ message }) {
             res.status(400)
 
             res.json({ status: 'KO', error: message })
         }
     } else
-        res.json({ status: 'OK', data: logic.listNotes() })
+        res.json({ status: 'OK', data: logic.listNotes(userId) })
 })
 
-app.delete('/api/notes/:id', (req, res) => {
-    const { params: { id } } = req
+app.delete('/api/users/:userId/notes/:id', (req, res) => {
+    const { params: { userId, id } } = req
 
     try {
-        logic.removeNote(id)
+        logic.removeNote(userId, id)
 
         res.json({ status: 'OK' })
     } catch ({ message }) {
@@ -70,11 +68,11 @@ app.delete('/api/notes/:id', (req, res) => {
     }
 })
 
-app.put('/api/notes/:id', (req, res) => {
-    const { params: { id }, body: { text } } = req
+app.patch('/api/users/:userId/notes/:id', (req, res) => {
+    const { params: { userId, id }, body: { text } } = req
 
     try {
-        logic.updateNote(id, text)
+        logic.updateNote(userId, id, text)
 
         res.json({ status: 'OK' })
     } catch ({ message }) {
