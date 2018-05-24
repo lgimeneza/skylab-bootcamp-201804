@@ -136,13 +136,10 @@ const logic = {
 
         if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
 
-        const note = this._notes.find(note => note.id === id && note.userId === userId)
-
-        if (!note) throw Error(`note with id ${id} does not exist for userId ${userId}`)
-
-        note.text = text
-
-        save()
+        return this._notes.findAndModify({ _id: ObjectId(id), userId }, { text })
+            .then(res => {
+                if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+            })
     },
 
     /**
