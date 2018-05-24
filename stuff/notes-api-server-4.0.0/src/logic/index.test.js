@@ -82,24 +82,29 @@ describe('logic (notes)', () => {
                 .catch(({ message }) => expect(message).toBe('userId is not a string'))
         )
 
-        false && it('should throw error on empty userId', () => {
-            expect(() => logic.addNote('')).toThrowError('userId is empty or blank')
+        it('should throw error on empty userId', () => {
+            logic.addNote('')
+                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
         })
 
-        false && it('should throw error on blank userId', () => {
-            expect(() => logic.addNote('   ')).toThrowError('userId is empty or blank')
+        it('should throw error on blank userId', () => {
+            logic.addNote('     ')
+                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
         })
 
-        false && it('should throw error on no text', () => {
-            expect(() => logic.addNote(_userId)).toThrowError('text is not a string')
+        it('should throw error on no text', () => {
+            logic.addNote(_userId)
+                .catch(({ message }) => expect(message).toBe('text is not a string'))
         })
 
-        false && it('should throw error on empty text', () => {
-            expect(() => logic.addNote(_userId, '')).toThrowError('text is empty or blank')
+        it('should throw error on empty text', () => {
+            logic.addNote(_userId, '')
+                .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         })
 
-        false && it('should throw error on blank text', () => {
-            expect(() => logic.addNote(_userId, '   ')).toThrowError('text is empty or blank')
+        it('should throw error on blank text', () => {
+            logic.addNote(_userId, '   ')
+                .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         })
     })
 
