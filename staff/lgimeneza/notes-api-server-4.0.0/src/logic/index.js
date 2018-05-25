@@ -53,19 +53,24 @@ const logic = {
      * @throws
      */
     retrieveNote(userId, id) {
-        if (typeof userId !== 'string') throw Error('userId is not a string')
+        return Promise.resolve()
+            .then(() => {
 
-        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (typeof userId !== 'string') throw Error('userId is not a string')
 
-        if (typeof id !== 'string') throw Error('id is not a string')
+                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+        
+                if (typeof id !== 'string') throw Error('id is not a string')
+        
+                if (!(id = id.trim())) throw Error('id is empty or blank')
+        
+                const index = this._notes.findIndex(note => note.id === id && note.userId === userId)
+        
+                if (index < 0) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+        
+                return this._notes[index]
 
-        if (!(id = id.trim())) throw Error('id is empty or blank')
-
-        const index = this._notes.findIndex(note => note.id === id && note.userId === userId)
-
-        if (index < 0) throw Error(`note with id ${id} does not exist for userId ${userId}`)
-
-        return this._notes[index]
+            })
     },
 
     /**
@@ -74,11 +79,17 @@ const logic = {
      * @throws
      */
     listNotes(userId) {
-        if (typeof userId !== 'string') throw Error('userId is not a string')
 
-        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+        return Promise.resolve()
+        .then(() => {
 
-        return this._notes.filter(note => note.userId === userId)
+            if (typeof userId !== 'string') throw Error('userId is not a string')
+
+            if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+
+            return this._notes.find({ userId }).toArray()
+
+        })
     },
 
     /**
