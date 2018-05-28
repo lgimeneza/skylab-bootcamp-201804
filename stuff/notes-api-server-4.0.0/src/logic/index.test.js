@@ -76,32 +76,32 @@ describe('logic (notes)', () => {
                 })
         })
 
-        it('should throw error on no userId', () =>
+        it('should fail on no user id', () =>
             logic.addNote()
-                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+                .catch(({ message }) => expect(message).toBe('user id is not a string'))
         )
 
-        it('should throw error on empty userId', () =>
+        it('should fail on empty user id', () =>
             logic.addNote('')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on blank userId', () =>
+        it('should fail on blank user id', () =>
             logic.addNote('     ')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on no text', () => {
+        it('should fail on no text', () => {
             logic.addNote(_userId)
                 .catch(({ message }) => expect(message).toBe('text is not a string'))
         })
 
-        it('should throw error on empty text', () =>
+        it('should fail on empty text', () =>
             logic.addNote(_userId, '')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
 
-        it('should throw error on blank text', () =>
+        it('should fail on blank text', () =>
             logic.addNote(_userId, '   ')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
@@ -133,19 +133,19 @@ describe('logic (notes)', () => {
                 })
         })
 
-        it('should throw error on non userId', () =>
+        it('should fail on non user id', () =>
             logic.listNotes()
-                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+                .catch(({ message }) => expect(message).toBe('user id is not a string'))
         )
 
-        it('should throw error on empty userId', () =>
+        it('should fail on empty user id', () =>
             logic.listNotes('')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on blank userId', () =>
+        it('should fail on blank user id', () =>
             logic.listNotes('      ')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
     })
 
@@ -166,22 +166,22 @@ describe('logic (notes)', () => {
                 })
         })
 
-        it('should throw error on non userId', () =>
+        it('should fail on non user id', () =>
             logic.retrieveNote()
-                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+                .catch(({ message }) => expect(message).toBe('user id is not a string'))
         )
 
-        it('should throw error on empty userId', () =>
+        it('should fail on empty user id', () =>
             logic.retrieveNote('')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on blank userId', () =>
+        it('should fail on blank user id', () =>
             logic.retrieveNote('      ')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on wrong userId', () =>
+        it('should fail on wrong user id', () =>
             cl.insertOne({ userId: _userId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
@@ -192,22 +192,22 @@ describe('logic (notes)', () => {
                 })
         )
 
-        it('should throw error on no id', () =>
+        it('should fail on no id', () =>
             logic.retrieveNote(_userId)
                 .catch(({ message }) => expect(message).toBe('id is not a string'))
         )
 
-        it('should throw error on empty id', () =>
+        it('should fail on empty id', () =>
             logic.retrieveNote(_userId, '')
                 .catch(({ message }) => expect(message).toBe('id is empty or blank'))
         )
 
-        it('should throw error on blank id', () =>
+        it('should fail on blank id', () =>
             logic.retrieveNote(_userId, '       ')
                 .catch(({ message }) => expect(message).toBe('id is empty or blank'))
         )
 
-        it('should throw error on wrong id', () =>
+        it('should fail on wrong id', () =>
             cl.insertOne({ userId: _userId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
@@ -232,22 +232,22 @@ describe('logic (notes)', () => {
                 .then(note => expect(note).toBeNull())
         })
 
-        it('should throw error on non userId', () =>
+        it('should fail on non user id', () =>
             logic.removeNote()
-                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+                .catch(({ message }) => expect(message).toBe('user id is not a string'))
         )
 
-        it('should throw error on empty userId', () =>
+        it('should fail on empty user id', () =>
             logic.removeNote('')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on blank userId', () =>
+        it('should fail on blank user id', () =>
             logic.removeNote('      ')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on wrong userId', () =>
+        it('should fail on wrong user id', () =>
             cl.insertOne({ userId: _userId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
@@ -258,22 +258,22 @@ describe('logic (notes)', () => {
                 })
         )
 
-        it('should throw error on no id', () =>
+        it('should fail on no id', () =>
             logic.removeNote(_userId)
                 .catch(({ message }) => expect(message).toBe('id is not a string'))
         )
 
-        it('should throw error on empty id', () =>
+        it('should fail on empty id', () =>
             logic.removeNote(_userId, '')
                 .catch(({ message }) => expect(message).toBe('id is empty or blank'))
         )
 
-        it('should throw error on blank id', () =>
+        it('should fail on blank id', () =>
             logic.removeNote(_userId, '       ')
                 .catch(({ message }) => expect(message).toBe('id is empty or blank'))
         )
 
-        it('should throw error on wrong id', () =>
+        it('should fail on wrong id', () =>
             cl.insertOne({ userId: _userId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
@@ -303,22 +303,22 @@ describe('logic (notes)', () => {
                 })
         })
 
-        it('should throw error on non userId', () =>
+        it('should fail on non user id', () =>
             logic.updateNote()
-                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+                .catch(({ message }) => expect(message).toBe('user id is not a string'))
         )
 
-        it('should throw error on empty userId', () =>
+        it('should fail on empty user id', () =>
             logic.updateNote('')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on blank userId', () =>
+        it('should fail on blank user id', () =>
             logic.updateNote('      ')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on wrong userId', () =>
+        it('should fail on wrong user id', () =>
             cl.insertOne({ userId: _userId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
@@ -329,22 +329,22 @@ describe('logic (notes)', () => {
                 })
         )
 
-        it('should throw error on no id', () =>
+        it('should fail on no id', () =>
             logic.updateNote(_userId)
                 .catch(({ message }) => expect(message).toBe('id is not a string'))
         )
 
-        it('should throw error on empty id', () =>
+        it('should fail on empty id', () =>
             logic.updateNote(_userId, '')
                 .catch(({ message }) => expect(message).toBe('id is empty or blank'))
         )
 
-        it('should throw error on blank id', () =>
+        it('should fail on blank id', () =>
             logic.updateNote(_userId, '       ')
                 .catch(({ message }) => expect(message).toBe('id is empty or blank'))
         )
 
-        it('should throw error on wrong id', () =>
+        it('should fail on wrong id', () =>
             cl.insertOne({ userId: _userId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
@@ -355,17 +355,17 @@ describe('logic (notes)', () => {
                 })
         )
 
-        it('should throw error on no text', () =>
+        it('should fail on no text', () =>
             logic.updateNote(_userId, '123')
                 .catch(({ message }) => expect(message).toBe('text is not a string'))
         )
 
-        it('should throw error on empty text', () =>
+        it('should fail on empty text', () =>
             logic.updateNote(_userId, '123', '')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
 
-        it('should throw error on blank text', () =>
+        it('should fail on blank text', () =>
             logic.updateNote(_userId, '123', '             ')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
@@ -431,27 +431,27 @@ describe('logic (notes)', () => {
                 })
         })
 
-        it('should throw error on non userId', () =>
+        it('should fail on non user id', () =>
             logic.findNotes()
-                .catch(({ message }) => expect(message).toBe('userId is not a string'))
+                .catch(({ message }) => expect(message).toBe('user id is not a string'))
         )
 
-        it('should throw error on empty userId', () =>
+        it('should fail on empty user id', () =>
             logic.findNotes('')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on blank userId', () =>
+        it('should fail on blank user id', () =>
             logic.findNotes('      ')
-                .catch(({ message }) => expect(message).toBe('userId is empty or blank'))
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
 
-        it('should throw error on no text', () =>
+        it('should fail on no text', () =>
             logic.findNotes(_userId)
                 .catch(({ message }) => expect(message).toBe('text is not a string'))
         )
 
-        it('should throw error on empty text', () =>
+        it('should fail on empty text', () =>
             logic.findNotes(_userId, '')
                 .catch(({ message }) => expect(message).toBe('text is empty'))
         )

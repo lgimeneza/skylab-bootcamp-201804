@@ -137,7 +137,35 @@ describe('logic (notes)', () => {
                 .catch(({ message }) => expect(message).toBe(`no user found with id ${userId}`))
         })
 
-        // TODO error cases
+        it('should fail on no user id', () =>
+            logic.addNote()
+                .catch(({ message }) => expect(message).toBe('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.addNote('')
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.addNote('     ')
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
+        )
+
+        it('should fail on no text', () => {
+            logic.addNote(_userId)
+                .catch(({ message }) => expect(message).toBe('text is not a string'))
+        })
+
+        it('should fail on empty text', () =>
+            logic.addNote(_userId, '')
+                .catch(({ message }) => expect(message).toBe('text is empty or blank'))
+        )
+
+        it('should fail on blank text', () =>
+            logic.addNote(_userId, '   ')
+                .catch(({ message }) => expect(message).toBe('text is empty or blank'))
+        )
     })
 
     describe('retrieve note', () => {
