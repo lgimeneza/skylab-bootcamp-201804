@@ -32,9 +32,9 @@ const logic = {
     addNote(userId, text) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('userId is not a string')
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
                 if (typeof text !== 'string') throw Error('text is not a string')
 
@@ -57,9 +57,9 @@ const logic = {
     retrieveNote(userId, id) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('userId is not a string')
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
                 if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -82,9 +82,9 @@ const logic = {
     listNotes(userId) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('userId is not a string')
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
                 return this._notes.find({ userId }).toArray()
                     .then(notes => notes.map(({ _id, userId, text }) => ({ id: _id.toString(), userId, text })))
@@ -101,9 +101,9 @@ const logic = {
     removeNote(userId, id) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('userId is not a string')
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
                 if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -127,9 +127,9 @@ const logic = {
     updateNote(userId, id, text) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('userId is not a string')
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
                 if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -156,9 +156,9 @@ const logic = {
     findNotes(userId, text) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('userId is not a string')
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
                 if (typeof text !== 'string') throw Error('text is not a string')
 

@@ -15,11 +15,19 @@ const logic = {
     registerUser(name, surname, email, password) {
         return Promise.resolve()
             .then(() => {
-                // TODO validations (name, surname, email, password)
+                if (typeof name !== 'string') throw Error ('name is not a string')
+                if (name !== name.trim()) throw Error('name is empty or blank')
+                if (typeof surname !== 'string') throw Error ('surname is not a string')
+                if (surname !== surname.trim()) throw Error('surname is empty or blank')
+                if (typeof email !== 'string') throw Error ('email is not a string')
+                if (email !== email.trim()) throw Error('email is empty or blank')
+                if (typeof password !== 'string') throw Error ('password is not a string')
+                if (password !== password.trim()) throw Error('password is empty or blank')
 
                 return User.create({ name, surname, email, password })
                     .then(() => true)
             })
+            
     },
 
     /**
@@ -32,7 +40,11 @@ const logic = {
     authenticateUser(email, password) {
         return Promise.resolve()
             .then(() => {
-                // TODO validations
+                if (typeof email !== 'string') throw Error ('email is not a string')
+                if (email !== email.trim()) throw Error('email is empty or blank')
+                if (typeof password !== 'string') throw Error ('password is not a string')
+                if (password !== password.trim()) throw Error('password is empty or blank')
+                
 
                 return User.findOne({ email, password })
             })
@@ -47,14 +59,12 @@ const logic = {
      * 
      * @param {string} id
      * 
-     * @returns {Promise<User>} 
+     * @returns {Promise<Object>} 
      */
     retrieveUser(id) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('id is not a string')
-
-                // TODO validations
 
                 return User.findById(id).select({ _id: 0, id: 1, name: 1, surname: 1, email: 1 })
             })
@@ -80,7 +90,15 @@ const logic = {
     updateUser(id, name, surname, email, password, newEmail, newPassword) {
         return Promise.resolve()
             .then(() => {
-                // TODO validations
+                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof name !== 'string') throw Error ('name is not a string')
+                if (name !== name.trim()) throw Error('name is empty or blank')
+                if (typeof surname !== 'string') throw Error ('surname is not a string')
+                if (surname !== surname.trim()) throw Error('surname is empty or blank')
+                if (typeof email !== 'string') throw Error ('email is not a string')
+                if (email !== email.trim()) throw Error('email is empty or blank')
+                if (typeof password !== 'string') throw Error ('password is not a string')
+                if (password !== password.trim()) throw Error('password is empty or blank')
 
                 return User.findOne({ email, password })
             })
@@ -110,7 +128,8 @@ const logic = {
     unregisterUser(id, email, password) {
         return Promise.resolve()
             .then(() => {
-                // TODO validations
+                if (typeof id !== 'string') throw Error('id is not a string')
+                
 
                 return User.findOne({ email, password })
             })
@@ -129,14 +148,14 @@ const logic = {
      * @param {string} userId
      * @param {string} text 
      * 
-     * @retuns {Promise<string>}
+     * @throws
      */
     addNote(userId, text) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('user id is not a string')
+                if (typeof userId !== 'string') throw Error('userId is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
                 if (typeof text !== 'string') throw Error('text is not a string')
 
@@ -168,31 +187,26 @@ const logic = {
     /**
      * 
      * @param {string} userId
-     * @param {string} noteId 
+     * @param {string} id 
      * 
-     * @returns {Promise<Note>}
+     * @throws
      */
-    retrieveNote(userId, noteId) {
+    retrieveNote(userId, id) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('user id is not a string')
+                if (typeof userId !== 'string') throw Error('userId is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
-                if (typeof noteId !== 'string') throw Error('note id is not a string')
+                if (typeof id !== 'string') throw Error('id is not a string')
 
-                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+                if (!(id = id.trim())) throw Error('id is empty or blank')
 
-                return User.findById(userId)
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
-
-                        return user.notes.id(noteId)
-                    })
+                return this._notes.findOne({ _id: ObjectId(id), userId })
                     .then(note => {
-                        if (!note) throw Error(`no note found with id ${noteId}`)
+                        if (!note) throw Error(`note with id ${id} does not exist for userId ${userId}`)
 
-                        return note
+                        return { id: note._id.toString(), userId: note.userId, text: note.text }
                     })
             })
     },
