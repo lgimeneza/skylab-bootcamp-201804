@@ -343,6 +343,19 @@ describe('logic (notes)', () => {
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
+        it('should fail on wrong user id', () => {
+            const user = new User(userData)
+            const note = new Note({ text: noteText })
+
+            user.notes.push(note)
+
+            return user.save()
+                .then(({ notes: [{ id: noteId }] }) => {
+                    return logic.updateNote(dummyUserId, noteId, `${noteText} 2`)
+                        .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
+                })
+        })
+
         it('should fail on wrong note id', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
