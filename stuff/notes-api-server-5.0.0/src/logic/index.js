@@ -222,7 +222,7 @@ const logic = {
      * @param {string} userId
      * @param {string} noteId 
      *
-     * @throws
+     * @returns {Promise<boolean>}
      */
     removeNote(userId, noteId) {
         return Promise.resolve()
@@ -257,7 +257,7 @@ const logic = {
      * @param {string} noteId 
      * @param {string} text 
      * 
-     * @throws
+     * @returns {Promise<boolean>}
      */
     updateNote(userId, noteId, text) {
         return Promise.resolve()
