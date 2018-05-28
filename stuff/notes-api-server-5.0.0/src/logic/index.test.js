@@ -6,6 +6,8 @@ const logic = require('.')
 const { User, Note } = require('../models')
 
 describe('logic (notes)', () => {
+    const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
+
     before(() => mongoose.connect('mongodb://localhost/skylab-bootcamp-201804-test'))
 
     beforeEach(() => Promise.all([User.remove()/*, Note.deleteMany()*/]))
@@ -21,7 +23,7 @@ describe('logic (notes)', () => {
 
     describe('authenticate user', () => {
         it('should succeed on correct data', () =>
-            User.create({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' })
+            User.create(userData)
                 .then(() =>
                     logic.authenticateUser('jd@mail.com', '123')
                         .then(id => expect(id).toBeDefined())
@@ -33,7 +35,7 @@ describe('logic (notes)', () => {
 
     describe('retrieve user', () => {
         it('should succeed on correct data', () =>
-            User.create({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' })
+            User.create(userData)
                 .then(({ id }) => {
                     return logic.retrieveUser(id)
                 })
@@ -58,7 +60,7 @@ describe('logic (notes)', () => {
 
     describe('udpate user', () => {
         it('should succeed on correct data', () =>
-            User.create({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' })
+            User.create(userData)
                 .then(({ id }) => {
                     return logic.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
@@ -79,11 +81,13 @@ describe('logic (notes)', () => {
                         })
                 })
         )
+
+        // TODO error cases
     })
 
     describe('unregister user', () => {
         it('should succeed on correct data', () =>
-            User.create({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' })
+            User.create(userData)
                 .then(({ id }) => {
                     return logic.unregisterUser(id, 'jd@mail.com', '123')
                         .then(res => {
@@ -103,7 +107,7 @@ describe('logic (notes)', () => {
 
     describe('add note', () => {
         it('should succeed on correct data', () =>
-            User.create({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' })
+            User.create(userData)
                 .then(({ id }) => {
                     return logic.addNote(id, 'my note')
                         .then(noteId => {
@@ -131,6 +135,26 @@ describe('logic (notes)', () => {
 
             return logic.addNote(userId, 'my note')
                 .catch(({ message }) => expect(message).toBe(`no user found with id ${userId}`))
+        })
+
+        // TODO error cases
+    })
+
+    describe('retrieve note', () => {
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+            const note = new Note({ text: 'my note' })
+
+            user.notes.push(note)
+
+            return user.save()
+                .then(({ id: userId, notes: [{ id: noteId }] }) => {
+                    return logic.retrieveNote(userId, noteId)
+                })
+                .then(({ id, text }) => {
+                    expect(id).toBe(note.id)
+                    expect(text).toBe(note.text)
+                })
         })
     })
 
