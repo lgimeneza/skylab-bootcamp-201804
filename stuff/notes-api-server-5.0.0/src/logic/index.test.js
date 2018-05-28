@@ -130,7 +130,7 @@ describe('logic (notes)', () => {
                 })
         )
 
-        it('should throw error on wrong user id', () => {
+        it('should fail on wrong user id', () => {
             const userId = '123456781234567812345678'
 
             return logic.addNote(userId, 'my note')
@@ -154,6 +154,36 @@ describe('logic (notes)', () => {
                 .then(({ id, text }) => {
                     expect(id).toBe(note.id)
                     expect(text).toBe(note.text)
+                })
+        })
+
+        it('should fail on wrong user id', () => {
+            const user = new User(userData)
+            const note = new Note({ text: 'my note' })
+
+            user.notes.push(note)
+
+            return user.save()
+                .then(({ notes: [{ id: noteId }] }) => {
+                    const userId = '123456781234567812345678'
+
+                    return logic.retrieveNote(userId, noteId)
+                        .catch(({ message }) => expect(message).toBe(`no user found with id ${userId}`))
+                })
+        })
+
+        it('should fail on wrong note id', () => {
+            const user = new User(userData)
+            const note = new Note({ text: 'my note' })
+
+            user.notes.push(note)
+
+            return user.save()
+                .then(({ id: userId }) => {
+                    const noteId = '123456781234567812345678'
+
+                    return logic.retrieveNote(userId, noteId)
+                        .catch(({ message }) => expect(message).toBe(`no note found with id ${noteId}`))
                 })
         })
     })

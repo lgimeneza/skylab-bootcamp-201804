@@ -189,6 +189,11 @@ const logic = {
 
                         return user.notes.id(noteId)
                     })
+                    .then(note => {
+                        if (!note) throw Error(`no note found with id ${noteId}`)
+
+                        return note
+                    })
             })
     },
 
