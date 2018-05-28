@@ -271,12 +271,13 @@ describe('logic (notes)', () => {
 
                     return logic.listNotes(userId)
                         .then(notes => {
-                            notes.forEach(({ id, text }) => {
+                            notes.forEach(({ id, text, _id }) => {
                                 // expect(validNoteIds.includes(id)).to.be.true
                                 // expect(validNoteTexts.includes(text)).to.be.true
                                 // or
                                 expect(validNoteIds).to.include(id)
                                 expect(validNoteTexts).to.include(text)
+                                expect(_id).not.to.exist
                             })
                         })
                 })
