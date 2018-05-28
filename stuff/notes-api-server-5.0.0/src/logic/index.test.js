@@ -342,6 +342,19 @@ describe('logic (notes)', () => {
             logic.updateNote('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
+
+        it('should fail on wrong note id', () => {
+            const user = new User(userData)
+            const note = new Note({ text: noteText })
+
+            user.notes.push(note)
+
+            return user.save()
+                .then(({ id: userId }) => {
+                    return logic.updateNote(userId, dummyNoteId, `${noteText} 2`)
+                        .catch(({ message }) => expect(message).to.equal(`no note found with id ${dummyNoteId}`))
+                })
+        })
     })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
