@@ -10,24 +10,44 @@ const logic = {
      * @param {string} email 
      * @param {string} password 
      * 
-     * @returns {Promise<Boolean>}
+     * @returns {Promise<boolean>}
      */
-    register(name, surname, email, password) {
+    registerUser(name, surname, email, password) {
         return Promise.resolve()
             .then(() => {
-                const { body:{name, surname, email, password}}=req
+                if (typeof name !== 'string') throw Error('name is not a string')
+
+                if (!(name = name.trim()).length) throw Error('name is empty or blank')
+
+                if (typeof surname !== 'string') throw Error('surname is not a string')
+
+                if (!(surname= surname.trim())) throw Error('surname is empty or blank')
+
+                if (typeof email !== 'string') throw Error('email is not a string')
+
+                if ((email = email.trim()).length === 0) throw Error('email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+
 
                 return User.create({ name, surname, email, password })
-                    .then (user=>{
-                        res.json ({status:'OK'})
-                    })
+                    .then(() => true)
             })
     },
 
-    login(email, password) {
+    /**
+     * 
+     * @param {string} email 
+     * @param {string} password 
+     * 
+     * @returns {Promise<string>}
+     */
+    authenticateUser(email, password) {
         return Promise.resolve()
             .then(() => {
-                const { body:{email, password}}=req
+                // TODO validations
 
                 return User.findOne({ email, password })
             })
@@ -38,19 +58,85 @@ const logic = {
             })
     },
 
-    retrieve(id) {
+    /**
+     * 
+     * @param {string} id
+     * 
+     * @returns {Promise<Object>} 
+     */
+    retrieveUser(id) {
         return Promise.resolve()
             .then(() => {
-                
+                if (typeof id !== 'string') throw Error('id is not a string')
 
-                return User.findById(id)
-            })
-            .then (User=>{
-                const{id, email, name, surname}=user
+                // TODO validations
 
-                return {id, email, name, surname}
+                return User.findById(id).select({ _id: 0, id: 1, name: 1, surname: 1, email: 1 })
             })
-            
+            .then(user => {
+                if (!user) throw Error(`no user found with id ${id}`)
+
+                return user
+            })
+    },
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {string} name 
+     * @param {string} surname 
+     * @param {string} email 
+     * @param {string} password 
+     * @param {string} newEmail 
+     * @param {string} newPassword 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    updateUser(id, name, surname, email, password, newEmail, newPassword) {
+        return Promise.resolve()
+            .then(() => {
+                // TODO validations
+
+                return User.findOne({ email, password })
+            })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
+
+                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+
+                user.name = name
+                user.surname = surname
+                user.email = newEmail ? newEmail : email
+                user.password = newPassword ? newPassword : password
+
+                return user.save()
+            })
+            .then(() => true)
+    },
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {string} email 
+     * @param {string} password 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    unregisterUser(id, email, password) {
+        return Promise.resolve()
+            .then(() => {
+                // TODO validations
+
+                return User.findOne({ email, password })
+            })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
+
+                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+
+                return user.remove()
+            })
+            .then(() => true)
     },
 
     /**
@@ -71,10 +157,22 @@ const logic = {
 
                 if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
 
-                const note = new Note(userId, text)
+                return User.findById(id)
 
-                return this._notes.insertOne(note)
-                    .then(() => note._id.toString())
+                .then(user =>{
+                    if (!user) throw Error (`no user found with id ${id}`)
+
+                    const note = new Note({text})
+
+                    user.notes.push(note)
+
+                    return user.save()
+                    .then (()=> note.id)
+                    User.findByIdAndUpdate(userId, {$push:{notes: {text}}}, {new:true})
+                    .then(user => {
+                        if (!user) throw Error (`no user found with userId ${userId}`)
+                    })
+                })     
             })
     },
 
