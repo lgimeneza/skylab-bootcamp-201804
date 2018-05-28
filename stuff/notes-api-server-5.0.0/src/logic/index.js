@@ -213,7 +213,7 @@ const logic = {
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
-                        return user.notes
+                        return user.notes.map(({ id, text }) => ({ id, text }))
                     })
             })
     },
