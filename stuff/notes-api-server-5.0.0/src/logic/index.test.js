@@ -210,6 +210,21 @@ describe('logic (notes)', () => {
                         .catch(({ message }) => expect(message).toBe(`no note found with id ${dummyNoteId}`))
                 })
         })
+
+        it('should fail on non user id', () =>
+            logic.retrieveNote()
+                .catch(({ message }) => expect(message).toBe('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.retrieveNote('')
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.retrieveNote('      ')
+                .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
+        )
     })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
