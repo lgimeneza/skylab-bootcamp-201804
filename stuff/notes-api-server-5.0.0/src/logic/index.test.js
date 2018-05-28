@@ -7,6 +7,8 @@ const { User, Note } = require('../models')
 
 describe('logic (notes)', () => {
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
+    const dummyUserId = '123456781234567812345678'
+    const dummyNoteId = '123456781234567812345678'
 
     before(() => mongoose.connect('mongodb://localhost/skylab-bootcamp-201804-test'))
 
@@ -131,10 +133,8 @@ describe('logic (notes)', () => {
         )
 
         it('should fail on wrong user id', () => {
-            const userId = '123456781234567812345678'
-
-            return logic.addNote(userId, 'my note')
-                .catch(({ message }) => expect(message).toBe(`no user found with id ${userId}`))
+            return logic.addNote(dummyUserId, 'my note')
+                .catch(({ message }) => expect(message).toBe(`no user found with id ${dummyUserId}`))
         })
 
         it('should fail on no user id', () =>
@@ -153,17 +153,17 @@ describe('logic (notes)', () => {
         )
 
         it('should fail on no text', () => {
-            logic.addNote(_userId)
+            logic.addNote(dummyUserId)
                 .catch(({ message }) => expect(message).toBe('text is not a string'))
         })
 
         it('should fail on empty text', () =>
-            logic.addNote(_userId, '')
+            logic.addNote(dummyUserId, '')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
 
         it('should fail on blank text', () =>
-            logic.addNote(_userId, '   ')
+            logic.addNote(dummyUserId, '   ')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
     })
@@ -193,10 +193,8 @@ describe('logic (notes)', () => {
 
             return user.save()
                 .then(({ notes: [{ id: noteId }] }) => {
-                    const userId = '123456781234567812345678'
-
-                    return logic.retrieveNote(userId, noteId)
-                        .catch(({ message }) => expect(message).toBe(`no user found with id ${userId}`))
+                    return logic.retrieveNote(dummyUserId, noteId)
+                        .catch(({ message }) => expect(message).toBe(`no user found with id ${dummyUserId}`))
                 })
         })
 
@@ -208,10 +206,8 @@ describe('logic (notes)', () => {
 
             return user.save()
                 .then(({ id: userId }) => {
-                    const noteId = '123456781234567812345678'
-
-                    return logic.retrieveNote(userId, noteId)
-                        .catch(({ message }) => expect(message).toBe(`no note found with id ${noteId}`))
+                    return logic.retrieveNote(userId, dummyNoteId)
+                        .catch(({ message }) => expect(message).toBe(`no note found with id ${dummyNoteId}`))
                 })
         })
     })
