@@ -185,32 +185,6 @@ describe('logic (notes)', () => {
                 })
         })
 
-        it('should fail on wrong user id', () => {
-            const user = new User(userData)
-            const note = new Note({ text: 'my note' })
-
-            user.notes.push(note)
-
-            return user.save()
-                .then(({ notes: [{ id: noteId }] }) => {
-                    return logic.retrieveNote(dummyUserId, noteId)
-                        .catch(({ message }) => expect(message).toBe(`no user found with id ${dummyUserId}`))
-                })
-        })
-
-        it('should fail on wrong note id', () => {
-            const user = new User(userData)
-            const note = new Note({ text: 'my note' })
-
-            user.notes.push(note)
-
-            return user.save()
-                .then(({ id: userId }) => {
-                    return logic.retrieveNote(userId, dummyNoteId)
-                        .catch(({ message }) => expect(message).toBe(`no note found with id ${dummyNoteId}`))
-                })
-        })
-
         it('should fail on non user id', () =>
             logic.retrieveNote()
                 .catch(({ message }) => expect(message).toBe('user id is not a string'))
@@ -225,6 +199,47 @@ describe('logic (notes)', () => {
             logic.retrieveNote('      ')
                 .catch(({ message }) => expect(message).toBe('user id is empty or blank'))
         )
+
+        it('should fail on wrong user id', () => {
+            const user = new User(userData)
+            const note = new Note({ text: 'my note' })
+
+            user.notes.push(note)
+
+            return user.save()
+                .then(({ notes: [{ id: noteId }] }) => {
+                    return logic.retrieveNote(dummyUserId, noteId)
+                        .catch(({ message }) => expect(message).toBe(`no user found with id ${dummyUserId}`))
+                })
+        })
+
+        it('should fail on no note id', () =>
+            logic.retrieveNote(dummyUserId)
+                .catch(({ message }) => expect(message).toBe('note id is not a string'))
+        )
+
+        it('should fail on empty note id', () =>
+            logic.retrieveNote(dummyUserId, '')
+                .catch(({ message }) => expect(message).toBe('note id is empty or blank'))
+        )
+
+        it('should fail on blank note id', () =>
+            logic.retrieveNote(dummyUserId, '       ')
+                .catch(({ message }) => expect(message).toBe('note id is empty or blank'))
+        )
+
+        it('should fail on wrong note id', () => {
+            const user = new User(userData)
+            const note = new Note({ text: 'my note' })
+
+            user.notes.push(note)
+
+            return user.save()
+                .then(({ id: userId }) => {
+                    return logic.retrieveNote(userId, dummyNoteId)
+                        .catch(({ message }) => expect(message).toBe(`no note found with id ${dummyNoteId}`))
+                })
+        })
     })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))

@@ -6,7 +6,7 @@ const logic = require('.')
 
 describe('logic (notes)', () => {
     let cn, db, cl
-    const _userId = '123'
+    const dummyUserId = '123'
     const noteText = 'my note'
     const indexes = []
 
@@ -36,7 +36,7 @@ describe('logic (notes)', () => {
 
     describe('add note', () => {
         it('should add on correct data', () =>
-            logic.addNote(_userId, noteText)
+            logic.addNote(dummyUserId, noteText)
                 .then(id => {
                     expect(id).toBeDefined()
 
@@ -44,14 +44,14 @@ describe('logic (notes)', () => {
                         .then(({ _id, userId, text }) => {
                             expect(_id).toBeDefined()
                             expect(_id.toString()).toBe(id)
-                            expect(userId).toBe(_userId)
+                            expect(userId).toBe(dummyUserId)
                             expect(text).toBe(noteText)
                         })
                 })
         )
 
         it('should add notes with different ids', () => {
-            const additions = indexes.map(index => logic.addNote(_userId, `${noteText} ${index}`))
+            const additions = indexes.map(index => logic.addNote(dummyUserId, `${noteText} ${index}`))
 
             return Promise.all(additions)
                 .then(ids => {
@@ -69,7 +69,7 @@ describe('logic (notes)', () => {
 
                             notes.forEach(({ _id, userId, text }, index) => {
                                 expect(_id.toString()).toBe(ids[index])
-                                expect(userId).toBe(_userId)
+                                expect(userId).toBe(dummyUserId)
                                 expect(text).toBe(`${noteText} ${indexes[index]}`)
                             })
                         })
@@ -92,24 +92,24 @@ describe('logic (notes)', () => {
         )
 
         it('should fail on no text', () => {
-            logic.addNote(_userId)
+            logic.addNote(dummyUserId)
                 .catch(({ message }) => expect(message).toBe('text is not a string'))
         })
 
         it('should fail on empty text', () =>
-            logic.addNote(_userId, '')
+            logic.addNote(dummyUserId, '')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
 
         it('should fail on blank text', () =>
-            logic.addNote(_userId, '   ')
+            logic.addNote(dummyUserId, '   ')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
     })
 
     describe('list notes', () => {
         it('should succeed on correct data', () => {
-            let additions = indexes.map(index => cl.insertOne({ userId: _userId, text: `${noteText} ${index}` }).then(res => res.insertedId.toString()))
+            let additions = indexes.map(index => cl.insertOne({ userId: dummyUserId, text: `${noteText} ${index}` }).then(res => res.insertedId.toString()))
 
             const _userId2 = '456'
 
@@ -117,7 +117,7 @@ describe('logic (notes)', () => {
 
             return Promise.all(additions)
                 .then(ids => {
-                    return logic.listNotes(_userId)
+                    return logic.listNotes(dummyUserId)
                         .then(notes => {
                             expect(notes.length).toBe(indexes.length)
 
@@ -126,7 +126,7 @@ describe('logic (notes)', () => {
 
                             notes.forEach(({ id, userId, text }) => {
                                 expect(validIds.includes(id)).toBeTruthy()
-                                expect(userId).toBe(_userId)
+                                expect(userId).toBe(dummyUserId)
                                 expect(validTexts.includes(text)).toBeTruthy()
                             })
                         })
@@ -151,14 +151,14 @@ describe('logic (notes)', () => {
 
     describe('retrieve note', () => {
         it('should succeed on correct data', () => {
-            const _note = { text: noteText, userId: _userId }
+            const _note = { text: noteText, userId: dummyUserId }
             const wrongUserId = '456'
 
             return cl.insertOne(_note)
-                .then(() => logic.retrieveNote(_userId, _note._id.toString()))
+                .then(() => logic.retrieveNote(dummyUserId, _note._id.toString()))
                 .then(({ id, userId, text }) => {
                     expect(id).toBe(_note._id.toString())
-                    expect(userId).toBe(_userId)
+                    expect(userId).toBe(dummyUserId)
                     expect(text).toBe(noteText)
 
                     return logic.retrieveNote(wrongUserId, id)
@@ -182,7 +182,7 @@ describe('logic (notes)', () => {
         )
 
         it('should fail on wrong user id', () =>
-            cl.insertOne({ userId: _userId, text: noteText })
+            cl.insertOne({ userId: dummyUserId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
                     const wrongUserId = 'wrong-id'
@@ -192,43 +192,43 @@ describe('logic (notes)', () => {
                 })
         )
 
-        it('should fail on no id', () =>
-            logic.retrieveNote(_userId)
-                .catch(({ message }) => expect(message).toBe('id is not a string'))
+        it('should fail on no note id', () =>
+            logic.retrieveNote(dummyUserId)
+                .catch(({ message }) => expect(message).toBe('note id is not a string'))
         )
 
-        it('should fail on empty id', () =>
-            logic.retrieveNote(_userId, '')
-                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        it('should fail on empty note id', () =>
+            logic.retrieveNote(dummyUserId, '')
+                .catch(({ message }) => expect(message).toBe('note id is empty or blank'))
         )
 
-        it('should fail on blank id', () =>
-            logic.retrieveNote(_userId, '       ')
-                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        it('should fail on blank note id', () =>
+            logic.retrieveNote(dummyUserId, '       ')
+                .catch(({ message }) => expect(message).toBe('note id is empty or blank'))
         )
 
-        it('should fail on wrong id', () =>
-            cl.insertOne({ userId: _userId, text: noteText })
+        it('should fail on wrong note id', () =>
+            cl.insertOne({ userId: dummyUserId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
                     const wrongNoteId = '123456781234567812345678'
 
-                    return logic.retrieveNote(_userId, wrongNoteId)
-                        .catch(({ message }) => expect(message).toBe(`note with id ${wrongNoteId} does not exist for userId ${_userId}`))
+                    return logic.retrieveNote(dummyUserId, wrongNoteId)
+                        .catch(({ message }) => expect(message).toBe(`note with id ${wrongNoteId} does not exist for userId ${dummyUserId}`))
                 })
         )
     })
 
     describe('remove note', () => {
         it('should remove a note', () => {
-            const _note = { text: noteText, userId: _userId }
+            const _note = { text: noteText, userId: dummyUserId }
             const wrongUserId = '456'
 
             return cl.insertOne(_note)
                 .then(() => logic.removeNote(wrongUserId, _note._id.toString()))
                 .catch(({ message }) => expect(message).toBe(`note with id ${_note._id} does not exist for userId ${wrongUserId}`))
-                .then(() => logic.removeNote(_userId, _note._id.toString()))
-                .then(() => cl.findOne({ _id: _note._id, userId: _userId }))
+                .then(() => logic.removeNote(dummyUserId, _note._id.toString()))
+                .then(() => cl.findOne({ _id: _note._id, userId: dummyUserId }))
                 .then(note => expect(note).toBeNull())
         })
 
@@ -248,7 +248,7 @@ describe('logic (notes)', () => {
         )
 
         it('should fail on wrong user id', () =>
-            cl.insertOne({ userId: _userId, text: noteText })
+            cl.insertOne({ userId: dummyUserId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
                     const wrongUserId = 'wrong-id'
@@ -258,47 +258,47 @@ describe('logic (notes)', () => {
                 })
         )
 
-        it('should fail on no id', () =>
-            logic.removeNote(_userId)
-                .catch(({ message }) => expect(message).toBe('id is not a string'))
+        it('should fail on no note id', () =>
+            logic.removeNote(dummyUserId)
+                .catch(({ message }) => expect(message).toBe('note id is not a string'))
         )
 
-        it('should fail on empty id', () =>
-            logic.removeNote(_userId, '')
-                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        it('should fail on empty note id', () =>
+            logic.removeNote(dummyUserId, '')
+                .catch(({ message }) => expect(message).toBe('note id is empty or blank'))
         )
 
-        it('should fail on blank id', () =>
-            logic.removeNote(_userId, '       ')
-                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        it('should fail on blank note id', () =>
+            logic.removeNote(dummyUserId, '       ')
+                .catch(({ message }) => expect(message).toBe('note id is empty or blank'))
         )
 
         it('should fail on wrong id', () =>
-            cl.insertOne({ userId: _userId, text: noteText })
+            cl.insertOne({ userId: dummyUserId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
                     const wrongNoteId = '123456781234567812345678'
 
-                    return logic.removeNote(_userId, wrongNoteId)
-                        .catch(({ message }) => expect(message).toBe(`note with id ${wrongNoteId} does not exist for userId ${_userId}`))
+                    return logic.removeNote(dummyUserId, wrongNoteId)
+                        .catch(({ message }) => expect(message).toBe(`note with id ${wrongNoteId} does not exist for userId ${dummyUserId}`))
                 })
         )
     })
 
     describe('update note', () => {
         it('should succeed on correct data', () => {
-            const _note = { text: noteText, userId: _userId }
+            const _note = { text: noteText, userId: dummyUserId }
             const wrongUserId = '456'
             const newNoteText = 'my new note'
 
             return cl.insertOne(_note)
                 .then(() => logic.updateNote(wrongUserId, _note._id.toString(), newNoteText))
                 .catch(({ message }) => expect(message).toBe(`note with id ${_note._id} does not exist for userId ${wrongUserId}`))
-                .then(() => logic.updateNote(_userId, _note._id.toString(), newNoteText))
-                .then(() => cl.findOne({ _id: _note._id, userId: _userId }))
+                .then(() => logic.updateNote(dummyUserId, _note._id.toString(), newNoteText))
+                .then(() => cl.findOne({ _id: _note._id, userId: dummyUserId }))
                 .then(({ _id, userId, text }) => {
                     expect(_id.toString()).toBe(_note._id.toString())
-                    expect(userId).toBe(_userId)
+                    expect(userId).toBe(dummyUserId)
                     expect(text).toBe(newNoteText)
                 })
         })
@@ -319,7 +319,7 @@ describe('logic (notes)', () => {
         )
 
         it('should fail on wrong user id', () =>
-            cl.insertOne({ userId: _userId, text: noteText })
+            cl.insertOne({ userId: dummyUserId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
                     const wrongUserId = 'wrong-id'
@@ -329,59 +329,59 @@ describe('logic (notes)', () => {
                 })
         )
 
-        it('should fail on no id', () =>
-            logic.updateNote(_userId)
-                .catch(({ message }) => expect(message).toBe('id is not a string'))
+        it('should fail on no note id', () =>
+            logic.updateNote(dummyUserId)
+                .catch(({ message }) => expect(message).toBe('note id is not a string'))
         )
 
-        it('should fail on empty id', () =>
-            logic.updateNote(_userId, '')
-                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        it('should fail on empty note id', () =>
+            logic.updateNote(dummyUserId, '')
+                .catch(({ message }) => expect(message).toBe('note id is empty or blank'))
         )
 
-        it('should fail on blank id', () =>
-            logic.updateNote(_userId, '       ')
-                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        it('should fail on blank note id', () =>
+            logic.updateNote(dummyUserId, '       ')
+                .catch(({ message }) => expect(message).toBe('note id is empty or blank'))
         )
 
         it('should fail on wrong id', () =>
-            cl.insertOne({ userId: _userId, text: noteText })
+            cl.insertOne({ userId: dummyUserId, text: noteText })
                 .then(res => res.insertedId.toString())
                 .then(id => {
                     const wrongNoteId = '123456781234567812345678'
 
-                    return logic.updateNote(_userId, wrongNoteId, 'my new note')
-                        .catch(({ message }) => expect(message).toBe(`note with id ${wrongNoteId} does not exist for userId ${_userId}`))
+                    return logic.updateNote(dummyUserId, wrongNoteId, 'my new note')
+                        .catch(({ message }) => expect(message).toBe(`note with id ${wrongNoteId} does not exist for userId ${dummyUserId}`))
                 })
         )
 
         it('should fail on no text', () =>
-            logic.updateNote(_userId, '123')
+            logic.updateNote(dummyUserId, '123')
                 .catch(({ message }) => expect(message).toBe('text is not a string'))
         )
 
         it('should fail on empty text', () =>
-            logic.updateNote(_userId, '123', '')
+            logic.updateNote(dummyUserId, '123', '')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
 
         it('should fail on blank text', () =>
-            logic.updateNote(_userId, '123', '             ')
+            logic.updateNote(dummyUserId, '123', '             ')
                 .catch(({ message }) => expect(message).toBe('text is empty or blank'))
         )
     })
 
     describe('find notes', () => {
         it('should return results on matching text', () => {
-            let additions = indexes.map(index => cl.insertOne({ userId: _userId, text: `${noteText} ${index}` }).then(res => res.insertedId.toString()))
+            let additions = indexes.map(index => cl.insertOne({ userId: dummyUserId, text: `${noteText} ${index}` }).then(res => res.insertedId.toString()))
 
             const anotherNoteText = 'another note'
 
-            additions = [...additions, ...indexes.map(index => cl.insertOne({ userId: _userId, text: `${anotherNoteText} ${index + indexes.length}` }).then(res => res.insertedId.toString()))]
+            additions = [...additions, ...indexes.map(index => cl.insertOne({ userId: dummyUserId, text: `${anotherNoteText} ${index + indexes.length}` }).then(res => res.insertedId.toString()))]
 
             return Promise.all(additions)
                 .then(ids => {
-                    return logic.findNotes(_userId, noteText)
+                    return logic.findNotes(dummyUserId, noteText)
                         .then(notes => {
                             expect(notes.length).toBe(indexes.length)
 
@@ -390,7 +390,7 @@ describe('logic (notes)', () => {
 
                             notes.forEach(({ id, userId, text }) => {
                                 expect(validIds.includes(id)).toBeTruthy()
-                                expect(userId).toBe(_userId)
+                                expect(userId).toBe(dummyUserId)
                                 expect(validTexts.includes(text)).toBeTruthy()
                             })
                         })
@@ -400,9 +400,9 @@ describe('logic (notes)', () => {
         it('should return results on matching text case', () => {
             const additions = []
 
-            additions.push(cl.insertOne({ userId: _userId, text: 'my note a' }).then(res => res.insertedId.toString()))
-            additions.push(cl.insertOne({ userId: _userId, text: 'my note aA' }).then(res => res.insertedId.toString()))
-            additions.push(cl.insertOne({ userId: _userId, text: 'my note aAa' }).then(res => res.insertedId.toString()))
+            additions.push(cl.insertOne({ userId: dummyUserId, text: 'my note a' }).then(res => res.insertedId.toString()))
+            additions.push(cl.insertOne({ userId: dummyUserId, text: 'my note aA' }).then(res => res.insertedId.toString()))
+            additions.push(cl.insertOne({ userId: dummyUserId, text: 'my note aAa' }).then(res => res.insertedId.toString()))
 
             const wrongUserId = '456'
 
@@ -414,7 +414,7 @@ describe('logic (notes)', () => {
                             expect(notes instanceof Array).toBeTruthy()
                             expect(notes.length).toBe(0)
 
-                            return logic.findNotes(_userId, 'aA')
+                            return logic.findNotes(dummyUserId, 'aA')
                         })
                         .then(notes => {
                             expect(notes).toBeDefined()
@@ -424,7 +424,7 @@ describe('logic (notes)', () => {
 
                             notes.forEach(({ id, userId, text }) => {
                                 expect(ids.includes(id)).toBeTruthy()
-                                expect(userId).toBe(_userId)
+                                expect(userId).toBe(dummyUserId)
                                 expect(validTexts.includes(text)).toBeTruthy()
                             })
                         })
@@ -447,12 +447,12 @@ describe('logic (notes)', () => {
         )
 
         it('should fail on no text', () =>
-            logic.findNotes(_userId)
+            logic.findNotes(dummyUserId)
                 .catch(({ message }) => expect(message).toBe('text is not a string'))
         )
 
         it('should fail on empty text', () =>
-            logic.findNotes(_userId, '')
+            logic.findNotes(dummyUserId, '')
                 .catch(({ message }) => expect(message).toBe('text is empty'))
         )
     })

@@ -61,9 +61,9 @@ const logic = {
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof id !== 'string') throw Error('note id is not a string')
 
-                if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(id = id.trim())) throw Error('note id is empty or blank')
 
                 return this._notes.findOne({ _id: ObjectId(id), userId })
                     .then(note => {
@@ -105,9 +105,9 @@ const logic = {
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof id !== 'string') throw Error('note id is not a string')
 
-                if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(id = id.trim())) throw Error('note id is empty or blank')
 
                 return this._notes.findOneAndDelete({ _id: ObjectId(id), userId })
                     .then(res => {
@@ -131,9 +131,9 @@ const logic = {
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof id !== 'string') throw Error('note id is not a string')
 
-                if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(id = id.trim())) throw Error('note id is empty or blank')
 
                 if (typeof text !== 'string') throw Error('text is not a string')
 
