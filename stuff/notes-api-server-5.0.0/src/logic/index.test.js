@@ -107,7 +107,6 @@ describe('logic (notes)', () => {
                 .then(({ id }) => {
                     return logic.addNote(id, 'my note')
                         .then(noteId => {
-                            debugger
                             expect(typeof noteId).toBe('string')
                             expect(noteId).toBeDefined()
 
