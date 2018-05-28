@@ -56,7 +56,7 @@ const logic = {
 
                 // TODO validations
 
-                return User.findById(id).select({ _id: 0, id: 1, name: 1, surname: 1, email: 1 })
+                return User.findById(id).select({ _id: 0, name: 1, surname: 1, email: 1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -200,7 +200,7 @@ const logic = {
     /**
      * @param {string} userId
      * 
-     * @throws
+     * @returns {Promise<[Note]>}
      */
     listNotes(userId) {
         return Promise.resolve()
@@ -209,8 +209,12 @@ const logic = {
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                return this._notes.find({ userId }).toArray()
-                    .then(notes => notes.map(({ _id, userId, text }) => ({ id: _id.toString(), userId, text })))
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        return user.notes
+                    })
             })
     },
 
