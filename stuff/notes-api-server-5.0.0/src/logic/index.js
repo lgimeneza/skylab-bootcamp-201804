@@ -220,25 +220,34 @@ const logic = {
     /**
      * 
      * @param {string} userId
-     * @param {string} id 
+     * @param {string} noteId 
      *
      * @throws
      */
-    removeNote(userId, id) {
+    removeNote(userId, noteId) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
 
-                if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
 
-                return this._notes.findOneAndDelete({ _id: ObjectId(id), userId })
-                    .then(res => {
-                        if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const note = user.notes.id(noteId)
+
+                        if (!note) throw Error(`no note found with id ${noteId}`)
+
+                        note.remove()
+
+                        return user.save()
                     })
+                    .then(() => true)
             })
     },
 
