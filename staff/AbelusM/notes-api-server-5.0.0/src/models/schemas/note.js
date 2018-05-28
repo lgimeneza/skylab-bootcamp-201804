@@ -4,6 +4,5 @@ module.exports = new Schema({
     text: {
         type: String,
         required: true
-    },
-    
+    }
 })
