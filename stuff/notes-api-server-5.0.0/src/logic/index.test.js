@@ -318,12 +318,29 @@ describe('logic (notes)', () => {
 
                                     return User.findById(userId)
                                 })
-                                .then(({ [{id, text}] }) => {
+                                .then(({ notes }) => {
+                                    const [{ id, text }] = notes
+
                                     expect(id).to.equal(noteId)
                                     expect(text).to.equal(newNoteText)
                                 })
                         })
                 )
+        )
+
+        it('should fail on non user id', () =>
+            logic.updateNote()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.updateNote('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.updateNote('      ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
     })
 
