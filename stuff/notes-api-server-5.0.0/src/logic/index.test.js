@@ -271,6 +271,9 @@ describe('logic (notes)', () => {
 
                     return logic.listNotes(userId)
                         .then(notes => {
+                            expect(notes).to.exist
+                            expect(notes.length).to.equal(indexes.length)
+
                             notes.forEach(({ id, text, _id }) => {
                                 // expect(validNoteIds.includes(id)).to.be.true
                                 // expect(validNoteTexts.includes(text)).to.be.true
@@ -296,6 +299,31 @@ describe('logic (notes)', () => {
         it('should fail on blank user id', () =>
             logic.listNotes('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+    })
+
+    describe('update note', () => {
+        it('should succeed on correct data', () =>
+            User.create(userData)
+                .then(({ id: userId }) =>
+                    User.findByIdAndUpdate(userId, { $push: { notes: { text: noteText } } }, { new: true })
+                        .then(user => {
+                            const noteId = user.notes[user.notes.length - 1].id
+
+                            const newNoteText = `${noteText} 2`
+
+                            return logic.updateNote(userId, noteId, newNoteText)
+                                .then(res => {
+                                    expect(res).to.be.true
+
+                                    return User.findById(userId)
+                                })
+                                .then(({ [{id, text}] }) => {
+                                    expect(id).to.equal(noteId)
+                                    expect(text).to.equal(newNoteText)
+                                })
+                        })
+                )
         )
     })
 
