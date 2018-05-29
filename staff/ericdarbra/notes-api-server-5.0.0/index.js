@@ -1,93 +1,37 @@
 'use strict'
 
+const { MongoClient } = require('mongodb')
 const express = require('express')
 const bodyParser = require('body-parser')
+const router = require('./src/routes')
 const logic = require('./src/logic')
+const cors = require('cors')
 
-const port = process.argv[2] || 3000
+MongoClient.connect('mongodb://localhost:27017/skylab-bootcamp-201804', { useNewUrlParser: true }, (err, conn) => {
+    if (err) throw err
 
-const app = express()
-app.use(bodyParser.json()) // middleware
+    const db = conn.db()
 
-let notes = []
+    logic.init(db)
 
-app.post('/api/users/:userId/notes', (req, res) => {
-    const { params: { userId }, body: { text } } = req
+    const port = process.argv[2] || 3000
 
-    try {
-        const id = logic.addNote(userId, text)
+    const app = express()
 
-        res.status(201)
+    app.use(cors())
 
-        res.json({ status: 'OK', data: { id } })
-    } catch ({ message }) {
-        res.status(400)
+    app.use(bodyParser.json()) // middleware
 
-        res.json({ status: 'KO', error: message })
-    }
-})
+    app.use('/api', router)
 
-app.get('/api/users/:userId/notes/:id', (req, res) => {
-    const { params: { userId, id } } = req
+    app.listen(port, () => console.log(`server running on port ${port}`))
 
-    try {
-        const note = logic.retrieveNote(userId, id)
+    process.on('SIGINT', () => {
+        console.log('\nstopping server')
 
-        res.json({ status: 'OK', data: note })
-    } catch ({ message }) {
-        res.status(400)
+        conn.close()
 
-        res.json({ status: 'KO', error: message })
-    }
-})
+        process.exit()
+    })
 
-app.get('/api/users/:userId/notes', (req, res) => {
-    const { params: { userId }, query: { q } } = req
-
-    if (q) {
-        try {
-            res.json({ status: 'OK', data: logic.findNotes(userId, q) })
-        } catch ({ message }) {
-            res.status(400)
-
-            res.json({ status: 'KO', error: message })
-        }
-    } else
-        res.json({ status: 'OK', data: logic.listNotes(userId) })
-})
-
-app.delete('/api/users/:userId/notes/:id', (req, res) => {
-    const { params: { userId, id } } = req
-
-    try {
-        logic.removeNote(userId, id)
-
-        res.json({ status: 'OK' })
-    } catch ({ message }) {
-        res.status(400)
-
-        res.json({ status: 'KO', error: message })
-    }
-})
-
-app.patch('/api/users/:userId/notes/:id', (req, res) => {
-    const { params: { userId, id }, body: { text } } = req
-
-    try {
-        logic.updateNote(userId, id, text)
-
-        res.json({ status: 'OK' })
-    } catch ({ message }) {
-        res.status(400)
-
-        res.json({ status: 'KO', error: message })
-    }
-})
-
-app.listen(port, () => console.log(`server running on port ${port}`))
-
-process.on('SIGINT', () => {
-    console.log('\nstopping server')
-
-    process.exit()
 })

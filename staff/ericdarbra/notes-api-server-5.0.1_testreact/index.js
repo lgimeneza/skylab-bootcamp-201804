@@ -1,18 +1,15 @@
 'use strict'
 
-const { MongoClient } = require('mongodb')
+/* const { MongoClient } = require('mongodb') */
 const express = require('express')
 const bodyParser = require('body-parser')
 const router = require('./src/routes')
 const logic = require('./src/logic')
 const cors = require('cors')
+const mongoose = require('mongoose')
 
-MongoClient.connect('mongodb://localhost:27017/skylab-bootcamp-201804', { useNewUrlParser: true }, (err, conn) => {
-    if (err) throw err
+mongoose.connect('mongodb://localhost/skylab-bootcamp-201804').then( ()=> {
 
-    const db = conn.db()
-
-    logic.init(db)
 
     const port = process.argv[2] || 3000
 
@@ -34,4 +31,8 @@ MongoClient.connect('mongodb://localhost:27017/skylab-bootcamp-201804', { useNew
         process.exit()
     })
 
+})
+.catch(error => {
+    console.error(error)
+    process.exit()
 })
