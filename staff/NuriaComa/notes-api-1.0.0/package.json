@@ -8,5 +8,13 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "lodash": "^4.17.10",
+    "mocha": "^5.2.0"
+  },
+  "devDependencies": {
+    "mongoose": "^5.1.3"
+  }
 }
