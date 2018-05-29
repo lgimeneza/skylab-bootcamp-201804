@@ -55,11 +55,11 @@ const logic = {
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
                 return User.findOne({ email, password })
-            })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
-
-                return user.id
+                .then(user => {
+                    if (!user) throw Error('wrong credentials')
+                    
+                    return user.id
+                })
             })
     },
 
@@ -73,8 +73,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('id is not a string')
-
-                // TODO validations
+                if ((id = id.trim()).length === 0) throw Error('id is empty or blank')
 
                 return User.findById(id).select({ _id: 0, id: 1, name: 1, surname: 1, email: 1 })
             })
@@ -241,21 +240,26 @@ const logic = {
      *
      * @throws
      */
-    removeNote(userId, id) {
+    removeNote(userId, noteId) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('userId is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
-                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof noteId !== 'string') throw Error('noteId is not a string')
 
-                if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(noteId = noteId.trim())) throw Error('noteId is empty or blank')
 
-                return this._notes.findOneAndDelete({ _id: ObjectId(id), userId })
+                return User.findById(userId)
                     .then(res => {
-                        if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                        const note = res.notes.id(noteId)
+                        if (!note) throw Error(`id no exist for userId ${userId}`)
+                        note.remove()
+
+                        return res.save()
                     })
+                    .then(()=> true)
             })
     },
 

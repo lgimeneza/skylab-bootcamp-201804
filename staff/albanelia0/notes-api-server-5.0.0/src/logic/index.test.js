@@ -2,20 +2,31 @@
 
 const mongoose = require('mongoose')
 const expect = require('expect')
+// const {expect} = require('chai')
 const logic = require('.')
 const { User, Note } = require('../models')
 
 describe('logic (notes)', () => {
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
+    const dummyUserId = '123456781234567812345678'
+    const dummyNoteId = '123456781234567812345678'
+    const noteText = 'my note'
+    const indexes = []
 
     before(() => mongoose.connect('mongodb://localhost/skylab-bootcamp-201804-test'))
 
-    beforeEach(() => Promise.all([User.remove()/*, Note.deleteMany()*/]))
+    beforeEach(() => {
+        let count = 10 + Math.floor(Math.random() * 10)
+        indexes.length = 0
+        while (count--) indexes.push(count)
+
+        return Promise.all([User.remove()/*, Note.deleteMany()*/])
+    })
 
     describe('register user', () => {
         it('should succeed on correct dada', () =>
             logic.registerUser('John', 'Doe', 'jd@mail.com', '123')
-                .then(res =>  {
+                .then(res => {
                     expect(res).toBeTruthy()
                     User.find()
                         .then(res => {
@@ -28,7 +39,7 @@ describe('logic (notes)', () => {
         )
 
         it('should throw error on empty or blank', () =>
-            logic.registerUser('','Doe', 'jd@mail.com', '123' )
+            logic.registerUser('', 'Doe', 'jd@mail.com', '123')
                 .catch(({ message }) => expect(message).toBe('name is empty or blank'))
         )
         it('should throw error on wrong name', () =>
@@ -72,22 +83,39 @@ describe('logic (notes)', () => {
                 )
         )
 
-        it('should throw error on empty or blank', () =>
-            logic.registerUser('John', 'Doe', '', '123')
-                .catch(({ message }) => expect(message).toBe('email is empty or blank'))
-        )
-        it('should throw error on wrong email', () =>
-            logic.registerUser('John', 'Doe', 98273, '123')
-                .catch(({ message }) => expect(message).toBe('email is not a string'))
-        )
-        it('should throw error on empty or blank', () =>
-            logic.registerUser('John', 'Doe', 'jd@mail.com', '')
-                .catch(({ message }) => expect(message).toBe('password is empty or blank'))
-        )
-        it('should throw error on wrong password', () =>
-            logic.registerUser('John', 'Doe', 'jd@mail.com', 93863)
-                .catch(({ message }) => expect(message).toBe('password is not a string'))
-        )
+        describe('should throw error', () => {
+            it('should throw error on empty or blank', () =>
+                logic.authenticateUser('', '123')
+                    .catch(({ message }) => expect(message).toBe('email is empty or blank'))
+            )
+            it('should throw error on wrong email', () =>
+                logic.authenticateUser(98273, '123')
+                    .catch(({ message }) => expect(message).toBe('email is not a string'))
+            )
+            it('should throw error on empty or blank', () =>
+                logic.authenticateUser('jd@mail.com', '')
+                    .catch(({ message }) => expect(message).toBe('password is empty or blank'))
+            )
+            it('should throw error on wrong password', () =>
+                logic.authenticateUser('jd@mail.com', 93863)
+                    .catch(({ message }) => expect(message).toBe('password is not a string'))
+            )
+            it('should throw error on wrong password', () =>
+                logic.authenticateUser('jd@mail.com', 93863)
+                    .catch(({ message }) => expect(message).toBe('password is not a string'))
+            )
+            it('should throw error on wrong credentials', () =>
+                User.create(userData).then((res) => {
+                    return logic.authenticateUser('jd@mail.com', '923')
+                        .then((res) => { expect(res).toThrow('wrong credentials') })
+                        .catch(({ message }) => expect(message).toBe('wrong credentials'))
+                })
+            )
+
+        })
+
+
+
     })
 
     describe('retrieve user', () => {
@@ -112,7 +140,23 @@ describe('logic (notes)', () => {
                 })
         )
 
-        // TODO error cases
+        it('should throw error on wrong id', () =>
+            logic.retrieveUser(98273)
+                .catch(({ message }) => expect(message).toBe('id is not a string'))
+        )
+        it('should throw error on empty or blank', () =>
+            logic.retrieveUser('')
+                .catch(({ message }) => expect(message).toBe('id is empty or blank'))
+        )
+        // it('should throw error on id no found', () => {
+        //     const _id = '2b0c0ff1e43d872575d7161c'
+        //     logic.retrieveUser(_id)
+        //         .then(id => {
+        //             console.log('ESTEEEEE',id)
+        //             return id
+        //         })
+        //         .catch(({ message }) => expect(message).toBe(`no user found with id ${id}`))
+        // })
     })
 
     describe('udpate user', () => {
@@ -241,6 +285,32 @@ describe('logic (notes)', () => {
 
                     return logic.retrieveNote(userId, noteId)
                         .catch(({ message }) => expect(message).toBe(`no note found with id ${noteId}`))
+                })
+        })
+    })
+
+    describe('should removed note', ()=> {
+        it('should succeed on correct data', () => {
+            // User.create(userData)
+            //     .then(res => {
+            //         expect(res).toBeDefined()
+            //     })
+            const user = new User(userData)
+            const note = new Note({ text: 'my note' })
+            user.notes.push(note)
+
+            return user.save()
+                .then(({id: userId, notes: [{id: noteId}]}) => {
+                   return logic.removeNote(userId, noteId)
+                        .then(res => {
+                            expect(res).toBeTruthy()
+
+                            return User.findById(userId)
+                        })
+                        .then(({notes}) => {
+                            expect(notes).toBeDefined()
+                            expect(notes.length).toEqual(0)
+                        })
                 })
         })
     })
