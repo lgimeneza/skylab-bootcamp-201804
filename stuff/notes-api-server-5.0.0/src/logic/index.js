@@ -129,7 +129,7 @@ const logic = {
      * @param {string} userId
      * @param {string} text 
      * 
-     * @retuns {Promise<string>}
+     * @returns {Promise<string>}
      */
     addNote(userId, text) {
         return Promise.resolve()
@@ -295,7 +295,7 @@ const logic = {
      * @param {string} userId
      * @param {string} text 
      * 
-     * @throws
+     * @returns {Promise<[Note]>}
      */
     findNotes(userId, text) {
         return Promise.resolve()
@@ -308,8 +308,12 @@ const logic = {
 
                 if (!text.length) throw Error('text is empty')
 
-                return this._notes.find({ userId, text: { $regex: text } }).toArray()
-                    .then(notes => notes.map(({ _id, userId, text }) => ({ id: _id.toString(), userId, text })))
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        return user.notes.filter(note => note.text.includes(text)).map(({ id, text }) => ({ id, text }))
+                    })
             })
     }
 }
