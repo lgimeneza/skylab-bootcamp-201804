@@ -16,7 +16,22 @@ describe('logic (notes)', () => {
                 .then(res => expect(res).toBeTruthy())
         )
 
-        // TODO error cases
+        it('should error on register with a email repeat', (done) => {
+            let users = [];
+       
+            users.push(new User({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }).save())
+            users.push( new User({ name: 'John', surname: 'Smitch', email: 'js@mail.com', password: '123' }).save())
+         
+            Promise.all(users).then()
+                .then(()=>{
+                     logic.registerUser('John', 'macarthur', 'js@mail.com', '123')
+                        .catch(({ message }) => {
+                            expect(message).toBe('this email exists on the db')
+                            done()
+                        })
+                })
+        })
+
     })
 
     describe('authenticate user', () => {
@@ -240,7 +255,7 @@ describe('logic (notes)', () => {
                         .then((res) => {
                             expect(res).toBeDefined()
                             expect(res).toBeTruthy()
-                            expect(res.notes.length).toBe(4)    
+                            expect(res.notes.length).toBe(4)
                         })
                 )
         })
@@ -260,13 +275,13 @@ describe('logic (notes)', () => {
             const noteId = user.notes[user.notes.length - 1].id
             return user.save()
                 .then(({ id: userId }) =>
-                    logic.updateNote(userId, note1.id,"my new note")
+                    logic.updateNote(userId, note1.id, "my new note")
                         .then((res) => {
                             expect(res).toBeDefined()
                             expect(res).toBeTruthy()
-                            expect(res.notes.length).toBe(2) 
-                            expect(res.notes[0].text).toBe('my new note')    
-                               
+                            expect(res.notes.length).toBe(2)
+                            expect(res.notes[0].text).toBe('my new note')
+
                         })
                 )
         })
@@ -291,9 +306,9 @@ describe('logic (notes)', () => {
                     logic.findNotes(userId, "note")
                         .then((filteredNotes) => {
                             expect(filteredNotes).toBeDefined()
-                            expect(filteredNotes.length).toBe(2) 
-                            expect(filteredNotes[0].text).toBe('my note1')    
-                            expect(filteredNotes[1].text).toBe('my note2')                                 
+                            expect(filteredNotes.length).toBe(2)
+                            expect(filteredNotes[0].text).toBe('my note1')
+                            expect(filteredNotes[1].text).toBe('my note2')
                         })
                 )
         })

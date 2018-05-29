@@ -15,12 +15,16 @@ const logic = {
      * @returns {Promise<boolean>}
      */
     registerUser(name, surname, email, password) {
-        return Promise.resolve()
-            .then(() => {
-                // TODO validations (name, surname, email, password)
 
-                return User.create({ name, surname, email, password })
-                    .then(() => true)
+        return User.findOne({email})
+            .then((user) => {
+
+                if (user === null) {
+                    return User.create({ name, surname, email, password })
+        
+                } else {
+                    throw Error('this email exists on the db')
+                }
             })
     },
 
@@ -287,7 +291,7 @@ const logic = {
                 return User.findById(userId)
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
-                        
+
                         user.notes.forEach((note, index) => {
                             (note.id === id) && (note.text = text)
                         });
