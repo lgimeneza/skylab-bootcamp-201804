@@ -19,15 +19,11 @@ html(lang='en')
           | Also you can select the number of attempts.
         br
         br
-        |  ${error? `
-        .alert.alert-warning.alert-dismissible
-          a.close(href='/two-players', data-dismiss='alert', aria-label='close') ×
-          strong Warning!
-          |  ${error}
-        | ` : '
-        br
-        br
-        | '}
+        if error
+          .alert.alert-warning.alert-dismissible
+            a.close(href='/two-players', data-dismiss='alert', aria-label='close') ×
+            strong Warning! 
+            span #{error}
         form(action='/initial-word', method='POST')
           label(for='attm')
             | Attempts:

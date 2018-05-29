@@ -19,6 +19,12 @@ const Hangman = (function () {
             this._guessed = new Array(this._word.length).fill('_')
 
             this._status = Hangman.CONTINUE
+
+            this._fails = ["· "]
+        }
+        hidden(){
+            if (this._status === Hangman.LOSE) return this._word.split("")
+            return 
         }
 
         guessed() {
@@ -33,9 +39,17 @@ const Hangman = (function () {
             return this._status
         }
 
+        fails(str) {
+            if (str) {
+                this._fails.push(str.toUpperCase())
+            } else {
+                return `${this._fails.join(" ")} ·`
+            }
+        }
+
         try(text) {
             if (typeof text !== 'string') throw Error('invalid letter or word ' + text)
-
+            
             text = text.trim();
 
             if (!text.length) throw Error('text cannot empty or blank');
@@ -54,7 +68,7 @@ const Hangman = (function () {
     }
 
     function tryLetter(inst, letter) {
-        const index = inst._word.indexOf(letter)
+        const index = normalize(inst._word).indexOf(normalize(letter))
 
         let match = false
 
@@ -62,11 +76,16 @@ const Hangman = (function () {
             for (let i = index; i < inst._word.length; i++) {
                 const char = inst._word[i]
 
-                if (char === letter) inst._guessed[i] = char
+                if (normalize(char) === normalize(letter)) {
+                    inst._guessed[i] = char
+                }
             }
 
             match = true
-        } else inst._attempts--
+        } else {
+            inst.fails(letter)
+            inst._attempts--
+        }
 
         update(inst)
 
@@ -76,7 +95,7 @@ const Hangman = (function () {
     function tryWord(inst, word) {
         let match = false
 
-        if (word === inst._word) {
+        if (normalize(word) === normalize(inst._word)) {
             for (var i = 0; i < inst._word.length; i++)
                 inst._guessed[i] = inst._word[i]
 
