@@ -52,7 +52,7 @@ const logic = {
     retrieveUser(id) {
         return Promise.resolve()
             .then(() => {
-                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof id !== 'string') throw Error('user id is not a string')
 
                 // TODO validations
 
@@ -187,9 +187,8 @@ const logic = {
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
-                        return user.notes.id(noteId)
-                    })
-                    .then(note => {
+                        const note = user.notes.id(noteId)
+
                         if (!note) throw Error(`no note found with id ${noteId}`)
 
                         return note
@@ -213,7 +212,7 @@ const logic = {
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
-                        return user.notes
+                        return user.notes.map(({ id, text }) => ({ id, text }))
                     })
             })
     },
@@ -221,55 +220,73 @@ const logic = {
     /**
      * 
      * @param {string} userId
-     * @param {string} id 
+     * @param {string} noteId 
      *
-     * @throws
+     * @returns {Promise<boolean>}
      */
-    removeNote(userId, id) {
+    removeNote(userId, noteId) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
 
-                if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
 
-                return this._notes.findOneAndDelete({ _id: ObjectId(id), userId })
-                    .then(res => {
-                        if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const note = user.notes.id(noteId)
+
+                        if (!note) throw Error(`no note found with id ${noteId}`)
+
+                        note.remove()
+
+                        return user.save()
                     })
+                    .then(() => true)
             })
     },
 
     /**
      * 
      * @param {string} userId
-     * @param {string} id 
+     * @param {string} noteId 
      * @param {string} text 
      * 
-     * @throws
+     * @returns {Promise<boolean>}
      */
-    updateNote(userId, id, text) {
+    updateNote(userId, noteId, text) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof id !== 'string') throw Error('id is not a string')
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
 
-                if (!(id = id.trim())) throw Error('id is empty or blank')
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
 
                 if (typeof text !== 'string') throw Error('text is not a string')
 
                 if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
 
-                return this._notes.findOneAndUpdate({ _id: ObjectId(id), userId }, { $set: { text } })
-                    .then(res => {
-                        if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const note = user.notes.id(noteId)
+
+                        if (!note) throw Error(`no note found with id ${noteId}`)
+
+                        note.text = text
+
+                        return user.save()
                     })
+                    .then(() => true)
             })
     },
 
