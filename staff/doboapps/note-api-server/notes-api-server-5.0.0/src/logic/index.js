@@ -242,19 +242,22 @@ const logic = {
                 if (!(id = id.trim())) throw Error('id is empty or blank')
 
                 return User.findById(userId)
-                    .then(user => {
+                    .then((user) => {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
-                        user.notes.forEach((note, index, object) => {
-                            if (note.id === id) {
-                                object.splice(index, 1)
+                        let { notes } = user;
+                        // notes.forEach((note, index, notes) => {
+                        //     if (note.id === id) && notes.splice(index, 1)     
+                        // })
+
+                        for (let i = 0; i < notes.length; i++) {
+                            if (notes[i].id === id) {
+                                notes.splice(i, 1)
+                                break
                             }
-                        });
-
+                        }
                         return user.save()
-                            .then(user)
                     })
-
             })
     },
 
@@ -284,15 +287,12 @@ const logic = {
                 return User.findById(userId)
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
-
+                        
                         user.notes.forEach((note, index) => {
-                            if (note.id === id) {
-                                note.text=text
-                            }
+                            (note.id === id) && (note.text = text)
                         });
 
                         return user.save()
-                            .then(user)
                     })
             })
     },
@@ -318,7 +318,7 @@ const logic = {
 
                 if (!text.length) throw Error('text is empty')
 
-                
+
                 return User.findById(userId)
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
@@ -328,7 +328,7 @@ const logic = {
                         });
 
                         return user.save()
-                            .then(()=>{
+                            .then(() => {
                                 return filteredNotes;
                             })
                     })

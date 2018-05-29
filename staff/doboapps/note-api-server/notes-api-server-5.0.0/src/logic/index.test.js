@@ -222,10 +222,16 @@ describe('logic (notes)', () => {
         it('should remove notes from correct user', () => {
             const note1 = new Note({ text: 'my note1' })
             const note2 = new Note({ text: 'my note2' })
+            const note3 = new Note({ text: 'my note2' })
+            const note4 = new Note({ text: 'my note2' })
+            const note5 = new Note({ text: 'my note2' })
 
             const user = new User({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' })
             user.notes.push(note1)
             user.notes.push(note2)
+            user.notes.push(note3)
+            user.notes.push(note4)
+            user.notes.push(note5)
 
             const noteId = user.notes[user.notes.length - 1].id
             return user.save()
@@ -234,7 +240,7 @@ describe('logic (notes)', () => {
                         .then((res) => {
                             expect(res).toBeDefined()
                             expect(res).toBeTruthy()
-                            expect(res.notes.length).toBe(1)    
+                            expect(res.notes.length).toBe(4)    
                         })
                 )
         })
@@ -284,7 +290,6 @@ describe('logic (notes)', () => {
                 .then(({ id: userId }) =>
                     logic.findNotes(userId, "note")
                         .then((filteredNotes) => {
-                            console.log("-->",filteredNotes)
                             expect(filteredNotes).toBeDefined()
                             expect(filteredNotes.length).toBe(2) 
                             expect(filteredNotes[0].text).toBe('my note1')    
