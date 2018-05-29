@@ -34,7 +34,10 @@ const logic = {
 
                 return User.create({ name, surname, email, password })
                     .then(() => true)
+                    .catch(err => err)
             })
+            
+           
     },
 
     /**
@@ -47,7 +50,15 @@ const logic = {
     authenticateUser(email, password) {
         return Promise.resolve()
             .then(() => {
-                // TODO validations
+
+                if (typeof email !== 'string') throw Error('email is not a string')
+
+                if ((email = email.trim()).length === 0) throw Error('email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+
 
                 return User.findOne({ email, password })
             })
@@ -69,7 +80,7 @@ const logic = {
             .then(() => {
                 if (typeof id !== 'string') throw Error('id is not a string')
 
-                // TODO validations
+                if (!(id = id.trim()).length) throw Error('id is empty or blank')
 
                 return User.findById(id).select({ _id: 0, id: 1, name: 1, surname: 1, email: 1 })
             })
@@ -95,7 +106,34 @@ const logic = {
     updateUser(id, name, surname, email, password, newEmail, newPassword) {
         return Promise.resolve()
             .then(() => {
-                // TODO validations
+                if (typeof id !== 'string') throw Error('id is not a string')
+                
+                if (!(id = id.trim()).length) throw Error('id is empty or blank')
+
+                if (typeof name !== 'string') throw Error('name is not a string')
+
+                if (!(name = name.trim()).length) throw Error('name is empty or blank')
+
+                if (typeof surname !== 'string') throw Error('surname is not a string')
+
+                if (!(surname= surname.trim())) throw Error('surname is empty or blank')
+
+                if (typeof email !== 'string') throw Error('email is not a string')
+
+                if ((email = email.trim()).length === 0) throw Error('email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+                
+                if (typeof newEmail !== 'string') throw Error('newEmail is not a string')
+
+                if ((newEmail = newEmail.trim()).length === 0) throw Error('newEmail is empty or blank')
+
+                if (typeof newPassword !== 'string') throw Error('newPassword is not a string')
+
+                if ((newPassword = newPassword.trim()).length === 0) throw Error('newPassword is empty or blank')
+
 
                 return User.findOne({ email, password })
             })
@@ -125,7 +163,20 @@ const logic = {
     unregisterUser(id, email, password) {
         return Promise.resolve()
             .then(() => {
-                // TODO validations
+
+                if (typeof id !== 'string') throw Error('id is not a string')
+                
+                if (!(id = id.trim()).length) throw Error('id is empty or blank')
+
+                if (typeof email !== 'string') throw Error('email is not a string')
+
+                if ((email = email.trim()).length === 0) throw Error('email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+                
+                
 
                 return User.findOne({ email, password })
             })
@@ -157,22 +208,26 @@ const logic = {
 
                 if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
 
-                return User.findById(id)
+                // way 1 (step by step)
+                // return User.findById(userId)
+                //     .then(user => {
+                //         if (!user) throw Error(`no user found with id ${userId}`)
 
-                .then(user =>{
-                    if (!user) throw Error (`no user found with id ${id}`)
+                //         const note = new Note({ text })
 
-                    const note = new Note({text})
+                //         user.notes.push(note)
 
-                    user.notes.push(note)
+                //         return user.save()
+                //             .then(() => note.id)
+                //     })
 
-                    return user.save()
-                    .then (()=> note.id)
-                    User.findByIdAndUpdate(userId, {$push:{notes: {text}}}, {new:true})
+                // way 2 (1 step)
+                return User.findByIdAndUpdate(userId, { $push: { notes: { text } } }, { new: true })
                     .then(user => {
-                        if (!user) throw Error (`no user found with userId ${userId}`)
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        return user.notes[user.notes.length - 1].id
                     })
-                })     
             })
     },
 
@@ -194,12 +249,16 @@ const logic = {
 
                 if (!(id = id.trim())) throw Error('id is empty or blank')
 
-                return this._notes.findOne({ _id: ObjectId(id), userId })
-                    .then(note => {
-                        if (!note) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                return User.findById( userId )
+                .then(user =>{
+                    const note= user.notes.id(id)
+                    return note
+                })
+                .then(note => {
+                    if (!note) throw Error(`note with id ${id} does not exist for userId ${userId}`)
 
-                        return { id: note._id.toString(), userId: note.userId, text: note.text }
-                    })
+                    return note
+                })
             })
     },
 
@@ -215,8 +274,11 @@ const logic = {
 
                 if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
-                return this._notes.find({ userId }).toArray()
-                    .then(notes => notes.map(({ _id, userId, text }) => ({ id: _id.toString(), userId, text })))
+                return User.findById(userId )
+                .then(user =>{
+                    const notes= user.notes
+                    return notes
+                })  
             })
     },
 
@@ -238,10 +300,28 @@ const logic = {
 
                 if (!(id = id.trim())) throw Error('id is empty or blank')
 
-                return this._notes.findOneAndDelete({ _id: ObjectId(id), userId })
-                    .then(res => {
-                        if (!res.value) throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                return User.findById(userId )
+                .then(user =>{
+                    const notes= user.notes
+                    const note=notes.find((note)=>{
+
+                        return note.id===id
+                       
                     })
+
+                    const index= notes.indexOf(note)
+                    
+                    
+                    if (index === -1){
+                        throw Error(`note with id ${id} does not exist for userId ${userId}`)
+                    }else{
+
+                        user.notes.splice(index,1)
+                        
+                        return user.save().then(()=> true)
+                        
+                    }
+                })
             })
     },
 
@@ -297,6 +377,6 @@ const logic = {
                     .then(notes => notes.map(({ _id, userId, text }) => ({ id: _id.toString(), userId, text })))
             })
     }
-}
 
+}
 module.exports = logic

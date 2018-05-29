@@ -7,13 +7,9 @@ const router = require('./src/routes')
 const logic = require('./src/logic')
 const cors = require('cors')
 
-MongoClient.connect('mongodb://localhost:27017/skylab-bootcamp-201804', { useNewUrlParser: true }, (err, conn) => {
-    if (err) throw err
 
-    const db = conn.db()
-
-    //logic.init(db)
-
+mongoose.connect('mongodb://localhost/skylab-bootcamp-201804-test')
+.then(()=>{
     const port = process.argv[2] || 3000
 
     const app = express()
@@ -32,6 +28,7 @@ MongoClient.connect('mongodb://localhost:27017/skylab-bootcamp-201804', { useNew
         conn.close()
 
         process.exit()
-    })
+})
+
 
 })
