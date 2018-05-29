@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const { expect } = require('chai')
 const logic = require('.')
 const { User, Note } = require('../models')
+const _ = require('lodash')
 
 describe('logic (notes)', () => {
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
@@ -261,13 +262,16 @@ describe('logic (notes)', () => {
 
             return user.save()
                 .then(({ id: userId, notes }) => {
-                    const validNoteIds = []
-                    const validNoteTexts = []
+                    // const validNoteIds = []
+                    // const validNoteTexts = []
 
-                    notes.forEach(({ id, text }) => {
-                        validNoteIds.push(id)
-                        validNoteTexts.push(text)
-                    })
+                    // notes.forEach(({ id, text }) => {
+                    //     validNoteIds.push(id)
+                    //     validNoteTexts.push(text)
+                    // })
+                    // or
+                    const validNoteIds = _.map(notes, 'id')
+                    const validNoteTexts = _.map(notes, 'text')
 
                     return logic.listNotes(userId)
                         .then(notes => {
@@ -447,6 +451,68 @@ describe('logic (notes)', () => {
                         .catch(({ message }) => expect(message).to.equal(`no note found with id ${dummyNoteId}`))
                 })
         })
+    })
+
+    describe('find notes', () => {
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+
+            user.notes.push(new Note({ text: `${noteText} a` }))
+            user.notes.push(new Note({ text: `${noteText} ab` }))
+            user.notes.push(new Note({ text: `${noteText} abc` }))
+            user.notes.push(new Note({ text: `${noteText} bc` }))
+            user.notes.push(new Note({ text: `${noteText} c` }))
+
+            const text = 'ab'
+
+            return user.save()
+                .then(({ id: userId, notes }) => {
+                    const matchingNotes = notes.filter(note => note.text.includes(text))
+
+                    const validNoteIds = _.map(matchingNotes, 'id')
+                    const validNoteTexts = _.map(matchingNotes, 'text')
+
+                    return logic.findNotes(userId, text)
+                        .then(notes => {
+                            expect(notes).to.exist
+                            expect(notes.length).to.equal(matchingNotes.length)
+
+                            notes.forEach(({ id, text, _id }) => {
+                                // expect(validNoteIds.includes(id)).to.be.true
+                                // expect(validNoteTexts.includes(text)).to.be.true
+                                // or
+                                expect(validNoteIds).to.include(id)
+                                expect(validNoteTexts).to.include(text)
+                                expect(_id).not.to.exist
+                            })
+                        })
+                })
+        })
+
+        it('should fail on non user id', () =>
+            logic.findNotes()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.findNotes('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.findNotes('      ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on no text', () =>
+            logic.findNotes(dummyUserId)
+                .catch(({ message }) => expect(message).to.equal('text is not a string'))
+        )
+
+        it('should fail on empty text', () =>
+            logic.findNotes(dummyUserId, '')
+                .catch(({ message }) => expect(message).to.equal('text is empty'))
+        )
     })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
