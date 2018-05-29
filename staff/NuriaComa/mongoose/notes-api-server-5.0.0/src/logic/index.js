@@ -30,14 +30,20 @@ const logic = {
                 if (typeof password !== 'string') throw Error('password is not a string')
 
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+                
+                return User.findOne({email})
+                    .then(user =>{
 
+                        if (user){
+                            throw Error ('existing email')
+                        } else {
+                            return User.create({ name, surname, email, password })
+                                .then(() => true)
+                        }
 
-                return User.create({ name, surname, email, password })
-                    .then(() => true)
-                    .catch(err => err)
-            })
-            
-           
+                    })
+                      
+            })             
     },
 
     /**
@@ -142,12 +148,27 @@ const logic = {
 
                 if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
 
-                user.name = name
-                user.surname = surname
-                user.email = newEmail ? newEmail : email
-                user.password = newPassword ? newPassword : password
+                return User.findOne({email:newEmail})
+                    .then(user =>{
+                        if (user){
+                            throw Error ('existing email')
+                        } else {
 
-                return user.save()
+                            return User.findOne({ email, password })
+                            .then(user=>{
+                                user.name = name
+                                user.surname = surname
+                                user.email = newEmail ? newEmail : email
+                                user.password = newPassword ? newPassword : password
+                
+                                return user.save()
+
+                            })
+                            
+                            
+                        }
+
+                    })
             })
             .then(() => true)
     },

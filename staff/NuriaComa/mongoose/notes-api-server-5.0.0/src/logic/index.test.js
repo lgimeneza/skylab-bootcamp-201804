@@ -15,6 +15,13 @@ describe('logic (notes)', () => {
             logic.registerUser('John', 'Doe', 'jd@mail.com', '123')
                 .then(res => expect(res).toBeTruthy())
         )
+        it('should throw error on existing email', ()=>{
+            User.create({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' })
+                .then(() =>{
+                logic.registerUser('Jack', 'Does', 'jd@mail.com', '123')
+                .catch(({message})=> expect(message).toBe('existing email'))
+            })
+        })
         
         it('should throw error on non correct name', () => {
            logic.registerUser(undefined, 'Doe', 'jd@mail.com', '123')
@@ -134,6 +141,21 @@ describe('logic (notes)', () => {
                         })
                 })
         )
+
+        it('should throw error on existing email', () =>
+
+        User.create({ name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' })
+        .then(()=>{
+            return User.create({ name: 'Jack', surname: 'Wyne', email: 'jw@mail.com', password: '456' })
+                .then(({ id }) => {
+                    return logic.updateUser(id, 'Jack', 'Wayne', 'jw@mail.com', '456', 'jd@mail.com', '456')
+                    .catch(({message})=> expect(message).toBe('existing email'))
+                    })
+
+        })
+            
+        )
+
         it('should throw error on non correct id', () => {
             logic.updateUser(undefined, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
             .catch(({message})=> expect(message).toBe('id is not a string'))
