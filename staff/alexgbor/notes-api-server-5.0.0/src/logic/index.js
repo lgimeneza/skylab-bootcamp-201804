@@ -15,14 +15,13 @@ const logic = {
     registerUser(name, surname, email, password) {
         return Promise.resolve()
             .then(() => {
-                let repeatedUser
-                User.findOne({email})
-                .then(res => res !== null ? repeatedUser=res.toString() : undefined)
+                return User.findOne({ email })
+                    .then(user => {
+                        if (user) throw Error(`the user with email ${email} already exists`)
 
-                if (repeatedUser) throw Error(`the user with email ${email} already exists`)
-
-                return User.create({ name, surname, email, password })
-                    .then(() => true)
+                        return User.create({ name, surname, email, password })
+                            .then(() => true)
+                    })
             })
     },
 
@@ -85,8 +84,8 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 let repeatedUser
-                User.findOne({email:newEmail})
-                .then(res => res !== null ? repeatedUser=res.toString() : undefined)
+                User.findOne({ email: newEmail })
+                    .then(res => res !== null ? repeatedUser = res.toString() : undefined)
 
                 if (repeatedUser) throw Error(`the user with email ${email} already exists`)
 
