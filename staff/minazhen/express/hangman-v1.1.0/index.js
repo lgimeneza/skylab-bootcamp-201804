@@ -45,10 +45,10 @@ app.get('/two-players', (req, res) => {
 
 app.post('/initial-word', (req, res) => {
     const { body: { word, attempts } } = req
-    
+    const att = parseInt(attempts)
     try {
-        hangman = new Hangman(word.toUpperCase(), attempts)
-        swattempts(attempts) 
+        hangman = new Hangman(word.toUpperCase(), att)
+        swattempts(att) 
         sprite = sprites[0]
     } catch ({ message }) {
         res.redirect(`/two-players?error=${message}`)
@@ -57,21 +57,9 @@ app.post('/initial-word', (req, res) => {
     res.redirect('/game')
 })
 
-// app.get('/initial-word', (req, res) => {
-   
-//     try {
-//         hangman = new Hangman()
-//     } catch ({ message }) {
-//         res.redirect(`/two-players?error=${message}`)
-//     }
-
-//     res.redirect('/game')
-// })
-
 app.post("/try", (req, res) => {
     const { body: { text } } = req
 
-    // LET OP!!! tildes y mayusculas
     try {
         hangman.try(text)
     } catch ({ message }) {

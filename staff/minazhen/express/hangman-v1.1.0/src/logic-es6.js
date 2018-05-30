@@ -3,7 +3,7 @@
 const Hangman = (function () {
     class Hangman {
         constructor(word  = randomWord(), attempts = 10) {
-            console.log(word)
+            
             if (typeof word !== 'string') throw Error('invalid word ' + word)
 
             this._word = word.trim()

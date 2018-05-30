@@ -20,7 +20,6 @@ block content
             a.close(href='/game', data-dismiss='alert', aria-label='close') ×
             strong Warning! 
             span #{error}
-        // <p>${hangman.attempts()}</p>
         if hangman.status() === 2
           h1#sparcing.masthead-brand.display-6 #{hangman.hidden().join("").toUpperCase()}
         else
