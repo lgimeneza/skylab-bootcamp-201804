@@ -79,9 +79,9 @@ describe('logic (notes)', () => {
 
     describe('udpate user', () => {
         it('should succeed on correct data', () => {
-            Promise.all(p1, p2)
             let p1 = User.create(userData2)
             let p2 = User.create(userData)
+            Promise.all(p1, p2)
                 .then(({ id }) => {
                     return logic.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
