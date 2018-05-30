@@ -5,8 +5,8 @@ test(function () { return toCamelCase("Hello World");},
             function (result) { return result === "helloWorld";
     });
 
-test(function () { return toCamelCase("Hello litte World");}, 
-            "toCamelCase('Hello litte World') should return helloLittleWorld", 
+test(function () { return toCamelCase("Hello little World");}, 
+            "toCamelCase('Hello little World') should return helloLittleWorld", 
             function(result) {return result === "helloLittleWorld";
     });
 
