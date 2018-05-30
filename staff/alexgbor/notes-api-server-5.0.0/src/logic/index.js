@@ -256,8 +256,9 @@ const logic = {
 
                         if (!note) throw Error(`no note found with id ${noteId}`)
 
-                        const { _id: id, text } = note
-
+                        const id = note.id
+                        const text = note.text
+                        
                         return { id, text }
                     })
             })
