@@ -109,7 +109,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('authenticate user', () => {
+    describe('authenticate user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(() =>
@@ -149,7 +149,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('retrieve user', () => {
+    describe('retrieve user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -186,7 +186,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('udpate user', () => {
+   describe('udpate user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -299,7 +299,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('unregister user', () => {
+   describe('unregister user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
