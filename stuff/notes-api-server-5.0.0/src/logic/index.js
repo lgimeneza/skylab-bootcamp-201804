@@ -1,6 +1,6 @@
 'use strict'
 
-const { User, Note } = require('../models')
+const { models: { User, Note } } = require('notes-data')
 
 const logic = {
     /**

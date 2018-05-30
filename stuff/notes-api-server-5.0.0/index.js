@@ -2,7 +2,7 @@
 
 require('dotenv').config()
 
-const mongoose = require('mongoose')
+const { mongoose } = require('notes-data')
 const express = require('express')
 const bodyParser = require('body-parser')
 const router = require('./src/routes')
