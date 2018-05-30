@@ -43,9 +43,9 @@ const notesApi = {
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
 
-                return axios.post (`${this.url}/users`, {email, password })
+                return axios.post (`${this.url}/auth`, {email, password })
             })
-            .then(({ status, data }) => status === 201 && data.status === 'OK')
+            .then(({ data:{id }}) => id)
                     .catch(({ response: { data: { error } } }) => error)
                 
             
