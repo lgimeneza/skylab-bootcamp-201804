@@ -168,7 +168,67 @@ const notesApi = {
                     })
                 .catch(({ response: { data: { error } } }) => { return error })
             })
-    }
+    },
+
+        /**
+     * 
+     * @param {string} userId
+     * @param {string} text 
+     * 
+     * @returns {Promise<string>}
+     */
+    addNote(userId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+                
+                return axios.post(`${this.url}/users/${userId}/notes`, { text })
+                .then(({ status, data }) => {
+                    if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    
+                    return data.data.id
+                })
+            .catch(({ response: { data: { error } } }) => { return error }) })
+    },
+
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} noteId 
+     * 
+     * @returns {Promise<Note>}
+     */
+    retrieveNote(userId, noteId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
+
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+
+                return axios.get(`${this.url}/users/${userId}/notes/${noteId}`)
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                    const { data: { _id, text } } = data
+
+                    const note = { id: _id, text }
+
+                    return note
+                })
+            .catch(({ response: { data: { error } } }) => { return error }) })
+    },
+
+
 }
 
 module.exports = notesApi

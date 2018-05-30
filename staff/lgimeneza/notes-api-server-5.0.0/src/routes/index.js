@@ -74,8 +74,9 @@ router.delete('/users/:userId', (req, res) => {
 })
 
 router.post('/users/:userId/notes', (req, res) => {
-    const { params: { userId }, body: { text } } = req
 
+    const { params: { userId }, body: { text } } = req
+    
     logic.addNote(userId, text)
         .then(id => {
             res.status(201)
