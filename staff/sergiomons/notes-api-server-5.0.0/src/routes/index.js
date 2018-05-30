@@ -77,9 +77,9 @@ router.post('/users/:userId/notes', (req, res) => {
     const { params: { userId }, body: { text } } = req
 
     logic.addNote(userId, text)
-        .then(id => {
+        .then(noteId => {
             res.status(201)
-            res.json({ status: 'OK', data: { id } })
+            res.json({ status: 'OK', data: { noteId } })
         })
         .catch(({ message }) => {
             res.status(400)
@@ -92,6 +92,7 @@ router.get('/users/:userId/notes/:id', (req, res) => {
 
     logic.retrieveNote(userId, id)
         .then(note => {
+            res.status(200)
             res.json({ status: 'OK', data: note })
         })
         .catch(({ message }) => {
