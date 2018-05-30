@@ -1,17 +1,13 @@
-import { Mongoose } from 'mongoose';
-
 'use strict'
 
-const { MongoClient } = require('mongodb')
+const mongoose = require('mongoose')
 const express = require('express')
 const bodyParser = require('body-parser')
 const router = require('./src/routes')
-const logic = require('./src/logic')
 const cors = require('cors')
 
-Mongoose.connect('mongodb://localhost/skylab-bootcamp-201804')
+mongoose.connect('mongodb://localhost/skylab-bootcamp-201804')
     .then(() => {
-
         const port = process.argv[2] || 3000
 
         const app = express()
@@ -27,8 +23,9 @@ Mongoose.connect('mongodb://localhost/skylab-bootcamp-201804')
         process.on('SIGINT', () => {
             console.log('\nstopping server')
 
-            Mongoose.connection.close(()=> {
-                console.log('db conection closed')
+            mongoose.connection.close(() => {
+                console.log('db connection closed')
+
                 process.exit()
             })
         })

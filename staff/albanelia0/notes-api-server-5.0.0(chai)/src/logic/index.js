@@ -17,8 +17,16 @@ const logic = {
             .then(() => {
                 // TODO validations (name, surname, email, password)
 
-                return User.create({ name, surname, email, password })
-                    .then(() => true)
+                User.findOne({ email })
+                    .then((email) => {
+                        if (email) throw Error('the email already exists =>>>>')
+
+                        return User.create({ name, surname, email, password })
+                            .then((res) => {
+
+                                return true
+                            })
+                    })
             })
     },
 
@@ -240,7 +248,7 @@ const logic = {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
                         const note = user.notes.id(noteId)
-                        
+
                         if (!note) throw Error(`no note found with id ${noteId}`)
 
                         note.remove()
