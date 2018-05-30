@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const { mongoose, models: { User, Note } } = require('notes-data')
 const { expect } = require('chai')
-const notesApi = require('./notes-api-1.0.0')
+const notesApi = require('.')
 const _ = require('lodash')
 
 const { env: { DB_URL, API_URL } } = process
