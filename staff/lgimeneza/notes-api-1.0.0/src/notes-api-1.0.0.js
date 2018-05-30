@@ -95,6 +95,45 @@ const notesApi = {
                     })
                     .catch(({ response: { data: { error } } }) => error)
             })
+    },
+
+        /**
+     * 
+     * @param {string} id
+     * 
+     * @returns {Promise<User>} 
+     */
+    updateUser(id, name, surname, email, password, newEmail, newPassword) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof id !== 'string') throw Error('user id is not a string')
+
+                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof name !== 'string') throw Error('user name is not a string')
+
+                if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+                if (typeof surname !== 'string') throw Error('user surname is not a string')
+
+                if ((surname = surname.trim()).length === 0) throw Error('user surname is empty or blank')
+
+                if (typeof email !== 'string') throw Error('user email is not a string')
+
+                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('user password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
+
+                return axios.patch(`${this.url}/users/${id}`, { name, surname, email, password, newEmail, newPassword })
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return true
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
+            })
     }
 }
 
