@@ -1,8 +1,10 @@
 'use strict'
 
-const { User, Note } = require('../models')
+const axios = require('axios')
 
-const logic = {
+const notesApi = {
+    url: 'NOWHERE',
+
     /**
      * 
      * @param {string} name 
@@ -31,13 +33,14 @@ const logic = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return User.findOne({ email })
-                    .then(user => {
-                        if (user) throw Error(`user with email ${email} already exists`)
+                return axios.post(`${this.url}/users`, { name, surname, email, password })
+                    //.then(({ status, data }) => status === 201 && data.status === 'OK')
+                    .then(({ status, data }) => {
+                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                        return User.create({ name, surname, email, password })
-                            .then(() => true)
+                        return true
                     })
+                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -59,12 +62,14 @@ const logic = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return User.findOne({ email, password })
-            })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
+                return axios.post(`${this.url}/auth`, { email, password })
+                    //.then(({ data: { data: { id } } }) => id)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                return user.id
+                        return data.data.id
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -81,12 +86,14 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, surname: 1, email: 1 })
-            })
-            .then(user => {
-                if (!user) throw Error(`no user found with id ${id}`)
+                return axios.get(`${this.url}/users/${id}`)
+                    //.then(({ data: { data: user } }) => user)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                return user
+                        return data.data
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -125,33 +132,13 @@ const logic = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return User.findOne({ email, password })
+                return axios.patch(`${this.url}/users/${id}`, { name, surname, email, password, newEmail, newPassword })
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                        return true
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
             })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
-
-                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
-
-                if (newEmail) {
-                    return User.findOne({ email: newEmail })
-                        .then(_user => {
-                            if (_user && _user.id !== id) throw Error(`user with email ${newEmail} already exists`)
-
-                            return user
-                        })
-                }
-
-                return user
-            })
-            .then(user => {
-                user.name = name
-                user.surname = surname
-                user.email = newEmail ? newEmail : email
-                user.password = newPassword ? newPassword : password
-
-                return user.save()
-            })
-            .then(() => true)
     },
 
     /**
@@ -177,16 +164,13 @@ const logic = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return User.findOne({ email, password })
+                return axios.delete(`${this.url}/users/${id}`, { data: { email, password } })
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                        return true
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
             })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
-
-                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
-
-                return user.remove()
-            })
-            .then(() => true)
     },
 
     /**
@@ -207,26 +191,13 @@ const logic = {
 
                 if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
 
-                // way 1 (step by step)
-                // return User.findById(userId)
-                //     .then(user => {
-                //         if (!user) throw Error(`no user found with id ${userId}`)
+                return axios.post(`${this.url}/users/${userId}/notes`, { text })
+                    .then(({ status, data }) => {
+                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                //         const note = new Note({ text })
-
-                //         user.notes.push(note)
-
-                //         return user.save()
-                //             .then(() => note.id)
-                //     })
-
-                // way 2 (1 step)
-                return User.findByIdAndUpdate(userId, { $push: { notes: { text } } }, { new: true })
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
-
-                        return user.notes[user.notes.length - 1].id
+                        return data.data.id
                     })
+                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -248,18 +219,13 @@ const logic = {
 
                 if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
 
-                return User.findById(userId)
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
+                return axios.get(`${this.url}/users/${userId}/notes/${noteId}`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                        const note = user.notes.id(noteId)
-
-                        if (!note) throw Error(`no note found with id ${noteId}`)
-
-                        const { _id: id, text } = note
-
-                        return { id, text }
+                        return data.data
                     })
+                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -275,12 +241,36 @@ const logic = {
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(userId)
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
-
-                        return user.notes.map(({ id, text }) => ({ id, text }))
+                return axios.get(`${this.url}/users/${userId}/notes`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                        return data.data
                     })
+                    .catch(({ response: { data: { error } } }) => error)
+            })
+    },
+
+    updateNote(userId, noteId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
+
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+
+                return axios.patch(`${this.url}/users/${userId}/notes/${noteId}`, { text })
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                        return true
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -302,58 +292,12 @@ const logic = {
 
                 if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
 
-                return User.findById(userId)
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
-
-                        const note = user.notes.id(noteId)
-
-                        if (!note) throw Error(`no note found with id ${noteId}`)
-
-                        note.remove()
-
-                        return user.save()
+                return axios.delete(`${this.url}/users/${userId}/notes/${noteId}`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                        return true
                     })
-                    .then(() => true)
-            })
-    },
-
-    /**
-     * 
-     * @param {string} userId
-     * @param {string} noteId 
-     * @param {string} text 
-     * 
-     * @returns {Promise<boolean>}
-     */
-    updateNote(userId, noteId, text) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof userId !== 'string') throw Error('user id is not a string')
-
-                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
-
-                if (typeof noteId !== 'string') throw Error('note id is not a string')
-
-                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
-
-                if (typeof text !== 'string') throw Error('text is not a string')
-
-                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
-
-                return User.findById(userId)
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
-
-                        const note = user.notes.id(noteId)
-
-                        if (!note) throw Error(`no note found with id ${noteId}`)
-
-                        note.text = text
-
-                        return user.save()
-                    })
-                    .then(() => true)
+                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -375,14 +319,14 @@ const logic = {
 
                 if (!text.length) throw Error('text is empty')
 
-                return User.findById(userId)
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
-
-                        return user.notes.filter(note => note.text.includes(text)).map(({ id, text }) => ({ id, text }))
+                return axios.get(`${this.url}/users/${userId}/notes?q=${text}`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                        return data.data
                     })
+                    .catch(({ response: { data: { error } } }) => error)
             })
     }
 }
 
-module.exports = logic
+module.exports = notesApi
