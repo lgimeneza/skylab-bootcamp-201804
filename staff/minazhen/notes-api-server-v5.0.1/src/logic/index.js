@@ -173,13 +173,14 @@ const logic = {
 
                 return User.findById(userId)
                     .then(user => {
+
                         if (!user) throw Error(`no user found with id ${userId}`)
 
                         const note = user.notes.id(noteId)
-
+                        
                         if (!note) throw Error(`no note found with ${noteId} id, in user ${userId}`)
 
-                        return note
+                        return { id : note.id, text: note.text }
                     })
             })
     },
@@ -274,11 +275,15 @@ const logic = {
                 if (!user) throw Error(`no user found with id ${userId}`)
 
                 const txt = new RegExp(text,"i"); 
+                
+                const notes = [] 
 
-                const notes = user.notes.filter(note => {
-                    if (note.text.search(txt) > -1) return note
+                user.notes.forEach(note => {
+                    if (note.text.search(txt) > -1) {
+                        notes.push({ id: note.id, text: note.text }) 
+                    }
                 })
-        
+                
                 return notes
             })
         })

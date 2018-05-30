@@ -1234,7 +1234,7 @@ describe('logic (notes & users)', () => {
             })
         })
     
-        describe('find notes by text (userId, text', () => {
+         describe('find notes by text (userId, text', () => {
             it('should return results on matching text', () => 
                 User.create({ name: uName, surname: uSurname, email: uEmail, password: uPass })
                     .then((user) => {
@@ -1243,7 +1243,7 @@ describe('logic (notes & users)', () => {
                         user.notes.push(new Note({ text: `my noute 3` }))
                         
                         return user.save()
-                            .then(({ id, text, _id }) => {
+                            .then(({ id, text }) => {
                                 return logic.findNotes(id, "not")
                                 .then(notes => {
                                     expect(notes).toBeDefined()

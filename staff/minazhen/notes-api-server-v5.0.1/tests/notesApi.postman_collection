@@ -71,7 +71,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -80,7 +80,7 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074"
+						"5b0ef120d1df032990b6585a"
 					]
 				}
 			},
@@ -101,7 +101,7 @@
 					"raw": "{\n\t\"name\" : \"Mina\",\n\t\"surname\" : \"Zhen\",\n\t\"email\" : \"mz@mail.com\",\n\t\"password\" : \"123\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -110,7 +110,7 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074"
+						"5b0ef120d1df032990b6585a"
 					]
 				}
 			},
@@ -131,7 +131,7 @@
 					"raw": "{\n\t\"email\": \"mz@mail.com\",\n\t\"password\" : \"123\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -140,7 +140,7 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074"
+						"5b0ef120d1df032990b6585a"
 					]
 				}
 			},
@@ -158,10 +158,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"text\" : \"Mina nota3\"\n}"
+					"raw": "{\n\t\"text\" : \"MY NOute 4\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074/notes",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a/notes",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -170,7 +170,7 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074",
+						"5b0ef120d1df032990b6585a",
 						"notes"
 					]
 				}
@@ -184,7 +184,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074/notes",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a/notes",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -193,7 +193,7 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074",
+						"5b0ef120d1df032990b6585a",
 						"notes"
 					]
 				}
@@ -207,7 +207,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074/notes/5b0e3e8c2dc9833244237075",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a/notes/5b0ef17cd1df032990b6585d",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -216,9 +216,9 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074",
+						"5b0ef120d1df032990b6585a",
 						"notes",
-						"5b0e3e8c2dc9833244237075"
+						"5b0ef17cd1df032990b6585d"
 					]
 				}
 			},
@@ -231,7 +231,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074/notes?q=2",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a/notes?q=noute",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -240,13 +240,13 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074",
+						"5b0ef120d1df032990b6585a",
 						"notes"
 					],
 					"query": [
 						{
 							"key": "q",
-							"value": "2"
+							"value": "noute"
 						}
 					]
 				}
@@ -268,7 +268,7 @@
 					"raw": "{\n\t\"text\" : \"changed\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074/notes/5b0e3e8c2dc9833244237075",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a/notes/5b0ef17cd1df032990b6585d",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -277,9 +277,9 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074",
+						"5b0ef120d1df032990b6585a",
 						"notes",
-						"5b0e3e8c2dc9833244237075"
+						"5b0ef17cd1df032990b6585d"
 					]
 				}
 			},
@@ -332,7 +332,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/users/5b0e3e5e2dc9833244237074/notes/5b0e3e8c2dc9833244237075",
+					"raw": "http://localhost:5000/api/users/5b0ef120d1df032990b6585a/notes/5b0ef17cd1df032990b6585d",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -341,9 +341,9 @@
 					"path": [
 						"api",
 						"users",
-						"5b0e3e5e2dc9833244237074",
+						"5b0ef120d1df032990b6585a",
 						"notes",
-						"5b0e3e8c2dc9833244237075"
+						"5b0ef17cd1df032990b6585d"
 					]
 				}
 			},
