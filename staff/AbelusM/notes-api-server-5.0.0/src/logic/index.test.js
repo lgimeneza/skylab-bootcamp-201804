@@ -7,6 +7,7 @@ const { User, Note } = require('../models')
 
 describe('logic (notes)', () => {
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
+    const userData2 = { name: 'John', surname: 'Doe', email: 'jW@mail.com', password: '123' }    
     const dummyUserId = '123456781234567812345678'
     const dummyNoteId = '123456781234567812345678'
     const noteText = 'my note'
@@ -26,6 +27,15 @@ describe('logic (notes)', () => {
         it('should succeed on correct dada', () =>
             logic.registerUser('John', 'Doe', 'jd@mail.com', '123')
                 .then(res => expect(res).to.be.true)
+        )
+
+        it('should throw error on already registered user', () => {
+
+            logic.registerUser('Jack', 'Doe', 'jw@mail.com', '123')
+            logic.registerUser('Jack', 'Doe', 'jw@mail.com', '123')
+
+                .catch(({ message }) => expect(message).to.equal('this user already exists'))
+        }
         )
 
         // TODO error cases
@@ -68,8 +78,10 @@ describe('logic (notes)', () => {
     })
 
     describe('udpate user', () => {
-        it('should succeed on correct data', () =>
-            User.create(userData)
+        it('should succeed on correct data', () => {
+            Promise.all(p1, p2)
+            let p1 = User.create(userData2)
+            let p2 = User.create(userData)
                 .then(({ id }) => {
                     return logic.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
@@ -89,7 +101,16 @@ describe('logic (notes)', () => {
                             expect(password).to.equal('456')
                         })
                 })
+        }
         )
+        it('should throw an error when try to put an already exist email', () => {
+            User.create(userData)
+            User.create()
+                .then(({ id }) => {
+                    return logic.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
+                })
+                .catch(({ message }) => expect(message).to.equal('this user already exists'))
+        })
 
         // TODO error cases
     })
@@ -375,7 +396,7 @@ describe('logic (notes)', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
             const note2 = new Note({ text: `${noteText} 2` })
-            
+
 
             user.notes.push(note)
             user.notes.push(note2)
