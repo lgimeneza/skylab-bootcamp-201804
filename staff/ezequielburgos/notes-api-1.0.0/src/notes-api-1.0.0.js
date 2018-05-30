@@ -238,7 +238,7 @@ const notesApi = {
                 return axios.get(`${this.url}/users/${userId}/notes/${id}`)
                     .then(({ status, data }) => {
                         if (data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        // console.log(data.data)
+
                         return data.data
                     })
                     .catch(({ response: { data: { error } } }) => error)
@@ -257,12 +257,10 @@ const notesApi = {
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                // return this._notes.find({ userId }).toArray()
-                //     .then(notes => notes.map(({ _id, userId, text }) => ({ id: _id.toString(), userId, text })))
                 return axios.get(`${this.url}/users/${userId}/notes`)
                     .then(({ status, data }) => {
                         if (data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        // console.log(data.data)
+
                         return data.data
                     })
                     .catch(({ response: { data: { error } } }) => error)
