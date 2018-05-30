@@ -2,10 +2,9 @@
 
 require('dotenv').config()
 
-const mongoose = require('mongoose')
+const { mongoose, models: { User, Note } } = require('notes-data')
 const { expect } = require('chai')
 const logic = require('.')
-const { User, Note } = require('../models')
 const _ = require('lodash')
 
 const { env: { DB_URL } } = process

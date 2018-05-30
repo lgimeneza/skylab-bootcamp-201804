@@ -1,11 +1,15 @@
 'use strict'
 
-const mongoose = require('mongoose')
+require('dotenv').config()
+
+const mongoose = require('../mongoose')
 const { User, Note } = require('.')
 const expect = require('expect')
 
+const { env: { DB_URL } } = process
+
 describe('models (notes)', () => {
-    before(() => mongoose.connect('mongodb://localhost/skylab-bootcamp-201804-test'))
+    before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => Promise.all([User.remove(), Note.deleteMany()]))
 
