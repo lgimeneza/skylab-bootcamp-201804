@@ -255,8 +255,10 @@ const logic = {
                         const note = user.notes.id(noteId)
 
                         if (!note) throw Error(`no note found with id ${noteId}`)
+                        const id = note._id.toString()
+                        const text = note.text
 
-                        return note
+                        return {id, text}
                     })
             })
     },

@@ -8,11 +8,9 @@ const notesApi = require('./notes-api-1.0.0')
 const { User, Note } = require('./models')
 const _ = require('lodash')
 
-// const { env: { DB_URL, API_URL } } = process
+const { env: { DB_URL, API_URL } } = process
 
-
-notesApi.url = process.env.API_URL
-
+notesApi.url = API_URL
 
 describe('logic (notes api)', () => {
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
@@ -22,14 +20,14 @@ describe('logic (notes api)', () => {
     const noteText = 'my note'
     const indexes = []
 
-    before(() => mongoose.connect(process.env.BD_URL))
+    before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => {
         let count = 10 + Math.floor(Math.random() * 10)
         indexes.length = 0
         while (count--) indexes.push(count)
 
-        return Promise.all([User.remove()/*, Note.deleteMany()*/])
+        return Promise.all([User.remove(), Note.deleteMany()])
     })
 
     describe('register user', () => {
@@ -115,7 +113,7 @@ describe('logic (notes api)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(() =>
-                    notesApi.authenticateUser('jc@mail.com', '123')
+                    notesApi.authenticateUser('jd@mail.com', '123')
                         .then(id => expect(id).to.exist)
                 )
         )
@@ -158,7 +156,6 @@ describe('logic (notes api)', () => {
                     return notesApi.retrieveUser(id)
                 })
                 .then(user => {
-                    debugger
                     expect(user).to.exist
 
                     const { name, surname, email, _id, password, notes } = user
@@ -189,7 +186,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('udpate user', () => {
+    describe('udpate user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -302,7 +299,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('unregister user', () => {
+    describe('unregister user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -364,13 +361,14 @@ describe('logic (notes api)', () => {
         )
     })
 
-
-    false && describe('add note', () => {
+    describe('add note', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
+                    
                     return notesApi.addNote(id, noteText)
                         .then(noteId => {
+                            
                             // expect(typeof noteId).to.equal('string')
                             // or
                             expect(noteId).to.be.a('string')
@@ -378,8 +376,9 @@ describe('logic (notes api)', () => {
 
                             return User.findById(id)
                                 .then(user => {
+                                    
                                     expect(user).to.exist
-
+                                    
                                     expect(user.notes).to.exist
                                     expect(user.notes.length).to.equal(1)
 
@@ -428,7 +427,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('retrieve note', () => {
+   describe('retrieve note', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
@@ -437,9 +436,11 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId, notes: [{ id: noteId }] }) => {
+    
                     return notesApi.retrieveNote(userId, noteId)
                 })
                 .then(({ id, text }) => {
+                    
                     expect(id).to.equal(note.id)
                     expect(text).to.equal(note.text)
                 })
@@ -502,7 +503,7 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('list notes', () => {
+    describe('list notes', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
 
@@ -525,6 +526,7 @@ describe('logic (notes api)', () => {
 
                     return notesApi.listNotes(userId)
                         .then(notes => {
+                            debugger
                             expect(notes).to.exist
                             expect(notes.length).to.equal(indexes.length)
 
@@ -556,7 +558,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('update note', () => {
+    describe('update note', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id: userId }) =>
@@ -624,7 +626,7 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('remove note', () => {
+    describe('remove note', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
@@ -703,7 +705,7 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('find notes', () => {
+    describe('find notes', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
 
