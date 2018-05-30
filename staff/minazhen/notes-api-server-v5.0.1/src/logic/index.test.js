@@ -1,11 +1,13 @@
 'use strict'
 
+require('dotenv').config()
+
 const mongoose = require('mongoose')
 const expect = require('expect')
 const logic = require('.')
 const { User, Note } = require('../models')
 
-//const { env: { DB_URL } } = process
+const { env: { DB_URL } } = process
 
 describe('logic (notes & users)', () => {
     const uName = "John"
@@ -16,8 +18,8 @@ describe('logic (notes & users)', () => {
     const fakeid = "123456781234567812345678"
     let randoms = [];
 
-    before(() => mongoose.connect('mongodb://localhost/skylab-bootcamp-201804-test'))
-    //before(() => mongoose.connect(DB_URL))
+    // before(() => mongoose.connect('mongodb://localhost/skylab-bootcamp-201804-test'))
+    before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => {
         let count =  Math.floor(Math.random() * 6) + 3
