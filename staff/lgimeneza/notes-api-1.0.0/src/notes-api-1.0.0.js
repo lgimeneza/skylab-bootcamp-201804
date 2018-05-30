@@ -134,6 +134,40 @@ const notesApi = {
                     })
                     .catch(({ response: { data: { error } } }) => error)
             })
+    },
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {string} email 
+     * @param {string} password 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    unregisterUser(id, email, password) {
+        return Promise.resolve()
+            .then(() => {
+
+                if (typeof id !== 'string') throw Error('user id is not a string')
+
+                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof email !== 'string') throw Error('user email is not a string')
+
+                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('user password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
+
+                return axios.delete(`${this.url}/users/${id}`, { data: { email, password } })
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return true
+                    })
+                .catch(({ response: { data: { error } } }) => { return error })
+            })
     }
 }
 
