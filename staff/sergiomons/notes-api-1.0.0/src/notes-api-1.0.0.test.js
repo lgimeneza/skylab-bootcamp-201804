@@ -526,7 +526,7 @@ describe('logic (notes api)', () => {
 
                     return notesApi.listNotes(userId)
                         .then(notes => {
-                            debugger
+                           
                             expect(notes).to.exist
                             expect(notes.length).to.equal(indexes.length)
 
