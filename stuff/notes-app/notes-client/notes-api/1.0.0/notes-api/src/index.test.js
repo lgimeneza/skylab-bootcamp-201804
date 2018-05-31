@@ -349,10 +349,14 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('udpate user', () => {
+    describe('udpate user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
                             expect(res).to.be.true
@@ -379,6 +383,10 @@ describe('logic (notes api)', () => {
                 User.create(otherUserData)
             ])
                 .then(([{ id: id1 }, { id: id2 }]) => {
+                    const token = jwt.sign({ id: id1 }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     const { name, surname, email, password } = userData
 
                     return notesApi.updateUser(id1, name, surname, email, password, otherUserData.email)
@@ -588,7 +596,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('retrieve note', () => {
+    describe('retrieve note', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
