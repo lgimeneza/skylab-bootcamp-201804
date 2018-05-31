@@ -163,21 +163,148 @@ const notesApi = {
     addNote(userId, text) {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('userId is not a string')
+                
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
                 if (typeof text !== 'string') throw Error('text is not a string')
 
                 if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
  
                
-                return axios.delete(`${this.url}/users/${id}`,{data: {email, password}})
+                return axios.post(`${this.url}/users/${userId}/notes`, {text})
                     
                     .then(({ status, data }) => {
+                        
+                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        
+                        return data.data.id
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
+            })
+    },
+    retrieveNote(userId, noteId) {
+        return Promise.resolve()
+            .then(() => {
+                
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
+
+                if ((noteId = noteId.trim()).length === 0) throw Error('note id is empty or blank')
+ 
+               
+                return axios.get(`${this.url}/users/${userId}/notes/${noteId}`)
+                    
+                    .then(({ status, data }) => {
+                        
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
+    
+                        return data.data
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
+            })
+    },
+
+    listNotes(userId) {
+        return Promise.resolve()
+            .then(() => {
+                
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+               
+               
+                return axios.get(`${this.url}/users/${userId}/notes`)
+                    
+                    .then(({ status, data }) => {
+                        
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        
+                        return data.data
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
+            })
+    },
+    updateNote(userId, noteId, text) {
+        return Promise.resolve()
+            .then(() => {
+                
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
+
+                if ((noteId = noteId.trim()).length === 0) throw Error('note id is empty or blank')
+                
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+               
+                return axios.patch(`${this.url}/users/${userId}/notes/${noteId}`, {text})
+                    
+                    .then(({ status, data }) => {
+                        
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        
                         return true
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
+            })
+    },
+
+    removeNote(userId, noteId) {
+        return Promise.resolve()
+            .then(() => {
+                
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+               
+               
+                return axios.delete(`${this.url}/users/${userId}/notes/${noteId}`)
+                    
+                    .then(({ status, data }) => {
+                        
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        
+                        return true
+                    })
+                    .catch(({ response: { data: { error } } }) => error)
+            })
+    },
+
+    findNotes(userId, text) {
+        return Promise.resolve()
+            .then(() => {
+                
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty')
+               
+               
+                return axios.get(`${this.url}/users/${userId}/notes?q=${text}`)
+                    
+                    .then(({ status, data }) => {
+                        
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        
+                        return data.data
                     })
                     .catch(({ response: { data: { error } } }) => error)
             })
@@ -185,3 +312,5 @@ const notesApi = {
 }
 
 module.exports = notesApi
+
+
