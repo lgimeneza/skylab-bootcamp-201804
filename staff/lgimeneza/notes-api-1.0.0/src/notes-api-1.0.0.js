@@ -228,6 +228,90 @@ const notesApi = {
             .catch(({ response: { data: { error } } }) => { return error }) })
     },
 
+    listNotes(userId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                return axios.get(`${this.url}/users/${userId}/notes`)
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                
+                    return data.data
+                })
+            .catch(({ response: { data: { error } } }) => { return error }) })
+    },
+
+    updateNote(userId, id, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof id !== 'string') throw Error('note id is not a string')
+
+                if (!(id = id.trim())) throw Error('note id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+
+                return axios.patch(`${this.url}/users/${userId}/notes/${id}`, { text })
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                
+                    return true
+                })
+            .catch(({ response: { data: { error } } }) => { 
+                return error
+             }) })
+    },
+
+    removeNote(userId, id) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof id !== 'string') throw Error('note id is not a string')
+
+                if (!(id = id.trim())) throw Error('note id is empty or blank')
+
+                return axios.delete(`${this.url}/users/${userId}/notes/${id}`)
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                
+                    return true
+                })
+            .catch(({ response: { data: { error } } }) => { 
+                return error
+             }) })
+    },
+
+    findNotes(userId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty')
+
+                return axios.get(`${this.url}/users/${userId}/notes?q=${text}`, )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                
+                    return data.data
+                })
+            .catch(({ response: { data: { error } } }) => { return error }) })
+    },
+
 
 }
 
