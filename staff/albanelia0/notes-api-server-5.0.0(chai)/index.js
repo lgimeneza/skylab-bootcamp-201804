@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const router = require('./src/routes')
 const cors = require('cors')
 
-mongoose.connect('mongodb://localhost/skylab-bootcamp-201804')
+mongoose.connect('mongodb://localhost/skylab-bootcamp-201804-test')
     .then(() => {
         const port = process.argv[2] || 3000
 

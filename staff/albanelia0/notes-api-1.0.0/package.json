@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha src/"
+    "start": "node .",
+    "watch": "nodemon .",
+    "debug": "node debug .",
+    "test": "mocha src/",
+    "coverage": "nyc mocha src/",
+    "coverage-report": "nyc --reporter=html --reporter=text mocha src/"
   },
   "keywords": [],
   "author": "",

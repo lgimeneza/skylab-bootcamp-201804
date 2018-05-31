@@ -67,6 +67,8 @@ const logic = {
                 return User.findById(id).select({ _id: 0, name: 1, surname: 1, email: 1 })
             })
             .then(user => {
+                console.log(user)
+                
                 if (!user) throw Error(`no user found with id ${id}`)
 
                 return user
