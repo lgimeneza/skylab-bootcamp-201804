@@ -8,8 +8,9 @@ const notesApi = require('.')
 const _ = require('lodash')
 const sinon = require('sinon')
 const axios = require('axios')
+const jwt = require('jsonwebtoken')
 
-const { env: { DB_URL, API_URL } } = process
+const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 
 notesApi.url = API_URL
 
@@ -168,7 +169,11 @@ describe('logic (notes api)', () => {
             User.create(userData)
                 .then(() =>
                     notesApi.authenticateUser('jd@mail.com', '123')
-                        .then(id => expect(id).to.exist)
+                        .then(id => {
+                            expect(id).to.exist
+
+                            expect(notesApi.token).not.to.equal('NO-TOKEN')
+                        })
                 )
         )
 
@@ -260,6 +265,10 @@ describe('logic (notes api)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.retrieveUser(id)
                 })
                 .then(user => {

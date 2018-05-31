@@ -5,6 +5,8 @@ const axios = require('axios')
 const notesApi = {
     url: 'NOWHERE',
 
+    token: 'NO-TOKEN',
+
     /**
      * 
      * @param {string} name 
@@ -70,11 +72,14 @@ const notesApi = {
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
                 return axios.post(`${this.url}/auth`, { email, password })
-                    //.then(({ data: { data: { id } } }) => id)
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                        return data.data.id
+                        const { data: { id, token } } = data
+
+                        this.token = token
+
+                        return id
                     })
                     .catch(err => {
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
@@ -101,8 +106,7 @@ const notesApi = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return axios.get(`${this.url}/users/${id}`)
-                    //.then(({ data: { data: user } }) => user)
+                return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
