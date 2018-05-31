@@ -34,13 +34,20 @@ const notesApi = {
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
                 return axios.post(`${this.url}/users`, { name, surname, email, password })
-                    //.then(({ status, data }) => status === 201 && data.status === 'OK')
                     .then(({ status, data }) => {
                         if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
                         return true
                     })
-                    .catch(({ response: { data: { error } } }) => error)
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
             })
     },
 
@@ -69,7 +76,15 @@ const notesApi = {
 
                         return data.data.id
                     })
-                    .catch(({ response: { data: { error } } }) => error)
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
             })
     },
 
@@ -93,7 +108,15 @@ const notesApi = {
 
                         return data.data
                     })
-                    .catch(({ response: { data: { error } } }) => error)
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
             })
     }
 }
