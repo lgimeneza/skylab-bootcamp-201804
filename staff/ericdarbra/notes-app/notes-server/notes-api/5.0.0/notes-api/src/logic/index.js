@@ -253,7 +253,7 @@ const logic = {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
                         const note = user.notes.id(noteId)
-                        
+
                         if (!note) throw Error(`no note found with id ${noteId}`)
 
                         return note
