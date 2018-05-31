@@ -4,15 +4,15 @@ require('dotenv').config()
 
 const mongoose = require('mongoose')
 const { expect } = require('chai')
-const notesApi = require('./notes-api-1.0.0')
-const { User, Note } = require('./models')
+const logic = require('.')
+const { User, Note } = require('../models')
 const _ = require('lodash')
 
-const { env: { DB_URL, API_URL } } = process
+const { env: { DB_URL } } = process
 
-notesApi.url = API_URL
+describe('logic (notes)', () => {
+    debugger
 
-describe('logic (notes api)', () => {
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
     const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
     const dummyUserId = '123456781234567812345678'
@@ -32,7 +32,7 @@ describe('logic (notes api)', () => {
 
     describe('register user', () => {
         it('should succeed on correct dada', () =>
-            notesApi.registerUser('John', 'Doe', 'jd@mail.com', '123')
+            logic.registerUser('John', 'Doe', 'jd@mail.com', '123')
                 .then(res => expect(res).to.be.true)
         )
 
@@ -41,7 +41,7 @@ describe('logic (notes api)', () => {
                 .then(() => {
                     const { name, surname, email, password } = userData
 
-                    return notesApi.registerUser(name, surname, email, password)
+                    return logic.registerUser(name, surname, email, password)
                 })
                 .catch(({ message }) => {
                     expect(message).to.equal(`user with email ${userData.email} already exists`)
@@ -49,62 +49,62 @@ describe('logic (notes api)', () => {
         )
 
         it('should fail on no user name', () =>
-            notesApi.registerUser()
+            logic.registerUser()
                 .catch(({ message }) => expect(message).to.equal('user name is not a string'))
         )
 
         it('should fail on empty user name', () =>
-            notesApi.registerUser('')
+            logic.registerUser('')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on blank user name', () =>
-            notesApi.registerUser('     ')
+            logic.registerUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on no user surname', () =>
-            notesApi.registerUser(userData.name)
+            logic.registerUser(userData.name)
                 .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
         )
 
         it('should fail on empty user surname', () =>
-            notesApi.registerUser(userData.name, '')
+            logic.registerUser(userData.name, '')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on blank user surname', () =>
-            notesApi.registerUser(userData.name, '     ')
+            logic.registerUser(userData.name, '     ')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on no user email', () =>
-            notesApi.registerUser(userData.name, userData.surname)
+            logic.registerUser(userData.name, userData.surname)
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            notesApi.registerUser(userData.name, userData.surname, '')
+            logic.registerUser(userData.name, userData.surname, '')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            notesApi.registerUser(userData.name, userData.surname, '     ')
+            logic.registerUser(userData.name, userData.surname, '     ')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            notesApi.registerUser(userData.name, userData.surname, userData.email)
+            logic.registerUser(userData.name, userData.surname, userData.email)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            notesApi.registerUser(userData.name, userData.surname, userData.email, '')
+            logic.registerUser(userData.name, userData.surname, userData.email, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            notesApi.registerUser(userData.name, userData.surname, userData.email, '     ')
+            logic.registerUser(userData.name, userData.surname, userData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
     })
@@ -113,38 +113,38 @@ describe('logic (notes api)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(() =>
-                    notesApi.authenticateUser('jd@mail.com', '123')
+                    logic.authenticateUser('jd@mail.com', '123')
                         .then(id => expect(id).to.exist)
                 )
         )
 
         it('should fail on no user email', () =>
-            notesApi.authenticateUser()
+            logic.authenticateUser()
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            notesApi.authenticateUser('')
+            logic.authenticateUser('')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            notesApi.authenticateUser('     ')
+            logic.authenticateUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            notesApi.authenticateUser(userData.email)
+            logic.authenticateUser(userData.email)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            notesApi.authenticateUser(userData.email, '')
+            logic.authenticateUser(userData.email, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            notesApi.authenticateUser(userData.email, '     ')
+            logic.authenticateUser(userData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
     })
@@ -153,7 +153,7 @@ describe('logic (notes api)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return notesApi.retrieveUser(id)
+                    return logic.retrieveUser(id)
                 })
                 .then(user => {
                     expect(user).to.exist
@@ -171,17 +171,17 @@ describe('logic (notes api)', () => {
         )
 
         it('should fail on no user id', () =>
-            notesApi.retrieveUser()
+            logic.retrieveUser()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.retrieveUser('')
+            logic.retrieveUser('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.retrieveUser('     ')
+            logic.retrieveUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
     })
@@ -190,7 +190,7 @@ describe('logic (notes api)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return notesApi.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
+                    return logic.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
                             expect(res).to.be.true
 
@@ -218,83 +218,83 @@ describe('logic (notes api)', () => {
                 .then(([{ id: id1 }, { id: id2 }]) => {
                     const { name, surname, email, password } = userData
 
-                    return notesApi.updateUser(id1, name, surname, email, password, otherUserData.email)
+                    return logic.updateUser(id1, name, surname, email, password, otherUserData.email)
                 })
                 .catch(({ message }) => expect(message).to.equal(`user with email ${otherUserData.email} already exists`))
         )
 
         it('should fail on no user id', () =>
-            notesApi.updateUser()
+            logic.updateUser()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.updateUser('')
+            logic.updateUser('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.updateUser('     ')
+            logic.updateUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on no user name', () =>
-            notesApi.updateUser(dummyUserId)
+            logic.updateUser(dummyUserId)
                 .catch(({ message }) => expect(message).to.equal('user name is not a string'))
         )
 
         it('should fail on empty user name', () =>
-            notesApi.updateUser(dummyUserId, '')
+            logic.updateUser(dummyUserId, '')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on blank user name', () =>
-            notesApi.updateUser(dummyUserId, '     ')
+            logic.updateUser(dummyUserId, '     ')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on no user surname', () =>
-            notesApi.updateUser(dummyUserId, userData.name)
+            logic.updateUser(dummyUserId, userData.name)
                 .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
         )
 
         it('should fail on empty user surname', () =>
-            notesApi.updateUser(dummyUserId, userData.name, '')
+            logic.updateUser(dummyUserId, userData.name, '')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on blank user surname', () =>
-            notesApi.updateUser(dummyUserId, userData.name, '     ')
+            logic.updateUser(dummyUserId, userData.name, '     ')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on no user email', () =>
-            notesApi.updateUser(dummyUserId, userData.name, userData.surname)
+            logic.updateUser(dummyUserId, userData.name, userData.surname)
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            notesApi.updateUser(dummyUserId, userData.name, userData.surname, '')
+            logic.updateUser(dummyUserId, userData.name, userData.surname, '')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            notesApi.updateUser(dummyUserId, userData.name, userData.surname, '     ')
+            logic.updateUser(dummyUserId, userData.name, userData.surname, '     ')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            notesApi.updateUser(dummyUserId, userData.name, userData.surname, userData.email)
+            logic.updateUser(dummyUserId, userData.name, userData.surname, userData.email)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            notesApi.updateUser(dummyUserId, userData.name, userData.surname, userData.email, '')
+            logic.updateUser(dummyUserId, userData.name, userData.surname, userData.email, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            notesApi.updateUser(dummyUserId, userData.name, userData.surname, userData.email, '     ')
+            logic.updateUser(dummyUserId, userData.name, userData.surname, userData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
     })
@@ -303,7 +303,7 @@ describe('logic (notes api)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return notesApi.unregisterUser(id, 'jd@mail.com', '123')
+                    return logic.unregisterUser(id, 'jd@mail.com', '123')
                         .then(res => {
                             expect(res).to.be.true
 
@@ -316,47 +316,47 @@ describe('logic (notes api)', () => {
         )
 
         it('should fail on no user id', () =>
-            notesApi.unregisterUser()
+            logic.unregisterUser()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.unregisterUser('')
+            logic.unregisterUser('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.unregisterUser('     ')
+            logic.unregisterUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on no user email', () =>
-            notesApi.unregisterUser(dummyUserId)
+            logic.unregisterUser(dummyUserId)
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            notesApi.unregisterUser(dummyUserId, '')
+            logic.unregisterUser(dummyUserId, '')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            notesApi.unregisterUser(dummyUserId, '     ')
+            logic.unregisterUser(dummyUserId, '     ')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            notesApi.unregisterUser(dummyUserId, userData.email)
+            logic.unregisterUser(dummyUserId, userData.email)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            notesApi.unregisterUser(dummyUserId, userData.email, '')
+            logic.unregisterUser(dummyUserId, userData.email, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            notesApi.unregisterUser(dummyUserId, userData.email, '     ')
+            logic.unregisterUser(dummyUserId, userData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
     })
@@ -366,7 +366,7 @@ describe('logic (notes api)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return notesApi.addNote(id, noteText)
+                    return logic.addNote(id, noteText)
                         .then(noteId => {
                             // expect(typeof noteId).to.equal('string')
                             // or
@@ -390,37 +390,37 @@ describe('logic (notes api)', () => {
         )
 
         it('should fail on wrong user id', () => {
-            return notesApi.addNote(dummyUserId, noteText)
+            return logic.addNote(dummyUserId, noteText)
                 .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
         })
 
         it('should fail on no user id', () =>
-            notesApi.addNote()
+            logic.addNote()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.addNote('')
+            logic.addNote('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.addNote('     ')
+            logic.addNote('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on no text', () => {
-            notesApi.addNote(dummyUserId)
+            logic.addNote(dummyUserId)
                 .catch(({ message }) => expect(message).to.equal('text is not a string'))
         })
 
         it('should fail on empty text', () =>
-            notesApi.addNote(dummyUserId, '')
+            logic.addNote(dummyUserId, '')
                 .catch(({ message }) => expect(message).to.equal('text is empty or blank'))
         )
 
         it('should fail on blank text', () =>
-            notesApi.addNote(dummyUserId, '   ')
+            logic.addNote(dummyUserId, '   ')
                 .catch(({ message }) => expect(message).to.equal('text is empty or blank'))
         )
     })
@@ -434,26 +434,26 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId, notes: [{ id: noteId }] }) => {
-                    return notesApi.retrieveNote(userId, noteId)
+                    return logic.retrieveNote(userId, noteId)
                 })
-                .then(({ _id: id, text }) => {
+                .then(({ id, text }) => {
                     expect(id).to.equal(note.id)
                     expect(text).to.equal(note.text)
                 })
         })
 
         it('should fail on non user id', () =>
-            notesApi.retrieveNote()
+            logic.retrieveNote()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.retrieveNote('')
+            logic.retrieveNote('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.retrieveNote('      ')
+            logic.retrieveNote('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
@@ -465,23 +465,23 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ notes: [{ id: noteId }] }) => {
-                    return notesApi.retrieveNote(dummyUserId, noteId)
+                    return logic.retrieveNote(dummyUserId, noteId)
                         .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
                 })
         })
 
         it('should fail on no note id', () =>
-            notesApi.retrieveNote(dummyUserId)
+            logic.retrieveNote(dummyUserId)
                 .catch(({ message }) => expect(message).to.equal('note id is not a string'))
         )
 
         it('should fail on empty note id', () =>
-            notesApi.retrieveNote(dummyUserId, '')
+            logic.retrieveNote(dummyUserId, '')
                 .catch(({ message }) => expect(message).to.equal('note id is empty or blank'))
         )
 
         it('should fail on blank note id', () =>
-            notesApi.retrieveNote(dummyUserId, '       ')
+            logic.retrieveNote(dummyUserId, '       ')
                 .catch(({ message }) => expect(message).to.equal('note id is empty or blank'))
         )
 
@@ -493,7 +493,7 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId }) => {
-                    return notesApi.retrieveNote(userId, dummyNoteId)
+                    return logic.retrieveNote(userId, dummyNoteId)
                         .catch(({ message }) => expect(message).to.equal(`no note found with id ${dummyNoteId}`))
                 })
         })
@@ -520,7 +520,7 @@ describe('logic (notes api)', () => {
                     const validNoteIds = _.map(notes, 'id')
                     const validNoteTexts = _.map(notes, 'text')
 
-                    return notesApi.listNotes(userId)
+                    return logic.listNotes(userId)
                         .then(notes => {
                             expect(notes).to.exist
                             expect(notes.length).to.equal(indexes.length)
@@ -538,17 +538,17 @@ describe('logic (notes api)', () => {
         })
 
         it('should fail on non user id', () =>
-            notesApi.listNotes()
+            logic.listNotes()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.listNotes('')
+            logic.listNotes('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.listNotes('      ')
+            logic.listNotes('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
     })
@@ -563,7 +563,7 @@ describe('logic (notes api)', () => {
 
                             const newNoteText = `${noteText} 2`
 
-                            return notesApi.updateNote(userId, noteId, newNoteText)
+                            return logic.updateNote(userId, noteId, newNoteText)
                                 .then(res => {
                                     expect(res).to.be.true
 
@@ -580,17 +580,17 @@ describe('logic (notes api)', () => {
         )
 
         it('should fail on non user id', () =>
-            notesApi.updateNote()
+            logic.updateNote()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.updateNote('')
+            logic.updateNote('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.updateNote('      ')
+            logic.updateNote('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
@@ -602,7 +602,7 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ notes: [{ id: noteId }] }) => {
-                    return notesApi.updateNote(dummyUserId, noteId, `${noteText} 2`)
+                    return logic.updateNote(dummyUserId, noteId, `${noteText} 2`)
                         .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
                 })
         })
@@ -615,7 +615,7 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId }) => {
-                    return notesApi.updateNote(userId, dummyNoteId, `${noteText} 2`)
+                    return logic.updateNote(userId, dummyNoteId, `${noteText} 2`)
                         .catch(({ message }) => expect(message).to.equal(`no note found with id ${dummyNoteId}`))
                 })
         })
@@ -630,7 +630,7 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId, notes: [{ id: noteId }] }) => {
-                    return notesApi.removeNote(userId, noteId)
+                    return logic.removeNote(userId, noteId)
                         .then(res => {
                             expect(res).to.be.true
 
@@ -644,17 +644,17 @@ describe('logic (notes api)', () => {
         })
 
         it('should fail on non user id', () =>
-            notesApi.removeNote()
+            logic.removeNote()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.removeNote('')
+            logic.removeNote('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.removeNote('      ')
+            logic.removeNote('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
@@ -666,23 +666,23 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ notes: [{ id: noteId }] }) => {
-                    return notesApi.removeNote(dummyUserId, noteId)
+                    return logic.removeNote(dummyUserId, noteId)
                         .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
                 })
         })
 
         it('should fail on no note id', () =>
-            notesApi.removeNote(dummyUserId)
+            logic.removeNote(dummyUserId)
                 .catch(({ message }) => expect(message).to.equal('note id is not a string'))
         )
 
         it('should fail on empty note id', () =>
-            notesApi.removeNote(dummyUserId, '')
+            logic.removeNote(dummyUserId, '')
                 .catch(({ message }) => expect(message).to.equal('note id is empty or blank'))
         )
 
         it('should fail on blank note id', () =>
-            notesApi.removeNote(dummyUserId, '       ')
+            logic.removeNote(dummyUserId, '       ')
                 .catch(({ message }) => expect(message).to.equal('note id is empty or blank'))
         )
 
@@ -694,7 +694,7 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId }) => {
-                    return notesApi.removeNote(userId, dummyNoteId)
+                    return logic.removeNote(userId, dummyNoteId)
                         .catch(({ message }) => expect(message).to.equal(`no note found with id ${dummyNoteId}`))
                 })
         })
@@ -719,7 +719,7 @@ describe('logic (notes api)', () => {
                     const validNoteIds = _.map(matchingNotes, 'id')
                     const validNoteTexts = _.map(matchingNotes, 'text')
 
-                    return notesApi.findNotes(userId, text)
+                    return logic.findNotes(userId, text)
                         .then(notes => {
                             expect(notes).to.exist
                             expect(notes.length).to.equal(matchingNotes.length)
@@ -737,27 +737,27 @@ describe('logic (notes api)', () => {
         })
 
         it('should fail on non user id', () =>
-            notesApi.findNotes()
+            logic.findNotes()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            notesApi.findNotes('')
+            logic.findNotes('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            notesApi.findNotes('      ')
+            logic.findNotes('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on no text', () =>
-            notesApi.findNotes(dummyUserId)
+            logic.findNotes(dummyUserId)
                 .catch(({ message }) => expect(message).to.equal('text is not a string'))
         )
 
         it('should fail on empty text', () =>
-            notesApi.findNotes(dummyUserId, '')
+            logic.findNotes(dummyUserId, '')
                 .catch(({ message }) => expect(message).to.equal('text is empty'))
         )
     })
