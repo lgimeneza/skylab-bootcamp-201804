@@ -470,11 +470,17 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('unregister user', () => {
+    describe('unregister user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return notesApi.unregisterUser(id, 'jd@mail.com', '123')
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
+                    const { email, password } = userData
+
+                    return notesApi.unregisterUser(id, email, password)
                         .then(res => {
                             expect(res).to.be.true
 
@@ -596,7 +602,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    describe('retrieve note', () => {
+    false && describe('retrieve note', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
