@@ -581,7 +581,7 @@ describe('logic (notes api)', () => {
 
         it('should fail on no user id', () =>
             notesApi.addNote()
-                .catch(({ message }) => expect(message).to.equal('.user id is not a string'))
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
