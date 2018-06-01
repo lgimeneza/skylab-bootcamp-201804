@@ -396,6 +396,42 @@ const notesApi = {
                         } else throw err
                     })
             })
+    },
+
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} text 
+     * 
+     * @returns {Promise<[Note]>}
+     */
+    findNotes(userId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if (!text.length) throw Error('text is empty')
+
+                return axios.get(`${this.url}/users/${userId}/notes?q=${text}`, { headers: { authorization: `Bearer ${this.token}` } })
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return data.data
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
+            })
     }
 }
 

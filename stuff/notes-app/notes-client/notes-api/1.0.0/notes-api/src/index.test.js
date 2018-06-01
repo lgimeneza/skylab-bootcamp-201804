@@ -925,7 +925,7 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('find notes', () => {
+    describe('find notes', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
 
@@ -943,6 +943,10 @@ describe('logic (notes api)', () => {
 
                     const validNoteIds = _.map(matchingNotes, 'id')
                     const validNoteTexts = _.map(matchingNotes, 'text')
+
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
 
                     return notesApi.findNotes(userId, text)
                         .then(notes => {
