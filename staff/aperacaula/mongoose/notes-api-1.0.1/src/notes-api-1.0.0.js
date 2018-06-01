@@ -145,6 +145,216 @@ const notesApi = {
             })
     },
 
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} text 
+     * 
+     * @returns {Promise<string>}
+     */
+    addNote(userId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+                
+                return axios.post(`${this.url}/users/${userId}/notes`, {text})
+                .then(({ status, data }) => {
+                    
+                    console.log(status)
+                    if(status === 201 && data.status === 'OK'){
+                        return data.data.id
+    
+                    }
+                
+                })
+                .catch(({ response: { data: { error } } }) => {
+                    
+                    return error
+                })
+            })
+                
+    },
+
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} noteId 
+     * 
+     * @returns {Promise<Note>}
+     */
+    retrieveNote(userId, noteId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
+
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+
+                return axios.get(`${this.url}/users/${userId}/notes/${noteId}`)
+                .then(({ status, data }) => {
+                    
+                    console.log(status)
+                    if(data.status === 'OK'){
+                        console.log(data.data)
+                        return data.data
+    
+                    }
+                
+                })
+                .catch(({ response: { data: { error } } }) => {
+                    
+                    return error
+                })
+            })
+    },
+
+    /**
+     * @param {string} userId
+     * 
+     * @returns {Promise<[Note]>}
+     */
+    listNotes(userId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                return axios.get(`${this.url}/users/${userId}/notes/`)
+                .then(({ data }) => {
+                
+                    if(data.status === 'OK'){
+                        
+                        return data.data
+    
+                    }
+                
+                })
+                .catch(({ response: { data: { error } } }) => {
+                    
+                    return error
+                })
+            })
+    },
+
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} noteId 
+     *
+     * @returns {Promise<boolean>}
+     */
+    removeNote(userId, noteId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
+
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+
+                return axios.delete(`${this.url}/users/${userId}/notes/${noteId}`)
+                .then(({ data }) => {
+                    
+                    
+                    if(data.status === 'OK'){
+                        
+                        return true
+    
+                    }
+                
+                })
+                .catch(({ response: { data: { error } } }) => {
+                    
+                    return error
+                })
+            })
+    },
+
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} noteId 
+     * @param {string} text 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    updateNote(userId, noteId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
+
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+
+                return axios.patch(`${this.url}/users/${userId}/notes/${noteId}`, {text})
+                .then(({ data }) => {
+                    
+                    if(data.status === 'OK'){
+                        return true
+    
+                    }
+                
+                })
+                .catch(({ response: { data: { error } } }) => {
+                    
+                    return error
+                })
+            })
+    },
+
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} text 
+     * 
+     * @returns {Promise<[Note]>}
+     */
+    findNotes(userId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if (!text.length) throw Error('text is empty')
+
+                return axios.get(`${this.url}/users/${userId}/notes?q=${text}`)
+                .then(({ status, data }) => {
+                    
+                    if(data.status === 'OK'){
+                        return data.data
+    
+                    }
+                
+                })
+                .catch(({ response: { data: { error } } }) => {
+                    
+                    return error
+                })
+            })
+    }
+
 
 
 }
