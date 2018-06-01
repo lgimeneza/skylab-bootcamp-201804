@@ -754,7 +754,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('update note', () => {
+    describe('update note', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id: userId }) =>
@@ -763,6 +763,10 @@ describe('logic (notes api)', () => {
                             const noteId = user.notes[user.notes.length - 1].id
 
                             const newNoteText = `${noteText} 2`
+
+                            const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
+
+                            notesApi.token = token
 
                             return notesApi.updateNote(userId, noteId, newNoteText)
                                 .then(res => {
@@ -803,8 +807,12 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ notes: [{ id: noteId }] }) => {
+                    const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.updateNote(fakeUserId, noteId, `${noteText} 2`)
-                        .catch(({ message }) => expect(message).to.equal(`no user found with id ${fakeUserId}`))
+                        .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${user.id}`))
                 })
         })
 
@@ -816,6 +824,10 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId }) => {
+                    const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+                    
                     return notesApi.updateNote(userId, fakeNoteId, `${noteText} 2`)
                         .catch(({ message }) => expect(message).to.equal(`no note found with id ${fakeNoteId}`))
                 })
