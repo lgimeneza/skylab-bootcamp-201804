@@ -1,5 +1,3 @@
-'use strict'
-
 const notesApi = require('notes-api')
 
 notesApi.url = 'http://localhost:5000/api'
