@@ -696,7 +696,7 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('list notes', () => {
+    describe('list notes', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
 
@@ -716,6 +716,10 @@ describe('logic (notes api)', () => {
                     // or
                     const validNoteIds = _.map(notes, 'id')
                     const validNoteTexts = _.map(notes, 'text')
+
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
 
                     return notesApi.listNotes(userId)
                         .then(notes => {
