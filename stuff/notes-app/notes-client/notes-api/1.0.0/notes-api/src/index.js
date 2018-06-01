@@ -3,7 +3,7 @@
 const axios = require('axios')
 
 const notesApi = {
-    url: 'NOWHERE',
+    url: 'NO-URL',
 
     token: 'NO-TOKEN',
 
@@ -207,6 +207,43 @@ const notesApi = {
                         return true
                     })
                     .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
+            })
+    },
+
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} text 
+     * 
+     * @returns {Promise<string>}
+     */
+    addNote(userId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+
+                return axios.post(`${this.url}/users/${userId}/notes`, { text }, { headers: { authorization: `Bearer ${this.token}` } })
+                    .then(({ status, data }) => {
+                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return data.data.id
+                    })
+                    .catch(err => {
+                        debugger
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
 
                         if (err.response) {

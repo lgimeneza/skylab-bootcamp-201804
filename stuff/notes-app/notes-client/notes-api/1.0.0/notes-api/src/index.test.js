@@ -29,7 +29,7 @@ describe('logic (notes api)', () => {
         indexes.length = 0
         while (count--) indexes.push(count)
 
-        return Promise.all([User.remove()/*, Note.deleteMany()*/])
+        return Promise.all([User.remove()]) // or User.deleteMany()
     })
 
     describe('register user', () => {
@@ -538,15 +538,16 @@ describe('logic (notes api)', () => {
         )
     })
 
-
-    false && describe('add note', () => {
+    describe('add note', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.addNote(id, noteText)
                         .then(noteId => {
-                            // expect(typeof noteId).to.equal('string')
-                            // or
                             expect(noteId).to.be.a('string')
                             expect(noteId).to.exist
 
@@ -566,10 +567,17 @@ describe('logic (notes api)', () => {
                 })
         )
 
-        it('should fail on wrong user id', () => {
-            return notesApi.addNote(fakeUserId, noteText)
-                .catch(({ message }) => expect(message).to.equal(`no user found with id ${fakeUserId}`))
-        })
+        it('should fail on wrong user id', () =>
+            User.create(userData)
+                .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
+                    return notesApi.addNote(fakeUserId, noteText)
+                        .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${id}`))
+                })
+        )
 
         it('should fail on no user id', () =>
             notesApi.addNote()
