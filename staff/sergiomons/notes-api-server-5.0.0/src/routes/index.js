@@ -3,6 +3,8 @@ const logic = require('../logic')
 
 const router = express.Router()
 
+const jwtValidator = 
+
 router.post('/users', (req, res) => {
     const { body: { name, surname, email, password } } = req
 
