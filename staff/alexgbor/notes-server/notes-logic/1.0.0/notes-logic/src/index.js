@@ -1,12 +1,8 @@
 'use strict'
 
-const axios = require('axios')
+const { models: { User, Note } } = require('notes-data')
 
-const notesApi = {
-    url: 'NOWHERE',
-
-    token: 'NO-TOKEN',
-
+const logic = {
     /**
      * 
      * @param {string} name 
@@ -35,20 +31,12 @@ const notesApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.post(`${this.url}/users`, { name, surname, email, password })
-                    .then(({ status, data }) => {
-                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                return User.findOne({ email })
+                    .then(user => {
+                        if (user) throw Error(`user with email ${email} already exists`)
 
-                        return true
-                    })
-                    .catch(err => {
-                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
-
-                        if (err.response) {
-                            const { response: { data: { error: message } } } = err
-
-                            throw Error(message)
-                        } else throw err
+                        return User.create({ name, surname, email, password })
+                            .then(() => true)
                     })
             })
     },
@@ -71,24 +59,12 @@ const notesApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.post(`${this.url}/auth`, { email, password })
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        const { data: { id, token } } = data
+                return User.findOne({ email, password })
+            })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
 
-                        this.token = token
-
-                        return id
-                    })
-                    .catch(err => {
-                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
-
-                        if (err.response) {
-                            const { response: { data: { error: message } } } = err
-
-                            throw Error(message)
-                        } else throw err
-                    })
+                return user.id
             })
     },
 
@@ -104,21 +80,13 @@ const notesApi = {
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
-                
-                return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` } })
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                       
-                        return data.data
-                    })
-                    .catch(err => {
-                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
-                        
-                        if (err.response) {
-                            const { response: { data: { error: message } } } = err
-                            throw Error(message)
-                        } else throw err
-                    })
+
+                return User.findById(id).select({ _id: 0, name: 1, surname: 1, email: 1 })
+            })
+            .then(user => {
+                if (!user) throw Error(`no user found with id ${id}`)
+
+                return user
             })
     },
 
@@ -157,13 +125,33 @@ const notesApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.patch(`${this.url}/users/${id}`, { name, surname, email, password, newEmail, newPassword },{headers:{authorization: `Bearer ${this.token}`}})
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        return true
-                    })
-                    .catch(({ response: { data: { error } } }) => error)
+                return User.findOne({ email, password })
             })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
+
+                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+
+                if (newEmail) {
+                    return User.findOne({ email: newEmail })
+                        .then(_user => {
+                            if (_user && _user.id !== id) throw Error(`user with email ${newEmail} already exists`)
+
+                            return user
+                        })
+                }
+
+                return user
+            })
+            .then(user => {
+                user.name = name
+                user.surname = surname
+                user.email = newEmail ? newEmail : email
+                user.password = newPassword ? newPassword : password
+
+                return user.save()
+            })
+            .then(() => true)
     },
 
     /**
@@ -189,13 +177,16 @@ const notesApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.delete(`${this.url}/users/${id}`, {headers:{authorization: `Bearer ${this.token}`}, data: { email, password } })
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        return true
-                    })
-                    .catch(({ response: { data: { error } } }) => error)
+                return User.findOne({ email, password })
             })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
+
+                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+
+                return user.remove()
+            })
+            .then(() => true)
     },
 
     /**
@@ -216,13 +207,26 @@ const notesApi = {
 
                 if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
 
-                return axios.post(`${this.url}/users/${userId}/notes`,{text}, {headers:{authorization: `Bearer ${this.token}`} })
-                    .then(({ status, data }) => {
-                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                // way 1 (step by step)
+                // return User.findById(userId)
+                //     .then(user => {
+                //         if (!user) throw Error(`no user found with id ${userId}`)
 
-                        return data.data.id
+                //         const note = new Note({ text })
+
+                //         user.notes.push(note)
+
+                //         return user.save()
+                //             .then(() => note.id)
+                //     })
+
+                // way 2 (1 step)
+                return User.findByIdAndUpdate(userId, { $push: { notes: { text } } }, { new: true })
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        return user.notes[user.notes.length - 1].id
                     })
-                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -244,12 +248,18 @@ const notesApi = {
 
                 if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
 
-                return axios.get(`${this.url}/users/${userId}/notes/${noteId}`,{headers:{authorization: `Bearer ${this.token}`}})
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        return data.data
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const note = user.notes.id(noteId)
+
+                        if (!note) throw Error(`no note found with id ${noteId}`)
+
+                        const {_id:id,text} = note
+
+                        return {id,text}
                     })
-                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -265,36 +275,12 @@ const notesApi = {
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                return axios.get(`${this.url}/users/${userId}/notes`,{headers:{authorization: `Bearer ${this.token}`}})
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        return data.data
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        return user.notes.map(({ id, text }) => ({ id, text }))
                     })
-                    .catch(({ response: { data: { error } } }) => error)
-            })
-    },
-
-    updateNote(userId, noteId, text) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof userId !== 'string') throw Error('user id is not a string')
-
-                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
-
-                if (typeof noteId !== 'string') throw Error('note id is not a string')
-
-                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
-
-                if (typeof text !== 'string') throw Error('text is not a string')
-
-                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
-
-                return axios.patch(`${this.url}/users/${userId}/notes/${noteId}`, {headers:{authorization: `Bearer ${this.token}`}, text })
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        return true
-                    })
-                    .catch(({ response: { data: { error } } }) => error)
             })
     },
 
@@ -316,12 +302,58 @@ const notesApi = {
 
                 if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
 
-                return axios.delete(`${this.url}/users/${userId}/notes/${noteId}`,{headers:{authorization: `Bearer ${this.token}`}})
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        return true
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const note = user.notes.id(noteId)
+
+                        if (!note) throw Error(`no note found with id ${noteId}`)
+
+                        note.remove()
+
+                        return user.save()
                     })
-                    .catch(({ response: { data: { error } } }) => error)
+                    .then(() => true)
+            })
+    },
+
+    /**
+     * 
+     * @param {string} userId
+     * @param {string} noteId 
+     * @param {string} text 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    updateNote(userId, noteId, text) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof noteId !== 'string') throw Error('note id is not a string')
+
+                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+
+                if (typeof text !== 'string') throw Error('text is not a string')
+
+                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const note = user.notes.id(noteId)
+
+                        if (!note) throw Error(`no note found with id ${noteId}`)
+
+                        note.text = text
+
+                        return user.save()
+                    })
+                    .then(() => true)
             })
     },
 
@@ -343,14 +375,14 @@ const notesApi = {
 
                 if (!text.length) throw Error('text is empty')
 
-                return axios.get(`${this.url}/users/${userId}/notes?q=${text}`,{headers:{authorization: `Bearer ${this.token}`}})
-                    .then(({ status, data }) => {
-                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        return data.data
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        return user.notes.filter(note => note.text.includes(text)).map(({ id, text }) => ({ id, text }))
                     })
-                    .catch(({ response: { data: { error } } }) => error)
             })
     }
 }
 
-module.exports = notesApi
+module.exports = logic
