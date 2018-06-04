@@ -542,14 +542,12 @@ describe('logic (notes api)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                  
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
                     notesApi.token = token
 
                     return notesApi.addNote(id, noteText)
                         .then(noteId => {
-                            
                             expect(noteId).to.be.a('string')
                             expect(noteId).to.exist
 
@@ -627,8 +625,7 @@ describe('logic (notes api)', () => {
 
                     return notesApi.retrieveNote(userId, noteId)
                 })
-                .then(({id, text}) => {
-                   
+                .then(({ id, text }) => {
                     expect(id).to.equal(note.id)
                     expect(text).to.equal(note.text)
                 })
@@ -757,7 +754,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('update note', () => {
+    describe('update note', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id: userId }) =>
@@ -837,7 +834,7 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('remove note', () => {
+    describe('remove note', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
@@ -947,9 +944,12 @@ describe('logic (notes api)', () => {
                     const validNoteIds = _.map(matchingNotes, 'id')
                     const validNoteTexts = _.map(matchingNotes, 'text')
 
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.findNotes(userId, text)
                         .then(notes => {
-                            debugger
                             expect(notes).to.exist
                             expect(notes.length).to.equal(matchingNotes.length)
 
