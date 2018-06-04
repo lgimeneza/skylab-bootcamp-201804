@@ -6,6 +6,10 @@ module.exports = new Schema({
         type: String,
         required: true
     },
+    creator: {
+        type: ObjectId,
+        ref: User
+    },
     city: {
         type: String,
         required: true

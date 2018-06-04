@@ -7,10 +7,6 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    surname: {
-        type: String,
-        required: true
-    },
     email: {
         type: String,
         required: true,
@@ -22,23 +18,18 @@ module.exports = new Schema({
     },
     race: {
         type: String,
-      //  required: true
     },
     gender: {
         type: String,
-        // required: true
     },
     description: {
         type: String,
-        // required: true
     },
     photoProfile: { 
         type: String,
-        // required: true
     },
     birthdate: { 
         type: Date,
-        // required: true
     },
     friends: [{
         type: ObjectId,
