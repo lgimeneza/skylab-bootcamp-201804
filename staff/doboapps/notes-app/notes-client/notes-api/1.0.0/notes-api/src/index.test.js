@@ -13,6 +13,7 @@ const jwt = require('jsonwebtoken')
 const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 
 notesApi.url = API_URL
+
 describe('logic (notes api)', () => {
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
     const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
@@ -28,10 +29,10 @@ describe('logic (notes api)', () => {
         indexes.length = 0
         while (count--) indexes.push(count)
 
-        return Promise.all([User.remove()/*, Note.deleteMany()*/])
+        return Promise.all([User.remove()]) // or User.deleteMany()
     })
 
-    false && describe('register user', () => {
+    describe('register user', () => {
         it('should succeed on correct dada', () =>
             notesApi.registerUser('John', 'Doe', 'jd@mail.com', '123')
                 .then(res => expect(res).to.be.true)
@@ -163,7 +164,7 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('authenticate user', () => {
+    describe('authenticate user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(() =>
@@ -260,7 +261,7 @@ describe('logic (notes api)', () => {
         })
     })
 
-    false && describe('retrieve user', () => {
+    describe('retrieve user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -346,12 +347,16 @@ describe('logic (notes api)', () => {
                     })
             })
         })
-    }) 
+    })
 
     describe('udpate user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
                             expect(res).to.be.true
@@ -378,6 +383,10 @@ describe('logic (notes api)', () => {
                 User.create(otherUserData)
             ])
                 .then(([{ id: id1 }, { id: id2 }]) => {
+                    const token = jwt.sign({ id: id1 }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     const { name, surname, email, password } = userData
 
                     return notesApi.updateUser(id1, name, surname, email, password, otherUserData.email)
@@ -385,87 +394,93 @@ describe('logic (notes api)', () => {
                 .catch(({ message }) => expect(message).to.equal(`user with email ${otherUserData.email} already exists`))
         )
 
-        // it('should fail on no user id', () =>
-        //     notesApi.updateUser()
-        //         .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-        // )
+        it('should fail on no user id', () =>
+            notesApi.updateUser()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
 
-        // it('should fail on empty user id', () =>
-        //     notesApi.updateUser('')
-        //         .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-        // )
+        it('should fail on empty user id', () =>
+            notesApi.updateUser('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
 
-        // it('should fail on blank user id', () =>
-        //     notesApi.updateUser('     ')
-        //         .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-        // )
+        it('should fail on blank user id', () =>
+            notesApi.updateUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
 
-        // it('should fail on no user name', () =>
-        //     notesApi.updateUser(fakeUserId)
-        //         .catch(({ message }) => expect(message).to.equal('user name is not a string'))
-        // )
+        it('should fail on no user name', () =>
+            notesApi.updateUser(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('user name is not a string'))
+        )
 
-        // it('should fail on empty user name', () =>
-        //     notesApi.updateUser(fakeUserId, '')
-        //         .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-        // )
+        it('should fail on empty user name', () =>
+            notesApi.updateUser(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
+        )
 
-        // it('should fail on blank user name', () =>
-        //     notesApi.updateUser(fakeUserId, '     ')
-        //         .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-        // )
+        it('should fail on blank user name', () =>
+            notesApi.updateUser(fakeUserId, '     ')
+                .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
+        )
 
-        // it('should fail on no user surname', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name)
-        //         .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
-        // )
+        it('should fail on no user surname', () =>
+            notesApi.updateUser(fakeUserId, userData.name)
+                .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
+        )
 
-        // it('should fail on empty user surname', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name, '')
-        //         .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-        // )
+        it('should fail on empty user surname', () =>
+            notesApi.updateUser(fakeUserId, userData.name, '')
+                .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
+        )
 
-        // it('should fail on blank user surname', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name, '     ')
-        //         .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-        // )
+        it('should fail on blank user surname', () =>
+            notesApi.updateUser(fakeUserId, userData.name, '     ')
+                .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
+        )
 
-        // it('should fail on no user email', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name, userData.surname)
-        //         .catch(({ message }) => expect(message).to.equal('user email is not a string'))
-        // )
+        it('should fail on no user email', () =>
+            notesApi.updateUser(fakeUserId, userData.name, userData.surname)
+                .catch(({ message }) => expect(message).to.equal('user email is not a string'))
+        )
 
-        // it('should fail on empty user email', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name, userData.surname, '')
-        //         .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-        // )
+        it('should fail on empty user email', () =>
+            notesApi.updateUser(fakeUserId, userData.name, userData.surname, '')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
 
-        // it('should fail on blank user email', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name, userData.surname, '     ')
-        //         .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-        // )
+        it('should fail on blank user email', () =>
+            notesApi.updateUser(fakeUserId, userData.name, userData.surname, '     ')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
 
-        // it('should fail on no user password', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name, userData.surname, userData.email)
-        //         .catch(({ message }) => expect(message).to.equal('user password is not a string'))
-        // )
+        it('should fail on no user password', () =>
+            notesApi.updateUser(fakeUserId, userData.name, userData.surname, userData.email)
+                .catch(({ message }) => expect(message).to.equal('user password is not a string'))
+        )
 
-        // it('should fail on empty user password', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name, userData.surname, userData.email, '')
-        //         .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-        // )
+        it('should fail on empty user password', () =>
+            notesApi.updateUser(fakeUserId, userData.name, userData.surname, userData.email, '')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
 
-        // it('should fail on blank user password', () =>
-        //     notesApi.updateUser(fakeUserId, userData.name, userData.surname, userData.email, '     ')
-        //         .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-        // )
+        it('should fail on blank user password', () =>
+            notesApi.updateUser(fakeUserId, userData.name, userData.surname, userData.email, '     ')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
     })
 
-    false && describe('unregister user', () => {
+    describe('unregister user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return notesApi.unregisterUser(id, 'jd@mail.com', '123')
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
+                    const { email, password } = userData
+
+                    return notesApi.unregisterUser(id, email, password)
                         .then(res => {
                             expect(res).to.be.true
 
@@ -523,15 +538,16 @@ describe('logic (notes api)', () => {
         )
     })
 
-
-    false && describe('add note', () => {
+    describe('add note', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.addNote(id, noteText)
                         .then(noteId => {
-                            // expect(typeof noteId).to.equal('string')
-                            // or
                             expect(noteId).to.be.a('string')
                             expect(noteId).to.exist
 
@@ -551,10 +567,17 @@ describe('logic (notes api)', () => {
                 })
         )
 
-        it('should fail on wrong user id', () => {
-            return notesApi.addNote(fakeUserId, noteText)
-                .catch(({ message }) => expect(message).to.equal(`no user found with id ${fakeUserId}`))
-        })
+        it('should fail on wrong user id', () =>
+            User.create(userData)
+                .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
+                    return notesApi.addNote(fakeUserId, noteText)
+                        .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${id}`))
+                })
+        )
 
         it('should fail on no user id', () =>
             notesApi.addNote()
@@ -587,7 +610,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('retrieve note', () => {
+    describe('retrieve note', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
@@ -596,6 +619,10 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId, notes: [{ id: noteId }] }) => {
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.retrieveNote(userId, noteId)
                 })
                 .then(({ id, text }) => {
@@ -627,8 +654,12 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ notes: [{ id: noteId }] }) => {
+                    const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.retrieveNote(fakeUserId, noteId)
-                        .catch(({ message }) => expect(message).to.equal(`no user found with id ${fakeUserId}`))
+                        .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${user.id}`))
                 })
         })
 
@@ -655,13 +686,17 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId }) => {
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.retrieveNote(userId, fakeNoteId)
                         .catch(({ message }) => expect(message).to.equal(`no note found with id ${fakeNoteId}`))
                 })
         })
     })
 
-    false && describe('list notes', () => {
+    describe('list notes', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
 
@@ -681,6 +716,10 @@ describe('logic (notes api)', () => {
                     // or
                     const validNoteIds = _.map(notes, 'id')
                     const validNoteTexts = _.map(notes, 'text')
+
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
 
                     return notesApi.listNotes(userId)
                         .then(notes => {
@@ -715,7 +754,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('update note', () => {
+    describe('update note', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id: userId }) =>
@@ -724,6 +763,10 @@ describe('logic (notes api)', () => {
                             const noteId = user.notes[user.notes.length - 1].id
 
                             const newNoteText = `${noteText} 2`
+
+                            const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
+
+                            notesApi.token = token
 
                             return notesApi.updateNote(userId, noteId, newNoteText)
                                 .then(res => {
@@ -764,8 +807,12 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ notes: [{ id: noteId }] }) => {
+                    const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.updateNote(fakeUserId, noteId, `${noteText} 2`)
-                        .catch(({ message }) => expect(message).to.equal(`no user found with id ${fakeUserId}`))
+                        .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${user.id}`))
                 })
         })
 
@@ -777,13 +824,17 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId }) => {
+                    const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.updateNote(userId, fakeNoteId, `${noteText} 2`)
                         .catch(({ message }) => expect(message).to.equal(`no note found with id ${fakeNoteId}`))
                 })
         })
     })
 
-    false && describe('remove note', () => {
+    describe('remove note', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const note = new Note({ text: noteText })
@@ -792,6 +843,10 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId, notes: [{ id: noteId }] }) => {
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.removeNote(userId, noteId)
                         .then(res => {
                             expect(res).to.be.true
@@ -828,8 +883,12 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ notes: [{ id: noteId }] }) => {
+                    const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.removeNote(fakeUserId, noteId)
-                        .catch(({ message }) => expect(message).to.equal(`no user found with id ${fakeUserId}`))
+                        .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${user.id}`))
                 })
         })
 
@@ -856,13 +915,17 @@ describe('logic (notes api)', () => {
 
             return user.save()
                 .then(({ id: userId }) => {
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
+
                     return notesApi.removeNote(userId, fakeNoteId)
                         .catch(({ message }) => expect(message).to.equal(`no note found with id ${fakeNoteId}`))
                 })
         })
     })
 
-    false && describe('find notes', () => {
+    describe('find notes', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
 
@@ -880,6 +943,10 @@ describe('logic (notes api)', () => {
 
                     const validNoteIds = _.map(matchingNotes, 'id')
                     const validNoteTexts = _.map(matchingNotes, 'text')
+
+                    const token = jwt.sign({ id: userId }, TOKEN_SECRET)
+
+                    notesApi.token = token
 
                     return notesApi.findNotes(userId, text)
                         .then(notes => {
