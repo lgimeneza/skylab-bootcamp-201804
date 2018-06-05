@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --devtool eval",
+    "build": "webpack -p --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
@@ -13,9 +15,12 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.23.0",
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.1",
     "ejs": "^2.6.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3",
     "pug": "^2.0.3",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
@@ -36,7 +41,7 @@
     "pug-loader": "^2.4.0",
     "sass-loader": "^7.0.2",
     "style-loader": "^0.21.0",
-    "webpack": "^4.10.2",
-    "webpack-dev-server": "^3.1.4"
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
   }
 }

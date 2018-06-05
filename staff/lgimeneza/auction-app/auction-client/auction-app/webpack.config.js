@@ -3,23 +3,17 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const isProd = 'production' === process.env.NODE_ENV; //true or false
-const cssDev = [
+const cssConfig = [
   'style-loader',
   'css-loader',
   'sass-loader'
 ];
-const cssProd = ExtractTextPlugin.extract({
-  fallback: 'style-loader',
-  use: ['css-loader','sass-loader'],
-  publicPath: '/dist'
-});
-const cssConfig = isProd ? cssProd : cssDev;
 
 module.exports = {
   entry: {
     vendor: ['babel-polyfill', 'react', 'react-dom'],
     app: [path.resolve(__dirname, 'src/App.js')],
+    bootsrap: [path.resolve(__dirname, 'src/App.js')]
   },
   module: {
     rules: [
@@ -45,7 +39,7 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     compress: true,
-    port: 8080,
+    port: 8000,
     stats: 'errors-only',
     hot: true,
     open: true
@@ -53,16 +47,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'My App using pug',
-      template: './public/index.pug',
+      template: './views/index.pug',
       hash: true,
       minify: {
         collapseWhitespace: true
       }
-    }),
-    new ExtractTextPlugin({
-      filename: 'css/app.css',
-      disable: !isProd,
-      allChunks: true
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
