@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Title } from './components/title'
-import 'bulma/css/bulma.css'
 
 import './App.css';
 
