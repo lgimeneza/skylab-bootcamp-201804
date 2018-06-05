@@ -1,0 +1,69 @@
+@import "common2.css";
+section {
+    display: grid;
+    grid-template: 50% 50% /33% 33% 33%;
+    text-align: center;
+    width: 85%;
+    height: 100%;
+}
+article {
+    width: 100%;
+    height: 100%; 
+    font-family: Arial, Helvetica, sans-serif ;
+}
+img {
+    width: 50%;
+    height: 50%; 
+    margin-top: 7%;
+    box-shadow: 8px 8px 12px rgb(66, 60, 60);
+}
+img:hover {
+   transform: scale(1.1);
+   transition: transform 1s;
+}
+figcaption {
+    margin-top: 3%;
+    font-size: 25px;
+    font-style: italic;
+    font-weight: bold;
+}
+@media screen and (max-width: 768px) {
+    aside, section {
+         width: 100%;
+         height:auto;
+     }
+     section {
+     grid-template: 6fr / 2fr;
+     }
+    header {
+        float:left;
+        height: 150px;
+    }
+    #nav-header > li {
+        width: 100%;
+        padding-right: 8%;
+    }
+    html, body, #nav-header {
+        height: auto;
+    }
+}
+@media screen and (max-width: 450px) {
+    aside, section {
+         width: 100%;
+         height:auto;
+     }
+     section {
+     grid-template: 6fr / 1fr;
+     }
+    header {
+        float:left;
+        height: 150px;
+    }
+    #nav-header > li {
+        width: 100%;
+        padding-right: 8%;
+    }
+    html, body, #nav-header {
+        height: auto;
+    }
+}
