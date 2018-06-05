@@ -1,12 +1,7 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
-// const Product = require('./product')
 
 module.exports = new Schema({
-    user: {
-        type: String,
-        required: true
-    },
-    addressDelivery: {
+    deliveryAddress: {
         type: String,
         required: true
     },
@@ -22,8 +17,8 @@ module.exports = new Schema({
         ref: 'Product',
         required: true
     }],
-    payment_method: [{
+    paymentMethod: {
         type: String,
         required: true
-    }]
+    }
 })

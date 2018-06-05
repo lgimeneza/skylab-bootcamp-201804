@@ -23,18 +23,15 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    repeatPassword: {
-        type: String,
-        required: true
-    },
     address: {
         type: String,
     },
-    telephone: {
+    phone: {
         type: Number,
     },
     points: {
         type: Number,
+        default: 0
     },
     orders: [Order]
 })

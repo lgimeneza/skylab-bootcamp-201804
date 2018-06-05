@@ -200,7 +200,14 @@ const logic = {
             .then(() => true)
     },
 
-    listCategory(categoryId) {
+    /**
+     * Lists products by a given category
+     * 
+     * @param {String} categoryId The category id
+     * 
+     * @returns {Promise<[Product]>}
+     */
+    listProductsByCategory(categoryId) {
         return Promise.resolve()
             .then(() => {
                 if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')

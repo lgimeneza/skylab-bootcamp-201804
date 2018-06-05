@@ -1,10 +1,12 @@
-const { Schema } = require('mongoose')
-const Subcategory = require('./subcategory')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
     name: {
         type: String,
         required: true
     },
-    subcategories: [Subcategory]
+    parentId: {
+        type: ObjectId,
+        ref: 'Category'
+    }
 })

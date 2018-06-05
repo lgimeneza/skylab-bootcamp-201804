@@ -1,10 +1,10 @@
-const { Schema, Schema: { ObjectId } } = require('mongoose')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 const Category = require('./category');
-const Subcategory = require('./subcategory')
 
 module.exports = new Schema({
-    image_product: {
+    image: {
         type: String,
+        required: true
     },
     name: {
         type: String,
@@ -12,18 +12,18 @@ module.exports = new Schema({
     },
     description: {
         type: String,
+        required: true
     },
     price: {
         type: Number,
+        required: true
     },
-    category: [{
+    discount: {
+        type: Number
+    },
+    category: {
         type: ObjectId,
         ref: 'Category',
         required: true
-    }],
-    subcategory: [{
-        type: ObjectId,
-        ref: 'Subcategory',
-        required: true
-    }],
+    }
 })
