@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { User, Apartment } } = require('data')
+const { mongoose, models: { User, Category, Product, Order } } = require('data')
 
 const logic = {
 
@@ -9,13 +9,13 @@ const logic = {
      * @param {string} name 
      * @param {string} surname 
      * @param {string} phone
-     * @param {string} dni
+     * @param {string} email
      * @param {string} password 
      * 
      * @returns {Promise<boolean>}
      */
 
-    registerUser(name, surname, phone, dni, password) {
+    registerUser(name, surname, address, email, password) {
         return Promise.resolve()
             .then(() => {
 
@@ -27,24 +27,24 @@ const logic = {
 
                 if (!(surname = surname.trim())) throw Error('surname is empty or blank')
 
-                if (typeof phone !== 'string') throw Error('phone is not a string')
+                if (typeof address !== 'string') throw Error('address is not a string')
 
-                if ((phone = phone.trim()).length === 0) throw Error('phone is empty or blank')
+                if ((address = address.trim()).length === 0) throw Error('address is empty or blank')
 
-                if (typeof dni !== 'string') throw Error('dni is not a string')
+                if (typeof email !== 'string') throw Error('email is not a string')
 
-                if ((dni = dni.trim()).length === 0) throw Error('dni is empty or blank')
+                if ((email = email.trim()).length === 0) throw Error('email is empty or blank')
 
                 if (typeof password !== 'string') throw Error('password is not a string')
 
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
 
-                return User.findOne({ dni })
+                return User.findOne({ email })
                     .then(user => {
-                        if (user) throw Error(`user with dni ${dni} already exists`)
+                        if (user) throw Error(`user with email ${email} already exists`)
 
-                        return User.create({ name, surname, phone, dni, password })
+                        return User.create({ name, surname, address, email, password })
                         .then(() => true)
                 })
             })
@@ -52,23 +52,23 @@ const logic = {
     
     /**
      * 
-     * @param {string} dni
+     * @param {string} email
      * @param {string} password 
      * 
      * @returns {Promise<string>}
      */
-    authenticateUser(dni, password) {
+    authenticateUser(email, password) {
         return Promise.resolve()
             .then(() => {
-                if (typeof dni !== 'string') throw Error('user dni is not a string')
+                if (typeof email !== 'string') throw Error('user email is not a string')
 
-                if (!(dni = dni.trim()).length) throw Error('user dni is empty or blank')
+                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
 
                 if (typeof password !== 'string') throw Error('user password is not a string')
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return User.findOne({ dni, password })
+                return User.findOne({ email, password })
             })
             .then(user => {
                 if (!user) throw Error('wrong credentials')
@@ -77,12 +77,45 @@ const logic = {
             })
     },
 
+    /**
+     * @param {string} userId
+     * 
+     * @returns {Promise<[Note]>}
+     */
+    listCategories() {
+        return Promise.resolve()
+            .then(() => {
 
+                return Category.find({})
+                    .then(category => {
+                        if (!category) throw Error(`no categories where found`)
 
+                        // return category.map(({ id, text }) => ({ id, text }))
+                        return category.map(category => category)
+                    })
+            })
+    },
 
+    /**
+     * @param {string} userId
+     * 
+     * @returns {Promise<[Note]>}
+     */
+    listProducts(userId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
 
+                        return user.notes.map(({ id, text }) => ({ id, text }))
+                    })
+            })
+    }
 
 
 
