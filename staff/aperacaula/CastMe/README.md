@@ -1,7 +1,7 @@
 This is CastMe, the online casting finder
 
-#Data-base diagram
-![](./client/design/sketches/CastMe Database Diagram.jpg)
+##Data-base diagram
+![](./client/design/sketches/database_diagram.jpg)
 
-#Layout
+##Layout
 ![](./client/design/sketches/layout.png)
