@@ -1,5 +1,0 @@
-# testing
-
-```sh
-$ mocha src/
-```
