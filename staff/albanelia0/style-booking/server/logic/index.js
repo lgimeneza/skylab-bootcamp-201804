@@ -120,7 +120,6 @@ const logic = {
       .then(() => {
         const monthStart = moment(`${year}-${month}-01`)
         const monthEnd = moment(monthStart).add(1, 'M')
-        //para saber hasta la fecha del mes siguiente cuantos dias han pasado desde monthstart
         const monthDays = monthEnd.diff(monthStart, 'days')
         return Booking.find({
           $and: [
