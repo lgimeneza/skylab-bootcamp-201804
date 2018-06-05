@@ -18,7 +18,7 @@ const logic = {
     registerUser(name, surname, address, email, password) {
         return Promise.resolve()
             .then(() => {
-
+                
                 if (typeof name !== 'string') throw Error('name is not a string')
 
                 if (!(name = name.trim()).length) throw Error('name is empty or blank')
