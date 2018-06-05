@@ -85,7 +85,46 @@ describe('models nutrifit', () => {
     })
 
     describe('list products by category (linked directly to the category, or indirectly through sub-categories)', () => {
-        // TODO
+            it('should succeed on correct data', () =>
+            Promise.all([
+                new Category(packCategoryData).save(),
+                new Category(packSCategoryData).save(),              
+                new Category(packMCategoryData).save(),
+                new Category(packLCategoryData).save(),
+                new Category(packXLCategoryData).save(),
+                new Category(packToningMuscleData).save(),
+                new Category(packBuildingMuscleData).save(),
+                new Category(packFatBurnData).save(),
+                
+
+            ])
+                .then(([packCategory, packSCategory, packMCategory, packLCategory, packXLCategory]) => {
+                    packSCategory.parentId = packCategory._id
+                    packMCategory.parentId = packCategory._id
+                    packLCategory.parentId = packCategory._id
+                    packXLCategory.parentId = packCategory._id
+
+                    return Promise.all([
+                        packSCategory.save(),
+                        packMCategory.save(),
+                        packLCategory.save(),
+                        packXLCategory.save()
+                    ])
+                        .then(([packSCategory, packMCategory, packLCategory, packXLCategory]) => {
+                            expect(packSCategory.name).to.equal(packSCategoryData.name)
+                            expect(packSCategory.parentId.toString()).to.equal(packCategory._id.toString())
+
+                            expect(packMCategory.name).to.equal(packMCategoryData.name)
+                            expect(packMCategory.parentId.toString()).to.equal(packCategory._id.toString())
+
+                            expect(packLCategory.name).to.equal(packLCategoryData.name)
+                            expect(packLCategory.parentId.toString()).to.equal(packCategory._id.toString())
+
+                            expect(packXLCategory.name).to.equal(packXLCategoryData.name)
+                            expect(packXLCategory.parentId.toString()).to.equal(packCategory._id.toString())
+                        })
+                })
+        )
     })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
