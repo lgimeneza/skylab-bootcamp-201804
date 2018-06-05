@@ -4,6 +4,9 @@ const axios = require('axios')
 
 const shApi = {
     url: 'NOWHERE',
+
+    token: 'NO-TOKEN',
+
     /**
      * 
      * @param {string} name 
@@ -110,7 +113,7 @@ const shApi = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return axios.get(`${this.url}/users/${id}` )
+                return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -167,7 +170,24 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.patch(`${this.url}//users/:userId`)
+                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, dni, password, newPhone, newPassword },{ headers: { authorization: `Bearer ${this.token}`}})
+                .then(({ status, data }) => {
+
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                    return true
+                })
+                .catch(err => {
+
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                    } else throw err
+                })
+                
             })
             
     },
@@ -183,6 +203,7 @@ const shApi = {
     unregisterUser(id, dni, password) {
         return Promise.resolve()
             .then(() => {
+
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
@@ -195,16 +216,26 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return User.findOne({ dni, password })
-            })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
+                return axios.delete(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` }, data: { dni, password } })
 
-                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+                .then(({ status, data }) => {
 
-                return user.remove()
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                    return true
+                })
+                .catch(err => {
+
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                    } else throw err
+                })
             })
-            .then(() => true)
+            
     },
    
 

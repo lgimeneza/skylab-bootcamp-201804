@@ -6,19 +6,23 @@ const { mongoose, models: { User, Apartment } } = require('data')
 const shApi = require('.')
 const { expect } = require('chai')
 const axios = require('axios')
+const jwt = require('jsonwebtoken')
 
-const { env: { DB_URL } } = process
+const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
+
+shApi.url = API_URL
 
 describe('logic (sweet-home)', () => {
     const userData = { name: 'Nur', surname: 'C', phone: '689456739', dni: '45629856L', password: '123' }
-    const dummyUserId = '123456781234567812345678'
+    const exempleID = '987654321234537812345375'
+
     before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => User.remove())
 
     describe('register user', () => {
         it('should succeed on correct data', () =>
-            shApi.registerUser('Nur', 'C', '689456739', '45629856L', '1234')
+            shApi.registerUser('Nur', 'C', '689456739', '45629856L', '123')
                 .then(res => expect(res).to.be.true)
         )
 
@@ -149,6 +153,10 @@ describe('logic (sweet-home)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    shApi.token = token
+
                     return shApi.retrieveUser(id)
                 })
                 .then(user => {
@@ -186,6 +194,11 @@ describe('logic (sweet-home)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
+
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    shApi.token = token
+
                     return shApi.updateUser(id, 'Nur', 'C', '689456739','45629856L', '123', '678345629', '456')
                         .then(res => {
                             expect(res).to.be.true
@@ -224,84 +237,91 @@ describe('logic (sweet-home)', () => {
         )
 
         it('should fail on no user name', () =>
-            shApi.updateUser(dummyUserId)
+            shApi.updateUser(exempleID)
                 .catch(({ message }) => expect(message).to.equal('user name is not a string'))
         )
 
         it('should fail on empty user name', () =>
-            shApi.updateUser(dummyUserId, '')
+            shApi.updateUser(exempleID, '')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on blank user name', () =>
-            shApi.updateUser(dummyUserId, '     ')
+            shApi.updateUser(exempleID, '     ')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on no user surname', () =>
-            shApi.updateUser(dummyUserId, userData.name)
+            shApi.updateUser(exempleID, userData.name)
                 .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
         )
 
         it('should fail on empty user surname', () =>
-            shApi.updateUser(dummyUserId, userData.name, '')
+            shApi.updateUser(exempleID, userData.name, '')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on blank user surname', () =>
-            shApi.updateUser(dummyUserId, userData.name, '     ')
+            shApi.updateUser(exempleID, userData.name, '     ')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on no user phone', () =>
-            shApi.updateUser(dummyUserId, userData.name, userData.surname)
+            shApi.updateUser(exempleID, userData.name, userData.surname)
                 .catch(({ message }) => expect(message).to.equal('user phone is not a string'))
         )
 
         it('should fail on empty user phone', () =>
-            shApi.updateUser(dummyUserId, userData.name, userData.surname, '')
+            shApi.updateUser(exempleID, userData.name, userData.surname, '')
                 .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
         )
 
         it('should fail on blank user phone', () =>
-            shApi.updateUser(dummyUserId, userData.name, userData.surname, '     ')
+            shApi.updateUser(exempleID, userData.name, userData.surname, '     ')
                 .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
         )
 
         it('should fail on no user dni', () =>
-        shApi.updateUser(dummyUserId, userData.name, userData.surname,userData.phone)
+        shApi.updateUser(exempleID, userData.name, userData.surname,userData.phone)
             .catch(({ message }) => expect(message).to.equal('user dni is not a string'))
     )
 
         it('should fail on empty user dni', () =>
-            shApi.updateUser(dummyUserId, userData.name, userData.surname,userData.phone, '')
+            shApi.updateUser(exempleID, userData.name, userData.surname,userData.phone, '')
                 .catch(({ message }) => expect(message).to.equal('user dni is empty or blank'))
         )
 
         it('should fail on blank user dni', () =>
-            shApi.updateUser(dummyUserId, userData.name, userData.surname,userData.phone, '     ')
+            shApi.updateUser(exempleID, userData.name, userData.surname,userData.phone, '     ')
                 .catch(({ message }) => expect(message).to.equal('user dni is empty or blank'))
         )
         it('should fail on no user password', () =>
-            shApi.updateUser(dummyUserId, userData.name, userData.surname, userData.phone, userData.dni)
+            shApi.updateUser(exempleID, userData.name, userData.surname, userData.phone, userData.dni)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            shApi.updateUser(dummyUserId, userData.name, userData.surname, userData.phone, userData.dni, '')
+            shApi.updateUser(exempleID, userData.name, userData.surname, userData.phone, userData.dni, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            shApi.updateUser(dummyUserId, userData.name, userData.surname, userData.phone, userData.dni, '     ')
+            shApi.updateUser(exempleID, userData.name, userData.surname, userData.phone, userData.dni, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
     })
-    describe('unregister user', () => {
+
+   describe('unregister user', () => {
+
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return shApi.unregisterUser(id, '45629856L', '123')
+
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    shApi.token = token
+                    
+                    return shApi.unregisterUser(id, userData.dni, userData.password)
                         .then(res => {
                             expect(res).to.be.true
 
@@ -312,7 +332,7 @@ describe('logic (sweet-home)', () => {
                         })
                 })
         )
-
+    
         it('should fail on no user id', () =>
             shApi.unregisterUser()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
@@ -329,35 +349,35 @@ describe('logic (sweet-home)', () => {
         )
 
         it('should fail on no user dni', () =>
-            shApi.unregisterUser(dummyUserId)
+            shApi.unregisterUser(exempleID)
                 .catch(({ message }) => expect(message).to.equal('user dni is not a string'))
         )
 
         it('should fail on empty user dni', () =>
-            shApi.unregisterUser(dummyUserId, '')
+            shApi.unregisterUser(exempleID, '')
                 .catch(({ message }) => expect(message).to.equal('user dni is empty or blank'))
         )
 
         it('should fail on blank user dni', () =>
-            shApi.unregisterUser(dummyUserId, '     ')
+            shApi.unregisterUser(exempleID, '     ')
                 .catch(({ message }) => expect(message).to.equal('user dni is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            shApi.unregisterUser(dummyUserId, userData.dni)
+            shApi.unregisterUser(exempleID, userData.dni)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            shApi.unregisterUser(dummyUserId, userData.dni, '')
+            shApi.unregisterUser(exempleID, userData.dni, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            shApi.unregisterUser(dummyUserId, userData.dni, '     ')
+            shApi.unregisterUser(exempleID, userData.dni, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
-    })
+     })
 
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))

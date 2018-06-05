@@ -171,6 +171,9 @@ const logic = {
     unregisterUser(id, dni, password) {
         return Promise.resolve()
             .then(() => {
+
+                console.log(dni)
+
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
