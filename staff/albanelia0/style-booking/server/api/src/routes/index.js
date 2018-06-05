@@ -52,17 +52,45 @@ router.post('/user/services', bodyParser.json(), (req, res) => {
 
 router.get('/availability/:year/:month', (req, res) => {
   const { params: { year, month } } = req
-
   logic.getAvailableDaysForYearMonth(year, month)
-      .then((service) => {
-        console.log(service)
+    .then((service) => {
+      debugger
+      res.status(200)
+      res.json({ status: 'OK', })
+    })
+    .catch(({ message }) => {
+      res.status(400)
+      res.json({ status: 'KO', error: message })
+    })
+}),
+  router.delete('/delete/booking/user/:idUser/:bookingId', (req, res) => {
+    const { params: { idUser, bookingId } } = req
+
+    logic.deleteBooking(idUser, bookingId)
+      .then((booking) => {
+        console.log(booking)
         res.status(200)
-        res.json({ status: 'OK',  })
+        res.json({ status: 'OK', })
       })
       .catch(({ message }) => {
         res.status(400)
         res.json({ status: 'KO', error: message })
       })
-})
+  }),
+
+  router.post('/create/booking', bodyParser.json(), (req, res) => {
+    const { body: { idUser, serviceId, date, endDate } } = req
+
+    logic.placeBooking(idUser, serviceId, date, endDate)
+      .then((booking) => {
+        console.log(booking)
+        res.status(201)
+        res.json({ status: 'OK', })
+      })
+      .catch(({ message }) => {
+        res.status(400)
+        res.json({ status: 'KO', error: message })
+      })
+  })
 
 module.exports = router

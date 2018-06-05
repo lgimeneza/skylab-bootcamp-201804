@@ -113,8 +113,8 @@ const logic = {
         // check days that are fully booked
         // create array to return with days and two states: true => available, false => full
         // example: [true, true, true .... false, true, true ,true... true] if march => array.length = 31
-        const monthStart = moment(`${year}-${month}-01 00:00`)
-        const monthEnd = monthStart.add(1, 'month')
+        const monthStart = moment(`${year}-${month}-01`)
+        const monthEnd = moment(monthStart).add(1, 'M')
         //para saber hasta la fecha del mes siguiente cuantos dias han pasado desde monthstart
         const monthDays = monthEnd.diff(monthStart, 'days')
         return Booking.find({
@@ -124,6 +124,7 @@ const logic = {
           ]
         })
           .then((bookings) => {
+            
             const availableDays = []
             for (let i = 0; i < monthDays; i++) {
               const day = i + 1
@@ -132,6 +133,7 @@ const logic = {
                 //si la fecha del booking es para este mismo dia se incluiría en el array devuelto por filter
                 return bookingDate === moment(`${year}-${month}-${day}`)
               })
+              console.log(currentDayBookings)
               const bookingsMinutes = currentDayBookings.reduce((sum, booking) => {
                 const minutes = moment(booking.endDate).diff(moment(booking.date), 'minutes')
                 return sum + minutes
@@ -144,12 +146,18 @@ const logic = {
   },
 
   getAvailableHoursForDate(date) { // yyyy-MM-dd
+    Promise.resolve(() => {
+      //TODO VALIDATIONS
 
+
+
+    })
   },
   /**
    * @param {String} idUser
    * @param {String} serviceId
    * @param {Date} date
+   * @param {Date} endDate
    * 
    * @returns {Promise<boolean>}
    */
@@ -157,21 +165,36 @@ const logic = {
     return Promise.resolve()
       .then(() => {
         //TODO VALIDATIONS
-
-        // iduser = '123'
-
-        // services = ['345','456']
-        User.findOne({ id: idUser })
+        return Service.find(idUser)
+        console.log('hola')
           .then((res) => {
+            console.log(res)
+
+            // const date = new Date()
+
+            // const totalDuration = service1.duration + service2.duration
+            date = moment(date).toDate()
+
+            const endDate = moment(date).add(res.duration, 'minutes').toDate()
+
+            // const booking = new Booking({
+            //   userId,
+            //   serviceId,
+            //   date,
+            //   endDate
+            // })
+
+            // return booking.save()
+            return Booking.create({ idUser, serviceId, date, endDate })
+              .then((res) => console.log(res))
 
           })
-        date = new Date()
-
-        //totalDuration = ser
-        endDate = moment(date).add(totalDuration, 'minutes').toDate()
-
-        return Booking.create({ idUser, serviceId, date, endDate })
       })
+
+
+  },
+
+  listBookings(idUser, bookingId) {
 
   },
 
@@ -182,6 +205,30 @@ const logic = {
    * @returns {Promise<boolean>}
    */
   deleteBooking(idUser, bookingId) {
+    Promise.resolve()
+      .then(() => {
+        if (typeof idUser !== 'string') throw Error('user id is not a string')
+
+        if (!(idUser = idUser.trim()).length) throw Error('user id is empty or blank')
+
+        if (typeof bookingId !== 'string') throw Error('note id is not a string')
+
+        if (!(bookingId = bookingId.trim())) throw Error('note id is empty or blank')
+
+        return Booking.findById({ bookingId: { idUser } })
+          .then(user => {
+            if (!user) throw Error(`no user found with id ${idUser}`)
+
+            console.log(user)
+
+            // if (!note) throw Error(`no note found with id ${bookingId}`)
+
+            // note.remove()
+
+            // return user.save()
+          })
+        // .then(() => true)
+      })
 
   },
 
