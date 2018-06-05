@@ -62,10 +62,7 @@ describe('logic (style-booking)', () => {
                   expect(booking.date.toString()).to.equal(date.toString())
                   expect(booking.endDate.toString()).to.equal(endDate.toString())
                 })
-
             })
-
-
         })
     )
   })
