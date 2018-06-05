@@ -2,67 +2,126 @@
 
 require('dotenv').config()
 
-const { mongoose, models: { User, Apartment } } = require('.')
+const { mongoose, models: { User, Category, Product, Order } } = require('.')
 const { expect } = require('chai')
 
 const { env: { DB_URL } } = process
 
-describe('models (sweet-home)', () => {
-    const jackData = { name: 'Jack', surname: 'Johnson', phone: '+34 933 666 777', dni: '01234567Z', password: '123' }
-    const annaData = { name: 'Anna', surname: 'Kennedy', phone: '+34 933 666 778', dni: '01234568U', password: '456' }
-    const apartmentData = { name: 'Skylab', address: 'Roc Boronat 35', phone: '+34 933 111 222', owner: [{ name: 'John', surname: 'Doe', dni: '12345678T', phone: '+34 933 333 444' }], realstate: { name: 'Super Pisos', address: 'Llull 40', phone: '+34 933 222 555' } }
+describe('models (singin-lab)', () => {
+    let jackData, annaData, beginnerCourseCategoryData, advancedCourseCategoryData, beginnerCourseData, advancedCourseData
 
     before(() => mongoose.connect(DB_URL))
 
-    beforeEach(() => Promise.all([User.remove(), Apartment.deleteMany()]))
+    beforeEach(() => {
+        Promise.all([User.remove(), Category.deleteMany(), Product.deleteMany()])
+
+        jackData = { name: 'Jack', surname: 'Johnson', phone: '+34 933 666 777', address: 'Roc Boronat 35', email: 'jj@mail.com', password: '123' }
+        annaData = { name: 'Anna', surname: 'Kennedy', phone: '+34 933 666 778', address: 'Llull 69', email: 'ak@mail.com', password: '456' }
+        beginnerCourseCategoryData = { name: 'Beginner Course', description: 'Beginner Course desc', image: 'http://images.com/230957' }
+        advancedCourseCategoryData = { name: 'Advanced Course', description: 'Advanced Course desc', image: 'http://images.com/259827' }
+        beginnerCourseData = { name: 'Beginner Course I', price: 50, discount: 15, description: 'Beginner Course I desc', image: 'http://images.com/5678', stock: 123 }
+        advancedCourseData = { name: 'Advanced Course I', price: 100, discount: 20, description: 'Advanced Course I desc', image: 'http://images.com/1234', stock: 77 }
+    })
 
     describe('create user', () => {
         it('should succeed on correct data', () => {
-            const user = new User(jackData)
+            const jack = new User(jackData)
 
-            return user.save()
+            return jack.save()
                 .then(user => {
                     expect(user).to.exist
                     expect(user._id).to.exist
                     expect(user.name).to.equal(jackData.name)
                     expect(user.surname).to.equal(jackData.surname)
                     expect(user.phone).to.equal(jackData.phone)
-                    expect(user.dni).to.equal(jackData.dni)
+                    expect(user.email).to.equal(jackData.email)
                     expect(user.password).to.equal(jackData.password)
                 })
         })
     })
 
-    describe('create apartment', () => {
+    describe('retrieve user', () => {
+        it('should succeed on correct data', () => {
+            const jack = new User(jackData)
+
+            return jack.save()
+                .then(user => {
+                    expect(user).to.exist
+                    expect(user._id).to.exist
+
+                    return User.findById(user._id)
+                        .then(user => {
+                            expect(user.name).to.equal(jackData.name)
+                            expect(user.surname).to.equal(jackData.surname)
+                            expect(user.phone).to.equal(jackData.phone)
+                            expect(user.email).to.equal(jackData.email)
+                            expect(user.password).to.equal(jackData.password)
+                        })
+                })
+        })
+    })
+
+    describe('create order', () => {
         it('should succeed on correct data', () =>
             Promise.all([
-                User.create(jackData),
-                User.create(annaData)
+                Category.create(beginnerCourseCategoryData),
+                Category.create(advancedCourseCategoryData)
             ])
                 .then(res => {
-                    const [{ _doc: user1 }, { _doc: user2 }] = res
+                    const [{ _doc: beginnerCourseCategory }, { _doc: advancedCourseCategory }] = res
 
-                    expect(user1).to.exist
-                    expect(user1.name).to.equal(jackData.name)
+                    expect(beginnerCourseCategory._id).to.exist
+                    expect(beginnerCourseCategory.name).to.equal(beginnerCourseCategoryData.name)
 
-                    expect(user2).to.exist
-                    expect(user2.name).to.equal(annaData.name)
+                    expect(advancedCourseCategory._id).to.exist
+                    expect(advancedCourseCategory.name).to.equal(advancedCourseCategoryData.name)
 
-                    const apartment = new Apartment(apartmentData)
+                    beginnerCourseData.category = beginnerCourseCategory._id
+                    advancedCourseData.category = advancedCourseCategory._id
 
-                    apartment.users.push(user1._id)
-                    apartment.users.push(user2._id)
+                    return Promise.all([
+                        Product.create(beginnerCourseData),
+                        Product.create(advancedCourseData),
+                        new User(jackData).save()
+                    ])
+                        .then(res => {
+                            const [{ _doc: beginnerCourse }, { _doc: advancedCourse }, user] = res
 
-                    return apartment.save()
-                        .then(apartment => {
-                            expect(apartment._id).to.exist
-                            expect(apartment.name).to.equal(apartmentData.name)
-                            //...
+                            expect(beginnerCourse._id).to.exist
+                            expect(beginnerCourse.name).to.equal(beginnerCourseData.name)
 
-                            const { users: [userId1, userId2] } = apartment
+                            expect(advancedCourse._id).to.exist
+                            expect(advancedCourse.name).to.equal(advancedCourseData.name)
 
-                            expect(userId1.toString()).to.equal(user1._id.toString())
-                            expect(userId2.toString()).to.equal(user2._id.toString())
+                            const order = new Order({
+                                date: new Date(),
+                                paymentMethod: 'paypal',
+                                products: [
+                                    beginnerCourse._id,
+                                    advancedCourse._id
+                                ]
+                            })
+
+                            user.orders.push(order)
+
+                            return user.save()
+                                .then(user => {
+                                    expect(user._id).to.exist
+
+                                    expect(user.orders).to.exist
+                                    expect(user.orders.length).to.equal(1)
+
+                                    const { orders: [order] } = user
+
+                                    expect(order._id).to.exist
+                                    expect(order.products).to.exist
+                                    expect(order.products.length).to.equal(2)
+
+                                    const { products: [productId1, productId2] } = order
+
+                                    expect(productId1.toString()).to.equal(beginnerCourse._id.toString())
+                                    expect(productId2.toString()).to.equal(advancedCourse._id.toString())
+                                })
                         })
                 })
         )
