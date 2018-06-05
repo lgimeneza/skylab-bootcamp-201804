@@ -4,11 +4,9 @@
 const { models: { User, Booking, Service } } = require('data')
 const moment = require('moment')
 
-const workdayStart = '09:00'
-const workdayEnd = '17:00'
-//el diff devuelve la cantidad de minutos que han pasado desde fecha A a fecha B
-const workdayMinutes = moment(workdayEnd).diff(moment(workdayStart), 'minutes')
-
+/**
+ * Style Booking logic
+ */
 const logic = {
 
   /**
@@ -101,18 +99,25 @@ const logic = {
       })
   },
   /**
-   * @param {Date} startDate
-   * @param {Date} endDate
+   * Returns the booking hours (on existing days) for a given year and month
    * 
-   * @returns {Promise<availability>}
+   * @example
+   *  logic.getBookingHoursByYearMonth(2018, 6)
+   *    .then(bookingHours => bookingHours.forEach(console.log))
+   * // output
+   * { day: 5, bookingHours: 6 }
+   * { day: 11, bookingHours: 3 }
+   * { day: 25, bookingHours: 7 }
+   * { day: 30, bookingHours: 2.5 }
+   * 
+   * @param {Number} year
+   * @param {Number} month
+   * 
+   * @returns {Promise<[{day<Number>, bookingHours<Number>}]>}
    */
-  getAvailableDaysForYearMonth(year, month) {
+  getBookingHoursForYearMonth(year, month) {
     return Promise.resolve()
       .then(() => {
-        //TODO get all bookings in given year and month
-        // check days that are fully booked
-        // create array to return with days and two states: true => available, false => full
-        // example: [true, true, true .... false, true, true ,true... true] if march => array.length = 31
         const monthStart = moment(`${year}-${month}-01`)
         const monthEnd = moment(monthStart).add(1, 'M')
         //para saber hasta la fecha del mes siguiente cuantos dias han pasado desde monthstart
@@ -123,24 +128,28 @@ const logic = {
             { "date": { $lt: monthEnd } }
           ]
         })
-          .then((bookings) => {
-            
-            const availableDays = []
-            for (let i = 0; i < monthDays; i++) {
-              const day = i + 1
-              const currentDayBookings = bookings.filter((booking) => {
-                const bookingDate = moment(booking.date).format('YYYY-MM-DD')
-                //si la fecha del booking es para este mismo dia se incluiría en el array devuelto por filter
-                return bookingDate === moment(`${year}-${month}-${day}`)
+          .then(bookings => {
+            if (bookings.length) {
+              const bookingHours = bookings.reduce((accum, booking) => {
+                const { date, endDate } = booking
+
+                const dayOfMonth = date.getDate()
+
+                const diff = moment(endDate).diff(date)
+
+                const duration = moment.duration(diff)
+
+                if (!accum[dayOfMonth]) accum[dayOfMonth] = 0
+
+                accum[dayOfMonth] += duration.asHours()
+
+                return accum
               })
-              console.log(currentDayBookings)
-              const bookingsMinutes = currentDayBookings.reduce((sum, booking) => {
-                const minutes = moment(booking.endDate).diff(moment(booking.date), 'minutes')
-                return sum + minutes
-              }, 0)
-              availableDays.push(bookingsMinutes < workdayMinutes)
-            }
-            return availableDays
+
+              // bookingHours => { 5: 3, 10: 7.5 }
+
+              return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
+            } else return []
           })
       })
   },
