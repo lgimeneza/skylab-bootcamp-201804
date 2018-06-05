@@ -118,7 +118,7 @@ const logic = {
   getBookingHoursForYearMonth(year, month) {
     return Promise.resolve()
       .then(() => {
-        const monthStart = moment(`${year}-${month}-01`)
+        const monthStart = moment(`${year}-${month}-01`, 'YYYY-MM-DD')
         const monthEnd = moment(monthStart).add(1, 'M')
         const monthDays = monthEnd.diff(monthStart, 'days')
         return Booking.find({
@@ -127,29 +127,28 @@ const logic = {
             { "date": { $lt: monthEnd } }
           ]
         })
-          .then(bookings => {
-            if (bookings.length) {
-              const bookingHours = bookings.reduce((accum, booking) => {
-                const { date, endDate } = booking
-
-                const dayOfMonth = date.getDate()
-
-                const diff = moment(endDate).diff(date)
-
-                const duration = moment.duration(diff)
-
-                if (!accum[dayOfMonth]) accum[dayOfMonth] = 0
-
-                accum[dayOfMonth] += duration.asHours()
-
-                return accum
-              })
-
-              // bookingHours => { 5: 3, 10: 7.5 }
-
-              return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
-            } else return []
-          })
+        .then(bookings => {
+          if (bookings.length) {
+            const bookingHours = bookings.reduce((accum, booking) => {
+              const { date, endDate } = booking
+              const dayOfMonth = date.getDate()
+  
+              // calculate the duration of booking in hours
+              const diff = moment(endDate).diff(date)
+              const duration = moment.duration(diff).asHours()
+  
+              // add hours of this booking to the accum object's date key
+              if (!accum[dayOfMonth]) accum[dayOfMonth] = 0
+              accum[dayOfMonth] += duration
+  
+              return accum
+            }, {})
+  
+            // bookingHours => { 5: 3, 10: 7.5 }
+  
+            return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
+          } else return []
+        })
       })
   },
 

@@ -50,13 +50,13 @@ router.post('/user/services', bodyParser.json(), (req, res) => {
     })
 })
 
-router.get('/availability/:year/:month', (req, res) => {
+router.get('/booking/hours/:year/:month', (req, res) => {
   const { params: { year, month } } = req
-  logic.getAvailableDaysForYearMonth(year, month)
-    .then((service) => {
-      debugger
+  return logic.getBookingHoursForYearMonth(year, month)
+    .then((data) => {
+      console.log(data)
       res.status(200)
-      res.json({ status: 'OK', })
+      res.json({ status: 'OK', data })
     })
     .catch(({ message }) => {
       res.status(400)
