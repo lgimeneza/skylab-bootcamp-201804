@@ -14,7 +14,7 @@ describe('models (style-booking)', () => {
 
     before(() => mongoose.connect(DB_URL))
 
-    beforeEach(() => Promise.all([User.remove(), Service.deleteMany()], Booking.deleteMany()))
+    beforeEach(() => Promise.all([User.remove(), Service.deleteMany(), Booking.deleteMany()]))
 
     describe('create user', () => {
 
@@ -41,6 +41,7 @@ describe('models (style-booking)', () => {
                 Service.create(serviceData2)
             ])
                 .then(res => {
+
                     const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
 
                     const date = new Date()
