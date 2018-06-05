@@ -25,14 +25,10 @@ module.exports = new Schema({
     },
     image: {
         type: String,
-        required: false
+        required: true
     },
-    unitsInStock: {
+    stock: {
         type: Number,
-        required: false
-    },
-    available: {
-        type: Boolean,
         required: true
     }
 })
