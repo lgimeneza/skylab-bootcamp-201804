@@ -13,14 +13,14 @@ describe('models (singin-lab)', () => {
     before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => {
-        Promise.all([User.remove(), Category.deleteMany(), Product.deleteMany()])
-
         jackData = { name: 'Jack', surname: 'Johnson', phone: '+34 933 666 777', address: 'Roc Boronat 35', email: 'jj@mail.com', password: '123' }
         annaData = { name: 'Anna', surname: 'Kennedy', phone: '+34 933 666 778', address: 'Llull 69', email: 'ak@mail.com', password: '456' }
         beginnerCourseCategoryData = { name: 'Beginner Course', description: 'Beginner Course desc', image: 'http://images.com/230957' }
         advancedCourseCategoryData = { name: 'Advanced Course', description: 'Advanced Course desc', image: 'http://images.com/259827' }
         beginnerCourseData = { name: 'Beginner Course I', price: 50, discount: 15, description: 'Beginner Course I desc', image: 'http://images.com/5678', stock: 123 }
         advancedCourseData = { name: 'Advanced Course I', price: 100, discount: 20, description: 'Advanced Course I desc', image: 'http://images.com/1234', stock: 77 }
+
+        return Promise.all([User.remove(), Category.deleteMany(), Product.deleteMany()])
     })
 
     describe('create user', () => {
@@ -85,6 +85,7 @@ describe('models (singin-lab)', () => {
                         new User(jackData).save()
                     ])
                         .then(res => {
+                        
                             const [{ _doc: beginnerCourse }, { _doc: advancedCourse }, user] = res
 
                             expect(beginnerCourse._id).to.exist
@@ -107,7 +108,7 @@ describe('models (singin-lab)', () => {
                             return user.save()
                                 .then(user => {
                                     expect(user._id).to.exist
-
+                                    
                                     expect(user.orders).to.exist
                                     expect(user.orders.length).to.equal(1)
 
