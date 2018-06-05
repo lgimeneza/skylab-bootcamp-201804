@@ -26,7 +26,8 @@
  * @author manuelbarzi
  * @version 1.1.0
  */
-class Xtorage {
+//class Xtorage {
+var Xtorage = class {
 	/**
 	 * Creates an instance
 	 * 
