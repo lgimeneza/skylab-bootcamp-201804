@@ -5,7 +5,7 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    parentId: {
+    parent: {
         type: ObjectId,
         ref: 'Category'
     }
