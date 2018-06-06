@@ -5,11 +5,11 @@ require('dotenv').config()
 const { mongoose, models: { User, Park } } = require('data')
 const { expect } = require('chai')
 const logic = require('.')
-const _ = require('lodash')
+//const _ = require('lodash')
 
 const { env: { DB_URL } } = process
 
-describe('logic social', () => {
+ describe('logic social', () => {
     const birthdateUser = new Date()
     const dummyUserId = '123456781234567812345678'
     const dummyUserId2 = '223456781234567812345678'
@@ -30,7 +30,7 @@ describe('logic social', () => {
         return Promise.all([User.remove()/*, Note.deleteMany()*/])
     })
 
-    describe('register user', () => {
+      describe('register user', () => {
         it('should succeed on correct dada', () =>
             logic.registerUser('John', 'jd@mail.com', '123')
                 .then(res => expect(res).to.be.true)
@@ -94,7 +94,7 @@ describe('logic social', () => {
         )
     })
 
-    describe('authenticate user', () => {
+      describe('authenticate user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(() =>
@@ -134,7 +134,7 @@ describe('logic social', () => {
         )
     })
 
-    describe('retrieve user', () => {
+      describe('retrieve user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -169,12 +169,13 @@ describe('logic social', () => {
         )
     })
 
-    describe('udpate user', () => {
+      describe('udpate user', () => {
+
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
 
-                    return logic.updateUser(id, 'Jack', 'jd@mail.com', '123', 'jck@mail.com', '456', "pug", "female", "a dog", "/images", birthdateUser)
+                    return logic.updateUser(id, 'Jack', 'jd@mail.com', '123', 'jck@mail.com', '456', "pug", "female", "a dog", "/images", birthdateUser, "barcelona", "08016")
                         .then(res => {
                             expect(res).to.be.true
 
@@ -183,7 +184,7 @@ describe('logic social', () => {
                         .then(user => {
                             expect(user).to.exist
 
-                            const { name, email, password, race, gender, description, photoProfile, birthdate } = user
+                            const { name, email, password, race, gender, description, photoProfile, birthdate, city, zip, } = user
 
                             expect(user.id).to.equal(id)
                             expect(name).to.equal('Jack')
@@ -194,6 +195,9 @@ describe('logic social', () => {
                             expect(description).to.equal('a dog')
                             expect(photoProfile).to.equal('/images')
                             expect(birthdate.toString()).to.equal(birthdateUser.toString())
+                            expect(city).to.equal('barcelona')
+                            expect(zip).to.equal('08016')
+
                         })
                 })
         )
@@ -206,7 +210,7 @@ describe('logic social', () => {
                 .then(([{ id: id1 }, { id: id2 }]) => {
                     const { name, email, password } = userData
 
-                    return logic.updateUser(id1, name, email, password, otherUserData.email, "456", "pug", "male", "a dog", "/images", birthdateUser)
+                    return logic.updateUser(id1, name, email, password, otherUserData.email, "456", "pug", "male", "a dog", "/images", birthdateUser, "madrid", "91279")
                 })
                 .catch(({ message }) => expect(message).to.equal(`user with email ${otherUserData.email} already exists`))
         )
@@ -343,10 +347,223 @@ describe('logic social', () => {
                 .catch(({ message }) => expect(message).to.equal('user birthdate is not a object'))
         )
 
+        it('should fail on no user city', () =>
+            logic.updateUser(dummyUserId, userData.name, userData.email, userData.password, otherUserData.email, '456', "pug", "male", "the description", "/image", birthdateUser)
+                .catch(({ message }) => expect(message).to.equal('user city is not a string'))
+        )
+
+        it('should fail on empty user city', () =>
+
+            logic.updateUser(dummyUserId, userData.name, userData.email, userData.password, otherUserData.email, '456', "pug", "male", "the description", "/image", birthdateUser, "")
+                .catch(({ message }) => expect(message).to.equal('user city is empty or blank'))
+        )
+
+        it('should fail on blank user city', () =>
+            logic.updateUser(dummyUserId, userData.name, userData.email, userData.password, otherUserData.email, '456', "pug", "male", "the description", "/image", birthdateUser, "       ")
+                .catch(({ message }) => expect(message).to.equal('user city is empty or blank'))
+        )
+
+
+        it('should fail on no user zip', () =>
+            logic.updateUser(dummyUserId, userData.name, userData.email, userData.password, otherUserData.email, '456', "pug", "male", "the description", "/image", birthdateUser, "barcelona")
+                .catch(({ message }) => expect(message).to.equal('user zip is not a string'))
+        )
+
+        it('should fail on empty user zip', () =>
+
+            logic.updateUser(dummyUserId, userData.name, userData.email, userData.password, otherUserData.email, '456', "pug", "male", "the description", "/image", birthdateUser, "barcelona", "")
+                .catch(({ message }) => expect(message).to.equal('user zip is empty or blank'))
+        )
+
+        it('should fail on blank user zip', () =>
+            logic.updateUser(dummyUserId, userData.name, userData.email, userData.password, otherUserData.email, '456', "pug", "male", "the description", "/image", birthdateUser, "barcelona", "       ")
+                .catch(({ message }) => expect(message).to.equal('user zip is empty or blank'))
+        )
+    })
+
+
+     describe('filter users', function () {
+        this.timeout(3000);
+
+        it('should succeed on correct data', () => {
+            let users = []
+            
+            users.push(new User({ name: 'John', email: 'johndoe@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdateUser, city: "barcelona", zip: "08016" }).save())
+            users.push(new User({ name: 'pepe', email: 'pepe@mail.com', password: '123', race: "bulldog", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser, city: "madrid", zip: "912829" }).save())
+            users.push(new User({ name: 'toby', email: 'toby@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser, city: "barcelona", zip: "08013" }).save())
+
+            return Promise.all(users)
+                .then((users) => {
+
+                    let filters = []
+                    filters.push(logic.filterUsers('John', undefined, undefined, undefined)) //name race gender city
+                    filters.push(logic.filterUsers(undefined, "pug", undefined, undefined)) //name race gender city
+                    filters.push(logic.filterUsers(undefined, undefined, "female", undefined)) //name race gender city
+                    filters.push(logic.filterUsers(undefined, "pug", undefined, "barcelona")) //name race gender city
+
+                    return Promise.all(filters).then(res => {
+
+                        expect(res[0].length).to.equal(1)
+                        expect(res[1].length).to.equal(2)
+                        expect(res[2].length).to.equal(2)
+                        expect(res[3].length).to.equal(2)
+
+                    })
+                })
+        })
+
+
+        it('should fail on no user name', () =>
+            logic.filterUsers(1)
+                .catch(({ message }) => expect(message).to.equal('user name is not a string or undefined'))
+        )
+
+        it('should fail on no user race', () =>
+            logic.filterUsers("",1)
+                .catch(({ message }) => expect(message).to.equal('user race is not a string or undefined'))
+        )
+
+        it('should fail on no user gender', () =>
+            logic.filterUsers("","",1)
+                .catch(({ message }) => expect(message).to.equal('user gender is not a string or undefined'))
+        )
+
+        it('should fail on no user city', () =>
+            logic.filterUsers(undefined,undefined,undefined,1)
+                .catch(({ message }) => expect(message).to.equal('user city is not a string or undefined'))
+        )
+    })
+
+
+    describe('filter parks', function () {
+        this.timeout(3000);
+
+        it('should succeed on correct data', () => {
+            let parks = []
+
+            parks.push(new Park({ name: 'mypark1', creator: dummyUserId, city: 'barcelona', zip: "08013", location: "12314434-342342432" }).save())
+            parks.push(new Park({ name: 'mypark2', creator: dummyUserId, city: 'madrid', zip: "12345", location: "12314434-342342432" }).save())
+            parks.push(new Park({ name: 'mypark3', creator: dummyUserId, city: 'barcelona', zip: "08016", location: "12314434-342342432" }).save())
+
+            return Promise.all(parks)
+                .then((parks) => {
+
+                    let filters = []
+                    filters.push(logic.filterParks('mypark2', undefined, undefined, )) //name city zip
+                    filters.push(logic.filterParks(undefined, "barcelona", undefined, )) //name city zip
+                    filters.push(logic.filterParks(undefined, undefined, "12345", )) //name city zip
+                    filters.push(logic.filterParks(undefined, "barcelona", "08016")) //name city zip
+
+                    return Promise.all(filters).then(res => {
+
+                        expect(res[0].length).to.equal(1)
+                        expect(res[1].length).to.equal(2)
+                        expect(res[2].length).to.equal(1)
+                        expect(res[3].length).to.equal(1)
+
+                    })
+                })
+        })
+
+
+        it('should fail on no park name', () =>
+            logic.filterParks(1)
+                .catch(({ message }) => expect(message).to.equal('park name is not a string or undefined'))
+        )
+
+        it('should fail on no park city', () =>
+            logic.filterParks("",1)
+                .catch(({ message }) => expect(message).to.equal('park city is not a string or undefined'))
+        )
+
+        it('should fail on no park zip', () =>
+            logic.filterParks("","",1)
+                .catch(({ message }) => expect(message).to.equal('park zip is not a string or undefined'))
+        )
+
+  
+    })
+
+      describe('add notifications', () => {
+
+        it('should succeed on correct data', () =>
+            User.create(userData)
+                .then(({ id }) => {
+
+                    return logic.addNotification(id, "one notification")
+                        .then((notifications) => {
+                            expect(notifications).to.exist
+                            expect(notifications[0]).to.equal('one notification')
+                        })
+                })
+        )
+
+        it('should fail on no user id', () =>
+            logic.addNotification()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.addNotification('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.addNotification('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on no user notification', () =>
+            logic.addNotification(dummyUserId)
+                .catch(({ message }) => expect(message).to.equal('notification is not a string'))
+        )
+
+        it('should fail on empty user notification', () =>
+            logic.addNotification(dummyUserId, '')
+                .catch(({ message }) => expect(message).to.equal('notification is empty or blank'))
+        )
+
+        it('should fail on blank user notification', () =>
+            logic.addNotification(dummyUserId, '     ')
+                .catch(({ message }) => expect(message).to.equal('notification is empty or blank'))
+        )
+
 
     })
 
-    describe('unregister user', () => {
+
+    describe('delete notifications', () => {
+
+        it('should succeed on correct data', () =>
+            User.create( { name: 'John', email: 'jd@mail.com', password: '123'  , notifications:["notification1","notification2","notification3"]})
+                  .then(({ id }) => {
+
+                    return logic.deleteNotifications(id)
+                        .then((res) => {
+                            expect(res).to.be.true
+                        })
+                })
+        )
+
+        it('should fail on no user id', () =>
+            logic.addNotification()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.addNotification('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.addNotification('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+
+    })
+
+      describe('unregister user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -408,27 +625,44 @@ describe('logic social', () => {
         )
     })
 
-    describe('add friend', () => {
+      describe('add friend', () => {
+
         it('should succeed on correct data', () => {
-            let users = [];
+            let users = []
+            let userId
 
             users.push(new User({ name: 'John', email: 'johndoe@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdateUser }).save())
             users.push(new User({ name: 'pepe', email: 'pepe@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser }).save())
             users.push(new User({ name: 'toby', email: 'toby@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser }).save())
 
-            return Promise.all(users).then()
+            return Promise.all(users)
                 .then((users) => {
-                    let addFriends = []
-                    addFriends.push(logic.addFriend(users[0].id, users[1].id))
-                    addFriends.push(logic.addFriend(users[0].id, users[2].id))
+                    userId = users[1].id
+                    return logic.addFriend(users[0].id, users[1].id)
+                })
+                .then(idFriend => {
+                    expect(idFriend).to.exist
+                    expect(idFriend.length).to.equals(1)
+                    expect(idFriend[0].toString()).to.equal(userId)
+                })
+        })
 
-                    return Promise.all(addFriends)
-                        .then(idFriend => {
-                            expect(idFriend).to.exist
-                            expect(idFriend.length).to.equals(2)
-                            expect(idFriend[0].toString()).to.equal(users[1].id)
-                            expect(idFriend[1].toString()).to.equal(users[2].id)
+        it('should throw error by repeated user', () => {
+            let users = [];
+
+            users.push(new User({ name: 'John', email: 'johndoe@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdateUser }).save())
+            users.push(new User({ name: 'pepe', email: 'pepe@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser }).save())
+
+            return Promise.all(users)
+                .then(users => {
+                    return logic.addFriend(users[0].id, users[1].id)
+                        .then((res) => {
+                            return logic.addFriend(users[0].id, users[1].id)
                         })
+                        .catch(({ message }) => {
+                            expect(message).to.equal(`this user already exists`)
+                        })
+
                 })
         })
 
@@ -473,6 +707,7 @@ describe('logic social', () => {
 
 
     describe('remove friend', () => {
+
         it('should succeed on correct data', () => {
             let users = [];
 
@@ -491,27 +726,47 @@ describe('logic social', () => {
 
                             return logic.removeFriend(id, users[1].id)
 
-                        }).then(friends => {
-                            expect(friends).to.exist
-                            expect(friends.length).to.equals(1)
-                            expect(friends[0].toString()).to.equals(users[2].id)
+                        }).then(loves => {
+                            expect(loves).to.exist
+                            expect(loves.length).to.equals(1)
+                            expect(loves[0].toString()).to.equals(users[2].id)
 
                         })
                 })
         })
 
+        //  it('should throw error by repeated user', () => {
+        //     let users = [];
 
-        it('no friend found', () =>{
+        //     users.push(new User({ name: 'John', email: 'johndoe@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdateUser }).save())
+        //     users.push(new User({ name: 'pepe', email: 'pepe@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser }).save())
 
-        const user = new User(userData)
-        user.friends.push(dummyUserId)
+        //     return Promise.all(users)
+        //         .then(users => {
+        //             return logic.removeFriend(users[0].id, users[1].id)
+        //                 .then((res) => {
+        //                     return logic.removeFriend(users[0].id, users[1].id)
+        //                 })
+        //                 .catch(({ message }) => {
+        //                     expect(message).to.equal(`this user already exists`)
+        //                 })
 
-        return user.save()
-            .then(({ id:userId }) => {
+        //         })
+        // })
 
-                logic.removeFriend(userId, dummyUserId2)
-                    .catch(({ message }) => expect(message).to.equal(`no friend found with id ${dummyUserId2}`))
-            })
+
+
+        it('no friend found', () => {
+
+            const user = new User(userData)
+            user.friends.push(dummyUserId)
+
+            return user.save()
+                .then(({ id: userId }) => {
+
+                    logic.removeFriend(userId, dummyUserId2)
+                        .catch(({ message }) => expect(message).to.equal(`no friend found with id ${dummyUserId2}`))
+                })
         })
 
         it('should fail on non user id', () =>
@@ -561,7 +816,7 @@ describe('logic social', () => {
 
 
 
-    describe('add lover', () => {
+      describe('add lover', () => {
         it('should succeed on correct data', () => {
             let users = [];
 
@@ -576,29 +831,48 @@ describe('logic social', () => {
                     addLoves.push(logic.addLove(users[0].id, users[2].id))
 
                     return Promise.all(addLoves)
-                        .then(idFriend => {
-                            expect(idFriend).to.exist
-                            expect(idFriend.length).to.equals(2)
-                            expect(idFriend[0].toString()).to.equal(users[1].id)
-                            expect(idFriend[1].toString()).to.equal(users[2].id)
+                        .then(idLove => {
+                            expect(idLove).to.exist
+                            expect(idLove.length).to.equals(2)
+                            expect(idLove[0].toString()).to.equal(users[1].id)
+                            expect(idLove[1].toString()).to.equal(users[2].id)
                         })
                 })
         })
 
+        it('should throw error by repeated user', () => {
+            let users = [];
 
-        it('no love found', () =>{
+            users.push(new User({ name: 'John', email: 'johndoe@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdateUser }).save())
+            users.push(new User({ name: 'pepe', email: 'pepe@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser }).save())
+
+            return Promise.all(users)
+                .then(users => {
+                    return logic.addLove(users[0].id, users[1].id)
+                        .then((res) => {
+                            return logic.addLove(users[0].id, users[1].id)
+                        })
+                        .catch(({ message }) => {
+                            expect(message).to.equal(`this user already exists`)
+                        })
+
+                })
+        })
+
+
+        it('no love found', () => {
 
             const user = new User(userData)
             user.loves.push(dummyUserId)
-    
+
             return user.save()
-                .then(({ id:userId }) => {
-    
+                .then(({ id: userId }) => {
+
                     logic.removeLove(userId, dummyUserId2)
                         .catch(({ message }) => expect(message).to.equal(`no love found with id ${dummyUserId2}`))
                 })
-            })
-    
+        })
+
 
         it('should fail on wrong user id', () => {
             return logic.addLove(dummyUserId, dummyUserId)
@@ -639,7 +913,7 @@ describe('logic social', () => {
     })
 
 
-    describe('remove love', () => {
+      describe('remove love', () => {
         it('should succeed on correct data', () => {
             let users = [];
 
@@ -714,11 +988,33 @@ describe('logic social', () => {
 
 
 
-    describe('create park', () => {
-        it('should succeed on correct dada', () =>
-            logic.createPark('central park', dummyUserId, "New York", "08013", "789098776-099762121", dummyUserId)
-                .then(res => expect(res).to.be.true)
+      describe('create park', () => {
+        it('should succeed on correct dada', () => {
+
+            return User.create(userData)
+                .then(({ id: idCreator }) => {
+
+                    return logic.createPark('central park', idCreator, "New York", "08013", "789098776-099762121", dummyUserId)
+                        .then(res => expect(res).to.be.true
+                        )
+                })
+
+        })
+
+        it('park with name x already exists', () => {
+
+            const park = new Park(parkData)
+            return park.save()
+                .then((park) => {
+
+                    const { name, creator, city, zip, location } = parkData
+                    logic.createPark(name, creator, city, zip, location)
+                        .catch(({ message }) => expect(message).to.equal(`park with name ${parkData.name} already exists`))
+                })
+
+        }
         )
+
 
 
         it('should fail on no name', () =>
@@ -805,7 +1101,7 @@ describe('logic social', () => {
     })
 
 
-    describe('retrieve park', () => {
+      describe('retrieve park', () => {
         it('should succeed on correct dada', () => {
 
             let createParks = []
@@ -850,7 +1146,7 @@ describe('logic social', () => {
 
 
 
-    describe('remove park', () => {
+      describe('remove park', () => {
         it('should succeed on correct dada', () => {
 
             let createParks = []

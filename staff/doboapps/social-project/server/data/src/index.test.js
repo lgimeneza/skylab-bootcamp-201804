@@ -10,30 +10,33 @@ const { env: { DB_URL } } = process
 describe('models (user,park)', () => {
     before(() => mongoose.connect(DB_URL))
 
-    beforeEach(() => Promise.all([User.remove(), Note.deleteMany()]))
+    beforeEach(() => Promise.all([User.remove(), Park.remove(), Image.deleteMany()]))
 
-    describe('create user', () => {
+     describe('create user and park', () => {
 
 
-        it('should succeed', () => {
-            let users = [];
+        it('should succeed (user)', () => {
+            let models = [];
 
-            users.push(new User({ name: 'John', email: 'johndoe@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdate: new Date() }).save())
-            users.push(new User({ name: 'pepe', email: 'pepe@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdate: new Date() }).save())
-            users.push(new User({ name: 'toby', email: 'toby@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdate: new Date() }).save())
+            models.push(new User({ name: 'John', email: 'johndoe@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdate: new Date() , city: 'mycity', zip: "12345"}).save())
+            models.push(new User({ name: 'pepe', email: 'pepe@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdate: new Date(), city: 'mycity', zip: "12345" }).save())
+            models.push(new User({ name: 'toby', email: 'toby@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdate: new Date(), city: 'mycity', zip: "12345" }).save())
+            models.push(new Park({ name: 'mypark', creator: "123456781234567812345678", city: 'mycity', zip: "12345", location: "12314434-342342432" }).save())
 
-            Promise.all(users).then()
-                .then((users) => {
+            Promise.all(models).then()
+                .then((models) => {
                     const birthdate = new Date();
                     const image = new Image({ route: '/my/route', description: "my description", })
                     const user = new User({ name: 'curro', email: 'curro@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdate })
 
                     user.images.push(image)
                     user.images.push(image)
-                    user.friends.push(users[0].id)
-                    user.friends.push(users[1].id)
-                    user.loves.push(users[1].id)
-                    user.loves.push(users[2].id)
+                    user.friends.push(models[0].id)
+                    user.friends.push(models[1].id)
+                    user.loves.push(models[1].id)
+                    user.loves.push(models[2].id)
+                    user.parks.push(models[3].id)
+                    user.notifications.push("notification "+models[3].id)
 
                     return user.save()
                         .then(user => {
@@ -45,11 +48,14 @@ describe('models (user,park)', () => {
                             expect(user.gender).toBe('male')
                             expect(user.description).toBe('a dog')
                             expect(user.photoProfile).toBe('/image')
+                            expect(user.city).toBe('my city')
+                            expect(user.zip).toBe('12345')
                             expect(user.birthdate).toBe(birthdate)
                             expect(user.friends.length).toBe(2)
                             expect(user.loves.length).toBe(2)
                             expect(user.images.length).toBe(2)
                             expect(user.images[0].route).toBe('/my/route')
+                            
                         })
 
                 })
@@ -57,22 +63,18 @@ describe('models (user,park)', () => {
         })
     })
 
-    describe('create park', () => {
-        it('should succeed', () => {
+        it('should succeed (park)', () => {
 
-            const user = new User({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' })
-
+            const user = new User({ name: 'John', email: 'johndoe@mail.com', password: '123' })
 
             return user.save()
                 .then((user) => {
-
                     const park = new Park({ name: 'park', city: 'Toledo', zip: '09123', location: "9887788009-3342" })
                     park.users.push(user.id)
                     
                     return park.save()
 
                 }).then(park => {
-
                     expect(park).toBeDefined()
                     expect(park.name).toBe('park')
                     expect(park.city).toBe('Toledo')
@@ -83,7 +85,7 @@ describe('models (user,park)', () => {
                 })
         })
 
-    })
+    
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })

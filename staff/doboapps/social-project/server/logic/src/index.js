@@ -97,12 +97,12 @@ const logic = {
      * @param {string} gender 
      * @param {string} description 
      * @param {string} photoProfile 
-     * @param {string} birthdate 
+     * @param {Date} birthdate 
 
      * 
      * @returns {Promise<boolean>}
      */
-    updateUser(id, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate) {
+    updateUser(id, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate,city,zip) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -138,7 +138,14 @@ const logic = {
                 if ((photoProfile = photoProfile.trim()).length === 0) throw Error('user photoProfile is empty or blank')
 
                 if (typeof birthdate !== 'object') throw Error('user birthdate is not a object')
+                
+                if (typeof city !== 'string') throw Error('user city is not a string')
 
+                if ((city = city.trim()).length === 0) throw Error('user city is empty or blank')
+
+                if (typeof zip !== 'string') throw Error('user zip is not a string')
+
+                if ((zip = zip.trim()).length === 0) throw Error('user zip is empty or blank')
 
                 return User.findOne({ email, password })
             })
@@ -166,11 +173,136 @@ const logic = {
                 user.description = description
                 user.photoProfile = photoProfile
                 user.birthdate = birthdate
+                user.city = city
+                user.zip = zip
 
                 return user.save()
             })
             .then(() => true)
     },
+
+    
+    /**
+     * 
+     * @param {string} name 
+     * @param {string} race 
+     * @param {string} gender 
+     * @param {string} city 
+     * 
+     * @returns {Promise<Array>}
+     */
+    filterUsers(name, race, gender, city) {
+
+        let query = {}
+
+        return Promise.resolve()
+            .then(() => {
+                if (typeof name !== 'string' && name!==undefined) throw Error('user name is not a string or undefined')
+                if (typeof race !== 'string' && race!==undefined) throw Error('user race is not a string or undefined')
+                if (typeof gender !== 'string' && gender!==undefined) throw Error('user gender is not a string or undefined')
+                if (typeof city !== 'string' && city!==undefined) throw Error('user city is not a string or undefined')
+
+                if(name) query.name=name
+                if(race) query.race=race
+                if(gender) query.gender=gender
+                if(city) query.city=city
+
+                return User.find(query)
+            })
+            .then(users =>  users)
+    },
+
+
+     /**
+     * 
+     * @param {string} name 
+     * @param {string} city 
+     * @param {string} zip 
+     * 
+     * @returns {Promise<Array>}
+     */
+    filterParks(name, city, zip) {
+
+        let query = {}
+
+        return Promise.resolve()
+            .then(() => {
+                if (typeof name !== 'string' && name!==undefined) throw Error('park name is not a string or undefined')
+                if (typeof city !== 'string' && city!==undefined) throw Error('park city is not a string or undefined')
+                if (typeof zip !== 'string' && zip!==undefined) throw Error('park zip is not a string or undefined')
+
+                if(name) query.name=name
+                if(city) query.city=city
+                if(zip) query.zip=zip
+
+                return Park.find(query)
+            })
+            .then(parks =>  parks)
+    },
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {string} notification 
+     * 
+     * @returns {Promise<Array>}
+     */
+    addNotification(id, notification) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof id !== 'string') throw Error('user id is not a string')
+
+                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof notification !== 'string') throw Error('notification is not a string')
+
+                if (!(notification = notification.trim()).length) throw Error('notification is empty or blank')
+
+
+                return User.findById(id)
+            })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
+
+                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+
+                user.notifications.push(notification)
+                
+                return user.save()
+            })
+            .then(user => user.notifications)
+    },
+
+       /**
+     * 
+     * @param {string} id 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    deleteNotifications(id) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof id !== 'string') throw Error('user id is not a string')
+
+                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+   
+                return User.findById(id)
+            })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
+
+                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+
+                user.notifications.length=0
+                
+                return user.save()
+            })
+            .then((res)=>{
+                
+                return true})
+    },
+
 
     /**
      * 
@@ -227,16 +359,23 @@ const logic = {
 
                 if ((friendId = friendId.trim()).length === 0) throw Error('friendId is empty or blank')
 
-
                 return User.findById(userId)
                     .then(user => {
+
                         if (!user) throw Error(`no user found with id ${userId}`)
+                        
+                        const friend = user.friends.find((element)=>{
+                           
+                           return element == friendId
+                        })                        
+
+                     if (friend) throw Error("this user already exists")
                         user.friends.push(friendId)
 
                         return user.save()
-                            .then((user) => user.friends)
+                            .then((user) => {
+                                return user.friends})
                     })
-
             })
     },
 
@@ -262,15 +401,23 @@ const logic = {
 
 
                 return User.findById(userId)
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
-                        user.loves.push(loveId)
+                .then(user => {
 
-                        return user.save()
-                            .then((user) => user.loves)
-                    })
+                    if (!user) throw Error(`no user found with id ${userId}`)
+                    
+                    const love = user.loves.find((element)=>{
+                       
+                       return element == loveId
+                    })                        
 
-            })
+                 if (love) throw Error("this user already exists")
+                    user.loves.push(loveId)
+
+                    return user.save()
+                        .then((user) => {
+                            return user.loves})
+                })
+        })
     },
 
 
@@ -372,6 +519,7 @@ const logic = {
     createPark(name, creator, city, zip, location) {
         return Promise.resolve()
             .then(() => {
+
                 if (typeof name !== 'string') throw Error('name is not a string')
 
                 if (!(name = name.trim()).length) throw Error('name is empty or blank')
@@ -392,7 +540,7 @@ const logic = {
 
                 if ((location = location.trim()).length === 0) throw Error('location is empty or blank')
 
-                return User.findOne({ name })
+                return Park.findOne({ name })
                     .then(park => {
                         if (park) throw Error(`park with name ${name} already exists`)
 
@@ -400,7 +548,18 @@ const logic = {
                             .then((park) => {
                                 park.users.push(creator)
                                 return park.save()
-                            }).then(() => true)
+                            }).then(({ id, creator }) => {
+
+                                return User.findByIdAndUpdate(creator, { $push: { parks: id } }, { new: true })
+                                    .then(user => {
+                                        if (!user) throw Error(`no user found with id ${id}`)
+
+                                        return true
+                                    })
+
+                            })
+
+
                     })
             })
 
@@ -409,8 +568,7 @@ const logic = {
 
     /**
     * 
-    * @param {string} userId
-    * @param {string} loveId 
+    * @param {string} idPark 
     * 
     * @returns {Promise<object>}
     */

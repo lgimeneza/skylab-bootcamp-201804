@@ -10,7 +10,7 @@ function jwtValidator(req, res, next) {
     const { params: { userId } } = req
 
     try {
-        const auth = req.get('authorization') // Bearer CHURRO-TOKEN
+        const auth = req.get('authorization') // Bearer-TOKEN
 
         const token = auth.split(' ')[1]
 

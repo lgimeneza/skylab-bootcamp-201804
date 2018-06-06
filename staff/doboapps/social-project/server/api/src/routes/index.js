@@ -58,9 +58,11 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
 })
 
 router.patch('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
-    const { params: { userId }, body: { name, surname, email, password, newEmail, newPassword } } = req
+    const { params: { userId }, body: {  name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate,city,zip } } = req
 
-    logic.updateUser(userId, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate)
+    const birthdateObject = new Date(birthdate)
+
+    logic.updateUser(userId, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdateObject,city,zip)
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })
@@ -70,6 +72,57 @@ router.patch('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
             res.json({ status: 'KO', error: message })
         })
 })
+
+router.get('/search/users', (req, res) => {
+
+    const { query:{name,race,gender,city}} = req
+
+    logic.filterUsers(name,race,gender,city)
+        .then((users) => {
+            res.status(200)
+            res.json({ status: 'OK',
+                        users })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+
+
+router.post('/notification/:userId',jsonBodyParser, (req, res) => {
+
+    const {params: { userId } ,body:{notification}} = req
+
+    logic.addNotification(userId,notification)
+        .then((notifications) => {
+            res.status(200)
+            res.json({ status: 'OK',
+                       notifications })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+
+
+router.delete('/notification/:userId',jsonBodyParser, (req, res) => {
+
+const {params: { userId } } = req
+
+logic.deleteNotifications(userId)
+    .then((notifications) => {
+        res.status(200)
+        res.json({ status: 'OK' })
+    })
+    .catch(({ message }) => {
+        res.status(400)
+        res.json({ status: 'KO', error: message })
+    })
+})
+
+
 
 router.delete('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
     const { params: { userId }, body: { email, password } } = req
@@ -104,7 +157,7 @@ router.post('/users/:userId/friends', [jwtValidator, jsonBodyParser], (req, res)
 router.post('/users/:userId/loves', [jwtValidator, jsonBodyParser], (req, res) => {
     const { params: { userId }, body: { loveId } } = req
 
-    logic.addFriend(userId, loveId)
+    logic.addLove(userId, loveId)
         .then(loves => {
             res.status(201)
             res.json({ status: 'OK', data: { loves } })
@@ -116,11 +169,11 @@ router.post('/users/:userId/loves', [jwtValidator, jsonBodyParser], (req, res) =
 })
 
 
-router.delete('/users/:userId/friends/:id', jwtValidator, (req, res) => {
+router.delete('/users/:userId/friends/:friendId', jwtValidator, (req, res) => {
     const { params: { userId, friendId } } = req
 
     logic.removeFriend(userId, friendId)
-        (friends => {
+        .then(friends => {
             res.status(201)
             res.json({ status: 'OK', data: { friends } })
         })
@@ -131,11 +184,11 @@ router.delete('/users/:userId/friends/:id', jwtValidator, (req, res) => {
 })
 
 
-router.delete('/users/:userId/loves/:id', jwtValidator, (req, res) => {
+router.delete('/users/:userId/loves/:lovesId', jwtValidator, (req, res) => {
     const { params: { userId, lovesId } } = req
 
     logic.removeLove(userId, lovesId)
-        (loves => {
+        .then(loves => {
             res.status(201)
             res.json({ status: 'OK', data: { loves } })
         })
@@ -161,10 +214,10 @@ router.post('/parks', jsonBodyParser, (req, res) => {
 })
 
 
-router.get('/parks/:idPark', jwtValidator, (req, res) => {
+router.get('/parks/:idPark', (req, res) => {
     const { params: { idPark } } = req
 
-    return logic.retriveParks(idPark)
+    return logic.retrivePark(idPark)
         .then(park => {
             res.status(200)
             res.json({ status: 'OK', park })
@@ -177,13 +230,13 @@ router.get('/parks/:idPark', jwtValidator, (req, res) => {
 })
 
 
-router.delete('/parks/:idPark', [jwtValidator, jsonBodyParser], (req, res) => {
-    const { params: { idPark } } = req
+router.delete('/parks/:parkId/user/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
+    const { params: { parkId,userId } } = req
 
-    logic.removePark(idPark)
+    logic.removePark(parkId)
         .then(() => {
             res.status(200)
-            res.json({ status: 'OK' })
+            res.json({ parkId: 'OK' })
         })
         .catch(({ message }) => {
             res.status(400)

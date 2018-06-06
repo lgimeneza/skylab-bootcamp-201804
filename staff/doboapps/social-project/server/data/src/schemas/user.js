@@ -1,6 +1,7 @@
 const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 const Image = require('./image')
 const Note = require('./note')
+const Park = require('./park')
 
 module.exports = new Schema({
     name: {
@@ -31,6 +32,12 @@ module.exports = new Schema({
     birthdate: { 
         type: Date,
     },
+    city: {
+        type: String,
+    },
+    zip: {
+        type: String,
+    },
     friends: [{
         type: ObjectId,
         ref: this
@@ -39,7 +46,10 @@ module.exports = new Schema({
         type: ObjectId,
         ref: this
     }],
-
+    parks: [{
+        type: ObjectId,
+        ref: Park
+    }],
     images:[Image],
-    notes: [Note]
+    notifications:[String]
 })
