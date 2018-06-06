@@ -1,5 +1,5 @@
 const {Schema, Schema:{ObjectId}}= require('mongoose')
-const PhysicalData= require('./physicalData')
+const PhysicalData= require('./physical-data')
 
 module.exports= new Schema({
     title:{

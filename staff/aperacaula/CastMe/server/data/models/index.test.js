@@ -2,8 +2,8 @@
 
 require('dotenv').config()
 
-const { mongoose, models: { User, Demand, Casting, ProfessionalData, PersonalData, PhysicalData } } = require('../')
-const castings = require("./castingGenerator")
+const { mongoose, models: { User, Casting, Project, ProfessionalData, PersonalData, PhysicalData } } = require('../')
+const projects = require("./projects-generator")
 const expect = require('expect')
 
 const { env: { DB_URL } } = process
@@ -11,13 +11,13 @@ const { env: { DB_URL } } = process
 describe('models ', () => {
     before(() => mongoose.connect(DB_URL))
 
-    beforeEach(() => Promise.all([User.remove(), Casting.deleteMany()]))
+    beforeEach(() => Promise.all([User.remove(), Project.deleteMany()]))
 
     describe('create user', () => {
         it('should succeed', () => {
-            const castingList = castings
+            const projectList = projects
 
-            const user = new User({ 
+            const user = new User({
                 email: 'aperacaula@gmail.com',
                 password: '12345',
                 personalData: new PersonalData({
@@ -31,7 +31,7 @@ describe('models ', () => {
                     phone: 630075725
 
                 }),
-            
+
                 physicalData: new PhysicalData({
 
                     height: 1.77,
@@ -45,7 +45,7 @@ describe('models ', () => {
                     piercings: false
 
                 }),
-            
+
                 professionalData: new ProfessionalData({
 
                     profession: 'actor/actress',
@@ -53,17 +53,22 @@ describe('models ', () => {
                     dancing: true,
                     otherHabilities: 'surfing',
                     previousJobExperiences: 20,
-                    curriculum: ['The Importance of Being Earnest, TNC','Hello World, E.G.Wells']
+                    curriculum: ['The Importance of Being Earnest, TNC', 'Hello World, E.G.Wells']
 
                 }),
-            
+
                 videobookLink: 'https://youtube.com',
-            
+
                 pics: [],
             })
 
-            user.castings.push(castingList[0].demanding[0].id)
-            user.castings.push(castingList[0].demanding[1].id)
+            user.castings.push({
+                project: projectList[0]._id,
+                castings: [
+                    projectList[0].castings[0]._id,
+                    projectList[0].castings[1]._id
+                ]
+            })
 
             return user.save()
                 .then(user => {
@@ -72,10 +77,21 @@ describe('models ', () => {
                     expect(user.personalData.surname).toBe('Peracaula')
                     expect(user.professionalData.profession).toBe('actor/actress')
                     expect(user.password).toBe('12345')
-                    expect(castingList[0].title).toBe('Bonded')
-                    expect(castingList[1].province).toBe('Barcelona')
-                    expect(castingList[2].demanding[0].title).toBe('Female')
-                    expect(castingList[0].demanding[0].status).toBe(true)
+
+                    expect(user.castings).toBeDefined()
+                    expect(user.castings.length).toBe(1)
+
+                    const { castings: [casting] } = user
+
+                    expect(casting.project.toString()).toBe(projectList[0]._id.toString())
+
+                    expect(casting.castings).toBeDefined()
+                    expect(casting.castings.length).toBe(2)
+
+                    const { castings: [casting1, casting2] } = casting
+
+                    expect(casting1.toString()).toBe(projectList[0].castings[0]._id.toString())
+                    expect(casting2.toString()).toBe(projectList[0].castings[1]._id.toString())
                 })
         })
     })
