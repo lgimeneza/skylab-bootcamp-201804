@@ -1,0 +1,57 @@
+'use strict'
+
+/**
+ * Creates demo bookings
+ * 
+ * @example
+ * 
+ * $ node demos/create-bookings.js
+ */
+
+require('dotenv').config()
+
+const { mongoose, models: { User, Service, Booking } } = require('../')
+const moment = require('moment')
+
+const { env: { DB_URL } } = process
+
+mongoose.connect(DB_URL)
+    .then(() => {
+        const serviceData = { name: 'lavado de pelo', duration: 30, price: 15 }
+        const serviceData2 = { name: 'corte de pelo', duration: 60, price: 45 }
+
+        return Promise.all([
+            User.create({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' }),
+            Service.create(serviceData),
+            Service.create(serviceData2)
+        ])
+            .then(res => {
+                const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
+
+                // first booking data
+                const date = new Date()
+                const totalDuration = service1.duration + service2.duration
+                const endDate = moment(date).add(totalDuration, 'minutes').toDate()
+
+                // second booking data
+                const date2 = moment().add(1, 'days').toDate()
+                const totalDuration2 = service2.duration
+                const endDate2 = moment(date2).add(totalDuration2, 'minutes').toDate()
+
+                return Promise.all([
+                    Booking.create({
+                        userId,
+                        services: [service1._id, service2._id],
+                        date,
+                        endDate
+                    }),
+                    Booking.create({
+                        userId,
+                        services: [service2._id],
+                        date: date2,
+                        endDate: endDate2
+                    }),
+                ])
+            })
+            .then(() => mongoose.connection.close((() => console.log('done'))))
+    })
