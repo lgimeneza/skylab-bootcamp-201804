@@ -167,6 +167,8 @@ const logic = {
   getBookingHoursForYearMonth(year, month) {
     return Promise.resolve()
       .then(() => {
+
+        //TODO VALIDATIONS
         const monthStart = moment(`${year}-${month}-01`, 'YYYY-MM-DD')
         const monthEnd = moment(monthStart).add(1, 'M')
         const monthDays = monthEnd.diff(monthStart, 'days')

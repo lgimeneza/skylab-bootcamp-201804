@@ -70,7 +70,7 @@ router.get('/booking/hours/:year/:month', (req, res) => {
     })
 }),
 
-  router.delete('/delete/booking/user/:idUser/:bookingId', jwtValidator, (req, res) => {
+  router.delete('/booking/user/:idUser/:bookingId', jwtValidator, (req, res) => {
     const { params: { idUser, bookingId } } = req
 
     logic.deleteBooking(idUser, bookingId)
@@ -84,7 +84,7 @@ router.get('/booking/hours/:year/:month', (req, res) => {
       })
   }),
 
-  router.post('/create/booking', [jwtValidator, bodyParser.json()], (req, res) => {
+  router.post('/booking', [jwtValidator, bodyParser.json()], (req, res) => {
     const { body: { idUser, serviceId, date, endDate } } = req
 
     logic.placeBooking(idUser, serviceId, date, endDate)
