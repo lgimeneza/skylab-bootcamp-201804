@@ -176,7 +176,7 @@ const singinLabApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.patch(`${this.url}/users/${id}`, { name, surname, email, password, newEmail, newPassword }, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, address, email, password, newEmail, newPassword }, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

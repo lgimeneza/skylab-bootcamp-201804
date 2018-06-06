@@ -18,6 +18,8 @@ describe('logic (singingLab api)', () => {
     let jackData, annaData, otherjackData, beginnerCourseCategoryData, advancedCourseCategoryData, beginnerCourseData, advancedCourseData
     const dummyUserId = '123456781234567812345678'
     const dummyNoteId = '123456781234567812345678'
+    const fakeUserId = '123456781234567812345678'
+    const fakeNoteId = '123456781234567812345678'
 
     before(() => mongoose.connect(DB_URL))
 
@@ -32,7 +34,6 @@ describe('logic (singingLab api)', () => {
 
         return Promise.all([User.remove(), Category.deleteMany(), Product.deleteMany()])
     })
-
 
     describe('register user', () => {
         it('should succeed on correct dada', () =>
@@ -288,18 +289,19 @@ describe('logic (singingLab api)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    notesApi.token = token
+                    singinLabApi.token = token
 
-                    return notesApi.retrieveUser(id)
+                    return singinLabApi.retrieveUser(id)
                 })
                 .then(user => {
                     expect(user).to.exist
-                    console.log(user)
-                    const { name, surname, email, _id, password, notes } = user
 
-                    expect(name).to.equal('John')
-                    expect(surname).to.equal('Doe')
-                    expect(email).to.equal('jd@mail.com')
+                    const { name, surname, address, email, _id, password, notes } = user
+
+                    expect(name).to.equal('Jack')
+                    expect(surname).to.equal('Johnson')
+                    expect(address).to.equal('Roc Boronat 35')
+                    expect(email).to.equal('jj@mail.com')
 
                     expect(_id).to.be.undefined
                     expect(password).to.be.undefined
@@ -307,257 +309,290 @@ describe('logic (singingLab api)', () => {
                 })
         )
 
-        // it('should fail on no user id', () =>
-        //     notesApi.retrieveUser()
-        //         .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-        // )
+        it('should fail on no user id', () =>
+            singinLabApi.retrieveUser()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
 
-        // it('should fail on empty user id', () =>
-        //     notesApi.retrieveUser('')
-        //         .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-        // )
+        it('should fail on empty user id', () =>
+            singinLabApi.retrieveUser('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
 
-        // it('should fail on blank user id', () =>
-        //     notesApi.retrieveUser('     ')
-        //         .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-        // )
+        it('should fail on blank user id', () =>
+            singinLabApi.retrieveUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
 
-        // describe('on unexpected server behavior', () => {
-        //     let sandbox
+        describe('on unexpected server behavior', () => {
+            let sandbox
 
-        //     beforeEach(() => sandbox = sinon.createSandbox())
+            beforeEach(() => sandbox = sinon.createSandbox())
 
-        //     afterEach(() => sandbox.restore())
+            afterEach(() => sandbox.restore())
 
-        //     it('should fail on response status hacked', () => {
-        //         const resolved = new Promise((resolve, reject) => {
-        //             resolve({ status: 200, data: { status: 'KO' } })
-        //         })
+            it('should fail on response status hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    resolve({ status: 200, data: { status: 'KO' } })
+                })
 
-        //         sandbox.stub(axios, 'get').returns(resolved)
+                sandbox.stub(axios, 'get').returns(resolved)
 
-        //         return notesApi.retrieveUser(fakeUserId)
-        //             .catch(({ message }) => {
-        //                 expect(message).to.equal(`unexpected response status 200 (KO)`)
-        //             })
-        //     })
+                return singinLabApi.retrieveUser(fakeUserId)
+                    .catch(({ message }) => {
+                        expect(message).to.equal(`unexpected response status 200 (KO)`)
+                    })
+            })
 
-        //     it('should fail on id hacked', () => {
-        //         const resolved = new Promise((resolve, reject) => {
-        //             reject({ response: { data: { error: 'user id is not a string' } } })
-        //         })
+            it('should fail on id hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ response: { data: { error: 'user id is not a string' } } })
+                })
 
-        //         sandbox.stub(axios, 'get').returns(resolved)
+                sandbox.stub(axios, 'get').returns(resolved)
 
-        //         return notesApi.retrieveUser(fakeUserId)
-        //             .catch(({ message }) => {
-        //                 expect(message).to.equal('user id is not a string')
-        //             })
-        //     })
+                return singinLabApi.retrieveUser(fakeUserId)
+                    .catch(({ message }) => {
+                        expect(message).to.equal('user id is not a string')
+                    })
+            })
 
-        //     it('should fail on server down', () => {
-        //         const resolved = new Promise((resolve, reject) => {
-        //             reject({ code: 'ECONNREFUSED' })
-        //         })
+            it('should fail on server down', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ code: 'ECONNREFUSED' })
+                })
 
-        //         sandbox.stub(axios, 'get').returns(resolved)
+                sandbox.stub(axios, 'get').returns(resolved)
 
-        //         return notesApi.retrieveUser(fakeUserId)
-        //             .catch(({ message }) => {
-        //                 expect(message).to.equal('could not reach server')
-        //             })
-        //     })
-        // })
+                return singinLabApi.retrieveUser(fakeUserId)
+                    .catch(({ message }) => {
+                        expect(message).to.equal('could not reach server')
+                    })
+            })
+        })
     })
 
-    // describe('udpate user', () => {
-    //     it('should succeed on correct data', () =>
-    //         User.create(jackData)
-    //             .then(({ id }) => {
-    //                 const token = jwt.sign({ id }, TOKEN_SECRET)
+    describe('udpate user', () => {
+        it('should succeed on correct data', () =>
+            User.create(jackData)
+                .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
 
-    //                 notesApi.token = token
+                    singinLabApi.token = token
 
-    //                 return notesApi.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
-    //                     .then(res => {
-    //                         expect(res).to.be.true
+                    return singinLabApi.updateUser(id, 'Jack', 'Wayne', '+34 111 222 333', 'colorado', 'jj@mail.com', '123', 'jw@mail.com', '456')
+                        .then(res => {
+                            console.log(res)
+                            expect(res).to.be.true
 
-    //                         return User.findById(id)
-    //                     })
-    //                     .then(user => {
-    //                         expect(user).to.exist
+                            return User.findById(id)
+                        })
+                        .then(user => {
+                            expect(user).to.exist
 
-    //                         const { name, surname, email, password } = user
+                            const { name, surname, phone, address, email, password } = user
 
-    //                         expect(user.id).to.equal(id)
-    //                         expect(name).to.equal('Jack')
-    //                         expect(surname).to.equal('Wayne')
-    //                         expect(email).to.equal('jw@mail.com')
-    //                         expect(password).to.equal('456')
-    //                     })
-    //             })
-    //     )
+                            expect(user.id).to.equal(id)
+                            expect(name).to.equal('Jack')
+                            expect(surname).to.equal('Wayne')
+                            expect(phone).to.equal('+34 111 222 333')
+                            expect(address).to.equal('colorado')
+                            expect(email).to.equal('jw@mail.com')
+                            expect(password).to.equal('456')
+                        })
+                })
+        )
 
-    //     it('should fail on changing email to an already existing user\'s email', () =>
-    //         Promise.all([
-    //             User.create(jackData),
-    //             User.create(otherjackData)
-    //         ])
-    //             .then(([{ id: id1 }, { id: id2 }]) => {
-    //                 const token = jwt.sign({ id: id1 }, TOKEN_SECRET)
+        it('should fail on changing email to an already existing user\'s email', () =>
+            Promise.all([
+                User.create(jackData),
+                User.create(otherjackData)
+            ])
+                .then(([{ id: id1 }, { id: id2 }]) => {
+                    const token = jwt.sign({ id: id1 }, TOKEN_SECRET)
 
-    //                 notesApi.token = token
+                    singinLabApi.token = token
+                    
+                    const { name, surname, phone, address, email, password } = jackData
 
-    //                 const { name, surname, email, password } = jackData
+                    return singinLabApi.updateUser(id1, name, surname, phone, address, email, password, otherjackData.email)
+                })
+                .catch(({ message }) => expect(message).to.equal(`user with email ${otherjackData.email} already exists`))
+        )
 
-    //                 return notesApi.updateUser(id1, name, surname, email, password, otherjackData.email)
-    //             })
-    //             .catch(({ message }) => expect(message).to.equal(`user with email ${otherjackData.email} already exists`))
-    //     )
+        it('should fail on no user id', () =>
+            singinLabApi.updateUser()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
 
-    //     it('should fail on no user id', () =>
-    //         notesApi.updateUser()
-    //             .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-    //     )
+        it('should fail on empty user id', () =>
+            singinLabApi.updateUser('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
 
-    //     it('should fail on empty user id', () =>
-    //         notesApi.updateUser('')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
+        it('should fail on blank user id', () =>
+            singinLabApi.updateUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
 
-    //     it('should fail on blank user id', () =>
-    //         notesApi.updateUser('     ')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
+        it('should fail on no user name', () =>
+            singinLabApi.updateUser(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('user name is not a string'))
+        )
 
-    //     it('should fail on no user name', () =>
-    //         notesApi.updateUser(fakeUserId)
-    //             .catch(({ message }) => expect(message).to.equal('user name is not a string'))
-    //     )
+        it('should fail on empty user name', () =>
+            singinLabApi.updateUser(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
+        )
 
-    //     it('should fail on empty user name', () =>
-    //         notesApi.updateUser(fakeUserId, '')
-    //             .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-    //     )
+        it('should fail on blank user name', () =>
+            singinLabApi.updateUser(fakeUserId, '     ')
+                .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
+        )
 
-    //     it('should fail on blank user name', () =>
-    //         notesApi.updateUser(fakeUserId, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-    //     )
+        it('should fail on no user surname', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name)
+                .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
+        )
 
-    //     it('should fail on no user surname', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name)
-    //             .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
-    //     )
+        it('should fail on empty user surname', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, '')
+                .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
+        )
 
-    //     it('should fail on empty user surname', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name, '')
-    //             .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-    //     )
+        it('should fail on blank user surname', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, '     ')
+                .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
+        )
 
-    //     it('should fail on blank user surname', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-    //     )
+        it('should fail on no user phone', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname)
+                .catch(({ message }) => expect(message).to.equal('user phone is not a string'))
+        )
 
-    //     it('should fail on no user email', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name, jackData.surname)
-    //             .catch(({ message }) => expect(message).to.equal('user email is not a string'))
-    //     )
+        it('should fail on empty user phone', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '')
+                .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
+        )
 
-    //     it('should fail on empty user email', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name, jackData.surname, '')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
+        it('should fail on blank user phone', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '     ')
+                .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
+        )
 
-    //     it('should fail on blank user email', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name, jackData.surname, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
+        it('should fail on no user address', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone)
+                .catch(({ message }) => expect(message).to.equal('user address is not a string'))
+        )
 
-    //     it('should fail on no user password', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.email)
-    //             .catch(({ message }) => expect(message).to.equal('user password is not a string'))
-    //     )
+        it('should fail on empty user address', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone, '')
+                .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
+        )
 
-    //     it('should fail on empty user password', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.email, '')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
+        it('should fail on blank user address', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, '     ')
+                .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
+        )
 
-    //     it('should fail on blank user password', () =>
-    //         notesApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.email, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-    // })
+        it('should fail on no user email', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address)
+                .catch(({ message }) => expect(message).to.equal('user email is not a string'))
+        )
 
-    // describe('unregister user', () => {
-    //     it('should succeed on correct data', () =>
-    //         User.create(jackData)
-    //             .then(({ id }) => {
-    //                 const token = jwt.sign({ id }, TOKEN_SECRET)
+        it('should fail on empty user email', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
 
-    //                 notesApi.token = token
+        it('should fail on blank user email', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '     ')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
 
-    //                 const { email, password } = jackData
+        it('should fail on no user password', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email)
+                .catch(({ message }) => expect(message).to.equal('user password is not a string'))
+        )
 
-    //                 return notesApi.unregisterUser(id, email, password)
-    //                     .then(res => {
-    //                         expect(res).to.be.true
+        it('should fail on empty user password', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
 
-    //                         return User.findById(id)
-    //                     })
-    //                     .then(user => {
-    //                         expect(user).to.be.null
-    //                     })
-    //             })
-    //     )
+        it('should fail on blank user password', () =>
+            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '     ')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+    })
 
-    //     it('should fail on no user id', () =>
-    //         notesApi.unregisterUser()
-    //             .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-    //     )
+    describe('unregister user', () => {
+        it('should succeed on correct data', () =>
+            User.create(jackData)
+                .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
 
-    //     it('should fail on empty user id', () =>
-    //         notesApi.unregisterUser('')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
+                    singinLabApi.token = token
 
-    //     it('should fail on blank user id', () =>
-    //         notesApi.unregisterUser('     ')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
+                    const { email, password } = jackData
 
-    //     it('should fail on no user email', () =>
-    //         notesApi.unregisterUser(fakeUserId)
-    //             .catch(({ message }) => expect(message).to.equal('user email is not a string'))
-    //     )
+                    return singinLabApi.unregisterUser(id, email, password)
+                        .then(res => {
+                            expect(res).to.be.true
 
-    //     it('should fail on empty user email', () =>
-    //         notesApi.unregisterUser(fakeUserId, '')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
+                            return User.findById(id)
+                        })
+                        .then(user => {
+                            expect(user).to.be.null
+                        })
+                })
+        )
 
-    //     it('should fail on blank user email', () =>
-    //         notesApi.unregisterUser(fakeUserId, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
+        it('should fail on no user id', () =>
+            singinLabApi.unregisterUser()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
 
-    //     it('should fail on no user password', () =>
-    //         notesApi.unregisterUser(fakeUserId, jackData.email)
-    //             .catch(({ message }) => expect(message).to.equal('user password is not a string'))
-    //     )
+        it('should fail on empty user id', () =>
+            singinLabApi.unregisterUser('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
 
-    //     it('should fail on empty user password', () =>
-    //         notesApi.unregisterUser(fakeUserId, jackData.email, '')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
+        it('should fail on blank user id', () =>
+            singinLabApi.unregisterUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
 
-    //     it('should fail on blank user password', () =>
-    //         notesApi.unregisterUser(fakeUserId, jackData.email, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-    // })
+        it('should fail on no user email', () =>
+            singinLabApi.unregisterUser(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('user email is not a string'))
+        )
+
+        it('should fail on empty user email', () =>
+            singinLabApi.unregisterUser(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on blank user email', () =>
+            singinLabApi.unregisterUser(fakeUserId, '     ')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on no user password', () =>
+            singinLabApi.unregisterUser(fakeUserId, jackData.email)
+                .catch(({ message }) => expect(message).to.equal('user password is not a string'))
+        )
+
+        it('should fail on empty user password', () =>
+            singinLabApi.unregisterUser(fakeUserId, jackData.email, '')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+
+        it('should fail on blank user password', () =>
+            singinLabApi.unregisterUser(fakeUserId, jackData.email, '     ')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+    })
 
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))

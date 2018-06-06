@@ -409,6 +409,7 @@ describe('logic (singing-lab)', () => {
                 .then(res => {
                     return logic.listCategories()
                         .then(category => {
+
                             expect(category[0]._id).to.exist
                             expect(category[0].name).to.equal(beginnerCourseCategoryData.name)
 
