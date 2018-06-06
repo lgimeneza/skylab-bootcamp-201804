@@ -30,39 +30,40 @@ describe('logic (style-booking)', () => {
 
           const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
 
+          // first booking data
           const date = new Date()
-
           const totalDuration = service1.duration + service2.duration
-
           const endDate = moment(date).add(totalDuration, 'minutes').toDate()
 
-          const booking = new Booking({
-            userId,
-            services: [service1._id, service2._id],
-            date,
-            endDate
-          })
-              return booking.save()
-                .then(booking => {
-                  logic.getBookingHoursForYearMonth(2018, 6)
-                    .then((res) => res)
+          // second booking data
+          const date2 = moment().add(1, 'days').toDate()
+          const totalDuration2 = service2.duration
+          const endDate2 = moment(date2).add(totalDuration2, 'minutes').toDate()
 
-
-                    
-                  // console.log(booking)
-                  // expect(booking._id).to.exist
-                  // expect(booking.services).to.exist
-                  // expect(booking.services.length).to.equal(2)
-
-                  // const { services: [serviceId1, serviceId2] } = booking
-
-                  // expect(serviceId1.toString()).to.equal(service1._id.toString())
-                  // expect(serviceId2.toString()).to.equal(service2._id.toString())
-
-                  // expect(booking.date.toString()).to.equal(date.toString())
-                  // expect(booking.endDate.toString()).to.equal(endDate.toString())
-                })
+          return Promise.all([
+            Booking.create({
+              userId,
+              services: [service1._id, service2._id],
+              date,
+              endDate
+            }),
+            Booking.create({
+              userId,
+              services: [service2._id],
+              date: date2,
+              endDate: endDate2
+            }),
+          ])
+            .then(() => {
+               return logic.getBookingHoursForYearMonth(2018, 6)
             })
+            .then(res => {
+              // TODO: EXPECT
+              console.log(res)
+              
+            })
+        })
+
     )
   })
 
