@@ -7,7 +7,8 @@ const { expect } = require('chai')
 
 const { env: { DB_URL } } = process
 
-describe('models nutrifit', () => {
+describe('models nutrifit', function()  {
+    this.timeout(3000)
     let sergioData, johnData, pack_CategoryData, proteinCategoryData, veganCategoryData, pack_S_CategoryData, pack_M_CategoryData, pack_L_CategoryData, pack_L_C_CategoryData, pack_XL_CategoryData, packMuscle_Data, packMuscle_S_Data, packMuscle_M_Data, packMuscle_L_Data, packMuscle_L_C_Data, packMuscle_XL_Data
 
     before(() => mongoose.connect(DB_URL))
@@ -55,8 +56,8 @@ describe('models nutrifit', () => {
     })
 
     describe('create category hierarchy', () => {
-        it('should succeed on correct data', () =>
-            Promise.all([
+        it('should succeed on correct data', () => {
+           return Promise.all([
                 new Category(pack_CategoryData).save(),
                 new Category(pack_S_CategoryData).save(),
                 new Category(pack_M_CategoryData).save(),
@@ -96,12 +97,12 @@ describe('models nutrifit', () => {
                             expect(pack_XL_Category.parent.toString()).to.equal(pack_Category._id.toString())
                         })
                 })
-        )
+        })
     })
 
     describe('list products by category (linked directly to the category, or indirectly through sub-categories)', () => {
-        it('should succeed on correct data', () =>
-            Promise.all([
+        it('should succeed on correct data', () => {
+            return Promise.all([
                 new Category(pack_CategoryData).save(),
                 new Category(pack_S_CategoryData).save(),
                 new Category(pack_M_CategoryData).save(),
@@ -182,7 +183,6 @@ describe('models nutrifit', () => {
                                                 })
                                             )
                                                 .then(res => {
-                                                    debugger
 
                                                     const withResults = res.filter(res => res.length)
 
@@ -194,7 +194,6 @@ describe('models nutrifit', () => {
 
                                                     return Product.find({ category: { $in: ids } })
                                                         .then(res => {
-                                                            debugger
 
                                                             expect(res.length).to.equal(6)
 
@@ -221,7 +220,7 @@ describe('models nutrifit', () => {
                                 })
                         })
                 })
-        )
+        })
     })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))

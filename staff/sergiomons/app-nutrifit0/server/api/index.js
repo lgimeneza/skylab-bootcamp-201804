@@ -1,13 +1,16 @@
 'use strict'
 
-const mongoose = require('mongoose')
+require('dotenv').config()
+
+const {mongoose} = require('data')
 const express = require('express')
 const router = require('./src/routes/index')
 
+const { env: { PORT, DB_URL } } = process
 
-mongoose.connect('mongodb://localhost/nutrifit-test')
+mongoose.connect(DB_URL)
     .then(() => {
-        const port = process.argv[2] || 3000
+        const port = PORT || process.argv[2] || 3000
 
         const app = express()
 
