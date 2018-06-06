@@ -39,7 +39,7 @@ const logic = {
         return User.findOne({ email })
           .then((user) => {
 
-            if (user) throw Error(`User with email ${email} already exists`)
+            if (user) throw Error(`user with email ${email} already exists`)
 
             return User.create({ name, surname, email, password })
               .then(() => true)
