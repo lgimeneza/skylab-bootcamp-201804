@@ -19,6 +19,14 @@ describe('logic (style-booking)', () => {
 
   beforeEach(() => Promise.all([User.remove(), Service.deleteMany(), Booking.deleteMany()]))
 
+  describe('register user', () => {
+    it('should succeed on correct dada', () =>
+      logic.registerUser('John', 'Doe', 'jd@mail.com', '123')
+        .then(res => expect(res).to.be.true)
+    )
+    describe('')
+  })
+
   describe('create a booking', () => {
     it('should succeed on correct data', () =>
       Promise.all([
@@ -58,13 +66,15 @@ describe('logic (style-booking)', () => {
                return logic.getBookingHoursForYearMonth(2018, 6)
             })
             .then(res => {
-              // TODO: EXPECT
-              console.log(res)
-              
+              expect(res.length).to.equal(2)
+              expect(res[0].day).to.equal(6)
+              expect(res[1].day).to.equal(7)
+              expect(res[0].bookingHours).to.equal(1.5)
+              expect(res[1].bookingHours).to.equal(1)
             })
         })
+    )//TODO CATCH 
 
-    )
   })
 
   after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
