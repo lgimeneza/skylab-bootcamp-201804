@@ -1,6 +1,6 @@
 const User = require('./user')
 const Arduino = require('./arduino')
-const ArduinoData = require('./arduinoData')
+const ArduinoData = require('./arduino-data')
 
 module.exports =  {
     User,

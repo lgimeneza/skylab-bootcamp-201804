@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-const ArduinoData = require('./arduinodata')
+const ArduinoData = require('./arduino-data')
 const Arduino = require('./arduino')
 
 module.exports = new Schema({

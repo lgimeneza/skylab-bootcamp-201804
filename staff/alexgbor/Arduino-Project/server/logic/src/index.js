@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { User, Arduino, ArduinoData } } = require('data')
+const { models: { User, Arduino, ArduinoData }, mongoose: { Types: { ObjectId } } } = require('data')
 
 const logic = {
     /**
@@ -208,10 +208,9 @@ const logic = {
                 if (typeof userId !== 'string') throw Error('userId is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
- 
-                User.findByIdAndUpdate({id: userId}, { $push: { arduinos: { ip } } }, { new: true })
+
+                return User.findByIdAndUpdate(userId, { $push: { arduinos: { ip } } }, { new: true })
                     .then(user => {
-                        debugger
                         if (!user) throw Error(`no user found with id ${userId}`)
 
                         return user.arduinos[user.arduinos.length - 1].id

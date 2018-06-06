@@ -384,14 +384,14 @@ describe('logic (user)', () => {
     })
 
     describe('add arduino', () => {
-        it('should succeed on correct data', () => {
+        it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
                     return logic.addArduino(id, '192.162.1.1')
                         .then(arduId => {
                             expect(arduId).to.be.a('string')
                             expect(arduId).to.exist
-                            
+
                             return User.findById(id)
                                 .then(user => {
                                     expect(user).to.exist
@@ -405,7 +405,7 @@ describe('logic (user)', () => {
                                 })
                         })
                 })
-        })
+        )
 
         it('should fail on wrong user id', () =>
             logic.addArduino(dummyUserId, '192.168.1.1')
@@ -522,31 +522,31 @@ describe('logic (user)', () => {
     })
 
     describe('list arduinos', () => {
-        // it('should succeed on correct data', () => {
-        //     const user = new User(userData)
-        //     const dummyIp = '192.168.1.1'
-        //     const arduinos = indexes.map(index => new Arduino({ ip: `${dummyIp} ${index}` }))
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+            const dummyIp = '192.168.1.'
+            const arduinos = indexes.map(index => new Arduino({ ip: `${dummyIp}${index}` }))
 
-        //     user.arduinos = arduinos
+            user.arduinos = arduinos
 
-        //     return user.save()
-        //         .then(({ id: userId, arduinos }) => {
-        //             const validArduinoIds = _.map(arduinos, 'id')
-        //             const validArduinoIps = _.map(arduinos, 'ip')
+            return user.save()
+                .then(({ id: userId, arduinos }) => {
+                    const validArduinoIds = _.map(arduinos, 'id')
+                    const validArduinoIps = _.map(arduinos, 'ip')
 
-        //             return logic.listArduinos(userId)
-        //                 .then(arduinos => {
-        //                     expect(arduinos).to.exist
-        //                     expect(arduinos.length).to.equal(indexes.length)
+                    return logic.listArduinos(userId)
+                        .then(arduinos => {
+                            expect(arduinos).to.exist
+                            expect(arduinos.length).to.equal(indexes.length)
 
-        //                     arduinos.forEach(({ id, ip, _id }) => {
-        //                         expect(validArduinoIds).to.include(id)
-        //                         expect(validArduinoIps).to.include(ip)
-        //                         expect(_id).not.to.exist
-        //                     })
-        //                 })
-        //         })
-        // })
+                            arduinos.forEach(({ id, ip, _id }) => {
+                                expect(validArduinoIds).to.include(id)
+                                expect(validArduinoIps).to.include(ip)
+                                expect(_id).not.to.exist
+                            })
+                        })
+                })
+        })
 
         it('should fail on non user id', () =>
             logic.listArduinos()
