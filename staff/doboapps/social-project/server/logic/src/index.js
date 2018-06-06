@@ -184,6 +184,41 @@ const logic = {
     
     /**
      * 
+     * @param {string} id 
+     * @param {string} email 
+     * @param {string} password 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    unregisterUser(id, email, password) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof id !== 'string') throw Error('user id is not a string')
+
+                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof email !== 'string') throw Error('user email is not a string')
+
+                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('user password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
+
+                return User.findOne({ email, password })
+            })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
+
+                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+
+                return user.remove()
+            })
+            .then(() => true)
+    },
+
+    /**
+     * 
      * @param {string} name 
      * @param {string} race 
      * @param {string} gender 
@@ -303,41 +338,6 @@ const logic = {
                 return true})
     },
 
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {string} email 
-     * @param {string} password 
-     * 
-     * @returns {Promise<boolean>}
-     */
-    unregisterUser(id, email, password) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof id !== 'string') throw Error('user id is not a string')
-
-                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
-
-                if (typeof email !== 'string') throw Error('user email is not a string')
-
-                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
-
-                if (typeof password !== 'string') throw Error('user password is not a string')
-
-                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-
-                return User.findOne({ email, password })
-            })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
-
-                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
-
-                return user.remove()
-            })
-            .then(() => true)
-    },
 
     /**
      * 

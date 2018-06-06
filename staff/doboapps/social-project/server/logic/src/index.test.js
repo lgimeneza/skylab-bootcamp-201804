@@ -546,17 +546,17 @@ const { env: { DB_URL } } = process
         )
 
         it('should fail on no user id', () =>
-            logic.addNotification()
+            logic.deleteNotifications()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            logic.addNotification('')
+            logic.deleteNotifications('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            logic.addNotification('     ')
+            logic.deleteNotifications('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
