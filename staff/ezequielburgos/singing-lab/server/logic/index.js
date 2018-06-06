@@ -8,7 +8,7 @@ const logic = {
      * 
      * @param {string} name 
      * @param {string} surname 
-     * @param {string} phone
+     * @param {string} address
      * @param {string} email
      * @param {string} password 
      * 
@@ -163,8 +163,8 @@ const logic = {
             .then(user => {
                 user.name = name
                 user.surname = surname
-                user.address = address
                 user.phone = phone
+                user.address = address
                 user.email = newEmail ? newEmail : email
                 user.password = newPassword ? newPassword : password
 
