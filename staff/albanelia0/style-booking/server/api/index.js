@@ -1,15 +1,16 @@
 
 const express = require('express')
-const {mongoose} = require('data')
+const { mongoose } = require('data')
+
+require('dotenv').config()
 
 const router = require('./src/routes')
 const cors = require('cors')
 
-require('dotenv').config()
-
 const { env: { PORT, DB_URL } } = process
 
 console.log(PORT, DB_URL)
+
 mongoose.connect(DB_URL)
   .then(() => {
     const port = PORT || process.argv[2] || 5000

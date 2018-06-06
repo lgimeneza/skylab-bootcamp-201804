@@ -6,10 +6,11 @@ const jwt = require('jsonwebtoken')
 const jwtValidation = require('./utils/jwt-validation')
 
 const router = express.Router()
-
 const { env: { TOKEN_SECRET, TOKEN_EXP } } = process
+const jwtValidator = jwtValidation(TOKEN_SECRET)
 
-router.post('/user/', bodyParser.json(), (req, res) => {
+
+router.post('/user', bodyParser.json(), (req, res) => {
   const { body: { name, surname, email, password } } = req
 
   logic.registerUser(name, surname, email, password)
@@ -22,10 +23,12 @@ router.post('/user/', bodyParser.json(), (req, res) => {
       res.json({ status: 'KO', error: message })
     })
 })
+
 router.post('/auth', bodyParser.json(), (req, res) => {
   const { body: { email, password } } = req
   logic.authenticateUser(email, password)
     .then(id => {
+
       const token = jwt.sign({ id }, TOKEN_SECRET, { expiresIn: TOKEN_EXP })
 
       res.status(200)
@@ -36,7 +39,9 @@ router.post('/auth', bodyParser.json(), (req, res) => {
       res.json({ status: 'KO', error: message })
     })
 })
+
 router.post('/user/services', bodyParser.json(), (req, res) => {
+
   const { body: { name, duration, price } } = req
 
   logic.createService(name, duration, price)
@@ -45,6 +50,7 @@ router.post('/user/services', bodyParser.json(), (req, res) => {
       res.json({ status: 'OK', data: { service } })
     })
     .catch(({ message }) => {
+      console.log('CATCH', service)
       res.status(400)
       res.json({ status: 'KO', error: message })
     })
@@ -63,12 +69,12 @@ router.get('/availability/:year/:month', (req, res) => {
       res.json({ status: 'KO', error: message })
     })
 }),
-  router.delete('/delete/booking/user/:idUser/:bookingId', (req, res) => {
+
+  router.delete('/delete/booking/user/:idUser/:bookingId', jwtValidator, (req, res) => {
     const { params: { idUser, bookingId } } = req
 
     logic.deleteBooking(idUser, bookingId)
       .then((booking) => {
-        console.log(booking)
         res.status(200)
         res.json({ status: 'OK', })
       })
@@ -78,7 +84,7 @@ router.get('/availability/:year/:month', (req, res) => {
       })
   }),
 
-  router.post('/create/booking', bodyParser.json(), (req, res) => {
+  router.post('/create/booking', [jwtValidator, bodyParser.json()], (req, res) => {
     const { body: { idUser, serviceId, date, endDate } } = req
 
     logic.placeBooking(idUser, serviceId, date, endDate)

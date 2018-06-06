@@ -27,7 +27,7 @@ function jwtValidator(req, res, next) {
     res.json({ status: 'KO', error: message })
 }
 
-module.exports = function(secret) {
+module.exports = function (secret) {
     _secret = secret
 
     return jwtValidator
