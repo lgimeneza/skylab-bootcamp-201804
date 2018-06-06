@@ -27,6 +27,14 @@ describe('logic (singing-lab)', () => {
         return Promise.all([User.remove(), Category.deleteMany(), Product.deleteMany()])
     })
 
+    describe('create category', () => {
+        it('should succeed on correct data', () =>
+            logic.registerUser('Jack', 'Wayne', 'somewhere road', 'jw@mail.com', '1234')
+                .then(res => expect(res).to.be.true)
+        )
+
+    })
+
     describe('register user', () => {
         it('should succeed on correct data', () =>
             logic.registerUser('Jack', 'Wayne', 'somewhere road', 'jw@mail.com', '1234')

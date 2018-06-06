@@ -219,6 +219,7 @@ const logic = {
 
                 return Category.find({})
                     .then(category => {
+
                         if (!category) throw Error(`no categories where found`)
 
                         // return category.map(({ id, text }) => ({ id, text }))
