@@ -31,6 +31,6 @@ module.exports= new Schema({
         required: true
     },
 
-    users: [{type: ObjectId, ref: 'User', required: true}]
+    applicants: [{type: ObjectId, ref: 'User', required: true}]
     
 })

@@ -3,24 +3,24 @@ const { mongoose, models: { Project, Casting, PhysicalData } } = require('../')
 //Project 1
 
 const pr1_1 = new PhysicalData({
-    height: undefined,
-    weight: undefined,
+    height: null,
+    weight: null,
     physicalCondition: 'chubby',
-    eyes: undefined,
-    hair: undefined,
+    eyes: null,
+    hair: null,
     ethnicity: 'latino/hispanic',
     beard: false,
 
     tattoos: false,
 
-    piercings: undefined
+    piercings: null
 });
 const casting1_1 =
 
     new Casting({
         title: "Gordo(Lead)",
-        minAge: 16,
-        maxAge: 18,
+        minAge: 20,
+        maxAge: 28,
         sex: 'male',
         description: 'Gordo is a chubby, pudgy, overweight kid who works in the sweatshop. Very funny and high energy.',
         physicalReq: pr1_1,
@@ -30,21 +30,21 @@ const casting1_1 =
     ;
 const pr1_2 = new PhysicalData({
     height: 1.80,
-    weight: undefined,
+    weight: null,
     physicalCondition: 'thin/slim',
-    eyes: undefined,
-    hair: undefined,
+    eyes: null,
+    hair: null,
     ethnicity: 'latino/hispanic',
     beard: false,
 
     tattoos: false,
 
-    piercings: undefined
+    piercings: null
 });
 const casting1_2 = new Casting({
     title: "Carlito(Supporting)",
-    minAge: 16,
-    maxAge: 18,
+    minAge: 20,
+    maxAge: 28,
     sex: 'male',
     description: 'Carlito is tall and skinny, very mean. He is the leader of the kids in the sweatshop',
     physicalReq: pr1_2,
@@ -72,14 +72,14 @@ const project1 = new Project({
 
 const pr2_1 = new PhysicalData({
     height: 1.70,
-    weight: undefined,
+    weight: null,
     physicalCondition: 'fit',
-    eyes: undefined,
+    eyes: null,
     hair: "blond",
-    ethnicity: undefined,
+    ethnicity: null,
     beard: false,
     tattoos: false,
-    piercings: undefined
+    piercings: null
 });
 const casting2_1 = new Casting({
     title: "Desiree",
@@ -93,15 +93,15 @@ const casting2_1 = new Casting({
 })
     ;
 const pr2_2 = new PhysicalData({
-    height: undefined,
-    weight: undefined,
+    height: null,
+    weight: null,
     physicalCondition: 'chubby',
     eyes: "brown",
     hair: "brown",
-    ethnicity: undefined,
+    ethnicity: null,
     beard: false,
     tattoos: true,
-    piercings: undefined
+    piercings: null
 });
 const casting2_2 = new Casting({
     title: "Tracy(Supporting)",
@@ -134,7 +134,7 @@ const project2 = new Project({
 
 const pr3_1 = new PhysicalData({
     height: 1.70,
-    weight: undefined,
+    weight: null,
     physicalCondition: 'fit',
     eyes: "green",
     hair: "brown",

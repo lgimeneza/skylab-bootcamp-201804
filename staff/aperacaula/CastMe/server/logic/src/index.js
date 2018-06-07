@@ -1,303 +1,636 @@
-'use strict'
+"use strict";
 
-const { models: { User, Demand, Casting, PersonalData, PhysicalData, ProfessionalData } } = require('notes-data')
+const {
+  models: {
+    User,
+    Project,
+    Casting,
+    PersonalData,
+    PhysicalData,
+    ProfessionalData
+  }
+} = require("../../data");
 
 const logic = {
-    /**
-     * 
-     * 
-     * @param {string} email 
-     * @param {string} password 
-     * @param {object} personalData 
-     * @param {object} physicalData 
-     * @param {object} professionalData 
-     * @param {string} videobookLink
-     * @param {array} pics
-     * 
-     * 
-     * 
-     * 
-     * @returns {Promise<boolean>}
-     */
-    registerUser(email, password, personalData, physicalData, professionalData, videobookLink, pics ) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof email !== 'string') throw Error('user email is not a string')
+  /**
+   *
+   *
+   * @param {string} email
+   * @param {string} password
+   * @param {object} personalData
+   * @param {object} physicalData
+   * @param {object} professionalData
+   * @param {string} videobookLink
+   * @param {array} pics
+   *
+   *
+   *
+   *
+   * @returns {Promise<boolean>}
+   */
+  registerUser(
+    email,
+    password,
+    personalData,
+    physicalData,
+    professionalData,
+    videobookLink,
+    pics
+  ) {
+    return Promise.resolve().then(() => {
+      if (typeof email !== "string") throw Error("user email is not a string");
 
-                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
+      if (!(email = email.trim()).length)
+        throw Error("user email is empty or blank");
 
-                if (typeof videobookLink !== 'string') throw Error('user videobookLink is not a string')
+      if (typeof password !== "string")
+        throw Error("user password is not a string");
 
-                if ((videobookLink = videobookLink.trim()).length === 0) throw Error('user videobookLink is empty or blank')
+      if ((password = password.trim()).length === 0)
+        throw Error("user password is empty or blank");
 
-                if (typeof personalData !== 'object') throw Error('personal data is not what it should be')
+      if (typeof personalData !== "object")
+        throw Error("personal data is not what it should be");
 
-                if (!(personalData = personalData.trim()).length) throw Error('personal data is empty or blank')
+      if (typeof professionalData !== "object")
+        throw Error("professional data is not what it should be");
 
-                if (typeof password !== 'string') throw Error('user password is not a string')
+      if (typeof physicalData !== "object")
+        throw Error("physical data is not what it should be");
 
-                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
+      if (typeof videobookLink !== "string")
+        throw Error("user videobookLink is not a string");
 
-                if (typeof professionalData !== 'object') throw Error('professional data is not what it should be')
+      if ((videobookLink = videobookLink.trim()).length === 0)
+        throw Error("user videobookLink is empty or blank");
 
-                if (!(professionalData = professionalData.trim()).length) throw Error('professional data is empty or blank')
+      if (!pics instanceof Array) throw Error("pics should be an array");
 
-                if (typeof physicalData !== 'object') throw Error('physical data is not what it should be')
+      return User.findOne({ email }).then(user => {
+        if (user) throw Error(`user with email ${email} already exists`);
 
-                if (!(physicalData = physicalData.trim()).length) throw Error('physical data is empty or blank')
+        return User.create({
+          email,
+          password,
+          personalData,
+          physicalData,
+          professionalData,
+          videobookLink,
+          pics
+        }).then(() => true);
+      });
+    });
+  },
 
-                if (! pics instanceof Array ) throw Error('pics should be an array')
+  /**
+   *
+   * @param {string} email
+   * @param {string} password
+   *
+   * @returns {Promise<string>}
+   */
+  authenticateUser(email, password) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof email !== "string")
+          throw Error("user email is not a string");
 
-                return User.findOne({ email })
-                    .then(user => {
-                        if (user) throw Error(`user with email ${email} already exists`)
+        if (!(email = email.trim()).length)
+          throw Error("user email is empty or blank");
 
-                        return User.create({ email, password, personalData, physicalData, professionalData, videobookLink, pics })
-                            .then(() => true)
+        if (typeof password !== "string")
+          throw Error("user password is not a string");
+
+        if ((password = password.trim()).length === 0)
+          throw Error("user password is empty or blank");
+
+        return User.findOne({ email, password });
+      })
+      .then(user => {
+        if (!user) throw Error("wrong credentials");
+
+        return user.id;
+      });
+  },
+
+  /**
+   *
+   * @param {string} id
+   *
+   * @returns {Promise<User>}
+   */
+  retrieveUser(id) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof id !== "string") throw Error("user id is not a string");
+
+        if (!(id = id.trim()).length) throw Error("user id is empty or blank");
+
+        return User.findById(id);
+      })
+      .then(user => {
+        if (!user) throw Error(`no user found with id ${id}`);
+
+        const {
+          email,
+          personalData,
+          physicalData,
+          professionalData,
+          videobookLink,
+          pics,
+          castings
+        } = user;
+        return {
+          email,
+          personalData,
+          physicalData,
+          professionalData,
+          videobookLink,
+          pics,
+          castings
+        };
+      });
+  },
+
+  /**
+   *
+   * @param {string} email
+   * @param {string} password
+   * @param {object} personalData
+   * @param {object} physicalData
+   * @param {object} professionalData
+   * @param {string} videobookLink
+   * @param {array} pics
+   * @param {string} newEmail
+   * @param {string} newPassword
+   *
+   * @returns {Promise<boolean>}
+   */
+  updateUser(
+    email,
+    password,
+    newEmail,
+    newPassword,
+    personalData,
+    physicalData,
+    professionalData,
+    videobookLink,
+    pics
+  ) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof email !== "string")
+          throw Error("user email is not a string");
+
+        if (!(email = email.trim()).length)
+          throw Error("user email is empty or blank");
+
+        if (typeof password !== "string")
+          throw Error("user password is not a string");
+
+        if ((password = password.trim()).length === 0)
+          throw Error("user password is empty or blank");
+
+        if (typeof newEmail !== "string")
+          throw Error("user newEmail is not a string");
+
+        if (!(newEmail = newEmail.trim()).length)
+          throw Error("user newEmail is empty or blank");
+
+        if (typeof newPassword !== "string")
+          throw Error("user newPassword is not a string");
+
+        if ((newPassword = newPassword.trim()).length === 0)
+          throw Error("user newPassword is empty or blank");
+
+        if (typeof videobookLink !== "string")
+          throw Error("user videobookLink is not a string");
+
+        if ((videobookLink = videobookLink.trim()).length === 0)
+          throw Error("user videobookLink is empty or blank");
+
+        if (typeof personalData !== "object")
+          throw Error("personal data is not what it should be");
+
+        if (typeof professionalData !== "object")
+          throw Error("professional data is not what it should be");
+
+        if (typeof physicalData !== "object")
+          throw Error("physical data is not what it should be");
+
+        if (!pics instanceof Array) throw Error("pics should be an array");
+
+        return User.findOne({ email, password });
+      })
+      .then(user => {
+        if (!user) throw Error("wrong credentials");
+
+        if (newEmail) {
+          return User.findOne({ email: newEmail }).then(_user => {
+            if (_user && _user.id !== user.id)
+              throw Error(`user with email ${newEmail} already exists`);
+
+            return user;
+          });
+        }
+
+        return user;
+      })
+      .then(user => {
+        user.email = newEmail ? newEmail : email;
+        user.password = newPassword ? newPassword : password;
+        user.personalData = personalData;
+        user.professionalData = professionalData;
+        user.physicalData = physicalData;
+        user.videobookLink = videobookLink;
+        user.pics = pics;
+
+        return user.save();
+      })
+      .then(() => true);
+  },
+
+  /**
+   *
+   * @param {string} id
+   * @param {string} email
+   * @param {string} password
+   *
+   * @returns {Promise<boolean>}
+   */
+  unregisterUser(id, email, password) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof id !== "string") throw Error("user id is not a string");
+
+        if (!(id = id.trim()).length) throw Error("user id is empty or blank");
+
+        if (typeof email !== "string")
+          throw Error("user email is not a string");
+
+        if (!(email = email.trim()).length)
+          throw Error("user email is empty or blank");
+
+        if (typeof password !== "string")
+          throw Error("user password is not a string");
+
+        if ((password = password.trim()).length === 0)
+          throw Error("user password is empty or blank");
+
+        return User.findOne({ email, password });
+      })
+      .then(user => {
+        if (!user) throw Error("wrong credentials");
+
+        if (user.id !== id)
+          throw Error(`no user found with id ${id} for given credentials`);
+
+        return user.remove();
+      })
+      .then(() => true);
+  },
+
+  /**
+   *
+   * @param {string} userId
+   *
+   * @returns {Promise<array>} with all the applications the user has, which are objects with project info on project method and castings array with casting info in castings method
+   */
+  getCastings(userId) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof userId !== "string") throw Error("user id is not a string");
+
+        if (!(userId = userId.trim()).length)
+          throw Error("user id is empty or blank");
+
+        return User.findById(userId);
+      })
+      .then(user => {
+        const applicationsList = [];
+
+        //return Promise.all(user.castings.map())
+
+
+        user.castings.forEach(casting => {
+          let applications = {
+            project: undefined,
+            castings: []
+          };
+
+          return Project.findOne({ _id: casting.project }).then(project => {
+            const {
+              title,
+              publishedDate,
+              endDate,
+              paid,
+              professional,
+              province,
+              description
+            } = project;
+            applications.project = {
+              title,
+              publishedDate,
+              endDate,
+              paid,
+              professional,
+              province,
+              description
+            };
+
+
+            return Promise.all(casting.castings.map(applicationId=> Casting.findById(applicationId)))
+                .then(arrayApplications=> {
+                    arrayApplications.forEach(application=>{
+                        applications.castings.push(application)
+                        //console.log(applications)
                     })
-            })
-    },
-
-    /**
-     * 
-     * @param {string} email 
-     * @param {string} password 
-     * 
-     * @returns {Promise<string>}
-     */
-    authenticateUser(email, password) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof email !== 'string') throw Error('user email is not a string')
-
-                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
-
-                if (typeof password !== 'string') throw Error('user password is not a string')
-
-                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-
-                return User.findOne({ email, password })
-            })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
-
-                return user.id
-            })
-    },
-
-    /**
-     * 
-     * @param {string} id
-     * 
-     * @returns {Promise<User>} 
-     */
-    retrieveUser(id) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof id !== 'string') throw Error('user id is not a string')
-
-                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
-
-                return User.findById(id).select({ _id: 0})
-            })
-            .then(user => {
-                if (!user) throw Error(`no user found with id ${id}`)
-
-                return user
-            })
-    },
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {string} email 
-     * @param {string} password 
-     * @param {object} personalData 
-     * @param {object} physicalData 
-     * @param {object} professionalData 
-     * @param {string} videobookLink
-     * @param {array} pics
-     * @param {string} newEmail 
-     * @param {string} newPassword 
-     * 
-     * @returns {Promise<boolean>}
-     */
-    updateUser(email, password, newEmail, newPassword, personalData, physicalData, professionalData, videobookLink, pics ) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof email !== 'string') throw Error('user email is not a string')
-
-                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
-
-                if (typeof password !== 'string') throw Error('user password is not a string')
-
-                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-
-                if (typeof newEmail !== 'string') throw Error('user newEmail is not a string')
-
-                if (!(newEmail = newEmail.trim()).length) throw Error('user newEmail is empty or blank')
-
-                if (typeof newPassword !== 'string') throw Error('user newPassword is not a string')
-
-                if ((newPassword = password.trim()).length === 0) throw Error('user newPassword is empty or blank')
-
-                if (typeof videobookLink !== 'string') throw Error('user videobookLink is not a string')
-
-                if ((videobookLink = videobookLink.trim()).length === 0) throw Error('user videobookLink is empty or blank')
-
-                if (typeof personalData !== 'object') throw Error('personal data is not what it should be')
-
-                if (!(personalData = personalData.trim()).length) throw Error('personal data is empty or blank')
-
-                if (typeof professionalData !== 'object') throw Error('professional data is not what it should be')
-
-                if (!(professionalData = professionalData.trim()).length) throw Error('professional data is empty or blank')
-
-                if (typeof physicalData !== 'object') throw Error('physical data is not what it should be')
-
-                if (!(physicalData = physicalData.trim()).length) throw Error('physical data is empty or blank')
-
-                if (! pics instanceof Array ) throw Error('pics should be an array')
-
-                return User.findOne({ email, password })
-            })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
-
-                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
-
-                if (newEmail) {
-                    return User.findOne({ email: newEmail })
-                        .then(_user => {
-                            if (_user && _user.id !== id) throw Error(`user with email ${newEmail} already exists`)
-
-                            return user
-                        })
-                }
-
-                return user
-            })
-            .then(user => {
-                user.email = newEmail ? newEmail : email
-                user.password = newPassword ? newPassword : password
-                user.personalData = personalData
-                user.professionalData = professionalData
-                user.physicalData = physicalData
-                user.videobookLink = videobookLink
-                user.pics = pics
-
-                return user.save()
-            })
-            .then(() => true)
-    },
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {string} email 
-     * @param {string} password 
-     * 
-     * @returns {Promise<boolean>}
-     */
-    unregisterUser(id, email, password) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof id !== 'string') throw Error('user id is not a string')
-
-                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
-
-                if (typeof email !== 'string') throw Error('user email is not a string')
-
-                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
-
-                if (typeof password !== 'string') throw Error('user password is not a string')
-
-                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-
-                return User.findOne({ email, password })
-            })
-            .then(user => {
-                if (!user) throw Error('wrong credentials')
-
-                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
-
-                return user.remove()
-            })
-            .then(() => true)
-    },
-
-    /**
-     * 
-     * @param {string} userId 
-     * 
-     * @returns {Promise<array>}
-     */
-    getCastings(userId){
-        return Promise.resolve()
-            .then(()=>{
-
-                if (typeof userId !== 'string') throw Error('user id is not a string')
-
-                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
-
-                return User.findById(userId)
-            })
-            .then(user =>{
-                const applications=[]
-                user.castings.forEach(casting => applications.push(casting))
-                return applications
-            })
-    },
-
-    eligibility(userId,demandId){ //Has to check if the user can join the demand
-        return Promise.resolve()
-    },
+                    return applications
+                })
+                .then(applications =>{
+                    //console.log(applications)
+                    applicationsList.push(applications)
+                    //console.log(applicationsList)
+                    return applicationsList
+                })
 
 
-    /**
-     * 
-     * @param {string} userId 
-     * @param {string} castingId
-     * @param {string} demandId 
-     * 
-     * @returns {Promise<array>}
-     */
-    joinCasting(userId, castingId, demandId){
-        return Promise.resolve()
-            .then(()=>{
 
-                if (typeof userId !== 'string') throw Error('user id is not a string')
+            // casting.castings.forEach(applicationId => {
+            //   return Casting.findById(applicationId).then(application => {
+            //     applications.castings.push(application);
+            //     //console.log(applications)
+            //   });
+            // });
 
-                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+            // applicationsList.push(applications);
+            // console.log(applicationsList);
+            // return applicationsList;
+          });
 
-                if (typeof castingId !== 'string') throw Error('user id is not a string')
+          return applicationsList
+        });
+      });
+  },
 
-                if (!(castingId = castingId.trim()).length) throw Error('user id is empty or blank')
+  getCastings2(userId) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof userId !== "string") throw Error("user id is not a string");
 
-                if (typeof demandId !== 'string') throw Error('user id is not a string')
+        if (!(userId = userId.trim()).length)
+          throw Error("user id is empty or blank");
 
-                if (!(demandId = demandId.trim()).length) throw Error('user id is empty or blank')
+        return User.findById(userId);
+      })
+      .then(user => {
+        const applicationsList = [];
 
-                return User.findById(userId)
-            })
-            .then(user =>{
-                return Casting.findById(castingId)//hace falta pasar por el intermediario?? Ensenya el diagrama
-                    .then(casting =>{
-                        return Demand.findById(demandId)
-                            console.log('not finished')
-                            //Faltaaaaaaa
-                        
+        return Promise.all(user.castings.map(projectSheet => Project.findOne({_id: projectSheet.project})))
+
+
+        user.castings.forEach(casting => {
+          let applications = {
+            project: undefined,
+            castings: []
+          };
+
+          return Project.findOne({ _id: casting.project }).then(project => {
+            const {
+              title,
+              publishedDate,
+              endDate,
+              paid,
+              professional,
+              province,
+              description
+            } = project;
+            applications.project = {
+              title,
+              publishedDate,
+              endDate,
+              paid,
+              professional,
+              province,
+              description
+            };
+
+
+            return Promise.all(casting.castings.map(applicationId=> Casting.findById(applicationId)))
+                .then(arrayApplications=> {
+                    arrayApplications.forEach(application=>{
+                        applications.castings.push(application)
+                        //console.log(applications)
                     })
-                const applications=[]
-                user.castings.forEach(casting => applications.push(casting))
-                return applications
-            })
+                    return applications
+                })
+                .then(applications =>{
+                    //console.log(applications)
+                    applicationsList.push(applications)
+                    //console.log(applicationsList)
+                    return applicationsList
+                })
 
 
 
-    }
+            // casting.castings.forEach(applicationId => {
+            //   return Casting.findById(applicationId).then(application => {
+            //     applications.castings.push(application);
+            //     //console.log(applications)
+            //   });
+            // });
 
-    
-}
+            // applicationsList.push(applications);
+            // console.log(applicationsList);
+            // return applicationsList;
+          });
 
-module.exports = logic
+          return applicationsList
+        });
+      });
+  }
+
+  // getAge(date1){
+  //     var birthday = date1;
+  //     var today = new Date();
+  //     var years = today.getFullYear() - birthday.getFullYear();
+  //     birthday.setFullYear(today.getFullYear());
+  //     if (today < birthday) years--;
+  //     return years
+  // },
+
+  // /**
+  //  *
+  //  * @param {string} userId
+  //  * @param {string} castingId
+  //  * @returns {Promise<boolean>} returns true if the user can subscribe to the casting.
+  //  */
+  // userIsEligible(userId,castingId){
+  //     return Promise.resolve()
+  //         .then(()=>{
+
+  //             if (typeof userId !== 'string') throw Error('user id is not a string')
+
+  //             if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+  //             if (typeof castingId !== 'string') throw Error('casting id is not a string')
+
+  //             if (!(castingId = castingId.trim()).length) throw Error('casting id is empty or blank')
+
+  //             return User.findById(userId)
+  //                 .then(user =>{
+  //                     return Casting.findById(castingId)
+  //                         .then(casting =>{
+  //                             const age= this.getAge(user.personalData.birthDate)
+  //                             if (!casting.status) return false
+
+  //                             if (!(age>=casting.minAge && age<=casting.maxAge)) return false
+
+  //                             if (user.personalData.sex!==casting.sex) return false
+
+  //                             const requirements= Object.values(casting.physicalReq.toObject())
+  //                             const userProps= Object.values(user.physicalData.toObject())
+
+  //                             const minHeight= requirements[1]
+  //                             const userHeight= userProps[1]
+
+  //                             if (userHeight<minHeight) return false
+
+  //                             for (let i=2; i<requirements.length; i++){
+  //                                 if(!requirements[i]){
+  //                                     if(requirements[i]!==userProps[i]) return false
+  //                                 }
+  //                             }
+
+  //                             return true
+
+  //                         })
+  //                 })
+
+  //         })
+  // },
+
+  // /**
+  //  *
+  //  * @param {string} userId
+  //  * @param {string} projectId
+  //  * @param {string} castingId
+  //  *
+  //  * @returns {Promise<boolean>} that confirms the user has joined the casting
+  //  */
+  // joinCasting(userId, projectId, castingId){
+  //     return Promise.resolve()
+  //         .then(()=>{
+
+  //             if (typeof userId !== 'string') throw Error('user id is not a string')
+
+  //             if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+  //             if (typeof projectId !== 'string') throw Error('user id is not a string')
+
+  //             if (!(projectId = projectId.trim()).length) throw Error('user id is empty or blank')
+
+  //             if (typeof castingId !== 'string') throw Error('user id is not a string')
+
+  //             if (!(castingId = castingId.trim()).length) throw Error('user id is empty or blank')
+
+  //             return User.findById(userId)
+  //         })
+  //         .then(user =>{
+  //             return Project.findById(projectId)
+  //                 .then(project =>{
+  //                     const casting= project.castings.find(casting=> casting._id.toString()===castingId)
+
+  //                     if (!casting) throw Error(`there is no casting with id ${castingId} in the project given`)
+
+  //                     const userEligible= this.userIsEligible(userId, castingId)
+
+  //                     if(!userEligible) return false
+
+  //                     casting.applicants.push(user._id) //ads the user to the casting user's list
+
+  //                     const index= null;
+  //                     for (let i=0; i<user.castings.length; i++){
+  //                         if (user.castings[i].project.toString()===projectId){
+  //                             index= i
+  //                         }
+  //                     }
+
+  //                     if (index){
+  //                         user.castings[index].castings.push(casting_id)
+  //                     }else{
+  //                         user.castings.push({project: project_id, castings: casting_id})
+  //                     }
+
+  //                     return true
+
+  //                 })
+  //         })
+  // },
+
+  // /**
+  //  *
+  //  * @param {string} userId
+  //  * @param {string} projectId
+  //  * @param {string} castingId
+  //  *
+  //  * @returns {Promise<boolean>} that confirms the user has joined the casting
+  //  */
+  // quitCasting(userId, projectId, castingId){
+  //     return Promise.resolve()
+  //         .then(()=>{
+
+  //             if (typeof userId !== 'string') throw Error('user id is not a string')
+
+  //             if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+  //             if (typeof projectId !== 'string') throw Error('user id is not a string')
+
+  //             if (!(projectId = projectId.trim()).length) throw Error('user id is empty or blank')
+
+  //             if (typeof castingId !== 'string') throw Error('user id is not a string')
+
+  //             if (!(castingId = castingId.trim()).length) throw Error('user id is empty or blank')
+
+  //             return User.findById(userId)
+  //         })
+  //         .then(user =>{
+  //             return Project.findById(projectId)
+  //                 .then(project =>{
+  //                     const casting= project.castings.find(casting=> casting._id.toString()===castingId)
+
+  //                     if (!casting) throw Error(`there is no casting with id ${castingId} in the project given`)
+
+  //                     const indexUser= null;//let 's take the user off the casting applicants list
+  //                     for (let i=0; i<casting.applicants.length; i++){
+  //                         if (casting.applicants[i].toString()===userId) indexUser=i
+  //                     }
+
+  //                     if(!indexUser) throw Error('user is not registered in the given casting')
+
+  //                     casting.applicants.splice(indexUser,1)
+
+  //                     const indexCasting= null;//let's take the casting off the user's list
+  //                     for (let i=0; i<user.castings.length; i++){
+  //                         if (user.castings[i].project.toString()===projectId){
+  //                             indexCasting= i
+  //                         }
+  //                     }
+
+  //                     if (!indexCasting) throw Error('user is not registered in the given casting')
+
+  //                     for (let i=0; i<user.castings.length; i++){
+  //                         if (user.castings[indexCasting].castings[i].toString()===castingId){
+  //                             user.castings[indexCasting].castings.splice(i,1)
+  //                         }
+  //                     }
+  //                     if(user.castings[indexCasting].castings.length===0) user.castings.splice(indexCasting,1)
+
+  //                     return true
+
+  //                 })
+  //         })
+  //     }
+};
+
+module.exports = logic;

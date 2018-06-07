@@ -4,30 +4,30 @@ module.exports= new Schema({
 
     height: {
         type: Number,
-        required: true
+        ////required: true
     },
     weight: {
         type: Number,
-        required: true
+        //required: true
     },
     physicalCondition: {
         type: String,
-        required: true,
-        enum: ['strong', 'fit', 'fat/chubby', 'average', 'thin/slim']
+        //required: true,
+        enum: ['strong', 'fit', 'fat/chubby', 'average', 'thin/slim', null]
     },
     eyes: {
         type: String,
-        required: true,
-        enum: ['brown', 'green', 'blue', 'dark', 'other']
+        //required: true,
+        enum: ['brown', 'green', 'blue', 'dark', 'other', null]
     },
     hair: {
         type: String,
-        required: true,
-        enum: ['brown', 'blond', 'dark/black', 'ginger', 'bald', 'buzzed']
+        //required: true,
+        enum: ['brown', 'blond', 'dark/black', 'ginger', 'bald', 'buzzed', null]
     },
     ethnicity: {
         type: String,
-        required: true,
+        //required: true,
         
 
     },
@@ -37,12 +37,12 @@ module.exports= new Schema({
 
     tattoos:{
         type: Boolean,
-        required: true
+        //required: true
     },
 
     piercings:{
         type: Boolean,
-        required: true
+        //required: true
     },
 
 })

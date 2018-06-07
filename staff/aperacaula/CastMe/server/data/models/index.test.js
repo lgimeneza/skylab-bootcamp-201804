@@ -90,6 +90,7 @@ describe('models ', () => {
 
                     const { castings: [casting1, casting2] } = casting
 
+
                     expect(casting1.toString()).toBe(projectList[0].castings[0]._id.toString())
                     expect(casting2.toString()).toBe(projectList[0].castings[1]._id.toString())
                 })
