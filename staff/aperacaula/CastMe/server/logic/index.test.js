@@ -6,7 +6,7 @@ const { mongoose, models: { User, Casting, Project, ProfessionalData, PersonalDa
 const { expect } = require('chai')
 const logic = require('.')
 const _ = require('lodash')
-const projects = require('./data-generator')
+const generateData = require('./generate-data')
 
 const { env: { DB_URL } } = process
 
@@ -106,11 +106,13 @@ describe('logic', () => {
     }
     const dummyUserId = '123456781234567812345678'
     const dummyNoteId = '123456781234567812345678'
+    let projects
 
 
     before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => {
+        projects = generateData()
 
         return Promise.all([User.remove(), Project.deleteMany()])
     })
@@ -220,11 +222,11 @@ describe('logic', () => {
 
     describe('retrieve user', () => {
 
-        it('should succeed on correct data', () =>{
+        it('should succeed on correct data', () => {
             const user = new User(userData)
             return user.save()
                 .then(user => {
-                    
+
                     return logic.retrieveUser(user.id)
                 })
                 .then(user => {
@@ -232,7 +234,7 @@ describe('logic', () => {
 
                     const { email, _id, password, personalData, physicalData, professionalData, videobookLink, pics, applications } = user
 
-                    
+
                     expect(email).to.equal('aperacaula@gmail.com')
 
                     expect(_id).to.be.undefined
@@ -390,7 +392,6 @@ describe('logic', () => {
 
             return Promise.all([proj1.save(), user.save()])
                 .then(([proj1, user]) => {
-                    
                     const { castings: [cast1_1, cast1_2] } = proj1
 
                     user.applications.push({ project: proj1._id, castings: [cast1_1._id, cast1_2._id] })
@@ -433,34 +434,35 @@ describe('logic', () => {
     })
 
 
-    describe ('get age', ()=>{
-        it('should succeed',()=>{
-            const age= logic.getAge(new Date('10/07/1993'))
+    describe('get age', () => {
+        it('should succeed', () => {
+            const age = logic.getAge(new Date('10/07/1993'))
             expect(age).to.equal(24)
         })
     })
 
-    describe ('user is eligible', ()=>{
+    describe('user is eligible', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const proj1 = projects[0]
 
             return Promise.all([proj1.save(), user.save()])
                 .then(([proj1, user]) => {
-                    Project.find().then(res => console.log(res))
+                    debugger
+
                     const { castings: [cast1_1, cast1_2] } = proj1
-                    return logic.userIsEligible(user.id,proj1.id,cast1_1.id)
+
+                    return logic.userIsEligible(user.id, proj1.id, cast1_1.id)
                         .then(res => {
                             expect(res).to.be.true
-                            
+
                         })
-                    
                 })
         })
         // it('should succeed',()=>{
         //     const user = new User(userData)
         //     const proj1 = projects[0]
-            
+
         //     return Promise.all([proj1.save(), user.save()])
         //         .then(([proj1, user]) => {
         //             Project.find().then(res => console.log(res))
@@ -474,7 +476,7 @@ describe('logic', () => {
         //         })
         // })
     })
-    
+
     false && describe('join casting', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
@@ -522,6 +524,12 @@ describe('logic', () => {
             logic.getUserAppliedProjectCastings('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
+    })
+
+    describe('list products', () => {
+        it('should succeed on correct data', () => {
+            // TODO
+        })
     })
 
 
