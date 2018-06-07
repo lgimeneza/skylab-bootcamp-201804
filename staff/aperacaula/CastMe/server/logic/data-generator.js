@@ -51,6 +51,16 @@ const casting1_2 = new Casting({
     status: true
 
 })
+
+const casting1_3 = new Casting({
+    title: "Pedrito(Supporting)",
+    minAge: 30,
+    maxAge: 38,
+    sex: 'male',
+    description: 'Pedrito is tall and skinny, very mean. He is the leader of the kids in the sweatshop',
+    physicalReq: pr1_2,
+    status: true
+})
 const project1 = new Project({
     title: 'Bonded',
     publishedDate: (() => new Date())(),
@@ -64,7 +74,7 @@ const project1 = new Project({
     province: 'Albacete',
     description: 'Project "Bonded," a feature film based on true events about illegal sweat shops in Los Angeles.',
 
-    castings: [casting1_1, casting1_2]
+    castings: [casting1_1, casting1_2, casting1_3]
 })
 
 
