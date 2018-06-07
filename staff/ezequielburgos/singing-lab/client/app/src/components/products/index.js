@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
 
-class Home extends Component {
+class Products extends Component {
 
     render() {
         return (
             <main>
-                <h1>Home</h1>
+                <h1>Products</h1>
             
             </main>
         )
@@ -15,4 +16,4 @@ class Home extends Component {
 
 }
 
-export default Home
+export default Products

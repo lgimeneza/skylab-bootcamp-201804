@@ -1,6 +1,6 @@
 const singingLabApi = require('api')
 
-singingLabApi.url = 'http://localhost:5000/api'
+singingLabApi.url = 'http://localhost:4000/api'
 
 const logic = {
     userId: 'NO-ID',
@@ -18,6 +18,7 @@ const logic = {
                 return true
             })
     },
+    
     retrieveUser(id) {
         return singingLabApi.retrieveUser(id)
             .then(res => {
@@ -28,14 +29,18 @@ const logic = {
             })
     },
 
-    // updateUser(id, name, surname, phone, dni, password, newPhone, newPassword) {
-    //     return (id, name, surname, phone, dni, password, newPhone, newPassword)
+    updateUser(id, name, surname, phone, address, password, newPhone, newPassword) {
+        return singingLabApi.updateUser(id, name, surname, phone, address, password, newPhone, newPassword)
+            .then(res => {
+                return true
+            })
 
-    // },
+    },
 
-    // unregisterUser(id, dni, password) {
-    //     return shApi.unregisterUser(id, dni, password)
-    // }
+    unregisterUser(id, dni, password) {
+        return singingLabApi.unregisterUser(id, dni, password)
+            .then(true)
+    }
 }
 
 module.exports = logic

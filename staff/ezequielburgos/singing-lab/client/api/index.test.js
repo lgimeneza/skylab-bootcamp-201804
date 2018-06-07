@@ -382,7 +382,7 @@ describe('logic (singingLab api)', () => {
 
                     return singinLabApi.updateUser(id, 'Jack', 'Wayne', '+34 111 222 333', 'colorado', 'jj@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
-                            console.log(res)
+
                             expect(res).to.be.true
 
                             return User.findById(id)
