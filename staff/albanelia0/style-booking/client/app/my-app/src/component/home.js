@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Dropdown from './dropdown'
+import {Dropdown} from './dropdown'
 import '../desing/home.css'
 
 const images = [
@@ -30,7 +30,7 @@ class Home extends Component {
       this.setState({
         image: images[i]
       })
-    }, 5000)
+    }, 3000)
   }
 
   render() {
@@ -40,7 +40,7 @@ class Home extends Component {
           <nav className="navbar">
             <div className="container">
               <div className="navbar-brand">
-                  <p className="subtitle">Victoria Style</p>
+                <p className="title">Victoria Style</p>
                 <span className="navbar-burger burger" data-target="navbarMenu">
                 <span></span>
                 <span></span>
@@ -74,9 +74,8 @@ class Home extends Component {
                 </figure>
               </div>
               <div className="column is-6 is-offset-1">
-                <p className="title is-1 is-spaced">Available days</p>
+                <p className="subtitle is-1 is-spaced">Available days</p>
                 <Dropdown/>
-                <button className="button is-info is-medium">check days</button>
               </div>
             </div>
           </div>
@@ -90,6 +89,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
+        {/* <script src="../js/bulma.js"></script> */}
       </section>
     )
   }
