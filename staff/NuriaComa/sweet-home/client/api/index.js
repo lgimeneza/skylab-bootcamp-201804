@@ -84,7 +84,9 @@ const shApi = {
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                    const { data: { id } } = data
+                    const { data: { id, token } } = data
+
+                    this.token = token
 
                     return id
                 })

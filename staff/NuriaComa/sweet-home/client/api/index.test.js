@@ -3,7 +3,7 @@
 require('dotenv').config()
 
 const { mongoose, models: { User, Apartment } } = require('data')
-const shApi = require('.')
+const shApi = require('./index')
 const { expect } = require('chai')
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
@@ -11,7 +11,6 @@ const jwt = require('jsonwebtoken')
 const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 
 shApi.url = API_URL
-console.log(DB_URL)
 
 describe('logic (sweet-home)', () => {
     const userData = { name: 'Nur', surname: 'C', phone: '689456739', dni: '45629856L', password: '123' }
@@ -115,8 +114,11 @@ describe('logic (sweet-home)', () => {
             User.create(userData)
                 .then(() =>
                     shApi.authenticateUser('45629856L', '123')
-                    
-                        .then(id => expect(id).to.exist)
+                        .then(id => {
+                            expect(id).to.exist
+
+                            expect(shApi.token).not.to.equal('NO-TOKEN')
+                        })
                 )
         )
 

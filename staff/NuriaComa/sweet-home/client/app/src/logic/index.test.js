@@ -2,20 +2,24 @@
 
 const { expect } = require('chai')
 const logic = require('.')
-const shApi = require('../../../../api/src')
+const shApi = require('api')
 
 describe('logic (sweet-home)', () => {
-    const userData = { name: 'Nur', surname: 'C', phone: '637986245', dni:'42765289I', password: '123' }
+    const userData = { name: 'Nur', surname: 'C', phone: '637986245', dni: '42765289I', password: '123' }
 
     beforeEach(done => {
         const { dni, password } = userData
 
         shApi.authenticateUser(dni, password)
-            .then(id => 
+            .then(id =>
                 shApi.unregisterUser(id, dni, password)
             )
-            .then(() => done())
-            .catch(() => done())
+            .then(res => {
+                done()
+            })
+            .catch(err => {
+                done()
+            })
     })
 
     describe('register', () => {
@@ -40,5 +44,4 @@ describe('logic (sweet-home)', () => {
                 })
         })
     })
-    after(done => shApi.deleteDB(() => mongoose.connection.close(done)))
 })
