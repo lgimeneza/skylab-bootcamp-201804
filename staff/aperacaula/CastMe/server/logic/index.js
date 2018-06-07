@@ -138,7 +138,7 @@ const logic = {
           professionalData,
           videobookLink,
           pics,
-          castings
+          applications
         } = user;
         return {
           email,
@@ -147,7 +147,7 @@ const logic = {
           professionalData,
           videobookLink,
           pics,
-          castings
+          applications
         };
       });
   },
@@ -326,123 +326,125 @@ const logic = {
   },
 
 
-  // getAge(date1){
-  //     var birthday = date1;
-  //     var today = new Date();
-  //     var years = today.getFullYear() - birthday.getFullYear();
-  //     birthday.setFullYear(today.getFullYear());
-  //     if (today < birthday) years--;
-  //     return years
-  // },
+  getAge(date1){
+      var birthday = date1;
+      var today = new Date();
+      var years = today.getFullYear() - birthday.getFullYear();
+      birthday.setFullYear(today.getFullYear());
+      if (today < birthday) years--;
+      return years
+  },
 
-  // /**
-  //  *
-  //  * @param {string} userId
-  //  * @param {string} castingId
-  //  * @returns {Promise<boolean>} returns true if the user can subscribe to the casting.
-  //  */
-  // userIsEligible(userId,castingId){
-  //     return Promise.resolve()
-  //         .then(()=>{
+  /**
+   *
+   * @param {string} userId
+   * @param {string} castingId
+   * @returns {Promise<boolean>} returns true if the user can subscribe to the casting.
+   */
+  userIsEligible(userId,projectId,castingId){
+      return Promise.resolve()
+          .then(()=>{
 
-  //             if (typeof userId !== 'string') throw Error('user id is not a string')
+              if (typeof userId !== 'string') throw Error('user id is not a string')
 
-  //             if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+              if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-  //             if (typeof castingId !== 'string') throw Error('casting id is not a string')
+              if (typeof castingId !== 'string') throw Error('casting id is not a string')
 
-  //             if (!(castingId = castingId.trim()).length) throw Error('casting id is empty or blank')
+              if (!(castingId = castingId.trim()).length) throw Error('casting id is empty or blank')
 
-  //             return User.findById(userId)
-  //                 .then(user =>{
-  //                     return Casting.findById(castingId)
-  //                         .then(casting =>{
-  //                             const age= this.getAge(user.personalData.birthDate)
-  //                             if (!casting.status) return false
+              return User.findById(userId)
+                  .then(user =>{
+                      return Project.findById(projectId)
+                          .then(project =>{
+                              const casting= project.castings.find(casting=> casting._id.toString()===castingId)
+                              const age= this.getAge(user.personalData.birthDate)
+                              
+                              if (!casting.status) return false
 
-  //                             if (!(age>=casting.minAge && age<=casting.maxAge)) return false
+                              if (!(age>=casting.minAge && age<=casting.maxAge)) return false
 
-  //                             if (user.personalData.sex!==casting.sex) return false
+                              if (user.personalData.sex!==casting.sex) return false
 
-  //                             const requirements= Object.values(casting.physicalReq.toObject())
-  //                             const userProps= Object.values(user.physicalData.toObject())
+                              const requirements= Object.values(casting.physicalReq.toObject())
+                              const userProps= Object.values(user.physicalData.toObject())
 
-  //                             const minHeight= requirements[1]
-  //                             const userHeight= userProps[1]
+                              const minHeight= requirements[1]
+                              const userHeight= userProps[1]
 
-  //                             if (userHeight<minHeight) return false
+                              if (userHeight<minHeight) return false
 
-  //                             for (let i=2; i<requirements.length; i++){
-  //                                 if(!requirements[i]){
-  //                                     if(requirements[i]!==userProps[i]) return false
-  //                                 }
-  //                             }
+                              for (let i=2; i<requirements.length; i++){
+                                  if(!requirements[i]){
+                                      if(requirements[i]!==userProps[i]) return false
+                                  }
+                              }
 
-  //                             return true
+                              return true
 
-  //                         })
-  //                 })
+                          })
+                  })
 
-  //         })
-  // },
+          })
+  },
 
-  // /**
-  //  *
-  //  * @param {string} userId
-  //  * @param {string} projectId
-  //  * @param {string} castingId
-  //  *
-  //  * @returns {Promise<boolean>} that confirms the user has joined the casting
-  //  */
-  // joinCasting(userId, projectId, castingId){
-  //     return Promise.resolve()
-  //         .then(()=>{
+  /**
+   *
+   * @param {string} userId
+   * @param {string} projectId
+   * @param {string} castingId
+   *
+   * @returns {Promise<boolean>} that confirms the user has joined the casting
+   */
+  joinCasting(userId, projectId, castingId){
+      return Promise.resolve()
+          .then(()=>{
 
-  //             if (typeof userId !== 'string') throw Error('user id is not a string')
+              if (typeof userId !== 'string') throw Error('user id is not a string')
 
-  //             if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+              if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-  //             if (typeof projectId !== 'string') throw Error('user id is not a string')
+              if (typeof projectId !== 'string') throw Error('user id is not a string')
 
-  //             if (!(projectId = projectId.trim()).length) throw Error('user id is empty or blank')
+              if (!(projectId = projectId.trim()).length) throw Error('user id is empty or blank')
 
-  //             if (typeof castingId !== 'string') throw Error('user id is not a string')
+              if (typeof castingId !== 'string') throw Error('user id is not a string')
 
-  //             if (!(castingId = castingId.trim()).length) throw Error('user id is empty or blank')
+              if (!(castingId = castingId.trim()).length) throw Error('user id is empty or blank')
 
-  //             return User.findById(userId)
-  //         })
-  //         .then(user =>{
-  //             return Project.findById(projectId)
-  //                 .then(project =>{
-  //                     const casting= project.castings.find(casting=> casting._id.toString()===castingId)
+              return User.findById(userId)
+          })
+          .then(user =>{
+              return Project.findById(projectId)
+                  .then(project =>{
+                      const casting= project.castings.find(casting=> casting._id.toString()===castingId)
 
-  //                     if (!casting) throw Error(`there is no casting with id ${castingId} in the project given`)
+                      if (!casting) throw Error(`there is no casting with id ${castingId} in the project given`)
 
-  //                     const userEligible= this.userIsEligible(userId, castingId)
+                      const userEligible= this.userIsEligible(userId, projectId, castingId)
 
-  //                     if(!userEligible) return false
+                      if(!userEligible) return false
 
-  //                     casting.applicants.push(user._id) //ads the user to the casting user's list
+                      casting.applicants.push(user._id) //ads the user to the casting user's list
 
-  //                     const index= null;
-  //                     for (let i=0; i<user.castings.length; i++){
-  //                         if (user.castings[i].project.toString()===projectId){
-  //                             index= i
-  //                         }
-  //                     }
+                      const index= null;
+                      for (let i=0; i<user.castings.length; i++){
+                          if (user.castings[i].project.toString()===projectId){
+                              index= i
+                          }
+                      }
 
-  //                     if (index){
-  //                         user.castings[index].castings.push(casting_id)
-  //                     }else{
-  //                         user.castings.push({project: project_id, castings: casting_id})
-  //                     }
+                      if (index){
+                          user.castings[index].castings.push(casting_id)
+                      }else{
+                          user.castings.push({project: project_id, castings: casting_id})
+                      }
 
-  //                     return true
+                      return true
 
-  //                 })
-  //         })
-  // },
+                  })
+          })
+  },
 
   // /**
   //  *

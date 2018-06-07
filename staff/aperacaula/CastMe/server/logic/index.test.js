@@ -54,6 +54,8 @@ describe('logic', () => {
         videobookLink: 'https://youtube.com',
 
         pics: [],
+
+        applications: []
     }
 
     const otherUserData = {
@@ -99,6 +101,8 @@ describe('logic', () => {
         videobookLink: 'https://youtube.com',
 
         pics: [],
+
+        applications: []
     }
     const dummyUserId = '123456781234567812345678'
     const dummyNoteId = '123456781234567812345678'
@@ -215,24 +219,27 @@ describe('logic', () => {
     })
 
     describe('retrieve user', () => {
-        it('should succeed on correct data', () =>
-            User.create(userData)
-                .then(({ id }) => {
-                    return logic.retrieveUser(id)
+
+        it('should succeed on correct data', () =>{
+            const user = new User(userData)
+            return user.save()
+                .then(user => {
+                    
+                    return logic.retrieveUser(user.id)
                 })
                 .then(user => {
                     expect(user).to.exist
 
-                    const { email, _id, password, personalData, physicalData, professionalData, videobookLink, pics, castings } = user
+                    const { email, _id, password, personalData, physicalData, professionalData, videobookLink, pics, applications } = user
 
-
+                    
                     expect(email).to.equal('aperacaula@gmail.com')
 
                     expect(_id).to.be.undefined
                     expect(password).to.be.undefined
-                    expect(castings).to.exist
+                    expect(applications).to.exist
                 })
-        )
+        })
 
         it('should fail on no user id', () =>
             logic.retrieveUser()
@@ -376,8 +383,99 @@ describe('logic', () => {
     })
 
 
-
     describe('get user applied project castings', () => {
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+            const proj1 = projects[0]
+
+            return Promise.all([proj1.save(), user.save()])
+                .then(([proj1, user]) => {
+                    
+                    const { castings: [cast1_1, cast1_2] } = proj1
+
+                    user.applications.push({ project: proj1._id, castings: [cast1_1._id, cast1_2._id] })
+
+                    return user.save()
+                        .then(user => {
+                            return logic.getUserAppliedProjectCastings(user.id)
+                                .then(projects => {
+                                    expect(projects).to.exist
+                                    expect(projects.length).to.equal(1)
+
+                                    const [project] = projects
+
+                                    expect(project._id).to.deep.equal(proj1._id)
+                                    expect(project.title).to.equal(proj1.title)
+                                    expect(project.castings.length).to.equal(2)
+
+                                    const { castings: [casting1, casting2] } = project
+
+                                    expect(casting1._id.toString()).to.equal(cast1_1._id.toString())
+                                })
+                        })
+                })
+        })
+
+        it('should fail on non user id', () =>
+            logic.getUserAppliedProjectCastings()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.getUserAppliedProjectCastings('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.getUserAppliedProjectCastings('      ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+    })
+
+
+    describe ('get age', ()=>{
+        it('should succeed',()=>{
+            const age= logic.getAge(new Date('10/07/1993'))
+            expect(age).to.equal(24)
+        })
+    })
+
+    describe ('user is eligible', ()=>{
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+            const proj1 = projects[0]
+
+            return Promise.all([proj1.save(), user.save()])
+                .then(([proj1, user]) => {
+                    Project.find().then(res => console.log(res))
+                    const { castings: [cast1_1, cast1_2] } = proj1
+                    return logic.userIsEligible(user.id,proj1.id,cast1_1.id)
+                        .then(res => {
+                            expect(res).to.be.true
+                            
+                        })
+                    
+                })
+        })
+        // it('should succeed',()=>{
+        //     const user = new User(userData)
+        //     const proj1 = projects[0]
+            
+        //     return Promise.all([proj1.save(), user.save()])
+        //         .then(([proj1, user]) => {
+        //             Project.find().then(res => console.log(res))
+        //             Project.findById(proj1._id).then(project => console.log(project))
+        //             const { _id, castings: [cast1_1, cast1_2] } = proj1
+        //             return logic.userIsEligible(user._id.toString(),_id.toString(),cast1_1.id)
+
+        //         })
+        //         .then(res=>{
+        //             expect(res).to.be.true
+        //         })
+        // })
+    })
+    
+    false && describe('join casting', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const proj1 = projects[0]
@@ -404,7 +502,7 @@ describe('logic', () => {
 
                                     const { castings: [casting1, casting2] } = project
 
-                                    // TODO...
+                                    expect(casting1._id.toString()).to.equal(cast1_1._id.toString())
                                 })
                         })
                 })
@@ -425,6 +523,7 @@ describe('logic', () => {
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
     })
+
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })
