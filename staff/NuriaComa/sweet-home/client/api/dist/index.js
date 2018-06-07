@@ -18,9 +18,12 @@ const shApi = {
      * @returns {Promise<boolean>}
      */
 
-    registerUser(name, surname, phone, dni, password) {
+    registerUser: function registerUser(name, surname, phone, dni, password) {
+
+        var _this=this;
+
         return Promise.resolve()
-            .then(() => {
+            .then( function () {
 
                 if (typeof name !== 'string') throw Error('name is not a string')
 
@@ -43,9 +46,12 @@ const shApi = {
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
                 
-                return axios.post(`${this.url}/register`,{name, surname, phone, dni, password} )
-                .then(({ status, data }) => {
-                    if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                return axios.post(_this.url +'/register',{name:name, surname:surname, phone:phone, dni:dni, password:phone} )
+                .then(function (_ref) {
+                    var status = _ref.status,
+                        data = _ref.data;
+    
+                    if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status' + status + '(' + data.status + ')')
 
                     return true
                 })
@@ -68,7 +74,10 @@ const shApi = {
      * 
      * @returns {Promise<string>}
      */
-    authenticateUser(dni, password) {
+    authenticateUser: function authenticateUser(dni, password) {
+
+        var _this2 = this;
+
         return Promise.resolve()
             .then(() => {
                 
@@ -80,11 +89,20 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
                 
-                return axios.post(`${this.url}/auth`, { dni, password })
-                .then(({ status, data }) => {
+                return axios.post(_this2.url + '/auth', { dni: dni, password: password })
+                .then(function (_ref2) {
+                var status = _ref2.status,
+                    data = _ref2.data;
+
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                    const { data: { id } } = data
+                    var _data$data = data.data,
+                    id = _data$data.id,
+                    token = _data$data.token;
+
+
+                     _this2.token = token;
+
 
                     return id
                 })
@@ -107,13 +125,19 @@ const shApi = {
      * @returns {Promise<User>} 
      */
     retrieveUser(id) {
+
+        var _this3 = this;
+
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` } } )
+                return axios.get(_this3.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this3.token } }).then(function (_ref3) {
+                    var status = _ref3.status
+                        data = _ref3.data
+
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -129,6 +153,7 @@ const shApi = {
                     } else throw err
                 })
             })
+        })
     },
      /**
      * 
@@ -144,6 +169,9 @@ const shApi = {
      * @returns {Promise<boolean>}
      */
     updateUser(id, name, surname, phone, dni, password, newPhone, newPassword) {
+
+        var _this4 = this;
+
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -170,7 +198,7 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, dni, password, newPhone, newPassword },{ headers: { authorization: `Bearer ${this.token}`}})
+                return axios.patch(_this4.url + '/users/' + id, { name: name, surname: surname, phone: phone, dni:dni, password: password, newPhone: newPhone, newPassword: newPassword }, { headers: { authorization: 'Bearer ' + _this4.token } })
                 .then(({ status, data }) => {
 
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
@@ -195,12 +223,15 @@ const shApi = {
     /**
      * 
      * @param {string} id 
-     * @param {string} dni
+     * @param {string} dni 
      * @param {string} password 
      * 
      * @returns {Promise<boolean>}
      */
     unregisterUser(id, dni, password) {
+
+        var _this5 = this
+
         return Promise.resolve()
             .then(() => {
 
@@ -216,7 +247,9 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.delete(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` }, data: { dni, password } })
+                return axios.delete(_this5.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this5.token }, data: { dni: dni, password: password } }).then(function (_ref5) {
+                var status = _ref5.status,
+                    data = _ref5.data
 
                 .then(({ status, data }) => {
 
@@ -235,7 +268,7 @@ const shApi = {
                     } else throw err
                 })
             })
-            
+        })  
     },
    
 

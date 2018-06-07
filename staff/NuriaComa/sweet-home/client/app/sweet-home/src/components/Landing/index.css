@@ -1,0 +1,32 @@
+.tittle{
+    margin-top: 40vw;
+    font-size:12vw;
+    color:#92ac19;
+}
+
+.welcome{
+    font-size: 5vw;
+    margin-bottom: 20vw;
+}
+
+.register-button{
+
+    width:80vw;
+    
+    color:white;
+    font-size: 5vw;
+    margin: 5vw 7vw;
+    padding: 2vw;
+    background-color: #92ac19;
+    border:0;
+}
+.login-button{
+
+    width:80vw;
+    color:white;
+    font-size: 5vw;
+    margin: 3vw 7vw;
+    padding: 2vw;
+    background-color: #92ac19;
+    border:0;
+}

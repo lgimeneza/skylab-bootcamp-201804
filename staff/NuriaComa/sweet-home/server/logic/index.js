@@ -172,7 +172,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
 
-                console.log(dni)
+                
 
                 if (typeof id !== 'string') throw Error('user id is not a string')
 

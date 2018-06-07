@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const jsonBodyParser = bodyParser.json()
 const logic = require('../../../logic/')
 const jwt = require('jsonwebtoken')
-const jwtValidation = require('../routes/utils/jwt-validation')
+const jwtValidation = require('./utils/jwt-validation')
 
 const { env: { TOKEN_SECRET, TOKEN_EXP } } = process
 
