@@ -9,7 +9,8 @@ const logic = {
     data: 'NO-DATA',
 
     registerUser(name, surname, phone, dni, password) {
-        return shApi.registerUser(name, surname, phone, dni, password).then((res) => true)
+        return shApi.registerUser(name, surname, phone, dni, password)
+        .then((res) => true)
     },
 
     authenticateUser(dni, password) {
@@ -32,12 +33,13 @@ const logic = {
     },
 
     updateUser(id, name, surname, phone, dni, password, newPhone, newPassword) {
-        return (id, name, surname, phone, dni, password, newPhone, newPassword)
-
+        return shApi.updateUser(id, name, surname, phone, dni, password, newPhone, newPassword)
+        .then((res) => true)
     },
 
     unregisterUser(id, dni, password) {
         return shApi.unregisterUser(id, dni, password)
+        .then((res) => true)
     }
 }
 
