@@ -3,6 +3,7 @@ import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
 import Navbar from './../navbar'
+import storage from '../../utils/storage'
 
 class Login extends Component {
 
@@ -11,8 +12,6 @@ class Login extends Component {
         this.state = {
             isRegistered: false,
             isLogged: false,
-            name: '',
-            surname: '',
             email: '',
             password: ''
         }
@@ -21,14 +20,21 @@ class Login extends Component {
     handleSubmitLogin = (e) => {
         e.preventDefault()
 
-        logic.login(this.state.email, this.state.password)
-            .then(res => {
+        const { email, password } = this.state
+          if (email !== "" || password !== "") {
+    
+            logic.login(email, password)
+              .then(res => {
                 if (res) {
-                    this.setState({
-                        isLogged: true
-                    })
+                      this.props.history.push('/')
+    
+                } else {
+                  console.log('Error, username and/or password wrong')
                 }
-            }).catch(err => err.message)
+    
+              }).catch(err => err.message)
+          
+        }
     }
 
 
@@ -53,7 +59,7 @@ class Login extends Component {
                 <form onSubmit={this.handleSubmitLogin}>
                     <input type="email" name="email" placeholder="email" onChange={this.handlerCapturingEmail} value={this.state.email} />
                     <input type="password" name="password" onChange={this.handlerCapturingPassword} value={this.state.password} />
-                    <button type="submit">Register</button>
+                    <button type="submit">Login</button>
                 </form>
             </div>
 

@@ -5,6 +5,7 @@ require('dotenv').config()
 const { mongoose } = require('../data')
 const express = require('express')
 const router = require('./src/routes/index')
+const cors = require('cors')
 
 const { env: { PORT, DB_URL } } = process
 
@@ -13,6 +14,8 @@ mongoose.connect(DB_URL)
         const port = PORT || process.argv[2] || 3000
 
         const app = express()
+
+        app.use(cors())
 
         app.use('/api', router)
 
