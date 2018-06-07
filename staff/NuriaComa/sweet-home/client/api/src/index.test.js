@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken')
 const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 
 shApi.url = API_URL
+console.log(DB_URL)
 
 describe('logic (sweet-home)', () => {
     const userData = { name: 'Nur', surname: 'C', phone: '689456739', dni: '45629856L', password: '123' }
