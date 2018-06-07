@@ -2,7 +2,7 @@
 
 require('dotenv').config()
 
-const { mongoose, models: { User, Category, Product, Order } } = require('../../../server/data')
+const { mongoose, models: { User, Category, Product, Order } } = require('data')
 const { expect } = require('chai')
 const singinLabApi = require('./index')
 const _ = require('lodash')
