@@ -426,22 +426,6 @@ describe('logic (singing-lab)', () => {
                         })
                 })
         )
-
-
-        it('should fail on non user id', () =>
-            logic.listCategories()
-                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-        )
-
-        it('should fail on empty user id', () =>
-            logic.listCategories('')
-                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-        )
-
-        it('should fail on blank user id', () =>
-            logic.listCategories('      ')
-                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-        )
     })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))

@@ -216,13 +216,10 @@ const logic = {
     listCategories() {
         return Promise.resolve()
             .then(() => {
-
                 return Category.find({})
                     .then(category => {
-
                         if (!category) throw Error(`no categories where found`)
 
-                        // return category.map(({ id, text }) => ({ id, text }))
                         return category.map(category => category)
                     })
             })

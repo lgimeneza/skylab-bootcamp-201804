@@ -6,9 +6,9 @@ const { mongoose } = require('../data')
 const express = require('express')
 const router = require('./src/routes/index')
 
-const { env: { PORT, DB_URL } } = process
+const { env: { PORT, DB_URL2 } } = process
 
-mongoose.connect(DB_URL)
+mongoose.connect(DB_URL2)
     .then(() => {
         const port = process.argv[2] || 3000
 

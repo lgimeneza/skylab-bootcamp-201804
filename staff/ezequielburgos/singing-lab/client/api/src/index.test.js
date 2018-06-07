@@ -594,6 +594,26 @@ describe('logic (singingLab api)', () => {
         )
     })
 
+    describe('list categories', () => {
+        it('should succeed on correct data', () =>
+            Promise.all([
+                Category.create(beginnerCourseCategoryData),
+                Category.create(advancedCourseCategoryData)
+            ])
+                .then(res => {
+                    return singinLabApi.listCategories()
+                        .then(category => {
+
+                            expect(category[0]._id).to.exist
+                            expect(category[0].name).to.equal(beginnerCourseCategoryData.name)
+
+                            expect(category[1]._id).to.exist
+                            expect(category[1].name).to.equal(advancedCourseCategoryData.name)
+                        })
+                })
+        )
+    })
+
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })
