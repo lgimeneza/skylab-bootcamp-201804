@@ -1,4 +1,4 @@
-const { mongoose, models: { Casting, PhysicalData } } = require('../../data')
+const { mongoose, models: { Project, Casting, PhysicalData } } = require('data')
 
 //Project 1
 
@@ -17,7 +17,7 @@ const pr1_1 = new PhysicalData({
 });
 const casting1_1 =
 
-    {
+    new Casting({
         title: "Gordo(Lead)",
         minAge: 20,
         maxAge: 28,
@@ -26,7 +26,7 @@ const casting1_1 =
         physicalReq: pr1_1,
         status: true
 
-    }
+    })
     ;
 const pr1_2 = new PhysicalData({
     height: 1.80,
@@ -41,7 +41,7 @@ const pr1_2 = new PhysicalData({
 
     piercings: null
 });
-const casting1_2 = {
+const casting1_2 = new Casting({
     title: "Carlito(Supporting)",
     minAge: 20,
     maxAge: 28,
@@ -50,8 +50,8 @@ const casting1_2 = {
     physicalReq: pr1_2,
     status: true
 
-}
-const project1 = {
+})
+const project1 = new Project({
     title: 'Bonded',
     publishedDate: (() => new Date())(),
     endDate: (() => {
@@ -65,7 +65,7 @@ const project1 = {
     description: 'Project "Bonded," a feature film based on true events about illegal sweat shops in Los Angeles.',
 
     castings: [casting1_1, casting1_2]
-}
+})
 
 
 //Project 2
@@ -81,7 +81,7 @@ const pr2_1 = new PhysicalData({
     tattoos: false,
     piercings: null
 });
-const casting2_1 = {
+const casting2_1 = new Casting({
     title: "Desiree",
     minAge: 20,
     maxAge: 30,
@@ -90,7 +90,7 @@ const casting2_1 = {
     physicalReq: pr2_1,
     status: true
 
-}
+})
     ;
 const pr2_2 = new PhysicalData({
     height: null,
@@ -103,7 +103,7 @@ const pr2_2 = new PhysicalData({
     tattoos: true,
     piercings: null
 });
-const casting2_2 = {
+const casting2_2 = new Casting({
     title: "Tracy(Supporting)",
     minAge: 40,
     maxAge: 50,
@@ -112,8 +112,8 @@ const casting2_2 = {
     physicalReq: pr2_2,
     status: true
 
-}
-const project2 = {
+})
+const project2 = new Project({
     title: 'Crown Vic',
     publishedDate: (() => new Date())(),
     endDate: (() => {
@@ -127,7 +127,7 @@ const project2 = {
     description: 'Project "Crown Vic," a SAG Low Budget feature produced by Alec Baldwin. Project personnel will hold a Buffalo, NY open call. No appointments necessary.',
 
     castings: [casting2_1, casting2_2]
-}
+})
 
 
 //Project 3
@@ -143,7 +143,7 @@ const pr3_1 = new PhysicalData({
     tattoos: false,
     piercings: false
 });
-const casting3_1 = {
+const casting3_1 = new Casting({
     title: "Female",
     minAge: 20,
     maxAge: 50,
@@ -152,10 +152,10 @@ const casting3_1 = {
     physicalReq: pr3_1,
     status: true
 
-}
+})
     ;
 
-const project3 = {
+const project3 = new Project({
     title: 'Luxury Fragrance (Publicity)',
     publishedDate: (() => new Date())(),
     endDate: (() => {
@@ -169,8 +169,6 @@ const project3 = {
     description: 'Project stand-ins for male and female talent in a luxury fragrance TVC shoot. Applicants must have similar height/measurements and skin tone as described.',
 
     castings: [casting3_1]
-}
-
-
+})
 
 module.exports = [project1, project2, project3]

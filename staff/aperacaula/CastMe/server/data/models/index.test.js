@@ -62,7 +62,7 @@ describe('models ', () => {
                 pics: [],
             })
 
-            user.castings.push({
+            user.applications.push({
                 project: projectList[0]._id,
                 castings: [
                     projectList[0].castings[0]._id,
@@ -78,17 +78,17 @@ describe('models ', () => {
                     expect(user.professionalData.profession).toBe('actor/actress')
                     expect(user.password).toBe('12345')
 
-                    expect(user.castings).toBeDefined()
-                    expect(user.castings.length).toBe(1)
+                    expect(user.applications).toBeDefined()
+                    expect(user.applications.length).toBe(1)
 
-                    const { castings: [casting] } = user
+                    const { applications: [application] } = user
 
-                    expect(casting.project.toString()).toBe(projectList[0]._id.toString())
+                    expect(application.project.toString()).toBe(projectList[0]._id.toString())
 
-                    expect(casting.castings).toBeDefined()
-                    expect(casting.castings.length).toBe(2)
+                    expect(application.castings).toBeDefined()
+                    expect(application.castings.length).toBe(2)
 
-                    const { castings: [casting1, casting2] } = casting
+                    const { castings: [casting1, casting2] } = application
 
 
                     expect(casting1.toString()).toBe(projectList[0].castings[0]._id.toString())

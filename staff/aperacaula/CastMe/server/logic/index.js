@@ -9,7 +9,7 @@ const {
     PhysicalData,
     ProfessionalData
   }
-} = require("../../data");
+} = require("data");
 
 const logic = {
   /**
@@ -296,7 +296,7 @@ const logic = {
    *
    * @returns {Promise<array>} with all the applications the user has, which are objects with project info on project method and castings array with casting info in castings method
    */
-  getCastings(userId) {
+  getUserAppliedProjectCastings(userId) {
     return Promise.resolve()
       .then(() => {
         if (typeof userId !== "string") throw Error("user id is not a string");
@@ -304,75 +304,27 @@ const logic = {
         if (!(userId = userId.trim()).length)
           throw Error("user id is empty or blank");
 
-        return User.findById(userId);
+        return User.findById(userId).populate('applications.project');
       })
       .then(user => {
-        const applicationsList = [];
+        return user.applications.map(application => {
+          const { project, castings } = application
 
-        //return Promise.all(user.castings.map())
+          const castingIds = castings.map(casting => casting.toString())
 
+          const filteredCastings = project.castings.filter(casting => {
+            const id = casting._id.toString()
 
-        user.castings.forEach(casting => {
-          let applications = {
-            project: undefined,
-            castings: []
-          };
+            return castingIds.includes(id)
+          })
 
-          return Project.findOne({ _id: casting.project }).then(project => {
-            const {
-              title,
-              publishedDate,
-              endDate,
-              paid,
-              professional,
-              province,
-              description
-            } = project;
-            applications.project = {
-              title,
-              publishedDate,
-              endDate,
-              paid,
-              professional,
-              province,
-              description
-            };
+          project.castings = filteredCastings
 
-
-            return Promise.all(casting.castings.map(applicationId=> Casting.findById(applicationId)))
-                .then(arrayApplications=> {
-                    arrayApplications.forEach(application=>{
-                        applications.castings.push(application)
-                        //console.log(applications)
-                    })
-                    return applications
-                })
-                .then(applications =>{
-                    //console.log(applications)
-                    applicationsList.push(applications)
-                    //console.log(applicationsList)
-                    return applicationsList
-                })
-
-
-
-            // casting.castings.forEach(applicationId => {
-            //   return Casting.findById(applicationId).then(application => {
-            //     applications.castings.push(application);
-            //     //console.log(applications)
-            //   });
-            // });
-
-            // applicationsList.push(applications);
-            // console.log(applicationsList);
-            // return applicationsList;
-          });
-
-          return applicationsList
-        });
+          return project
+        })
       });
   },
-  
+
 
   // getAge(date1){
   //     var birthday = date1;

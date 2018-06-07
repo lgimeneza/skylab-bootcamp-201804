@@ -32,7 +32,7 @@ module.exports = new Schema({
 
     },
 
-    castings: [
+    applications: [
         {
             project: {
                 type: ObjectId,
