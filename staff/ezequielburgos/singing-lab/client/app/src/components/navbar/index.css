@@ -11,7 +11,6 @@
     background: linear-gradient(to left, rgb(121, 27, 105), rgb(34, 8, 44));
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
-    color: lightgrey;
 }
 
 .site-header a {

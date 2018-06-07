@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
+import Navbar from './../navbar'
 
 class Register extends Component {
 
@@ -59,6 +60,7 @@ class Register extends Component {
     render() {
         return (
             <main>
+              <Navbar/>
                 <h1>Register</h1>
                 <form onSubmit={this.handleSubmitRegister}>
                     <input type="name" name="name" onChange={this.handlerCapturingName} value={this.state.name} />

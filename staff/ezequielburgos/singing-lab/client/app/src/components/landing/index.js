@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
+import Navbar from './../navbar'
 
 class Landing extends Component {
 
     render() {
-        console.log('this is render')
         return (
             <main>
-                <h1>Landing Page</h1>
+                <Navbar/>
+                 <h1>Landing Page</h1>
                 <section>
                     <p className="welcome">Welcome to singing lab</p>
 
