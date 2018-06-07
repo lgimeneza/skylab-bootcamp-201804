@@ -224,9 +224,7 @@ const logic = {
       .then(() => {
         //TODO VALIDATIONS
         return Service.find(idUser)
-        console.log('hola')
           .then((res) => {
-            console.log(res)
 
             // const date = new Date()
 
@@ -244,7 +242,7 @@ const logic = {
 
             // return booking.save()
             return Booking.create({ idUser, serviceId, date, endDate })
-              .then((res) => console.log(res))
+              .then((res) => res)
 
           })
       })
@@ -277,7 +275,6 @@ const logic = {
           .then(user => {
             if (!user) throw Error(`no user found with id ${idUser}`)
 
-            console.log(user)
 
             // if (!note) throw Error(`no note found with id ${bookingId}`)
 

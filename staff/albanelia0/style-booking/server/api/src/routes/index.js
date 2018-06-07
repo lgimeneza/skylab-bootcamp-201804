@@ -50,7 +50,6 @@ router.post('/user/services', bodyParser.json(), (req, res) => {
       res.json({ status: 'OK', data: { service } })
     })
     .catch(({ message }) => {
-      console.log('CATCH', service)
       res.status(400)
       res.json({ status: 'KO', error: message })
     })
@@ -60,7 +59,6 @@ router.get('/booking/hours/:year/:month', (req, res) => {
   const { params: { year, month } } = req
   return logic.getBookingHoursForYearMonth(year, month)
     .then((data) => {
-      console.log(data)
       res.status(200)
       res.json({ status: 'OK', data })
     })
@@ -89,7 +87,6 @@ router.get('/booking/hours/:year/:month', (req, res) => {
 
     logic.placeBooking(idUser, serviceId, date, endDate)
       .then((booking) => {
-        console.log(booking)
         res.status(201)
         res.json({ status: 'OK', })
       })
