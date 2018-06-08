@@ -1,3 +1,4 @@
+'use strict'
 
 const customMiddleware = store => next => action => {
     return isFunction(action) ? action(store.dispatch, store.getState): next(action);

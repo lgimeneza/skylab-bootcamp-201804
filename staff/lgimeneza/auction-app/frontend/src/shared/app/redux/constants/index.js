@@ -1,0 +1,7 @@
+'use strict'
+
+export const Types = {
+    UPDATE_PRODUCT:'UPDATE_PRODUCT',
+    UPDATE_PRODUCTS:'UPDATE_PRODUCTS',
+    UPDATE_NAME:'UPDATE_NAME'
+};

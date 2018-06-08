@@ -1,3 +1,5 @@
+'use strict'
+
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers/combine';
 import middleware from './middleware';

@@ -1,4 +1,6 @@
-import { Types } from '../constants/products-types';
+'use strict'
+
+import { Types } from '../constants';
 import Request from 'axios';
 
 export function getProducts() {

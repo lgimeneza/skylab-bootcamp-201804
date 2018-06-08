@@ -1,7 +1,9 @@
+'use strict'
+
 import { combineReducers } from 'redux';
-import userReducer from './user-reducer';
-import productsReducer from './products-reducer';
-import productReducer from './product-reducer'
+import userReducer from './user';
+import productsReducer from './products';
+import productReducer from './product'
 
 const reducers = combineReducers({
     user: userReducer,

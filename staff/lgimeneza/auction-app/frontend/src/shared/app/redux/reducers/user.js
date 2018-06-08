@@ -1,4 +1,6 @@
-import { Types } from '../constants/user-types';
+'use strict'
+
+import { Types } from '../constants';
 
 const initialState = {
     name: null,

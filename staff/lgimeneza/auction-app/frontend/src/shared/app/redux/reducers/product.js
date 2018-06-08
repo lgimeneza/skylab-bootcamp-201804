@@ -1,4 +1,6 @@
-import { Types } from '../constants/product-types';
+'use strict'
+
+import { Types } from '../constants';
 
 const initialState = {
     product:{}
