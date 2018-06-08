@@ -194,7 +194,7 @@ describe('logic (singingLab api)', () => {
                         .then(id => {
                             expect(id).to.exist
 
-                            expect(singinLabApi.token).not.to.equal('NO-TOKEN')
+                            expect(singinLabApi.token()).not.to.equal('NO-TOKEN')
                         })
                 )
         )
@@ -289,7 +289,7 @@ describe('logic (singingLab api)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    singinLabApi.token = token
+                    singinLabApi.token(token)
 
                     return singinLabApi.retrieveUser(id)
                 })
@@ -378,7 +378,7 @@ describe('logic (singingLab api)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    singinLabApi.token = token
+                    singinLabApi.token(token)
 
                     return singinLabApi.updateUser(id, 'Jack', 'Wayne', '+34 111 222 333', 'colorado', 'jj@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
@@ -411,7 +411,7 @@ describe('logic (singingLab api)', () => {
                 .then(([{ id: id1 }, { id: id2 }]) => {
                     const token = jwt.sign({ id: id1 }, TOKEN_SECRET)
 
-                    singinLabApi.token = token
+                    singinLabApi.token(token)
                     
                     const { name, surname, phone, address, email, password } = jackData
 
@@ -532,7 +532,7 @@ describe('logic (singingLab api)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    singinLabApi.token = token
+                    singinLabApi.token(token)
 
                     const { email, password } = jackData
 

@@ -18,7 +18,7 @@ const logic = {
                 return true
             })
     },
-    
+
     retrieveUser(id) {
         return singingLabApi.retrieveUser(id)
             .then(res => {

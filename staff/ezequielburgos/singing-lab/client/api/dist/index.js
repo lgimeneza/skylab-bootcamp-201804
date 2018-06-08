@@ -5,7 +5,16 @@ var axios = require('axios');
 var singinLabApi = {
     url: 'NO-URL',
 
-    token: 'NO-TOKEN',
+    token: function token(_token) {
+        if (_token) {
+            this._token = _token;
+
+            return;
+        }
+
+        return this._token;
+    },
+
 
     /**
      * 
@@ -92,7 +101,7 @@ var singinLabApi = {
                     token = _data$data.token;
 
 
-                _this2.token = token;
+                _this2.token(token);
 
                 return id;
             }).catch(function (err) {
@@ -123,7 +132,7 @@ var singinLabApi = {
 
             if (!(id = id.trim()).length) throw Error('user id is empty or blank');
 
-            return axios.get(_this3.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this3.token } }).then(function (_ref3) {
+            return axios.get(_this3.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this3.token() } }).then(function (_ref3) {
                 var status = _ref3.status,
                     data = _ref3.data;
 
@@ -190,7 +199,7 @@ var singinLabApi = {
 
             if ((password = password.trim()).length === 0) throw Error('user password is empty or blank');
 
-            return axios.patch(_this4.url + '/users/' + id, { name: name, surname: surname, phone: phone, address: address, email: email, password: password, newEmail: newEmail, newPassword: newPassword }, { headers: { authorization: 'Bearer ' + _this4.token } }).then(function (_ref4) {
+            return axios.patch(_this4.url + '/users/' + id, { name: name, surname: surname, phone: phone, address: address, email: email, password: password, newEmail: newEmail, newPassword: newPassword }, { headers: { authorization: 'Bearer ' + _this4.token() } }).then(function (_ref4) {
                 var status = _ref4.status,
                     data = _ref4.data;
 
@@ -235,7 +244,7 @@ var singinLabApi = {
 
             if ((password = password.trim()).length === 0) throw Error('user password is empty or blank');
 
-            return axios.delete(_this5.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this5.token }, data: { email: email, password: password } }).then(function (_ref5) {
+            return axios.delete(_this5.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this5.token() }, data: { email: email, password: password } }).then(function (_ref5) {
                 var status = _ref5.status,
                     data = _ref5.data;
 

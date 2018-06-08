@@ -5,7 +5,7 @@
 
 # SINGING-LAB
 
-# ![](./docs/skylab-coders-logo.png)
+# ![](./images/skylab-coders-logo.png)
 
 ## TARGET
 
@@ -23,11 +23,11 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 ## DATA MODEL
 
-![](./docs/data-model.png)
+![](./images/data-model.png)
 
 ## BLOCK MODEL
 
-![block model](./docs/block-model.png)
+![block model](./images/block-model.png)
 
 ## DESIGN (screenshots)
 
@@ -36,27 +36,27 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 ### Home Page
 
-![](./docs/sketch/home-page.png)
+![](./images/sketch/home-page.png)
 
 ### Login
 
-![](./docs/sketch/login.png)
+![](./images/sketch/login.png)
 
 ### Register
 
-![](./docs/sketch/register.png)
+![](./images/sketch/register.png)
 
 ### Products (Categories)
 
-![](./docs/sketch/categories-page.png)
+![](./images/sketch/categories-page.png)
 
 ### Product page
 
-![](./docs/sketch/product-page.png)
+![](./images/sketch/product-page.png)
 
 ### Cart
 
-![](./docs/sketch/cart-page.png)
+![](./images/sketch/cart-page.png)
 
 ## DEMO
 
@@ -68,5 +68,5 @@ You can see a demo of the project here: surge
 
 //TODO...
 
-![](./docs/gant-chart.png)
+![](./images/gant-chart.png)
 

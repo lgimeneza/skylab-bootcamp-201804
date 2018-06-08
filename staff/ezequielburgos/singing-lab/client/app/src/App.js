@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import logic from './logic/index'
-import { Landing, Home, Register, Login, Products} from './components'
-import { Switch, Route} from 'react-router-dom'
+import { Landing, Home, Register, Login, Products } from './components'
+import { Switch, Route } from 'react-router-dom'
 
 class App extends Component {
 
-  render(){
+  render() {
     return (
       <Switch>
-          <Route exact path="/" component={Landing}/>
-          <Route path="/home" component={Home}/>
-          <Route path="/auth" component={Login}/>
-          <Route path="/register" component={Register}/>
-          <Route path="/products" component={Products}/>
+        <Route exact path="/" component={Landing} />
+        <Route path="/home" component={Home} />
+        <Route path="/auth" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/products" component={Products} />
       </Switch>
     )
   }
@@ -46,7 +45,7 @@ class App extends Component {
   // }
   // handleSubmitLogin = (e) => {
   //   e.preventDefault()
-    
+
   //   logic.login(this.state.email, this.state.password)
   //     .then(res => {
   //       if(res){
