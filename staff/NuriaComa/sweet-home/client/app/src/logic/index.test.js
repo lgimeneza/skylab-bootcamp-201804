@@ -44,68 +44,70 @@ describe('logic (sweet-home)', () => {
                 })
         })
     })
-    describe('retrieve', ()=>{
-        it('shoul succed on correct data', ()=>{
+    describe('retrieve', () => {
+        it('shoul succeed on correct data', () => {
             const { name, surname, phone, dni, password } = userData
 
             return shApi.registerUser(name, surname, phone, dni, password)
                 .then(() => logic.authenticateUser(dni, password))
                 .then(() => {
                     logic.retrieveUser(logic.userId)
-                    .then(res => {
-                        expect(res).to.be.true
-    
-                        expect(logic.data).not.to.equal('NO-DATA')
-                    })
+                        .then(res => {
+                            expect(res).to.be.true
+
+                            expect(logic.data).not.to.equal('NO-DATA')
+                        })
                 })
-                      
+
         })
     })
-    describe('update', ()=>{
-        it('should succed on correct data', ()=>{
+    describe('update', () => {
+        it('should succeed on correct data', () => {
             const { name, surname, phone, dni, password } = userData
 
             return shApi.registerUser(name, surname, phone, dni, password)
                 .then(() => logic.authenticateUser(dni, password))
                 .then(() => {
-                    logic.updateUser(logic.userId, name, surname, phone, dni, password, newPhone, newPassword )
-                    .then(res => {
-                        expect(res).to.be.true
-    
-                    })
+                    const newPhone = '123'
+                    const newPassword = '789'
+
+                    return logic.updateUser(logic.userId, name, surname, phone, dni, password, newPhone, newPassword)
+                        .then(res => {
+                            expect(res).to.be.true
+
+                        })
                 })
         })
 
     })
-    describe('list users', ()=>{
-        it('shoul succed on correct data', ()=>{
-            
+    describe('list users', () => {
+        it('shoul succeed on correct data', () => {
 
             return shApi.listUsers()
                 .then(() => logic.authenticateUser(dni, password))
                 .then(() => {
                     logic.listUsers()
-                    .then(res => {
-                        expect(res).to.be.true
-    
-                        expect(logic.data).not.to.equal('NO-DATA')
-                    })
+                        .then(res => {
+                            expect(res).to.be.true
+
+                            expect(logic.data).not.to.equal('NO-DATA')
+                        })
                 })
-                      
+
         })
     })
-    describe('unregister', ()=>{
-        it('should succed on correct data', ()=>{
+    describe('unregister', () => {
+        it('should succeed on correct data', () => {
             const { name, surname, phone, dni, password } = userData
 
             return shApi.registerUser(name, surname, phone, dni, password)
                 .then(() => logic.authenticateUser(dni, password))
                 .then(() => {
                     logic.unregisterUser(logic.userId, dni, password)
-                    .then(res => {
-                        expect(res).to.be.true
-    
-                    })
+                        .then(res => {
+                            expect(res).to.be.true
+
+                        })
                 })
         })
 

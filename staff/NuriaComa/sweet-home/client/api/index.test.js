@@ -118,7 +118,7 @@ describe('logic (sweet-home)', () => {
                         .then(id => {
                             expect(id).to.exist
 
-                            //expect(shApi.token).not.to.equal('NO-TOKEN')
+                            expect(shApi.token()).not.to.equal('NO-TOKEN')
                         })
                 )
         )
@@ -159,7 +159,7 @@ describe('logic (sweet-home)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    shApi.token = token
+                    shApi.token(token)
 
                     return shApi.retrieveUser(id)
                 })
@@ -201,7 +201,7 @@ describe('logic (sweet-home)', () => {
 
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    shApi.token = token
+                    shApi.token(token)
 
                     return shApi.updateUser(id, 'Nur', 'C', '689456739','45629856L', '123', '678345629', '456')
                         .then(res => {
@@ -321,7 +321,7 @@ describe('logic (sweet-home)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    shApi.token = token
+                    shApi.token(token)
 
                     return shApi.listUsers()
                 })
@@ -348,7 +348,7 @@ describe('logic (sweet-home)', () => {
 
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    shApi.token = token
+                    shApi.token(token)
                     
                     return shApi.unregisterUser(id, userData.dni, userData.password)
                         .then(res => {

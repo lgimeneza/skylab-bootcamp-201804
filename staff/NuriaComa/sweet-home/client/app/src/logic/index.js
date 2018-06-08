@@ -4,14 +4,24 @@ const shApi = require('api')
 
 shApi.url = 'http://localhost:4000/api'
 
+shApi.token = function (token) {
+    if (token) {
+        localStorage.setItem('token', token)
+
+        return
+    }
+
+    return localStorage.getItem('token')
+}
+
 const logic = {
     userId: 'NO-ID',
     data: 'NO-DATA',
-    users:'NO-USERS',
+    users: 'NO-USERS',
 
     registerUser(name, surname, phone, dni, password) {
         return shApi.registerUser(name, surname, phone, dni, password)
-        .then((res) => true)
+            .then((res) => true)
     },
 
     authenticateUser(dni, password) {
@@ -33,13 +43,13 @@ const logic = {
             })
     },
 
-    updateUser(id, name, surname, phone, dni, password, newPhone, newPassword) {
-        return shApi.updateUser(id, name, surname, phone, dni, password, newPhone, newPassword)
-        .then(users => {
-            return users
-        })
+    updateUser(id, name, surname, phone, dni, password, newPassword) {
+        return shApi.updateUser(id, name, surname, phone, dni, password, newPassword)
+            .then(users => {
+                return users
+            })
     },
-    listUsers(){
+    listUsers() {
         return shApi.listUsers()
 
         this.users = res.data
@@ -49,7 +59,7 @@ const logic = {
 
     unregisterUser(id, dni, password) {
         return shApi.unregisterUser(id, dni, password)
-        .then((res) => true)
+            .then((res) => true)
     }
 }
 

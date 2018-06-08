@@ -6,12 +6,13 @@ const shApi = {
     url: 'NOWHERE',
 
     token(token){
-
         if(token){
-            localStorage.setItem('token', token)
+            this._token = token
+            
             return
         }
-        return localStorage.getItem('token')
+
+        return this._token
     },
 
     /**
@@ -93,7 +94,7 @@ const shApi = {
 
                     const { data: { id, token } } = data
 
-                    this.token()(token)
+                    this.token(token)
 
                     return id
                 })
@@ -121,6 +122,8 @@ const shApi = {
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+                debugger
 
                 return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {

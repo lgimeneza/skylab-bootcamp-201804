@@ -5,7 +5,16 @@ var axios = require('axios');
 var shApi = {
     url: 'NOWHERE',
 
-    token: 'NO-TOKEN',
+    token: function token(_token) {
+        if (_token) {
+            this._token = _token;
+
+            return;
+        }
+
+        return this._token;
+    },
+
 
     /**
      * 
@@ -95,7 +104,7 @@ var shApi = {
                     token = _data$data.token;
 
 
-                _this2.token = token;
+                _this2.token(token);
 
                 return id;
             }).catch(function (err) {
@@ -126,7 +135,9 @@ var shApi = {
 
             if (!(id = id.trim()).length) throw Error('user id is empty or blank');
 
-            return axios.get(_this3.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this3.token } }).then(function (_ref3) {
+            debugger;
+
+            return axios.get(_this3.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this3.token() } }).then(function (_ref3) {
                 var status = _ref3.status,
                     data = _ref3.data;
 
@@ -187,7 +198,7 @@ var shApi = {
 
             if ((password = password.trim()).length === 0) throw Error('user password is empty or blank');
 
-            return axios.patch(_this4.url + '/users/' + id, { name: name, surname: surname, phone: phone, dni: dni, password: password, newPhone: newPhone, newPassword: newPassword }, { headers: { authorization: 'Bearer ' + _this4.token } }).then(function (_ref4) {
+            return axios.patch(_this4.url + '/users/' + id, { name: name, surname: surname, phone: phone, dni: dni, password: password, newPhone: newPhone, newPassword: newPassword }, { headers: { authorization: 'Bearer ' + _this4.token() } }).then(function (_ref4) {
                 var status = _ref4.status,
                     data = _ref4.data;
 
@@ -211,6 +222,38 @@ var shApi = {
 
 
     /**
+    * 
+    * 
+    * 
+    * @returns {Promise<User>} 
+    */
+    listUsers: function listUsers() {
+        var _this5 = this;
+
+        return Promise.resolve().then(function () {
+
+            return axios.get(_this5.url + '/list', { headers: { authorization: 'Bearer ' + _this5.token() } }).then(function (_ref5) {
+                var status = _ref5.status,
+                    data = _ref5.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
+    },
+
+
+    /**
      * 
      * @param {string} id 
      * @param {string} dni
@@ -219,7 +262,7 @@ var shApi = {
      * @returns {Promise<boolean>}
      */
     unregisterUser: function unregisterUser(id, dni, password) {
-        var _this5 = this;
+        var _this6 = this;
 
         return Promise.resolve().then(function () {
 
@@ -235,9 +278,9 @@ var shApi = {
 
             if ((password = password.trim()).length === 0) throw Error('user password is empty or blank');
 
-            return axios.delete(_this5.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this5.token }, data: { dni: dni, password: password } }).then(function (_ref5) {
-                var status = _ref5.status,
-                    data = _ref5.data;
+            return axios.delete(_this6.url + '/users/' + id, { headers: { authorization: 'Bearer ' + _this6.token() }, data: { dni: dni, password: password } }).then(function (_ref6) {
+                var status = _ref6.status,
+                    data = _ref6.data;
 
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
