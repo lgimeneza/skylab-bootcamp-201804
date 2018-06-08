@@ -12,8 +12,7 @@ describe('logic (sweet-home)', () => {
 
         shApi.authenticateUser(dni, password)
             .then(id => {
-                console.log(id)
-                shApi.unregisterUser(id, dni, password)
+                return shApi.unregisterUser(id, dni, password)
             })
             .then(res => {
                 done()

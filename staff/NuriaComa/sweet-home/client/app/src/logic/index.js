@@ -4,16 +4,6 @@ const shApi = require('api')
 
 shApi.url = 'http://localhost:4000/api'
 
-shApi.token = function (token) {
-    if (token) {
-        localStorage.setItem('token', token)
-
-        return
-    }
-
-    return localStorage.getItem('token')
-}
-
 const logic = {
     userId: 'NO-ID',
     data: 'NO-DATA',
