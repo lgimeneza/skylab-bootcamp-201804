@@ -2,9 +2,9 @@
 
 require('dotenv').config()
 
-const { mongoose } = require('auction-data')
+const { mongoose } = require('data')
 const express = require('express')
-const router = require('./src/routes')
+const router = require('./routes')
 const cors = require('cors')
 
 const { env: { PORT, DB_URL } } = process

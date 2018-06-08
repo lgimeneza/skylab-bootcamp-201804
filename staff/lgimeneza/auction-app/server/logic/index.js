@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { Product } } = require('auction-data')
+const { models: { Product } } = require('data')
 
 const logic = {
 

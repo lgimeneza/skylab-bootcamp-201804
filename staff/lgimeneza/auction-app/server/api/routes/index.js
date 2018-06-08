@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const logic = require('auction-logic')
+const logic = require('logic')
 const jwt = require('jsonwebtoken')
 const jwtValidation = require('./utils/jwt-validation')
 

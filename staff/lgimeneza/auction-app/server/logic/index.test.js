@@ -2,7 +2,7 @@
 
 require('dotenv').config()
 
-const { mongoose, models: { Product } } = require('auction-data')
+const { mongoose, models: { Product } } = require('data')
 const { expect } = require('chai')
 const logic = require('.')
 const _ = require('lodash')

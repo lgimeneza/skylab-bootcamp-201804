@@ -1,17 +1,18 @@
 {
-  "name": "auction-logic",
+  "name": "logic",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha .",
+    "debug-test": "mocha debug ."
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "auction-data": "file:../auction-data",
     "chai": "^4.1.2",
+    "data": "file:../data",
     "dotenv": "^6.0.0",
     "lodash": "^4.17.10"
   }
