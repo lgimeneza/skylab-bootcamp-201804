@@ -20,6 +20,10 @@ class Register extends Component {
     }
   }
 
+  componentDidMount() {
+    document.body.style.background = "linear-gradient(#9824afa6, #6b2061a9, transparent), url('/images/blurry-register.jpeg')"
+
+  }
 
   handleSubmitRegister = (e) => {
     e.preventDefault()
@@ -33,10 +37,10 @@ class Register extends Component {
             if (res) {
               // logic.login(res.email, res.password)
               //   .then(() => {
-                  this.props.history.push('/auth')
-                 
-                //   this.setState({ isRegistered: true })
-                // })
+              this.props.history.push('/auth')
+
+              //   this.setState({ isRegistered: true })
+              // })
 
             } else {
               console.log('Error, username and/or password wrong')
@@ -76,17 +80,67 @@ class Register extends Component {
     return (
       <main>
         <Navbar />
-        <h1>Register</h1>
-        <form onSubmit={this.handleSubmitRegister}>
-          <input type="text" name="name" placeholder="name" autoFocus="" onChange={this.handlerCapturingName} value={this.state.name} />
-          <input type="text" name="surname" placeholder="surname" onChange={this.handlerCapturingSurname} value={this.state.surname} />
-          <input type="text" name="address" placeholder="address" onChange={this.handlerCapturingAddress} value={this.state.address} />
-          <input type="email" name="email" placeholder="email" onChange={this.handlerCapturingEmail} value={this.state.email} />
-          <input type="password" name="password" placeholder="password" onChange={this.handlerCapturingPassword} value={this.state.password} />
-          <input type="password" name="passwordConfirm" placeholder="passwordConfirm" onChange={this.handlerCapturingPasswordConfirm} value={this.state.passwordConfirm} />
-          <button type="submit">Register</button>
-        </form>
+        <div className="container">
+          <div className="py-5 text-center title">
+            <h2>Register</h2>
+            <p className="lead">Below is an example </p>
+          </div>
+
+          <div className="main-container">
+            <form className="form-register" onSubmit={this.handleSubmitRegister} noValidate>
+              <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label htmlFor="firstName">First name</label>
+                  <input type="text" className="form-control" id="firstName" name="name" placeholder="name" autoFocus="" onChange={this.handlerCapturingName} value={this.state.name} />
+                  <div className="invalid-feedback">
+                    Valid first name is required.
+                </div>
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label htmlFor="lastName">Last name</label>
+                  <input type="text" className="form-control" id="lastName" name="surname" placeholder="surname" onChange={this.handlerCapturingSurname} value={this.state.surname} />
+                  <div className="invalid-feedback">
+                    Valid last name is required.
+                </div>
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="username">address</label>
+                <div className="input-group">
+                  <input type="text" className="form-control" id="username" name="address" placeholder="address" onChange={this.handlerCapturingAddress} value={this.state.address} />
+                  <div className="invalid-feedback" style={{ width: '100%' }}>
+                    Your address is required.
+                </div>
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="email">Email
+              </label>
+                <input type="email" className="form-control" id="email" name="email" placeholder="email" onChange={this.handlerCapturingEmail} value={this.state.email} />
+                <div className="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
+              </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="address">password</label>
+                <input type="password" className="form-control" id="address" name="password" placeholder="password" onChange={this.handlerCapturingPassword} value={this.state.password} />
+                <div className="invalid-feedback">
+                  Please enter your shipping address.
+              </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="address2">Confirm password
+              </label>
+                <input type="password" className="form-control" id="address2" name="passwordConfirm" placeholder="passwordConfirm" onChange={this.handlerCapturingPasswordConfirm} value={this.state.passwordConfirm} />
+              </div>
+              <hr className="mb-4" />
+              <button className="btn btn-primary btn-lg btn-block register-submit" type="submit">Continue to Login</button>
+            </form>
+          </div>
+        </div>
+
       </main>
+
     )
   }
 }
