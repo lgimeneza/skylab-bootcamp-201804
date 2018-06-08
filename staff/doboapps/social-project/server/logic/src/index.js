@@ -11,7 +11,7 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
-    registerUser(name, email, password) {
+    registerUser(name, email, password,city) {
         return Promise.resolve()
             .then(() => {
                 if (typeof name !== 'string') throw Error('user name is not a string')
@@ -26,11 +26,15 @@ const logic = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
+                if (typeof city !== 'string') throw Error('user city is not a string')
+
+                if ((city = city.trim()).length === 0) throw Error('user city is empty or blank')
+
                 return User.findOne({ email })
                     .then(user => {
                         if (user) throw Error(`user with email ${email} already exists`)
 
-                        return User.create({ name, email, password })
+                        return User.create({ name, email, password, city })
                             .then(() => true)
                     })
             })
@@ -76,7 +80,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, email: 1 })
+                return User.findById(id).select({ _id: 0, name: 1, email: 1, race:1, gender:1, city:1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)

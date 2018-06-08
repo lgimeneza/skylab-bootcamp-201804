@@ -9,13 +9,13 @@ const logic = require('.')
 
 const { env: { DB_URL } } = process
 
- describe('logic social', () => {
+describe('logic social', () => {
     const birthdateUser = new Date()
     const dummyUserId = '123456781234567812345678'
     const dummyUserId2 = '223456781234567812345678'
     const dummyNoteId = '123456781234567812345678'
-    const userData = { name: 'John', email: 'jd@mail.com', password: '123' }
-    const otherUserData = { name: 'Jack', email: 'jw@mail.com', password: '456' }
+    const userData = { name: 'John', email: 'jd@mail.com', password: '123', city: "Barcelona" }
+    const otherUserData = { name: 'Jack', email: 'jw@mail.com', password: '456', city: "Barcelona" }
     const parkData = { name: 'mypark', creator: dummyUserId, city: 'mycity', zip: "12345", location: "12314434-342342432" }
     const parkData2 = { name: 'mypark2', creator: dummyUserId2, city: 'mycity', zip: "12345", location: "12314434-342342432" }
     const indexes = []
@@ -30,18 +30,18 @@ const { env: { DB_URL } } = process
         return Promise.all([User.remove()/*, Note.deleteMany()*/])
     })
 
-      describe('register user', () => {
+    describe('register user', () => {
         it('should succeed on correct dada', () =>
-            logic.registerUser('John', 'jd@mail.com', '123')
+            logic.registerUser('John', 'jd@mail.com', '123', "Barcelona")
                 .then(res => expect(res).to.be.true)
         )
 
         it('should fail on already registered user', () =>
             User.create(userData)
                 .then(() => {
-                    const { name, email, password } = userData
+                    const { name, email, password, city } = userData
 
-                    return logic.registerUser(name, email, password)
+                    return logic.registerUser(name, email, password, city)
                 })
                 .catch(({ message }) => {
                     expect(message).to.equal(`user with email ${userData.email} already exists`)
@@ -92,9 +92,24 @@ const { env: { DB_URL } } = process
             logic.registerUser(userData.name, userData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
+
+        it('should fail on no user city', () =>
+            logic.registerUser(userData.name, userData.email,userData.city)
+                .catch(({ message }) => expect(message).to.equal('user city is not a string'))
+        )
+
+        it('should fail on empty user city', () =>
+            logic.registerUser(userData.name, userData.email,userData.city, '')
+                .catch(({ message }) => expect(message).to.equal('user city is empty or blank'))
+        )
+
+        it('should fail on blank user city', () =>
+            logic.registerUser(userData.name, userData.email,userData.city, '     ')
+                .catch(({ message }) => expect(message).to.equal('user city is empty or blank'))
+        )
     })
 
-      describe('authenticate user', () => {
+    describe('authenticate user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(() =>
@@ -134,7 +149,7 @@ const { env: { DB_URL } } = process
         )
     })
 
-      describe('retrieve user', () => {
+    describe('retrieve user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -169,7 +184,7 @@ const { env: { DB_URL } } = process
         )
     })
 
-      describe('udpate user', () => {
+    describe('udpate user', () => {
 
         it('should succeed on correct data', () =>
             User.create(userData)
@@ -382,12 +397,12 @@ const { env: { DB_URL } } = process
     })
 
 
-     describe('filter users', function () {
+    describe('filter users', function () {
         this.timeout(3000);
 
         it('should succeed on correct data', () => {
             let users = []
-            
+
             users.push(new User({ name: 'John', email: 'johndoe@mail.com', password: '123', race: "pug", gender: "male", description: "a dog", photoProfile: "/image", birthdateUser, city: "barcelona", zip: "08016" }).save())
             users.push(new User({ name: 'pepe', email: 'pepe@mail.com', password: '123', race: "bulldog", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser, city: "madrid", zip: "912829" }).save())
             users.push(new User({ name: 'toby', email: 'toby@mail.com', password: '123', race: "pug", gender: "female", description: "a dog", photoProfile: "/image", birthdateUser, city: "barcelona", zip: "08013" }).save())
@@ -419,17 +434,17 @@ const { env: { DB_URL } } = process
         )
 
         it('should fail on no user race', () =>
-            logic.filterUsers("",1)
+            logic.filterUsers("", 1)
                 .catch(({ message }) => expect(message).to.equal('user race is not a string or undefined'))
         )
 
         it('should fail on no user gender', () =>
-            logic.filterUsers("","",1)
+            logic.filterUsers("", "", 1)
                 .catch(({ message }) => expect(message).to.equal('user gender is not a string or undefined'))
         )
 
         it('should fail on no user city', () =>
-            logic.filterUsers(undefined,undefined,undefined,1)
+            logic.filterUsers(undefined, undefined, undefined, 1)
                 .catch(({ message }) => expect(message).to.equal('user city is not a string or undefined'))
         )
     })
@@ -472,19 +487,19 @@ const { env: { DB_URL } } = process
         )
 
         it('should fail on no park city', () =>
-            logic.filterParks("",1)
+            logic.filterParks("", 1)
                 .catch(({ message }) => expect(message).to.equal('park city is not a string or undefined'))
         )
 
         it('should fail on no park zip', () =>
-            logic.filterParks("","",1)
+            logic.filterParks("", "", 1)
                 .catch(({ message }) => expect(message).to.equal('park zip is not a string or undefined'))
         )
 
-  
+
     })
 
-      describe('add notifications', () => {
+    describe('add notifications', () => {
 
         it('should succeed on correct data', () =>
             User.create(userData)
@@ -535,8 +550,8 @@ const { env: { DB_URL } } = process
     describe('delete notifications', () => {
 
         it('should succeed on correct data', () =>
-            User.create( { name: 'John', email: 'jd@mail.com', password: '123'  , notifications:["notification1","notification2","notification3"]})
-                  .then(({ id }) => {
+            User.create({ name: 'John', email: 'jd@mail.com', password: '123', notifications: ["notification1", "notification2", "notification3"] })
+                .then(({ id }) => {
 
                     return logic.deleteNotifications(id)
                         .then((res) => {
@@ -563,7 +578,7 @@ const { env: { DB_URL } } = process
 
     })
 
-      describe('unregister user', () => {
+    describe('unregister user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -625,7 +640,7 @@ const { env: { DB_URL } } = process
         )
     })
 
-      describe('add friend', () => {
+    describe('add friend', () => {
 
         it('should succeed on correct data', () => {
             let users = []
@@ -816,7 +831,7 @@ const { env: { DB_URL } } = process
 
 
 
-      describe('add lover', () => {
+    describe('add lover', () => {
         it('should succeed on correct data', () => {
             let users = [];
 
@@ -913,7 +928,7 @@ const { env: { DB_URL } } = process
     })
 
 
-      describe('remove love', () => {
+    describe('remove love', () => {
         it('should succeed on correct data', () => {
             let users = [];
 
@@ -988,7 +1003,7 @@ const { env: { DB_URL } } = process
 
 
 
-      describe('create park', () => {
+    describe('create park', () => {
         it('should succeed on correct dada', () => {
 
             return User.create(userData)
@@ -1101,7 +1116,7 @@ const { env: { DB_URL } } = process
     })
 
 
-      describe('retrieve park', () => {
+    describe('retrieve park', () => {
         it('should succeed on correct dada', () => {
 
             let createParks = []
@@ -1146,7 +1161,7 @@ const { env: { DB_URL } } = process
 
 
 
-      describe('remove park', () => {
+    describe('remove park', () => {
         it('should succeed on correct dada', () => {
 
             let createParks = []
