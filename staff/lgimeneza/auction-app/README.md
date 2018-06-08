@@ -2,4 +2,4 @@
 
 ### Data model
 
-![](/images/auction-model.png)
+![](/docs/images/auction-model.png)

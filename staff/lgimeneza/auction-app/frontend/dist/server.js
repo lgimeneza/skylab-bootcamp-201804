@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -117,19 +117,19 @@ var _navbar = __webpack_require__(7);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
-var _home = __webpack_require__(19);
+var _home = __webpack_require__(18);
 
 var _home2 = _interopRequireDefault(_home);
 
-var _user = __webpack_require__(29);
+var _user = __webpack_require__(28);
 
 var _user2 = _interopRequireDefault(_user);
 
-var _landing = __webpack_require__(20);
+var _landing = __webpack_require__(19);
 
 var _landing2 = _interopRequireDefault(_landing);
 
-var _product = __webpack_require__(21);
+var _product = __webpack_require__(20);
 
 var _product2 = _interopRequireDefault(_product);
 
@@ -430,7 +430,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(5);
 
-var _redirectWStatus = __webpack_require__(22);
+var _redirectWStatus = __webpack_require__(21);
 
 var _redirectWStatus2 = _interopRequireDefault(_redirectWStatus);
 
@@ -529,15 +529,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(2);
 
-var _userReducer = __webpack_require__(28);
+var _userReducer = __webpack_require__(27);
 
 var _userReducer2 = _interopRequireDefault(_userReducer);
 
-var _productsReducer = __webpack_require__(27);
+var _productsReducer = __webpack_require__(26);
 
 var _productsReducer2 = _interopRequireDefault(_productsReducer);
 
-var _productReducer = __webpack_require__(26);
+var _productReducer = __webpack_require__(25);
 
 var _productReducer2 = _interopRequireDefault(_productReducer);
 
@@ -561,22 +561,16 @@ module.exports = require("express");
 /* 15 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-dom");
+module.exports = require("react-dom/server");
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-dom/server");
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
 module.exports = require("react-router");
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -590,7 +584,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(16);
+var _server = __webpack_require__(15);
 
 var _server2 = _interopRequireDefault(_server);
 
@@ -602,8 +596,6 @@ var _app = __webpack_require__(11);
 
 var _app2 = _interopRequireDefault(_app);
 
-var _reactDom = __webpack_require__(15);
-
 var _reactRedux = __webpack_require__(3);
 
 var _redux = __webpack_require__(2);
@@ -612,7 +604,7 @@ var _combine = __webpack_require__(13);
 
 var _combine2 = _interopRequireDefault(_combine);
 
-var _reactRouter = __webpack_require__(17);
+var _reactRouter = __webpack_require__(16);
 
 var _thunk = __webpack_require__(12);
 
@@ -699,7 +691,7 @@ function renderFullPage(html, preloadedState, helmet) {
 }
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -774,7 +766,7 @@ var Home = function (_Component) {
 exports.default = Home;
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -798,7 +790,7 @@ var _redux = __webpack_require__(2);
 
 var _reactHelmet = __webpack_require__(1);
 
-var _productsActions = __webpack_require__(24);
+var _productsActions = __webpack_require__(23);
 
 var actions = _interopRequireWildcard(_productsActions);
 
@@ -932,7 +924,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Landing);
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -956,7 +948,7 @@ var _redux = __webpack_require__(2);
 
 var _reactHelmet = __webpack_require__(1);
 
-var _productActions = __webpack_require__(23);
+var _productActions = __webpack_require__(22);
 
 var actions = _interopRequireWildcard(_productActions);
 
@@ -1178,7 +1170,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Product);
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1213,7 +1205,7 @@ var RedirectWithStatus = function RedirectWithStatus(_ref) {
 exports.default = RedirectWithStatus;
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1245,7 +1237,7 @@ function getProductFromAPI(id) {
 }
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1277,7 +1269,7 @@ function getProductsFromAPI() {
 }
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1309,7 +1301,7 @@ function getUserFromAPI(id) {
 }
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1341,7 +1333,7 @@ function productReducer() {
 }
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1373,7 +1365,7 @@ function productsReducer() {
 }
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1406,7 +1398,7 @@ function userReducer() {
 }
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1430,7 +1422,7 @@ var _redux = __webpack_require__(2);
 
 var _reactHelmet = __webpack_require__(1);
 
-var _userActions = __webpack_require__(25);
+var _userActions = __webpack_require__(24);
 
 var actions = _interopRequireWildcard(_userActions);
 
