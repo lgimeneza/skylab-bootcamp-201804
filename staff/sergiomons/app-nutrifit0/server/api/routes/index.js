@@ -5,7 +5,7 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const jsonBodyParser = bodyParser.json()
-const logic = require('../../../logic/')
+const logic = require('logic')
 
 const jwt = require('jsonwebtoken')
 const jwtValidation = require('./utils/jwt-validation')

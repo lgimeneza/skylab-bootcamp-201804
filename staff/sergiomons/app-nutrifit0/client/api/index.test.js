@@ -15,7 +15,7 @@ const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 clientApi.url = API_URL
 
 describe('logic Api (api)', () => {
-    const userDataRegister = { username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword:'123' }
+    const userDataRegister = { username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword: '123' }
     const userData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: 123456789, points: 4, orders: [] }
     const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
     const fakeUserId = '123456781234567812345678'
@@ -24,10 +24,12 @@ describe('logic Api (api)', () => {
     // products data
     const polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
     const terneraData = { image: 'http://images.com/1234', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
-    const polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }       
+    const polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }
     const sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }
     const sopaMariscoData = { image: 'http://images.com/1234', name: 'Sopa de marisco', description: 'Sopa de marisco desc', price: 3.25 }
     const pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
+    // categories
+    const pack_CategoryData = { name: 'Pack' }
 
     before(() => mongoose.connect(DB_URL))
 
@@ -42,6 +44,8 @@ describe('logic Api (api)', () => {
     describe('register user', () => {
 
         const { username, email, password, repeatPassword } = userDataRegister
+
+        debugger
 
         it('should succeed on correct dada', () =>
             clientApi.registerUser(username, email, password, repeatPassword)
@@ -68,7 +72,7 @@ describe('logic Api (api)', () => {
 
         it('should fail on no user username', () =>
             clientApi.registerUser()
-            .catch(({ message }) => expect(message).to.equal('username is not a string'))
+                .catch(({ message }) => expect(message).to.equal('username is not a string'))
         )
 
         it('should fail on empty user username', () =>
@@ -112,8 +116,8 @@ describe('logic Api (api)', () => {
         )
 
         it('should fail on no user repeatPassword', () =>
-        clientApi.registerUser(username, email, password)
-            .catch(({ message }) => expect(message).to.equal('repeatPassword is not a string'))
+            clientApi.registerUser(username, email, password)
+                .catch(({ message }) => expect(message).to.equal('repeatPassword is not a string'))
         )
 
         it('should fail on empty user repeatPassword', () =>
@@ -184,16 +188,16 @@ describe('logic Api (api)', () => {
     describe('authenticate user', () => {
         it('should succeed on correct data', () =>
             User.create(userDataRegister)
-            .then(id => {
-               return clientApi.authenticateUser('ser@email.com', '123')
-                    .then(id => {
-                        expect(id).to.exist
-                        expect(clientApi.token).not.to.equal('NO-TOKEN')
-                    })
-                
-            })
+                .then(id => {
+                    return clientApi.authenticateUser('ser@email.com', '123')
+                        .then(id => {
+                            expect(id).to.exist
+                            expect(clientApi.token).not.to.equal('NO-TOKEN')
+                        })
+
+                })
         )
-    
+
 
         it('should fail on no user email', () =>
             clientApi.authenticateUser()
@@ -224,7 +228,7 @@ describe('logic Api (api)', () => {
             clientApi.authenticateUser(userDataRegister.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('password is empty or blank'))
         )
-    
+
         describe('on unexpected server behavior', () => {
             let sandbox
 
@@ -285,11 +289,11 @@ describe('logic Api (api)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    clientApi.token(token) 
+                    clientApi.token(token)
 
                     return clientApi.retrieveUser(id)
                 })
-                .then(user=> {
+                .then(user => {
                     expect(user).to.exist
 
                     const { _id, name, surname, username, email, password, address, phone, points, orders } = user
@@ -726,18 +730,29 @@ describe('logic Api (api)', () => {
                 new Product(polloArrozData).save(),
                 new Product(sopaVerdurasData).save(),
                 new Product(sopaMariscoData).save(),
-                new Product(pescadoPlanchaData).save()
+                new Product(pescadoPlanchaData).save(),
+                new Category(pack_CategoryData).save()
             ])
-                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha]) => {
-                   return clientApi.listProducts()
-                            .then(products => {
-                                expect(products.length).to.equal(6)
-                                expect(products[0]._id.toString()).to.equal(polloVerduras._doc._id.toString())
-                                expect(products[0].name).to.equal(polloVerduras.name)
-                                expect(products[0].description).to.equal(polloVerduras.description)
-                                expect(products[0].price).to.equal(polloVerduras.price)
-                                expect(products[0]._id.toString()).not.to.equal(ternera._doc._id.toString())
-                            })
+                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, packCategory]) => {
+
+                    polloVerduras.category = packCategory._id
+
+                    return polloVerduras.save()
+                        .then(() => {
+                            return clientApi.listProducts()
+                                .then(products => {
+                                    expect(products.length).to.equal(6)
+
+                                    const product = products.find(product => product.id === polloVerduras._id.toString())
+
+                                    expect(product.id).to.equal(polloVerduras._doc._id.toString())
+                                    expect(product.id).not.to.equal(ternera._doc._id.toString())
+                                    expect(product.name).to.equal(polloVerduras.name)
+                                    expect(product.description).to.equal(polloVerduras.description)
+                                    expect(product.price).to.equal(polloVerduras.price)
+                                    expect(product.categoryId).to.equal(packCategory._id.toString())
+                                })
+                        })
                 })
         })
 

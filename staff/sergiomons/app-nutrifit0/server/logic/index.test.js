@@ -2,14 +2,14 @@
 
 require('dotenv').config()
 
-const { mongoose, models: { User, Order, Product, Category, Subcategory} } = require('data')
+const { mongoose, models: { User, Order, Product, Category, Subcategory } } = require('data')
 const logic = require('.')
 const { expect } = require('chai')
 
 const { env: { DB_URL } } = process
 
 describe('logic nutrifit', () => {
-    const userDataRegister = { username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword:'123' }
+    const userDataRegister = { username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword: '123' }
     const userData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: 123456789, points: 4, orders: [] }
     const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
     const dummyUserId = '123456781234567812345678'
@@ -18,10 +18,13 @@ describe('logic nutrifit', () => {
     // products data
     const polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
     const terneraData = { image: 'http://images.com/1234', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
-    const polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }       
+    const polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }
     const sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }
     const sopaMariscoData = { image: 'http://images.com/1234', name: 'Sopa de marisco', description: 'Sopa de marisco desc', price: 3.25 }
     const pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
+    // categories
+    const pack_CategoryData = { name: 'Pack' }
+
 
     before(() => mongoose.connect(DB_URL))
 
@@ -31,24 +34,24 @@ describe('logic nutrifit', () => {
         while (count--) indexes.push(count)
 
 
-        return Promise.all([User.remove() , Product.deleteMany()])
+        return Promise.all([User.remove(), Product.deleteMany()])
     })
 
     describe('register user', () => {
 
         const { username, email, password, repeatPassword } = userDataRegister
-       
+
         it('should succeed on correct data', () =>
 
             logic.registerUser('sergi', 'ser@email.com', '123', '123')
                 .then(res => expect(res).to.be.true)
         )
 
-        it('should fail no match password', () => 
+        it('should fail no match password', () =>
             logic.registerUser(username, email, password, '124')
-            .catch(({ message }) => expect(message).to.equal('the fields password not match'))
+                .catch(({ message }) => expect(message).to.equal('the fields password not match'))
         )
-        
+
         it('should fail on existing username', () => {
             User.create(userDataRegister)
                 .then(() => {
@@ -66,9 +69,9 @@ describe('logic nutrifit', () => {
         })
 
         it('should fail on no user username', () =>
-        logic.registerUser()
-            .catch(({ message }) => expect(message).to.equal('username is not a string'))
-    )
+            logic.registerUser()
+                .catch(({ message }) => expect(message).to.equal('username is not a string'))
+        )
 
         it('should fail on empty user username', () =>
             logic.registerUser('')
@@ -111,9 +114,9 @@ describe('logic nutrifit', () => {
         )
 
         it('should fail on no user repeatPassword', () =>
-        logic.registerUser(username, email, password)
-            .catch(({ message }) => expect(message).to.equal('repeatPassword is not a string'))
-    )
+            logic.registerUser(username, email, password)
+                .catch(({ message }) => expect(message).to.equal('repeatPassword is not a string'))
+        )
 
         it('should fail on empty user repeatPassword', () =>
             logic.registerUser(username, email, password, '')
@@ -331,19 +334,29 @@ describe('logic nutrifit', () => {
                 new Product(polloArrozData).save(),
                 new Product(sopaVerdurasData).save(),
                 new Product(sopaMariscoData).save(),
-                new Product(pescadoPlanchaData).save()
+                new Product(pescadoPlanchaData).save(),
+                new Category(pack_CategoryData).save()
             ])
-                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha]) => {
-                   return logic.listProducts()
-                            .then(products => {
-                                debugger
-                                expect(products.length).to.equal(6)
-                                expect(products[0]._id.toString()).to.equal(polloVerduras._doc._id.toString())
-                                expect(products[0].name).to.equal(polloVerduras.name)
-                                expect(products[0].description).to.equal(polloVerduras.description)
-                                expect(products[0].price).to.equal(polloVerduras.price)
-                                expect(products[0]._id.toString()).not.to.equal(ternera._doc._id.toString())
-                            })
+                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, packCategory]) => {
+
+                    polloVerduras.category = packCategory._id
+
+                    return polloVerduras.save()
+                        .then(() => {
+                            return logic.listProducts()
+                                .then(products => {
+                                    expect(products.length).to.equal(6)
+                                    
+                                    const [product] = products
+
+                                    expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
+                                    expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
+                                    expect(product.name).to.equal(polloVerduras.name)
+                                    expect(product.description).to.equal(polloVerduras.description)
+                                    expect(product.price).to.equal(polloVerduras.price)
+                                    expect(product.categoryId).to.equal(packCategory._id.toString())
+                                })
+                        })
                 })
         })
     })

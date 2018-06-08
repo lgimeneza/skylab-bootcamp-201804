@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const {mongoose} = require('data')
 const express = require('express')
-const router = require('./src/routes/index')
+const router = require('./routes/index')
 const cors = require('cors')
 
 const { env: { PORT, DB_URL } } = process

@@ -42,16 +42,16 @@ const logic = {
                         if (user) throw Error(`user with username ${username} already exists`)
 
                         return User.findOne({ email })
-                                .then(user => {
-                                    if (user) throw Error(`user with email ${email} already exists`)
+                            .then(user => {
+                                if (user) throw Error(`user with email ${email} already exists`)
 
-                                    return User.create({ username, email, password, repeatPassword })
-                                        .then(() => true)
+                                return User.create({ username, email, password, repeatPassword })
+                                    .then(() => true)
+                            })
                     })
-                })
-        })
+            })
     },
-    
+
     /**
      * 
      * @param {string} email
@@ -92,7 +92,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, surname: 1, username: 1, email: 1, address: 1, telephone: 1, phone: 1})  
+                return User.findById(id).select({ _id: 0, name: 1, surname: 1, username: 1, email: 1, address: 1, telephone: 1, phone: 1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -213,10 +213,10 @@ const logic = {
 
                 return Product.find({})
                     .then(res => {
-                        const products = res.map(product => product._doc)
+                        const products = res.map(({ _id: id, name, description, image, price, discount, category }) => ({ id, name, description, image, price, discount, categoryId: category ? category.toString() : undefined }))
                         return products
                     })
-            })     
+            })
     },
 
     /**
@@ -240,9 +240,9 @@ const logic = {
     //                     return Promise.all(
     //                         res.map(({ _doc: category }) => {
     //                             ids.push(category._id.toString())
-                                
+
     //                             return Category.find({ parent: category._id })
-                            
+
     //                         })
     //                     )
     //                         .then(res => {
