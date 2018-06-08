@@ -1,6 +1,8 @@
 'use strict'
 
 const axios = require('axios')
+const storage = require('../api/utils/storage')
+
 
 const singinLabApi = {
     url: 'NO-URL',
@@ -84,6 +86,8 @@ const singinLabApi = {
                         const { data: { id, token } } = data
 
                         this.token = token
+
+                        sessionStorage.setItem('token', token)
 
                         return id
                     })

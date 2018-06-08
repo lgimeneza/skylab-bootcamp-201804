@@ -3,7 +3,6 @@ import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
 import Navbar from './../navbar'
-import storage from '../../utils/storage'
 
 class Register extends Component {
 
@@ -35,7 +34,7 @@ class Register extends Component {
               // logic.login(res.email, res.password)
               //   .then(() => {
                   this.props.history.push('/auth')
-                  storage.setToken(res.data.token)
+                 
                 //   this.setState({ isRegistered: true })
                 // })
 
