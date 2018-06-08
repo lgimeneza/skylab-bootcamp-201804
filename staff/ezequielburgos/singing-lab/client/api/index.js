@@ -85,8 +85,6 @@ const singinLabApi = {
 
                         const { data: { id, token } } = data
 
-                        this.token = token
-
                         sessionStorage.setItem('token', token)
 
                         return id
@@ -117,7 +115,7 @@ const singinLabApi = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -180,7 +178,7 @@ const singinLabApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, address, email, password, newEmail, newPassword }, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, address, email, password, newEmail, newPassword }, { headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -221,7 +219,7 @@ const singinLabApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.delete(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` }, data: { email, password } })
+                return axios.delete(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` }, data: { email, password } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

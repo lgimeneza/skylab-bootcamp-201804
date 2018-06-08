@@ -3,7 +3,6 @@ import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
 import Navbar from './../navbar'
-import storage from '../../utils/storage'
 
 class Login extends Component {
 
