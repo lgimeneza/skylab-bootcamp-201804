@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import 'bulma/css/bulma.css';
 import 'font-awesome/css/font-awesome.min.css'
-import './index.css';
+import './desing/index.css';
 import './desing/home.css'
 import './desing/dropdown.css'
 import App from './App';

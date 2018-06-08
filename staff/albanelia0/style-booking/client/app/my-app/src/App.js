@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Home from './component/home'
 import Calendar from './component/calendar'
 import { Switch, Route } from 'react-router-dom'
-import './App.css';
+import './desing/App.css';
 import { Login } from './component/login';
 import { Register } from './component/register';
 

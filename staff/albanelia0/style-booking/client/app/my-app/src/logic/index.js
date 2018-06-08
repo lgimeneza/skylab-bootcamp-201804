@@ -6,13 +6,13 @@ logicApi.url = 'http://localhost:4000/api'
 const logic = {
   userId: 'No-id',
 
-  registerUser(name, surname, email, password){
+  registerUser({name, surname, email, password}){
     return logicApi.registerUser(name, surname, email, password)
   },
 
-  login(email, password) {
+  login({email, password}) {
     return logicApi.authenticateUser(email,password)
-      .then((id) => {
+      .then(id => {
         this.userId = id
         return true
       })

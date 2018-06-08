@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import moment from 'moment'
+import 'react-router-dom'
+import swal from 'sweetalert2'
 import logic from '../logic'
 
 
@@ -7,47 +8,75 @@ export class Login extends Component {
 
   state = {
     gmail: '',
-    password: ''
+    password: '',
+    formIsFull: false,
+    conditionForGoToHome: false
   }
 
   handleChange = (e) => {
 
     const { name, value } = e.target
+
     this.setState({
       [name]: value
-    })
+    },
+      () => {
+        this.setState({
+          formIsFull: (
+            this.state.gmail &&
+            this.state.password
+          )
+        })
+      }
+    )
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault()
+  handleSubmit = (event) => {
+    event.preventDefault()
 
-    const { gmail, password } = this.state
+    const { gmail, password, formIsFull } = this.state
 
-    if (gmail && password) {
+    if (formIsFull) {
+      console.log(formIsFull)
 
-      const body = {gmail, password}
-      
+      const body = { gmail, password }
+
       logic.login(body).then(result => {
 
-        if (result.status === 'OK') {
+        if (result) {
+          this.setState({
+            conditionForGoToHome: true
+          })
+          
           this.storageUserData(result)
           localStorage.setItem(password)
-        } else {
-          swal({
-            type: 'error',
-            title: 'Something went wrong!',
-            text: result.error
-          })
         }
+      }).catch((data) => {
+        swal({
+          type: 'error',
+          title: 'Something went wrong!',
+          text: data.error
+        })
       })
+
       this.setState({
         gmail: '',
         password: ''
       })
     }
   }
+  goToHome() {
+    if (this.state.conditionForGoToHome) {
+      this.props.history.push('./home.js')
+    } else {
+      swal({
+        type: 'error',
+        title: 'Something went wrong!',
+      })
+    }
+  }
 
-  storageUserData(result){
+  storageUserData(result) {
     localStorage.setItem('token', result.data.token)
     localStorage.setItem('id', result.data.id)
   }
@@ -62,9 +91,9 @@ export class Login extends Component {
               <p className="subtitle has-text-grey">Please login to proceed.</p>
               <div className="box">
                 <figure className="avatar">
-                  <img src="https://placehold.it/128x128" />
+                  <img src="https://placehold.it/128x128" alt="" />
                 </figure>
-                <form onSubmit={this.handleSubmit()}>
+                <form>
                   <div className="field">
                     <div className="control">
                       <input onChange={this.handleChange} name='gmail' className="input is-large" type="email" placeholder="Your Email" autofocus="" />
@@ -81,11 +110,13 @@ export class Login extends Component {
                       Remember me
                     </label>
                   </div>
-                  <button className="button is-block is-info is-large is-fullwidth">Login</button>
+                  {this.state.conditionForGoToHome ? <button onClick={this.goToHome} className="button is-block is-info is-large is-fullwidth">Login</button> :
+                    <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Login</button>
+                  }
                 </form>
               </div>
               <p className="has-text-grey">
-                <a href="../">Sign Up</a> &nbsp;·&nbsp;
+                <a onClick={this.goToHome}>Go to home</a> &nbsp;·&nbsp;
                 <a href="../">Forgot Password</a> &nbsp;·&nbsp;
                 <a href="../">Need Help?</a>
               </p>
