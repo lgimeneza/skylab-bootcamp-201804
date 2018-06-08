@@ -77,7 +77,24 @@ describe('logic (sweet-home)', () => {
         })
 
     })
-    describe('update', ()=>{
+    describe('list users', ()=>{
+        it('shoul succed on correct data', ()=>{
+            
+
+            return shApi.listUsers()
+                .then(() => logic.authenticateUser(dni, password))
+                .then(() => {
+                    logic.listUsers()
+                    .then(res => {
+                        expect(res).to.be.true
+    
+                        expect(logic.data).not.to.equal('NO-DATA')
+                    })
+                })
+                      
+        })
+    })
+    describe('unregister', ()=>{
         it('should succed on correct data', ()=>{
             const { name, surname, phone, dni, password } = userData
 

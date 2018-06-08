@@ -16,7 +16,7 @@ function Landing(props) {
             <h1 className="tittle">SWEET HOME</h1>
         </header>
         <section>
-            <p className="welcome">Welcome to the room sharing web</p>
+            <p className="welcome">Welcome to the house sharing web</p>
            
             <Link to="/auth">  
                 <button className="login-button">Login</button>

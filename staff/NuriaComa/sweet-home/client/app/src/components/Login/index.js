@@ -2,26 +2,67 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import {Link} from 'react-router-dom'
 import './index.css'
+import Xtorage from '../../Xtorage'
+import swal from 'sweetalert2'
 
 class Login extends Component {
 
+    state = {
+        dni: '',
+        password: '',
+        id:'',
+        token:''
+    }
+
+    loginDni = (e) => {
+        const dni = e.target.value
+        this.setState({ dni })
+    }
+    loginPassword = (e) => {
+        const password = e.target.value
+        this.setState({ password })
+    }
+
+    acceptLogin = (e) => {
+        e.preventDefault()
+        
+        logic.authenticateUser(this.state.dni, this.state.password)
+            .then(resp => {
+
+                swal(
+                    'Successful login',
+                ).then(this.props.history.push('/home'))
+                
+                
+            })
+            .catch(err => 
+                {
+                    swal(
+                        err.message,
+                    )
+                })  
+        }
 
 
+    redirect= () => {
+        this.props.history.push('/register')
+    }
 
     render() {
         return (
             <div>
                  <div>
                     <section>
-                    <form>
+                    <h2>Login</h2>
+                    <form  onSubmit={this.acceptLogin}>
                         <p> DNI:</p>
-                        <input className="formulario" type="text" name="DNI" ></input>
+                        <input className="formulario" type="text" value={this.state.dni} onChange={this.loginDni}  name="DNI" ></input>
                         <p> Password:</p>
-                        <input className="formulario" type="text" name="password"></input>
+                        <input className="formulario" type="text" value={this.state.password} onChange={this.loginPassword} name="password"></input>
+                    <button type="submit" className="login-button">Login</button>
                     </form>
-                    <Link to="/Home">
-                    <button className="login-button">Login</button>
-                    </Link>
+                   
+                  
                         <p>New in Sweet Home?</p> 
                         <Link to="/register">
                             <p> Register now</p>

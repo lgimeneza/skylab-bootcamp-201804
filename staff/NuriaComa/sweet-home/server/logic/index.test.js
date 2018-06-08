@@ -296,6 +296,29 @@ describe('logic (sweet-home)', () => {
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
     })
+
+    describe('list user', () => {
+        it('should succeed on correct data', () =>
+            User.create(userData)
+                .then(() => {
+                    return logic.listUsers()
+                        .then(users => {
+                            expect(users).to.exist
+                            
+                            expect(users[0].name).to.equal('Nur')
+                            expect(users[0].surname).to.equal('C')
+                            expect (users[0].phone).to.equal('689456739')
+                            expect(users[0].dni).to.equal('45629856L')
+
+                            expect(users[0]._id).to.exist
+                            expect(users[0].password).to.exist
+                            
+                
+                        })
+                })
+        )
+    })
+
     describe('unregister user', () => {
         it('should succeed on correct data', () =>
             User.create(userData)

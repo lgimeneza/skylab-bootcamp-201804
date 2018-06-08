@@ -160,6 +160,21 @@ const logic = {
             .then(() => true)
     },
 
+    listUsers(){
+
+        return Promise.resolve()
+            .then(()=>{
+
+                return User.find()
+                    .then(users => {
+                        if (!users) throw Error(`no users found`)
+                       
+                        return users
+                    })
+                    
+            })
+    },
+    
     /**
      * 
      * @param {string} id 

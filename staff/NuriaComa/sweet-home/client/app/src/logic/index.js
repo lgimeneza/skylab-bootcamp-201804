@@ -7,6 +7,7 @@ shApi.url = 'http://localhost:4000/api'
 const logic = {
     userId: 'NO-ID',
     data: 'NO-DATA',
+    users:'NO-USERS',
 
     registerUser(name, surname, phone, dni, password) {
         return shApi.registerUser(name, surname, phone, dni, password)
@@ -18,7 +19,7 @@ const logic = {
             .then(id => {
                 this.userId = id
 
-                return true
+                return id
             })
     },
 
@@ -34,7 +35,16 @@ const logic = {
 
     updateUser(id, name, surname, phone, dni, password, newPhone, newPassword) {
         return shApi.updateUser(id, name, surname, phone, dni, password, newPhone, newPassword)
-        .then((res) => true)
+        .then(users => {
+            return users
+        })
+    },
+    listUsers(){
+        return shApi.listUsers()
+
+        this.users = res.data
+
+        return true
     },
 
     unregisterUser(id, dni, password) {

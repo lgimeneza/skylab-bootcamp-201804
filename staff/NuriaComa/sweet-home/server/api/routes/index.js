@@ -70,6 +70,20 @@ router.patch('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
             res.json({ status: 'KO', error: message })
         })
 })
+router.get('/list',jwtValidator, (req, res) => {
+    
+
+    return logic.listUsers()
+        .then(users => {
+            res.status(200)
+            res.json({ status: 'OK', data: users })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+
+})
 router.delete('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
     const { params: { userId }, body: { dni, password } } = req
 

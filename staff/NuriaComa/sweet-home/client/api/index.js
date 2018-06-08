@@ -5,7 +5,14 @@ const axios = require('axios')
 const shApi = {
     url: 'NOWHERE',
 
-    token: 'NO-TOKEN',
+    token(token){
+
+        if(token){
+            localStorage.setItem('token', token)
+            return
+        }
+        return localStorage.getItem('token')
+    },
 
     /**
      * 
@@ -86,7 +93,7 @@ const shApi = {
 
                     const { data: { id, token } } = data
 
-                    this.token = token
+                    this.token()(token)
 
                     return id
                 })
@@ -115,7 +122,7 @@ const shApi = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` } } )
+                return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -172,7 +179,7 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, dni, password, newPhone, newPassword },{ headers: { authorization: `Bearer ${this.token}`}})
+                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, dni, password, newPhone, newPassword },{ headers: { authorization: `Bearer ${this.token()}`}})
                 .then(({ status, data }) => {
 
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
@@ -192,6 +199,34 @@ const shApi = {
                 
             })
             
+    },
+
+     /**
+     * 
+     * 
+     * 
+     * @returns {Promise<User>} 
+     */
+    listUsers() {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.get(`${this.url}/list`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                    return data.data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                    } else throw err
+                })
+            })
     },
 
     /**
@@ -218,7 +253,7 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.delete(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` }, data: { dni, password } })
+                return axios.delete(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token()}` }, data: { dni, password } })
 
                 .then(({ status, data }) => {
 
