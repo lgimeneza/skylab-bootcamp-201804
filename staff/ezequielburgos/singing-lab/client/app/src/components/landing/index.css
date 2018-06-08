@@ -24,3 +24,19 @@
     color: #fff;
     text-decoration: none;
 }
+
+/*
+Home page CSS
+*/
+
+/* .fas {
+    color: red;
+} */
+
+.first-main{
+    background: linear-gradient(-40deg, #9824af49, #5c1b535e, transparent), url('/images/microphone.jpg');
+    background-size: cover;
+    background-position: top left;
+    background-repeat: no-repeat;
+    
+}

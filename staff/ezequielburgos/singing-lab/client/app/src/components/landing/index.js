@@ -9,17 +9,15 @@ class Landing extends Component {
     render() {
         return (
             <main>
-                <Navbar/>
-                 <h1>Landing Page</h1>
+                <Navbar />
                 <section>
-                    <p className="welcome">Welcome to singing lab</p>
-
-                    <Link to="/auth">
-                        <button className="login-button">Login</button>
-                    </Link>
-                    <Link to="/register">
-                        <button className="register-button">Register</button>
-                    </Link>
+                    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light first-main">
+                        <div class="col-md-5 p-lg-5 mx-auto my-5 main-title">
+                            <h1 class="display-4 font-weight-normal">Singing-Lab</h1>
+                            <p class="lead font-weight-normal">A place to increase your singing skills from home</p>
+                            <a class="btn btn-outline-secondary" href="categories.html">Click here to enter</a>
+                        </div>
+                    </div>
                 </section>
 
             </main>

@@ -24,7 +24,9 @@ describe('logic (notes-app)', () => {
             const { name, surname, address, email, password } = userData
 
             return logic.registerUser(name, surname, address, email, password)
-                .then(res => expect(res).to.be.true)
+                .then(res => {
+                    expect(res).to.be.true
+                })
         })
     })
 
@@ -36,7 +38,6 @@ describe('logic (notes-app)', () => {
                 .then(() => logic.login(email, password))
                 .then(res => {
                     expect(res).to.be.true
-
                     expect(logic.userId).not.to.equal('NO-ID')
                 })
         })
@@ -96,7 +97,7 @@ describe('logic (notes-app)', () => {
         it('should succeed on correct data', () => {
             const { name, surname, address, email, password } = userData
 
-            return logic.register(name, surname, address, email, password)
+            return logic.registerUser(name, surname, address, email, password)
                 then(res => {
                     console.log('HELLO')
                 })
