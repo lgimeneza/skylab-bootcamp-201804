@@ -170,7 +170,7 @@ var shApi = {
     * 
     * @returns {Promise<boolean>}
     */
-    updateUser: function updateUser(id, name, surname, phone, dni, password, newPhone, newPassword) {
+    updateUser: function updateUser(id, name, surname, phone, dni, password, newPassword) {
         var _this4 = this;
 
         return Promise.resolve().then(function () {
@@ -198,7 +198,7 @@ var shApi = {
 
             if ((password = password.trim()).length === 0) throw Error('user password is empty or blank');
 
-            return axios.patch(_this4.url + '/users/' + id, { name: name, surname: surname, phone: phone, dni: dni, password: password, newPhone: newPhone, newPassword: newPassword }, { headers: { authorization: 'Bearer ' + _this4.token() } }).then(function (_ref4) {
+            return axios.patch(_this4.url + '/users/' + id, { name: name, surname: surname, phone: phone, dni: dni, password: password, newPassword: newPassword }, { headers: { authorization: 'Bearer ' + _this4.token() } }).then(function (_ref4) {
                 var status = _ref4.status,
                     data = _ref4.data;
 

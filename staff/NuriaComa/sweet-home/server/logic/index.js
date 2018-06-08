@@ -113,7 +113,7 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
-    updateUser(id, name, surname, phone, dni, password, newPhone, newPassword) {
+    updateUser(id, name, surname, phone, dni, password, newPassword) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -152,7 +152,6 @@ const logic = {
             .then(user => {
                 user.name = name
                 user.surname = surname
-                user.phone = newPhone ? newPhone : phone
                 user.password = newPassword ? newPassword : password
 
                 return user.save()

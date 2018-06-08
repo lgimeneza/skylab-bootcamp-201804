@@ -155,7 +155,7 @@ const shApi = {
      * 
      * @returns {Promise<boolean>}
      */
-    updateUser(id, name, surname, phone, dni, password, newPhone, newPassword) {
+    updateUser(id, name, surname, phone, dni, password, newPassword) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -182,7 +182,7 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, dni, password, newPhone, newPassword },{ headers: { authorization: `Bearer ${this.token()}`}})
+                return axios.patch(`${this.url}/users/${id}`, { name, surname, phone, dni, password, newPassword },{ headers: { authorization: `Bearer ${this.token()}`}})
                 .then(({ status, data }) => {
 
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)

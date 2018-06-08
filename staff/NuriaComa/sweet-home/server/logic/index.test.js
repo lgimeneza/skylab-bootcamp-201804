@@ -185,7 +185,7 @@ describe('logic (sweet-home)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return logic.updateUser(id, 'Nur', 'C', '689456739','45629856L', '123', '678345629', '456')
+                    return logic.updateUser(id, 'Nur', 'C', '689456739','45629856L', '123', '456')
                         .then(res => {
                             expect(res).to.be.true
 
@@ -199,7 +199,7 @@ describe('logic (sweet-home)', () => {
                             expect(user.id).to.equal(id)
                             expect(name).to.equal('Nur')
                             expect(surname).to.equal('C')
-                            expect(phone).to.equal('678345629')
+                            expect(phone).to.equal('689456739')
                             expect(dni).to.equal('45629856L')
                             expect(password).to.equal('456')
                         })
