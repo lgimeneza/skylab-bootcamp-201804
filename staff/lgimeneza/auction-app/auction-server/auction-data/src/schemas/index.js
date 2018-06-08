@@ -1,9 +1,9 @@
 const User = require('./user')
-const Auction = require('./auction')
+const Product = require('./product')
 const Bid = require('./bid')
 
 module.exports =  {
     User,
-    Auction,
+    Product,
     Bid,
 }

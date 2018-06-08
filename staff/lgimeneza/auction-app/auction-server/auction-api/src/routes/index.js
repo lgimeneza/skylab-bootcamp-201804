@@ -12,11 +12,11 @@ const jwtValidator = jwtValidation(TOKEN_SECRET)
 
 const jsonBodyParser = bodyParser.json()
 
-router.get('/auction', (req, res) => {
+router.get('/product', (req, res) => {
 
-    return logic.listAuctions()
-        .then(auction => {
-            res.status(200).json({ status: 'OK', data: auction })
+    return logic.listProducts()
+        .then(products => {
+            res.status(200).json({ status: 'OK', data: products })
         })
         .catch(({ message }) => {
             res.status(400).json({ status: 'KO', error: message })
@@ -24,10 +24,23 @@ router.get('/auction', (req, res) => {
 
 })
 
-router.post('/auction', jsonBodyParser, (req, res) => {
+router.get('/product/:productId', (req, res) => {
+    const { params: { productId } } = req
+
+    return logic.retrieveProduct(productId)
+        .then(product => {
+            res.status(200).json({ status: 'OK', data: product })
+        })
+        .catch(({ message }) => {
+            res.status(400).json({ status: 'KO', error: message })
+        })
+
+})
+
+router.post('/product', jsonBodyParser, (req, res) => {
     const { body: { title, description, startDate, endDate, startPrice, closed, image } } = req
 
-    logic.addAuction(title, description, startDate, endDate, startPrice, closed, image)
+    logic.addProduct(title, description, startDate, endDate, startPrice, closed, image)
         .then(() => {
             res.status(201).json({ status: 'OK' })
         })

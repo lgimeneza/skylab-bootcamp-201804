@@ -1,26 +1,46 @@
 'use strict'
 
-const { models: { Auction, Bid } } = require('auction-data')
+const { models: { Product } } = require('auction-data')
 
 const logic = {
 
-    listAuctions() {
+    //TODO: Add error handling
+    //TODO: Add documentation
+
+    listProducts() {
         return Promise.resolve()
             .then(() => {
-                return Auction.find()
-                    .then(auction => {
-                        return auction
-                    })
+                return Product.find()
+            })
+            .then(products => {
+                return products
             })
     },
 
-    addAuction(title, description, startDate, endDate, startPrice, closed, image) {
+    retrieveProduct(productId){
         return Promise.resolve()
             .then(() => {
-                return Auction.create({ title, description, startDate, endDate, startPrice, closed, image })
-                .then(() => true)
+                if (typeof productId !== 'string') throw Error('product id is not a string')
+
+                if (!(productId = productId.trim()).length) throw Error('product id is empty or blank')
+
+                return Product.findById(productId)
+            })
+            .then(product => {
+                if (!product) throw Error(`no product found with id ${productId}`)
+
+                return product
             })
     },
+
+    addProduct(title, description, startDate, endDate, startPrice, closed, image) {
+        return Promise.resolve()
+            .then(() => {
+                return Product.create({ title, description, startDate, endDate, startPrice, closed, image })
+            })
+            .then(() => true)
+    },
+
 
 }
 
