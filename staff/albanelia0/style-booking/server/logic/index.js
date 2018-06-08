@@ -203,12 +203,61 @@ const logic = {
       })
   },
 
-  getAvailableHoursForDate(date) { // yyyy-MM-dd
+  /**
+   * Returns the booking hours for a given year, month, day
+   * 
+   * @example
+   *  logic.getBookingHoursForYearMonthDay(2018, 10, 1)
+   *    .then(bookingHours => bookingHours.forEach(console.log))
+   * // output
+   * { start: 9, end: 10.5 }
+   * { start: 12.5, end: 13.5 }
+   * { start: 15.25, end: 16 }
+   * 
+   * @param {Number} year
+   * @param {Number} month
+   * @param {Number} day
+   */
+  getBookingHoursForYearMonthDay(year, month, day) { // yyyy-MM-dd
+
     Promise.resolve(() => {
       //TODO VALIDATIONS
 
+      const monthStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
+      const monthEnd = moment(monthStart).add(1, 'M')
+      const monthDays = monthEnd.diff(monthStart, 'days')
+      const hoursOfDays = {}
 
+      return Booking.find({
+        $and: [
+          { "date": { $gte: monthStart } },
+          { "date": { $lt: monthEnd } }
+        ]
+      })
+        .then(bookings => {
+          if (bookings.length) {
+            const bookingHours = bookings.forEach(element => {
 
+              const { date, endDate } = booking
+              hoursOfDays = {"date": data, "endDate": endDate}
+              
+
+              // calculate the duration of booking in hours
+              const diff = moment(endDate).diff(date)
+              const duration = moment.duration(diff).asHours()
+
+              // add hours of this booking to the accum object's date key
+              if (!accum[dayOfMonth]) accum[dayOfMonth] = 0
+              accum[dayOfMonth] += duration
+
+              return accum
+            });
+
+            // bookingHours => { 5: 3, 10: 7.5 }
+
+            return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
+          } else return []
+        })
     })
   },
   /**

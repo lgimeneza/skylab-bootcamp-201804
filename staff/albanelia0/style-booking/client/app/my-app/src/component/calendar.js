@@ -76,6 +76,7 @@ class Calendar extends Component {
       <div className="container">
         <section>
           <h1 className="calendar-title subtitle">Calendar</h1>
+          <hr/>
         </section>
         <section className="container-booking-data">
           {this.renderBookingData()}

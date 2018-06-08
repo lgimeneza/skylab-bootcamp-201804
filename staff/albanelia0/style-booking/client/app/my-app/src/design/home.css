@@ -1,8 +1,13 @@
+  @import url('https://fonts.googleapis.com/css?family=Poiret+One');
   body {
-    font-family: 'Open Sans';
+    font-family: 'Poiret One', cursive;
   }
 
   img {
     padding: 5px;
     border: 1px solid #ccc;
+  }
+
+  .navbar {
+    color: white;
   }

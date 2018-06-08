@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Dropdown} from './dropdown'
 import '../design/home.css'
+import img from '../design/logofucsia-1.png'
 // import 'bulma/js/bulma.js';
 
 const images = [
@@ -38,10 +39,10 @@ class Home extends Component {
     return (
       <section className="hero is-fullheight is-default is-bold">
         <div className="hero-head">
-          <nav className="navbar">
+          <nav className="navbar has-background-info">
             <div className="container">
               <div className="navbar-brand">
-                <p className="title">Victoria Style</p>
+                <p className="subtitle">Victoria Style</p>
                 <span className="navbar-burger burger" data-target="navbarMenu">
                 <span></span>
                 <span></span>
@@ -51,7 +52,7 @@ class Home extends Component {
               <div id="navbarMenu" className="navbar-menu">
                 <div className="navbar-end">
                   <div className="tabs is-right">
-                    <ul>
+                    <ul className="subtitle is-4">
                       <li className="is-active"><a>Home</a></li>
                       <li><a href="">Examples</a></li>
                       <li><a href="">Features</a></li>
@@ -66,8 +67,14 @@ class Home extends Component {
         </div>
         <div className="hero-body">
           <div className="container has-text-centered">
-            <p className="subtitle">ask for an appointment!
+          <section class="hero is-small is-primary">
+            <div class="hero-body">
+              <div class="container">
+                  <p className="subtitle">ask for an appointment!
                   We will do our best to satisfy your wishes!</p>
+              </div>
+            </div>
+          </section>
             <div className="columns is-vcentered">
               <div className="column is-5">
                 <figure className="image is-4by3">
