@@ -3,6 +3,8 @@ import logic from '../../logic'
 // import { Link } from 'react-router-dom'
 import './index.css'
 import Navbar from './../navbar'
+import Footer from './../footer'
+import LandingMain from '../landing-main'
 
 class Landing extends Component {
 
@@ -19,7 +21,8 @@ class Landing extends Component {
                         </div>
                     </div>
                 </section>
-
+                <LandingMain/>
+                <Footer/>
             </main>
         )
     }

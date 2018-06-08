@@ -40,7 +40,14 @@ const logic = {
     unregisterUser(id, dni, password) {
         return singingLabApi.unregisterUser(id, dni, password)
             .then(true)
+    },
+
+
+    listCategories(){
+        return singingLabApi.listCategories()
+            .then(categories => categories)
     }
+    
 }
 
 module.exports = logic
