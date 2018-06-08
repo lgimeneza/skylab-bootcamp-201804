@@ -19,7 +19,7 @@ mongoose.connect(DB_URL)
 
         app.use('/api', router)
 
-        app.listen(port, () => console.log(`server running on port ${port}`))
+        app.listen(port, () => console.log(`server running on port ${port} with db${DB_URL}`))
 
         process.on('SIGINT', () => {
             console.log('\nstopping server')

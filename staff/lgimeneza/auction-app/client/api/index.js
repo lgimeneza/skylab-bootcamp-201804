@@ -5,8 +5,6 @@ const axios = require('axios')
 const auctionApi = {
     url: 'NO-URL',
 
-    token: 'NO-TOKEN',
-
     /**
      * @returns {Promise<[Product]>}
      */
