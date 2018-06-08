@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Route, withRouter, Switch, Redirect} from 'react-router-dom';
 
-import castmeApi from '../../../CastMe Api/src';
 import './App.css';
 import Landing from './components/Landing/landing.js'
 //import Home from './components/Home/Home'
