@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { User, Arduino, ArduinoData }, mongoose: { Types: { ObjectId } } } = require('data')
+const { models: { User, Arduino, ArduinoData } } = require('data')
 
 const logic = {
     /**
@@ -196,7 +196,7 @@ const logic = {
             .then(() => true)
     },
 
-    addArduino(userId, ip) {
+    addArduino(userId, ip, port) {
 
         return Promise.resolve()
             .then(() => {
@@ -204,12 +204,13 @@ const logic = {
                 if (typeof ip !== 'string') throw Error('ip must be a string')
                 if (ip.trim() === '') throw Error('Empty ip')
                 if (!/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip)) throw Error('invalid ip')
-
+                if (typeof port !== 'string') throw Error('port must be a string')
+                if (!(port = port.trim()).length) throw Error('port is empty or blank')
                 if (typeof userId !== 'string') throw Error('userId is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
-                return User.findByIdAndUpdate(userId, { $push: { arduinos: { ip } } }, { new: true })
+                return User.findByIdAndUpdate(userId, { $push: { arduinos: { ip, port } } }, { new: true })
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
@@ -237,9 +238,9 @@ const logic = {
 
                         if (!ardu) throw Error(`no arduino found with id ${arduId}`)
 
-                        const { id, ip } = ardu
+                        const { id, ip, port } = ardu
 
-                        return { id, ip }
+                        return { id, ip, port }
                     })
             })
     },
@@ -255,10 +256,138 @@ const logic = {
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
-                        return user.arduinos.map(({ id, ip }) => ({ id, ip }))
+                        return user.arduinos.map(({ id, ip, port }) => ({ id, ip, port }))
+                    })
+            })
+    },
+
+    removeArduino(userId, arduId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof arduId !== 'string') throw Error('arduino id is not a string')
+
+                if (!(arduId = arduId.trim())) throw Error('arduino id is empty or blank')
+
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const ardu = user.arduinos.id(arduId)
+
+                        if (!ardu) throw Error(`no arduino found with id ${arduId}`)
+
+                        ardu.remove()
+
+                        return user.save()
+                    })
+                    .then(() => true)
+            })
+    },
+
+    updateArduino(userId, arduId, ip, port) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof arduId !== 'string') throw Error('arduino id is not a string')
+
+                if (!(arduId = arduId.trim())) throw Error('arduino id is empty or blank')
+
+                if (typeof ip !== 'string') throw Error('ip is not a string')
+
+                if ((ip = ip.trim()).length === 0) throw Error('ip is empty or blank')
+
+                if (typeof port !== 'string') throw Error('port is not a string')
+
+                if (!(port = port.trim())) throw Error('port is empty or blank')
+
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const ardu = user.arduinos.id(arduId)
+
+                        if (!ardu) throw Error(`no arduino found with id ${arduId}`)
+
+                        ardu.ip = ip
+
+                        ardu.port = port
+
+                        return user.save()
+                    })
+                    .then(() => true)
+            })
+    },
+
+    findArduinos(userId, chunk) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof chunk !== 'string') throw Error('chunk is not a string')
+
+                if (!chunk.length) throw Error('chunk is empty')
+
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        return user.arduinos.filter(arduino => arduino.ip.includes(chunk)).map(({ id, ip, port }) => ({ id, ip, port }))
+                    })
+            })
+    },
+
+    addArduinoData(id, arduId, value) {
+
+        return Promise.resolve()
+            .then(() => {
+                if (typeof value !== 'number') throw Error('value must be a number')
+                if (typeof arduId !== 'string') throw Error('arduId is not a string')
+
+                if (!(arduId = arduId.trim()).length) throw Error('arduId is empty or blank')
+                return User.findById(id)
+                    .then(user => {
+                        const data = new ArduinoData({ timestamp: Date.now(), value })
+                        const index = user.arduinos.findIndex(ardu => ardu.id === arduId)
+
+                        if (index === -1) throw Error(`no arduino found with id ${arduId}`)
+
+                        user.arduinos[index].data.push(data)
+                        return user.save()
+                            .then(user =>
+                                user.arduinos[index].data[user.arduinos[index].data.length - 1].id
+                            )
+                    })
+            })
+    },
+
+    retrieveArduinoData(id,arduId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof arduId !== 'string') throw Error('arduId is not a string')
+
+                if (!(arduId = arduId.trim())) throw Error('arduId is empty or blank')
+
+                return User.findById(id)
+                    .then(user => {
+                        const index = user.arduinos.findIndex(ardu => ardu.id === arduId)
+
+                        if (index === -1) throw Error(`No user with arduino ${arduId}`)
+
+                        return user.arduinos[index].data
                     })
             })
     }
+
+    //filtrado por fecha?
 }
 
 module.exports = logic

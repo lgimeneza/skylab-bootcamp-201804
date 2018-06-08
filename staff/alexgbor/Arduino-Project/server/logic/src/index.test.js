@@ -387,7 +387,7 @@ describe('logic (user)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return logic.addArduino(id, '192.162.1.1')
+                    return logic.addArduino(id, '192.162.1.1', '5000')
                         .then(arduId => {
                             expect(arduId).to.be.a('string')
                             expect(arduId).to.exist
@@ -398,17 +398,18 @@ describe('logic (user)', () => {
                                     expect(user.arduinos).to.exist
                                     expect(user.arduinos.length).to.equal(1)
 
-                                    const [{ id, ip }] = user.arduinos
+                                    const [{ id, ip, port }] = user.arduinos
 
                                     expect(id).to.equal(arduId)
                                     expect(ip).to.equal('192.162.1.1')
+                                    expect(port).to.equal('5000')
                                 })
                         })
                 })
         )
 
         it('should fail on wrong user id', () =>
-            logic.addArduino(dummyUserId, '192.168.1.1')
+            logic.addArduino(dummyUserId, '192.168.1.1', '5000')
                 .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
         )
 
@@ -418,13 +419,18 @@ describe('logic (user)', () => {
         )
 
         it('should fail on empty user id', () =>
-            logic.addArduino('', '192.168.1.1')
+            logic.addArduino('', '192.168.1.1', '5000')
                 .catch(({ message }) => expect(message).to.equal('userId is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            logic.addArduino('     ', '192.168.1.1')
+            logic.addArduino('     ', '192.168.1.1', '5000')
                 .catch(({ message }) => expect(message).to.equal('userId is empty or blank'))
+        )
+
+        it('should fail on empty user port', () =>
+            logic.addArduino(dummyUserId, '192.168.1.1', '')
+                .catch(({ message }) => expect(message).to.equal('port is empty or blank'))
         )
 
         it('should fail on no ip', () => {
@@ -448,17 +454,19 @@ describe('logic (user)', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const arduIp = '192.168.1.1'
-            const ardu = new Arduino({ ip: arduIp })
+            const arduPort = '5000'
+            const ardu = new Arduino({ ip: arduIp, port: arduPort })
 
             user.arduinos.push(ardu)
 
             return user.save()
-                .then(({ id: userId, arduinos: [{ id: arduId }] }) => {
+                .then(({ id: userId, arduinos: [{ id: arduId, port: arduPort }] }) => {
                     return logic.retrieveArduino(userId, arduId)
                 })
-                .then(({ id, ip, _id }) => {
+                .then(({ id, ip, _id, port }) => {
                     expect(id).to.equal(ardu.id)
                     expect(ip).to.equal(ardu.ip)
+                    expect(port).to.equal(ardu.port)
                     expect(_id).not.to.exist
                 })
         })
@@ -480,7 +488,7 @@ describe('logic (user)', () => {
 
         it('should fail on wrong user id', () => {
             const user = new User(userData)
-            const ardu = new Arduino({ ip: '192.168.1.1' })
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
 
             user.arduinos.push(ardu)
 
@@ -490,6 +498,7 @@ describe('logic (user)', () => {
                         .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
                 })
         })
+
 
         it('should fail on no arduId', () =>
             logic.retrieveArduino(dummyUserId)
@@ -508,7 +517,7 @@ describe('logic (user)', () => {
 
         it('should fail on wrong arduId', () => {
             const user = new User(userData)
-            const ardu = new Arduino({ ip: '192.168.1.1' })
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
 
             user.arduinos.push(ardu)
 
@@ -525,7 +534,7 @@ describe('logic (user)', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const dummyIp = '192.168.1.'
-            const arduinos = indexes.map(index => new Arduino({ ip: `${dummyIp}${index}` }))
+            const arduinos = indexes.map(index => new Arduino({ ip: `${dummyIp}${index}`, port: `5000 ${index}` }))
 
             user.arduinos = arduinos
 
@@ -533,15 +542,17 @@ describe('logic (user)', () => {
                 .then(({ id: userId, arduinos }) => {
                     const validArduinoIds = _.map(arduinos, 'id')
                     const validArduinoIps = _.map(arduinos, 'ip')
+                    const validArduinoPorts = _.map(arduinos, 'port')
 
                     return logic.listArduinos(userId)
                         .then(arduinos => {
                             expect(arduinos).to.exist
                             expect(arduinos.length).to.equal(indexes.length)
 
-                            arduinos.forEach(({ id, ip, _id }) => {
+                            arduinos.forEach(({ id, ip, _id, port }) => {
                                 expect(validArduinoIds).to.include(id)
                                 expect(validArduinoIps).to.include(ip)
+                                expect(validArduinoPorts).to.include(port)
                                 expect(_id).not.to.exist
                             })
                         })
@@ -562,6 +573,325 @@ describe('logic (user)', () => {
             logic.listArduinos('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
+    })
+
+    describe('remove arduino', () => {
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
+
+            user.arduinos.push(ardu)
+
+            return user.save()
+                .then(({ id: userId, arduinos: [{ id: arduId }] }) => {
+                    return logic.removeArduino(userId, arduId)
+                        .then(res => {
+                            expect(res).to.be.true
+
+                            return User.findById(userId)
+                        })
+                        .then(({ arduinos }) => {
+                            expect(arduinos).to.exist
+                            expect(arduinos.length).to.equal(0)
+                        })
+                })
+        })
+
+        it('should fail on non user id', () =>
+            logic.removeArduino()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.removeArduino('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.removeArduino('      ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on wrong user id', () => {
+            const user = new User(userData)
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
+
+            user.arduinos.push(ardu)
+
+            return user.save()
+                .then(({ arduinos: [{ id: arduId }] }) => {
+                    return logic.removeArduino(dummyUserId, arduId)
+                        .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
+                })
+        })
+
+        it('should fail on no arduino id', () =>
+            logic.removeArduino(dummyUserId)
+                .catch(({ message }) => expect(message).to.equal('arduino id is not a string'))
+        )
+
+        it('should fail on empty arduino id', () =>
+            logic.removeArduino(dummyUserId, '')
+                .catch(({ message }) => expect(message).to.equal('arduino id is empty or blank'))
+        )
+
+        it('should fail on blank arduino id', () =>
+            logic.removeArduino(dummyUserId, '       ')
+                .catch(({ message }) => expect(message).to.equal('arduino id is empty or blank'))
+        )
+
+        it('should fail on wrong arduino id', () => {
+            const user = new User(userData)
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
+
+            user.arduinos.push(ardu)
+
+            return user.save()
+                .then(({ id: userId }) => {
+                    return logic.removeArduino(userId, dummyArduId)
+                        .catch(({ message }) => expect(message).to.equal(`no arduino found with id ${dummyArduId}`))
+                })
+        })
+    })
+
+    describe('update arduino', () => {
+        it('should succeed on correct data', () =>
+            User.create(userData)
+                .then(({ id: userId }) =>
+                    User.findByIdAndUpdate(userId, { $push: { arduinos: { ip: '192.168.1.1', port: '5000' } } }, { new: true })
+                        .then(user => {
+                            const arduId = user.arduinos[user.arduinos.length - 1].id
+
+                            const newArduIp = '193.168.1.2'
+                            const newArduPort = '3000'
+
+                            return logic.updateArduino(userId, arduId, newArduIp, newArduPort)
+                                .then(res => {
+                                    expect(res).to.be.true
+
+                                    return User.findById(userId)
+                                })
+                                .then(({ arduinos }) => {
+                                    const [{ id, ip, port }] = arduinos
+
+                                    expect(id).to.equal(arduId)
+                                    expect(ip).to.equal(newArduIp)
+                                    expect(port).to.equal(newArduPort)
+                                })
+                        })
+                )
+        )
+
+        it('should fail on non user id', () =>
+            logic.updateArduino()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.updateArduino('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.updateArduino('      ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on wrong user id', () => {
+            const user = new User(userData)
+            const ardu = new Arduino({ ip: '196.162.1.1', port: '5000' })
+
+            user.arduinos.push(ardu)
+
+            return user.save()
+                .then(({ arduinos: [{ id: arduId }] }) => {
+                    return logic.updateArduino(dummyUserId, arduId, '192.168.1.2', '3000')
+                        .catch(({ message }) => expect(message).to.equal(`no user found with id ${dummyUserId}`))
+                })
+        })
+
+        it('should fail on wrong arduino id', () => {
+            const user = new User(userData)
+            const ardu = new Arduino({ ip: '196.162.1.1', port: '5000' })
+
+            user.arduinos.push(ardu)
+
+            return user.save()
+                .then(({ id: userId }) => {
+                    return logic.updateArduino(userId, dummyArduId, `196.162.1.2`, '3000')
+                        .catch(({ message }) => expect(message).to.equal(`no arduino found with id ${dummyArduId}`))
+                })
+        })
+
+        it('should fail on wrong port', () => {
+            const user = new User(userData)
+            const ardu = new Arduino({ ip: '196.162.1.1', port: '5000' })
+
+            user.arduinos.push(ardu)
+
+            return user.save()
+                .then(({ id: userId }) => {
+                    return logic.updateArduino(userId, dummyArduId, `196.162.1.2`, '')
+                        .catch(({ message }) => expect(message).to.equal('port is empty or blank'))
+                })
+        })
+    })
+
+    describe('find arduinos', () => {
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+
+            user.arduinos.push(new Arduino({ ip: '192.168.1.1', port: '5000' }))
+            user.arduinos.push(new Arduino({ ip: '192.168.1.2', port: '5001' }))
+            user.arduinos.push(new Arduino({ ip: '192.168.1.3', port: '5002' }))
+            user.arduinos.push(new Arduino({ ip: '192.168.2.4', port: '5003' }))
+            user.arduinos.push(new Arduino({ ip: '192.168.2.5', port: '5000' }))
+
+            const ipChunk = '.2.'
+
+            return user.save()
+                .then(({ id: userId, arduinos }) => {
+                    const matchingArduinos = arduinos.filter(arduino => arduino.ip.includes(ipChunk))
+
+                    const validArduinoIds = _.map(matchingArduinos, 'id')
+                    const validArduinoIps = _.map(matchingArduinos, 'ip')
+
+                    return logic.findArduinos(userId, ipChunk)
+                        .then(arduinos => {
+                            expect(arduinos).to.exist
+                            expect(arduinos.length).to.equal(matchingArduinos.length)
+
+                            arduinos.forEach(({ id, ip, _id }) => {
+                                expect(validArduinoIds).to.include(id)
+                                expect(validArduinoIps).to.include(ip)
+                                expect(_id).not.to.exist
+                            })
+                        })
+                })
+        })
+
+        it('should fail on non user id', () =>
+            logic.findArduinos()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.findArduinos('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.findArduinos('      ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on no ip', () =>
+            logic.findArduinos(dummyUserId)
+                .catch(({ message }) => expect(message).to.equal('chunk is not a string'))
+        )
+
+        it('should fail on empty ip', () =>
+            logic.findArduinos(dummyUserId, '')
+                .catch(({ message }) => expect(message).to.equal('chunk is empty'))
+        )
+    })
+
+    describe('addArduinoData', () => {
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+
+            user.arduinos.push(new Arduino({ ip: '192.168.1.1', port: '5000' }))
+
+            return user.save()
+                .then(({ id, arduinos: [{ id: arduId }] }) => {
+                    return logic.addArduinoData(id, arduId, 123123)
+                        .then(dataId => {
+                            
+                            expect(dataId).to.be.a('string')
+                            expect(dataId).to.exist
+                            
+                            return User.findById(id)
+                                .then(user => {
+                                    
+                                    expect(user.arduinos).to.exist
+                                    expect(user.arduinos.length).to.equal(1)
+                                    expect(user.arduinos[0].data.length).to.equal(1)
+                                    const {_id:id, timestamp, value } = user.arduinos[0].data[0]
+
+                                    expect(id.toString()).to.equal(dataId)
+                                    expect(timestamp).to.be.a('number')
+                                    expect(value).to.equal(123123)
+                                })
+                        })
+                })
+        })
+
+        it('should fail on no arduino id', () =>
+            logic.addArduinoData(dummyUserId,undefined, 312123)
+                .catch(({ message }) => expect(message).to.equal('arduId is not a string'))
+        )
+
+        it('should fail on empty arduino id', () =>
+            logic.addArduinoData(dummyUserId,'', 123321)
+                .catch(({ message }) => expect(message).to.equal('arduId is empty or blank'))
+        )
+
+        it('should fail on wrong arduino id', () => {
+            const user = new User(userData)
+
+            user.arduinos.push(new Arduino({ ip: '192.168.1.1', port: '5000' }))
+
+            return user.save()
+                .then(({ id, arduinos: [{ id: arduId }] }) => {
+                    return logic.addArduinoData(id, dummyArduId, 123123)
+                        .catch(({ message }) => expect(message).to.equal(`no arduino found with id ${dummyArduId}`))
+                })
+
+        })
+    })
+
+    describe('retrieveArduinoData', () => {
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+
+            user.arduinos.push(new Arduino({ ip: '192.168.1.1', port: '5000' }))
+            user.arduinos[0].data.push(new ArduinoData({ timestamp: Date.now(), value: 123123 }))
+
+            return user.save()
+                .then(({ id, arduinos: [{ id: arduId }] }) => {
+                    return logic.retrieveArduinoData(id,arduId)
+                        .then(data => {
+                            expect(data).to.exist
+                            expect(data.length).to.equal(1)
+                            expect(data[0].timestamp).to.be.a('number')
+                            expect(data[0].value).to.equal(123123)
+                        })
+                })
+        })
+
+        it('should fail on no arduino id', () =>
+            logic.retrieveArduinoData(dummyUserId,undefined)
+                .catch(({ message }) => expect(message).to.equal('arduId is not a string'))
+        )
+
+        it('should fail on empty arduino id', () =>
+            logic.retrieveArduinoData(dummyUserId,'')
+                .catch(({ message }) => expect(message).to.equal('arduId is empty or blank'))
+        )
+
+        it('should fail on wrong arduino id', () => {
+            const user = new User(userData)
+
+            user.arduinos.push(new Arduino({ ip: '192.168.1.1', port: '5000' }))
+            user.arduinos[0].data.push(new ArduinoData({ timestamp: Date.now(), value: 123123 }))
+
+            return user.save()
+                .then(({ id, arduinos: [{ id: arduId }] }) => {
+                    return logic.retrieveArduinoData(id,dummyArduId)
+                        .catch(({ message }) => expect(message).to.equal(`No user with arduino ${dummyArduId}`))
+                })
+
+        })
     })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
