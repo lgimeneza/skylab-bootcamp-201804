@@ -8,6 +8,8 @@ const logic = {
     userId: 'NO-ID',
     data: 'NO-DATA',
     users: 'NO-USERS',
+    apartmentId: 'NO-ID',
+
 
     registerUser(name, surname, phone, dni, password) {
         return shApi.registerUser(name, surname, phone, dni, password)
@@ -16,10 +18,11 @@ const logic = {
 
     authenticateUser(dni, password) {
         return shApi.authenticateUser(dni, password)
-            .then(id => {
-                this.userId = id
+            .then(user => {
+                localStorage.setItem('apartmentId', user.apartmentId)
 
-                return id
+                this.userId =user.id
+                return user
             })
     },
 
@@ -39,8 +42,8 @@ const logic = {
                 return users
             })
     },
-    listUsers() {
-        return shApi.listUsers()
+    listUsers(apartmentId) {
+        return shApi.listUsers(apartmentId)
         .then(res => {
             console.log(res)
             this.users = res

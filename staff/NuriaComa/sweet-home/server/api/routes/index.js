@@ -11,11 +11,11 @@ const jwtValidator = jwtValidation(TOKEN_SECRET)
 
 const router = express.Router()
 
-router.post('/register', jsonBodyParser, (req,res) =>{
+router.post('/register/:apartmentId', jsonBodyParser, (req,res) =>{
 
-    const { body: { name, surname, phone, dni, password } } = req
+    const { params: { apartmentId }, body: { name, surname, phone, dni, password } } = req
 
-    return logic.registerUser(name, surname, phone, dni, password)
+    return logic.registerUser(name, surname, phone, dni, password, apartmentId)
     .then(()=>{
         res.status(201)
         res.json({status:'OK'})
@@ -31,12 +31,13 @@ router.post('/auth', jsonBodyParser, (req, res) => {
     const { body: { dni, password } } = req
 
     logic.authenticateUser(dni, password)
-        .then(id=> {
-            
-            const token = jwt.sign({ id }, TOKEN_SECRET, { expiresIn: TOKEN_EXP })
+        .then(user=> {
+            const userId = user.id;
+            const apartmentId = user.apartmentId;
+            const token = jwt.sign({ id: userId, apartmentId }, TOKEN_SECRET, { expiresIn: TOKEN_EXP })
 
             res.status(200)
-            res.json({ status: 'OK', data: { id, token  } })
+            res.json({ status: 'OK', data: { user, token  } })
         })
         .catch(({ message }) => {
             res.status(400)
@@ -70,10 +71,10 @@ router.patch('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
             res.json({ status: 'KO', error: message })
         })
 })
-router.get('/list',jwtValidator, (req, res) => {
-    
+router.get('/list/:apartmentId',jwtValidator, (req, res) => {
+    const{ params: {apartmentId} } =req
 
-    return logic.listUsers()
+    return logic.listUsers(apartmentId)
         .then(users => {
             res.status(200)
             res.json({ status: 'OK', data: users })
@@ -96,5 +97,20 @@ router.delete('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
             res.status(400)
             res.json({ status: 'KO', error: message })
         })
+})
+
+router.post('/register', jsonBodyParser, (req,res) =>{
+
+    const { body: { name, address, phone } } = req
+
+    return logic.registerApartment(name, address, phone)
+    .then(apartId=>{
+        res.status(201)
+        res.json({status:'OK', data: apartId})
+    })
+    .catch(({message})=>{
+        res.status(400)
+        res.json({status:'KO', error: message})
+    })
 })
 module.exports = router

@@ -15,7 +15,7 @@ const logic = {
      * @returns {Promise<boolean>}
      */
 
-    registerUser(name, surname, phone, dni, password) {
+    registerUser(name, surname, phone, dni, password, apartmentId ) {
         return Promise.resolve()
             .then(() => {
 
@@ -44,7 +44,7 @@ const logic = {
                     .then(user => {
                         if (user) throw Error(`user with dni ${dni} already exists`)
                         debugger
-                        return User.create({ name, surname, phone, dni, password })
+                        return User.create({ name, surname, phone, dni, password, apartmentId })
                         .then(() => true)
                 })
             })
@@ -69,12 +69,12 @@ const logic = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
                 
-                return User.findOne({ dni,password })
+                return User.findOne({ dni ,password })
                 .then(user => {
                     //console.log(user)
                     if (!user) throw Error('wrong credentials')
                 
-                return user.id
+                return { id: user.id, apartmentId: user.apartmentId }
             })
             })
     },
@@ -159,12 +159,12 @@ const logic = {
             .then(() => true)
     },
 
-    listUsers(){
+    listUsers(apartmentId){
 
         return Promise.resolve()
             .then(()=>{
 
-                return User.find()
+                return User.find({apartmentId})
                     .then(users => {
                         if (!users) throw Error(`no users found`)
                        
@@ -212,7 +212,11 @@ const logic = {
             .then(() => true)
     },
    
-
+    registerApartment(name, address, phone){
+        return Apartment.create({ name, address, phone})
+        .then(apartment =>  apartment.id)
+    }
+    
 }
 
 module.exports = logic

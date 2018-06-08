@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose')
+
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
     name: {
@@ -20,5 +21,11 @@ module.exports = new Schema({
     password: {
         type: String,
         required: true
+    },
+    apartmentId: {
+        type: ObjectId,
+        ref: 'Apartment',
+        required: true
     }
+
 })

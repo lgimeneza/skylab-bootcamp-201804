@@ -52,7 +52,7 @@ var shApi = {
 
             if ((password = password.trim()).length === 0) throw Error('password is empty or blank');
 
-            return axios.post(_this.url + '/register', { name: name, surname: surname, phone: phone, dni: dni, password: password }).then(function (_ref) {
+            return axios.post(_this.url + '/register', { nameApartment: nameApartment, name: name, surname: surname, phone: phone, dni: dni, password: password }).then(function (_ref) {
                 var status = _ref.status,
                     data = _ref.data;
 
@@ -98,15 +98,14 @@ var shApi = {
                     data = _ref2.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
-
                 var _data$data = data.data,
-                    id = _data$data.id,
+                    user = _data$data.user,
                     token = _data$data.token;
 
 
                 _this2.token(token);
 
-                return id;
+                return user;
             }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
 
@@ -227,12 +226,12 @@ var shApi = {
     * 
     * @returns {Promise<User>} 
     */
-    listUsers: function listUsers() {
+    listUsers: function listUsers(apartmentId) {
         var _this5 = this;
 
         return Promise.resolve().then(function () {
 
-            return axios.get(_this5.url + '/list', { headers: { authorization: 'Bearer ' + _this5.token() } }).then(function (_ref5) {
+            return axios.get(_this5.url + '/list/' + apartmentId, { headers: { authorization: 'Bearer ' + _this5.token() } }).then(function (_ref5) {
                 var status = _ref5.status,
                     data = _ref5.data;
 

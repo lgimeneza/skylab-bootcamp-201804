@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .general {
     text-align: center;
   }
   
 h1{
     color: black;
+    font-family: 'Montserrat', sans-serif;
 
 }
 img{

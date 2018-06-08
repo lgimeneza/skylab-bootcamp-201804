@@ -3,9 +3,34 @@
   }
 .words1{
     margin-top:10vw;
-    color:#0d292d;
+    
+    font-size: 5vw;
 }
 .words{
-    margin-top:5vw;
-    color:#0d292d;
+    margin-top:3vw;
+   
+    font-size: 5vw;
+}
+.formularior{
+    border: 1px solid #92ac19;
+    font-size: 5vw;
+    border-radius: 1vw;
+}
+.registerButton{
+    width:80vw;
+    color:white;
+    font-size: 5vw;
+    margin: 5vw 7vw 2vw 7vw;
+    padding: 2vw;
+    background-color: #92ac19;
+    border:0;
+}
+.backButton{
+    width:80vw;
+    color:white;
+    font-size: 5vw;
+    margin: 0 7vw 3vw 7vw;
+    padding: 2vw;
+    background-color: #92ac19;
+    border:0;
 }

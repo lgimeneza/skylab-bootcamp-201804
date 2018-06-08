@@ -9,10 +9,10 @@ class Users extends Component {
         usersInfo:''
     }
     componentWillMount(){
-   
-            Promise.resolve()
-            .then(()=>{
-                logic.listUsers().then(res => { 
+        Promise.resolve()
+        .then(()=>{
+            const apartmentId = localStorage.getItem('apartmentId')
+                logic.listUsers(apartmentId).then(res => { 
                     console.log(res)
                     this.setState({
                         usersInfo: res
@@ -30,7 +30,7 @@ class Users extends Component {
                     <section>
                        
                         <h2 className="us">USERS</h2>
-                        <ul>
+                        <ul className="text">
                             {this.state.usersInfo ? this.state.usersInfo.map(users => {
                                 return(
                                 <div className="listUsers"><li><span className="data">Name:</span> {users.name}</li>
@@ -41,7 +41,7 @@ class Users extends Component {
                             }
                         </ul>
                         <Link to="/home">
-                             <button className="back" onClick={this.redirect} >Back</button>
+                             <button className="back">Back</button>
                         </Link>
                        
                     </section>

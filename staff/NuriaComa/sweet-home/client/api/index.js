@@ -51,7 +51,7 @@ const shApi = {
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
                 
-                return axios.post(`${this.url}/register`,{name, surname, phone, dni, password} )
+                return axios.post(`${this.url}/register`,{nameApartment, name, surname, phone, dni, password} )
                 .then(({ status, data }) => {
                     if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -91,12 +91,11 @@ const shApi = {
                 return axios.post(`${this.url}/auth`, { dni, password })
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-
-                    const { data: { id, token } } = data
+                    const { data: { user, token } } = data
 
                     this.token(token)
 
-                    return id
+                    return user
                 })
                 .catch(err => {
                     if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
@@ -210,11 +209,11 @@ const shApi = {
      * 
      * @returns {Promise<User>} 
      */
-    listUsers() {
+    listUsers(apartmentId) {
         return Promise.resolve()
             .then(() => {
                
-                return axios.get(`${this.url}/list`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                return axios.get(`${this.url}/list/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

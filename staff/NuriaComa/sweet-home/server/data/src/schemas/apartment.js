@@ -15,11 +15,11 @@ module.exports = new Schema({
     owners: [{
         name: {
             type: String,
-            required: true
+            
         },
         surname: {
             type: String,
-            required: true
+            
         },
         dni: {
             type: String
@@ -32,18 +32,16 @@ module.exports = new Schema({
     realstate: {
         name: {
             type: String,
-            required: true
+            
         },
-        adress: {
-            type: String
+        address: {
+            type: String,
+            
         },
         phone: {
-            type: String
+            type: String,
+            
         }
-    },
-    users: [{
-        type: ObjectId,
-        ref: 'User',
-        required: true
-    }]
+    }
+  
 })

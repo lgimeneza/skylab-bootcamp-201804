@@ -84,11 +84,16 @@ class Register extends Component {
             else{
             logic.registerUser(this.state.name,this.state.surname, this.state.phone, this.state.dni, this.state.password)
             .then(resp => {
-                swal(
-                    'WELCOME',
-                    this.props.history.push("/auth")
 
-                )
+                swal({
+                    type: 'success',
+                    title: 'Welcome',
+                    text: 'Sweet Home!',
+                    footer: '<a href>Why do I have this issue?</a>',
+                  }).then(()=>{
+                    this.props.history.push("/auth")
+                  })
+
             })
             .catch(err => {
                 
@@ -114,22 +119,21 @@ class Register extends Component {
             <div>
                 <div className="general">
                     <section>
-                      
                         <form onSubmit={this.acceptRegister}>
                             <p className="words1"> Name: </p>
-                            <input className="formulario" type="text" value={this.state.name}onChange={this.registerName} name="name" ></input>
+                            <input autocomplete="off" className="formularior" type="text" value={this.state.name}onChange={this.registerName} name="name" ></input>
                             <p className="words">Surname:</p>
-                            <input className="formulario" type="text" value={this.state.surname}onChange={this.registerSurname} name="apellido"></input>
+                            <input autocomplete="off" className="formularior" type="text" value={this.state.surname}onChange={this.registerSurname} name="apellido"></input>
                             <p className="words">Phone: </p>
-                            <input className="formulario" type="text" name="phone" value={this.state.phone}onChange={this.registerPhone} ></input>
+                            <input autocomplete="off" className="formularior" type="text" name="phone" value={this.state.phone}onChange={this.registerPhone} ></input>
                             <p className="words">DNI: </p>
-                            <input className="formulario" type="text" value={this.state.dni}onChange={this.registerDni} name="dni" ></input>
+                            <input autocomplete="off" className="formularior" type="text" value={this.state.dni}onChange={this.registerDni} name="dni" ></input>
                             <p className="words">Password: </p>
-                            <input className="formulario" type="text" value={this.state.password}onChange={this.registerPassword} name="password" ></input>
+                            <input autocomplete="off" className="formularior" type="password" value={this.state.password}onChange={this.registerPassword} name="password" ></input>
                             <p className="words">Repeat Password: </p>
-                            <input className="formulario" type="text" value={this.state.repeatpassword}onChange={this.registerRepeatPassword} name="password" ></input>
-                            <button className="register-button" type="submit">Register</button>
-                            <button className="register-button" type="button" onClick={this.redirect}>Back</button>
+                            <input autocomplete="off" className="formularior" type="password" value={this.state.repeatpassword}onChange={this.registerRepeatPassword} name="password" ></input>
+                            <button className="registerButton" type="submit">Register</button>
+                            <button className="backButton" type="button" onClick={this.redirect}>Back</button>
                         </form>
                         
                     </section>

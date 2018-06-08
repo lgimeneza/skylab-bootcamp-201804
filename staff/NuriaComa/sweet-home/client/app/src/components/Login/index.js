@@ -55,17 +55,17 @@ class Login extends Component {
                     <section>
                     
                     <form  onSubmit={this.acceptLogin}>
-                        <p> Dni:</p>
-                        <input className="formulario" type="text" value={this.state.dni} onChange={this.loginDni}  name="DNI" ></input>
-                        <p> Password:</p>
-                        <input className="formulario" type="text" value={this.state.password} onChange={this.loginPassword} name="password"></input>
+                        <p className="text1"> Dni:</p>
+                        <input autocomplete="off" className="formulariol" type="text" value={this.state.dni} onChange={this.loginDni}  name="DNI" ></input>
+                        <p className="text2"> Password:</p>
+                        <input autocomplete="off" className="formulariol" type="password" value={this.state.password} onChange={this.loginPassword} name="password"></input>
                     <button type="submit" className="login-button">Login</button>
                     </form>
                    
                   
                         <p>New in Sweet Home?</p> 
                         <Link to="/register">
-                            <p> Register now</p>
+                            <p > Register now</p>
                         </Link>
                     </section>
                 </div>

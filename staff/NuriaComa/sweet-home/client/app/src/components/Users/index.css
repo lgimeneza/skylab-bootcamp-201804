@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .back {
     width:78vw;
     color:white;
@@ -6,19 +8,29 @@
     padding: 2vw;
     background-color: #0d292d;
     border:0;
+    font-family: 'Montserrat', sans-serif;
 }
 .us{
-    background-color: #0d292d;
+   
     padding: 2vw;
-    color:white;
+    color:#0d292d;
     text-align: center;
-    margin: 5vw 12vw;
+    margin: 7vw 12vw;
+    font-family: 'Montserrat', sans-serif;
 }
 .listUsers{
     border-bottom: 1px solid #0d292d;
     margin-right: 10vw;
+    font-family: 'Montserrat', sans-serif;
+    
+}
+.text{
+    height: 120vw ;
+    overflow: scroll;
+    font-family: 'Montserrat', sans-serif;
 }
  .data{
+     margin-right: 2vw;
      color:#0d292d;
      font-size: 5vw;
  }
@@ -26,4 +38,7 @@ li{
     margin: 2vw 5vw;
     list-style:none;
     
+}
+.text{
+    overflow: scroll
 }
