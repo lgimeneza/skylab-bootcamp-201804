@@ -14,12 +14,12 @@ describe('logic (sweet-home)', () => {
             .then(id => {
                 shApi.unregisterUser(id, dni, password)
                 .then(res => {
-                    console.log('0')
+                    
                     done()
                 })
             })
             .catch(err => {
-                console.log('E')
+                
                 done()
             })
     })
@@ -27,7 +27,7 @@ describe('logic (sweet-home)', () => {
     describe('register', () => {
         it('should succeed on correct data', () => {
             const { name, surname, phone, dni, password } = userData
-            console.log('1')
+           
 
             return logic.registerUser(name, surname, phone, dni, password)
                 .then(res => {
@@ -39,7 +39,7 @@ describe('logic (sweet-home)', () => {
     describe('login', () => {
         it('should succeed on correct data', () => {
             const { name, surname, phone, dni, password } = userData
-            console.log('2')
+            
 
             return shApi.registerUser(name, surname, phone, dni, password)
                 .then(() => logic.authenticateUser(dni, password))
@@ -53,7 +53,7 @@ describe('logic (sweet-home)', () => {
     describe('retrieve', () => {
         it('shoul succeed on correct data', () => {
             const { name, surname, phone, dni, password } = userData
-            console.log('3')
+            
 
             return shApi.registerUser(name, surname, phone, dni, password)
                 .then(() => logic.authenticateUser(dni, password))
@@ -61,8 +61,9 @@ describe('logic (sweet-home)', () => {
                     logic.retrieveUser(logic.userId)
                         .then(res => {
                             expect(res).to.be.true
-
+                       
                             expect(logic.data).not.to.equal('NO-DATA')
+                            
                         })
                 })
 
@@ -72,7 +73,7 @@ describe('logic (sweet-home)', () => {
     describe('update', () => {
         it('should succeed on correct data', () => {
             const { name, surname, phone, dni, password } = userData
-            console.log('4')
+            
 
             return shApi.registerUser(name, surname, phone, dni, password)
                 .then(() => logic.authenticateUser(dni, password))
@@ -102,9 +103,10 @@ describe('logic (sweet-home)', () => {
 
                 .then(() => {
                     logic.listUsers()
-                        .then(res => {
+                        .then(data => {
                         
-                            expect(logic.data).not.to.equal('NO-DATA')
+                            expect(data).not.to.equal('NO-DATA')
+                            
                         })
                 })
 

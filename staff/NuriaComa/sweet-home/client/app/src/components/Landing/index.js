@@ -10,7 +10,7 @@ function Landing(props) {
   return (
 
 
-    <div>
+    <div className="general">
      <div>
      <header >
             <h1 className="tittle">SWEET HOME</h1>

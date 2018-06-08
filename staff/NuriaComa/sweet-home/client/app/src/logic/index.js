@@ -41,10 +41,12 @@ const logic = {
     },
     listUsers() {
         return shApi.listUsers()
+        .then(res => {
+            console.log(res)
+            this.users = res
 
-        this.users = res.data
-
-        return true
+            return this.users
+        })
     },
 
     unregisterUser(id, dni, password) {

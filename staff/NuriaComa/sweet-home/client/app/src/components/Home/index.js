@@ -16,7 +16,7 @@ class Home extends Component {
     render () {
       
         return(
-        <div>
+        <div className="general">
             <div >
         <header >
             <h1>SWEET HOME</h1>

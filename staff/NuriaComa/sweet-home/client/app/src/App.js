@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
-import Landing from './components/Landing/'
-import Home from './components/Home/'
-import Login from './components/Login/'
-import Register from './components/Register/'
-import Users from './components/Users/'
-import Xtorage from './Xtorage'
+import Landing from './components/landing/'
+import Home from './components/home/'
+import Login from './components/login/'
+import Register from './components/register/'
+import Users from './components/users/'
+
 
 class App extends Component {
   render() {

@@ -112,9 +112,9 @@ class Register extends Component {
     render() {
         return (
             <div>
-                <div>
+                <div className="general">
                     <section>
-                        <h2>Register</h2>
+                      
                         <form onSubmit={this.acceptRegister}>
                             <p className="words1"> Name: </p>
                             <input className="formulario" type="text" value={this.state.name}onChange={this.registerName} name="name" ></input>

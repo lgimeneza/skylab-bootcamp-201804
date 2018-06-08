@@ -5,27 +5,44 @@ import './index.css'
 import swal from 'sweetalert'
 
 class Users extends Component {
-
-    listUsers =(e) =>{
-        e.preventDefault()
-        Promise.resolve()
-        .then(()=>{
-            logic.listUser()
-            .then(users =>{
-                return users
-            })
-        })
+    state = {
+        usersInfo:''
     }
+    componentWillMount(){
+   
+            Promise.resolve()
+            .then(()=>{
+                logic.listUsers().then(res => { 
+                    console.log(res)
+                    this.setState({
+                        usersInfo: res
+                    })
+                })
+            })
+        
+    }
+    
 
     render() {
         return (
-            <div>
+            <div >
                 <div>
                     <section>
-                        <h2>Users</h2> <button onClick={this.redirect} >Back</button>
+                       
+                        <h2 className="us">USERS</h2>
                         <ul>
-                            {users.map(users => <li>{users}</li>)}
+                            {this.state.usersInfo ? this.state.usersInfo.map(users => {
+                                return(
+                                <div className="listUsers"><li><span className="data">Name:</span> {users.name}</li>
+                                <li><span className="data">Surname:</span> {users.surname}</li>
+                                <li><span className="data">Phone:</span> {users.phone}</li>
+                                <li><span className="data">Dni:</span> {users.dni}</li></div>)
+                            }) : undefined
+                            }
                         </ul>
+                        <Link to="/home">
+                             <button className="back" onClick={this.redirect} >Back</button>
+                        </Link>
                        
                     </section>
                 </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import {Link} from 'react-router-dom'
 import './index.css'
-import Xtorage from '../../Xtorage'
+
 import swal from 'sweetalert2'
 
 class Login extends Component {
@@ -51,11 +51,11 @@ class Login extends Component {
     render() {
         return (
             <div>
-                 <div>
+                 <div className="general">
                     <section>
-                    <h2>Login</h2>
+                    
                     <form  onSubmit={this.acceptLogin}>
-                        <p> DNI:</p>
+                        <p> Dni:</p>
                         <input className="formulario" type="text" value={this.state.dni} onChange={this.loginDni}  name="DNI" ></input>
                         <p> Password:</p>
                         <input className="formulario" type="text" value={this.state.password} onChange={this.loginPassword} name="password"></input>
