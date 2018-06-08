@@ -19,6 +19,11 @@ const logic = {
                 return true
             })
     },
+    
+    listProducts() {
+        return clientApi.listProducts()
+                .then(products => products)
+    }
 }
 
 module.exports = logic

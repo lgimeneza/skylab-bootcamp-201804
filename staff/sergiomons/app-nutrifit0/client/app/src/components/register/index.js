@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
+import {withRouter} from 'react-router-dom'
 
 class Register extends Component {
 
@@ -16,10 +17,13 @@ class Register extends Component {
         const { username, email, password, repeatPassword } = this.state
         logic.registerUser(username, email, password, repeatPassword)
             .then(res => {
-                if (!res) alert('Algo falló')
-                return alert('Registrado')
+                if (res) {
+                    this.props.history.push('/auth')
+                } else {
+                    alert('wrong error')
+                }     
             })
-            .catch()
+            .catch(err => err.message)
     }
 
     handlerCapturingUsername = e => {
@@ -73,4 +77,4 @@ class Register extends Component {
    
 }
 
-export default Register
+export default withRouter(Register)

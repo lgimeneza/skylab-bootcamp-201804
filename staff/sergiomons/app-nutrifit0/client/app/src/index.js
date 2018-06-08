@@ -6,13 +6,15 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import clientApi from 'client-api';
 
-clientApi.token(token) = function (token) {
+clientApi.token = function (token) {
     if (token) {
-        sessionStorage.setItem('token', token)
-        return;
+      sessionStorage.setItem('token', token)
+  
+      return
     }
-        return sessionStorage.getItem('token')
-},
+  
+    return sessionStorage.getItem('token')
+  }
 
 ReactDOM.render(
     <Router> 

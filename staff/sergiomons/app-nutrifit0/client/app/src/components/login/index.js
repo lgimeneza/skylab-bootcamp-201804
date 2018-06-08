@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
+import {withRouter} from 'react-router-dom'
 
 class Login extends Component {
 
@@ -14,11 +15,15 @@ class Login extends Component {
 
         const { email, password} = this.state
         logic.login(email, password)
-            .then(res => {
-                if (!res) alert('Algo falló')
-                return alert('Registrado')
-            })
-            .catch()
+        .then(res => {
+            if (res) {
+                  this.props.history.push('/')
+
+            } else {
+              console.log('Error, username and/or password wrong')
+            }
+        })
+            .catch(err => err.message)
     }
 
     handlerCapturingEmail = e => {
@@ -34,7 +39,7 @@ class Login extends Component {
             password: value
         })
     }
-s
+
    render() {
     const { email, password } = this.state
     return (
@@ -54,4 +59,4 @@ s
    
 }
 
-export default Login
+export default withRouter(Login)
