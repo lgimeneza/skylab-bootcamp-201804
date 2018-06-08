@@ -10,7 +10,6 @@ export class Login extends Component {
     email: '',
     password: '',
     formIsFull: false,
-    conditionForGoToHome: false
   }
 
   handleChange = (e) => {
@@ -41,17 +40,19 @@ export class Login extends Component {
       }
 
       logic.login(body).then(result => {
-        console.log(result)
 
         if (result) {
-          this.setState({
-            conditionForGoToHome: true
-          })
-
           this.storageUserData(result)
-          localStorage.setItem("password", password)
+          this.props.history.push('/')
         }
-      })
+      }).catch(data => {
+              swal({
+                type: 'error',
+                title: 'wrong credentials',
+                text: data.error
+              })
+
+          })
 
       this.setState({
         email: '',
@@ -59,19 +60,6 @@ export class Login extends Component {
       })
     }
   }
-
-  goToHome =() =>{
-    
-    if (this.state.conditionForGoToHome) {
-      this.props.history.push('./home')
-    } else {
-      swal({
-        type: 'error',
-        title: 'Something went wrong!',
-      })
-    }
-  }
-
   storageUserData(result) {
     localStorage.setItem('token', result.token)
     localStorage.setItem('id', result.id)
@@ -92,7 +80,7 @@ export class Login extends Component {
                 <form>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name='email' className="input is-large" type="email" placeholder="Your Email" autofocus="" value={this.state.email}/>
+                      <input onChange={this.handleChange} name='email' className="input is-large" type="email" placeholder="Your Email" autoFocus value={this.state.email}/>
                     </div>
                   </div>
                   <div className="field">
@@ -106,9 +94,7 @@ export class Login extends Component {
                       Remember me
                     </label>
                   </div>
-                  {this.state.conditionForGoToHome ? <button type="submit" onClick={this.goToHome} className="button is-block is-info is-large is-fullwidth">Login</button> :
                     <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Login</button>
-                  }
                 </form>
               </div>
               <p className="has-text-grey">

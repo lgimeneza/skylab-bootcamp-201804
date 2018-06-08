@@ -13,7 +13,6 @@ const logic = {
   login({email, password}) {
     return logicApi.authenticateUser(email,password)
       .then(data => {
-        console.log(data)
         this.userId = data.id
         return data
       })
