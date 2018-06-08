@@ -292,6 +292,22 @@ const logic = {
 
   /**
    *
+   * 
+   *
+   * @returns {Promise<array>} 
+   */
+  listProjects() {
+    return Promise.resolve()
+      .then(()=>{
+
+        return Project.find()
+      })
+  },
+
+
+
+  /**
+   *
    * @param {string} userId
    *
    * @returns {Promise<array>} with all the applications the user has, which are objects with project info on project method and castings array with casting info in castings method

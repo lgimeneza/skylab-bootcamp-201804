@@ -441,7 +441,7 @@ describe('logic', () => {
         })
     })
 
-    describe('user is eligible', () => {
+    false && describe('user is eligible', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const proj1 = projects[0]
@@ -459,22 +459,7 @@ describe('logic', () => {
                         })
                 })
         })
-        // it('should succeed',()=>{
-        //     const user = new User(userData)
-        //     const proj1 = projects[0]
-
-        //     return Promise.all([proj1.save(), user.save()])
-        //         .then(([proj1, user]) => {
-        //             Project.find().then(res => console.log(res))
-        //             Project.findById(proj1._id).then(project => console.log(project))
-        //             const { _id, castings: [cast1_1, cast1_2] } = proj1
-        //             return logic.userIsEligible(user._id.toString(),_id.toString(),cast1_1.id)
-
-        //         })
-        //         .then(res=>{
-        //             expect(res).to.be.true
-        //         })
-        // })
+    
     })
 
     false && describe('join casting', () => {

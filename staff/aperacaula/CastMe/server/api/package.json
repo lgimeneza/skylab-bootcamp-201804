@@ -1,5 +1,5 @@
 {
-  "name": "notes-api",
+  "name": "api",
   "version": "5.0.0",
   "description": "",
   "main": "index.js",
@@ -16,7 +16,7 @@
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "data": "file:../../../data",
-    "logic": "file:../../../logic"
+    "data": "file:../data",
+    "logic": "file:../logic"
   }
 }
