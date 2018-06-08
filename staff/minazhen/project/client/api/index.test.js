@@ -6,7 +6,7 @@ const { mongoose, models: { User, Country, Photo } } = require("data")
 const { expect } = require("chai")
 const axios = require("axios")
 const jwt = require("jsonwebtoken")
-const travelApi = require(".")
+const travelApi = require("./index")
 
 const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { withRouter } from 'react-router-dom'
-// import App from '../App'
 import logic from '../logic/index'
-// import Xtorage from './Xtorage'
+import api from 'api'
 
 
 class Login extends Component {
@@ -32,17 +31,9 @@ class Login extends Component {
 
         logic.login(this.state.user, this.state.password)
             .then(res => {
-                if (res.status === "KO") {
-                    
-                    throw Error("KO") //BORRALO
-
-                }
-                return res
+                sessionStorage.setItem('userId', logic.userId)
+                sessionStorage.setItem('token', api.token)
             })
-            // .then(res =>
-            //     // Xtorage.local.set('user', { id: res.data.id, token: res.data.token})
-                
-            // )
             .then(() => this.props.history.push(`/profile`))//aqui iba a bucle
             .catch(error => {
                 console.error("show -> "+ error.message)
