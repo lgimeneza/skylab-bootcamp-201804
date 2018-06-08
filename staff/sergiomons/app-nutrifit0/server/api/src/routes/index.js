@@ -60,6 +60,19 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
         })
 })
 
+router.get('/products', (req, res) => {
+
+    return logic.listProducts()
+            .then(products => {
+                res.status(200)
+                res.json({ status: 'OK', data: products})
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message }) 
+            })
+})
+
 router.get('categories/:categoryId', (req, res) => {
     const { params: {categoryId} } = req
 
@@ -73,5 +86,6 @@ router.get('categories/:categoryId', (req, res) => {
                 res.json({ status: 'KO', error: message }) 
             })
 })
+
 
 module.exports = router

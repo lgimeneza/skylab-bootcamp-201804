@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { User, Order, Product, Category, Subcategory} } = require('data')
+const { models: { User, Order, Product, Category, Subcategory } } = require('data')
 
 const logic = {
 
@@ -92,7 +92,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, surname: 1, username: 1, email: 1, address: 1, telephone: 1 })  
+                return User.findById(id).select({ _id: 0, name: 1, surname: 1, username: 1, email: 1, address: 1, telephone: 1, phone: 1})  
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -201,66 +201,69 @@ const logic = {
     // },
 
     /**
+     * Lists products
+     * 
+     * @param {String} categoryId The category id
+     * 
+     * @returns {Promise<[Product]>}
+     */
+    listProducts() {
+        return Promise.resolve()
+            .then(() => {
+
+                return Product.find({})
+                    .then(res => {
+                        const products = res.map(product => product._doc)
+                        return products
+                    })
+            })     
+    },
+
+    /**
      * Lists products by a given category
      * 
      * @param {String} categoryId The category id
      * 
      * @returns {Promise<[Product]>}
      */
-    listProductsByCategory(categoryId) {
-        return Promise.resolve()
-            .then(() => {
-                if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
+    // listProductsByCategory(categoryId) {
+    //     return Promise.resolve()
+    //         .then(() => {
+    //             if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
 
-                if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
+    //             if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
 
-                return Category.find({ parent: categoryId.toString() })
-                    .then(res => {
-                        const ids = [categoryId]
+    //             return Category.find({ parent: categoryId.toString() })
+    //                 .then(res => {
+    //                     const ids = [categoryId]
 
-                        return Promise.all(
-                            res.map(({ _doc: category }) => {
-                                ids.push(category._id.toString())
+    //                     return Promise.all(
+    //                         res.map(({ _doc: category }) => {
+    //                             ids.push(category._id.toString())
                                 
-                                return Category.find({ parent: category._id })
+    //                             return Category.find({ parent: category._id })
                             
-                            })
-                        )
-                            .then(res => {
+    //                         })
+    //                     )
+    //                         .then(res => {
 
-                                const withResults = res.filter(res => res.length)
+    //                             const withResults = res.filter(res => res.length)
 
-                                withResults.forEach(res => {
-                                    res.forEach(({ _doc: category }) => ids.push(category._id.toString()))
-                                })
+    //                             withResults.forEach(res => {
+    //                                 res.forEach(({ _doc: category }) => ids.push(category._id.toString()))
+    //                             })
 
-                                return Product.find({ category: { $in: ids } })
-                                    .then(res => {
+    //                             return Product.find({ category: { $in: ids } })
+    //                                 .then(res => {
 
-                                        const results = res.map(({_doc: product}) => product )
+    //                                     const results = res.map(({_doc: product}) => product )
 
-                                        return results                                      
-                                    })
-                            })
-                        })
-                    })
-                    
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //                                     return results                                      
+    //                                 })
+    //                         })
+    //                     })
+    //                 })              
+    // },
 
 }
 

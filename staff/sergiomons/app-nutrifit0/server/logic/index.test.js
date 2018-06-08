@@ -10,11 +10,18 @@ const { env: { DB_URL } } = process
 
 describe('logic nutrifit', () => {
     const userDataRegister = { username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword:'123' }
-    const userData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword:'123', address: 'Calle V', telephone: 123456789, points: 4, orders: [] }
+    const userData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: 123456789, points: 4, orders: [] }
     const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
     const dummyUserId = '123456781234567812345678'
     const dummyNoteId = '123456781234567812345678'
     const indexes = []
+    // products data
+    const polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
+    const terneraData = { image: 'http://images.com/1234', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
+    const polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }       
+    const sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }
+    const sopaMariscoData = { image: 'http://images.com/1234', name: 'Sopa de marisco', description: 'Sopa de marisco desc', price: 3.25 }
+    const pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
 
     before(() => mongoose.connect(DB_URL))
 
@@ -23,7 +30,8 @@ describe('logic nutrifit', () => {
         indexes.length = 0
         while (count--) indexes.push(count)
 
-        return Promise.all([User.remove()/*, Note.deleteMany()*/])
+
+        return Promise.all([User.remove() , Product.deleteMany()])
     })
 
     describe('register user', () => {
@@ -56,7 +64,6 @@ describe('logic nutrifit', () => {
                         .catch(({ message }) => expect(message).to.equal(`user with email ${email} already exists`))
                 })
         })
-
 
         it('should fail on no user username', () =>
         logic.registerUser()
@@ -171,14 +178,14 @@ describe('logic nutrifit', () => {
                 .then(user => {
                     expect(user).to.exist
 
-                    const { _id, name, surname, username, email, password, address, telephone, points, orders } = user
+                    const { _id, name, surname, username, email, password, address, phone, points, orders } = user
 
                     expect(name).to.equal('Sergio')
                     expect(surname).to.equal('M')
                     expect(username).to.equal('sergi')
                     expect(email).to.equal('ser@email.com')
                     expect(address).to.equal('Calle V')
-                    expect(telephone).to.equal(123456789)
+                    expect(phone).to.equal(123456789)
 
                     expect(_id).to.be.undefined
                     expect(password).to.be.undefined
@@ -316,6 +323,32 @@ describe('logic nutrifit', () => {
     //     )
     // })
 
+    describe('list all products', () => {
+        it('should succeed on correct data', () => {
+            return Promise.all([
+                new Product(polloVerdurasData).save(),
+                new Product(terneraData).save(),
+                new Product(polloArrozData).save(),
+                new Product(sopaVerdurasData).save(),
+                new Product(sopaMariscoData).save(),
+                new Product(pescadoPlanchaData).save()
+            ])
+                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha]) => {
+                   return logic.listProducts()
+                            .then(products => {
+                                debugger
+                                expect(products.length).to.equal(6)
+                                expect(products[0]._id.toString()).to.equal(polloVerduras._doc._id.toString())
+                                expect(products[0].name).to.equal(polloVerduras.name)
+                                expect(products[0].description).to.equal(polloVerduras.description)
+                                expect(products[0].price).to.equal(polloVerduras.price)
+                                expect(products[0]._id.toString()).not.to.equal(ternera._doc._id.toString())
+                            })
+                })
+        })
+    })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })
+
+// [polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha]

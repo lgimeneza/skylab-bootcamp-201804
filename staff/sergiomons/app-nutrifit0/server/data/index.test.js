@@ -14,8 +14,8 @@ describe('models nutrifit', function()  {
     before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => {
-        sergioData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword: '123', address: 'Calle V', phone: 123456789, points: 4 }
-        johnData = { name: 'John', surname: 'W', username: 'jwaine', email: 'jw@email.com', password: '123', repeatPassword: '123', address: 'Calle J', phone: 987654321, points: 5 }
+        sergioData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: 123456789 }
+        johnData = { name: 'John', surname: 'W', username: 'jwaine', email: 'jw@email.com', password: '123', address: 'Calle J', phone: 987654321 }
 
         pack_CategoryData = { name: 'Pack' }
         proteinCategoryData = { name: 'Protein' }
@@ -48,9 +48,9 @@ describe('models nutrifit', function()  {
                     expect(user.surname).to.equal(sergioData.surname)
                     expect(user.phone).to.equal(sergioData.phone)
                     expect(user.email).to.equal(sergioData.email)
+                    expect(user.address).to.equal(sergioData.address)
                     expect(user.username).to.equal(sergioData.username)
                     expect(user.password).to.equal(sergioData.password)
-                    // TODO check all mandatory fields (more expects)
                 })
         })
     })
@@ -96,6 +96,28 @@ describe('models nutrifit', function()  {
                             expect(pack_XL_Category.name).to.equal(pack_XL_CategoryData.name)
                             expect(pack_XL_Category.parent.toString()).to.equal(pack_Category._id.toString())
                         })
+                })
+        })
+    })
+
+    describe('create products', () => {
+        it('should succeed on correct data', () => {
+           return Promise.all([
+                new Product(packMuscle_Data).save(),
+                new Product(packMuscle_S_Data).save(),
+                new Product(packMuscle_M_Data).save(),
+            ])
+                .then(([pack_Muscle, packMuscle_S_, packMuscle_M_]) => {
+                    
+                    const arrayProducts = [pack_Muscle, packMuscle_S_, packMuscle_M_];
+
+                    expect(arrayProducts.length).to.equal(3)
+                    expect(pack_Muscle._doc._id.toString()).to.exist
+                    expect(pack_Muscle.name).to.equal(packMuscle_Data.name)
+                    expect(packMuscle_S_._doc._id.toString()).to.exist
+                    expect(packMuscle_S_.name).to.equal(packMuscle_S_Data.name)
+                    expect(packMuscle_M_._doc._id.toString()).to.exist
+                    expect(packMuscle_M_.name).to.equal(packMuscle_M_Data.name)
                 })
         })
     })
