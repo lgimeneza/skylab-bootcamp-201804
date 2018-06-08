@@ -1,6 +1,6 @@
 'use strict'
 
-const auctionApi = require('../api')
+const auctionApi = require('api')
 
 auctionApi.url = 'http://localhost:5000/api'
 

@@ -1,14 +1,11 @@
 'use strict'
 
-import { Types } from '../constants';
-import Request from 'axios';
+import { Types } from '../constants'
+import logic from '../../../logic'
 
 export function getProducts() {
     return async function (dispatch, getState) {
-        let {data:{data}} = await getProductsFromAPI();
-        dispatch({ type: Types.UPDATE_PRODUCTS, payload: {products: data} });
+        let {data:{data}} = await logic.listProducts()
+        dispatch({ type: Types.UPDATE_PRODUCTS, payload: {products: data} })
     }
-}
-function getProductsFromAPI() {
-    return Request.get(`http://localhost:5000/api/product`);
 }
