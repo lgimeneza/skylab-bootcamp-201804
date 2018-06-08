@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Home from './component/home'
 import Calendar from './component/calendar'
 import { Switch, Route } from 'react-router-dom'
-import './desing/App.css';
+import './design/App.css';
 import { Login } from './component/login';
 import { Register } from './component/register';
 
@@ -15,7 +15,6 @@ class App extends Component {
           <Route path='/calendar/:year/:month' component={Calendar} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
-
         </Switch>
       </div>
     )

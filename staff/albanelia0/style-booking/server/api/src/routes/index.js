@@ -32,6 +32,7 @@ router.post('/auth', bodyParser.json(), (req, res) => {
       const token = jwt.sign({ id }, TOKEN_SECRET, { expiresIn: TOKEN_EXP })
 
       res.status(200)
+      
       res.json({ status: 'OK', data: { id, token } })
     })
     .catch(({ message }) => {

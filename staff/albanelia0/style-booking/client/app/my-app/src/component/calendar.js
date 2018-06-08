@@ -4,7 +4,7 @@ import { ButtonBackToHome } from './buttonBackToHome'
 import {Login} from './login'
 import moment from 'moment'
 import logic from '../logic'
-import '../desing/calendar.css'
+import '../design/calendar.css'
 import {Register} from './register';
 
 class Calendar extends Component {

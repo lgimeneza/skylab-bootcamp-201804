@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import '../desing/dropdown.css'
+import '../design/dropdown.css'
 
 let day = new Date()
 const year = day.getFullYear()

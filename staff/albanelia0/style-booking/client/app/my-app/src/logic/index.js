@@ -1,5 +1,5 @@
 
-const logicApi = require('api')
+import logicApi from 'api'
 
 logicApi.url = 'http://localhost:4000/api'
 
@@ -12,9 +12,10 @@ const logic = {
 
   login({email, password}) {
     return logicApi.authenticateUser(email,password)
-      .then(id => {
-        this.userId = id
-        return true
+      .then(data => {
+        console.log(data)
+        this.userId = data.id
+        return data
       })
   },
 
@@ -24,4 +25,4 @@ const logic = {
   }
 }
 
-module.exports = logic
+export default logic

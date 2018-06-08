@@ -7,7 +7,7 @@ import logic from '../logic'
 export class Login extends Component {
 
   state = {
-    gmail: '',
+    email: '',
     password: '',
     formIsFull: false,
     conditionForGoToHome: false
@@ -22,10 +22,7 @@ export class Login extends Component {
     },
       () => {
         this.setState({
-          formIsFull: (
-            this.state.gmail &&
-            this.state.password
-          )
+          formIsFull: this.state.email && this.state.password ? true : false
         })
       }
     )
@@ -34,40 +31,39 @@ export class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
 
-    const { gmail, password, formIsFull } = this.state
+    const { email, password, formIsFull } = this.state
 
     if (formIsFull) {
-      console.log(formIsFull)
 
-      const body = { gmail, password }
+      const body = {
+        "email": email,
+        "password": password
+      }
 
       logic.login(body).then(result => {
+        console.log(result)
 
         if (result) {
           this.setState({
             conditionForGoToHome: true
           })
-          
+
           this.storageUserData(result)
-          localStorage.setItem(password)
+          localStorage.setItem("password", password)
         }
-      }).catch((data) => {
-        swal({
-          type: 'error',
-          title: 'Something went wrong!',
-          text: data.error
-        })
       })
 
       this.setState({
-        gmail: '',
+        email: '',
         password: ''
       })
     }
   }
-  goToHome() {
+
+  goToHome =() =>{
+    
     if (this.state.conditionForGoToHome) {
-      this.props.history.push('./home.js')
+      this.props.history.push('./home')
     } else {
       swal({
         type: 'error',
@@ -77,8 +73,8 @@ export class Login extends Component {
   }
 
   storageUserData(result) {
-    localStorage.setItem('token', result.data.token)
-    localStorage.setItem('id', result.data.id)
+    localStorage.setItem('token', result.token)
+    localStorage.setItem('id', result.id)
   }
 
   render() {
@@ -96,12 +92,12 @@ export class Login extends Component {
                 <form>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name='gmail' className="input is-large" type="email" placeholder="Your Email" autofocus="" />
+                      <input onChange={this.handleChange} name='email' className="input is-large" type="email" placeholder="Your Email" autofocus="" value={this.state.email}/>
                     </div>
                   </div>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name='password' className="input is-large" type="password" placeholder="Your Password" />
+                      <input onChange={this.handleChange} name='password' className="input is-large" type="password" placeholder="Your Password" value={this.state.password} />
                     </div>
                   </div>
                   <div className="field">
@@ -110,7 +106,7 @@ export class Login extends Component {
                       Remember me
                     </label>
                   </div>
-                  {this.state.conditionForGoToHome ? <button onClick={this.goToHome} className="button is-block is-info is-large is-fullwidth">Login</button> :
+                  {this.state.conditionForGoToHome ? <button type="submit" onClick={this.goToHome} className="button is-block is-info is-large is-fullwidth">Login</button> :
                     <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Login</button>
                   }
                 </form>

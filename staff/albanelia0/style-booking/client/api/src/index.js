@@ -77,7 +77,7 @@ const logic = {
 
             this.token = token
 
-            return id
+            return {id, token}
           })
           .catch(err => {
             if (err.code === 'ECONNREFUSED') throw Error('could not reach server')

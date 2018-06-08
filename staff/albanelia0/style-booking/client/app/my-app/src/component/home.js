@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Dropdown} from './dropdown'
-import '../desing/home.css'
+import '../design/home.css'
+// import 'bulma/js/bulma.js';
 
 const images = [
   '/images/0.jpg',
