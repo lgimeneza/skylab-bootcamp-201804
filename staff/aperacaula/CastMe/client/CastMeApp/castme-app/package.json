@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "api": "file:../../CastMeApi/src",
+    "api": "file:../../CastMeApi",
     "data": "../../../server/data",
     "chai": "^4.1.2",
     "mongoose": "^5.1.4",
