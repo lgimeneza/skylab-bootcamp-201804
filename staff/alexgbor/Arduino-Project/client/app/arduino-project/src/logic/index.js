@@ -14,7 +14,6 @@ const logic = {
     login(email, password) {
         return arduApi.authenticateUser(email, password)
             .then(data => {
-                console.log(data)
                 this.userId = data.data.id
 
                 return data
