@@ -84,9 +84,9 @@ describe('logic (sweet-home)', () => {
                         .then(res => {
                             expect(res).to.be.true
 
-                            .then(id => {
-                                return shApi.unregisterUser(id, dni, '789')
-                            })
+                            // TODO check user updated correctly (check other properties of user)
+
+                            return shApi.unregisterUser(logic.userId, dni, '789')
                         })
                 })
         })
