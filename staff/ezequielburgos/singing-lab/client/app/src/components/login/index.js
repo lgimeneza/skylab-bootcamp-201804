@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import { Link } from 'react-router-dom'
 import './index.css'
 import Navbar from './../navbar'
 
@@ -14,13 +13,6 @@ class Login extends Component {
             email: '',
             password: ''
         }
-    }
-
-    componentDidMount() {
-        document.body.style.background = 'url(/images/login-micro.jpeg)'
-        document.body.style.backgroundSize = 'cover'
-        document.body.style. backgroundPosition = 'top left'
-        document.body.style.backgroundRepeat = 'no-repeat'
     }
 
     handleSubmitLogin = (e) => {
@@ -58,7 +50,7 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div className="login-app">
                 <Navbar />
                 <form className="form-signin" onSubmit={this.handleSubmitLogin}>
                     <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>

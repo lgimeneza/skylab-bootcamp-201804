@@ -1,8 +1,22 @@
 body{
-    /* background: url('/images/login-micro.jpeg'); */
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.login-app{
+    background: url('/images/login-micro.jpeg');
     background-size: cover;
-    background-position: top left;
+    background-position: center;
     background-repeat: no-repeat;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
 }
 
 .form-signin{

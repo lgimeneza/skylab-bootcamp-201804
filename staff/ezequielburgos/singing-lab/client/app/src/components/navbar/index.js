@@ -13,11 +13,19 @@ class Navbar extends Component {
                             {/* <i className="fas fa-music" />
                             <i className="fas fa-music" /> */}
                         </div>
-                        <span className="py-2 d-none d-md-inline-block">home</span>
-                        <span className="py-2 d-none d-md-inline-block"><Link to="/products">Products</Link></span>
+                        <span className="py-2 d-none d-md-inline-block">
+                            <Link to="/">Home</Link>
+                        </span>
+                        <span className="py-2 d-none d-md-inline-block">
+                            <Link to="/categories">Products</Link>
+                        </span>
                         <span className="py-2 d-none d-md-inline-block">Search</span>
-                        <span className="py-2 d-none d-md-inline-block"><Link to="/auth">Login</Link></span>
-                        <span className="py-2 d-none d-md-inline-block"><Link to="/register">Register</Link></span>
+                        <span className="py-2 d-none d-md-inline-block">
+                            <Link to="/auth">Login</Link>
+                        </span>
+                        <span className="py-2 d-none d-md-inline-block">
+                            <Link to="/register">Register</Link>
+                        </span>
                     </div>
                 </nav>
 

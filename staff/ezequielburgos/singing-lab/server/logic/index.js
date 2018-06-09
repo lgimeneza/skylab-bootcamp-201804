@@ -230,18 +230,14 @@ const logic = {
      * 
      * @returns {Promise<[Note]>}
      */
-    listProducts(userId) {
+    listProducts() {
         return Promise.resolve()
             .then(() => {
-                if (typeof userId !== 'string') throw Error('user id is not a string')
+                return Products.findById({})
+                    .then(product => {
+                        if (!product) throw Error(`no products where found`)
 
-                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
-
-                return User.findById(userId)
-                    .then(user => {
-                        if (!user) throw Error(`no user found with id ${userId}`)
-
-                        return user.notes.map(({ id, text }) => ({ id, text }))
+                        return product.map(product => product)
                     })
             })
     }

@@ -5,8 +5,13 @@ import './index.css'
 import Navbar from './../navbar'
 import Footer from './../footer'
 import LandingMain from '../landing-main'
+import LandingChat from '../landing-chat'
 
 class Landing extends Component {
+
+    componentDidMount(){
+        document.body.style.background = "lightgrey"
+    }
 
     render() {
         return (
@@ -22,6 +27,7 @@ class Landing extends Component {
                     </div>
                 </section>
                 <LandingMain/>
+                <LandingChat/>
                 <Footer/>
             </main>
         )

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import { Link } from 'react-router-dom'
 import './index.css'
 import Navbar from './../navbar'
 
@@ -20,10 +19,6 @@ class Register extends Component {
     }
   }
 
-  componentDidMount() {
-    document.body.style.background = "linear-gradient(#9824afa6, #6b2061a9, transparent), url('/images/blurry-register.jpeg')"
-
-  }
 
   handleSubmitRegister = (e) => {
     e.preventDefault()
@@ -78,7 +73,7 @@ class Register extends Component {
 
   render() {
     return (
-      <main>
+      <main className="my_container register-app">
         <Navbar />
         <div className="container">
           <div className="py-5 text-center title">

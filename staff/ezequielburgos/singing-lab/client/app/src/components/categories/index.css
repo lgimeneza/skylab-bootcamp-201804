@@ -1,0 +1,9 @@
+.main-title{
+    text-align: center;
+}
+
+.thumbnail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

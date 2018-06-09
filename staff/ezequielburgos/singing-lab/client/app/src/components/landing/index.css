@@ -38,5 +38,6 @@ Home page CSS
     background-size: cover;
     background-position: top left;
     background-repeat: no-repeat;
+    margin: 0px !important;
     
 }

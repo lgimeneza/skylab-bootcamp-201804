@@ -19,7 +19,7 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 | javascript (ES5, ES6) | MongoDB, Mongoose | CSS3 | Chai |
 | HTML |Pug | Bootstrap | NYC (Istambul) |
 
-- Other: [Trello](https://trello.com/b/eriWR8jg/final-project), Git & Github, surge, Draw.io. 
+- Other: [Trello](https://trello.com/b/eriWR8jg/final-project), Git & Github, surge, cloudinary, Draw.io. 
 
 ## DATA MODEL
 
