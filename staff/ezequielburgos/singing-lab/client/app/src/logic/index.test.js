@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const logic = require('.')
 const singingLabApi = require('api')
 
-describe('logic (notes-app)', () => {
+describe('logic (singingLab)', () => {
     const userData = { name: 'John', surname: 'Doe', phone: '+34 111 222 333', address: 'Roc Boronat 35', email: 'jd@mail.com', password: '123' }
     const maryDoeData = { name: 'mary', surname: 'doe', phone: '+34 444 555 111', address: 'colorado', email: 'md@mail.com', password: '456' }
 
@@ -110,7 +110,7 @@ describe('logic (notes-app)', () => {
 
             return logic.listCategories()
                 .then(res => {
-                    console.log('LIST CATEGORIES', res)
+                    // console.log('LIST CATEGORIES', res)
                 })
 
         })
@@ -122,6 +122,10 @@ describe('logic (notes-app)', () => {
             return logic.listCategories()
                 .then(res => {
                     console.log('LIST CATEGORIES', res)
+                    return logic.listProducts(res[0]._id)
+                        .then(res => {
+                            console.log('LIST Products', res)
+                        })
                 })
 
         })

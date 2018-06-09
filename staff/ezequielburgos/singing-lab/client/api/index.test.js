@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const { mongoose, models: { User, Category, Product, Order } } = require('data')
 const { expect } = require('chai')
-const singinLabApi = require('./index')
+const singingLabApi = require('./index')
 const _ = require('lodash')
 const sinon = require('sinon')
 const axios = require('axios')
@@ -12,7 +12,7 @@ const jwt = require('jsonwebtoken')
 
 const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 
-singinLabApi.url = API_URL
+singingLabApi.url = API_URL
 
 describe('logic (singingLab api)', () => {
     let jackData, annaData, otherjackData, beginnerCourseCategoryData, advancedCourseCategoryData, beginnerCourseData, advancedCourseData
@@ -37,7 +37,7 @@ describe('logic (singingLab api)', () => {
 
     describe('register user', () => {
         it('should succeed on correct dada', () =>
-            singinLabApi.registerUser('John', 'Doe', 'Roc Boronat 35', 'jd@mail.com', '123')
+            singingLabApi.registerUser('John', 'Doe', 'Roc Boronat 35', 'jd@mail.com', '123')
                 .then(res => {
                     expect(res).to.be.true
                 })
@@ -49,7 +49,7 @@ describe('logic (singingLab api)', () => {
                 .then(() => {
                     const { name, surname, address, email, password } = jackData
 
-                    return singinLabApi.registerUser(name, surname, address, email, password)
+                    return singingLabApi.registerUser(name, surname, address, email, password)
                 })
                 .catch(({ message }) => {
                     expect(message).to.equal(`user with email ${jackData.email} already exists`)
@@ -57,77 +57,77 @@ describe('logic (singingLab api)', () => {
         )
 
         it('should fail on no user name', () =>
-            singinLabApi.registerUser()
+            singingLabApi.registerUser()
                 .catch(({ message }) => expect(message).to.equal('user name is not a string'))
         )
 
         it('should fail on empty user name', () =>
-            singinLabApi.registerUser('')
+            singingLabApi.registerUser('')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on blank user name', () =>
-            singinLabApi.registerUser('     ')
+            singingLabApi.registerUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on no user surname', () =>
-            singinLabApi.registerUser(jackData.name)
+            singingLabApi.registerUser(jackData.name)
                 .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
         )
 
         it('should fail on empty user surname', () =>
-            singinLabApi.registerUser(jackData.name, '')
+            singingLabApi.registerUser(jackData.name, '')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on blank user surname', () =>
-            singinLabApi.registerUser(jackData.name, '     ')
+            singingLabApi.registerUser(jackData.name, '     ')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on no user address', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname)
+            singingLabApi.registerUser(jackData.name, jackData.surname)
                 .catch(({ message }) => expect(message).to.equal('user address is not a string'))
         )
 
         it('should fail on empty user address', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname, '')
+            singingLabApi.registerUser(jackData.name, jackData.surname, '')
                 .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
         )
 
         it('should fail on blank user address', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname, '     ')
+            singingLabApi.registerUser(jackData.name, jackData.surname, '     ')
                 .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
         )
 
         it('should fail on no user email', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname, jackData.address)
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address)
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname, jackData.address, '')
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, '')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname, jackData.address, '     ')
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, '     ')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email)
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email, '')
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            singinLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email, '     ')
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
@@ -147,7 +147,7 @@ describe('logic (singingLab api)', () => {
 
                 const { name, surname, address, email, password } = jackData
 
-                return singinLabApi.registerUser(name, surname, address, email, password)
+                return singingLabApi.registerUser(name, surname, address, email, password)
                     .catch(({ message }) => {
                         expect(message).to.equal(`unexpected response status 201 (KO)`)
                     })
@@ -162,7 +162,7 @@ describe('logic (singingLab api)', () => {
 
                 const { name, surname, address, email, password } = jackData
 
-                return singinLabApi.registerUser(name, surname, address, email, password)
+                return singingLabApi.registerUser(name, surname, address, email, password)
                     .catch(({ message }) => {
                         expect(message).to.equal('email is not a string')
                     })
@@ -177,7 +177,7 @@ describe('logic (singingLab api)', () => {
 
                 const { name, surname, address, email, password } = jackData
 
-                return singinLabApi.registerUser(name, surname, address, email, password)
+                return singingLabApi.registerUser(name, surname, address, email, password)
                     .catch(({ message }) => {
                         expect(message).to.equal('could not reach server')
                     })
@@ -190,42 +190,42 @@ describe('logic (singingLab api)', () => {
         it('should succeed on correct data', () =>
             User.create(jackData)
                 .then(() =>
-                    singinLabApi.authenticateUser('jj@mail.com', '123')
+                    singingLabApi.authenticateUser('jj@mail.com', '123')
                         .then(id => {
                             expect(id).to.exist
 
-                            expect(singinLabApi.token()).not.to.equal('NO-TOKEN')
+                            expect(singingLabApi.token()).not.to.equal('NO-TOKEN')
                         })
                 )
         )
 
         it('should fail on no user email', () =>
-            singinLabApi.authenticateUser()
+            singingLabApi.authenticateUser()
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            singinLabApi.authenticateUser('')
+            singingLabApi.authenticateUser('')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            singinLabApi.authenticateUser('     ')
+            singingLabApi.authenticateUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            singinLabApi.authenticateUser(jackData.email)
+            singingLabApi.authenticateUser(jackData.email)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            singinLabApi.authenticateUser(jackData.email, '')
+            singingLabApi.authenticateUser(jackData.email, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            singinLabApi.authenticateUser(jackData.email, '     ')
+            singingLabApi.authenticateUser(jackData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
@@ -245,7 +245,7 @@ describe('logic (singingLab api)', () => {
 
                 const { email, password } = jackData
 
-                return singinLabApi.authenticateUser(email, password)
+                return singingLabApi.authenticateUser(email, password)
                     .catch(({ message }) => {
                         expect(message).to.equal(`unexpected response status 200 (KO)`)
                     })
@@ -260,7 +260,7 @@ describe('logic (singingLab api)', () => {
 
                 const { email, password } = jackData
 
-                return singinLabApi.authenticateUser(email, password)
+                return singingLabApi.authenticateUser(email, password)
                     .catch(({ message }) => {
                         expect(message).to.equal('email is not a string')
                     })
@@ -275,7 +275,7 @@ describe('logic (singingLab api)', () => {
 
                 const { email, password } = jackData
 
-                return singinLabApi.authenticateUser(email, password)
+                return singingLabApi.authenticateUser(email, password)
                     .catch(({ message }) => {
                         expect(message).to.equal('could not reach server')
                     })
@@ -289,9 +289,9 @@ describe('logic (singingLab api)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    singinLabApi.token(token)
+                    singingLabApi.token(token)
 
-                    return singinLabApi.retrieveUser(id)
+                    return singingLabApi.retrieveUser(id)
                 })
                 .then(user => {
                     expect(user).to.exist
@@ -310,17 +310,17 @@ describe('logic (singingLab api)', () => {
         )
 
         it('should fail on no user id', () =>
-            singinLabApi.retrieveUser()
+            singingLabApi.retrieveUser()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            singinLabApi.retrieveUser('')
+            singingLabApi.retrieveUser('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            singinLabApi.retrieveUser('     ')
+            singingLabApi.retrieveUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
@@ -338,7 +338,7 @@ describe('logic (singingLab api)', () => {
 
                 sandbox.stub(axios, 'get').returns(resolved)
 
-                return singinLabApi.retrieveUser(fakeUserId)
+                return singingLabApi.retrieveUser(fakeUserId)
                     .catch(({ message }) => {
                         expect(message).to.equal(`unexpected response status 200 (KO)`)
                     })
@@ -351,7 +351,7 @@ describe('logic (singingLab api)', () => {
 
                 sandbox.stub(axios, 'get').returns(resolved)
 
-                return singinLabApi.retrieveUser(fakeUserId)
+                return singingLabApi.retrieveUser(fakeUserId)
                     .catch(({ message }) => {
                         expect(message).to.equal('user id is not a string')
                     })
@@ -364,7 +364,7 @@ describe('logic (singingLab api)', () => {
 
                 sandbox.stub(axios, 'get').returns(resolved)
 
-                return singinLabApi.retrieveUser(fakeUserId)
+                return singingLabApi.retrieveUser(fakeUserId)
                     .catch(({ message }) => {
                         expect(message).to.equal('could not reach server')
                     })
@@ -378,9 +378,9 @@ describe('logic (singingLab api)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    singinLabApi.token(token)
+                    singingLabApi.token(token)
 
-                    return singinLabApi.updateUser(id, 'Jack', 'Wayne', '+34 111 222 333', 'colorado', 'jj@mail.com', '123', 'jw@mail.com', '456')
+                    return singingLabApi.updateUser(id, 'Jack', 'Wayne', '+34 111 222 333', 'colorado', 'jj@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
 
                             expect(res).to.be.true
@@ -411,117 +411,117 @@ describe('logic (singingLab api)', () => {
                 .then(([{ id: id1 }, { id: id2 }]) => {
                     const token = jwt.sign({ id: id1 }, TOKEN_SECRET)
 
-                    singinLabApi.token(token)
+                    singingLabApi.token(token)
                     
                     const { name, surname, phone, address, email, password } = jackData
 
-                    return singinLabApi.updateUser(id1, name, surname, phone, address, email, password, otherjackData.email)
+                    return singingLabApi.updateUser(id1, name, surname, phone, address, email, password, otherjackData.email)
                 })
                 .catch(({ message }) => expect(message).to.equal(`user with email ${otherjackData.email} already exists`))
         )
 
         it('should fail on no user id', () =>
-            singinLabApi.updateUser()
+            singingLabApi.updateUser()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            singinLabApi.updateUser('')
+            singingLabApi.updateUser('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            singinLabApi.updateUser('     ')
+            singingLabApi.updateUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on no user name', () =>
-            singinLabApi.updateUser(fakeUserId)
+            singingLabApi.updateUser(fakeUserId)
                 .catch(({ message }) => expect(message).to.equal('user name is not a string'))
         )
 
         it('should fail on empty user name', () =>
-            singinLabApi.updateUser(fakeUserId, '')
+            singingLabApi.updateUser(fakeUserId, '')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on blank user name', () =>
-            singinLabApi.updateUser(fakeUserId, '     ')
+            singingLabApi.updateUser(fakeUserId, '     ')
                 .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
         )
 
         it('should fail on no user surname', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name)
+            singingLabApi.updateUser(fakeUserId, jackData.name)
                 .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
         )
 
         it('should fail on empty user surname', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, '')
+            singingLabApi.updateUser(fakeUserId, jackData.name, '')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on blank user surname', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, '     ')
+            singingLabApi.updateUser(fakeUserId, jackData.name, '     ')
                 .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
         )
 
         it('should fail on no user phone', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname)
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname)
                 .catch(({ message }) => expect(message).to.equal('user phone is not a string'))
         )
 
         it('should fail on empty user phone', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '')
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '')
                 .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
         )
 
         it('should fail on blank user phone', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '     ')
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '     ')
                 .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
         )
 
         it('should fail on no user address', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone)
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone)
                 .catch(({ message }) => expect(message).to.equal('user address is not a string'))
         )
 
         it('should fail on empty user address', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone, '')
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone, '')
                 .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
         )
 
         it('should fail on blank user address', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, '     ')
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, '     ')
                 .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
         )
 
         it('should fail on no user email', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address)
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address)
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '')
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '     ')
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '     ')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email)
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '')
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            singinLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '     ')
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
     })
@@ -532,11 +532,11 @@ describe('logic (singingLab api)', () => {
                 .then(({ id }) => {
                     const token = jwt.sign({ id }, TOKEN_SECRET)
 
-                    singinLabApi.token(token)
+                    singingLabApi.token(token)
 
                     const { email, password } = jackData
 
-                    return singinLabApi.unregisterUser(id, email, password)
+                    return singingLabApi.unregisterUser(id, email, password)
                         .then(res => {
                             expect(res).to.be.true
 
@@ -549,47 +549,47 @@ describe('logic (singingLab api)', () => {
         )
 
         it('should fail on no user id', () =>
-            singinLabApi.unregisterUser()
+            singingLabApi.unregisterUser()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            singinLabApi.unregisterUser('')
+            singingLabApi.unregisterUser('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            singinLabApi.unregisterUser('     ')
+            singingLabApi.unregisterUser('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on no user email', () =>
-            singinLabApi.unregisterUser(fakeUserId)
+            singingLabApi.unregisterUser(fakeUserId)
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            singinLabApi.unregisterUser(fakeUserId, '')
+            singingLabApi.unregisterUser(fakeUserId, '')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            singinLabApi.unregisterUser(fakeUserId, '     ')
+            singingLabApi.unregisterUser(fakeUserId, '     ')
                 .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            singinLabApi.unregisterUser(fakeUserId, jackData.email)
+            singingLabApi.unregisterUser(fakeUserId, jackData.email)
                 .catch(({ message }) => expect(message).to.equal('user password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            singinLabApi.unregisterUser(fakeUserId, jackData.email, '')
+            singingLabApi.unregisterUser(fakeUserId, jackData.email, '')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            singinLabApi.unregisterUser(fakeUserId, jackData.email, '     ')
+            singingLabApi.unregisterUser(fakeUserId, jackData.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
     })
@@ -601,7 +601,7 @@ describe('logic (singingLab api)', () => {
                 Category.create(advancedCourseCategoryData)
             ])
                 .then(res => {
-                    return singinLabApi.listCategories()
+                    return singingLabApi.listCategories()
                         .then(category => {
 
                             expect(category[0]._id).to.exist
@@ -633,8 +633,8 @@ describe('logic (singingLab api)', () => {
                         .then(res => {
 
                             return Promise.all([
-                                singinLabApi.listProducts(res[0].category),
-                                singinLabApi.listProducts(res[1].category),
+                                singingLabApi.listProducts(res[0].category),
+                                singingLabApi.listProducts(res[1].category),
                             ])
                                 .then(product => {
 

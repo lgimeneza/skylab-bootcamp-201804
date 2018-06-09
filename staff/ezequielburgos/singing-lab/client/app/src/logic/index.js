@@ -49,8 +49,10 @@ const logic = {
     },
 
     listProducts(categoryId){
-        return singingLabApi.listProducts()
-            .then(products => products)
+        return singingLabApi.listProducts(categoryId)
+            .then(products => {
+                return products
+            })
     }
     
 }

@@ -2,7 +2,7 @@
 
 const axios = require('axios')
 
-const singinLabApi = {
+const singingLabApi = {
     url: 'NO-URL',
 
     token(token) {
@@ -294,4 +294,4 @@ const singinLabApi = {
     }
 }
 
-module.exports = singinLabApi
+module.exports = singingLabApi
