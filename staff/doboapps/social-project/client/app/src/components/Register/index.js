@@ -62,22 +62,21 @@ class Register extends Component {
         e.preventDefault();
         if (this.state.notMatchingMessage === '') {
 
-            logic.registerUser(this.state.userName,this.state.userEmail, this.state.password.toString())
+            logic.registerUser(this.state.userName,this.state.userEmail, this.state.password)
                 .then(res => {
-
-                    if (res.status === 'OK') {
-                        console.log("You registered awesomely!")
+                    if (res===true) {
+                        alert("You registered awesomely!")
 
                         //this.props.history.push('/login')
                     }
                     else {
-                        console.log("opps error")
+                        alert("opps error "+res)
 
                         this.setState({ registerFailedMessage: res.error })
                     }
                 })
         } else {
-console.log("password no coincide")
+alert("password no coincide")
         }
     }
 
@@ -91,7 +90,7 @@ console.log("password no coincide")
 
                 <form onSubmit={this.handleRegister}>
 
-                    <input value={this.state.userName} onChange={this.handleKeepName} type="text" placeholder="Nombre" />
+                    <input value={this.state.userName} onChange={this.handleKeepName} type="text" placeholder="Nombre" autoFocus />
                     <input value={this.state.UserEmail} onChange={this.handleKeepEmail} type="text" placeholder="Email" />
                     <input value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />
                     <input value={this.state.repeatPassword} onChange={this.handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />

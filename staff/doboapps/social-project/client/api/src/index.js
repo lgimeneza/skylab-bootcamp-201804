@@ -5,7 +5,7 @@ const axios = require('axios')
 const socialApi = {
     url: 'NO-URL',
 
-    token: 'NO-TOKEN',
+    token: localStorage.getItem('token') ? localStorage.getItem('token') : 'NO-TOKEN',
 
     /**
      * 
@@ -42,8 +42,8 @@ const socialApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -73,8 +73,9 @@ const socialApi = {
                         const { data: { id, token } } = data
 
                         this.token = token
+                       localStorage.setItem('token',token)
 
-                        return id
+                        return data
                     })
                     .catch(err => {
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
@@ -82,8 +83,9 @@ const socialApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+
+                        } else return err
                     })
             })
     },
@@ -104,7 +106,6 @@ const socialApi = {
                 return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-
                         return data.data
                     })
                     .catch(err => {
@@ -248,6 +249,50 @@ const socialApi = {
             })
     },
 
+    /**
+     * 
+     * @param {string} name 
+     * @param {string} race 
+     * @param {string} gender 
+     * @param {string} city 
+     * 
+     * @returns {Promise<object>}
+     */
+    searchUser(name, race, gender,city) {
+        return Promise.resolve()
+        .then(() => {
+            if (typeof name !== 'string' || !(name = name.trim()).length === 0) name=""
+            else name="name="+name
+
+            if (typeof race !== 'string' || (race = race.trim()).length === 0) race=""
+            else race="&race="+race
+
+            if (typeof gender !== 'string' || (gender = gender.trim()).length === 0) gender=""
+            else gender="&gender="+gender
+
+            if (typeof city !== 'string' || (city = city.trim()).length === 0) city=""
+            else city="&city="+city
+
+            
+            
+            return axios.get(`${this.url}/search/users?${name}${race}${gender}${city}`)
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                    return data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        return message
+
+                    } else return "e "+err
+                })
+        })
+}
 
 }
 

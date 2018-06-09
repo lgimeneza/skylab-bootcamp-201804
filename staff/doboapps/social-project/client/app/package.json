@@ -10,13 +10,18 @@
     "test-logic": "mocha src/logic"
   },
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "react": "^16.4.0",
+    "react-crossfade-image": "^1.1.1",
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "reactstrap": "^6.1.0",
     "social-api": "file:../api/"
   },
   "devDependencies": {
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.3"
   }
 }

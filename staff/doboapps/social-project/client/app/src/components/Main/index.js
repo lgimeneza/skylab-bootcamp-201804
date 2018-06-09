@@ -1,23 +1,28 @@
 import React, { Component } from "react";
 import { Route, Switch } from 'react-router-dom';
-import { Landing, Home, Register, Login, Error404 } from "../index";
-
+import { Register, Login, Error404, Start } from "../index";
+import logic from "../../logic"
 class Main extends Component {
 
-    isLogged = () => {
-        return localStorage.getItem("token-app") ? true : false
-    }
 
     render() {
-        return <div>
-            <Switch>
-                <Route exact path="/" component={Landing} />
-                <Route path="/home" render={props => <Home isLogged={this.isLogged} />} />
-                <Route path="/register" render={props => <Register />} />
-                <Route path="/login" render={props => <Login />} />
-                <Route path='/' render={props => <Error404 />} />
-            </Switch>
-        </div>
+        return logic.isLogged() ?
+
+            <div>
+                <Switch>
+                    <Route exact path="/" render={props => <Start  isLogged={this.props.isLogged}/>} />
+                    <Route path='/' render={props => <Error404 />} />
+                </Switch>
+            </div>
+            :
+            <div>
+                <Switch>
+                <Route exact path="/" render={props => <Start isLogged={this.props.isLogged} />} />
+                    <Route path="/register" render={props => <Register />} />
+                    <Route path="/login" render={props => <Login logIn={this.props.logIn} />} />
+                    <Route path='/' render={props => <Error404 />} />
+                </Switch>
+            </div>
     }
 
 }

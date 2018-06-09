@@ -1,26 +1,54 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import logic from "../../logic"
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { withRouter } from 'react-router-dom'
 
 
-function Header(props) {
 
-    return <header>
+class Header extends React.Component {
 
-        <nav >
-                <ul className="bar-ul ">
-                <li className="bar-item">
-                        <Link className="bar-link" to="/">Landing</Link>
-                    </li>
-                    <li className="bar-item">
-                        <Link className="bar-link" to="/login">Login</Link>
-                    </li>
-                    <li className="bar-item">
-                        <Link className="bar-link" to="/register">Register</Link>
-                    </li>
-                </ul>
-        </nav>
+    toggle = this.toggle.bind(this);
+    state = {
+        isOpen: false,
+    }
 
-    </header>
+    toggle() {
+        this.setState({
+            isOpen: !this.state.isOpen
+        })
+    }
+
+    render() {
+
+        if(logic.isLogged()) return (
+            <div>
+                <Navbar color="light" light expand="md">
+                    <NavbarBrand href="/">Dogger</NavbarBrand>
+                    <NavbarToggler onClick={this.toggle} />
+                    <Collapse isOpen={this.state.isOpen} navbar>
+
+                        {logic.isLogged() ? <Nav className="ml-auto" navbar>
+                            <NavItem>
+                                <NavLink  onClick={this.props.logOut}  >LogOut</NavLink>
+                            </NavItem>
+                        </Nav>
+                            :
+                            <Nav className="ml-auto" navbar>
+                                <NavItem>
+                                    <NavLink tag={Link} to="/Login">Login</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} to="/register">register</NavLink>
+                                </NavItem>
+                            </Nav>
+                        }
+
+                    </Collapse>
+                </Navbar>
+            </div>
+        )
+        else return (<div>hola</div>)
+    }
 }
-
-export default Header;
+export default withRouter(Header);
