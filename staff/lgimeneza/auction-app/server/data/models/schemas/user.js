@@ -1,3 +1,5 @@
+'use strict'
+
 const { Schema } = require('mongoose')
 const Role = require('./role')
 
