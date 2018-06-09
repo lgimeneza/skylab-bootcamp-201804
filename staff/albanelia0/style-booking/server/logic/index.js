@@ -9,6 +9,21 @@ const moment = require('moment')
  */
 const logic = {
 
+
+  getHoursOfWorkingToDay(){
+
+    let _hours = []
+    let hours = 0
+
+    for (let i = 0; i < 9; i++) {
+      hours = i + 8.15
+      _hours.push(hours)
+    }
+
+    return _hours
+
+  },
+
   /**
    * @param {string} name
    * @param {string} surname
@@ -223,40 +238,62 @@ const logic = {
     Promise.resolve(() => {
       //TODO VALIDATIONS
 
-      const monthStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
-      const monthEnd = moment(monthStart).add(1, 'M')
-      const monthDays = monthEnd.diff(monthStart, 'days')
+      // let hours = [{ 8: 0 }]
+      // for (let i = 8; i < 17; i++) {
+
+      //   for (let j = 0; j < 60; j += 15) {
+      //     if (!hours[i]) hours[i] = i
+
+      //     hours[i] = j
+
+      //     for (key in hours) {
+      //       if (hours[key] !== j)
+
+      //         hours += key + hours[j]
+      //     }
+
+      //   }
+      // }
+
       const hoursOfDays = {}
 
+      let _hours = []
+      for (let i = 8; i < 17; i++) {
+
+        for (let j = 0; j < 60; j += 15) {
+          _hours.push(`${i}.${j}`)
+
+        }
+      }
+
+      const dayStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
+      const dayEnd = moment(dayStart).add(1, 'days')
+      
       return Booking.find({
         $and: [
-          { "date": { $gte: monthStart } },
-          { "date": { $lt: monthEnd } }
+          { "date": { $gte: dayStart } },
+          { "date": { $lt: dayEnd } }
         ]
       })
-        .then(bookings => {
-          if (bookings.length) {
-            const bookingHours = bookings.forEach(element => {
 
-              const { date, endDate } = booking
-              hoursOfDays = {"date": data, "endDate": endDate}
-              
+        .then(booking => {
+            const hoursOfWork = _hours.forEach(hour => {
+
+              const endDate= booking.endDate
 
               // calculate the duration of booking in hours
               const diff = moment(endDate).diff(date)
               const duration = moment.duration(diff).asHours()
 
-              // add hours of this booking to the accum object's date key
-              if (!accum[dayOfMonth]) accum[dayOfMonth] = 0
-              accum[dayOfMonth] += duration
 
-              return accum
+              hoursOfDays = { "start": 8, "end": endDate }
+
+              
             });
 
             // bookingHours => { 5: 3, 10: 7.5 }
 
             return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
-          } else return []
         })
     })
   },
