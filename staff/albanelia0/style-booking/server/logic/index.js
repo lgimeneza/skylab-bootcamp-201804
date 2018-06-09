@@ -9,21 +9,6 @@ const moment = require('moment')
  */
 const logic = {
 
-
-  getHoursOfWorkingToDay(){
-
-    let _hours = []
-    let hours = 0
-
-    for (let i = 0; i < 9; i++) {
-      hours = i + 8.15
-      _hours.push(hours)
-    }
-
-    return _hours
-
-  },
-
   /**
    * @param {string} name
    * @param {string} surname
@@ -63,15 +48,15 @@ const logic = {
 
   },
   /**
-     * 
-     * @param {string} id 
-     * @param {string} name 
-     * @param {string} surname 
-     * @param {string} email 
-     * @param {string} password 
-     * @param {string} newEmail 
-     * @param {string} newPassword 
-     * 
+     *
+     * @param {string} id
+     * @param {string} name
+     * @param {string} surname
+     * @param {string} email
+     * @param {string} password
+     * @param {string} newEmail
+     * @param {string} newPassword
+     *
      * @returns {Promise<boolean>}
      */
   updateUser(id, name, surname, email, password, newEmail, newPassword) {
@@ -125,7 +110,7 @@ const logic = {
       })
       .then(() => true)
   },
-  
+
   /**
    * @param {String} id
    * @param {String} email
@@ -137,10 +122,10 @@ const logic = {
   },
 
   /**
-     * 
-     * @param {string} email 
-     * @param {string} password 
-     * 
+     *
+     * @param {string} email
+     * @param {string} password
+     *
      * @returns {Promise<string>}
      */
   authenticateUser(email, password) {
@@ -164,7 +149,7 @@ const logic = {
   },
   /**
    * Returns the booking hours (on existing days) for a given year and month
-   * 
+   *
    * @example
    *  logic.getBookingHoursByYearMonth(2018, 6)
    *    .then(bookingHours => bookingHours.forEach(console.log))
@@ -173,10 +158,10 @@ const logic = {
    * { day: 11, bookingHours: 3 }
    * { day: 25, bookingHours: 7 }
    * { day: 30, bookingHours: 2.5 }
-   * 
+   *
    * @param {Number} year
    * @param {Number} month
-   * 
+   *
    * @returns {Promise<[{day<Number>, bookingHours<Number>}]>}
    */
   getBookingHoursForYearMonth(year, month) {
@@ -198,20 +183,20 @@ const logic = {
             const bookingHours = bookings.reduce((accum, booking) => {
               const { date, endDate } = booking
               const dayOfMonth = date.getDate()
-  
+
               // calculate the duration of booking in hours
               const diff = moment(endDate).diff(date)
               const duration = moment.duration(diff).asHours()
-  
+
               // add hours of this booking to the accum object's date key
               if (!accum[dayOfMonth]) accum[dayOfMonth] = 0
               accum[dayOfMonth] += duration
-  
+
               return accum
             }, {})
-  
+
             // bookingHours => { 5: 3, 10: 7.5 }
-  
+
             return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
           } else return []
         })
@@ -220,7 +205,7 @@ const logic = {
 
   /**
    * Returns the booking hours for a given year, month, day
-   * 
+   *
    * @example
    *  logic.getBookingHoursForYearMonthDay(2018, 10, 1)
    *    .then(bookingHours => bookingHours.forEach(console.log))
@@ -228,7 +213,7 @@ const logic = {
    * { start: 9, end: 10.5 }
    * { start: 12.5, end: 13.5 }
    * { start: 15.25, end: 16 }
-   * 
+   *
    * @param {Number} year
    * @param {Number} month
    * @param {Number} day
@@ -238,7 +223,7 @@ const logic = {
     Promise.resolve(() => {
       //TODO VALIDATIONS
 
-      // let hours = [{ 8: 0 }]
+      // let hours = []
       // for (let i = 8; i < 17; i++) {
 
       //   for (let j = 0; j < 60; j += 15) {
@@ -268,7 +253,7 @@ const logic = {
 
       const dayStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
       const dayEnd = moment(dayStart).add(1, 'days')
-      
+
       return Booking.find({
         $and: [
           { "date": { $gte: dayStart } },
@@ -288,7 +273,7 @@ const logic = {
 
               hoursOfDays = { "start": 8, "end": endDate }
 
-              
+
             });
 
             // bookingHours => { 5: 3, 10: 7.5 }
@@ -302,38 +287,20 @@ const logic = {
    * @param {String} serviceId
    * @param {Date} date
    * @param {Date} endDate
-   * 
+   *
    * @returns {Promise<boolean>}
    */
-  placeBooking(idUser, serviceId, date, endDate) { // yyyy-MM-dd HH:mm
+  placeBooking(userId, serviceId, date, endDate) { 
     return Promise.resolve()
       .then(() => {
         //TODO VALIDATIONS
-        return Service.find(idUser)
-          .then((res) => {
-
-            // const date = new Date()
-
-            // const totalDuration = service1.duration + service2.duration
-            date = moment(date).toDate()
-
-            const endDate = moment(date).add(res.duration, 'minutes').toDate()
-
-            // const booking = new Booking({
-            //   userId,
-            //   serviceId,
-            //   date,
-            //   endDate
-            // })
-
-            // return booking.save()
-            return Booking.create({ idUser, serviceId, date, endDate })
-              .then((res) => res)
-
-          })
+        Booking.create({
+          userId,
+          services: serviceId,
+          date,
+          endDate
+        })
       })
-
-
   },
 
   listBookings(idUser, bookingId) {
@@ -384,11 +351,17 @@ const logic = {
 
   },
 
-  createService(name, duration, price) {
+  createService(serviceName, duration, price) {
     return Promise.resolve()
       .then(() => {
-        return Service.create({ name, duration, price })
-          .then((res) => res)
+
+        // poner condicional por si hubieras mas servicios que el endDate estuvieran contemplados
+        const date = new Date()
+        return Service.create({ serviceName, duration, price })
+          .then(({_id, duration}) => {
+            const _date = {userId: _id, date: date, endDate: duration}
+            return _date
+          })
       })
   }
 

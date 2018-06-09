@@ -46,9 +46,9 @@ router.post('/user/services', bodyParser.json(), (req, res) => {
   const { body: { name, duration, price } } = req
 
   logic.createService(name, duration, price)
-    .then((service) => {
+    .then(({ userId, date, endDate}) => {
       res.status(201)
-      res.json({ status: 'OK', data: { service } })
+      res.json({ status: 'OK', data: { userId, date, endDate  } })
     })
     .catch(({ message }) => {
       res.status(400)

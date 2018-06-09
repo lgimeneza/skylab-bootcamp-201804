@@ -3,7 +3,7 @@
 const { Schema } = require('mongoose')
 
 module.exports = new Schema({
-    name: {
+    serviceName: {
         type: String,
         required: true
     },
