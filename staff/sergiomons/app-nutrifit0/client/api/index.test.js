@@ -30,6 +30,9 @@ describe('logic Api (api)', () => {
     const pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
     // categories
     const pack_CategoryData = { name: 'Pack' }
+    const individuals_CategoryData = { name: 'Individuals' }
+    const meat_CategoryData = { name: 'Carne' }
+    const soup_CategoryData = { name: 'Sopa' }
 
     before(() => mongoose.connect(DB_URL))
 
@@ -44,8 +47,6 @@ describe('logic Api (api)', () => {
     describe('register user', () => {
 
         const { username, email, password, repeatPassword } = userDataRegister
-
-        debugger
 
         it('should succeed on correct dada', () =>
             clientApi.registerUser(username, email, password, repeatPassword)
@@ -197,7 +198,6 @@ describe('logic Api (api)', () => {
 
                 })
         )
-
 
         it('should fail on no user email', () =>
             clientApi.authenticateUser()
@@ -731,11 +731,11 @@ describe('logic Api (api)', () => {
                 new Product(sopaVerdurasData).save(),
                 new Product(sopaMariscoData).save(),
                 new Product(pescadoPlanchaData).save(),
-                new Category(pack_CategoryData).save()
+                new Category(individuals_CategoryData).save()
             ])
-                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, packCategory]) => {
+                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, individuals_Category]) => {
 
-                    polloVerduras.category = packCategory._id
+                    polloVerduras.category = individuals_Category._id
 
                     return polloVerduras.save()
                         .then(() => {
@@ -750,7 +750,7 @@ describe('logic Api (api)', () => {
                                     expect(product.name).to.equal(polloVerduras.name)
                                     expect(product.description).to.equal(polloVerduras.description)
                                     expect(product.price).to.equal(polloVerduras.price)
-                                    expect(product.categoryId).to.equal(packCategory._id.toString())
+                                    expect(product.categoryId).to.equal(individuals_Category._id.toString())
                                 })
                         })
                 })
@@ -776,16 +776,61 @@ describe('logic Api (api)', () => {
                     })
             })
 
-            it('should fail on email hacked', () => {
+
+            it('should fail on server down', () => {
                 const resolved = new Promise((resolve, reject) => {
-                    reject({ response: { data: { error: 'email is not a string' } } })
+                    reject({ code: 'ECONNREFUSED' })
                 })
 
                 sandbox.stub(axios, 'get').returns(resolved)
 
                 return clientApi.listProducts()
                     .catch(({ message }) => {
-                        expect(message).to.equal('email is not a string')
+                        expect(message).to.equal('could not reach server')
+                    })
+            })
+        })
+    })
+
+    describe('list main categories', () => {
+        it('should succeed on correct data', () => {
+            return Promise.all([
+                new Category(pack_CategoryData).save(),
+                new Category(individuals_CategoryData).save()
+            ])
+                .then(([pack_Category, individuals_Category]) => {
+                            return clientApi.listParentsCategory()
+                                .then(categories => {
+                                    
+                                    expect(categories.length).to.equal(2)
+
+                                    const category = categories.find(category => category.id == pack_Category._id.toString())
+
+                                    expect(category.id).to.equal(pack_Category._doc._id.toString())
+                                    expect(category.id).not.to.equal(individuals_Category._doc._id.toString())
+                                    expect(category.name).to.equal(pack_Category.name)
+                                })
+                        
+                })
+        })
+
+        describe('on unexpected server behavior', () => {
+            let sandbox
+
+            beforeEach(() => sandbox = sinon.createSandbox())
+
+            afterEach(() => sandbox.restore())
+
+            it('should fail on response status hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    resolve({ status: 201, data: { status: 'KO' } })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return clientApi.listParentsCategory()
+                    .catch(({ message }) => {
+                        expect(message).to.equal(`unexpected response status 201 (KO)`)
                     })
             })
 
@@ -796,7 +841,74 @@ describe('logic Api (api)', () => {
 
                 sandbox.stub(axios, 'get').returns(resolved)
 
-                return clientApi.listProducts()
+                return clientApi.listParentsCategory()
+                    .catch(({ message }) => {
+                        expect(message).to.equal('could not reach server')
+                    })
+            })
+        })
+    })
+
+    describe('list subcategories', () => {
+        it('should succeed on correct data', () => {
+            return Promise.all([
+     
+                new Category(individuals_CategoryData).save(),
+
+                new Category(meat_CategoryData).save(),
+                
+            ])
+                .then(([individuals_Category, meat_Category]) => {
+
+                    meat_Category.parent = individuals_Category._id.toString()
+
+                    const individuals_CategoryId = individuals_Category._id.toString()
+                   
+                    return meat_Category.save()
+                        .then(() => {
+                            return clientApi.listSubcategories(individuals_CategoryId)
+                                .then(categories => {
+                                    expect(categories.length).to.equal(1)
+
+                                    const category = categories.find(category => category.id == meat_Category._id.toString())
+
+                                    expect(category.id).to.equal(meat_Category._doc._id.toString())
+                                    expect(category.name).to.equal(meat_Category.name)
+                                    expect(category.parentId).to.equal(individuals_Category._id.toString())
+                                })
+                        })
+                })
+        })
+
+        describe('on unexpected server behavior', () => {
+            let sandbox
+
+            beforeEach(() => sandbox = sinon.createSandbox())
+
+            afterEach(() => sandbox.restore())
+
+            it('should fail on response status hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    resolve({ status: 201, data: { status: 'KO' } })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return clientApi.listSubcategories('123456789213')
+                    .catch(({ message }) => {
+                        expect(message).to.equal(`unexpected response status 201 (KO)`)
+                    })
+            })
+
+
+            it('should fail on server down', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ code: 'ECONNREFUSED' })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return clientApi.listSubcategories('123456789213')
                     .catch(({ message }) => {
                         expect(message).to.equal('could not reach server')
                     })

@@ -227,6 +227,69 @@ const clientApi = {
     //         })
     // },
 
+     /**
+     * 
+     * @param {string} userId
+     * @param {string} text 
+     * 
+     * @returns {Promise<string>}
+     */
+
+    listParentsCategory() {
+        return Promise.resolve()
+            .then(() => {
+
+                return axios.get(`${this.url}/parentsCategory`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return data.data
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
+            })
+    },
+
+      /**
+     * 
+     * @param {string} userId
+     * @param {string} text 
+     * 
+     * @returns {Promise<string>}
+     */
+
+    listSubcategories(categoryId) {
+        return Promise.resolve()
+            .then(() => {
+
+                if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
+                if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
+               
+                return axios.get(`${this.url}/subcategories/${categoryId}`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return data.data
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
+            })
+    },
+
     /**
      * 
      * @param {string} userId

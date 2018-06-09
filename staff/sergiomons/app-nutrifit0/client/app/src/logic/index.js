@@ -20,10 +20,21 @@ const logic = {
             })
     },
     
+    listParentsCategory() {
+        return clientApi.listParentsCategory()
+                .then(categories => categories)
+    },
+
+    listSubcategories() {
+        return clientApi.listSubcategories()
+                .then(categories => categories)
+    },
+
     listProducts() {
         return clientApi.listProducts()
                 .then(products => products)
-    }
+    },
+
 }
 
 module.exports = logic

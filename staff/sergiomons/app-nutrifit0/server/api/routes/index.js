@@ -60,6 +60,47 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
         })
 })
 
+router.get('/parentsCategory', (req, res) => {
+
+    return logic.listParentsCategory()
+            .then(categories => {
+                res.status(200)
+                res.json({ status: 'OK', data: categories})
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message }) 
+            })
+})
+
+router.get('/subcategories/:categoryId', (req, res) => {
+    const { params: { categoryId } } = req
+
+    return logic.listSubcategories(categoryId)
+            .then(subcategories => {
+                res.status(200)
+                res.json({ status: 'OK', data: subcategories})
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message }) 
+            })
+})
+
+router.get('/productsByCategory/:categoryId', (req, res) => {
+    const { params: { categoryId } } = req
+
+    return logic.listProductsByCategory(categoryId)
+            .then(products => {
+                res.status(200)
+                res.json({ status: 'OK', data: products})
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message }) 
+            })
+})
+
 router.get('/products', (req, res) => {
 
     return logic.listProducts()

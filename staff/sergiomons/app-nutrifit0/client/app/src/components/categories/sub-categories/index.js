@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
-import logic from '../../logic'
+import logic from '../../../logic/index.js'
 import {Link} from 'react-router-dom'
 
-class Home extends Component {
+class Subcategories extends Component {
 
     state = {
-
-       products: [],
+       categories: [],
        isLogged: false
     }
 
     componentDidMount() {
-        logic.listProducts()
-          .then(products => {
+        logic.listSubcategories()
+          .then(categories => {
                 this.setState({
-                    products
+                    categories
                 })
           })
           
@@ -26,15 +25,14 @@ class Home extends Component {
         <div>        
            <Link to="/register"><input className="buttons" type="submit" value="Register"/></Link>
            <Link to="/auth"><input className="buttons" type="submit" value="Login"/></Link>
-           <Link to="/categories"><input className="buttons" type="submit" value="Main categories"/></Link>
            
            <ul>
-               {this.state.products.map(product => {
-                   return (<li key={product.id} className="list-group-item">{product.name} - {product.price}€</li>)})}
+               {this.state.categories.map(category => {
+                   return (<li key={category.id} className="list-group-item">{category.name}</li>)})}
            </ul>
         </div>
         )
    }       
 }
 
-export default Home
+export default Subcategories

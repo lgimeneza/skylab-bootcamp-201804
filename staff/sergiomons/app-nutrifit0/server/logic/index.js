@@ -207,11 +207,57 @@ const logic = {
      * 
      * @returns {Promise<[Product]>}
      */
-    listParents() {
+    listParentsCategory() {
         return Promise.resolve()
             .then(() => {
 
-                return Product.find({})
+                return Category.find({ parent: undefined})
+                    .then(res => {
+                        const categories = res.map(({ _id: id, name}) => ({ id, name }))
+                        return categories
+                    })
+            })
+    },
+
+     /**
+     * Lists products
+     * 
+     * @param {String} categoryId The category id
+     * 
+     * @returns {Promise<[Product]>}
+     */
+    listSubcategories(categoryId) {
+        if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
+
+        if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
+
+        return Promise.resolve()
+            .then(() => {
+
+                return Category.find({ parent: categoryId.toString()})
+                    .then(res => {
+                        const categories = res.map(({ _id: id, name, parent}) => ({ id, name, parentId: parent ? parent.toString() : undefined }))
+                        return categories
+                    })
+            })
+    },
+
+    /**
+     * Lists products
+     * 
+     * @param {String} categoryId The category id
+     * 
+     * @returns {Promise<[Product]>}
+     */
+    listProductsByCategory(categoryId) {
+        return Promise.resolve()
+            .then(() => {
+
+                if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
+
+                if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
+
+                return Product.find({ category: categoryId.toString()})
                     .then(res => {
                         const products = res.map(({ _id: id, name, description, image, price, discount, category }) => ({ id, name, description, image, price, discount, categoryId: category ? category.toString() : undefined }))
                         return products
