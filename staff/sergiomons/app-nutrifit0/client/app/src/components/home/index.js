@@ -26,9 +26,10 @@ class Home extends Component {
         <div>        
            <Link to="/register"><input className="buttons" type="submit" value="Register"/></Link>
            <Link to="/auth"><input className="buttons" type="submit" value="Login"/></Link>
+           
            <ul>
                {this.state.products.map(product => {
-                   return (<li key={product._id} className="list-group-item">{product.name} - {product.price}€</li>)})}
+                   return (<li key={product.id} className="list-group-item">{product.name} - {product.price}€</li>)})}
            </ul>
         </div>
         )

@@ -335,20 +335,21 @@ describe('logic nutrifit', () => {
                 new Product(sopaVerdurasData).save(),
                 new Product(sopaMariscoData).save(),
                 new Product(pescadoPlanchaData).save(),
+
                 new Category(pack_CategoryData).save()
             ])
                 .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, packCategory]) => {
 
                     polloVerduras.category = packCategory._id
-
+                    
                     return polloVerduras.save()
                         .then(() => {
                             return logic.listProducts()
                                 .then(products => {
+                                  
                                     expect(products.length).to.equal(6)
                                     
-                                    const [product] = products
-
+                                    const product = products.find(product => product.id == polloVerduras._doc._id.toString())
                                     expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
                                     expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
                                     expect(product.name).to.equal(polloVerduras.name)

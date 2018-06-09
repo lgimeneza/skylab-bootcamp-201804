@@ -24,6 +24,5 @@ module.exports = new Schema({
     category: {
         type: ObjectId,
         ref: 'Category',
-        required: false
     }
 })

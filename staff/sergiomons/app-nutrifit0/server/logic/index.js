@@ -200,6 +200,25 @@ const logic = {
     //         .then(() => true)
     // },
 
+     /**
+     * Lists products
+     * 
+     * @param {String} categoryId The category id
+     * 
+     * @returns {Promise<[Product]>}
+     */
+    listParents() {
+        return Promise.resolve()
+            .then(() => {
+
+                return Product.find({})
+                    .then(res => {
+                        const products = res.map(({ _id: id, name, description, image, price, discount, category }) => ({ id, name, description, image, price, discount, categoryId: category ? category.toString() : undefined }))
+                        return products
+                    })
+            })
+    },
+
     /**
      * Lists products
      * 
