@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Helmet } from 'react-helmet';
-import * as actions from './redux/actions/products-actions'
+import * as actions from './redux/actions/products'
 
-class Landing extends React.Component {
+class Landing extends Component {
 
     static fetchData({ store }) {
         return store.dispatch(actions.getProducts());

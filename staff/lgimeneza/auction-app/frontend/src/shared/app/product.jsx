@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Helmet } from 'react-helmet';
-import * as actions from './redux/actions/product-actions'
+import * as actions from './redux/actions/product'
 
 class Product extends Component {
     static fetchData({ store, params: { id } }) {

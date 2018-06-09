@@ -8,7 +8,6 @@ const logic = {
 
     listProducts(){
         return auctionApi.listProducts()
-        .then(product => product)
     }
 }
 
