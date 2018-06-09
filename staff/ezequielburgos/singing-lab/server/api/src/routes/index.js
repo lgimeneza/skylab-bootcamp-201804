@@ -97,4 +97,18 @@ router.get('/categories', (req, res) => {
         })
 })
 
+router.get('/categories/:id', (req, res) => {
+    const { params: { id } } = req
+
+    logic.listProducts(id)
+        .then(products => {
+            res.status(200)
+            res.json({ status: 'OK', data: products })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+
 module.exports = router

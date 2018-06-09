@@ -5,31 +5,29 @@ import Navbar from './../navbar'
 import Footer from './../footer'
 import ListItems from './../ListItems'
 
-class Categories extends Component {
+class Products extends Component {
 
     constructor() {
         super()
         this.state = {
-            categories: []
+            products: []
         }
     }
 
     componentDidMount() {
-        document.body.style.background = 'white'
-
-        logic.listCategories()
-            .then(categories => this.setState({ categories }))
+        console.log(this.props)
+        logic.listProducts()
+            .then(products => this.setState({ products }))
     }
 
     render() {
         return (
             <main>
                 <Navbar />
-                <h2 className="main-title">These are my categories</h2>
+                <h2 className="main-title">These are my products</h2>
 
                 <ListItems
-                    btnShow
-                    items={this.state.categories}
+                    items={this.state.products}
                 />
 
                 <Footer />
@@ -39,4 +37,4 @@ class Categories extends Component {
 
 }
 
-export default Categories
+export default Products

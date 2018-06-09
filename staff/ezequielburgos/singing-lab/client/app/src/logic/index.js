@@ -46,6 +46,11 @@ const logic = {
     listCategories(){
         return singingLabApi.listCategories()
             .then(categories => categories)
+    },
+
+    listProducts(categoryId){
+        return singingLabApi.listProducts()
+            .then(products => products)
     }
     
 }

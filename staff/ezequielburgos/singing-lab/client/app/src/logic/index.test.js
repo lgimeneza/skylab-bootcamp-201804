@@ -115,4 +115,15 @@ describe('logic (notes-app)', () => {
 
         })
     })
+
+    describe('list products', () => {
+        it('should succeed on correct data', () => {
+
+            return logic.listCategories()
+                .then(res => {
+                    console.log('LIST CATEGORIES', res)
+                })
+
+        })
+    })
 })

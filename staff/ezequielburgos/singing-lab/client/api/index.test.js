@@ -622,6 +622,7 @@ describe('logic (singingLab api)', () => {
                 Category.create(advancedCourseCategoryData)
             ])
                 .then(res => {
+
                     beginnerCourseData.category = res[0]._id
                     advancedCourseData.category = res[1]._id
 
@@ -630,11 +631,13 @@ describe('logic (singingLab api)', () => {
                         Product.create(advancedCourseData),
                     ])
                         .then(res => {
+
                             return Promise.all([
-                                singingLabApi.listProducts(res[0].category),
-                                singingLabApi.listProducts(res[1].category),
+                                singinLabApi.listProducts(res[0].category),
+                                singinLabApi.listProducts(res[1].category),
                             ])
                                 .then(product => {
+
                                     expect(product[0][0]._id).to.exist
                                     expect(product[0][0].name).to.equal(beginnerCourseData.name)
 
