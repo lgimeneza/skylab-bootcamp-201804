@@ -230,10 +230,11 @@ const logic = {
      * 
      * @returns {Promise<[Note]>}
      */
-    listProducts() {
+    listProducts(categoryId) {
         return Promise.resolve()
             .then(() => {
-                return Products.findById({})
+                
+                return Product.find({ category: categoryId })
                     .then(product => {
                         if (!product) throw Error(`no products where found`)
 

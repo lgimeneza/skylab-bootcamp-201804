@@ -173,7 +173,7 @@ describe('logic (singing-lab)', () => {
                 .then(user => {
 
                     expect(user).to.exist
-                    
+
                     const { name, surname, address, email, _id, password } = user
 
                     expect(name).to.equal('Jack')
@@ -206,7 +206,7 @@ describe('logic (singing-lab)', () => {
         it('should succeed on correct data', () =>
             User.create(jackData)
                 .then(({ id }) => {
-                    return logic.updateUser(id, 'Jack', 'Wayne','+34 111 222 333', 'Roc Boronat 36' ,'jj@mail.com', '123', 'jw@mail.com', '456')
+                    return logic.updateUser(id, 'Jack', 'Wayne', '+34 111 222 333', 'Roc Boronat 36', 'jj@mail.com', '123', 'jw@mail.com', '456')
                         .then(res => {
                             expect(res).to.be.true
 
@@ -234,7 +234,7 @@ describe('logic (singing-lab)', () => {
                 User.create(otherjackData)
             ])
                 .then(([{ id: id1 }, { id: id2 }]) => {
-                    const {name, surname, phone, address, email, password} = jackData
+                    const { name, surname, phone, address, email, password } = jackData
 
                     return logic.updateUser(id1, name, surname, phone, address, email, password, otherjackData.email)
                 })
@@ -435,14 +435,25 @@ describe('logic (singing-lab)', () => {
                 Category.create(advancedCourseCategoryData)
             ])
                 .then(res => {
-                    return logic.listCategories()
-                        .then(category => {
+                    beginnerCourseData.category = res[0]._id
+                    advancedCourseData.category = res[1]._id
 
-                            expect(category[0]._id).to.exist
-                            expect(category[0].name).to.equal(beginnerCourseCategoryData.name)
+                    return Promise.all([
+                        Product.create(beginnerCourseData),
+                        Product.create(advancedCourseData),
+                    ])
+                        .then(res => {
+                            return Promise.all([
+                                logic.listProducts(res[0].category),
+                                logic.listProducts(res[1].category),
+                            ])
+                                .then(product => {
+                                    expect(product[0][0]._id).to.exist
+                                    expect(product[0][0].name).to.equal(beginnerCourseData.name)
 
-                            expect(category[1]._id).to.exist
-                            expect(category[1].name).to.equal(advancedCourseCategoryData.name)
+                                    expect(product[1][0]._id).to.exist
+                                    expect(product[1][0].name).to.equal(advancedCourseData.name)
+                                })
                         })
                 })
         )
