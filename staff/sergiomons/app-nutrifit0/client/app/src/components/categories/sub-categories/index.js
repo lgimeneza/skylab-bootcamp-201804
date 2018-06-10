@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logic from '../../../logic/index.js'
+import logic from '../../../logic'
 import {Link} from 'react-router-dom'
 
 class Subcategories extends Component {

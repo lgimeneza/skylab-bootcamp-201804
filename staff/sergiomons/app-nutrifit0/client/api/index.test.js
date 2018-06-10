@@ -722,76 +722,6 @@ describe('logic Api (api)', () => {
     //     })
     // })
 
-    describe('list all products', () => {
-        it('should succeed on correct data', () => {
-            return Promise.all([
-                new Product(polloVerdurasData).save(),
-                new Product(terneraData).save(),
-                new Product(polloArrozData).save(),
-                new Product(sopaVerdurasData).save(),
-                new Product(sopaMariscoData).save(),
-                new Product(pescadoPlanchaData).save(),
-                new Category(individuals_CategoryData).save()
-            ])
-                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, individuals_Category]) => {
-
-                    polloVerduras.category = individuals_Category._id
-
-                    return polloVerduras.save()
-                        .then(() => {
-                            return clientApi.listProducts()
-                                .then(products => {
-                                    expect(products.length).to.equal(6)
-
-                                    const product = products.find(product => product.id === polloVerduras._id.toString())
-
-                                    expect(product.id).to.equal(polloVerduras._doc._id.toString())
-                                    expect(product.id).not.to.equal(ternera._doc._id.toString())
-                                    expect(product.name).to.equal(polloVerduras.name)
-                                    expect(product.description).to.equal(polloVerduras.description)
-                                    expect(product.price).to.equal(polloVerduras.price)
-                                    expect(product.categoryId).to.equal(individuals_Category._id.toString())
-                                })
-                        })
-                })
-        })
-
-        describe('on unexpected server behavior', () => {
-            let sandbox
-
-            beforeEach(() => sandbox = sinon.createSandbox())
-
-            afterEach(() => sandbox.restore())
-
-            it('should fail on response status hacked', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    resolve({ status: 201, data: { status: 'KO' } })
-                })
-
-                sandbox.stub(axios, 'get').returns(resolved)
-
-                return clientApi.listProducts()
-                    .catch(({ message }) => {
-                        expect(message).to.equal(`unexpected response status 201 (KO)`)
-                    })
-            })
-
-
-            it('should fail on server down', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    reject({ code: 'ECONNREFUSED' })
-                })
-
-                sandbox.stub(axios, 'get').returns(resolved)
-
-                return clientApi.listProducts()
-                    .catch(({ message }) => {
-                        expect(message).to.equal('could not reach server')
-                    })
-            })
-        })
-    })
-
     describe('list main categories', () => {
         it('should succeed on correct data', () => {
             return Promise.all([
@@ -909,6 +839,150 @@ describe('logic Api (api)', () => {
                 sandbox.stub(axios, 'get').returns(resolved)
 
                 return clientApi.listSubcategories('123456789213')
+                    .catch(({ message }) => {
+                        expect(message).to.equal('could not reach server')
+                    })
+            })
+        })
+    })
+
+    describe('list products by category', () => {
+        it('should succeed on correct data', () => {
+            return Promise.all([
+                new Product(polloVerdurasData).save(),
+                new Product(terneraData).save(),
+                new Product(polloArrozData).save(),
+                new Product(sopaVerdurasData).save(),
+                new Product(sopaMariscoData).save(),
+                new Product(pescadoPlanchaData).save(),
+                new Category(individuals_CategoryData).save()
+            ])
+                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, individuals_Category]) => {
+
+                    polloVerduras.category = individuals_Category._id;
+                    ternera.category = individuals_Category._id;
+                    polloArroz.category = individuals_Category._id;
+
+                    const individuals_CategoryId = individuals_Category._id.toString()
+                    
+                    return Promise.all([
+                        polloVerduras.save(),
+                        ternera.save(),
+                        polloArroz.save()
+                    ])
+                        .then(() => {
+                            return clientApi.listProductsByCategory(individuals_CategoryId)
+                                .then(products => {
+                                    expect(products.length).to.equal(3)
+
+                                    const product = products.find(product => product.id == polloVerduras._id.toString())
+
+                                    expect(product.id).to.equal(polloVerduras._doc._id.toString())
+                                    expect(product.id).not.to.equal(ternera._doc._id.toString())
+                                    expect(product.name).to.equal(polloVerduras.name)
+                                    expect(product.description).to.equal(polloVerduras.description)
+                                    expect(product.price).to.equal(polloVerduras.price)
+                                    expect(product.categoryId).to.equal(individuals_Category._id.toString())
+                                })
+                        })
+                })
+        })
+
+        describe('on unexpected server behavior', () => {
+            let sandbox
+
+            beforeEach(() => sandbox = sinon.createSandbox())
+
+            afterEach(() => sandbox.restore())
+
+            it('should fail on response status hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    resolve({ status: 201, data: { status: 'KO' } })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return clientApi.listProductsByCategory('123456789213')
+                    .catch(({ message }) => {
+                        expect(message).to.equal(`unexpected response status 201 (KO)`)
+                    })
+            })
+
+
+            it('should fail on server down', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ code: 'ECONNREFUSED' })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return clientApi.listProductsByCategory('123456789213')
+                    .catch(({ message }) => {
+                        expect(message).to.equal('could not reach server')
+                    })
+            })
+        })
+    })
+
+    describe('list all products', () => {
+        it('should succeed on correct data', () => {
+            return Promise.all([
+                new Product(polloVerdurasData).save(),
+                new Product(terneraData).save(),
+                new Product(polloArrozData).save(),
+                new Product(sopaVerdurasData).save(),
+                new Product(sopaMariscoData).save(),
+                new Product(pescadoPlanchaData).save(),
+            ])
+                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha ]) => {
+
+                    return polloVerduras.save()
+                        .then(() => {
+                            return clientApi.listProducts()
+                                .then(products => {
+                                    expect(products.length).to.equal(6)
+
+                                    const product = products.find(product => product.id === polloVerduras._id.toString())
+
+                                    expect(product.id).to.equal(polloVerduras._doc._id.toString())
+                                    expect(product.id).not.to.equal(ternera._doc._id.toString())
+                                    expect(product.name).to.equal(polloVerduras.name)
+                                    expect(product.description).to.equal(polloVerduras.description)
+                                    expect(product.price).to.equal(polloVerduras.price)
+                                })
+                        })
+                })
+        })
+
+        describe('on unexpected server behavior', () => {
+            let sandbox
+
+            beforeEach(() => sandbox = sinon.createSandbox())
+
+            afterEach(() => sandbox.restore())
+
+            it('should fail on response status hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    resolve({ status: 201, data: { status: 'KO' } })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return clientApi.listProducts()
+                    .catch(({ message }) => {
+                        expect(message).to.equal(`unexpected response status 201 (KO)`)
+                    })
+            })
+
+
+            it('should fail on server down', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ code: 'ECONNREFUSED' })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return clientApi.listProducts()
                     .catch(({ message }) => {
                         expect(message).to.equal('could not reach server')
                     })

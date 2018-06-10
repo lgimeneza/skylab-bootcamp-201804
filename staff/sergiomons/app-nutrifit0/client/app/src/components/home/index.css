@@ -1,0 +1,59 @@
+
+.list-group-item {
+    background-color: rgba(228, 225, 225, 0.671);
+    font-size: 1em;
+    text-align: center;
+    border: 3px solid rgba(0,0,0,.125);
+
+}
+.list-group-item:hover {
+    background-color: rgba(128, 128, 128, 0.651);
+    color: white;
+}
+  
+.list-group-item:first-child {
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+
+.list-group-item.active {
+    background-color: #686d72;
+    border-color: #7b838f;
+}
+
+.card {
+    width: 90%;
+    border: 4px solid rgba(170, 167, 167, 0.856);
+    border-radius: calc(1.2rem - 1px);
+}
+
+.card-img-top {
+    border-top-left-radius: calc(1rem - 1px);
+    border-top-right-radius: calc(1rem - 1px);
+}
+
+.card-title {
+    margin: 0px 0 20px 0;
+    padding: 10px 0 10px 0;
+    background-color: rgba(209, 209, 209, 0.863); 
+    border-bottom: 2px solid rgba(0,0,0,.125);
+}
+
+.card-text {
+    margin: 10px 0 0 0;
+    padding-bottom: 15px;
+    border-bottom: 4px solid rgba(170, 167, 167, 0.856);
+}
+.card-bottom {
+    margin: 0;
+    background-color: rgba(226, 226, 226, 0.863); 
+    border-bottom-left-radius: calc(1rem - 1px);
+    border-bottom-right-radius: calc(1rem - 1px);
+    padding: 10px 0 10px 0;
+
+}

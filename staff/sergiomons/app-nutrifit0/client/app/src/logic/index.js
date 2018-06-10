@@ -25,9 +25,14 @@ const logic = {
                 .then(categories => categories)
     },
 
-    listSubcategories() {
+    listSubcategories(categoryId) {
         return clientApi.listSubcategories()
                 .then(categories => categories)
+    },
+
+    listProductsByCategory(categoryId) {
+        return clientApi.listProductsByCategory()
+                .then(products => products)
     },
 
     listProducts() {

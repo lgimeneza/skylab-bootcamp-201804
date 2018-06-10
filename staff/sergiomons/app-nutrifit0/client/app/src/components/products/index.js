@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logic from '../../../logic'
+import logic from '../../logic'
 import {Link} from 'react-router-dom'
 
 class Categories extends Component {
@@ -10,7 +10,7 @@ class Categories extends Component {
     }
 
     componentDidMount() {
-        logic.listParentsCategory()
+        logic.listProductsByCategory()
           .then(categories => {
                 this.setState({
                     categories
