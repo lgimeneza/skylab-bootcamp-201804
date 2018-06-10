@@ -1,7 +1,6 @@
 'use strict'
 
 const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
-const Role = require('./role')
 const Address = require('./address')
 const Wish = require('./wish')
 
@@ -23,7 +22,10 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    role:[Role],
+    role: {
+        type: String,
+        enum: ['admin', 'customer']
+    },
     registerDate:{
         type: Date,
         required: true

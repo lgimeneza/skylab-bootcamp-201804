@@ -6,7 +6,6 @@ const Category = require('./category')
 const Bid = require('./bid')
 const Address = require('./address')
 const Wish = require('./wish')
-const Role = require('./role')
 
 module.exports =  {
     User,
@@ -15,5 +14,4 @@ module.exports =  {
     Bid,
     Address,
     Wish,
-    Role,
 }
