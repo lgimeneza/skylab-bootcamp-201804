@@ -6,10 +6,6 @@ const Address = require('./address')
 const Wish = require('./wish')
 
 module.exports = new Schema({
-    _id: {
-        type: ObjectId,
-        required: true
-    },
     email: {
         type: String,
         required: true,

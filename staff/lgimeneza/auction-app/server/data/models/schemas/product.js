@@ -4,10 +4,6 @@ const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 const Bid = require('./bid')
 
 module.exports = new Schema({
-    _id: {
-        type: ObjectId,
-        required: true
-    },
     title: {
         type: String,
         required: true
