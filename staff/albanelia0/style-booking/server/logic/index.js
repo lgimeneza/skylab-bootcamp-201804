@@ -118,7 +118,30 @@ const logic = {
    *
    */
   unregisterUser(id, email, password) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof id !== 'string') throw Error('user id is not a string')
 
+        if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+        if (typeof email !== 'string') throw Error('user email is not a string')
+
+        if (!(email = email.trim()).length) throw Error('user email is empty or blank')
+
+        if (typeof password !== 'string') throw Error('user password is not a string')
+
+        if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
+
+        return User.findOne({ email, password })
+      })
+      .then(user => {
+        if (!user) throw Error('wrong credentials')
+
+        if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+
+        return user.remove()
+      })
+      .then(() => true)
   },
 
   /**
@@ -217,71 +240,27 @@ const logic = {
    * @param {Number} day
    */
   getBookingHoursForYearMonthDay(year, month, day) { // yyyy-MM-dd
-
-    Promise.resolve(() => {
-      //TODO VALIDATIONS
-
-      // let hours = []
-      // for (let i = 8; i < 17; i++) {
-
-      //   for (let j = 0; j < 60; j += 15) {
-      //     if (!hours[i]) hours[i] = i
-
-      //     hours[i] = j
-
-      //     for (key in hours) {
-      //       if (hours[key] !== j)
-
-      //         hours += key + hours[j]
-      //     }
-
-      //   }
-      // }
-
-      const hoursOfDays = {}
-
-      let _hours = []
-      for (let i = 8; i < 17; i++) {
-
-        for (let j = 0; j < 60; j += 15) {
-          _hours.push(`${i}.${j}`)
-
-        }
-      }
-
+    return Promise.resolve()
+    .then(() => {
       const dayStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
       const dayEnd = moment(dayStart).add(1, 'days')
-
       return Booking.find({
         $and: [
           { "date": { $gte: dayStart } },
           { "date": { $lt: dayEnd } }
         ]
       })
-
-        .then(booking => {
-          const hoursOfWork = _hours.forEach(hour => {
-
-            const endDate = booking.endDate
-
-            // calculate the duration of booking in hours
-            const diff = moment(endDate).diff(date)
-            const duration = moment.duration(diff).asHours()
-
-
-            hoursOfDays = { "start": 8, "end": endDate }
-
-
-          });
-
-          // bookingHours => { 5: 3, 10: 7.5 }
-
-          return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
+      .then(bookings => {
+        return bookings.map(booking => {
+          const startHour = moment(booking.date).hour() + (moment(booking.date).minutes() / 60)
+          const endHour = moment(booking.endDate).hour() + (moment(booking.endDate).minutes() / 60)
+          return { "start": startHour, "end": endHour }
         })
+      });
     })
   },
   /**
-   * @param {String} userId
+   * @param {object} userId
    * @param {Array} serviceIds
    * @param {Date} date
    *
@@ -291,6 +270,8 @@ const logic = {
     return Promise.resolve()
       .then(() => {
         //TODO VALIDATIONS
+        // - Comprobar que la hora de inicio de la reserva no sea menor al inicio de jornada
+        //   o mayor al fin de jornada (tirar un error en ese caso)
 
         let totalDuration = 0
 
@@ -345,11 +326,11 @@ const logic = {
   listBookingsUser(userId) {
     return Promise.resolve()
       .then(() => {
-        // if (typeof userId !== 'Object') throw Error('userId is not a string')
+        if (!userId) throw Error('userId is empty or blank')
+        if (!(userId instanceof Object)) throw Error('userId is not a object')
 
-        // if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
-        return Booking.findById({userId})
+        return Booking.find(userId)
           .then(res => res)
       })
   },
@@ -360,31 +341,24 @@ const logic = {
    *
    * @returns {Promise<boolean>}
    */
-  deleteBooking(idUser, bookingId) {
-    Promise.resolve()
+  deleteBooking(bookingId, userId) {
+    return Promise.resolve()
       .then(() => {
-        if (typeof idUser !== 'string') throw Error('user id is not a string')
+        // if (!userId) throw Error('userId is empty or blank')
 
-        if (!(idUser = idUser.trim()).length) throw Error('user id is empty or blank')
+        // if (!bookingId) throw Error('userId is empty or blank')
 
-        if (typeof bookingId !== 'string') throw Error('note id is not a string')
+        // if (!(userId instanceof Object)) throw Error('userId is not a object')
 
-        if (!(bookingId = bookingId.trim())) throw Error('note id is empty or blank')
+        // if (!(bookingId instanceof Object)) throw Error('bookingId is not a object')
 
-
-
-        return Booking.findById({ bookingId: { idUser } })
-          .then(user => {
-            if (!user) throw Error(`no user found with id ${idUser}`)
-
-
-            // if (!note) throw Error(`no note found with id ${bookingId}`)
-
-            // note.remove()
-
-            // return user.save()
+        return Booking.findOne({ _id: bookingId, userId })
+          .then((booking) => {
+            // if (!user) throw Error(`no user found with id ${userId}`)
+            return booking.remove()
+              .then(() => true)
           })
-        // .then(() => true)
+
       })
 
   },

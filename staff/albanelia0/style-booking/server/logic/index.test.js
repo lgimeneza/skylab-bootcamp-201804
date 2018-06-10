@@ -113,6 +113,68 @@ describe('logic (style-booking)', () => {
     })
   })
 
+  describe('unregister user', () => {
+    it('should succeed on correct data', () =>
+      User.create(userData)
+        .then(({ id }) => {
+          return logic.unregisterUser(id, 'jd@mail.com', '123')
+            .then(res => {
+              expect(res).to.be.true
+
+              return User.findById(id)
+            })
+            .then(user => {
+              expect(user).to.be.null
+            })
+        })
+    )
+
+    it('should fail on no user id', () =>
+      logic.unregisterUser()
+        .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+    )
+
+    it('should fail on empty user id', () =>
+      logic.unregisterUser('')
+        .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+    )
+
+    it('should fail on blank user id', () =>
+      logic.unregisterUser('     ')
+        .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+    )
+
+    it('should fail on no user email', () =>
+      logic.unregisterUser(dummyUserId)
+        .catch(({ message }) => expect(message).to.equal('user email is not a string'))
+    )
+
+    it('should fail on empty user email', () =>
+      logic.unregisterUser(dummyUserId, '')
+        .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+    )
+
+    it('should fail on blank user email', () =>
+      logic.unregisterUser(dummyUserId, '     ')
+        .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+    )
+
+    it('should fail on no user password', () =>
+      logic.unregisterUser(dummyUserId, userData.email)
+        .catch(({ message }) => expect(message).to.equal('user password is not a string'))
+    )
+
+    it('should fail on empty user password', () =>
+      logic.unregisterUser(dummyUserId, userData.email, '')
+        .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+    )
+
+    it('should fail on blank user password', () =>
+      logic.unregisterUser(dummyUserId, userData.email, '     ')
+        .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+    )
+  })
+
 
   describe('authenticate user', () => {
     describe('should succeed on correct dada', () => {
@@ -223,14 +285,14 @@ describe('logic (style-booking)', () => {
 
           const date = new Date()
           const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = _res
-          
-          return logic.placeBooking(userId, [service1._id ,service2._id], date)
+
+          return logic.placeBooking(userId, [service1._id, service2._id], date)
             .then(res => {
               expect(res.bookingId).to.exist
               expect(res.services.length).to.equal(2)
               expect(res.date).to.exist
               expect(res.endDate).to.exist
-              
+
             })
 
         })
@@ -258,16 +320,16 @@ describe('logic (style-booking)', () => {
               date,
               endDate
             })
-            .then(() => {
-              return logic.listBookings()
-                .then(res => {
-                  const [{_doc: booking}] = res
-                  expect(booking.services.length).to.equal(2)
-                  expect(booking.userId).to.exist
-                  expect(booking.date).to.exist
-                  expect(booking.endDate).to.exist
-                })
-            })
+              .then(() => {
+                return logic.listBookings()
+                  .then(res => {
+                    const [{ _doc: booking }] = res
+                    expect(booking.services.length).to.equal(2)
+                    expect(booking.userId).to.exist
+                    expect(booking.date).to.exist
+                    expect(booking.endDate).to.exist
+                  })
+              })
           ])
         })
     })
@@ -294,18 +356,107 @@ describe('logic (style-booking)', () => {
               endDate
             })
               .then(() => {
-                return logic.listBookingsUser(userId)
-                  .then(res => { console.log(res)
-                    // const [{ _doc: booking }] = res
-                    // expect(booking.services.length).to.equal(2)
-                    // expect(booking.userId).to.exist
-                    // expect(booking.date).to.exist
-                    // expect(booking.endDate).to.exist
+
+                return logic.listBookingsUser({ userId })
+                  .then(res => {
+                    const [{ _doc: booking }] = res
+                    expect(booking.services.length).to.equal(2)
+                    expect(booking.userId).to.exist
+                    expect(booking.date).to.exist
+                    expect(booking.endDate).to.exist
                   })
               })
           ])
         })
     })
+  })
+
+  describe('should delete the Bookings', () => {
+    it('should succeed on correct data', () => {
+      return Promise.all([
+        User.create({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' }),
+        Service.create(serviceData),
+        Service.create(serviceData2)
+      ])
+        .then(res => {
+          const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
+          // first booking data
+          const date = new Date()
+          const totalDuration = service1.duration + service2.duration
+          const endDate = moment(date).add(totalDuration, 'minutes').toDate()
+          return Promise.all([
+            Booking.create({
+              userId,
+              services: [service1._id, service2._id],
+              date,
+              endDate
+            })
+              .then((res) => {
+                const { _doc: booking } = res
+                const userId = booking.userId
+                const bookingId = booking._id
+
+                return logic.deleteBooking(bookingId, userId)
+                  .then(result => {
+                    return Booking.findById(bookingId).then((deletedBooking) => {
+
+                      expect(deletedBooking).not.to.exist
+                    })
+                  })
+              })
+          ])
+        })
+    })
+  })
+
+  describe('get Booking Hours For Year, Month and day', () => {
+    it('should succeed on correct data', () =>
+      Promise.all([
+        User.create({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' }),
+        Service.create(serviceData),
+        Service.create(serviceData2)
+      ])
+        .then(res => {
+
+          const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
+
+
+          // first booking data
+          const date = new Date('2018-05-15 10:15')
+          const totalDuration = service1.duration + service2.duration
+          const endDate = moment(date).add(totalDuration, 'minutes').toDate()
+
+          // second booking data
+          const date2 = moment(date).add(3, 'hours').toDate()
+          const totalDuration2 = service2.duration
+          const endDate2 = moment(date2).add(totalDuration2, 'minutes').toDate()
+
+          return Promise.all([
+            Booking.create({
+              userId,
+              services: [service1._id, service2._id],
+              date,
+              endDate
+            }),
+            Booking.create({
+              userId,
+              services: [service2._id],
+              date: date2,
+              endDate: endDate2
+            }),
+          ])
+            .then(() => {
+              return logic.getBookingHoursForYearMonthDay(moment(date).year(), moment(date).month() + 1, moment(date).date())
+            })
+            .then(res => {
+              expect(res.length).to.equal(2)
+              expect(res[0].start).to.equal(10.25)
+              expect(res[0].end).to.equal(13.75)
+              expect(res[1].start).to.equal(13.25)
+              expect(res[1].end).to.equal(16.25)
+            })
+        })
+    )//TODO CATCH 
   })
 
   after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
