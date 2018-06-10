@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { Product } } = require('data')
+const { models: { Product, User, Bid } } = require('data')
 
 const logic = {
 
@@ -40,6 +40,25 @@ const logic = {
             })
             .then(() => true)
     },
+
+    addBid(productId, userId, price) {
+        //TODO: not alow lower bid
+        return Promise.resolve()
+            .then(() => {
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const bid = new Bid({ price, date: Date.now(), user: user._id })
+                        return Product.findByIdAndUpdate(productId, { $push: { bids: bid } }, { new: true })
+                            .then(product => {
+                                if (!product) throw Error(`no product found with id ${productId}`)
+        
+                                return bid._id.toString()
+                            })
+                    })
+            })
+    }
 
 
 }

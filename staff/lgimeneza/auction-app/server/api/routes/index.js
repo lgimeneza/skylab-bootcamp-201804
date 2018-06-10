@@ -51,4 +51,16 @@ router.post('/product', jsonBodyParser, (req, res) => {
         })
 })
 
+router.post('/product/:productId/bid', jsonBodyParser, (req, res) => {
+    const { params: { productId }, body: { userId, price } } = req
+
+    logic.addBid(productId, userId, price)
+        .then(id => {
+            res.status(201).json({ status: 'OK', data: { id } })
+        })
+        .catch(({ message }) => {
+            res.status(400).json({ status: 'KO', error: message })
+        })
+})
+
 module.exports = router
