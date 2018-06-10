@@ -179,6 +179,7 @@ exports.default = async function renderRoute(req, res) {
 			return foundPath;
 		}) || {},
 		    component = _ref.component;
+
 		// safety check for valid component, if no component we initialize an empty shell
 
 
@@ -217,8 +218,7 @@ exports.default = async function renderRoute(req, res) {
 	} catch (error) {
 		res.status(400).send((0, _mainPage2.default)('An error occured.', {}, {}));
 	}
-}; // Set up ======================================================================
-// get all the tools we need
+};
 
 /***/ }),
 
@@ -371,8 +371,6 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "react-redux");
 
 var _redux = __webpack_require__(/*! redux */ "redux");
 
-var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
-
 var _products = __webpack_require__(/*! ./redux/actions/products */ "./src/shared/app/redux/actions/products.js");
 
 var actions = _interopRequireWildcard(_products);
@@ -428,7 +426,7 @@ var Landing = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
-                        this.props.products.map(function (product, index) {
+                        this.props.products.map(function (product) {
                             return _react2.default.createElement(
                                 'div',
                                 { className: 'col-md-4 col-xs-6', key: product._id, onClick: _this2.onProductClickHandler(product._id) },
@@ -751,8 +749,6 @@ var _react2 = _interopRequireDefault(_react);
 var _reactRedux = __webpack_require__(/*! react-redux */ "react-redux");
 
 var _redux = __webpack_require__(/*! redux */ "redux");
-
-var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
 
 var _product = __webpack_require__(/*! ./redux/actions/product */ "./src/shared/app/redux/actions/product.js");
 

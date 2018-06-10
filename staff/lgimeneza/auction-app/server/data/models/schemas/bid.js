@@ -1,22 +1,23 @@
 'use strict'
 
-const { Schema } = require('mongoose')
+const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 
 module.exports = new Schema({
-    auctionID: {
-        type: String,
+    _id: {
+        type: ObjectId,
         required: true
     },
     price: {
         type: Number,
         required: true
     },
-    bidDate: {
+    date: {
         type: Date,
         required: true
     },
-    userID: {
-        type: Schema.Types.ObjectId,
+    user: {
+        ref: 'User',
+        type: ObjectId,
         required: true
     }
 })

@@ -7,8 +7,8 @@ module.exports = new Schema({
         type: ObjectId,
         required: true
     },
-    name: {
-        type: String,
-        required: true
+    product:{
+        ref: 'Product',
+        type: ObjectId,
     },
 })

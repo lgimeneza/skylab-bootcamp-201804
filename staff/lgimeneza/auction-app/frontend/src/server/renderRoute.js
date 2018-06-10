@@ -1,5 +1,3 @@
-// Set up ======================================================================
-// get all the tools we need
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { StaticRouter as Router, matchPath } from 'react-router';
@@ -29,6 +27,7 @@ export default async function renderRoute(req, res) {
 				)
 				return foundPath;
 			}) || {};
+
 		// safety check for valid component, if no component we initialize an empty shell
 		if (!component)
 			component = {};

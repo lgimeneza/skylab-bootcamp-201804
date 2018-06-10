@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Helmet } from 'react-helmet';
 import * as actions from './redux/actions/products'
 
 class Landing extends Component {
@@ -23,7 +22,7 @@ class Landing extends Component {
         <div>
         <div id="store" className="col-md-12">
             <div className="row">
-                {this.props.products.map((product, index) => {
+                {this.props.products.map((product) => {
                     return (
                     <div className="col-md-4 col-xs-6" key={product._id} onClick={this.onProductClickHandler(product._id)}> 
                         <div className="product">

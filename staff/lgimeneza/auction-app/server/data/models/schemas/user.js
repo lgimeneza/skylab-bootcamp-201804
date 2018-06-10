@@ -1,9 +1,15 @@
 'use strict'
 
-const { Schema } = require('mongoose')
+const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 const Role = require('./role')
+const Address = require('./address')
+const Wish = require('./wish')
 
 module.exports = new Schema({
+    _id: {
+        type: ObjectId,
+        required: true
+    },
     email: {
         type: String,
         required: true,
@@ -21,5 +27,15 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    role:[Role]
+    role:[Role],
+    registerDate:{
+        type: Date,
+        required: true
+    },
+    products:[{
+        ref: 'Product',
+        type: ObjectId,
+    }],
+    address:Address,
+    wishes:[Wish]
 })
