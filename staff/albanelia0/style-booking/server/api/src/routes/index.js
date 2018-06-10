@@ -41,21 +41,6 @@ router.post('/auth', bodyParser.json(), (req, res) => {
     })
 })
 
-router.post('/user/services', bodyParser.json(), (req, res) => {
-
-  const { body: { name, duration, price } } = req
-
-  logic.createService(name, duration, price)
-    .then(({ userId, date, endDate}) => {
-      res.status(201)
-      res.json({ status: 'OK', data: { userId, date, endDate  } })
-    })
-    .catch(({ message }) => {
-      res.status(400)
-      res.json({ status: 'KO', error: message })
-    })
-})
-
 router.get('/booking/hours/:year/:month', (req, res) => {
   const { params: { year, month } } = req
   return logic.getBookingHoursForYearMonth(year, month)

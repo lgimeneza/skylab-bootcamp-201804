@@ -17,8 +17,12 @@ describe('logic (style-booking)', () => {
   const dummyUserId = '123456781234567812345678'
   const dummyNoteId = '123456781234567812345678'
 
-  const serviceData = { name: 'lavado de pelo', duration: 30, price: 15 }
-  const serviceData2 = { name: 'corte de pelo', duration: 60, price: 45 }
+  const serviceData = { serviceName: 'lavado de pelo', duration: 30, price: 10 }
+  const serviceData1 = { serviceName: 'corte de pelo', duration: 60, price: 20 }
+  const serviceData2 = { serviceName: 'trenzas pegadas', duration: 180, price: 100 }
+  const serviceData3 = { serviceName: 'peinar', duration: 40, price: 20 }
+
+
 
   before(() => mongoose.connect(DB_URL))
 
@@ -157,7 +161,7 @@ describe('logic (style-booking)', () => {
 
   })
 
-  describe('create a booking', () => {
+  describe('get Booking Hours For Year and Month', () => {
     it('should succeed on correct data', () =>
       Promise.all([
         User.create({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' }),
@@ -167,6 +171,7 @@ describe('logic (style-booking)', () => {
         .then(res => {
 
           const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
+
 
           // first booking data
           const date = new Date()
@@ -197,14 +202,75 @@ describe('logic (style-booking)', () => {
             })
             .then(res => {
               expect(res.length).to.equal(2)
-              expect(res[0].day).to.equal(6)
-              expect(res[1].day).to.equal(7)
-              expect(res[0].bookingHours).to.equal(1.5)
-              expect(res[1].bookingHours).to.equal(1)
+              expect(res[0].day).to.equal(10)
+              expect(res[1].day).to.equal(11)
+              expect(res[0].bookingHours).to.equal(3.5)
+              expect(res[1].bookingHours).to.equal(3)
             })
         })
     )//TODO CATCH 
+  })
 
+  describe('create a booking', () => {
+    it('should succeed on correct data', () => {
+
+      return Promise.all([
+        User.create({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' }),
+        Service.create(serviceData),
+        Service.create(serviceData2)
+      ])
+        .then(_res => {
+
+          const date = new Date()
+          const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = _res
+          
+          return logic.placeBooking(userId, [service1._id ,service2._id], date)
+            .then(res => {
+              expect(res.bookingId).to.exist
+              expect(res.services.length).to.equal(2)
+              expect(res.date).to.exist
+              expect(res.endDate).to.exist
+              
+            })
+
+        })
+
+    })
+  })
+
+  describe('should list all Bookings', () => {
+    it('should succeed on correct data', () => {
+      return Promise.all([
+        User.create({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' }),
+        Service.create(serviceData),
+        Service.create(serviceData2)
+      ])
+        .then(res => {
+          const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
+          // first booking data
+          const date = new Date()
+          const totalDuration = service1.duration + service2.duration
+          const endDate = moment(date).add(totalDuration, 'minutes').toDate()
+          return Promise.all([
+            Booking.create({
+              userId,
+              services: [service1._id, service2._id],
+              date,
+              endDate
+            })
+            .then(() => {
+              return logic.listBookings()
+                .then(res => {
+                  const [{_doc: booking}] = res
+                  expect(booking.services.length).to.equal(2)
+                  expect(booking.userId).to.exist
+                  expect(booking.date).to.exist
+                  expect(booking.endDate).to.exist
+                })
+            })
+          ])
+        })
+    })
   })
 
   after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))

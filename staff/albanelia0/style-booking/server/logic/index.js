@@ -178,28 +178,26 @@ const logic = {
             { "date": { $lt: monthEnd } }
           ]
         })
-        .then(bookings => {
-          if (bookings.length) {
-            const bookingHours = bookings.reduce((accum, booking) => {
-              const { date, endDate } = booking
-              const dayOfMonth = date.getDate()
+          .then(bookings => {
+            if (bookings.length) {
+              const bookingHours = bookings.reduce((accum, booking) => {
+                const { date, endDate } = booking
+                const dayOfMonth = date.getDate()
 
-              // calculate the duration of booking in hours
-              const diff = moment(endDate).diff(date)
-              const duration = moment.duration(diff).asHours()
+                // calculate the duration of booking in hours
+                const diff = moment(endDate).diff(date)
+                const duration = moment.duration(diff).asHours()
 
-              // add hours of this booking to the accum object's date key
-              if (!accum[dayOfMonth]) accum[dayOfMonth] = 0
-              accum[dayOfMonth] += duration
+                // add hours of this booking to the accum object's date key
+                if (!accum[dayOfMonth]) accum[dayOfMonth] = 0
+                accum[dayOfMonth] += duration
 
-              return accum
-            }, {})
+                return accum
+              }, {})
 
-            // bookingHours => { 5: 3, 10: 7.5 }
-
-            return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
-          } else return []
-        })
+              return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
+            } else return []
+          })
       })
   },
 
@@ -262,49 +260,98 @@ const logic = {
       })
 
         .then(booking => {
-            const hoursOfWork = _hours.forEach(hour => {
+          const hoursOfWork = _hours.forEach(hour => {
 
-              const endDate= booking.endDate
+            const endDate = booking.endDate
 
-              // calculate the duration of booking in hours
-              const diff = moment(endDate).diff(date)
-              const duration = moment.duration(diff).asHours()
-
-
-              hoursOfDays = { "start": 8, "end": endDate }
+            // calculate the duration of booking in hours
+            const diff = moment(endDate).diff(date)
+            const duration = moment.duration(diff).asHours()
 
 
-            });
+            hoursOfDays = { "start": 8, "end": endDate }
 
-            // bookingHours => { 5: 3, 10: 7.5 }
 
-            return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
+          });
+
+          // bookingHours => { 5: 3, 10: 7.5 }
+
+          return Object.keys(bookingHours).map(key => ({ day: parseInt(key), bookingHours: bookingHours[key] }))
         })
     })
   },
   /**
-   * @param {String} idUser
-   * @param {String} serviceId
+   * @param {String} userId
+   * @param {Array} serviceIds
    * @param {Date} date
-   * @param {Date} endDate
    *
-   * @returns {Promise<boolean>}
+   * @returns {Promise<Data>}
    */
-  placeBooking(userId, serviceId, date, endDate) { 
+  placeBooking(userId, serviceIds, date) {
     return Promise.resolve()
       .then(() => {
         //TODO VALIDATIONS
-        Booking.create({
-          userId,
-          services: serviceId,
-          date,
-          endDate
-        })
+
+        let totalDuration = 0
+
+        return Promise.all(serviceIds.map(serviceId => {
+          return Service.findById(serviceId)
+            .then(res => {
+
+              const { _doc: { duration } } = res
+              totalDuration += duration
+            })
+        }))
+          .then(() => {
+            const endDate = moment(date).add(totalDuration, 'minutes').toDate()
+
+            return Booking.create({
+              userId,
+              services: serviceIds,
+              date,
+              endDate
+            }).then(res => {
+
+              const { _doc: booking } = res
+              const data = {
+                bookingId: booking._id,
+                services: booking.services.map(s => s._id),
+                userId: booking.userId,
+                date: booking.date,
+                endDate: booking.endDate
+              }
+              return data
+            })
+          })
+      })
+  },
+/**
+ * This function should list all bookings
+ * 
+ * @returns {Promise<Data>}
+ */
+  listBookings() {
+    return Promise.resolve()
+      .then(() => {
+        return Booking.find()
+          .then(res => res)
       })
   },
 
-  listBookings(idUser, bookingId) {
+/**
+ * This function should list the bookings of user
+ * @returns {Promise<Data>}
+ */
+  listBookingsUser(userId) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof userId !== 'string') throw Error('userId is not a string')
 
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+
+        return Booking.find()
+          .then(res => res)
+      })
   },
 
   /**
@@ -323,6 +370,8 @@ const logic = {
         if (typeof bookingId !== 'string') throw Error('note id is not a string')
 
         if (!(bookingId = bookingId.trim())) throw Error('note id is empty or blank')
+
+
 
         return Booking.findById({ bookingId: { idUser } })
           .then(user => {
@@ -350,20 +399,6 @@ const logic = {
   updateBooking(bookingId, service, Date) {
 
   },
-
-  createService(serviceName, duration, price) {
-    return Promise.resolve()
-      .then(() => {
-
-        // poner condicional por si hubieras mas servicios que el endDate estuvieran contemplados
-        const date = new Date()
-        return Service.create({ serviceName, duration, price })
-          .then(({_id, duration}) => {
-            const _date = {userId: _id, date: date, endDate: duration}
-            return _date
-          })
-      })
-  }
 
 }
 module.exports = logic

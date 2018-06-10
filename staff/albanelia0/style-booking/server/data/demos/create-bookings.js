@@ -17,9 +17,9 @@ const { env: { DB_URL } } = process
 
 mongoose.connect(DB_URL)
     .then(() => {
-        const serviceData = { name: 'lavado de pelo', duration: 30, price: 15 }
-        const serviceData2 = { name: 'corte de pelo', duration: 60, price: 45 }
-        const serviceData3 = { name: 'trenzas completa', duration: 60, price: 60 }
+        const serviceData = { serviceName: 'lavado de pelo', duration: 30, price: 15 }
+        const serviceData2 = { serviceName: 'corte de pelo', duration: 60, price: 45 }
+        const serviceData3 = { serviceName: 'trenzas completa', duration: 60, price: 60 }
         
 
         return Promise.all([
