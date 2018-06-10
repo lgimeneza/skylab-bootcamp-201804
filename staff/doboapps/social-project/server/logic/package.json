@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "data": "file:../data/"
+    "data": "file:../data/",
+    "file-system": "^2.2.2"
   },
   "devDependencies": {
     "chai": "^4.1.2",

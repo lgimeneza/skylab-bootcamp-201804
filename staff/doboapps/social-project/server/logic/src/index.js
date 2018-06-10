@@ -1,6 +1,7 @@
 'use strict'
 
 const { models: { User, Park, Image, Note } } = require('data')
+const fs = require('file-system')
 
 const logic = {
     /**
@@ -11,7 +12,7 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
-    registerUser(name, email, password,city) {
+    registerUser(name, email, password, city) {
         return Promise.resolve()
             .then(() => {
                 if (typeof name !== 'string') throw Error('user name is not a string')
@@ -80,7 +81,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, email: 1, race:1, gender:1, city:1 })
+                return User.findById(id).select({ _id: 0, name: 1, email: 1, race: 1, gender: 1, city: 1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -106,7 +107,7 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
-    updateUser(id, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate,city,zip) {
+    updateUser(id, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate, city, zip) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -142,7 +143,7 @@ const logic = {
                 if ((photoProfile = photoProfile.trim()).length === 0) throw Error('user photoProfile is empty or blank')
 
                 if (typeof birthdate !== 'object') throw Error('user birthdate is not a object')
-                
+
                 if (typeof city !== 'string') throw Error('user city is not a string')
 
                 if ((city = city.trim()).length === 0) throw Error('user city is empty or blank')
@@ -185,7 +186,7 @@ const logic = {
             .then(() => true)
     },
 
-    
+
     /**
      * 
      * @param {string} id 
@@ -236,47 +237,47 @@ const logic = {
 
         return Promise.resolve()
             .then(() => {
-                if (typeof name !== 'string' && name!==undefined) throw Error('user name is not a string or undefined')
-                if (typeof race !== 'string' && race!==undefined) throw Error('user race is not a string or undefined')
-                if (typeof gender !== 'string' && gender!==undefined) throw Error('user gender is not a string or undefined')
-                if (typeof city !== 'string' && city!==undefined) throw Error('user city is not a string or undefined')
+                if (typeof name !== 'string' && name !== undefined) throw Error('user name is not a string or undefined')
+                if (typeof race !== 'string' && race !== undefined) throw Error('user race is not a string or undefined')
+                if (typeof gender !== 'string' && gender !== undefined) throw Error('user gender is not a string or undefined')
+                if (typeof city !== 'string' && city !== undefined) throw Error('user city is not a string or undefined')
 
-                if(name) query.name=name
-                if(race) query.race=race
-                if(gender) query.gender=gender
-                if(city) query.city=city
+                if (name) query.name = name
+                if (race) query.race = race
+                if (gender) query.gender = gender
+                if (city) query.city = city
 
                 return User.find(query)
             })
-            .then(users =>  users)
+            .then(users => users)
     },
 
 
-     /**
-     * 
-     * @param {string} name 
-     * @param {string} city 
-     * @param {string} zip 
-     * 
-     * @returns {Promise<Array>}
-     */
+    /**
+    * 
+    * @param {string} name 
+    * @param {string} city 
+    * @param {string} zip 
+    * 
+    * @returns {Promise<Array>}
+    */
     filterParks(name, city, zip) {
 
         let query = {}
 
         return Promise.resolve()
             .then(() => {
-                if (typeof name !== 'string' && name!==undefined) throw Error('park name is not a string or undefined')
-                if (typeof city !== 'string' && city!==undefined) throw Error('park city is not a string or undefined')
-                if (typeof zip !== 'string' && zip!==undefined) throw Error('park zip is not a string or undefined')
+                if (typeof name !== 'string' && name !== undefined) throw Error('park name is not a string or undefined')
+                if (typeof city !== 'string' && city !== undefined) throw Error('park city is not a string or undefined')
+                if (typeof zip !== 'string' && zip !== undefined) throw Error('park zip is not a string or undefined')
 
-                if(name) query.name=name
-                if(city) query.city=city
-                if(zip) query.zip=zip
+                if (name) query.name = name
+                if (city) query.city = city
+                if (zip) query.zip = zip
 
                 return Park.find(query)
             })
-            .then(parks =>  parks)
+            .then(parks => parks)
     },
 
     /**
@@ -306,18 +307,18 @@ const logic = {
                 if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
 
                 user.notifications.push(notification)
-                
+
                 return user.save()
             })
             .then(user => user.notifications)
     },
 
-       /**
-     * 
-     * @param {string} id 
-     * 
-     * @returns {Promise<boolean>}
-     */
+    /**
+  * 
+  * @param {string} id 
+  * 
+  * @returns {Promise<boolean>}
+  */
     deleteNotifications(id) {
         return Promise.resolve()
             .then(() => {
@@ -325,7 +326,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-   
+
                 return User.findById(id)
             })
             .then(user => {
@@ -333,13 +334,14 @@ const logic = {
 
                 if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
 
-                user.notifications.length=0
-                
+                user.notifications.length = 0
+
                 return user.save()
             })
-            .then((res)=>{
-                
-                return true})
+            .then((res) => {
+
+                return true
+            })
     },
 
 
@@ -367,18 +369,19 @@ const logic = {
                     .then(user => {
 
                         if (!user) throw Error(`no user found with id ${userId}`)
-                        
-                        const friend = user.friends.find((element)=>{
-                           
-                           return element == friendId
-                        })                        
 
-                     if (friend) throw Error("this user already exists")
+                        const friend = user.friends.find((element) => {
+
+                            return element == friendId
+                        })
+
+                        if (friend) throw Error("this user already exists")
                         user.friends.push(friendId)
 
                         return user.save()
                             .then((user) => {
-                                return user.friends})
+                                return user.friends
+                            })
                     })
             })
     },
@@ -405,23 +408,24 @@ const logic = {
 
 
                 return User.findById(userId)
-                .then(user => {
+                    .then(user => {
 
-                    if (!user) throw Error(`no user found with id ${userId}`)
-                    
-                    const love = user.loves.find((element)=>{
-                       
-                       return element == loveId
-                    })                        
+                        if (!user) throw Error(`no user found with id ${userId}`)
 
-                 if (love) throw Error("this user already exists")
-                    user.loves.push(loveId)
+                        const love = user.loves.find((element) => {
 
-                    return user.save()
-                        .then((user) => {
-                            return user.loves})
-                })
-        })
+                            return element == loveId
+                        })
+
+                        if (love) throw Error("this user already exists")
+                        user.loves.push(loveId)
+
+                        return user.save()
+                            .then((user) => {
+                                return user.loves
+                            })
+                    })
+            })
     },
 
 
@@ -617,6 +621,41 @@ const logic = {
                         return true
                     })
             })
+
+    },
+
+
+    /**
+* 
+* @param {string} idUser
+* @param {string} dataImage
+* 
+* @returns {Promise<boolean>}
+*/
+    saveImage(idUser, base64Image) {
+
+        return Promise.resolve()
+            .then(() => {
+                if (typeof idUser !== 'string') throw Error('idUser is not a string')
+
+                if (!(idUser = idUser.trim()).length) throw Error('idUser is empty or blank')
+
+                if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
+
+                console.log(base64Image)
+
+
+
+
+                var data = base64Image.replace(/^data:image\/\w+;base64,/, "");
+                var buf = new Buffer(data, 'base64');
+                fs.writeFile('img/image0.jpg', buf, function (err) {
+
+                    if (err) console.log("error", err)
+                    else console.log("upload Ok")
+                })
+            })
+
 
     }
 

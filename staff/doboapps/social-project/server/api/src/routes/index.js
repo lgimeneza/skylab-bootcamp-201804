@@ -13,9 +13,9 @@ const jwtValidator = jwtValidation(TOKEN_SECRET)
 const jsonBodyParser = bodyParser.json()
 
 router.post('/users', jsonBodyParser, (req, res) => {
-    const { body: { name, email, password } } = req
+    const { body: { name, email, password, city } } = req
 
-    logic.registerUser(name, email, password)
+    logic.registerUser(name, email, password, city)
         .then(() => {
             res.status(201)
             res.json({ status: 'OK' })
@@ -237,6 +237,22 @@ router.delete('/parks/:parkId/user/:userId', [jwtValidator, jsonBodyParser], (re
         .then(() => {
             res.status(200)
             res.json({ parkId: 'OK' })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+
+
+router.post('/uploadImage/:userId', jsonBodyParser, (req, res) => {
+    const { params: { userId }, body: { base64Image } } = req
+
+
+    logic.saveImage(userId, base64Image)
+        .then(() => {
+            res.status(200)
+            res.json({ status: 'OK' })
         })
         .catch(({ message }) => {
             res.status(400)
