@@ -23,18 +23,18 @@ const vegetarianCategoryData = { image: 'http://images.com/1234', name: "Vegetar
 const veganCategoryData = { image: 'http://images.com/1234', name: "Vegan" }
 
 // products packCategories
-const packMuscleData = { image: 'http://images.com/1234', name: 'Pack Muscle', description: 'Pack Muscle desc', price: 100 }
-const packBodyTonicData = { image: 'http://images.com/1235', name: 'Pack Body Tonic', description: 'Pack Body Tonic desc', price: 90 }
-const packBurningData = { image: 'http://images.com/1234', name: 'Pack Burning', description: 'Pack Burning desc', price: 85 }
-const packHealthyData = { image: 'http://images.com/1234', name: 'Pack Healthy', description: 'Pack Healthy desc', price: 105 }
-const packVeganData = { image: 'http://images.com/1234', name: 'Pack Vegan', description: 'Pack Vegan desc', price: 95 }
-const packNoGlutenData = { image: 'http://images.com/1234', name: 'Pack No Gluten', description: 'Pack No Gluten desc', price: 100 }
+const packMuscleData = { image: 'https://deportesaludable.com/wp-content/uploads/2018/05/six-pack_1000x600.jpg', name: 'Pack Muscle', description: 'Pack Muscle desc', price: 100 }
+const packBodyTonicData = { image: 'https://www.perfectnutrition.es/76/dieta-2200-descarga-o-bajada-de-peso.jpg', name: 'Pack Body Tonic', description: 'Pack Body Tonic desc', price: 90 }
+const packBurningData = { image: 'https://bodycultures.com/wp-content/uploads/2016/12/shutterstock_527734021.jpg', name: 'Pack Burning', description: 'Pack Burning desc', price: 85 }
+const packHealthyData = { image: 'https://hips.hearstapps.com/del.h-cdn.co/assets/17/06/1486402920-delish-rainbow-chicken-veggies-2.jpg', name: 'Pack Healthy', description: 'Pack Healthy desc', price: 105 }
+const packVeganData = { image: 'http://www.smartermeats.com/9-thickbox_default/match-meat-premium-vegan-meat-variety-pack.jpg', name: 'Pack Vegan', description: 'Pack Vegan desc', price: 95 }
+const packNoGlutenData = { image: 'https://static.ulabox.com/media/94390_banner-tablet.jpg', name: 'Pack No Gluten', description: 'Pack No Gluten desc', price: 100 }
 
 // products individualsCategory
 // products meatCategory
-const polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
-const terneraData = { image: 'http://images.com/1234', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
-const polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }
+const polloVerdurasData = { image: 'https://www.deliciosi.com/images/1000/1070/pollo-con-verduras.jpg', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
+const terneraData = { image: 'http://sevilla.abc.es/gurme//wp-content/uploads/2010/12/solomillo-relleno-de-foie-gras.jpg', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
+const polloArrozData = { image: 'https://www.cocinavital.mx/wp-content/uploads/2017/08/muslos-de-pollo-con-arroz.jpg', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }
 
 // products soupCategory
 const sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }

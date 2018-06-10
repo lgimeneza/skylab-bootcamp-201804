@@ -1,0 +1,27 @@
+.form {
+    margin-top: 140px;
+}
+.form-group {
+    font-size: 1.3rem;
+}
+.btn:nth-child(4) {
+    color: #fff;
+    background-color: #2d8f53;
+    border-color: #619270;
+    font-size: 1.3rem;
+}
+    
+.btn-dark:hover {
+    color: #fff;
+    background-color: #1f6e33;
+    border-color: #d1d1d1;
+}
+
+.checkbox {
+    margin: 45px 0 20px;
+    text-align: left;
+
+}
+input[placeholder] {
+    text-align: center;
+}

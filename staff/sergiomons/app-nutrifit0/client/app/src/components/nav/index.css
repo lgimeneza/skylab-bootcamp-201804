@@ -2,6 +2,7 @@
 
 nav.navbar ul.nav li {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-right: 20px;
 }
 
 .navbar-text {
@@ -13,6 +14,30 @@ nav.navbar ul.nav li {
   .navbar-dark .navbar-text a {
     color: rgba(253, 253, 253, 0.9);
     font-size: 7em;
+  }
+
+  .btn-secondary {
+    color: #fff;
+    background-color: #337ab9;
+    border-color: #5789b4;
+  }
+  
+  .btn-secondary:hover {
+    color: #fff;
+    background-color: #004e8a;
+    border-color: #d9dee4;
+  }
+
+  .btn-dark {
+    color: #fff;
+    background-color: #2d8f53;
+    border-color: #619270;
+  }
+  
+  .btn-dark:hover {
+    color: #fff;
+    background-color: #1f6e33;
+    border-color: #d1d1d1;
   }
 
 

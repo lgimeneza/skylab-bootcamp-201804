@@ -1,6 +1,6 @@
 
 .list-group-item {
-    background-color: rgba(228, 225, 225, 0.671);
+    background-color: rgba(255, 253, 253, 0.932);
     font-size: 1em;
     text-align: center;
     border: 3px solid rgba(0,0,0,.125);
@@ -12,48 +12,96 @@
 }
   
 .list-group-item:first-child {
-    border-top-left-radius: 1.5rem;
-    border-top-right-radius: 1.5rem;
+    border-top-left-radius: 1.2rem;
+    border-top-right-radius: 1.2rem;
 }
 
 .list-group-item:last-child {
-    border-bottom-right-radius: 1.5rem;
-    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.2rem;
+    border-bottom-left-radius: 1.2rem;
 }
 
 .list-group-item.active {
-    background-color: #686d72;
+    background-color: #6c757d;
     border-color: #7b838f;
 }
 
 .card {
     width: 90%;
-    border: 4px solid rgba(170, 167, 167, 0.856);
+    border: 2px solid rgba(170, 167, 167, 0.856);
     border-radius: calc(1.2rem - 1px);
 }
 
 .card-img-top {
+    height: 225px;
     border-top-left-radius: calc(1rem - 1px);
     border-top-right-radius: calc(1rem - 1px);
 }
 
 .card-title {
     margin: 0px 0 20px 0;
-    padding: 10px 0 10px 0;
-    background-color: rgba(209, 209, 209, 0.863); 
+    padding: 15px 0 15px 0;
+    color: white;
+    background-color: #6c757d; 
     border-bottom: 2px solid rgba(0,0,0,.125);
 }
 
 .card-text {
     margin: 10px 0 0 0;
-    padding-bottom: 15px;
-    border-bottom: 4px solid rgba(170, 167, 167, 0.856);
+    font-size: 1.5em;
+    padding-bottom: 5px;
+    /* border-bottom: 2px solid rgba(170, 167, 167, 0.856); */
 }
 .card-bottom {
     margin: 0;
-    background-color: rgba(226, 226, 226, 0.863); 
+    color: white;
+    background-color: rgba(255, 255, 255, 0.863); 
     border-bottom-left-radius: calc(1rem - 1px);
     border-bottom-right-radius: calc(1rem - 1px);
-    padding: 10px 0 10px 0;
+    padding: 15px 0 15px 0;
 
 }
+.carousel-text-sm {
+    padding-bottom: 45px;
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.carousel-caption {
+    color: rgb(255, 255, 255);
+    font-size: 1.8rem;
+    font-weight: bold
+}
+
+.btn-outline-secondary {
+    color: #337ab9;
+    border-color: #337ab9;
+}
+  
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #337ab9;
+    border-color: #0c3457;
+}
+.btn-outline-dark {
+    color: #569b3f;
+    border-color: #569b3f;
+}
+
+.btn-outline-dark:hover {
+    color: #fff;
+    background-color: #2d8f53;
+    border-color: #37502f;
+}
+/* .item {
+    display: block;
+    width: 100%;
+    height: 200px;
+    background-image: url('https://placeholdit.imgix.net/~text?txtsize=33&txt=350×150&w=350&h=150');
+    background-position: center;
+    background-repeat: non-repeat;
+    background-size: cover;
+  } */
+
