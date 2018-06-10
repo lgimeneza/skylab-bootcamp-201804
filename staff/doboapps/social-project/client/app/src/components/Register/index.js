@@ -9,6 +9,7 @@ class Register extends Component {
         userEmail: "",
         password: "",
         repeatPassword: "",
+        userCity: "",
         RegisterFailedMessage: "",
 
     }
@@ -38,6 +39,11 @@ class Register extends Component {
         this.setState({ userEmail })
     }
 
+    handleKeepCity = (e) => {
+        let userCity = e.target.value;
+        this.setState({ userCity })
+    }
+
     handleKeepPassword = (e) => {
         let password = e.target.value;
 
@@ -62,22 +68,26 @@ class Register extends Component {
         e.preventDefault();
         if (this.state.notMatchingMessage === '') {
 
-            logic.registerUser(this.state.userName,this.state.userEmail, this.state.password)
+            logic.registerUser(this.state.userName, this.state.userEmail, this.state.password,this.state.userCity)
                 .then(res => {
-                    if (res===true) {
+                    if (res === true) {
                         alert("You registered awesomely!")
 
-                        //this.props.history.push('/login')
+                        this.props.history.push('/login')
                     }
                     else {
-                        alert("opps error "+res)
+                        alert("opps error " + res)
 
                         this.setState({ registerFailedMessage: res.error })
                     }
                 })
         } else {
-alert("password no coincide")
+            alert("password no coincide")
         }
+    }
+
+    getCities = cities => {
+        return logic.cities.map(city => <option value={city}>{city}</option>)
     }
 
 
@@ -92,6 +102,7 @@ alert("password no coincide")
 
                     <input value={this.state.userName} onChange={this.handleKeepName} type="text" placeholder="Nombre" autoFocus />
                     <input value={this.state.UserEmail} onChange={this.handleKeepEmail} type="text" placeholder="Email" />
+                    <select value={this.state.UserCity} onChange={this.handleKeepCity} type="text" placeholder="City">{this.getCities()}</select>
                     <input value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />
                     <input value={this.state.repeatPassword} onChange={this.handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
 

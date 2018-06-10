@@ -93,6 +93,21 @@ describe('logic (social api)', () => {
                 .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
         )
 
+        it('should fail on no user city', () =>
+            socialApi.registerUser(userData.name, userData.email, userData.password)
+                .catch(({ message }) => expect(message).to.equal('user city is not a string'))
+        )
+
+        it('should fail on empty user city', () =>
+            socialApi.registerUser(userData.name, userData.email, userData.password, '')
+                .catch(({ message }) => expect(message).to.equal('user city is empty or blank'))
+        )
+
+        it('should fail on blank user city', () =>
+            socialApi.registerUser(userData.name, userData.email, userData.password, '     ')
+                .catch(({ message }) => expect(message).to.equal('user city is empty or blank'))
+        )
+
 
         describe('on unexpected server behavior', () => {
             let sandbox

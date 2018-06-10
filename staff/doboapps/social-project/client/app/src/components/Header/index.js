@@ -28,9 +28,9 @@ class Header extends React.Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
 
-                        {logic.isLogged() ? <Nav className="ml-auto" navbar>
+                        {logic.isLogged() ? <Nav className="ml-auto"  navbar>
                             <NavItem>
-                                <NavLink  onClick={this.props.logOut}  >LogOut</NavLink>
+                                <NavLink  onClick={this.props.logOut} tag={Link}  to="/" >LogOut</NavLink>
                             </NavItem>
                         </Nav>
                             :

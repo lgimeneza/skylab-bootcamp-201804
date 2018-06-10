@@ -4,9 +4,14 @@ socialApi.url = 'http://localhost:5000/api'
 
 const logic = {
     userId: 'NO-ID',
+    cities : ['Alava','Albacete','Alicante','Almería','Asturias','Avila','Badajoz','Barcelona','Burgos','Cáceres',
+    'Cádiz','Cantabria','Castellón','Ciudad Real','Córdoba','La Coruña','Cuenca','Gerona','Granada','Guadalajara',
+    'Guipúzcoa','Huelva','Huesca','Islas Baleares','Jaén','León','Lérida','Lugo','Madrid','Málaga','Murcia','Navarra',
+    'Orense','Palencia','Las Palmas','Pontevedra','La Rioja','Salamanca','Segovia','Sevilla','Soria','Tarragona',
+    'Santa Cruz de Tenerife','Teruel','Toledo','Valencia','Valladolid','Vizcaya','Zamora','Zaragoza'],
 
-    registerUser(name, email, password) {
-        return socialApi.registerUser(name, email, password)
+    registerUser(name, email, password,city) {
+        return socialApi.registerUser(name, email, password,city)
     },
 
     login(email, password) {
@@ -21,6 +26,10 @@ const logic = {
 
     retrieveUser(){
         return socialApi.retrieveUser(localStorage.getItem('id-app'))
+    },
+
+    uploadImage(base64Image){
+        return socialApi.uploadImage(localStorage.getItem('id-app'),base64Image)
     },
 
     isLogged(){

@@ -5,7 +5,8 @@ import Login from './Login/'
 import Error404 from './Error404/'
 import CardUser from './CardUser/'
 import Start from './Start/'
-
+import Profile from './Profile/'
+import UploadPicture from './UploadPicture'
 
 export {
     Landing,
@@ -14,5 +15,7 @@ export {
     Login,
     Error404,
     CardUser,
-    Start
+    Start,
+    Profile,
+    UploadPicture
 }

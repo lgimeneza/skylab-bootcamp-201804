@@ -15,7 +15,7 @@ const socialApi = {
      * 
      * @returns {Promise<boolean>}
      */
-    registerUser(name,  email, password) {
+    registerUser(name,  email, password,city) {
         return Promise.resolve()
             .then(() => {
                 if (typeof name !== 'string') throw Error('user name is not a string')
@@ -30,7 +30,11 @@ const socialApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.post(`${this.url}/users`, { name, email,password })
+                if (typeof city !== 'string') throw Error('user city is not a string')
+
+                if ((city = city.trim()).length === 0) throw Error('user city is empty or blank')
+
+                return axios.post(`${this.url}/users`, { name, email,password,city })
                     .then(({ status, data }) => {
                         if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -292,7 +296,46 @@ const socialApi = {
                     } else return "e "+err
                 })
         })
-}
+},
+
+
+ /**
+     * 
+     * @param {string} email 
+     * @param {string} password 
+     * 
+     * @returns {Promise<string>}
+     */
+    uploadImage(userId, base64Image) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user userId is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+
+                if (typeof base64Image !== 'string') throw Error('user base64Image is not a string')
+
+
+                return axios.post(`${this.url}/uploadImage/${userId}`, { base64Image },{ headers: { authorization: `Bearer ${this.token}` } })
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+
+                        return data.status
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            return message
+
+                        } else return err
+                    })
+            })
+    },
+
 
 }
 

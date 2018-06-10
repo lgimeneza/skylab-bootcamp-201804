@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { withRouter } from 'react-router-dom'
-import logic from "../../logic";
+import { withRouter,Link } from 'react-router-dom'
+import logic from "../../logic"
 import {CardUser} from '../'
-import {Container,Row} from 'reactstrap';
+import {Container,Row, Badge} from 'reactstrap'
 
 class Home extends Component {
 
@@ -35,7 +35,8 @@ class Home extends Component {
         return (
 
             <Container>
-                <h1>Home</h1>
+                <h1>Home</h1><Badge tag={Link} to="/profile" color="secondary">Profile</Badge>
+
                 <h3>Near you...</h3>
                 <Row>
                     {this.state.users.map(user => {

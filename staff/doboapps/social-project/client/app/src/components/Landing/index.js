@@ -7,13 +7,13 @@ import './style.css';
 const items = [
   { src: '../../images/carousel/dog-a.jpg',
     altText: 'dog1',
-    caption: 'cccc' },
+    caption: 'Antonio' },
   { src: '../../images/carousel/dog-b.jpg',
     altText: 'dog2',
-    caption: '' },
+    caption: 'Pepe' },
   { src:'../../images/carousel/dog-c.jpg',
     altText: 'dog3',
-    caption: ''
+    caption: 'Manuel'
   }
 ]
 
