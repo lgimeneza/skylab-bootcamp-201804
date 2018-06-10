@@ -99,7 +99,7 @@ describe('logic (singingLab)', () => {
 
             return logic.registerUser(name, surname, address, email, password)
                 .then(res => {
-                    console.log('HELLO')
+
                 })
 
         })
@@ -121,7 +121,6 @@ describe('logic (singingLab)', () => {
 
             return logic.listCategories()
                 .then(res => {
-                    console.log('LIST CATEGORIES', res)
                     return logic.listProducts(res[0]._id)
                         .then(res => {
                             console.log('LIST Products', res)

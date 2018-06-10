@@ -2,7 +2,7 @@
 
 var axios = require('axios');
 
-var singinLabApi = {
+var singingLabApi = {
     url: 'NO-URL',
 
     token: function token(_token) {
@@ -291,7 +291,36 @@ var singinLabApi = {
                 } else throw err;
             });
         });
+    },
+
+
+    /**
+    * @returns {Promise<User>} 
+    */
+    listProducts: function listProducts(categoryId) {
+        var _this7 = this;
+
+        return Promise.resolve().then(function () {
+
+            return axios.get(_this7.url + '/categories/' + categoryId).then(function (_ref7) {
+                var status = _ref7.status,
+                    data = _ref7.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
     }
 };
 
-module.exports = singinLabApi;
+module.exports = singingLabApi;

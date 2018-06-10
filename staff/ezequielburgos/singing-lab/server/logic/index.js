@@ -233,7 +233,6 @@ const logic = {
     listProducts(categoryId) {
         return Promise.resolve()
             .then(() => {
-                
                 return Product.find({ category: categoryId })
                     .then(product => {
                         if (!product) throw Error(`no products where found`)

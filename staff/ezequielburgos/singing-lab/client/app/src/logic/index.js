@@ -4,6 +4,7 @@ singingLabApi.url = 'http://localhost:4000/api'
 
 const logic = {
     userId: 'NO-ID',
+    categoryId: 'NO-ID',
 
     registerUser(name, surname, address, email, password) {
 
@@ -43,18 +44,18 @@ const logic = {
     },
 
 
-    listCategories(){
+    listCategories() {
         return singingLabApi.listCategories()
             .then(categories => categories)
     },
 
-    listProducts(categoryId){
-        return singingLabApi.listProducts(categoryId)
+    listProducts(category) {
+        return singingLabApi.listProducts(category)
             .then(products => {
                 return products
             })
     }
-    
+
 }
 
 module.exports = logic
