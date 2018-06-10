@@ -5,7 +5,7 @@ const logic = require('../../../logic/')
 const jwt = require('jsonwebtoken')
 const jwtValidation = require('./utils/jwt-validation')
 
-const { env: { TOKEN_SECRET, TOKEN_EXP }} = process
+const { env: { TOKEN_SECRET, TOKEN_EXP } } = process
 
 const jwtValidator = jwtValidation(TOKEN_SECRET)
 
@@ -103,12 +103,13 @@ router.get('/categories/:id', (req, res) => {
     logic.listProducts(id)
         .then(products => {
             res.status(200)
-            res.json({ status: 'OK', data: products })
+            res.json({ status: 'OK', data})
         })
         .catch(({ message }) => {
             res.status(400)
             res.json({ status: 'KO', error: message })
         })
+
 })
 
 module.exports = router
