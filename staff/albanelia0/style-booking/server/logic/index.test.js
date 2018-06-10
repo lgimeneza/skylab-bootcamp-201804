@@ -273,5 +273,40 @@ describe('logic (style-booking)', () => {
     })
   })
 
+  describe('should list the Bookings of user', () => {
+    it('should succeed on correct data', () => {
+      return Promise.all([
+        User.create({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' }),
+        Service.create(serviceData),
+        Service.create(serviceData2)
+      ])
+        .then(res => {
+          const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
+          // first booking data
+          const date = new Date()
+          const totalDuration = service1.duration + service2.duration
+          const endDate = moment(date).add(totalDuration, 'minutes').toDate()
+          return Promise.all([
+            Booking.create({
+              userId,
+              services: [service1._id, service2._id],
+              date,
+              endDate
+            })
+              .then(() => {
+                return logic.listBookingsUser(userId)
+                  .then(res => { console.log(res)
+                    // const [{ _doc: booking }] = res
+                    // expect(booking.services.length).to.equal(2)
+                    // expect(booking.userId).to.exist
+                    // expect(booking.date).to.exist
+                    // expect(booking.endDate).to.exist
+                  })
+              })
+          ])
+        })
+    })
+  })
+
   after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })

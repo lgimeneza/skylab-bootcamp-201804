@@ -325,11 +325,11 @@ const logic = {
           })
       })
   },
-/**
- * This function should list all bookings
- * 
- * @returns {Promise<Data>}
- */
+  /**
+   * This function should list all bookings
+   * 
+   * @returns {Promise<Data>}
+   */
   listBookings() {
     return Promise.resolve()
       .then(() => {
@@ -338,18 +338,18 @@ const logic = {
       })
   },
 
-/**
- * This function should list the bookings of user
- * @returns {Promise<Data>}
- */
+  /**
+   * This function should list the bookings of user
+   * @returns {Promise<Data>}
+   */
   listBookingsUser(userId) {
     return Promise.resolve()
       .then(() => {
-        if (typeof userId !== 'string') throw Error('userId is not a string')
+        // if (typeof userId !== 'Object') throw Error('userId is not a string')
 
-        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
+        // if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
-        return Booking.find()
+        return Booking.findById({userId})
           .then(res => res)
       })
   },
