@@ -1,6 +1,6 @@
 const travelApi = require("api")
 
-travelApi.url = "http://localhost:5000/api"
+travelApi.url = "http://localhost:4000/api"
 
 const logic = {
     userId: "NO-ID",

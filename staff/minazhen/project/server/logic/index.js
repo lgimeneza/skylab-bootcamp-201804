@@ -121,7 +121,7 @@ const logic = {
                     if (!country) {
                         return Country.create({ name , userId: user.id })
                         .then(cntry => {
-                            user.countries.push({name : cntry.name, id : cntry.id})
+                            user.countries.push(cntry.id)
     
                             return user.save()
                             .then(() => cntry)
