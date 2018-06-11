@@ -1,8 +1,7 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link ,withRouter,} from "react-router-dom"
 import logic from "../../logic"
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import { withRouter } from 'react-router-dom'
 
 
 
@@ -12,11 +11,15 @@ class Header extends React.Component {
     state = {
         isOpen: false,
     }
-
+ 
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
         })
+    }
+
+    goBack=()=>{
+        this.props.history.goBack();
     }
 
     render() {
@@ -25,6 +28,7 @@ class Header extends React.Component {
             <div>
                 <Navbar color="light" light expand="md">
                     <NavbarBrand href="/">Dogger</NavbarBrand>
+                    <button onClick={this.goBack}>Go Back</button>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
 

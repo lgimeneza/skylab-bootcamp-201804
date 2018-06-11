@@ -7,6 +7,8 @@ import CardUser from './CardUser/'
 import Start from './Start/'
 import Profile from './Profile/'
 import UploadPicture from './UploadPicture'
+import Select from './Inputs/select'
+import Text from './Inputs/text'
 
 export {
     Landing,
@@ -17,5 +19,7 @@ export {
     CardUser,
     Start,
     Profile,
-    UploadPicture
+    UploadPicture,
+    Text,
+    Select
 }

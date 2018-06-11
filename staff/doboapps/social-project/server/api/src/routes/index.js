@@ -10,7 +10,7 @@ const { env: { TOKEN_SECRET, TOKEN_EXP } } = process
 
 const jwtValidator = jwtValidation(TOKEN_SECRET)
 
-const jsonBodyParser = bodyParser.json()
+const jsonBodyParser = bodyParser.json({ limit:'3600kb'})
 
 router.post('/users', jsonBodyParser, (req, res) => {
     const { body: { name, email, password, city } } = req
@@ -245,11 +245,11 @@ router.delete('/parks/:parkId/user/:userId', [jwtValidator, jsonBodyParser], (re
 })
 
 
-router.post('/uploadImage/:userId', jsonBodyParser, (req, res) => {
+router.post('/uploadImageProfile/:userId', jsonBodyParser, (req, res) => {
     const { params: { userId }, body: { base64Image } } = req
 
-
-    logic.saveImage(userId, base64Image)
+console.log(base64Image)
+    logic.saveImageProfile(userId, base64Image)
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })

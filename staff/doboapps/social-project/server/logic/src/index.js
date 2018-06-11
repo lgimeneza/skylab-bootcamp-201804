@@ -625,14 +625,14 @@ const logic = {
     },
 
 
-    /**
+/**
 * 
 * @param {string} idUser
-* @param {string} dataImage
+* @param {string} base64Image
 * 
 * @returns {Promise<boolean>}
 */
-    saveImage(idUser, base64Image) {
+    saveImageProfile(idUser, base64Image) {
 
         return Promise.resolve()
             .then(() => {
@@ -642,23 +642,17 @@ const logic = {
 
                 if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
 
-                console.log(base64Image)
-
-
-
 
                 var data = base64Image.replace(/^data:image\/\w+;base64,/, "");
                 var buf = new Buffer(data, 'base64');
-                fs.writeFile('img/image0.jpg', buf, function (err) {
 
-                    if (err) console.log("error", err)
-                    else console.log("upload Ok")
+                return fs.writeFile(`img/profile_${idUser}.jpg`, buf, function (err) {
+
+                    if (err) return("error: "+err)
+                    else return"upload Ok"
                 })
             })
-
-
     }
-
 }
 
 module.exports = logic

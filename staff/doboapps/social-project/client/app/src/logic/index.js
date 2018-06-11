@@ -28,8 +28,8 @@ const logic = {
         return socialApi.retrieveUser(localStorage.getItem('id-app'))
     },
 
-    uploadImage(base64Image){
-        return socialApi.uploadImage(localStorage.getItem('id-app'),base64Image)
+    uploadImageProfile(base64Image){
+        return socialApi.uploadImageProfile(localStorage.getItem('id-app'),base64Image)
     },
 
     isLogged(){

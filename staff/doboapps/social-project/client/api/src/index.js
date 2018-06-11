@@ -306,7 +306,7 @@ const socialApi = {
      * 
      * @returns {Promise<string>}
      */
-    uploadImage(userId, base64Image) {
+    uploadImageProfile(userId, base64Image) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user userId is not a string')
@@ -316,7 +316,7 @@ const socialApi = {
                 if (typeof base64Image !== 'string') throw Error('user base64Image is not a string')
 
 
-                return axios.post(`${this.url}/uploadImage/${userId}`, { base64Image },{ headers: { authorization: `Bearer ${this.token}` } })
+                return axios.post(`${this.url}/uploadImageProfile/${userId}`, { base64Image },{ headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
