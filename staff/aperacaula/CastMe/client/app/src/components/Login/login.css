@@ -45,6 +45,113 @@
 	color: #FFFFFF;
 }
 
+/* Menu */
+
+/* Menu */
+
+#menu1-login {
+	float: left;
+	width: 348px;
+	height: 300px;
+}
+
+#menu1-login ul {
+	float: right;
+	margin: 0px;
+	padding: 20px 0px 0px 0px;
+	list-style: none;
+}
+
+#menu1-login li {
+	float: left;
+	margin: 0px 30px;
+}
+
+#menu1-login a {
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	text-transform: uppercase;
+	font-family: 'Abel', sans-serif;
+	font-size: 20px;
+	color: #FFFFFF;
+}
+
+#menu2-login {
+	float: right;
+	width: 348px;
+}
+
+#menu2-login ul {
+	float: left;
+	margin: 0px;
+	padding: 20px 0px 0px 0px;
+	list-style: none;
+}
+
+#menu2-login li {
+	float: left;
+	margin: 0px 30px;
+}
+
+#menu2-login a {
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	text-transform: uppercase;
+	font-family: 'Abel', sans-serif;
+	font-size: 20px;
+	color: #FFFFFF;
+}
+
+
+#menu {
+	overflow: hidden;
+	width: 940px;
+	padding: 15px 0px;
+	margin: 0px auto 30px auto;
+	background: #006BC2;
+	border-radius: 10px;
+	font-size: 20px;
+	color: #FFFFFF;
+}
+
+#menu ul {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px;
+	list-style: none;
+	line-height: normal;
+	text-align: center;
+}
+
+#menu li {
+	display: inline-block;
+	border-right: 1px solid #001DD6;
+}
+
+#menu a {
+	display: block;
+	padding: 0px 40px 0px 40px;
+	text-decoration: none;
+	text-align: center;
+	font-size: 16px;
+	font-weight:400;
+	color: #FFFFFF;
+	border: none;
+}
+
+.menu_link:hover{
+	text-decoration: underline;
+	color: blanchedalmond;
+}
+
+#menu .current_page_item a {
+	color: #FFFFFF;
+}
+
+#menu .last {
+	border-right: none;
+}
 
 
 /* Page */

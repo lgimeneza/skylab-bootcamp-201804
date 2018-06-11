@@ -14,7 +14,7 @@ router.post('/users', jsonBodyParser, (req, res) => {
         physicalData,
         professionalData,
         videobookLink,
-        pics } } = req
+         } } = req
 
     logic.registerUser(email,
         password,
@@ -22,7 +22,7 @@ router.post('/users', jsonBodyParser, (req, res) => {
         physicalData,
         professionalData,
         videobookLink,
-        pics)
+        )
         .then(() => {
             res.status(201)
             res.json({ status: 'OK' })
@@ -63,7 +63,7 @@ router.get('/users/:userId', (req, res) => {
 
 })
 
-router.patch('/users', jsonBodyParser, (req, res) => {
+router.patch('/users/:userId', jsonBodyParser, (req, res) => {
     const { body: { email,
         password,
         newEmail,
@@ -72,7 +72,8 @@ router.patch('/users', jsonBodyParser, (req, res) => {
         physicalData,
         professionalData,
         videobookLink,
-        pics } } = req
+        profilePicture
+     } } = req
 
     logic.updateUser(email,
         password,
@@ -82,7 +83,8 @@ router.patch('/users', jsonBodyParser, (req, res) => {
         physicalData,
         professionalData,
         videobookLink,
-        pics)
+        profilePicture
+    )
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })

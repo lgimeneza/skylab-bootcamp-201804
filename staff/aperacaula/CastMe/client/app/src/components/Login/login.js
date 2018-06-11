@@ -55,17 +55,21 @@ class Login extends Component {
         }
 
     redirect= () => {
-        this.props.history.push('/register')
+        this.props.history.push('/users')
     }
+
+    redirectLanding = () => {
+        this.props.history.push("/");
+      };
     
     render() {
         return (
             <div>
                 
-                <div id="wrapper-login">
+                <div id="wrapper">
                     <header id="header-wrapper-login">
                         <div id="header-login">
-                            <div id="menu1">
+                            <div id="menu1-login">
                                 <ul>
                                     <li className="menu_link">
                                         <a>Homepage</a>
@@ -77,10 +81,10 @@ class Login extends Component {
                             </div>
                             <div id="logo-login">
                                 <h1>
-                                    <a>CastMe </a>
+                                    <a onClick={this.redirectLanding}>CastMe </a>
                                 </h1>
                             </div>
-                            <div id="menu2">
+                            <div id="menu2-login">
                                 <ul>
                                     <li className="menu_link">
                                         <a>About</a>

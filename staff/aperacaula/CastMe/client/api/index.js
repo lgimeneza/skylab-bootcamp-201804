@@ -14,7 +14,6 @@ const castmeApi = {
    * @param {object} physicalData
    * @param {object} professionalData
    * @param {string} videobookLink
-   * @param {array} pics
    *
    * @returns {Promise<boolean>}
    */
@@ -25,7 +24,7 @@ const castmeApi = {
     physicalData,
     professionalData,
     videobookLink,
-    pics
+    profilePicture
   ) {
     return Promise.resolve().then(() => {
       if (typeof email !== "string") throw Error("user email is not a string");
@@ -54,7 +53,7 @@ const castmeApi = {
       if ((videobookLink = videobookLink.trim()).length === 0)
         throw Error("user videobookLink is empty or blank");
 
-      if (!pics instanceof Array) throw Error("pics should be an array");
+      
 
       return axios
         .post(`${this.url}/users`, {
@@ -64,7 +63,7 @@ const castmeApi = {
           physicalData,
           professionalData,
           videobookLink,
-          pics
+          profilePicture
         })
         .then(({ status, data }) => {
           if (status !== 201 || data.status !== "OK")
@@ -185,24 +184,26 @@ const castmeApi = {
    *
    * @param {string} email
    * @param {string} password
+   * @param {string} newEmail
+   * @param {string} newPassword
    * @param {object} personalData
    * @param {object} physicalData
    * @param {object} professionalData
    * @param {string} videobookLink
-   * @param {array} pics
-   * @param {string} newEmail
-   * @param {string} newPassword
-   *
+   *@param {string} profilePicture
+   * 
    * @returns {Promise<boolean>}
    */
   updateUser(
     email,
     password,
+    newEmail,
+    newPassword,
     personalData,
     physicalData,
     professionalData,
     videobookLink,
-    pics
+    profilePicture
   ) {
     return Promise.resolve().then(() => {
       if (typeof email !== "string") throw Error("user email is not a string");
@@ -243,7 +244,7 @@ const castmeApi = {
       if (typeof physicalData !== "object")
         throw Error("physical data is not what it should be");
 
-      if (!pics instanceof Array) throw Error("pics should be an array");
+      
 
       return axios
         .patch(`${this.url}/users/${id}`, {
@@ -253,7 +254,8 @@ const castmeApi = {
           physicalData,
           professionalData,
           videobookLink,
-          pics
+          profilePicture
+
         })
         .then(({ status, data }) => {
           if (status !== 200 || data.status !== "OK")

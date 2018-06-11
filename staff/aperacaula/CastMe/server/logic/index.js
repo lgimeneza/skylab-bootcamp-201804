@@ -21,7 +21,7 @@ const logic = {
    * @param {object} physicalData
    * @param {object} professionalData
    * @param {string} videobookLink
-   * @param {array} pics
+   * @param {string} profilePicture
    *
    *
    *
@@ -35,7 +35,7 @@ const logic = {
     physicalData,
     professionalData,
     videobookLink,
-    pics
+    profilePicture
   ) {
     return Promise.resolve().then(() => {
       if (typeof email !== "string") throw Error("user email is not a string");
@@ -64,7 +64,6 @@ const logic = {
       if ((videobookLink = videobookLink.trim()).length === 0)
         throw Error("user videobookLink is empty or blank");
 
-      if (!pics instanceof Array) throw Error("pics should be an array");
 
       return User.findOne({ email }).then(user => {
         if (user) throw Error(`user with email ${email} already exists`);
@@ -76,7 +75,7 @@ const logic = {
           physicalData,
           professionalData,
           videobookLink,
-          pics
+          profilePicture
         }).then(() => true);
       });
     });
@@ -138,6 +137,7 @@ const logic = {
           professionalData,
           videobookLink,
           pics,
+          profilePicture,
           applications
         } = user;
         return {
@@ -147,6 +147,7 @@ const logic = {
           professionalData,
           videobookLink,
           pics,
+          profilePicture,
           applications
         };
       });
@@ -156,13 +157,15 @@ const logic = {
    *
    * @param {string} email
    * @param {string} password
+  * @param {string} newEmail
+   * @param {string} newPassword
    * @param {object} personalData
    * @param {object} physicalData
    * @param {object} professionalData
    * @param {string} videobookLink
-   * @param {array} pics
-   * @param {string} newEmail
-   * @param {string} newPassword
+   * @param {file} pics
+   * @param {string} profilePicture
+
    *
    * @returns {Promise<boolean>}
    */
@@ -175,7 +178,8 @@ const logic = {
     physicalData,
     professionalData,
     videobookLink,
-    pics
+    pics,
+    profilePicture
   ) {
     return Promise.resolve()
       .then(() => {
@@ -218,7 +222,6 @@ const logic = {
         if (typeof physicalData !== "object")
           throw Error("physical data is not what it should be");
 
-        if (!pics instanceof Array) throw Error("pics should be an array");
 
         return User.findOne({ email, password });
       })
@@ -244,6 +247,7 @@ const logic = {
         user.physicalData = physicalData;
         user.videobookLink = videobookLink;
         user.pics = pics;
+        user.profilePicture= profilePicture;
 
         return user.save();
       })

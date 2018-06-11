@@ -57,9 +57,10 @@ describe('models ', () => {
 
                 }),
 
+                
                 videobookLink: 'https://youtube.com',
 
-                pics: [],
+                
             })
 
             user.applications.push({

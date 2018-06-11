@@ -53,7 +53,7 @@ describe('logic', () => {
 
         videobookLink: 'https://youtube.com',
 
-        pics: [],
+
 
         applications: []
     }
@@ -100,7 +100,6 @@ describe('logic', () => {
 
         videobookLink: 'https://youtube.com',
 
-        pics: [],
 
         applications: []
     }
@@ -119,7 +118,7 @@ describe('logic', () => {
 
     describe('register user', () => {
         it('should succeed on correct dada', () =>
-            logic.registerUser(userData.email, userData.password, userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink, userData.pics)
+            logic.registerUser(userData.email, userData.password, userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink)
                 .then(res => {
                     expect(res).to.be.true
                 })
@@ -131,7 +130,7 @@ describe('logic', () => {
             User.create(userData)
                 .then(() => {
 
-                    return logic.registerUser(userData.email, userData.password, userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink, userData.pics)
+                    return logic.registerUser(userData.email, userData.password, userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink)
                 })
                 .catch(({ message }) => {
                     expect(message).to.equal(`user with email ${userData.email} already exists`)
@@ -232,7 +231,7 @@ describe('logic', () => {
                 .then(user => {
                     expect(user).to.exist
 
-                    const { email, _id, password, personalData, physicalData, professionalData, videobookLink, pics, applications } = user
+                    const { email, _id, password, personalData, physicalData, professionalData, videobookLink, applications } = user
 
 
                     expect(email).to.equal('aperacaula@gmail.com')
@@ -264,7 +263,7 @@ describe('logic', () => {
             User.create(userData)
                 .then(({ email, password }) => {
 
-                    return logic.updateUser(userData.email, userData.password, 'jd@mail.com', '123', userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink, userData.pics)
+                    return logic.updateUser(userData.email, userData.password, 'jd@mail.com', '123', userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink)
                         .then(res => {
                             expect(res).to.be.true
 
@@ -273,7 +272,7 @@ describe('logic', () => {
                         .then(user => {
                             expect(user).to.exist
 
-                            const { email, password, personalData, physicalData, professionalData, videobookLink, pics } = user
+                            const { email, password, personalData, physicalData, professionalData, videobookLink} = user
 
                             expect(email).to.equal('jd@mail.com')
                             expect(password).to.equal('123')
@@ -290,7 +289,7 @@ describe('logic', () => {
                 .then(([{ email: email1 }, { email: email2 }]) => {
                     const { email, password } = userData
 
-                    return logic.updateUser(email, password, email2, '123', userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink, userData.pics)
+                    return logic.updateUser(email, password, email2, '123', userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink)
                 })
                 .catch(({ message }) => expect(message).to.equal(`user with email ${otherUserData.email} already exists`))
         )

@@ -39,7 +39,7 @@ function Landing(props) {
                     <a className="link-style">Login</a>
                 </Link>
 				
-                <Link to="/register">
+                <Link to="/users">
                     <a className="link-style">Register</a>
                 </Link>
 				

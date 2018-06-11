@@ -21,16 +21,21 @@ module.exports = new Schema({
 
     professionalData: ProfessionalData,
 
+    pics: {
+        type: File,
+        
+
+    },
     videobookLink: {
         type: String,
 
     },
 
-    pics: {
-        type: Array,
-        required: true
-
+    profilePicture:{
+        type: String,
     },
+
+    
 
     applications: [
         {

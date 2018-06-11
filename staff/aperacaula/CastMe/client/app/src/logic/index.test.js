@@ -47,7 +47,7 @@ describe('logic (cast me app)', () => {
 
         videobookLink: 'https://youtube.com',
 
-        pics: [],
+
 
     }
 
@@ -64,7 +64,7 @@ describe('logic (cast me app)', () => {
 
     describe('register', () => {
         it('should succeed on correct data', () => {
-            const { email, password, personalData, physicalData, professionalData, videobookLink, pics } = userData
+            const { email, password, personalData, physicalData, professionalData, videobookLink} = userData
 
             return logic.registerUser(email, password, personalData, physicalData, professionalData, videobookLink, pics)
                 .then(res => expect(res).to.be.true)
@@ -73,7 +73,7 @@ describe('logic (cast me app)', () => {
 
     describe('login', () => {
         it('should succeed on correct data', () => {
-            const { email, password, personalData, physicalData, professionalData, videobookLink, pics } = userData
+            const { email, password, personalData, physicalData, professionalData, videobookLink} = userData
 
             return CastMeApi.registerUser(email, password, personalData, physicalData, professionalData, videobookLink, pics)
                 .then(() => logic.login(email, password))

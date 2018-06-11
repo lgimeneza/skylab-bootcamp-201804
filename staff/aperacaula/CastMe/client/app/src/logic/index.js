@@ -6,8 +6,8 @@ api.url='http://localhost:5000/api'
 const logic = {
     userId: 'NO-ID',
 
-    registerUser(email, password, personalData, physicalData, professionalData, videobookLink, pics) {
-        return api.registerUser(email, password, personalData, physicalData, professionalData, videobookLink, pics)
+    registerUser(email, password, personalData, physicalData, professionalData, videobookLink, profilePicture) {
+        return api.registerUser(email, password, personalData, physicalData, professionalData, videobookLink, profilePicture)
     },
 
     login(email, password) {
