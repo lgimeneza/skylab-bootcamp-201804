@@ -43,7 +43,6 @@ const logic = {
             .then(true)
     },
 
-
     listCategories() {
         return singingLabApi.listCategories()
             .then(categories => categories)

@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
-import logic from '../../logic'
+
 import './index.css'
 
 export default ({items, btnShow = false}) => (

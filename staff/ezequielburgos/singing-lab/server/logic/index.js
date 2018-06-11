@@ -230,17 +230,38 @@ const logic = {
      * 
      * @returns {Promise<[Note]>}
      */
-    listProducts(categoryId) {
+    listProducts(category) {
         return Promise.resolve()
             .then(() => {
 
-                console.log(categoryId)
-                return Product.find({ category: categoryId })
-                    .then(product => {
-                        if (!product) throw Error(`no products where found`)
+                return Product.find({ category })
+                    .then((products) => {
+                        if (!products) throw Error(`no products where found`)
 
-                        return product.map(product => product)
+                        return products
                     })
+            })
+    },
+
+    /**
+     * 
+     * @param {string} id
+     * 
+     * @returns {Promise<User>} 
+     */
+    retrieveProduct(productId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof productId !== 'string') throw Error('user productId is not a string')
+
+                if (!(productId = productId.trim()).length) throw Error('user productId is empty or blank')
+
+                return Product.findById(productId).select({ _id: 0, name: 1, surname: 1, address: 1, email: 1 })
+            })
+            .then(product => {
+                if (!product) throw Error(`no product found with id ${productId}`)
+
+                return product
             })
     }
 

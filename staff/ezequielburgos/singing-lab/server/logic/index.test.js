@@ -9,7 +9,7 @@ const { expect } = require('chai')
 const { env: { DB_URL } } = process
 
 describe('logic (singing-lab)', () => {
-    let jackData, annaData, otherjackData, beginnerCourseCategoryData, advancedCourseCategoryData, beginnerCourseData, advancedCourseData
+    let jackData, annaData, otherjackData, beginnerCourseCategoryData, advancedCourseCategoryData, beginnerCourseData, beginnerCourseData2, advancedCourseData
     const dummyUserId = '123456781234567812345678'
     const dummyNoteId = '123456781234567812345678'
 
@@ -22,6 +22,7 @@ describe('logic (singing-lab)', () => {
         beginnerCourseCategoryData = { name: 'Beginner Course', description: 'Beginner Course desc', image: 'http://images.com/230957' }
         advancedCourseCategoryData = { name: 'Advanced Course', description: 'Advanced Course desc', image: 'http://images.com/259827' }
         beginnerCourseData = { name: 'Beginner Course I', price: 50, discount: 15, description: 'Beginner Course I desc', image: 'http://images.com/5678', stock: 123 }
+        beginnerCourseData2 = { name: 'Beginner Course II', price: 50, discount: 15, description: 'Beginner Course II desc', image: 'http://images.com/5679', stock: 11 }
         advancedCourseData = { name: 'Advanced Course I', price: 100, discount: 20, description: 'Advanced Course I desc', image: 'http://images.com/1234', stock: 77 }
 
         return Promise.all([User.remove(), Category.deleteMany(), Product.deleteMany()])
@@ -436,23 +437,25 @@ describe('logic (singing-lab)', () => {
             ])
                 .then(res => {
                     beginnerCourseData.category = res[0]._id
+                    beginnerCourseData2.category = res[0]._id
                     advancedCourseData.category = res[1]._id
 
                     return Promise.all([
                         Product.create(beginnerCourseData),
+                        Product.create(beginnerCourseData2),
                         Product.create(advancedCourseData),
                     ])
                         .then(res => {
                             return Promise.all([
                                 logic.listProducts(res[0].category),
-                                logic.listProducts(res[1].category),
                             ])
                                 .then(product => {
+
+                                    expect(product[0][1]._id).to.exist
+                                    expect(product[0][1].name).to.equal(beginnerCourseData2.name)
+
                                     expect(product[0][0]._id).to.exist
                                     expect(product[0][0].name).to.equal(beginnerCourseData.name)
-
-                                    expect(product[1][0]._id).to.exist
-                                    expect(product[1][0].name).to.equal(advancedCourseData.name)
                                 })
                         })
                 })

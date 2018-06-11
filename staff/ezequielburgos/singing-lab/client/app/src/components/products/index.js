@@ -15,8 +15,8 @@ class Products extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
-        logic.listProducts()
+        console.log(this.props.match.params.id)
+        logic.listProducts(this.props.match.params.id)
             .then(products => this.setState({ products }))
     }
 

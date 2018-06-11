@@ -110,7 +110,7 @@ describe('logic (singingLab)', () => {
 
             return logic.listCategories()
                 .then(res => {
-                    // console.log('LIST CATEGORIES', res)
+                    expect(res).to.exist
                 })
 
         })
@@ -123,7 +123,10 @@ describe('logic (singingLab)', () => {
                 .then(res => {
                     return logic.listProducts(res[0]._id)
                         .then(res => {
-                            console.log('LIST Products', res)
+                            expect(res).to.exist
+                            expect(res[0].name).to.equal('beginner course I')
+                            expect(res[0].description).to.equal('beginner course I desc')
+
                         })
                 })
 
