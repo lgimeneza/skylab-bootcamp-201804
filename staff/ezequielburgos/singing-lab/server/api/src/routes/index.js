@@ -112,4 +112,20 @@ router.get('/categories/:id', (req, res) => {
 
 })
 
+router.get('/categories/:id/:productId', (req, res) => {
+    const { params: { productId } } = req
+
+    return logic.retrieveProduct(productId)
+        .then(product => {
+            res.status(200)
+            res.json({ status: 'OK', data: product })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+
+})
+
+
 module.exports = router

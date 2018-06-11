@@ -255,8 +255,8 @@ const logic = {
                 if (typeof productId !== 'string') throw Error('user productId is not a string')
 
                 if (!(productId = productId.trim()).length) throw Error('user productId is empty or blank')
-
-                return Product.findById(productId).select({ _id: 0, name: 1, surname: 1, address: 1, email: 1 })
+                
+                return Product.findById(productId)
             })
             .then(product => {
                 if (!product) throw Error(`no product found with id ${productId}`)
