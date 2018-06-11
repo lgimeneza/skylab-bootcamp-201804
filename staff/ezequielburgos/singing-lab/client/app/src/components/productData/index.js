@@ -5,29 +5,28 @@ import Navbar from './../navbar'
 import Footer from './../footer'
 import ListItems from './../ListItems'
 
-class Products extends Component {
+class ProductData extends Component {
 
     constructor() {
         super()
         this.state = {
-            products: []
+            product: []
         }
     }
 
     componentDidMount() {
-        logic.listProducts(this.props.match.params.id)
-            .then(products => this.setState({ products }))
+        logic.retrieveProduct(this.props.match.params.id)
+            .then(product => this.setState({ product }))
     }
 
     render() {
         return (
             <main>
                 <Navbar />
-                <h2 className="main-title">These are my products</h2>
+                <h2 className="main-title">this is the product</h2>
 
                 <ListItems
-                    productDetail
-                    items={this.state.products}
+                    items={this.state.product}
                 />
 
                 <Footer />
@@ -37,4 +36,4 @@ class Products extends Component {
 
 }
 
-export default Products
+export default ProductData

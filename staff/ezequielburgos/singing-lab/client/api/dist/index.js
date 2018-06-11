@@ -320,6 +320,41 @@ var singingLabApi = {
                 } else throw err;
             });
         });
+    },
+
+
+    /**
+      * 
+      * @param {string} id
+      * 
+      * @returns {Promise<User>} 
+      */
+    retrieveProduct: function retrieveProduct(productId) {
+        var _this8 = this;
+
+        return Promise.resolve().then(function () {
+            if (typeof productId !== 'string') throw Error('user productId is not a string');
+
+            if (!(productId = productId.trim()).length) throw Error('user productId is empty or blank');
+
+            return axios.get(_this8.url + '/categories/products/' + productId).then(function (_ref8) {
+                var status = _ref8.status,
+                    data = _ref8.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
     }
 };
 

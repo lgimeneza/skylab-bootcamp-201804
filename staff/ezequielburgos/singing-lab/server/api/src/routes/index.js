@@ -112,7 +112,7 @@ router.get('/categories/:id', (req, res) => {
 
 })
 
-router.get('/categories/:id/:productId', (req, res) => {
+router.get('/categories/products/:productId', (req, res) => {
     const { params: { productId } } = req
 
     return logic.retrieveProduct(productId)

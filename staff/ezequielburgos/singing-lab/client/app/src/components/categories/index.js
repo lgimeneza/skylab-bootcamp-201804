@@ -15,8 +15,6 @@ class Categories extends Component {
     }
 
     componentDidMount() {
-        document.body.style.background = 'white'
-
         logic.listCategories()
             .then(categories => this.setState({ categories }))
     }

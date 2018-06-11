@@ -53,7 +53,13 @@ const logic = {
             .then(products => {
                 return products
             })
+    },
+
+    retrieveProduct(productId){
+        return singingLabApi.retrieveProduct(productId)
+            .then(product => product)
     }
+
 
 }
 
