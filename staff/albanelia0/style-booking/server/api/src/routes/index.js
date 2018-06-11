@@ -114,7 +114,7 @@ router.get('/booking', jwtValidator, (req, res) => {
 
   logic.listBookings()
     .then((booking) => {
-      res.status(201)
+      res.status(200)
       res.json({ status: 'OK', data: booking })
     })
     .catch(({ message }) => {
