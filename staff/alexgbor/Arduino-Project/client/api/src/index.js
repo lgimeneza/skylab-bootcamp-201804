@@ -225,18 +225,18 @@ const arduApi = {
      * 
      * @returns {Promise<string>}
      */
-    addNote(userId, text) {
+    addArduino(userId, ip, port) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof text !== 'string') throw Error('text is not a string')
+                if (typeof ip !== 'string') throw Error('ip is not a string')
 
-                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+                if ((ip = ip.trim()).length === 0) throw Error('ip is empty or blank')
 
-                return axios.post(`${this.url}/users/${userId}/notes`, { text }, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.post(`${this.url}/users/${userId}/arduinos`, { ip, port }, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -261,18 +261,18 @@ const arduApi = {
      * 
      * @returns {Promise<Note>}
      */
-    retrieveNote(userId, noteId) {
+    retrieveArduino(userId, arduId) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof noteId !== 'string') throw Error('note id is not a string')
+                if (typeof arduId !== 'string') throw Error('ardu id is not a string')
 
-                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+                if (!(arduId = arduId.trim())) throw Error('ardu id is empty or blank')
 
-                return axios.get(`${this.url}/users/${userId}/notes/${noteId}`, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.get(`${this.url}/users/${userId}/arduinos/${arduId}`, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -295,14 +295,14 @@ const arduApi = {
      * 
      * @returns {Promise<[Note]>}
      */
-    listNotes(userId) {
+    listArduinos(userId) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                return axios.get(`${this.url}/users/${userId}/notes`, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.get(`${this.url}/users/${userId}/arduinos`, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -328,22 +328,22 @@ const arduApi = {
      * 
      * @returns {Promise<boolean>}
      */
-    updateNote(userId, noteId, text) {
+    updateArduino(userId, arduId, ip, port) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof noteId !== 'string') throw Error('note id is not a string')
+                if (typeof arduId !== 'string') throw Error('note id is not a string')
 
-                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+                if (!(arduId = arduId.trim())) throw Error('note id is empty or blank')
 
-                if (typeof text !== 'string') throw Error('text is not a string')
+                if (typeof ip !== 'string') throw Error('ip is not a string')
 
-                if ((text = text.trim()).length === 0) throw Error('text is empty or blank')
+                if ((ip = ip.trim()).length === 0) throw Error('ip is empty or blank')
 
-                return axios.patch(`${this.url}/users/${userId}/notes/${noteId}`, { text }, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.patch(`${this.url}/users/${userId}/arduinos/${arduId}`, { ip, port }, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -368,25 +368,25 @@ const arduApi = {
      *
      * @returns {Promise<boolean>}
      */
-    removeNote(userId, noteId) {
+    removeArduino(userId, arduId) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof noteId !== 'string') throw Error('note id is not a string')
+                if (typeof arduId !== 'string') throw Error('arduino id is not a string')
 
-                if (!(noteId = noteId.trim())) throw Error('note id is empty or blank')
+                if (!(arduId = arduId.trim())) throw Error('arduino id is empty or blank')
 
-                return axios.delete(`${this.url}/users/${userId}/notes/${noteId}`, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.delete(`${this.url}/users/${userId}/arduinos/${arduId}`, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
                         return true
                     })
                     .catch(err => {
-                        debugger
+                        
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
 
                         if (err.response) {
@@ -405,18 +405,18 @@ const arduApi = {
      * 
      * @returns {Promise<[Note]>}
      */
-    findNotes(userId, text) {
+    findArduinos(userId, chunk) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
 
                 if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof text !== 'string') throw Error('text is not a string')
+                if (typeof chunk !== 'string') throw Error('chunk is not a string')
 
-                if (!text.length) throw Error('text is empty')
+                if (!chunk.length) throw Error('chunk is empty')
 
-                return axios.get(`${this.url}/users/${userId}/notes?q=${text}`, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.get(`${this.url}/users/${userId}/arduinos?q=${chunk}`, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

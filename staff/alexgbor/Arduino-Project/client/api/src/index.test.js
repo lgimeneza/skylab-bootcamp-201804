@@ -2,7 +2,7 @@
 
 require('dotenv').config()
 
-const { mongoose, models: { User, Note } } = require('data')
+const { mongoose, models: { User, Arduino, ArduinoData } } = require('data')
 const { expect } = require('chai')
 const arduApi = require('.')
 const _ = require('lodash')
@@ -14,7 +14,7 @@ const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 
 arduApi.url = API_URL
 
-describe('logic (notes api)', () => {
+describe('logic (ardu api)', () => {
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123123ab' }
     const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456456cd' }
     const fakeUserId = '123456781234567812345678'
@@ -33,9 +33,9 @@ describe('logic (notes api)', () => {
     })
 
     describe('register user', () => {
-        it('should succeed on correct dada', () =>
+        it('should succeed on correct data', () =>
             arduApi.registerUser('John', 'Doe', 'jd@mail.com', '123123ab')
-                .then(res => expect(res).to.be.true)
+                .then(({ status }) => expect(status).to.equal('OK'))
         )
 
         it('should fail on already registered user', () =>
@@ -538,7 +538,7 @@ describe('logic (notes api)', () => {
         )
     })
 
-    false && describe('add note', () => {
+    describe('add arduino', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
@@ -546,22 +546,23 @@ describe('logic (notes api)', () => {
 
                     arduApi.token = token
 
-                    return arduApi.addNote(id, noteText)
-                        .then(noteId => {
-                            expect(noteId).to.be.a('string')
-                            expect(noteId).to.exist
+                    return arduApi.addArduino(id, '192.168.1.1', '5000')
+                        .then(arduId => {
+                            expect(arduId).to.be.a('string')
+                            expect(arduId).to.exist
 
                             return User.findById(id)
                                 .then(user => {
                                     expect(user).to.exist
 
-                                    expect(user.notes).to.exist
-                                    expect(user.notes.length).to.equal(1)
+                                    expect(user.arduinos).to.exist
+                                    expect(user.arduinos.length).to.equal(1)
 
-                                    const [{ id, text }] = user.notes
+                                    const [{ id, ip, port }] = user.arduinos
 
-                                    expect(id).to.equal(noteId)
-                                    expect(text).to.equal(noteText)
+                                    expect(id).to.equal(arduId)
+                                    expect(ip).to.equal('192.168.1.1')
+                                    expect(port).to.equal('5000')
                                 })
                         })
                 })
@@ -574,115 +575,116 @@ describe('logic (notes api)', () => {
 
                     arduApi.token = token
 
-                    return arduApi.addNote(fakeUserId, noteText)
+                    return arduApi.addArduino(fakeUserId, noteText)
                         .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${id}`))
                 })
         )
 
         it('should fail on no user id', () =>
-            arduApi.addNote()
+            arduApi.addArduino()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            arduApi.addNote('')
+            arduApi.addArduino('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            arduApi.addNote('     ')
+            arduApi.addArduino('     ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
-        it('should fail on no text', () => {
-            arduApi.addNote(fakeUserId)
-                .catch(({ message }) => expect(message).to.equal('text is not a string'))
+        it('should fail on no ip', () => {
+            arduApi.addArduino(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('ip is not a string'))
         })
 
-        it('should fail on empty text', () =>
-            arduApi.addNote(fakeUserId, '')
-                .catch(({ message }) => expect(message).to.equal('text is empty or blank'))
+        it('should fail on empty ip', () =>
+            arduApi.addArduino(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('ip is empty or blank'))
         )
 
-        it('should fail on blank text', () =>
-            arduApi.addNote(fakeUserId, '   ')
-                .catch(({ message }) => expect(message).to.equal('text is empty or blank'))
+        it('should fail on blank ip', () =>
+            arduApi.addArduino(fakeUserId, '   ')
+                .catch(({ message }) => expect(message).to.equal('ip is empty or blank'))
         )
     })
 
-    false && describe('retrieve note', () => {
+    describe('retrieve arduino', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
-            const note = new Note({ text: noteText })
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
 
-            user.notes.push(note)
+            user.arduinos.push(ardu)
 
             return user.save()
-                .then(({ id: userId, notes: [{ id: noteId }] }) => {
+                .then(({ id: userId, arduinos: [{ id: arduId }] }) => {
                     const token = jwt.sign({ id: userId }, TOKEN_SECRET)
 
                     arduApi.token = token
 
-                    return arduApi.retrieveNote(userId, noteId)
+                    return arduApi.retrieveArduino(userId, arduId)
                 })
-                .then(({ id, text }) => {
-                    expect(id).to.equal(note.id)
-                    expect(text).to.equal(note.text)
+                .then(({ id, ip, port }) => {
+                    expect(id).to.equal(ardu.id)
+                    expect(ip).to.equal(ardu.ip)
+                    expect(port).to.equal(ardu.port)
                 })
         })
 
         it('should fail on non user id', () =>
-            arduApi.retrieveNote()
+            arduApi.retrieveArduino()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            arduApi.retrieveNote('')
+            arduApi.retrieveArduino('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            arduApi.retrieveNote('      ')
+            arduApi.retrieveArduino('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on wrong user id', () => {
             const user = new User(userData)
-            const note = new Note({ text: noteText })
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
 
-            user.notes.push(note)
+            user.arduinos.push(ardu)
 
             return user.save()
-                .then(({ notes: [{ id: noteId }] }) => {
+                .then(({ arduinos: [{ id: arduId }] }) => {
                     const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
 
                     arduApi.token = token
 
-                    return arduApi.retrieveNote(fakeUserId, noteId)
+                    return arduApi.retrieveArduino(fakeUserId, arduId)
                         .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${user.id}`))
                 })
         })
 
-        it('should fail on no note id', () =>
-            arduApi.retrieveNote(fakeUserId)
-                .catch(({ message }) => expect(message).to.equal('note id is not a string'))
+        it('should fail on no ardu id', () =>
+            arduApi.retrieveArduino(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('ardu id is not a string'))
         )
 
-        it('should fail on empty note id', () =>
-            arduApi.retrieveNote(fakeUserId, '')
-                .catch(({ message }) => expect(message).to.equal('note id is empty or blank'))
+        it('should fail on empty ardu id', () =>
+            arduApi.retrieveArduino(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('ardu id is empty or blank'))
         )
 
-        it('should fail on blank note id', () =>
-            arduApi.retrieveNote(fakeUserId, '       ')
-                .catch(({ message }) => expect(message).to.equal('note id is empty or blank'))
+        it('should fail on blank ardu id', () =>
+            arduApi.retrieveArduino(fakeUserId, '       ')
+                .catch(({ message }) => expect(message).to.equal('ardu id is empty or blank'))
         )
 
-        it('should fail on wrong note id', () => {
+        it('should fail on wrong ardu id', () => {
             const user = new User(userData)
-            const note = new Note({ text: noteText })
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
 
-            user.notes.push(note)
+            user.arduinos.push(ardu)
 
             return user.save()
                 .then(({ id: userId }) => {
@@ -690,48 +692,39 @@ describe('logic (notes api)', () => {
 
                     arduApi.token = token
 
-                    return arduApi.retrieveNote(userId, fakeNoteId)
-                        .catch(({ message }) => expect(message).to.equal(`no note found with id ${fakeNoteId}`))
+                    return arduApi.retrieveArduino(userId, '192.168.1.2')
+                        .catch(({ message }) => expect(message).to.equal(`no arduino found with id 192.168.1.2`))
                 })
         })
     })
 
-    false && describe('list notes', () => {
+    describe('list arduinos', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
 
-            const notes = indexes.map(index => new Note({ text: `${noteText} ${index}` }))
+            const arduinos = indexes.map(index => new Arduino({ ip: `192.168.1.${index}`, port: '5000' }))
 
-            user.notes = notes
+            user.arduinos = arduinos
 
             return user.save()
-                .then(({ id: userId, notes }) => {
-                    // const validNoteIds = []
-                    // const validNoteTexts = []
-
-                    // notes.forEach(({ id, text }) => {
-                    //     validNoteIds.push(id)
-                    //     validNoteTexts.push(text)
-                    // })
-                    // or
-                    const validNoteIds = _.map(notes, 'id')
-                    const validNoteTexts = _.map(notes, 'text')
+                .then(({ id: userId, arduinos }) => {
+                    const validArduIds = _.map(arduinos, 'id')
+                    const validArduIps = _.map(arduinos, 'ip')
+                    const validArduPorts = _.map(arduinos, 'port')
 
                     const token = jwt.sign({ id: userId }, TOKEN_SECRET)
 
                     arduApi.token = token
 
-                    return arduApi.listNotes(userId)
-                        .then(notes => {
-                            expect(notes).to.exist
-                            expect(notes.length).to.equal(indexes.length)
+                    return arduApi.listArduinos(userId)
+                        .then(arduinos => {
+                            expect(arduinos).to.exist
+                            expect(arduinos.length).to.equal(indexes.length)
 
-                            notes.forEach(({ id, text, _id }) => {
-                                // expect(validNoteIds.includes(id)).to.be.true
-                                // expect(validNoteTexts.includes(text)).to.be.true
-                                // or
-                                expect(validNoteIds).to.include(id)
-                                expect(validNoteTexts).to.include(text)
+                            arduinos.forEach(({ id, ip, port, _id }) => {
+                                expect(validArduIds).to.include(id)
+                                expect(validArduIps).to.include(ip)
+                                expect(validArduPorts).to.include(port)
                                 expect(_id).not.to.exist
                             })
                         })
@@ -739,88 +732,91 @@ describe('logic (notes api)', () => {
         })
 
         it('should fail on non user id', () =>
-            arduApi.listNotes()
+            arduApi.listArduinos()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            arduApi.listNotes('')
+            arduApi.listArduinos('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            arduApi.listNotes('      ')
+            arduApi.listArduinos('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
     })
 
-    false && describe('update note', () => {
+    describe('update arduino', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id: userId }) =>
-                    User.findByIdAndUpdate(userId, { $push: { notes: { text: noteText } } }, { new: true })
+                    User.findByIdAndUpdate(userId, { $push: { arduinos: { ip: '192.168.1.1', port: '5000' } } }, { new: true })
                         .then(user => {
-                            const noteId = user.notes[user.notes.length - 1].id
+                            const arduId = user.arduinos[user.arduinos.length - 1].id
 
-                            const newNoteText = `${noteText} 2`
+                            const newArduIp = '192.168.1.2'
+
+                            const newArduPort = '5001'
 
                             const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
 
                             arduApi.token = token
 
-                            return arduApi.updateNote(userId, noteId, newNoteText)
+                            return arduApi.updateArduino(userId, arduId, newArduIp, newArduPort)
                                 .then(res => {
                                     expect(res).to.be.true
 
                                     return User.findById(userId)
                                 })
-                                .then(({ notes }) => {
-                                    const [{ id, text }] = notes
+                                .then(({ arduinos }) => {
+                                    const [{ id, ip, port }] = arduinos
 
-                                    expect(id).to.equal(noteId)
-                                    expect(text).to.equal(newNoteText)
+                                    expect(id).to.equal(arduId)
+                                    expect(ip).to.equal('192.168.1.2')
+                                    expect(port).to.equal('5001')
                                 })
                         })
                 )
         )
 
         it('should fail on non user id', () =>
-            arduApi.updateNote()
+            arduApi.updateArduino()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            arduApi.updateNote('')
+            arduApi.updateArduino('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            arduApi.updateNote('      ')
+            arduApi.updateArduino('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on wrong user id', () => {
             const user = new User(userData)
-            const note = new Note({ text: noteText })
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
 
-            user.notes.push(note)
+            user.arduinos.push(ardu)
 
             return user.save()
-                .then(({ notes: [{ id: noteId }] }) => {
+                .then(({ arduinos: [{ id: arduId }] }) => {
                     const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
 
                     arduApi.token = token
 
-                    return arduApi.updateNote(fakeUserId, noteId, `${noteText} 2`)
+                    return arduApi.updateArduino(fakeUserId, arduId, '192.168.1.2', '5001')
                         .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${user.id}`))
                 })
         })
 
-        it('should fail on wrong note id', () => {
+        it('should fail on wrong ardu id', () => {
             const user = new User(userData)
-            const note = new Note({ text: noteText })
+            const ardu = new Arduino({ ip: '192.168.1.1', port: '5000' })
 
-            user.notes.push(note)
+            user.arduinos.push(ardu)
 
             return user.save()
                 .then(({ id: userId }) => {
@@ -828,90 +824,90 @@ describe('logic (notes api)', () => {
 
                     arduApi.token = token
 
-                    return arduApi.updateNote(userId, fakeNoteId, `${noteText} 2`)
-                        .catch(({ message }) => expect(message).to.equal(`no note found with id ${fakeNoteId}`))
+                    return arduApi.updateArduino(userId, fakeNoteId, '192.168.1.2', '5001')
+                        .catch(({ message }) => expect(message).to.equal(`no arduino found with id ${fakeNoteId}`))
                 })
         })
     })
 
-    false && describe('remove note', () => {
+    describe('remove arduino', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
-            const note = new Note({ text: noteText })
+            const ardu = new Arduino({ ip:'192.168.1.1', port:'5000' })
 
-            user.notes.push(note)
+            user.arduinos.push(ardu)
 
             return user.save()
-                .then(({ id: userId, notes: [{ id: noteId }] }) => {
+                .then(({ id: userId, arduinos: [{ id: arduId, ip, port }] }) => {
                     const token = jwt.sign({ id: userId }, TOKEN_SECRET)
 
                     arduApi.token = token
 
-                    return arduApi.removeNote(userId, noteId)
+                    return arduApi.removeArduino(userId, arduId)
                         .then(res => {
                             expect(res).to.be.true
 
                             return User.findById(userId)
                         })
-                        .then(({ notes }) => {
-                            expect(notes).to.exist
-                            expect(notes.length).to.equal(0)
+                        .then(({ arduinos }) => {
+                            expect(arduinos).to.exist
+                            expect(arduinos.length).to.equal(0)
                         })
                 })
         })
 
         it('should fail on non user id', () =>
-            arduApi.removeNote()
+            arduApi.removeArduino()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            arduApi.removeNote('')
+            arduApi.removeArduino('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            arduApi.removeNote('      ')
+            arduApi.removeArduino('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on wrong user id', () => {
             const user = new User(userData)
-            const note = new Note({ text: noteText })
+            const ardu = new Arduino({ ip:'192.168.1.1', port:'5000' })
 
-            user.notes.push(note)
+            user.arduinos.push(ardu)
 
             return user.save()
-                .then(({ notes: [{ id: noteId }] }) => {
+                .then(({ arduinos: [{ id: arduId, ip, port }] }) => {
                     const token = jwt.sign({ id: user.id }, TOKEN_SECRET)
 
                     arduApi.token = token
 
-                    return arduApi.removeNote(fakeUserId, noteId)
+                    return arduApi.removeArduino(fakeUserId, arduId)
                         .catch(({ message }) => expect(message).to.equal(`user id ${fakeUserId} does not match token user id ${user.id}`))
                 })
         })
 
-        it('should fail on no note id', () =>
-            arduApi.removeNote(fakeUserId)
-                .catch(({ message }) => expect(message).to.equal('note id is not a string'))
+        it('should fail on no ardu id', () =>
+            arduApi.removeArduino(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('arduino id is not a string'))
         )
 
-        it('should fail on empty note id', () =>
-            arduApi.removeNote(fakeUserId, '')
-                .catch(({ message }) => expect(message).to.equal('note id is empty or blank'))
+        it('should fail on empty ardu id', () =>
+            arduApi.removeArduino(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('arduino id is empty or blank'))
         )
 
-        it('should fail on blank note id', () =>
-            arduApi.removeNote(fakeUserId, '       ')
-                .catch(({ message }) => expect(message).to.equal('note id is empty or blank'))
+        it('should fail on blank ardu id', () =>
+            arduApi.removeArduino(fakeUserId, '       ')
+                .catch(({ message }) => expect(message).to.equal('arduino id is empty or blank'))
         )
 
-        it('should fail on wrong note id', () => {
+        it('should fail on wrong ardu id', () => {
             const user = new User(userData)
-            const note = new Note({ text: noteText })
+            const ardu = new Arduino({ ip:'192.168.1.1', port:'5000' })
 
-            user.notes.push(note)
+            user.arduinos.push(ardu)
 
             return user.save()
                 .then(({ id: userId }) => {
@@ -919,46 +915,43 @@ describe('logic (notes api)', () => {
 
                     arduApi.token = token
 
-                    return arduApi.removeNote(userId, fakeNoteId)
-                        .catch(({ message }) => expect(message).to.equal(`no note found with id ${fakeNoteId}`))
+                    return arduApi.removeArduino(userId, fakeNoteId)
+                        .catch(({ message }) => expect(message).to.equal(`no arduino found with id ${fakeNoteId}`))
                 })
         })
     })
 
-    false && describe('find notes', () => {
+    describe('find arduinos', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
 
-            user.notes.push(new Note({ text: `${noteText} a` }))
-            user.notes.push(new Note({ text: `${noteText} ab` }))
-            user.notes.push(new Note({ text: `${noteText} abc` }))
-            user.notes.push(new Note({ text: `${noteText} bc` }))
-            user.notes.push(new Note({ text: `${noteText} c` }))
+            user.arduinos.push(new Arduino({ ip: '192.168.1.1', port:'5000' }))
+            user.arduinos.push(new Arduino({ ip: '192.168.1.2', port:'5001' }))
+            user.arduinos.push(new Arduino({ ip: '192.168.1.3', port:'5002' }))
+            user.arduinos.push(new Arduino({ ip: '192.168.1.4', port:'5003' }))
+            user.arduinos.push(new Arduino({ ip: '192.161.2.1', port:'5004' }))
 
-            const text = 'ab'
+            const chunk = '1.2'
 
             return user.save()
-                .then(({ id: userId, notes }) => {
-                    const matchingNotes = notes.filter(note => note.text.includes(text))
+                .then(({ id: userId, arduinos }) => {
+                    const matchingArdus = arduinos.filter(ardu => ardu.ip.includes(chunk))
 
-                    const validNoteIds = _.map(matchingNotes, 'id')
-                    const validNoteTexts = _.map(matchingNotes, 'text')
+                    const validArduIds = _.map(matchingArdus, 'id')
+                    const validArduIps = _.map(matchingArdus, 'ip')
 
                     const token = jwt.sign({ id: userId }, TOKEN_SECRET)
 
                     arduApi.token = token
 
-                    return arduApi.findNotes(userId, text)
-                        .then(notes => {
-                            expect(notes).to.exist
-                            expect(notes.length).to.equal(matchingNotes.length)
+                    return arduApi.findArduinos(userId, chunk)
+                        .then(arduinos => {
+                            expect(arduinos).to.exist
+                            expect(arduinos.length).to.equal(matchingArdus.length)
 
-                            notes.forEach(({ id, text, _id }) => {
-                                // expect(validNoteIds.includes(id)).to.be.true
-                                // expect(validNoteTexts.includes(text)).to.be.true
-                                // or
-                                expect(validNoteIds).to.include(id)
-                                expect(validNoteTexts).to.include(text)
+                            arduinos.forEach(({ id, ip, _id }) => {
+                                expect(validArduIds).to.include(id)
+                                expect(validArduIps).to.include(ip)
                                 expect(_id).not.to.exist
                             })
                         })
@@ -966,28 +959,28 @@ describe('logic (notes api)', () => {
         })
 
         it('should fail on non user id', () =>
-            arduApi.findNotes()
+            arduApi.findArduinos()
                 .catch(({ message }) => expect(message).to.equal('user id is not a string'))
         )
 
         it('should fail on empty user id', () =>
-            arduApi.findNotes('')
+            arduApi.findArduinos('')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
-            arduApi.findNotes('      ')
+            arduApi.findArduinos('      ')
                 .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
         )
 
-        it('should fail on no text', () =>
-            arduApi.findNotes(fakeUserId)
-                .catch(({ message }) => expect(message).to.equal('text is not a string'))
+        it('should fail on no chunk', () =>
+            arduApi.findArduinos(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('chunk is not a string'))
         )
 
-        it('should fail on empty text', () =>
-            arduApi.findNotes(fakeUserId, '')
-                .catch(({ message }) => expect(message).to.equal('text is empty'))
+        it('should fail on empty chunk', () =>
+            arduApi.findArduinos(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('chunk is empty'))
         )
     })
 
