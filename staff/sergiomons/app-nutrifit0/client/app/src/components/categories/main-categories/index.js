@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import logic from '../../../logic'
 import {Link} from 'react-router-dom'
+import './index.css'
+import Nav from '../../nav'
 
 class Categories extends Component {
 
@@ -23,8 +25,7 @@ class Categories extends Component {
 
     return (
         <div>        
-           <Link to="/register"><input className="buttons" type="submit" value="Register"/></Link>
-           <Link to="/auth"><input className="buttons" type="submit" value="Login"/></Link>
+           <Nav/>
            
            <ul>
                {this.state.categories.map(category => {

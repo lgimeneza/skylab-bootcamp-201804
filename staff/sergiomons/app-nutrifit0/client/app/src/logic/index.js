@@ -5,7 +5,16 @@ const clientApi = require('client-api')
 clientApi.url = 'http://localhost:5000/api'
 
 const logic = {
-    userId: 'NO-ID',
+    // userId: 'NO-ID',
+
+    userId(userId) {
+        if (userId) {
+            this._userId = userId
+
+            return;
+        }
+            return this._userId
+    },
 
     registerUser(username, email, password, repeatPassword) {
         return clientApi.registerUser(username, email, password, repeatPassword)
@@ -14,8 +23,8 @@ const logic = {
     login(email, password) {
         return clientApi.authenticateUser(email, password)
             .then(id => {
-                this.userId = id
-
+                // this.userId = id
+                this.userId(id)
                 return true
             })
     },

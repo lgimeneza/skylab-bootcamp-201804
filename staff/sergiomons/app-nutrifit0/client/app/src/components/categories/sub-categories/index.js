@@ -1,34 +1,33 @@
 import React, { Component } from 'react'
 import logic from '../../../logic'
 import {Link} from 'react-router-dom'
+import './index.css'
+import Nav from '../../nav'
 
 class Subcategories extends Component {
 
     state = {
-       categories: [],
+       subcategories: [],
        isLogged: false
     }
 
     componentDidMount() {
         logic.listSubcategories()
-          .then(categories => {
+          .then(subcategories => {
                 this.setState({
-                    categories
+                    subcategories
                 })
-          })
-          
+          })        
     }
 
    render() {
 
     return (
         <div>        
-           <Link to="/register"><input className="buttons" type="submit" value="Register"/></Link>
-           <Link to="/auth"><input className="buttons" type="submit" value="Login"/></Link>
-           
+           <Nav />     
            <ul>
-               {this.state.categories.map(category => {
-                   return (<li key={category.id} className="list-group-item">{category.name}</li>)})}
+               {this.state.subcategories.map(subcategory => {
+                   return (<li key={subcategory.id} className="list-group-item">{subcategory.name}</li>)})}
            </ul>
         </div>
         )

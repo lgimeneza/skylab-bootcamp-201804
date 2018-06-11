@@ -7,6 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import clientApi from 'client-api';
+import clientLogic from 'client-logic';
 
 clientApi.token = function (token) {
     if (token) {
@@ -14,8 +15,16 @@ clientApi.token = function (token) {
   
       return
     }
-  
     return sessionStorage.getItem('token')
+  }
+
+  clientLogic.userId = function (userId) {
+    if (userId) {
+      sessionStorage.setItem('userId', userId)
+
+      return
+    }
+    return sessionStorage.getItem('userId')
   }
 
 ReactDOM.render(
