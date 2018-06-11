@@ -8,13 +8,13 @@ const shApi = {
     token(token){
         if(token){
             this._token = token
-            
             return
         }
-
         return this._token
     },
-
+        apartmentId: 'NO-ID',
+        
+    
     /**
      * 
      * @param {string} name 
@@ -26,10 +26,12 @@ const shApi = {
      * @returns {Promise<boolean>}
      */
 
-    registerUser(name, surname, phone, dni, password) {
+    registerUser(name, surname, phone, dni, password, apartmentId) {
+        
         return Promise.resolve()
             .then(() => {
 
+              
                 if (typeof name !== 'string') throw Error('name is not a string')
 
                 if (!(name = name.trim()).length) throw Error('name is empty or blank')
@@ -51,10 +53,9 @@ const shApi = {
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
                 
-                return axios.post(`${this.url}/register`,{nameApartment, name, surname, phone, dni, password} )
+                return axios.post(`${this.url}/registeruser/${this.apartmentId}`,{ name, surname, phone, dni, password, apartmentId} )
                 .then(({ status, data }) => {
                     if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-
                     return true
                 })
                 .catch(err => {
@@ -213,7 +214,7 @@ const shApi = {
         return Promise.resolve()
             .then(() => {
                
-                return axios.get(`${this.url}/list/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                return axios.get(`${this.url}/list/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}`}} )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -277,7 +278,67 @@ const shApi = {
             
     },
    
+    registerApartment(name, address, phone){
+        return Promise.resolve()
+        .then(() => {
 
+            if (typeof name !== 'string') throw Error('user name is not a string')
+
+            if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+            if (typeof address !== 'string') throw Error('user address is not a string')
+
+            if (!(address = address.trim()).length) throw Error('user address is empty or blank')
+
+            if (typeof phone !== 'string') throw Error('user phone is not a string')
+
+            if ((phone = phone.trim()).length === 0) throw Error('user phone is empty or blank')
+
+
+            return axios.post(`${this.url}/register`, {name, address, phone})
+            .then (({status, data}) =>{
+             
+
+                if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                this.apartmentId=data.data
+                return data
+               
+            })
+            .catch(err => {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                if (err.response) {
+                    const { response: { data: { error: message } } } = err
+
+                    throw Error(message)
+                } else throw err
+            
+            })
+        })
+    },
+    listApartment(apartmentId) {
+        return Promise.resolve()
+            .then(() => {
+                console.log('api-client-axios-apartmentId', apartmentId)
+               
+                return axios.get(`${this.url}/listapartment/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    console.log('api-client-axios-data', data.data)
+                    return data.data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
 }
 
 module.exports = shApi

@@ -13,9 +13,17 @@ class Register extends Component {
         dni:'',
         password:'',
         repeatpassword:'',
+        apartmentId:'',
         check:true
     }
+    componentDidMount() {
+                const apartId = localStorage.getItem('apartmentId')
+                this.setState({
+                    apartmentId: apartId
+                })
 
+            
+    }
     registerName =(e) => {
         const name = e.target.value
         this.setState({name})
@@ -68,22 +76,25 @@ class Register extends Component {
             this.setState({check:true})
         }
     }
+   
 
     acceptRegister = (e) =>{
-       
         e.preventDefault()
         Promise.resolve()
+        
         .then(() => this.checkInput())
         .then(()=> {
             if(!this.state.check){
                 this.setState({
                     password:'',
                     repeatpassword:''})
-                alert("Passwords don't match ;(")
-            }
-            else{
-            logic.registerUser(this.state.name,this.state.surname, this.state.phone, this.state.dni, this.state.password)
-            .then(resp => {
+                    alert("Passwords don't match ;(")
+                }
+                
+                else{
+                    logic.registerUser(this.state.name,this.state.surname, this.state.phone, this.state.dni, this.state.password, this.state.apartmentId)
+                    .then(resp => {
+                        
 
                 swal({
                     type: 'success',
@@ -105,7 +116,7 @@ class Register extends Component {
                     password:'',
                     repeatpassword:'',
                     })
-                            
+                    console.log('app-catch', err)     
                 alert(err)})
             }
         })
@@ -133,6 +144,7 @@ class Register extends Component {
                             <p className="words">Repeat Password: </p>
                             <input autocomplete="off" className="formularior" type="password" value={this.state.repeatpassword}onChange={this.registerRepeatPassword} name="password" ></input>
                             <button className="registerButton" type="submit">Register</button>
+
                             <button className="backButton" type="button" onClick={this.redirect}>Back</button>
                         </form>
                         

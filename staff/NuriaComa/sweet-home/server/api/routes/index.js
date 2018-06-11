@@ -11,10 +11,10 @@ const jwtValidator = jwtValidation(TOKEN_SECRET)
 
 const router = express.Router()
 
-router.post('/register/:apartmentId', jsonBodyParser, (req,res) =>{
+router.post('/registeruser/:apartmentId', jsonBodyParser, (req,res) =>{
 
     const { params: { apartmentId }, body: { name, surname, phone, dni, password } } = req
-
+    
     return logic.registerUser(name, surname, phone, dni, password, apartmentId)
     .then(()=>{
         res.status(201)
@@ -32,6 +32,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 
     logic.authenticateUser(dni, password)
         .then(user=> {
+            
             const userId = user.id;
             const apartmentId = user.apartmentId;
             const token = jwt.sign({ id: userId, apartmentId }, TOKEN_SECRET, { expiresIn: TOKEN_EXP })
@@ -73,7 +74,7 @@ router.patch('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
 })
 router.get('/list/:apartmentId',jwtValidator, (req, res) => {
     const{ params: {apartmentId} } =req
-
+    
     return logic.listUsers(apartmentId)
         .then(users => {
             res.status(200)
@@ -105,6 +106,7 @@ router.post('/register', jsonBodyParser, (req,res) =>{
 
     return logic.registerApartment(name, address, phone)
     .then(apartId=>{
+        
         res.status(201)
         res.json({status:'OK', data: apartId})
     })
@@ -113,4 +115,20 @@ router.post('/register', jsonBodyParser, (req,res) =>{
         res.json({status:'KO', error: message})
     })
 })
+
+router.get('/listapartment/:apartmentId', jwtValidator, (req, res) => {
+    const{ params: {apartmentId} } =req
+    console.log('api-server-apartmentId', apartmentId)
+    return logic.listApartment(apartmentId)
+        .then(apartments => {
+            console.log('api-server-apartment', apartments)
+            res.status(200)
+            res.json({ status: 'OK', data: apartments })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+
 module.exports = router

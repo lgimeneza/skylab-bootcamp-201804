@@ -12,7 +12,7 @@ module.exports = new Schema({
     phone: {
         type: String
     },
-    owners: [{
+    owners: {
         name: {
             type: String,
             
@@ -28,7 +28,7 @@ module.exports = new Schema({
             type: String
         },
 
-    }],
+    },
     realstate: {
         name: {
             type: String,

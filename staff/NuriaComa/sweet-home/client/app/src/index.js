@@ -9,7 +9,7 @@ import api from 'api'
 api.token = function (token) {
   if (token) {
       localStorage.setItem('token', token)
-
+      console.log('localstorage', localStorage)
       return
   }
 

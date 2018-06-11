@@ -15,7 +15,7 @@ const logic = {
      * @returns {Promise<boolean>}
      */
 
-    registerUser(name, surname, phone, dni, password, apartmentId ) {
+    registerUser(name, surname, phone, dni, password, apartmentId) {
         return Promise.resolve()
             .then(() => {
 
@@ -37,19 +37,24 @@ const logic = {
 
                 if (typeof password !== 'string') throw Error('password is not a string')
 
-                if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+                if ((apartmentId = apartmentId.trim()).length === 0) throw Error('apartmentId is empty or blank')
 
-                debugger
+                if (typeof apartmentId !== 'string') throw Error('apartmentId is not a string')
+
+                if ((apartmentId = apartmentId.trim()).length === 0) throw Error('apartmentId is empty or blank')
+
                 return User.findOne({ dni })
                     .then(user => {
+
+
                         if (user) throw Error(`user with dni ${dni} already exists`)
-                        debugger
+
                         return User.create({ name, surname, phone, dni, password, apartmentId })
-                        .then(() => true)
-                })
+                            .then(() => true)
+                    })
             })
     },
-    
+
     /**
      * 
      * @param {string} dni
@@ -60,7 +65,7 @@ const logic = {
     authenticateUser(dni, password) {
         return Promise.resolve()
             .then(() => {
-                
+
                 if (typeof dni !== 'string') throw Error('user dni is not a string')
 
                 if (!(dni = dni.trim()).length) throw Error('user dni is empty or blank')
@@ -68,23 +73,24 @@ const logic = {
                 if (typeof password !== 'string') throw Error('user password is not a string')
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-                
-                return User.findOne({ dni ,password })
-                .then(user => {
-                    //console.log(user)
-                    if (!user) throw Error('wrong credentials')
-                
-                return { id: user.id, apartmentId: user.apartmentId }
-            })
+
+                return User.findOne({ dni, password })
+                    .then(user => {
+
+
+                        if (!user) throw Error('wrong credentials')
+
+                        return { id: user.id, apartmentId: user.apartmentId }
+                    })
             })
     },
 
-     /**
-     * 
-     * @param {string} id
-     * 
-     * @returns {Promise<User>} 
-     */
+    /**
+    * 
+    * @param {string} id
+    * 
+    * @returns {Promise<User>} 
+    */
     retrieveUser(id) {
         return Promise.resolve()
             .then(() => {
@@ -92,7 +98,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, surname: 1, phone:1, dni: 1 })
+                return User.findById(id).select({ _id: 0, name: 1, surname: 1, phone: 1, dni: 1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -100,19 +106,19 @@ const logic = {
                 return user
             })
     },
-     /**
-     * 
-     * @param {string} id 
-     * @param {string} name 
-     * @param {string} surname 
-     * @param {string} phone
-     * @param {string} dni
-     * @param {string} password 
-     * @param {string} newPhone
-     * @param {string} newPassword 
-     * 
-     * @returns {Promise<boolean>}
-     */
+    /**
+    * 
+    * @param {string} id 
+    * @param {string} name 
+    * @param {string} surname 
+    * @param {string} phone
+    * @param {string} dni
+    * @param {string} password 
+    * @param {string} newPhone
+    * @param {string} newPassword 
+    * 
+    * @returns {Promise<boolean>}
+    */
     updateUser(id, name, surname, phone, dni, password, newPassword) {
         return Promise.resolve()
             .then(() => {
@@ -159,21 +165,21 @@ const logic = {
             .then(() => true)
     },
 
-    listUsers(apartmentId){
+    listUsers(apartmentId) {
 
         return Promise.resolve()
-            .then(()=>{
+            .then(() => {
 
-                return User.find({apartmentId})
+                return User.find({ apartmentId })
                     .then(users => {
                         if (!users) throw Error(`no users found`)
-                       
+
                         return users
                     })
-                    
+
             })
     },
-    
+
     /**
      * 
      * @param {string} id 
@@ -186,7 +192,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
 
-                
+
 
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
@@ -211,12 +217,52 @@ const logic = {
             })
             .then(() => true)
     },
-   
-    registerApartment(name, address, phone){
-        return Apartment.create({ name, address, phone})
-        .then(apartment =>  apartment.id)
-    }
+
+    registerApartment(name, address, phone) {
+        return Promise.resolve()
+            .then(() => {
+
+                if (typeof name !== 'string') throw Error('user name is not a string')
+
+                if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+                if (typeof address !== 'string') throw Error('user address is not a string')
+
+                if (!(address = address.trim()).length) throw Error('user address is empty or blank')
+
+                if (typeof phone !== 'string') throw Error('user phone is not a string')
+
+                if ((phone = phone.trim()).length === 0) throw Error('user phone is empty or blank')
+
+                // return Apartment.findOne({ apartmentId })
+                //     .then(apartment => {
+
+                //     if (apartment) throw Error(`apartment with apartmentId ${apartmentId} already exists`)
+
+                return Apartment.create({ name, address, phone })
+                    .then(({id}) => {
+                        
+                        return id
+                        
+                    })
+            })
+    },
     
+    listApartment(apartmentId){
+
+        return Promise.resolve()
+        .then(()=>{
+            console.log('logic-server-apartmentId', apartmentId)
+            return Apartment.findById( apartmentId )
+            .then(apartments =>{
+                if (!apartments) throw Error (`no apartment found`)
+
+                console.log('logic-server-apartment', apartments)
+                return apartments
+            })
+        })
+
+    }
 }
 
 module.exports = logic

@@ -6,17 +6,19 @@ import swal from 'sweetalert'
 
 class Users extends Component {
     state = {
-        usersInfo:''
+        usersInfo:[]
     }
     componentWillMount(){
         Promise.resolve()
         .then(()=>{
             const apartmentId = localStorage.getItem('apartmentId')
-                logic.listUsers(apartmentId).then(res => { 
-                    console.log(res)
+            logic.listUsers(apartmentId).then(res => { 
+                
+                   
                     this.setState({
                         usersInfo: res
                     })
+                   
                 })
             })
         
@@ -33,7 +35,7 @@ class Users extends Component {
                         <ul className="text">
                             {this.state.usersInfo ? this.state.usersInfo.map(users => {
                                 return(
-                                <div className="listUsers"><li><span className="data">Name:</span> {users.name}</li>
+                                <div key={users.name} className="listUsers"><li><span className="data">Name:</span> {users.name}</li>
                                 <li><span className="data">Surname:</span> {users.surname}</li>
                                 <li><span className="data">Phone:</span> {users.phone}</li>
                                 <li><span className="data">Dni:</span> {users.dni}</li></div>)

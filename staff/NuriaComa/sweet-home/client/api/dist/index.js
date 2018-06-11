@@ -8,13 +8,12 @@ var shApi = {
     token: function token(_token) {
         if (_token) {
             this._token = _token;
-
             return;
         }
-
         return this._token;
     },
 
+    apartmentId: 'NO-ID',
 
     /**
      * 
@@ -27,7 +26,7 @@ var shApi = {
      * @returns {Promise<boolean>}
      */
 
-    registerUser: function registerUser(name, surname, phone, dni, password) {
+    registerUser: function registerUser(name, surname, phone, dni, password, apartmentId) {
         var _this = this;
 
         return Promise.resolve().then(function () {
@@ -52,12 +51,11 @@ var shApi = {
 
             if ((password = password.trim()).length === 0) throw Error('password is empty or blank');
 
-            return axios.post(_this.url + '/register', { nameApartment: nameApartment, name: name, surname: surname, phone: phone, dni: dni, password: password }).then(function (_ref) {
+            return axios.post(_this.url + '/registeruser/' + _this.apartmentId, { name: name, surname: surname, phone: phone, dni: dni, password: password, apartmentId: apartmentId }).then(function (_ref) {
                 var status = _ref.status,
                     data = _ref.data;
 
                 if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
-
                 return true;
             }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
@@ -287,6 +285,68 @@ var shApi = {
                 return true;
             }).catch(function (err) {
 
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
+    },
+    registerApartment: function registerApartment(name, address, phone) {
+        var _this7 = this;
+
+        return Promise.resolve().then(function () {
+
+            if (typeof name !== 'string') throw Error('user name is not a string');
+
+            if (!(name = name.trim()).length) throw Error('user name is empty or blank');
+
+            if (typeof address !== 'string') throw Error('user address is not a string');
+
+            if (!(address = address.trim()).length) throw Error('user address is empty or blank');
+
+            if (typeof phone !== 'string') throw Error('user phone is not a string');
+
+            if ((phone = phone.trim()).length === 0) throw Error('user phone is empty or blank');
+
+            return axios.post(_this7.url + '/register', { name: name, address: address, phone: phone }).then(function (_ref7) {
+                var status = _ref7.status,
+                    data = _ref7.data;
+
+
+                if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+                _this7.apartmentId = data.data;
+                return data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
+    },
+    listApartment: function listApartment(apartmentId) {
+        var _this8 = this;
+
+        return Promise.resolve().then(function () {
+            console.log('api-client-axios-apartmentId', apartmentId);
+
+            return axios.get(_this8.url + '/listapartment/' + apartmentId, { headers: { authorization: 'Bearer ' + _this8.token() } }).then(function (_ref8) {
+                var status = _ref8.status,
+                    data = _ref8.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+                console.log('api-client-axios-data', data.data);
+                return data.data;
+            }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
 
                 if (err.response) {
