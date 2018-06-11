@@ -61,7 +61,7 @@ describe("logic (project-server)", () => {
             })
         })
 
-        describe("retrieve user -> (userId)", () => {
+        describe("retrieve user -> (user)", () => {
             it("should succeed without countries", () =>
                 User.create(userData)
                     .then(({ id }) => {
@@ -84,14 +84,15 @@ describe("logic (project-server)", () => {
             it("should succeed with 5 countries", () =>
                 User.create(userData)
                     .then((user) => {
-                        const p1 = Country.create({ name: "Japan", userId: user.id })
-                        const p2 = Country.create({ name: "Mexico", userId: user.id })
-                        const p3 = Country.create({ name: "Kenya", userId: user.id })
-                        const p4 = Country.create({ name: "Turkey", userId: user.id })
-                        const p5 = Country.create({ name: "Afghanistan", userId: user.id })
+                        const p1 = Country.create({ name: "Japan", user: user.id })
+                        const p2 = Country.create({ name: "Mexico", user: user.id })
+                        const p3 = Country.create({ name: "Kenya", user: user.id })
+                        const p4 = Country.create({ name: "Turkey", user: user.id })
+                        const p5 = Country.create({ name: "Afghanistan", user: user.id })
                         return Promise.all([p1, p2, p3, p4, p5])
-                            .then((promises) => {
-                                promises.map((v) => user.countries.push({ name: v.name, id: v.id }))
+                            .then(countries => {
+                                countries.map(country => user.countries.push(country._id))
+
                                 return user.save()
                             })
                             .then(() => {
@@ -107,8 +108,10 @@ describe("logic (project-server)", () => {
 
                                 expect(_id).to.be.undefined
                                 expect(password).to.be.undefined
+
                                 expect(countries).to.exist
                                 expect(countries.length).to.equal(5)
+
                                 const arr = countries.sort((a, b) => {
                                     if (a.name < b.name) return -1;
                                     if (a.name > b.name) return 1;
@@ -165,102 +168,104 @@ describe("logic (project-server)", () => {
         })
     })
 
-    describe("# Countries", () => {
-        it("world map should succeed with 5 countries", () =>
-            User.create(userData)
-                .then((user) => {
-                    const p1 = Country.create({ name: "Japan", userId: user.id })
-                    const p2 = Country.create({ name: "Mexico", userId: user.id })
-                    const p3 = Country.create({ name: "Kenya", userId: user.id })
-                    const p4 = Country.create({ name: "Turkey", userId: user.id })
-                    const p5 = Country.create({ name: "Afghanistan", userId: user.id })
-                    return Promise.all([p1, p2, p3, p4, p5])
-                        .then((promises) => {
-                            promises.map((v) => user.countries.push({ name: v.name, id: v.id }))
-                            return user.save()
-                        })
-                        .then(() => {
-                            return logic.world(user.id)
-                                .then(map => {
-                                    expect(map).to.exist
-                                    expect(map.length).to.equal(5)
-                                    expect(map[0]).to.equal("Afghanistan")
-                                    expect(map[1]).to.equal("Japan")
-                                    expect(map[2]).to.equal("Kenya")
-                                    expect(map[3]).to.equal("Mexico")
-                                    expect(map[4]).to.equal("Turkey")
-                                })
-                        })
-                })
-        )
+    describe("countries", () => {
+        describe('get visited countries', () => {
+            it("should succeed with 5 countries", () =>
+                User.create(userData)
+                    .then((user) => {
+                        const p1 = Country.create({ name: "Japan", user: user.id })
+                        const p2 = Country.create({ name: "Mexico", user: user.id })
+                        const p3 = Country.create({ name: "Kenya", user: user.id })
+                        const p4 = Country.create({ name: "Turkey", user: user.id })
+                        const p5 = Country.create({ name: "Afghanistan", user: user.id })
+                        return Promise.all([p1, p2, p3, p4, p5])
+                            .then(countries => {
+                                countries.map(country => user.countries.push(country._id))
 
-        it("world map should succeed without countries", () =>
-            User.create(userData)
-                .then(({ id }) => {
-                    return logic.world(id)
-                        .then(map => {
-                            expect(map).to.exist
-                            expect(map.length).to.equal(0)
-                        })
-                })
-        )
+                                return user.save()
+                            })
+                            .then(() => {
+                                return logic.listVisitedCountries(user.id)
+                                    .then(map => {
+                                        expect(map).to.exist
+                                        expect(map.length).to.equal(5)
+                                        expect(map[0]).to.equal("Afghanistan")
+                                        expect(map[1]).to.equal("Japan")
+                                        expect(map[2]).to.equal("Kenya")
+                                        expect(map[3]).to.equal("Mexico")
+                                        expect(map[4]).to.equal("Turkey")
+                                    })
+                            })
+                    })
+            )
 
-        it("retrieve country should succeed and return it with 5 photos", () => {
-            const dUrl3 = "https://cdn.tourradar.com/s3/tour/original/96639_55939865.jpg"
-            const dUrl4 = "http://www.travelcaffeine.com/wp-content/uploads/2017/01/woman-path-philosophers-walk-cherry-blossom-sakura-season-kyoto-japan-bricker.jpg"
-            const dUrl5 = "https://www.overseasattractions.com/wp-content/uploads/2015/03/Ghibli-Museum-1.jpg"
-
-            return User.create(userData)
-                .then((user) => {
-                    return Country.create({ name: "Japan", userId: user.id })
-                        .then((cntry) => {
-                            user.countries.push({ name: cntry.name, id: cntry.id })
-                            return user.save()
-                                .then(() => {
-                                    const p1 = Photo.create({ url: dUrl })
-                                    const p2 = Photo.create({ url: dUrl2 })
-                                    const p3 = Photo.create({ url: dUrl3 })
-                                    const p4 = Photo.create({ url: dUrl4 })
-                                    const p5 = Photo.create({ url: dUrl5 })
-
-                                    return Promise.all([p1, p2, p3, p4, p5])
-                                })
-                                .then(promises => {
-                                    promises.map((v) => cntry.photos.push(v))
-
-                                    return cntry.save()
-                                        .then(() => logic.retrieveCountry(user.id, cntry.name))
-                                        .then((res) => {
-                                            expect(res).to.exist
-                                            expect(res.photos.length).to.equal(5)
-                                            const arr = res.photos.sort((a, b) => {
-                                                if (a.url < b.url) return -1;
-                                                if (a.url > b.url) return 1;
-                                                return 0;
-                                            })
-                                            expect(arr[0].url).to.equal(dUrl)
-                                            expect(arr[1].url).to.equal(dUrl4)
-                                            expect(arr[2].url).to.equal(dUrl3)
-                                            expect(arr[3].url).to.equal(dUrl5)
-                                            expect(arr[4].url).to.equal(dUrl2)
-                                        })
-                                })
-                        })
-
-                })
+            it("world map should succeed without countries", () =>
+                User.create(userData)
+                    .then(({ id }) => {
+                        return logic.listVisitedCountries(id)
+                            .then(map => {
+                                expect(map).to.exist
+                                expect(map.length).to.equal(0)
+                            })
+                    })
+            )
         })
 
-        it("retrieve country should succeed if country has not photos", () => {
-            return User.create(userData)
-                .then(({ id }) => logic.retrieveCountry(id, "Japan"))
-                .then(res => expect(res).to.equal("Japan"))
+        describe('retrieve country', () => {
+            it("retrieve country should succeed and return it with 5 photos", () => {
+                const dUrl3 = "https://cdn.tourradar.com/s3/tour/original/96639_55939865.jpg"
+                const dUrl4 = "http://www.travelcaffeine.com/wp-content/uploads/2017/01/woman-path-philosophers-walk-cherry-blossom-sakura-season-kyoto-japan-bricker.jpg"
+                const dUrl5 = "https://www.overseasattractions.com/wp-content/uploads/2015/03/Ghibli-Museum-1.jpg"
+
+                return User.create(userData)
+                    .then((user) => {
+                        return Country.create({ name: "Japan", user: user.id })
+                            .then(country => {
+                                user.countries.push(country._id)
+
+                                return user.save()
+                                    .then(() => {
+                                        country.photos.push(new Photo({ url: dUrl }))
+                                        country.photos.push(new Photo({ url: dUrl2 }))
+                                        country.photos.push(new Photo({ url: dUrl3 }))
+                                        country.photos.push(new Photo({ url: dUrl4 }))
+                                        country.photos.push(new Photo({ url: dUrl5 }))
+
+                                        return country.save()
+                                            .then(() => logic.retrieveCountry(user.id, country.name))
+                                            .then((res) => {
+                                                expect(res).to.exist
+                                                expect(res.photos.length).to.equal(5)
+
+                                                const arr = res.photos.sort((a, b) => {
+                                                    if (a.url < b.url) return -1;
+                                                    if (a.url > b.url) return 1;
+                                                    return 0;
+                                                })
+
+                                                expect(arr[0].url).to.equal(dUrl)
+                                                expect(arr[1].url).to.equal(dUrl4)
+                                                expect(arr[2].url).to.equal(dUrl3)
+                                                expect(arr[3].url).to.equal(dUrl5)
+                                                expect(arr[4].url).to.equal(dUrl2)
+                                            })
+                                    })
+                            })
+
+                    })
+            })
+
+            it("retrieve country should succeed if country has not photos", () => {
+                return User.create(userData)
+                    .then(({ id }) => logic.retrieveCountry(id, "Japan"))
+                    .then(res => expect(res).not.to.exist)
+            })
         })
 
     })
 
 
-    describe("# Photos", () => {
-
+    describe("photos", () => {
         describe("add photo -> (user_id, country_name, password)", () => {
             it("should succeed on correct data and create country", () =>
                 User.create(userData)
@@ -269,27 +274,31 @@ describe("logic (project-server)", () => {
                             .then(id => expect(id).to.exist)
                     )
             )
+
             it("should succeed with country already created", () =>
                 User.create(userData)
                     .then((user) => {
-                        return new Country({ name: "Japan", userId: user.id }).save()
-                            .then((cntry) => {
-                                user.countries.push({ name: cntry.name, id: cntry.id })
+                        return new Country({ name: "Japan", user: user._id }).save()
+                            .then(country => {
+                                user.countries.push(country._id)
+
                                 return user.save()
-                                    .then(() => Photo.create({ url: dUrl }))
-                                    .then(ph => {
-                                        cntry.photos.push(ph)
-                                        return cntry.save()
+                                    .then(user => {
+                                        country.photos.push(new Photo({ url: dUrl }))
+
+                                        return country.save()
                                     })
                             })
                             .then(() => logic.addPhoto(user.id, "Japan", dUrl2))
                             .then(pId => {
                                 expect(pId).to.exist
                                 expect(typeof pId).to.equal("string")
+
                                 return User.findById(user.id)
                                     .then(user => {
                                         expect(user.countries.length).to.equal(1)
-                                        return Country.findById(user.countries[0].id)
+
+                                        return Country.findById(user.countries[0]._id.toString())
                                             .then(country => {
                                                 expect(country.photos.length).to.equal(2)
                                             })
@@ -297,6 +306,7 @@ describe("logic (project-server)", () => {
                             })
                     })
             )
+
             describe("errors", () => {
                 it("should fail on wrong user id", () =>
                     logic.addPhoto(fakeId, "Japan", dUrl)
@@ -314,17 +324,17 @@ describe("logic (project-server)", () => {
             it("should succeed on correct data", () =>
                 User.create(userData)
                     .then((user) => {
-                        return Country.create({ name: "Japan", userId: user.id })
-                            .then((cntry) => {
-                                user.countries.push({ name: cntry.name, id: cntry.id })
+                        return Country.create({ name: "Japan", user: user._id })
+                            .then(country => {
+                                user.countries.push(country._id)
                                 return user.save()
                                     .then(() => Photo.create({ url: dUrl }))
                                     .then(ph => {
-                                        cntry.photos.push(ph)
+                                        country.photos.push(ph)
                                         expect(ph.id).to.exist
                                         expect(ph.url).to.equal(dUrl)
-                                        return cntry.save()
-                                            .then(() => logic.retrievePhoto(user.id, cntry.name, ph.id))
+                                        return country.save()
+                                            .then(() => logic.retrievePhoto(user.id, country.name, ph.id))
                                             .then((res) => {
                                                 expect(res).to.exist
                                                 expect(res.id).to.exist
@@ -353,14 +363,15 @@ describe("logic (project-server)", () => {
                 it("should fail on wrong photo id", () =>
                     User.create(userData)
                         .then((user) => {
-                            return Country.create({ name: "Japan", userId: user.id })
-                                .then((cntry) => {
-                                    user.countries.push({ name: cntry.name, id: cntry.id })
+                            return Country.create({ name: "Japan", user: user.id })
+                                .then(country => {
+                                    user.countries.push(country._id)
+
                                     return user.save()
-                                        .then(() => Photo.create({ url: dUrl }))
-                                        .then(ph => {
-                                            cntry.photos.push(ph)
-                                            return cntry.save()
+                                        .then(user => {
+                                            country.photos.push(new Photo({ url: dUrl }))
+                                            debugger
+                                            return country.save()
                                                 .then(() => logic.retrievePhoto(user.id, "Japan", fakeId, dUrl2))
                                                 .catch(({ message }) => expect(message).to.equal(`no photo found with ${fakeId} id, in user ${user.id}`))
                                         })
@@ -370,24 +381,24 @@ describe("logic (project-server)", () => {
             })
         })
 
-        describe("update photo -> (user_id, country_name, photo_id, url2change)", () => {
+        false && describe("update photo -> (user_id, country_name, photo_id, url2change)", () => {
             it("should succeed on correct data", () =>
                 User.create(userData)
                     .then((user) => {
-                        return Country.create({ name: "Japan", userId: user.id })
-                            .then((cntry) => {
-                                user.countries.push({ name: cntry.name, id: cntry.id })
+                        return Country.create({ name: "Japan", user: user.id })
+                            .then(country => {
+                                user.countries.push(country._id)
                                 return user.save()
                                     .then(() => Photo.create({ url: dUrl }))
                                     .then(ph => {
-                                        cntry.photos.push(ph)
+                                        country.photos.push(ph)
                                         expect(ph.id).to.exist
                                         expect(ph.url).to.equal(dUrl)
-                                        return cntry.save()
-                                            .then(() => logic.updatePhoto(user.id, cntry.name, ph.id, dUrl2))
+                                        return country.save()
+                                            .then(() => logic.updatePhoto(user.id, country.name, ph.id, dUrl2))
                                             .then((res) => {
                                                 expect(res).to.be.true
-                                                return Country.findById(cntry.id)
+                                                return Country.findById(country.id)
                                                     .then((res) => {
                                                         expect(res.photos[0].id).to.equal(ph.id)
                                                         expect(res.photos[0].url).not.to.equal(ph.url)
@@ -423,14 +434,14 @@ describe("logic (project-server)", () => {
                 it("should fail on wrong photo id", () =>
                     User.create(userData)
                         .then((user) => {
-                            return Country.create({ name: "Japan", userId: user.id })
-                                .then((cntry) => {
-                                    user.countries.push({ name: cntry.name, id: cntry.id })
+                            return Country.create({ name: "Japan", user: user.id })
+                                .then(country => {
+                                    user.countries.push(country._id)
                                     return user.save()
                                         .then(() => Photo.create({ url: dUrl }))
                                         .then(ph => {
-                                            cntry.photos.push(ph)
-                                            return cntry.save()
+                                            country.photos.push(ph)
+                                            return country.save()
                                                 .then(() => logic.updatePhoto(user.id, "Japan", fakeId, dUrl2))
                                                 .catch(({ message }) => expect(message).to.equal(`no photo found with ${fakeId} id, in user ${user.id}`))
                                         })
@@ -440,13 +451,13 @@ describe("logic (project-server)", () => {
             })
         })
 
-        describe("remove photo -> (user_id, country_name, photo_id)", () => {
+        false && describe("remove photo -> (user_id, country_name, photo_id)", () => {
             it("should succeed on correct data and deleting just one photo", () =>
                 User.create(userData)
                     .then((user) => {
-                        return Country.create({ name: "Japan", userId: user.id })
-                            .then((cntry) => {
-                                user.countries.push({ name: cntry.name, id: cntry.id })
+                        return Country.create({ name: "Japan", user: user.id })
+                            .then(country => {
+                                user.countries.push(country._id)
                                 return user.save()
                                     .then(() => {
                                         const p1 = Photo.create({ url: dUrl })
@@ -454,14 +465,14 @@ describe("logic (project-server)", () => {
                                         return Promise.all([p1, p2])
                                     })
                                     .then(promises => {
-                                        promises.map((v) => cntry.photos.push(v))
-                                        expect(cntry.photos.length).to.equal(2)
-                                        const ph = cntry.photos[0]
-                                        return cntry.save()
-                                            .then(() => logic.removePhoto(user.id, cntry.name, ph.id))
+                                        promises.map((v) => country.photos.push(v))
+                                        expect(country.photos.length).to.equal(2)
+                                        const ph = country.photos[0]
+                                        return country.save()
+                                            .then(() => logic.removePhoto(user.id, country.name, ph.id))
                                             .then((res) => {
                                                 expect(res).to.be.true
-                                                return Country.findById(cntry.id)
+                                                return Country.findById(country.id)
                                                     .then((res) => {
                                                         expect(res.photos.length).to.equal(1)
                                                         let phot = res.photos.id(ph.id)
@@ -478,19 +489,19 @@ describe("logic (project-server)", () => {
             it("should succeed deleting the last photo and removing 'empty' country", () =>
                 User.create(userData)
                     .then((user) => {
-                        return Country.create({ name: "Japan", userId: user.id })
-                            .then((cntry) => {
-                                user.countries.push({ name: cntry.name, id: cntry.id })
+                        return Country.create({ name: "Japan", user: user.id })
+                            .then(country => {
+                                user.countries.push(country._id)
                                 return user.save()
                                     .then(() => Photo.create({ url: dUrl }))
                                     .then(photo => {
-                                        cntry.photos.push(photo)
-                                        expect(cntry.photos.length).to.equal(1)
-                                        return cntry.save()
-                                            .then(() => logic.removePhoto(user.id, cntry.name, photo.id))
+                                        country.photos.push(photo)
+                                        expect(country.photos.length).to.equal(1)
+                                        return country.save()
+                                            .then(() => logic.removePhoto(user.id, country.name, photo.id))
                                             .then((res) => {
                                                 expect(res).to.exist
-                                                return Country.findById(cntry.id)
+                                                return Country.findById(country.id)
                                                     .then((res) => {
                                                         expect(res).to.be.null
                                                         return User.findById(user.id)
@@ -521,14 +532,14 @@ describe("logic (project-server)", () => {
                 it("should fail on wrong photo id", () =>
                     User.create(userData)
                         .then((user) => {
-                            return Country.create({ name: "Japan", userId: user.id })
-                                .then((cntry) => {
-                                    user.countries.push({ name: cntry.name, id: cntry.id })
+                            return Country.create({ name: "Japan", user: user.id })
+                                .then(country => {
+                                    user.countries.push(country._id)
                                     return user.save()
                                         .then(() => Photo.create({ url: dUrl }))
                                         .then(ph => {
-                                            cntry.photos.push(ph)
-                                            return cntry.save()
+                                            country.photos.push(ph)
+                                            return country.save()
                                                 .then(() => logic.removePhoto(user.id, "Japan", fakeId, dUrl2))
                                                 .catch(({ message }) => expect(message).to.equal(`no photo found with ${fakeId} id, in user ${user.id}`))
                                         })
