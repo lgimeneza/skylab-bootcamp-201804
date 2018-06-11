@@ -24,6 +24,34 @@ router.post('/user', bodyParser.json(), (req, res) => {
     })
 })
 
+router.patch('/user', [jwtValidator, bodyParser.json()], (req, res) => {
+  const { body: { userId, name, surname, email, password, newEmail, newPassword } } = req
+
+  logic.updateUser(userId, name, surname, email, password, newEmail, newPassword )
+    .then(() => {
+      res.status(200)
+      res.json({ status: 'OK' })
+    })
+    .catch(({ message }) => {
+      res.status(400)
+      res.json({ status: 'KO', error: message })
+    })
+})
+
+router.delete('/user', [jwtValidator, bodyParser.json()], (req, res) => {
+  const { body: { userId, email, password } } = req
+  logic.unregisterUser(userId, email, password)
+    .then(() => {
+      res.status(200)
+      res.json({ status: 'OK' })
+    })
+    .catch(({ message }) => {
+      res.status(400)
+      res.json({ status: 'KO', error: message })
+    })
+
+})
+
 router.post('/auth', bodyParser.json(), (req, res) => {
   const { body: { email, password } } = req
   logic.authenticateUser(email, password)
@@ -43,7 +71,7 @@ router.post('/auth', bodyParser.json(), (req, res) => {
 
 router.get('/booking/hours/:year/:month', (req, res) => {
   const { params: { year, month } } = req
-  return logic.getBookingHoursForYearMonth(year, month)
+   logic.getBookingHoursForYearMonth(year, month)
     .then((data) => {
       res.status(200)
       res.json({ status: 'OK', data })
@@ -54,13 +82,13 @@ router.get('/booking/hours/:year/:month', (req, res) => {
     })
 }),
 
-  router.delete('/booking/user/:idUser/:bookingId', jwtValidator, (req, res) => {
-    const { params: { idUser, bookingId } } = req
-
-    logic.deleteBooking(idUser, bookingId)
-      .then((booking) => {
+  router.get('/booking/hours/:year/:month/:day', (req, res) => {
+    const { params: { year, month, day } } = req
+    
+    logic.getBookingHoursForYearMonthDay(year, month, day)
+      .then((data) => {
         res.status(200)
-        res.json({ status: 'OK', })
+        res.json({ status: 'OK', data })
       })
       .catch(({ message }) => {
         res.status(400)
@@ -69,11 +97,52 @@ router.get('/booking/hours/:year/:month', (req, res) => {
   }),
 
   router.post('/booking', [jwtValidator, bodyParser.json()], (req, res) => {
-    const { body: { idUser, serviceId, date, endDate } } = req
+    const { body: { userId, serviceId, date, endDate } } = req
 
-    logic.placeBooking(idUser, serviceId, date, endDate)
+  logic.placeBooking(userId, serviceId, date, endDate)
       .then((booking) => {
         res.status(201)
+        res.json({ status: 'OK', data: booking })
+      })
+      .catch(({ message }) => {
+        res.status(400)
+        res.json({ status: 'KO', error: message })
+      })
+  })
+
+router.get('/booking', jwtValidator, (req, res) => {
+
+  logic.listBookings()
+    .then((booking) => {
+      res.status(201)
+      res.json({ status: 'OK', data: booking })
+    })
+    .catch(({ message }) => {
+      res.status(400)
+      res.json({ status: 'KO', error: message })
+    })
+})
+
+router.get('/booking/user/:userId', jwtValidator, (req, res) => {
+  const { params: { userId } } = req
+
+  logic.listBookingsUser(userId)
+    .then((booking) => {
+      res.status(200)
+      res.json({ status: 'OK', data: booking})
+    })
+    .catch(({ message }) => {
+      res.status(400)
+      res.json({ status: 'KO', error: message })
+    })
+})
+
+router.delete('/booking/user/:bookingId/:userId', jwtValidator, (req, res) => {
+    const { params: { bookingId, userId } } = req
+
+    logic.deleteBooking(bookingId, userId)
+      .then((booking) => {
+        res.status(200)
         res.json({ status: 'OK', })
       })
       .catch(({ message }) => {
@@ -81,5 +150,6 @@ router.get('/booking/hours/:year/:month', (req, res) => {
         res.json({ status: 'KO', error: message })
       })
   })
+
 
 module.exports = router

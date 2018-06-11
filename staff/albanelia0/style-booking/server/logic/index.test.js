@@ -263,11 +263,12 @@ describe('logic (style-booking)', () => {
               return logic.getBookingHoursForYearMonth(2018, 6)
             })
             .then(res => {
+              debugger
               expect(res.length).to.equal(2)
-              expect(res[0].day).to.equal(10)
-              expect(res[1].day).to.equal(11)
-              expect(res[0].bookingHours).to.equal(3.5)
+              expect(res[1].day).to.equal(12)
               expect(res[1].bookingHours).to.equal(3)
+              expect(res[0].day).to.equal(11)
+              expect(res[0].bookingHours).to.equal(3.5)
             })
         })
     )//TODO CATCH 
@@ -357,7 +358,7 @@ describe('logic (style-booking)', () => {
             })
               .then(() => {
 
-                return logic.listBookingsUser({ userId })
+                return logic.listBookingsUser( {userId} )
                   .then(res => {
                     const [{ _doc: booking }] = res
                     expect(booking.services.length).to.equal(2)

@@ -117,12 +117,12 @@ const logic = {
    * @param {String} password
    *
    */
-  unregisterUser(id, email, password) {
+  unregisterUser(userId, email, password) {
     return Promise.resolve()
       .then(() => {
-        if (typeof id !== 'string') throw Error('user id is not a string')
+        if (typeof userId !== 'string') throw Error('user userId is not a string')
 
-        if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+        if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
 
         if (typeof email !== 'string') throw Error('user email is not a string')
 
@@ -137,7 +137,7 @@ const logic = {
       .then(user => {
         if (!user) throw Error('wrong credentials')
 
-        if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
+        if (user.id !== userId) throw Error(`no user found with id ${id} for given credentials`)
 
         return user.remove()
       })
@@ -241,23 +241,23 @@ const logic = {
    */
   getBookingHoursForYearMonthDay(year, month, day) { // yyyy-MM-dd
     return Promise.resolve()
-    .then(() => {
-      const dayStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
-      const dayEnd = moment(dayStart).add(1, 'days')
-      return Booking.find({
-        $and: [
-          { "date": { $gte: dayStart } },
-          { "date": { $lt: dayEnd } }
-        ]
-      })
-      .then(bookings => {
-        return bookings.map(booking => {
-          const startHour = moment(booking.date).hour() + (moment(booking.date).minutes() / 60)
-          const endHour = moment(booking.endDate).hour() + (moment(booking.endDate).minutes() / 60)
-          return { "start": startHour, "end": endHour }
+      .then(() => {
+        const dayStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
+        const dayEnd = moment(dayStart).add(1, 'days')
+        return Booking.find({
+          $and: [
+            { "date": { $gte: dayStart } },
+            { "date": { $lt: dayEnd } }
+          ]
         })
-      });
-    })
+          .then(bookings => {
+            return bookings.map(booking => {
+              const startHour = moment(booking.date).hour() + (moment(booking.date).minutes() / 60)
+              const endHour = moment(booking.endDate).hour() + (moment(booking.endDate).minutes() / 60)
+              return { "start": startHour, "end": endHour }
+            })
+          });
+      })
   },
   /**
    * @param {object} userId
@@ -315,7 +315,19 @@ const logic = {
     return Promise.resolve()
       .then(() => {
         return Booking.find()
-          .then(res => res)
+          .then(res => {
+            return res.map((obj) => {
+              const { _id, services, userId, date, endDate } = obj
+              const data = {
+                bookingId: _id,
+                services: services.map(s => s._id),
+                userId: userId,
+                date: date,
+                endDate: endDate
+              }
+              return data
+            })
+          })
       })
   },
 
@@ -327,17 +339,28 @@ const logic = {
     return Promise.resolve()
       .then(() => {
         if (!userId) throw Error('userId is empty or blank')
-        if (!(userId instanceof Object)) throw Error('userId is not a object')
 
 
-        return Booking.find(userId)
-          .then(res => res)
+        return Booking.find({ userId })
+          .then(result => {
+            return result.map(obj => {
+              const { _id, services, userId, date, endDate } = obj
+              const data = {
+                bookingId: _id,
+                services: services.map(s => s._id),
+                userId: userId,
+                date: date,
+                endDate: endDate
+              }
+              return data
+            })
+          })
       })
   },
 
   /**
    * @param {String} bookingId
-   * @param {String} idUser
+   * @param {String} userId
    *
    * @returns {Promise<boolean>}
    */
@@ -351,11 +374,11 @@ const logic = {
         // if (!(userId instanceof Object)) throw Error('userId is not a object')
 
         // if (!(bookingId instanceof Object)) throw Error('bookingId is not a object')
-
         return Booking.findOne({ _id: bookingId, userId })
           .then((booking) => {
             // if (!user) throw Error(`no user found with id ${userId}`)
-            return booking.remove()
+            const id = booking._id
+            return Booking.remove({_id:id})
               .then(() => true)
           })
 
@@ -372,7 +395,37 @@ const logic = {
    */
   updateBooking(bookingId, service, Date) {
 
+    return Promise.resolve()
+      .then(() => {
+
+
+
+        if (newEmail) {
+          return User.findOne({ email: newEmail })
+            .then(_user => {
+              if (_user && _user.id !== id) throw Error(`user with email ${newEmail} already exists`)
+
+              return user
+            })
+        }
+
+        return user
+
+          .then(user => {
+            user.name = name
+            user.surname = surname
+            user.email = newEmail ? newEmail : email
+            user.password = newPassword ? newPassword : password
+
+            return user.save()
+          })
+          .then(() => true)
+
+      })
   },
+
+
+
 
 }
 module.exports = logic
