@@ -53,7 +53,7 @@ describe('models ', () => {
                     dancing: true,
                     otherHabilities: 'surfing',
                     previousJobExperiences: 20,
-                    curriculum: ['The Importance of Being Earnest, TNC', 'Hello World, E.G.Wells']
+                   
 
                 }),
 

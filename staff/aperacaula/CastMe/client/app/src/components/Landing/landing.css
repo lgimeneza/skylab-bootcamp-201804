@@ -1,17 +1,16 @@
 
-/*
-Design by TEMPLATED
-http://templated.co
-Released for free under the Creative Commons Attribution License
-*/
 
-body {
+/* body {
 	margin: 0;
 	padding: 0;
 	background: #73252F url(images/main-background-bg.jpg) repeat;
 	font-family: 'Abel', sans-serif;
 	font-size: 14px;
 	color: #383838;
+}
+
+a{
+	text-decoration: none;
 }
 
 h1, h2, h3 {
@@ -44,13 +43,8 @@ ul, ol {
 a {
 	text-decoration: none;
 	color: #AE4D5A;
-}
+} */
 
-
-#wrapper {
-	padding: 0;
-	background: url(images/main-image-bg.jpg) no-repeat center top;
-}
 
 /* Header */
 
@@ -372,7 +366,7 @@ a {
 
 #sidebar li a {
 	padding-left: 20px;
-	background: url(images/img03.gif) no-repeat left 6px;
+	
 }
 
 #sidebar li li span {

@@ -24,8 +24,8 @@ module.exports= new Schema({
         required: true
     },
     curriculum: {
-        type: Array,
-        required: true,
+        type: File,
+        
     }
 
 })

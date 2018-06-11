@@ -13,12 +13,12 @@ module.exports= new Schema({
     physicalCondition: {
         type: String,
         //required: true,
-        enum: ['strong', 'fit', 'fat/chubby', 'average', 'thin/slim', null]
+        enum: ['muscular', 'fit', 'fat/chubby', 'average', 'thin/slim', null]
     },
     eyes: {
         type: String,
         //required: true,
-        enum: ['brown', 'green', 'blue', 'dark', 'other', null]
+        enum: ['brown', 'green', 'blue', 'dark', null]
     },
     hair: {
         type: String,

@@ -1,10 +1,4 @@
 
-/*
-Design by TEMPLATED
-http://templated.co
-Released for free under the Creative Commons Attribution License
-*/
-
 body {
 	margin: 0;
 	padding: 0;
@@ -47,10 +41,7 @@ a {
 }
 
 
-#wrapper {
-	padding: 0;
-	background: url(images/main-image-bg.jpg) no-repeat center top;
-}
+
 
 /* Header */
 

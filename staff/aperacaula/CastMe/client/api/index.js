@@ -123,8 +123,6 @@ const castmeApi = {
             data: { id }
           } = data;
 
-          this.token = token;
-
           return id;
         })
         .catch(err => {

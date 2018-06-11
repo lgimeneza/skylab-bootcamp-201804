@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {Route, withRouter, Switch, Redirect} from 'react-router-dom';
-
-import './App.css';
+import {Route, withRouter, Switch} from 'react-router-dom';
 import Landing from './components/Landing/landing.js'
 //import Home from './components/Home/Home'
-//import Login from './components/Login/Login'
-//import Profile from './components/Profile/Profile'
+import Login from './components/Login/login'
 //import Register from './components/RegisterUser/Register'
+//import Profile from './components/Profile/Profile'
+
+import './index.css'
 
 class App extends Component {
   render() {
@@ -14,9 +14,10 @@ class App extends Component {
       <Switch>
         <main>
           <div className="App">
+        
             <Route exact path="/" component={Landing} />
           
-            {/* <Route path="/auth" component={Login} /> */}
+            <Route path="/auth" component={Login} />
             {/* <Route path="/users" component={Register} /> */}
           
             {/* <Route path="/home" render={()=> ((Xtorage.session.get("user") === null)? (<Redirect to="/"/>):(<Home/>))}/> */}
