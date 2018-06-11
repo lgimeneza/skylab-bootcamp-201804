@@ -5,6 +5,7 @@ travelApi.url = "http://localhost:5000/api"
 const logic = {
     userId: "NO-ID",
     username: "",
+    visited : [],
 
     registerUser(username, password, location) {
         return travelApi.registerUser(username, password, location)
@@ -19,7 +20,7 @@ const logic = {
             .then(id => {
                 this.userId = id // va fuera
                 // this.storage.set('id', id)
-
+                console.log("LOG >> " + this.userId)
                 return true
             })
     },
@@ -44,6 +45,8 @@ const logic = {
         return travelApi.retrieveUser(id)
             .then((res) => {
                 this.username = res.username
+                console.log(id)
+                console.log(res.countries)
                 return res
             })
     },
@@ -57,9 +60,24 @@ const logic = {
 
                 return res
             })
-    }
+    },
 
+    world(id = this.userId) {
+        //const id = this.storage.get('id')
+
+        return travelApi.world(id)
+            .then((res) => res)
+    },
+
+    retrieveCountry(countryName, userId = this.userId) {
+        return travelApi.retrieveCountry(userId, countryName)
+            .then((res) => res) 
+    },
     
+    addPhoto(countryName, url) {
+        const id = this.userId
+        return travelApi.addPhoto(id, countryName, url)
+    }
 }
 
 module.exports = logic

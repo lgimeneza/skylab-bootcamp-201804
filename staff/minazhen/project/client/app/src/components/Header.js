@@ -19,7 +19,7 @@ function Header() {
         <nav>
             <Link to="/unregister"> Unregister </Link>
             <Link to="/profile"> Profile </Link>
-            <Link to="/home"> Home </Link>
+            <Link to="/world"> Home </Link>
         </nav>
     )
 

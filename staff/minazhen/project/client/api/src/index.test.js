@@ -277,11 +277,46 @@ describe('logic (travel api)', () => {
         describe("add photo -> (user_id, country_name, password)", () => {
             it("should succeed on correct data and create country", () =>
                 User.create(userData)
-                    .then(({ id }) =>
-                        travelApi.addPhoto(id, "Japan", dUrl)
-                            .then(id => expect(id).to.exist)
+                    .then((user) =>
+                        travelApi.addPhoto(user.id, "Japan", dUrl)
+                            .then(id =>{ 
+                                expect(id).to.exist
+                                return User.findById(user.id)
+                                .then(user => {
+                                    expect(user.countries.length).to.equal(1)
+                                    return Country.findById(user.countries[0].id)
+                                    .then(country => {
+                                        expect(country.photos.length).to.equal(1)
+                                    })
+                                })
+                            })
+                            
                     )
             )
+
+            // it("internal and create country", () =>
+            //     travelApi.registerUser("minax", "1","X")
+            //     .then((res)=> {
+            //         return travelApi.authenticateUser("minax", "1")
+            //         .then((id) =>
+            //             travelApi.addPhoto(id, "Japan", dUrl)
+            //                 .then(idp =>{ 
+            //                     expect(idp).to.exist
+            //                     return travelApi.retrieveUser(id)
+            //                     .then(user => {
+            //                         console.log(user)
+            //                         expect(user.countries.length).to.equal(1)
+            //                         return travelApi.retrieveCountry(id, "Japan")
+            //                         .then(country => {
+            //                             console.log(country)
+            //                             expect(country.photos.length).to.equal(1)
+            //                         })
+            //                     })
+            //                 })
+                            
+            //         )
+            //     })
+            // )
             it("should succeed with country already created", () =>
                 User.create(userData)
                     .then((user) => {
