@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logic from "../../logic";
 import {Button} from 'reactstrap'
 
 class Text extends Component {

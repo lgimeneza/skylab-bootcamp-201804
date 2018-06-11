@@ -2,6 +2,16 @@
 
 const { models: { User, Park, Image, Note } } = require('data')
 const fs = require('file-system')
+const cloudinary = require('cloudinary');
+
+
+cloudinary.config({ 
+    cloud_name: 'dpkyftge9', 
+    api_key: '936697417297718', 
+    api_secret: 'lmBzXsTcd8gmgsr3idgRnbPepMo' 
+  });
+  
+  
 
 const logic = {
     /**
@@ -81,7 +91,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, email: 1, race: 1, gender: 1, city: 1 })
+                return User.findById(id).select({ _id: 0, name: 1, email: 1, race: 1, gender: 1, city: 1, photoProfile:1, images:1, description:1, birthdate:1, zip:1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -108,8 +118,13 @@ const logic = {
      * @returns {Promise<boolean>}
      */
     updateUser(id, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate, city, zip) {
+        
+        console.log(race,"?????");
+
         return Promise.resolve()
             .then(() => {
+
+
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
@@ -633,7 +648,7 @@ const logic = {
 * @returns {Promise<boolean>}
 */
     saveImageProfile(idUser, base64Image) {
-
+        let url =""
         return Promise.resolve()
             .then(() => {
                 if (typeof idUser !== 'string') throw Error('idUser is not a string')
@@ -642,15 +657,32 @@ const logic = {
 
                 if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
 
-
-                var data = base64Image.replace(/^data:image\/\w+;base64,/, "");
-                var buf = new Buffer(data, 'base64');
-
-                return fs.writeFile(`img/profile_${idUser}.jpg`, buf, function (err) {
-
-                    if (err) return("error: "+err)
-                    else return"upload Ok"
+               
+               return  Promise.resolve()
+                    .then(() => {
+                        return cloudinary.uploader.upload(base64Image, function(data) {
+                            url = data.url
+                            console.log("update ok")
+                    }).then(()=>{
+                        return User.findById(idUser )
+                        .then(user => {
+                            return user
+                        })
+                    })
+                }).then(user => {
+                    user.photoProfile = url
+                    return user.save()
                 })
+                .then((user) => { console.log(user); return true
+                })
+                //SAVE ON SERVER
+                // var data = base64Image.replace(/^data:image\/\w+;base64,/, "");
+                // var buf = new Buffer(data, 'base64');
+                // return fs.writeFile(`img/profile_${idUser}.jpg`, buf, function (err) {
+
+                //     if (err) return("error: "+err)
+                //     else return"upload Ok"
+                // })
             })
     }
 }

@@ -16,7 +16,6 @@ class Home extends Component {
 
             logic.search(undefined, undefined, undefined, city)
                 .then(({ status, users }) => {
-    
                     this.setState({
                         loading: "",
                         users,
@@ -40,7 +39,7 @@ class Home extends Component {
                 <h3>Near you...</h3>
                 <Row>
                     {this.state.users.map(user => {
-                        return   <CardUser key={user.name+Date.now().toString()} user={user}/>
+                        return   <CardUser key={user.name+Date.now().toString()} user={user} />
                     })}
                 </Row>
             </Container>

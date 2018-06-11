@@ -58,11 +58,10 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
 })
 
 router.patch('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
-    const { params: { userId }, body: {  name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate,city,zip } } = req
-
+    const { params: { userId }, body: {  name, email, password,newEmail, newPassword, race, gender, description, photoProfile, birthdate,city,zip } } = req
     const birthdateObject = new Date(birthdate)
 
-    logic.updateUser(userId, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdateObject,city,zip)
+    logic.updateUser(userId, name,  email,password,newEmail, newPassword, race, gender, description, photoProfile, birthdateObject,city,zip)
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })
@@ -248,7 +247,6 @@ router.delete('/parks/:parkId/user/:userId', [jwtValidator, jsonBodyParser], (re
 router.post('/uploadImageProfile/:userId', jsonBodyParser, (req, res) => {
     const { params: { userId }, body: { base64Image } } = req
 
-console.log(base64Image)
     logic.saveImageProfile(userId, base64Image)
         .then(() => {
             res.status(200)

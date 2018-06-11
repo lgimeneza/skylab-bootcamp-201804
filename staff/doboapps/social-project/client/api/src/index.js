@@ -168,7 +168,7 @@ const socialApi = {
 
                 if ((newPassword = newPassword.trim()).length === 0) throw Error('user newPassword is empty or blank')
 
-                if (typeof race !== 'string') throw Error('user race is not a string')
+                if (typeof race !== 'string') throw Error('333user race is not a string')
 
                 if ((race = race.trim()).length === 0) throw Error('user race is empty or blank')
 
@@ -193,6 +193,7 @@ const socialApi = {
                 if (typeof zip !== 'string') throw Error('user zip is not a string')
 
                 if ((zip = zip.trim()).length === 0) throw Error('user zip is empty or blank')
+
 
                 return axios.patch(`${this.url}/users/${id}`, { name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate,city,zip }, { headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
