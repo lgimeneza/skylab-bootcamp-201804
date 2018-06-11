@@ -97,9 +97,9 @@ router.get('/booking/hours/:year/:month', (req, res) => {
   }),
 
   router.post('/booking', [jwtValidator, bodyParser.json()], (req, res) => {
-    const { body: { userId, serviceId, date, endDate } } = req
+    const { body: { userId, serviceId, date } } = req
 
-  logic.placeBooking(userId, serviceId, date, endDate)
+  logic.placeBooking(userId, serviceId, date)
       .then((booking) => {
         res.status(201)
         res.json({ status: 'OK', data: booking })
