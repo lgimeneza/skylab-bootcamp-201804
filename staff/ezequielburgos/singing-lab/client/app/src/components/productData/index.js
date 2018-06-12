@@ -3,7 +3,6 @@ import logic from '../../logic'
 import './index.css'
 import Navbar from './../navbar'
 import Footer from './../footer'
-import ListItems from './../ListItems'
 
 class ProductData extends Component {
 
