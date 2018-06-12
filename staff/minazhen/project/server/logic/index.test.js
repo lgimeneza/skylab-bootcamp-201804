@@ -168,7 +168,7 @@ describe("logic (project-server)", () => {
         })
     })
 
-    describe("countries", () => {
+    describe("# Countries", () => {
         describe('get visited countries', () => {
             it("should succeed with 5 countries", () =>
                 User.create(userData)
@@ -265,7 +265,7 @@ describe("logic (project-server)", () => {
     })
 
 
-    describe("photos", () => {
+    describe("# Photos", () => {
         describe("add photo -> (user_id, country_name, password)", () => {
             it("should succeed on correct data and create country", () =>
                 User.create(userData)
@@ -370,7 +370,6 @@ describe("logic (project-server)", () => {
                                     return user.save()
                                         .then(user => {
                                             country.photos.push(new Photo({ url: dUrl }))
-                                            debugger
                                             return country.save()
                                                 .then(() => logic.retrievePhoto(user.id, "Japan", fakeId, dUrl2))
                                                 .catch(({ message }) => expect(message).to.equal(`no photo found with ${fakeId} id, in user ${user.id}`))
@@ -381,11 +380,11 @@ describe("logic (project-server)", () => {
             })
         })
 
-        false && describe("update photo -> (user_id, country_name, photo_id, url2change)", () => {
+        describe("update photo -> (user_id, country_name, photo_id, url2change)", () => {
             it("should succeed on correct data", () =>
                 User.create(userData)
                     .then((user) => {
-                        return Country.create({ name: "Japan", user: user.id })
+                        return Country.create({ name: "Japan", user: user._id })
                             .then(country => {
                                 user.countries.push(country._id)
                                 return user.save()
@@ -451,11 +450,11 @@ describe("logic (project-server)", () => {
             })
         })
 
-        false && describe("remove photo -> (user_id, country_name, photo_id)", () => {
+        describe("remove photo -> (user_id, country_name, photo_id)", () => {
             it("should succeed on correct data and deleting just one photo", () =>
                 User.create(userData)
                     .then((user) => {
-                        return Country.create({ name: "Japan", user: user.id })
+                        return Country.create({ name: "Japan", user: user._id })
                             .then(country => {
                                 user.countries.push(country._id)
                                 return user.save()
@@ -489,7 +488,7 @@ describe("logic (project-server)", () => {
             it("should succeed deleting the last photo and removing 'empty' country", () =>
                 User.create(userData)
                     .then((user) => {
-                        return Country.create({ name: "Japan", user: user.id })
+                        return Country.create({ name: "Japan", user: user._id })
                             .then(country => {
                                 user.countries.push(country._id)
                                 return user.save()
@@ -500,12 +499,14 @@ describe("logic (project-server)", () => {
                                         return country.save()
                                             .then(() => logic.removePhoto(user.id, country.name, photo.id))
                                             .then((res) => {
-                                                expect(res).to.exist
+                                                expect(res).to.be.true
                                                 return Country.findById(country.id)
                                                     .then((res) => {
                                                         expect(res).to.be.null
                                                         return User.findById(user.id)
-                                                            .then((u) => expect(u.countries.length).to.equal(0))
+                                                            .then((u) => {
+                                                                expect(u.countries.length).to.equal(0)
+                                                            })
                                                     })
                                             })
                                     })

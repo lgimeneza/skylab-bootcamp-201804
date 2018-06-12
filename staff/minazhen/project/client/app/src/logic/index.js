@@ -17,20 +17,19 @@ const logic = {
 
     login(username, password, location) {
         return travelApi.authenticateUser(username, password, location)
-            .then(id => {
-                this.userId = id // va fuera
+            .then(userId => {
+                this.userId = userId // va fuera
                 // this.storage.set('id', id)
-                console.log("LOG >> " + this.userId)
                 return true
             })
     },
 
     loggedIn() { //era get loggedIn
         //const id = this.storage.get('id')
-        const id = this.userId
+        const userId = this.userId
         const token = travelApi.token
 
-        return  id !== "NO-ID" &&  token !== "NO-TOKEN"
+        return  userId !== "NO-ID" &&  token !== "NO-TOKEN"
     },
 
     logout() {
@@ -39,22 +38,20 @@ const logic = {
         return true
     },
 
-    retrieveUser(id = this.userId) {
+    retrieveUser(userId = this.userId) {
         //const id = this.storage.get('id')
 
-        return travelApi.retrieveUser(id)
+        return travelApi.retrieveUser(userId)
             .then((res) => {
                 this.username = res.username
-                console.log(id)
-                console.log(res.countries)
                 return res
             })
     },
 
     unregister(username, password) {
         //const id = this.storage.get('id')
-        const id = this.userId
-        return travelApi.unregisterUser(id, username, password)
+        const userId = this.userId
+        return travelApi.unregisterUser(userId, username, password)
             .then(() => this.logout())
             .then((res) => {
 
@@ -62,10 +59,10 @@ const logic = {
             })
     },
 
-    world(id = this.userId) {
+    world(userId = this.userId) {
         //const id = this.storage.get('id')
 
-        return travelApi.world(id)
+        return travelApi.world(userId)
             .then((res) => res)
     },
 
@@ -75,8 +72,22 @@ const logic = {
     },
     
     addPhoto(countryName, url) {
-        const id = this.userId
-        return travelApi.addPhoto(id, countryName, url)
+        const userId = this.userId
+        return travelApi.addPhoto(userId, countryName, url)
+    },
+
+    retrievePhoto(countryName, photoId, userId = this.userId) {
+        return travelApi.retrievePhoto(userId, countryName, photoId)
+    },
+
+    updatePhoto(countryName, photoId, newUrl) {
+        const userId = this.userId
+        return travelApi.updatePhoto(userId, countryName, photoId, newUrl)
+    },
+
+    removePhoto(countryName, photoId) {
+        const userId = this.userId
+        return travelApi.removePhoto(userId, countryName, photoId)
     }
 }
 

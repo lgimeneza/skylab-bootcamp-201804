@@ -92,14 +92,14 @@ describe('logic (travel api)', () => {
             it("should succeed with 5 countries", () => 
                 User.create(userData)
                     .then((user) => {
-                        const p1 = Country.create({ name : "Japan", userId: user.id })
-                        const p2 = Country.create({ name : "Mexico", userId: user.id })
-                        const p3 = Country.create({ name : "Kenya", userId: user.id })
-                        const p4 = Country.create({ name : "Turkey", userId: user.id })
-                        const p5 = Country.create({ name : "Afghanistan", userId: user.id })
+                        const p1 = Country.create({ name : "Japan", user: user._id })
+                        const p2 = Country.create({ name : "Mexico", user: user._id })
+                        const p3 = Country.create({ name : "Kenya", user: user._id })
+                        const p4 = Country.create({ name : "Turkey", user: user._id })
+                        const p5 = Country.create({ name : "Afghanistan", user: user._id })
                         return Promise.all([p1, p2, p3, p4, p5])
-                        .then((promises) => {
-                            promises.map((v) => user.countries.push({name : v.name, id : v.id}))
+                        .then((countries) => {
+                            countries.map(country => user.countries.push(country._id))
                             return user.save()
                         })
                         .then(() => {
@@ -177,14 +177,14 @@ describe('logic (travel api)', () => {
         it("world map should succeed with 5 countries", () => 
             User.create(userData)
                 .then((user) => {
-                    const p1 = Country.create({ name : "Japan", userId: user.id })
-                    const p2 = Country.create({ name : "Mexico", userId: user.id })
-                    const p3 = Country.create({ name : "Kenya", userId: user.id })
-                    const p4 = Country.create({ name : "Turkey", userId: user.id })
-                    const p5 = Country.create({ name : "Afghanistan", userId: user.id })
+                    const p1 = Country.create({ name : "Japan", user: user._id })
+                    const p2 = Country.create({ name : "Mexico", user: user._id })
+                    const p3 = Country.create({ name : "Kenya", user: user._id })
+                    const p4 = Country.create({ name : "Turkey", user: user._id })
+                    const p5 = Country.create({ name : "Afghanistan", user: user._id })
                     return Promise.all([p1, p2, p3, p4, p5])
                     .then((promises) => {
-                        promises.map((v) => user.countries.push({name : v.name, id : v.id}))
+                        promises.map((v) => user.countries.push(v._id))
                         return user.save()
                     })
                     .then(() => {
@@ -222,40 +222,37 @@ describe('logic (travel api)', () => {
 
             return User.create(userData)
             .then((user) => {
-                return Country.create({ name : "Japan", userId: user.id })
+                return Country.create({ name : "Japan", user: user._id })
                     .then((cntry) => {
-                        user.countries.push({name : cntry.name, id : cntry.id})
+                        user.countries.push( cntry._id )
                         return user.save()
                         .then(() => {
-                            const p1 = Photo.create({ url : dUrl })
-                            const p2 = Photo.create({ url : dUrl2 })
-                            const p3 = Photo.create({ url : dUrl3 })
-                            const p4 = Photo.create({ url : dUrl4 })
-                            const p5 = Photo.create({ url : dUrl5 })
+                            cntry.photos.push(new Photo({ url: dUrl }))
+                            cntry.photos.push(new Photo({ url: dUrl2 }))
+                            cntry.photos.push(new Photo({ url: dUrl3 }))
+                            cntry.photos.push(new Photo({ url: dUrl4 }))
+                            cntry.photos.push(new Photo({ url: dUrl5 }))
 
-                            return Promise.all([p1, p2, p3, p4, p5])
-                        })
-                        .then(promises => {
-                            promises.map((v) => cntry.photos.push(v))
-                            
                             return cntry.save()
-                            .then(() => travelApi.retrieveCountry(user.id, cntry.name))
-                            .then((res) => {
-                                expect(res).to.exist
-                                expect(res.photos.length).to.equal(5)
-                                const arr = res.photos.sort((a, b) => {
-                                    if(a.url < b.url) return -1;
-                                    if(a.url > b.url) return 1;
-                                    return 0;
-                                })
-                                expect(arr[0].url).to.equal(dUrl)
-                                expect(arr[1].url).to.equal(dUrl4)
-                                expect(arr[2].url).to.equal(dUrl3)
-                                expect(arr[3].url).to.equal(dUrl5)
-                                expect(arr[4].url).to.equal(dUrl2)
-                                expect(travelApi.token).not.to.equal('NO-TOKEN')
-                            })
                         })
+                        
+                        .then(() => travelApi.retrieveCountry(user.id, cntry.name))
+                        .then((res) => {
+                            expect(res).to.exist
+                            expect(res.photos.length).to.equal(5)
+                            const arr = res.photos.sort((a, b) => {
+                                if(a.url < b.url) return -1;
+                                if(a.url > b.url) return 1;
+                                return 0;
+                            })
+                            expect(arr[0].url).to.equal(dUrl)
+                            expect(arr[1].url).to.equal(dUrl4)
+                            expect(arr[2].url).to.equal(dUrl3)
+                            expect(arr[3].url).to.equal(dUrl5)
+                            expect(arr[4].url).to.equal(dUrl2)
+                            expect(travelApi.token).not.to.equal('NO-TOKEN')
+                        })
+                        
                     })
 
             })
@@ -265,7 +262,7 @@ describe('logic (travel api)', () => {
             return User.create(userData)
             .then(({id}) => travelApi.retrieveCountry(id, "Japan"))
             .then(res => {
-                expect(res).to.equal("Japan")
+                expect(res).not.to.exist
                 expect(travelApi.token).not.to.equal('NO-TOKEN')
             })        
         })
@@ -284,7 +281,7 @@ describe('logic (travel api)', () => {
                                 return User.findById(user.id)
                                 .then(user => {
                                     expect(user.countries.length).to.equal(1)
-                                    return Country.findById(user.countries[0].id)
+                                    return Country.findById(user.countries[0])
                                     .then(country => {
                                         expect(country.photos.length).to.equal(1)
                                     })
@@ -294,40 +291,16 @@ describe('logic (travel api)', () => {
                     )
             )
 
-            it("internal and create country", () =>
-                travelApi.registerUser("minax", "1","X")
-                .then((res)=> {
-                    return travelApi.authenticateUser("minax", "1")
-                    .then((id) =>
-                        travelApi.addPhoto(id, "Japan", dUrl)
-                            .then(idp =>{ 
-                                expect(idp).to.exist
-                                return travelApi.retrieveUser(id)
-                                .then(user => {
-                                    console.log(user)
-                                    expect(user.countries.length).to.equal(1)
-                                    return travelApi.retrieveCountry(id, "Japan")
-                                    .then(country => {
-                                        debugger
-                                        console.log(country)
-                                        expect(country.photos.length).to.equal(1)
-                                    })
-                                })
-                            })
-                            
-                    )
-                })
-            )
             it("should succeed with country already created", () =>
                 User.create(userData)
                     .then((user) => {
-                        return Country.create({ name : "Japan", userId: user.id })
+                        return new Country({ name: "Japan", user: user._id }).save()
                         .then((cntry) => {
-                            user.countries.push({name : cntry.name, id : cntry.id})
+                            user.countries.push(cntry._id)
                             return user.save()
-                            .then(() => Photo.create({ url : dUrl }))
-                            .then(ph => {
-                                cntry.photos.push(ph)
+                            .then(user => {
+                                cntry.photos.push(new Photo({ url: dUrl }))
+
                                 return cntry.save()
                             })
                         })
@@ -340,7 +313,7 @@ describe('logic (travel api)', () => {
                             return User.findById(user.id)
                             .then(user => {
                                 expect(user.countries.length).to.equal(1)
-                                return Country.findById(user.countries[0].id)
+                                return Country.findById(user.countries[0])
                                 .then(country => {
                                     expect(country.photos.length).to.equal(2)
                                 })
@@ -365,9 +338,9 @@ describe('logic (travel api)', () => {
             it("should succeed on correct data", () =>
                 User.create(userData)
                 .then((user) => {
-                    return Country.create({ name : "Japan", userId: user.id })
+                    return Country.create({ name : "Japan", user: user._id })
                         .then((cntry) => {
-                            user.countries.push({name : cntry.name, id : cntry.id})
+                            user.countries.push(cntry._id)
                             return user.save()
                             .then(() => Photo.create({ url : dUrl }))
                             .then(ph => {
@@ -404,9 +377,9 @@ describe('logic (travel api)', () => {
                 it("should fail on wrong photo id", () =>
                     User.create(userData)
                     .then((user) => {
-                        return Country.create({ name : "Japan", userId: user.id })
+                        return Country.create({ name : "Japan", user: user._id })
                             .then((cntry) => {
-                                user.countries.push({name : cntry.name, id : cntry.id})
+                                user.countries.push(cntry._id)
                                 return user.save()
                                 .then(() => Photo.create({ url : dUrl }))
                                 .then(ph => {
@@ -425,9 +398,9 @@ describe('logic (travel api)', () => {
             it("should succeed on correct data", () =>
                 User.create(userData)
                 .then((user) => {
-                    return Country.create({ name : "Japan", userId: user.id })
+                    return Country.create({ name : "Japan", user: user._id })
                         .then((cntry) => {
-                            user.countries.push({name : cntry.name, id : cntry.id})
+                            user.countries.push(cntry._id)
                             return user.save()
                             .then(() => Photo.create({ url : dUrl }))
                             .then(ph => {
@@ -470,9 +443,9 @@ describe('logic (travel api)', () => {
                 it("should fail on wrong photo id", () =>
                     User.create(userData)
                     .then((user) => {
-                        return Country.create({ name : "Japan", userId: user.id })
+                        return Country.create({ name : "Japan", user: user._id })
                             .then((cntry) => {
-                                user.countries.push({name : cntry.name, id : cntry.id})
+                                user.countries.push(cntry._id)
                                 return user.save()
                                 .then(() => Photo.create({ url : dUrl }))
                                 .then(ph => {
@@ -491,9 +464,9 @@ describe('logic (travel api)', () => {
             it("should succeed on correct data and deleting just one photo", () =>
                 User.create(userData)
                 .then((user) => {
-                    return Country.create({ name : "Japan", userId: user.id })
+                    return Country.create({ name : "Japan", user: user._id })
                         .then((cntry) => {
-                            user.countries.push({name : cntry.name, id : cntry.id})
+                            user.countries.push(cntry._id)
                             return user.save()
                             .then(() => {
                                 const p1 = Photo.create({ url : dUrl })
@@ -525,9 +498,9 @@ describe('logic (travel api)', () => {
             it("should succeed deleting the last photo and removing 'empty' country", () =>
                 User.create(userData)
                 .then((user) => {
-                    return Country.create({ name : "Japan", userId: user.id })
+                    return Country.create({ name : "Japan", user: user._id })
                         .then((cntry) => {
-                            user.countries.push({name : cntry.name, id : cntry.id})
+                            user.countries.push(cntry._id)
                             return user.save()
                             .then(() => Photo.create({ url : dUrl }))
                             .then(photo => {
@@ -568,9 +541,9 @@ describe('logic (travel api)', () => {
                 it("should fail on wrong photo id", () =>
                     User.create(userData)
                     .then((user) => {
-                        return Country.create({ name : "Japan", userId: user.id })
+                        return Country.create({ name : "Japan", user: user._id })
                             .then((cntry) => {
-                                user.countries.push({name : cntry.name, id : cntry.id})
+                                user.countries.push(cntry._id)
                                 return user.save()
                                 .then(() => Photo.create({ url : dUrl }))
                                 .then(ph => {

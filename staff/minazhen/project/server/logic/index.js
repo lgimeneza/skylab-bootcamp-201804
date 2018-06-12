@@ -146,7 +146,7 @@ const logic = {
                 return User.findById(userId).populate({ path: 'countries', match: { name: { $eq: countryName } } })
             })
             .then(user => {
-                debugger
+                
                 if (!user) throw Error(`no user found with id ${userId}`)
 
                 if (!user.countries.length) throw Error(`no country named ${countryName}, in user ${userId}`)
@@ -167,33 +167,24 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._checkErrors(userId, countryName, no, photoId, url)
-                return User.findById(userId)
+                return User.findById(userId).populate({ path: 'countries', match: { name: { $eq: countryName } } })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${userId}`)
+                if (!user.countries.length) throw Error(`no country named ${countryName}, in user ${userId}`)
 
-                let c = user.countries.map((v) => {
-                    if (v.name === countryName) return v
-                })
+                const { countries: [country] } = user
+                if (!country.photos) throw Error(`no photos found in user ${userId}`)
 
-                if (!c.length) throw Error(`no country named ${countryName}, in user ${userId}`)
+                const photo = country.photos.id(photoId)
+                if (!photo) throw Error(`no photo found with ${photoId} id, in user ${userId}`)
 
-                return Country.findById(c[0].id)
-                    .then(country => {
-                        if (!country) throw Error(`no country found with id ${c.id}`)
+                photo.url = url
+                return country.save()
 
-                        let phot = country.photos.id(photoId)
-
-                        if (!phot) throw Error(`no photo found with ${photoId} id, in user ${userId}`)
-
-                        phot.url = url
-
-                        return country.save()
-
-                            .then((res) => {
-                                return true
-                            })
-                    })
+                    .then((res) => {
+                        return true
+                    }) 
             })
     },
 
@@ -201,42 +192,37 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._checkErrors(userId, countryName, no, photoId, no)
-                return User.findById(userId)
+                return User.findById(userId).populate({ path: 'countries', match: { name: { $eq: countryName } } })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${userId}`)
+                if (!user.countries.length) throw Error(`no country named ${countryName}, in user ${userId}`)
 
-                let idxC = ""
-                let c = user.countries.map((v, i) => {
-                    if (v.name === countryName) {
-                        idxC = i
-                        return v
-                    }
-                })
+                const { countries: [country] } = user
+                const idxC = (user.countries.indexOf(country))
+                if (!country.photos) throw Error(`no photos found in user ${userId}`)
 
-                if (!c.length) throw Error(`no country named ${countryName}, in user ${userId}`)
+                const photo = country.photos.id(photoId)
+                if (!photo) throw Error(`no photo found with ${photoId} id, in user ${userId}`)
 
-                return Country.findById(c[0].id)
-                    .then(country => {
-                        if (!country) throw Error(`no country found with id ${c.id}`)
-
-                        let phot = country.photos.id(photoId)
-
-                        if (!phot) throw Error(`no photo found with ${photoId} id, in user ${userId}`)
-
-                        return Country.findByIdAndUpdate(c[0].id, { $pull: { photos: { _id: photoId } } }, { new: true })
-                    })
+                return Country.findByIdAndUpdate(country.id, { $pull: { photos: { _id: photoId } } }, { new: true })
                     .then((res) => {
-                        if (!res) throw Error(`no photo found with ${photoId} id, in country ${c[0].id}`)
+                        if (!res) throw Error(`no photo found with ${photoId} id, in ${countryName}`)
 
                         if (res.photos.length === 0) {
-                            user.countries.splice(idxC, 1)
-                            return user.save()
-                                .then(() => { return res.remove() })
+                            return User.findById(userId)
+                            .then(user => {
+                                user.countries.splice(idxC, 1)
+                                return user.save()
+                                    .then(() => { 
+                                        return res.remove() 
+                                        .then(() => true)
+                                    })
+                            })
                         }
-
                         return true
                     })
+                    
 
             })
     },
