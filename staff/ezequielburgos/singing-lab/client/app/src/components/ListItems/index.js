@@ -5,8 +5,7 @@ import './index.css'
 
 export default ({ items, btnShow = false, productDetail = false }) => (
     <ul className="thumbnail">
-        {(items.length) ?
-            items.map(item => (
+        {items.map(item => (
                 <li key={item._id}>
                     <div className="col-sm-6 col-md-4 products">
                         <img src={item.image} alt="bruno mars" width="240px" height="200px" />
@@ -18,17 +17,6 @@ export default ({ items, btnShow = false, productDetail = false }) => (
                         </div>
                     </div>
                 </li>
-            ))
-            :
-            <li key={items._id}>
-                <div className="col-sm-6 col-md-4 products">
-                    <img src={items.image} alt="bruno mars" width="240px" height="200px" />
-                    <div className="caption">
-                        <h3>{items.name}</h3>
-                        <p>{items.description}</p>
-                    </div>
-                </div>
-            </li>
-        }
+            ))}
     </ul>
 );

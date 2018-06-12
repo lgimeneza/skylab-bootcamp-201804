@@ -15,6 +15,7 @@ class ProductData extends Component {
     }
 
     componentDidMount() {
+
         logic.retrieveProduct(this.props.match.params.id)
             .then(product => this.setState({ product }))
     }
@@ -25,9 +26,17 @@ class ProductData extends Component {
                 <Navbar />
                 <h2 className="main-title">this is the product</h2>
 
-                <ListItems
-                    items={this.state.product}
-                />
+                <ul className="thumbnail">
+                    <li key={this.state.product._id}>
+                        <div className="col-sm-6 col-md-4 products">
+                            <img src={this.state.product.image} alt="bruno mars" width="240px" height="200px" />
+                            <div className="caption">
+                                <h3>{this.state.product.name}</h3>
+                                <p>{this.state.product.description}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
 
                 <Footer />
             </main>
