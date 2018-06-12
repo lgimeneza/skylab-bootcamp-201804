@@ -18,7 +18,9 @@ class Navbar extends Component {
                         <span className="py-2 d-none d-md-inline-block">
                             <Link to="/categories">Products</Link>
                         </span>
-                        <span className="py-2 d-none d-md-inline-block">Search</span>
+                        <span className="py-2 d-none d-md-inline-block">
+                            <Link to="/our-team">Our Team</Link>
+                        </span>
                         <span className="py-2 d-none d-md-inline-block">
                             <Link to="/auth">Login</Link>
                         </span>

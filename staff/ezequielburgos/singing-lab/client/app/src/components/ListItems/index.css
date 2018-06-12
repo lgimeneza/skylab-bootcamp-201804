@@ -1,13 +1,27 @@
 .thumbnail{
     list-style-type: none;
-}
-
-.thumbnail {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    padding-left: 0;
+}
+
+.listitems-body{
+    background: linear-gradient(-40deg, #9824af49, #5c1b535e, transparent);
+    padding: 3%;
+}
+
+.listitems-subbody{
+    background: white;
+    border-radius: 20px;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 .items {
     padding: 2%;
+}
+
+.list-button{
+    background: linear-gradient(to left, rgb(121, 27, 105), rgb(34, 8, 44)) !important;
 }

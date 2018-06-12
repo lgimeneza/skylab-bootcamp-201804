@@ -30,7 +30,9 @@ class ProductData extends Component {
                     </div>
                     <div className="caption">
                         <h3>{this.state.product.name}</h3>
+                        <h3>{this.state.product.price} €</h3>
                         <p>{this.state.product.description}</p>
+                        <a className="btn btn-outline-secondary" role="button">Chat now</a>
                     </div>
                 </section>
                 <div className="jumbotron">
@@ -38,7 +40,7 @@ class ProductData extends Component {
                     <p className="lead">Use the firebase chat example from the Firebase workshop</p>
                     <hr className="my-4" />
                     <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                    <a className="btn btn-primary btn-lg" role="button">Chat now</a>
+                    <a className="btn btn-outline-secondary" role="button">Chat now</a>
                 </div>
 
                 <Footer />
