@@ -24,12 +24,7 @@ class App extends Component {
   componentDidMount() {
     
     if (logic.loggedIn) { 
-      const userId = sessionStorage.getItem('userId')
-    
-    console.log(typeof userId)
-    console.log(logic.retrieveUser(userId))
-
-      logic.retrieveUser(userId)
+      logic.retrieveUser()
         .then(userData => {
               this.setState({
               userData
@@ -48,7 +43,7 @@ class App extends Component {
             <Route path='/categories' component={MainCategories}/>
             <Route path='/subcategories/:categoryId' component={Subcategories}/>
             <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Home/>}/>
-            <Route path='/auth' render={() => (!logic.loggedIn) ? <Login /> : <Home/>} />
+            <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin=?} /> : <Home/>} />
         </Switch>
       </div>
 

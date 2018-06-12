@@ -29,8 +29,8 @@ const logic = {
         })
     },
     
-    retrieveUser(userId) {
-        return clientApi.retrieveUser(userId)
+    retrieveUser() {
+        return clientApi.retrieveUser(this.userId)
                 .then(userData => userData)
     },
 

@@ -42,7 +42,7 @@ class MainCategories extends Component {
                                                 <div className="card mb-5">
                                                     <img className="card-img-top" alt={category.name} src={category.image} />
                                                     <div className="card-block">
-                                                        <h5 className="card-title">{category.name}</h5>
+                                                        <h5 className="card-title" onClick={() => this.selectCategory(category.id)}>{category.name}</h5>
                                                     </div>
                                                 </div>
                                         </div>

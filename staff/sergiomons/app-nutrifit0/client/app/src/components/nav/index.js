@@ -50,8 +50,10 @@ componentDidMount() {
                                     Categorías
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <Link to='/products' className="dropdown-item" href="">Packs</Link>
-                                    <Link to='/subcategories' className="dropdown-item" href="">Platos Individuales</Link>
+                                    <Link to='/category/${...}/products' className="dropdown-item" href="">Packs</Link>
+                                    <Link to='/category/${...}/products' className="dropdown-item" href="">Packs 2</Link>
+                                    <Link to='/category/${...}' className="dropdown-item" href="">Platos Individuales</Link>
+                                    <Link to='/category/${...}' className="dropdown-item" href="">Platos Colectivos</Link>
                                     <div className="dropdown-divider"></div>
                                     
                                     </div>
