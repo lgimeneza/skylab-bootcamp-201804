@@ -16,7 +16,7 @@ const logic = {
             return this._userId
     },
 
-    registerUser(username, email, password, repeatPassword) {
+    registerUser(username, email, password, repeatPassword) {   
         return clientApi.registerUser(username, email, password, repeatPassword)
     },
 
@@ -30,7 +30,7 @@ const logic = {
     },
     
     retrieveUser() {
-        return clientApi.retrieveUser(this.userId)
+        return clientApi.retrieveUser(this.userId())
                 .then(userData => userData)
     },
 

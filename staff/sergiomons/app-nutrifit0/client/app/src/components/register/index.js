@@ -11,6 +11,7 @@ class Register extends Component {
        email:'',
        password: '',
        repeatPassword: '',
+       error: '',
     }
 
     handlerSubmitRegister = e => {
@@ -25,7 +26,11 @@ class Register extends Component {
                     alert('wrong error')
                 }     
             })
-            .catch(err => err.message)
+            .catch(err => {
+                return this.setState({
+                    error: err.message
+                })
+            })
     }
 
     handlerCapturingUsername = e => {

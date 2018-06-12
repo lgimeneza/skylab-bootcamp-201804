@@ -18,36 +18,55 @@ class App extends Component {
   // }
 
   state = {
-    userData: {}
+    userData: {},
+    parentsCategory: {},
+    categories: {}
   }
 
-  componentDidMount() {
-    
-    if (logic.loggedIn) { 
-      logic.retrieveUser()
+  componentWillMount() {
+
+    logic.listParentsCategory()
+      .then(parentsCategory => {
+          this.setState({
+            parentsCategory
+          })
+      })
+   
+      console.log(this.state.parentsCategory)
+
+
+    if (logic.loggedIn) {
+    logic.retrieveUser()
+    .then(userData => {
+          this.setState({
+          userData
+      })
+    })
+  }
+  }
+
+  onLogin = () => {
+
+        logic.retrieveUser()
         .then(userData => {
               this.setState({
               userData
           })
         })
-    }
-   
   }
 
   render() {
     return (
       <div className="App">
-        <Nav userData={this.state.userData} />
+        <Nav userData={this.state.userData} parentsCategoryData={this.state.parentsCategory}/>
         <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/categories' component={MainCategories}/>
             <Route path='/subcategories/:categoryId' component={Subcategories}/>
             <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Home/>}/>
-            <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin=?} /> : <Home/>} />
+            <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Home/>} />
         </Switch>
       </div>
-
-
     );
   }
 }

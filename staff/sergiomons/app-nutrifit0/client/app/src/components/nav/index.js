@@ -4,33 +4,38 @@ import {Link} from 'react-router-dom'
 import './index.css'
 
 class Nav extends Component {
-
     state = {
-        userData: {},
-        categories: []
+        parentsCategory: {}
     }
 
-//         componentDidMount(props) {
-//         const userId = sessionStorage.getItem('userId')
-//         console.log(logic.loggedIn)
+        componentDidMount(props) {
 
-//          logic.retrieveUser(userId.toString())
-//             .then(userData => {
-//                 if (userData) this.setState({
-//                      userData
-//                     })
-//         })
+            logic.listParentsCategory()
+            .then(parentsCategory => {
+                this.setState({
+                  parentsCategory
+                })
+            })
+        const parentsCategoryId = this.state.parentsCategory._id
 
-//         console.log(this.props.userData)
-//   }
+        // console.log(parentsCategoryId)
+        //  logic.listSubcategories(parentsCategoryId)
+        //     .then(categories => {
+        //         if (categories) this.setState({
+        //              categories
+        //             })
+        // })
+  }
 
-componentDidMount() {
-    console.log(this.props.userData)
-}
+    logout() {
+        logic.logout()
+        this.props.location.push('/')
+    }
     
    render() {
 
     return (
+        
         <div>        
             <header>            
                     <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -50,15 +55,14 @@ componentDidMount() {
                                     Categorías
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <Link to='/category/${...}/products' className="dropdown-item" href="">Packs</Link>
-                                    <Link to='/category/${...}/products' className="dropdown-item" href="">Packs 2</Link>
-                                    <Link to='/category/${...}' className="dropdown-item" href="">Platos Individuales</Link>
-                                    <Link to='/category/${...}' className="dropdown-item" href="">Platos Colectivos</Link>
-                                    <div className="dropdown-divider"></div>
-                                    
+                                        <Link to='/category/${...}/products' className="dropdown-item" href="">Packs</Link>
+                                        <Link to='/category/${...}/products' className="dropdown-item" href="">Packs 2</Link>
+                                        <Link to='/category/${...}' className="dropdown-item" href="">Platos Individuales</Link>
+                                        <Link to='/category/${...}' className="dropdown-item" href="">Platos Colectivos</Link>
+                                        <div className="dropdown-divider"></div>                    
                                     </div>
                                 </li>
-            
+                                {this.state.parentsCategory.id}
                                 <li className="nav-item">
                                     <a className="nav-link" href="">Productos</a>
                                 </li>
@@ -76,11 +80,12 @@ componentDidMount() {
                             <ul className="nav navbar-nav navbar-right">
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {this.props.userData.name}
+                                    {this.props.userData.username}
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a className="dropdown-item" href="">Cuenta</a>
-                                        <a className="dropdown-item" href="">Logout</a>
+                                        <a className="dropdown-item" href="">Mi Cuenta</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a className="dropdown-item" href="" onClick={this.logout}>Cerrar sesión</a>
                                     <div className="dropdown-divider"></div>
                                     </div>
                                 </li>

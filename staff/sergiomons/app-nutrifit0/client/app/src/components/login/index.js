@@ -9,7 +9,6 @@ class Login extends Component {
     state = {
        email:'',
        password: '',
-       isLogged: false,
        error: ''
     }
 
@@ -21,6 +20,7 @@ class Login extends Component {
         logic.login(email, password)
         .then(res => {
             if (res) {
+                this.props.onLogin()
                 this.props.history.push('/')
 
             } else {
@@ -32,6 +32,8 @@ class Login extends Component {
                 error: err.message
             })
         })
+
+        
     }
 
     handlerCapturingEmail = e => {
