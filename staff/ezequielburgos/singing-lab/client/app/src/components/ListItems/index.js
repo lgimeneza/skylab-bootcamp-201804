@@ -12,7 +12,7 @@ export default ({ items, btnShow = false, productDetail = false }) => (
                     <img className="card-img-top" src={item.image} alt="course or category" />
                     <div className="card-body">
                         <h5 className="card-title">{item.name}</h5>
-                        <p className="card-text">{item.description}</p>
+                        {btnShow && <p className="card-text">{item.description}</p>}
                         {btnShow && (<p><Link to={`/categories/${item._id}`} className="btn btn-primary list-button" role="button">Show me more</Link></p>)}
                         {productDetail && (<p><Link to={`/categories/products/${item._id}`} className="btn btn-primary list-button" role="button">product details</Link></p>)}
                     </div>

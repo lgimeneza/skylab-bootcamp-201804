@@ -25,14 +25,16 @@ class ProductData extends Component {
                 <Navbar />
                 <h2 className="main-title">this is the product</h2>
                 <section className="productData">
-                    <div className="col-sm-6 col-md-4 products">
-                        <img src={this.state.product.image} alt="bruno mars" width="350px" height="300px" />
-                    </div>
-                    <div className="caption">
-                        <h3>{this.state.product.name}</h3>
-                        <h3>{this.state.product.price} €</h3>
-                        <p>{this.state.product.description}</p>
-                        <a className="btn btn-outline-secondary" role="button">Chat now</a>
+                    <div className="productDataSub">
+                        <div className="col-sm-6 col-md-4 products">
+                            <img src={this.state.product.image} className="product-data-image" alt="bruno mars"  />
+                        </div>
+                        <div className="caption product-desc">
+                            <h3>{this.state.product.name}</h3>
+                            <h3>{this.state.product.price} €</h3>
+                            <p>{this.state.product.description}</p>
+                            <a className="btn btn-outline-secondary" role="button">Add to the cart</a>
+                        </div>
                     </div>
                 </section>
                 <div className="jumbotron">
