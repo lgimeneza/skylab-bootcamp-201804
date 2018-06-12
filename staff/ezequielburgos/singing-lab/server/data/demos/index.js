@@ -11,6 +11,57 @@ const { env: { DB_URL } } = process
 mongoose.connect(DB_URL)
     .then(() => {
         // TODO insertions
+
+        //Categories
+        let beginnerCourseCategoryData = { name: 'Beginner Course', description: 'Beginner Course desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b' }
+        let IntermediateCourseCategoryData = { name: 'Intermediate Course', description: 'Intermediate Course desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b' }
+        let advancedCourseCategoryData = { name: 'Advanced Course', description: 'Advanced Course desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b' }
+        let improvCourseCategoryData = { name: 'Musical Improv Course', description: 'Musical Improv desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b' }
+        let theoryCourseCategoryData = { name: 'Musical Theory Course', description: 'Musical Theory desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b' }
+        let compositionCourseCategoryData = { name: 'Composition Course', description: 'Composition desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b' }
+
+        //Products
+        let beginnerCourseData = { name: 'Beginner Course I', price: 50, discount: 20, description: 'Beginner Course I desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 123 }
+        let beginnerCourseData2 = { name: 'Beginner Course II', price: 60, discount: 15, description: 'Beginner Course II desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 11}
+        let beginnerCourseData3 = { name: 'Beginner Course III', price: 60, discount: 15, description: 'Beginner Course III desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 11}
+        let intermediateCourseData = { name: 'Intermediate Course I', price: 80, discount: 20, description: 'Intermediate Course I desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 60 }
+        let intermediateCourseData2 = { name: 'Intermediate Course II', price: 80, discount: 20, description: 'Intermediate Course II desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 60 }
+        let advancedCourseData = { name: 'Advanced Course I', price: 100, discount: 10, description: 'Advanced Course I desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 20 }
+        let improvCourseData = { name: 'Improv Course I', price: 50, discount: 10, description: 'Musical Improv Course I desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 40 }
+        let theoryCourseData = { name: 'Musical Theory Course I', price: 70, discount: 10, description: 'Musical Theory Course I desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 33 }
+        let compositionCourseData = { name: 'Composition Course I', price: 40, discount: 0, description: 'Advanced Course I desc', image: 'https://firebasestorage.googleapis.com/v0/b/ninja-firebase-tut-72a5c.appspot.com/o/bruno-mars.png?alt=media&token=9b5bcb33-af87-4f84-a92f-78ab1bc8a13b', stock: 49 }
+
+        return Promise.all([
+            Category.create(beginnerCourseCategoryData),
+            Category.create(IntermediateCourseCategoryData),
+            Category.create(advancedCourseCategoryData),
+            Category.create(improvCourseCategoryData),
+            Category.create(theoryCourseCategoryData),
+            Category.create(compositionCourseCategoryData)
+        ])
+            .then(res => {
+                beginnerCourseData.category = res[0]._id
+                beginnerCourseData2.category = res[0]._id
+                beginnerCourseData3.category = res[0]._id
+                intermediateCourseData.category = res[1]._id
+                intermediateCourseData2.category = res[1]._id
+                advancedCourseData.category = res[2]._id
+                improvCourseData.category = res[3]._id
+                theoryCourseData.category = res[4]._id
+                compositionCourseData.category = res[5]._id
+
+                return Promise.all([
+                    Product.create(beginnerCourseData),
+                    Product.create(beginnerCourseData2),
+                    Product.create(beginnerCourseData3),
+                    Product.create(intermediateCourseData),
+                    Product.create(intermediateCourseData2),
+                    Product.create(advancedCourseData),
+                    Product.create(improvCourseData),
+                    Product.create(theoryCourseData),
+                    Product.create(compositionCourseData),
+                ])
+            })
     })
     .then(() => mongoose.disconnect())
     .then(() => console.log('done'))

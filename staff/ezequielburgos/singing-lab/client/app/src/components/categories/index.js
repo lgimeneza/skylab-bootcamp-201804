@@ -24,6 +24,7 @@ class Categories extends Component {
             <main>
                 <Navbar />
                 <h2 className="main-title">These are my categories</h2>
+                <hr/>
 
                 <ListItems
                     btnShow

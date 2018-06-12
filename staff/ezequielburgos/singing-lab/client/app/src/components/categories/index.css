@@ -1,9 +1,15 @@
 .main-title{
     text-align: center;
+    padding: 3%;
+    font-size: 45px;
+    margin: 0;
 }
 
-.thumbnail {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+hr{
+    border-color: purple;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid purple;
+    margin-top: 0;
 }
+ 

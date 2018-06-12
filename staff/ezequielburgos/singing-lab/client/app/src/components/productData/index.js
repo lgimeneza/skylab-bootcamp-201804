@@ -24,18 +24,22 @@ class ProductData extends Component {
             <main>
                 <Navbar />
                 <h2 className="main-title">this is the product</h2>
-
-                <ul className="thumbnail">
-                    <li key={this.state.product._id}>
-                        <div className="col-sm-6 col-md-4 products">
-                            <img src={this.state.product.image} alt="bruno mars" width="240px" height="200px" />
-                            <div className="caption">
-                                <h3>{this.state.product.name}</h3>
-                                <p>{this.state.product.description}</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <section className="productData">
+                    <div className="col-sm-6 col-md-4 products">
+                        <img src={this.state.product.image} alt="bruno mars" width="350px" height="300px" />
+                    </div>
+                    <div className="caption">
+                        <h3>{this.state.product.name}</h3>
+                        <p>{this.state.product.description}</p>
+                    </div>
+                </section>
+                <div className="jumbotron">
+                    <h1 className="display-4">Chat with our teachers!</h1>
+                    <p className="lead">Use the firebase chat example from the Firebase workshop</p>
+                    <hr className="my-4" />
+                    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                    <a className="btn btn-primary btn-lg" role="button">Chat now</a>
+                </div>
 
                 <Footer />
             </main>

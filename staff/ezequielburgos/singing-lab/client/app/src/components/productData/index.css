@@ -1,0 +1,5 @@
+.productData{
+    display: flex;
+    padding: 3%;
+    justify-content: space-evenly;
+}

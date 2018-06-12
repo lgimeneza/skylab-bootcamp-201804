@@ -1,6 +1,5 @@
 .register-app{
     background: linear-gradient(#9824afa6, #6b2061a9, transparent), url('/images/blurry-register.jpeg');
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
     color: rgb(228, 228, 228) !important;
     background-size: cover;
     background-position: center;
