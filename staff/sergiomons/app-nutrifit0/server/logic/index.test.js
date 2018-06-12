@@ -138,6 +138,16 @@ describe('logic nutrifit', () => {
                 )
         )
 
+        it('should fail no match email', () =>
+            logic.authenticateUser('fff@as.com', password)
+                .catch(({ message }) => expect(message).to.equal('Email o password incorrectos'))
+        )
+
+        it('should fail no match email', () =>
+            logic.authenticateUser(email, '124')
+                .catch(({ message }) => expect(message).to.equal('Email o password incorrectos'))
+    )
+
         it('should fail on no user email', () =>
             logic.authenticateUser()
                 .catch(({ message }) => expect(message).to.equal('user email is not a string'))

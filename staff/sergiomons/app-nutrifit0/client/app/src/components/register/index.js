@@ -59,8 +59,7 @@ class Register extends Component {
    render() {
     const { username, email, password, repeatPassword } = this.state
     return (
-        <div className="body-register">     
-            <Nav />   
+        <div className="body-register">       
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-7">

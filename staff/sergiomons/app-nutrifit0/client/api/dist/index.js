@@ -132,6 +132,7 @@ var clientApi = {
                 var status = _ref3.status,
                     data = _ref3.data;
 
+
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
 
                 return data.data;
@@ -244,6 +245,114 @@ var clientApi = {
     // },
 
     /**
+    * 
+    * @param {string} userId
+    * @param {string} text 
+    * 
+    * @returns {Promise<string>}
+    */
+
+    listParentsCategory: function listParentsCategory() {
+        var _this4 = this;
+
+        return Promise.resolve().then(function () {
+
+            return axios.get(_this4.url + '/parentsCategory').then(function (_ref4) {
+                var status = _ref4.status,
+                    data = _ref4.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
+    },
+
+
+    /**
+    * 
+    * @param {string} userId
+    * @param {string} text 
+    * 
+    * @returns {Promise<string>}
+    */
+
+    listSubcategories: function listSubcategories(categoryId) {
+        var _this5 = this;
+
+        return Promise.resolve().then(function () {
+
+            if (typeof categoryId !== 'string') throw Error('user categoryId is not a string');
+            if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank');
+
+            return axios.get(_this5.url + '/subcategories/' + categoryId).then(function (_ref5) {
+                var status = _ref5.status,
+                    data = _ref5.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
+    },
+
+
+    /**
+    * 
+    * @param {string} userId
+    * @param {string} text 
+    * 
+    * @returns {Promise<string>}
+    */
+
+    listProductsByCategory: function listProductsByCategory(categoryId) {
+        var _this6 = this;
+
+        return Promise.resolve().then(function () {
+
+            if (typeof categoryId !== 'string') throw Error('user categoryId is not a string');
+            if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank');
+
+            return axios.get(_this6.url + '/productsByCategory/' + categoryId).then(function (_ref6) {
+                var status = _ref6.status,
+                    data = _ref6.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
+    },
+
+
+    /**
      * 
      * @param {string} userId
      * @param {string} text 
@@ -251,13 +360,13 @@ var clientApi = {
      * @returns {Promise<string>}
      */
     listProducts: function listProducts() {
-        var _this4 = this;
+        var _this7 = this;
 
         return Promise.resolve().then(function () {
 
-            return axios.get(_this4.url + '/products').then(function (_ref4) {
-                var status = _ref4.status,
-                    data = _ref4.data;
+            return axios.get(_this7.url + '/products').then(function (_ref7) {
+                var status = _ref7.status,
+                    data = _ref7.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
 

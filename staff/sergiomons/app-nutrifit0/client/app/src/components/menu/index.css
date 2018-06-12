@@ -1,0 +1,28 @@
+
+.list-group-item {
+    background-color: rgba(255, 253, 253, 0.932);
+    font-size: 1em;
+    text-align: center;
+    border: 3px solid rgba(0,0,0,.125);
+
+}
+.list-group-item:hover {
+    background-color: rgba(128, 128, 128, 0.651);
+    color: white;
+}
+  
+.list-group-item:first-child {
+    border-top-left-radius: 1.2rem;
+    border-top-right-radius: 1.2rem;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 1.2rem;
+    border-bottom-left-radius: 1.2rem;
+}
+
+.list-group-item.active {
+    background-color: #6c757d;
+    border-color: #7b838f;
+}
+

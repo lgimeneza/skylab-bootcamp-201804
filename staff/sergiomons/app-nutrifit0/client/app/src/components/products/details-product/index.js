@@ -10,6 +10,7 @@ class Categories extends Component {
     }
 
     componentDidMount() {
+
         logic.listProductsByCategory()
           .then(categories => {
                 this.setState({
@@ -23,8 +24,7 @@ class Categories extends Component {
 
     return (
         <div>        
-           <Link to="/register"><input className="buttons" type="submit" value="Register"/></Link>
-           <Link to="/auth"><input className="buttons" type="submit" value="Login"/></Link>
+         
            
            <ul>
                {this.state.categories.map(category => {

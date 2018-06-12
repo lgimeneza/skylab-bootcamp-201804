@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import clientApi from 'client-api';
-import clientLogic from 'client-logic';
+import clientLogic from './logic'
 
 clientApi.token = function (token) {
     if (token) {

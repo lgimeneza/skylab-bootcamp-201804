@@ -65,7 +65,6 @@ const berenjenasData = { image: 'http://images.com/1234', name: 'Berenjenas al m
 const salteadoBrocoliData = { image: 'http://images.com/1234', name: 'Salteado de Brocóli', description: 'Salteado de Brócoli desc', price: 4 }
 const tortillaSinData = { image: 'http://images.com/1234', name: 'Tortilla sin huevos', description: 'Tortilla sin huevos desc', price: 4.50 }
 
-
 Promise.all([
     // Parents Category
     new Category(packsCategoryData).save(),
@@ -164,6 +163,10 @@ Promise.all([
             espagueti.save(), macarronesIntegrales.save(), arrozIntegral.save(), arrozRemolacha.save(), risotto.save(), ensaladaCol.save(), tacosFrijoles.save(), pastelesCamote.save(), 
             berenjenas.save(), salteadoBrocoli.save(), tortillaSin.save() ] 
      })
+    //  .then(() => {
+    //      mongoose.connection.close()
+    //      console.log('done')
+    //  })
 
      
 // const arrayPromsisesParents =[ packsCategory, individualsCategory ]
@@ -279,4 +282,52 @@ Promise.all([
 //         })
 //         .catch(console.error)
 // }
+
+
+
+
+// 'use strict'
+
+// require('dotenv').config()
+
+// const { mongoose, models: { User, Category, Product, Order } } = require('..')
+
+// const { env: { DB_URL } } = process
+
+// // WARN run this script from root folder: $ node demos/
+
+// mongoose.connect(DB_URL)
+//     .then(() => {
+//         // TODO insertions
+
+//         //Categories
+//         let beginnerCourseCategoryData = { name: 'Beginner Course', description: 'Beginner Course desc', image: 'http://images.com/230957' }
+//         let advancedCourseCategoryData = { name: 'Advanced Course', description: 'Advanced Course desc', image: 'http://images.com/259827' }
+
+//         //Products
+//         let beginnerCourseData = { name: 'Beginner Course I', price: 50, discount: 15, description: 'Beginner Course I desc', image: 'http://images.com/5678', stock: 123 }
+//         let beginnerCourseData2 = { name: 'Beginner Course II', price: 50, discount: 15, description: 'Beginner Course II desc', image: 'http://images.com/5679', stock: 11}
+//         let advancedCourseData = { name: 'Advanced Course I', price: 100, discount: 20, description: 'Advanced Course I desc', image: 'http://images.com/1234', stock: 77 }
+
+
+//         return Promise.all([
+//             Category.create(beginnerCourseCategoryData),
+//             Category.create(advancedCourseCategoryData)
+//         ])
+//             .then(res => {
+//                 console.log(res)
+
+//                 beginnerCourseData.category = res[0]._id
+//                 beginnerCourseData2.category = res[0]._id
+//                 advancedCourseData.category = res[1]._id
+
+//                 return Promise.all([
+//                     Product.create(beginnerCourseData),
+//                     Product.create(beginnerCourseData2),
+//                     Product.create(advancedCourseData),
+//                 ])
+//             })
+//     })
+//     .then(() => mongoose.disconnect())
+//     .then(() => console.log('done'))
 

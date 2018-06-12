@@ -73,7 +73,7 @@ const logic = {
                 return User.findOne({ email, password })
             })
             .then(user => {
-                if (!user) throw Error('wrong credentials')
+                if (!user) throw Error('Email o password incorrectos')
 
                 return user.id
             })

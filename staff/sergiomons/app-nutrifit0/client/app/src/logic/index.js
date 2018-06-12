@@ -20,15 +20,20 @@ const logic = {
         return clientApi.registerUser(username, email, password, repeatPassword)
     },
 
+    
     login(email, password) {
         return clientApi.authenticateUser(email, password)
-            .then(id => {
-                // this.userId = id
-                this.userId(id)
-                return true
-            })
+        .then(id => {
+            this.userId(id)
+            return true
+        })
     },
     
+    retrieveUser(userId) {
+        return clientApi.retrieveUser(userId)
+                .then(userData => userData)
+    },
+
     listParentsCategory() {
         return clientApi.listParentsCategory()
                 .then(categories => categories)
@@ -48,6 +53,26 @@ const logic = {
         return clientApi.listProducts()
                 .then(products => products)
     },
+
+    get loggedIn() {
+        if (sessionStorage.getItem('token')) return true
+
+        return false
+    },
+
+    /**
+ * Logs a user out
+ * 
+ * @param {string} username - The user's username
+ * @param {string} password - The user's password
+ * 
+ * @returns {boolean} - Confirms log-out 
+ */
+    logout() {
+        sessionStorage.clear()
+
+        return true
+    }
 
 }
 

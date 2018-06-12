@@ -9,23 +9,29 @@ class Login extends Component {
     state = {
        email:'',
        password: '',
-       isLogged: false
+       isLogged: false,
+       error: ''
     }
 
     handlerSubmitLogin = e => {
         e.preventDefault()
 
         const { email, password} = this.state
+
         logic.login(email, password)
         .then(res => {
             if (res) {
-                  this.props.history.push('/')
+                this.props.history.push('/')
 
             } else {
               console.log('Error, username and/or password wrong')
             }
         })
-            .catch(err => err.message)
+        .catch(err => {
+            return this.setState({
+                error: err.message
+            })
+        })
     }
 
     handlerCapturingEmail = e => {
@@ -46,7 +52,6 @@ class Login extends Component {
     const { email, password } = this.state
     return (
         <div>     
-            <Nav />   
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-4">
@@ -67,6 +72,7 @@ class Login extends Component {
                                 </label>
                             </div> 
                             <button type="submit" className="btn btn-dark btn-block mt-3" >Login</button>
+                            {this.state.error && this.state.error}
                         </form>
                     </div>
                     <div className="col-md-4">
