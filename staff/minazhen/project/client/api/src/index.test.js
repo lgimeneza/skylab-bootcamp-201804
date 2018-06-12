@@ -294,29 +294,30 @@ describe('logic (travel api)', () => {
                     )
             )
 
-            // it("internal and create country", () =>
-            //     travelApi.registerUser("minax", "1","X")
-            //     .then((res)=> {
-            //         return travelApi.authenticateUser("minax", "1")
-            //         .then((id) =>
-            //             travelApi.addPhoto(id, "Japan", dUrl)
-            //                 .then(idp =>{ 
-            //                     expect(idp).to.exist
-            //                     return travelApi.retrieveUser(id)
-            //                     .then(user => {
-            //                         console.log(user)
-            //                         expect(user.countries.length).to.equal(1)
-            //                         return travelApi.retrieveCountry(id, "Japan")
-            //                         .then(country => {
-            //                             console.log(country)
-            //                             expect(country.photos.length).to.equal(1)
-            //                         })
-            //                     })
-            //                 })
+            it("internal and create country", () =>
+                travelApi.registerUser("minax", "1","X")
+                .then((res)=> {
+                    return travelApi.authenticateUser("minax", "1")
+                    .then((id) =>
+                        travelApi.addPhoto(id, "Japan", dUrl)
+                            .then(idp =>{ 
+                                expect(idp).to.exist
+                                return travelApi.retrieveUser(id)
+                                .then(user => {
+                                    console.log(user)
+                                    expect(user.countries.length).to.equal(1)
+                                    return travelApi.retrieveCountry(id, "Japan")
+                                    .then(country => {
+                                        debugger
+                                        console.log(country)
+                                        expect(country.photos.length).to.equal(1)
+                                    })
+                                })
+                            })
                             
-            //         )
-            //     })
-            // )
+                    )
+                })
+            )
             it("should succeed with country already created", () =>
                 User.create(userData)
                     .then((user) => {
