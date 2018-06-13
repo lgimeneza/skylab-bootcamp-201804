@@ -14,8 +14,8 @@ describe('models nutrifit', function () {
     before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => {
-        sergioData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: 123456789 }
-        johnData = { name: 'John', surname: 'W', username: 'jwaine', email: 'jw@email.com', password: '123', address: 'Calle J', phone: 987654321 }
+        sergioData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: '123456789' }
+        johnData = { name: 'John', surname: 'W', username: 'jwaine', email: 'jw@email.com', password: '123', address: 'Calle J', phone: '987654321' }
 
         pack_CategoryData = { name: 'Pack' }
         proteinCategoryData = { name: 'Protein' }

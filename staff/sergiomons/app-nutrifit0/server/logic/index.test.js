@@ -9,7 +9,7 @@ const { expect } = require('chai')
 const { env: { DB_URL } } = process
 
 describe('logic nutrifit', () => {
-    let userDataRegister, userData, otherUserData, dummyUserId, indexes, polloVerdurasData, terneraData, polloArrozData, sopaVerdurasData, sopaMariscoData, pescadoPlanchaData, pack_CategoryData
+    let userDataRegister, userData, otherUserData, dummyUserId, indexes, polloVerdurasData, terneraData, polloArrozData, sopaVerdurasData, sopaMariscoData, pescadoPlanchaData, pack_CategoryData, individual_CategoryData, individual_S_CategoryData
 
     before(() => mongoose.connect(DB_URL))
 
@@ -19,7 +19,6 @@ describe('logic nutrifit', () => {
         otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
         dummyUserId = '123456781234567812345678'
 
-        indexes = []
         // products data
         polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
         terneraData = { image: 'http://images.com/1234', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
@@ -27,14 +26,18 @@ describe('logic nutrifit', () => {
         sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }
         sopaMariscoData = { image: 'http://images.com/1234', name: 'Sopa de marisco', description: 'Sopa de marisco desc', price: 3.25 }
         pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
+
         // categories
         pack_CategoryData = { name: 'Pack' }
+        individual_CategoryData = { name: 'Individual' }
+        individual_S_CategoryData = { name: 'Inviditual S' }
 
+        indexes = []
         let count = 10 + Math.floor(Math.random() * 10)
         indexes.length = 0
         while (count--) indexes.push(count)
 
-        return Promise.all([User.remove(), Product.deleteMany()])
+        return Promise.all([User.remove(), Product.deleteMany(), Category.deleteMany()])
     })
 
     describe('register user', () => {
@@ -45,7 +48,7 @@ describe('logic nutrifit', () => {
                 .then(res => expect(res).to.be.true)
         })
 
-        it('should fail no match password', () =>{
+        it('should fail no match password', () => {
             const { username, email, password, repeatPassword } = userDataRegister
 
             return logic.registerUser(username, email, password, '124')
@@ -379,33 +382,58 @@ describe('logic nutrifit', () => {
 
     describe('list root categories', () => {
         it('should succeed on correct data', () => {
-            return new Category(pack_CategoryData).save()
-                .then(category => {
-                    polloVerdurasData.category = category._id
-                    terneraData.category = category._id
-                    polloArrozData.category = category._id
+            return Promise.all([
+                new Category(pack_CategoryData).save(),
+                new Category(individual_CategoryData).save(),
+                new Category(individual_S_CategoryData).save()
+            ])
+                .then(categories => {
+                    const [packCat, indCat, indSCat] = categories
 
-                    return Promise.all([
-                        new Product(polloVerdurasData).save(),
-                        new Product(terneraData).save(),
-                        new Product(polloArrozData).save(),
-                    ])
-                        .then(([polloVerduras, ternera, polloArroz]) => {
-                            return polloVerduras.save()
-                                .then(() => {
-                                    return logic.listProducts()
-                                        .then(products => {
+                    indSCat.parent = indCat._id
 
-                                            expect(products.length).to.equal(6)
+                    return indSCat.save()
+                        .then(() => {
+                            polloVerdurasData.category = packCat._id
+                            terneraData.category = packCat._id
 
-                                            const product = products.find(product => product.id == polloVerduras._doc._id.toString())
-                                            expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
-                                            expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
-                                            expect(product.name).to.equal(polloVerduras.name)
-                                            expect(product.description).to.equal(polloVerduras.description)
-                                            expect(product.price).to.equal(polloVerduras.price)
-                                            expect(product.categoryId).to.equal(category._id.toString())
+                            polloArrozData.category = indSCat._id
+                            sopaVerdurasData.category = indSCat._id
+                            sopaMariscoData.category = indSCat._id
+
+                            return Promise.all([
+                                new Product(polloVerdurasData).save(),
+                                new Product(terneraData).save(),
+                                new Product(polloArrozData).save(),
+                                new Product(sopaVerdurasData).save(),
+                                new Product(sopaMariscoData).save(),
+                            ])
+                        })
+                        .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco]) => {
+                            return logic.listRootCategories()
+                                .then(categories => {
+                                    expect(categories).to.exist
+                                    expect(categories.length).to.equal(2)
+
+                                    {
+                                        const category = categories.find(category => {
+                                            return category.id === packCat._id.toString()
                                         })
+
+                                        expect(category).to.exist
+                                        expect(category.id).to.equal(packCat._id.toString())
+                                        expect(category.hasChildren).to.be.false
+                                    }
+
+                                    {
+                                        const category = categories.find(category => {
+                                            return category.id === indCat._id.toString()
+                                        })
+
+                                        expect(category).to.exist
+                                        expect(category.id).to.equal(indCat._id.toString())
+                                        expect(category.hasChildren).to.be.true
+                                    }
                                 })
                         })
                 })
