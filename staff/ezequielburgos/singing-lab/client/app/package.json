@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "api": "file:../api",
+    "popper.js": "^1.14.3",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.3.1",

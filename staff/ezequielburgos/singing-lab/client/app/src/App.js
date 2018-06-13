@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import logic from '../src/logic'
 import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, Cart } from './components'
 import { Switch, Route } from 'react-router-dom'
 
 class App extends Component {
+
 
   render() {
     return (

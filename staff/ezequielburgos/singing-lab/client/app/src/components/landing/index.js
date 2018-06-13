@@ -6,6 +6,7 @@ import Footer from './../footer'
 import LandingMain from '../landing-main'
 import LandingProducts from '../landingProducts'
 import LandingChat from '../landing-chat'
+import logic from '../../logic'
 
 class Landing extends Component {
 
@@ -22,10 +23,10 @@ class Landing extends Component {
                         </div>
                     </div>
                 </section>
-                <LandingMain/>
-                <LandingProducts/>
-                <LandingChat/>
-                <Footer/>
+                <LandingMain />
+                <LandingProducts />
+                <LandingChat />
+                <Footer />
             </main>
         )
     }

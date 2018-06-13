@@ -54,7 +54,7 @@ describe('logic (singingLab)', () => {
                     expect(res).to.be.true
                     expect(logic.userId).not.to.equal('NO-ID')
 
-                    return singingLabApi.retrieveUser(logic.userId)
+                    return logic.retrieveUser()
                         .then(res => {
                             expect(res.name).to.equal('John')
                             expect(res.surname).to.equal('Doe')

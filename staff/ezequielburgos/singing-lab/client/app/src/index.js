@@ -5,6 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { HashRouter } from 'react-router-dom'
 import singingLabApi from 'api'
+import logic from './logic'
 
 singingLabApi.token = function (token) {
   if (token) {
@@ -14,6 +15,16 @@ singingLabApi.token = function (token) {
   }
 
   return sessionStorage.getItem('token')
+}
+
+logic.userId = function (userId) {
+  if (userId) {
+    sessionStorage.setItem('userId', userId)
+
+    return
+  }
+
+  return sessionStorage.getItem('userId')
 }
 
 ReactDOM.render(

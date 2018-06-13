@@ -3,8 +3,17 @@ const singingLabApi = require('api')
 singingLabApi.url = 'http://localhost:4000/api'
 
 const logic = {
-    userId: 'NO-ID',
-    categoryId: 'NO-ID',
+    // userId: 'NO-ID',
+
+    userId(userId) {
+        if (userId) {
+            this._userId = userId
+
+            return
+        }
+
+        return this._userId
+    },
 
     registerUser(name, surname, address, email, password) {
 
@@ -14,20 +23,15 @@ const logic = {
     login(email, password) {
         return singingLabApi.authenticateUser(email, password)
             .then(id => {
-                this.userId = id
+                this.userId(id)
 
                 return true
             })
     },
 
-    retrieveUser(id) {
-        return singingLabApi.retrieveUser(id)
-            .then(res => {
-
-                this.data = res.data
-
-                return true
-            })
+    retrieveUser() {
+        return singingLabApi.retrieveUser(this.userId())
+            .then(res => res)
     },
 
     updateUser(id, name, surname, phone, address, password, newPhone, newPassword) {
