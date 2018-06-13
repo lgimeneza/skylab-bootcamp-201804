@@ -11,7 +11,7 @@ mongoose.connect(DB_URL)
     .then(() => mongoose.connection.db.dropDatabase())
     .then(() => {
 
-        
+
         // parentCategories
         let packsCategoryData = { image: 'http://images.com/1234', name: "Packs" }
         let individualsCategoryData = { image: 'http://images.com/1234', name: "Individuals dish" }
@@ -74,120 +74,117 @@ mongoose.connect(DB_URL)
             Category.create(packsCategoryData),
             Category.create(individualsCategoryData),
         ])
-        .then(([packsCategory, individualsCategory]) => {
+            .then(([packsCategory, individualsCategory]) => {
 
-            //Subcategories
-            meatCategoryData.parent = individualsCategory._id;
-            soupCategoryData.parent = individualsCategory._id;
-            fishCategoryData.parent = individualsCategory._id;
-            pastaCategoryData.parent = individualsCategory._id;
-            proteinCategoryData.parent = individualsCategory._id;
-            vegetarianCategoryData.parent = individualsCategory._id;
-            veganCategoryData.parent = individualsCategory._id;
+                //Subcategories
+                meatCategoryData.parent = individualsCategory._id;
+                soupCategoryData.parent = individualsCategory._id;
+                fishCategoryData.parent = individualsCategory._id;
+                pastaCategoryData.parent = individualsCategory._id;
+                proteinCategoryData.parent = individualsCategory._id;
+                vegetarianCategoryData.parent = individualsCategory._id;
+                veganCategoryData.parent = individualsCategory._id;
 
-            return Promise.all([
-                Category.create(meatCategoryData),
-                Category.create(soupCategoryData),
-                Category.create(fishCategoryData),
-                Category.create(pastaCategoryData),
-                Category.create(proteinCategoryData),
-                Category.create(vegetarianCategoryData),
-                Category.create(veganCategoryData)
-            ])
-            .then(([meatCategory, soupCategory, fishCategory, pastaCategory, proteinCategory,
-                vegetarianCategory, veganCategory]) => {
+                return Promise.all([
+                    Category.create(meatCategoryData),
+                    Category.create(soupCategoryData),
+                    Category.create(fishCategoryData),
+                    Category.create(pastaCategoryData),
+                    Category.create(proteinCategoryData),
+                    Category.create(vegetarianCategoryData),
+                    Category.create(veganCategoryData)
+                ])
+                    .then(([meatCategory, soupCategory, fishCategory, pastaCategory, proteinCategory,
+                        vegetarianCategory, veganCategory]) => {
 
-                    // Set category to products PacksCategory
-                    packMuscleData.category = packsCategory._id;
-                    packBodyTonicData.category = packsCategory._id;
-                    packBurningData.category = packsCategory._id;
-                    packHealthyData.category = packsCategory._id;
-                    packVeganData.category = packsCategory._id;
-                    packNoGlutenData.category = packsCategory._id;
+                        // Set category to products PacksCategory
+                        packMuscleData.category = packsCategory._id;
+                        packBodyTonicData.category = packsCategory._id;
+                        packBurningData.category = packsCategory._id;
+                        packHealthyData.category = packsCategory._id;
+                        packVeganData.category = packsCategory._id;
+                        packNoGlutenData.category = packsCategory._id;
 
-                    // Set category to products individualsCategory
-                    polloVerdurasData.category = meatCategory._id;
-                    terneraData.category = meatCategory._id;
-                    polloArrozData.category = meatCategory._id;
+                        // Set category to products individualsCategory
+                        polloVerdurasData.category = meatCategory._id;
+                        terneraData.category = meatCategory._id;
+                        polloArrozData.category = meatCategory._id;
 
-                    sopaVerdurasData.category = soupCategory._id;
-                    sopaMariscoData.category = soupCategory._id;
+                        sopaVerdurasData.category = soupCategory._id;
+                        sopaMariscoData.category = soupCategory._id;
 
-                    pescadoPlanchaData.category = fishCategory._id;
-                    salmonData.category = fishCategory._id;
-                    pescadoVerdurasData.category = fishCategory._id;
+                        pescadoPlanchaData.category = fishCategory._id;
+                        salmonData.category = fishCategory._id;
+                        pescadoVerdurasData.category = fishCategory._id;
 
-                    tallarinesData.category = pastaCategory._id;
-                    espaguetiData.category = pastaCategory._id;
-                    macarronesIntegralesData.category = pastaCategory._id;
+                        tallarinesData.category = pastaCategory._id;
+                        espaguetiData.category = pastaCategory._id;
+                        macarronesIntegralesData.category = pastaCategory._id;
 
-                    arrozIntegralData.category = proteinCategory._id;
-                    arrozRemolachaData.category = proteinCategory._id;
-                    risottoData.category = proteinCategory._id;
+                        arrozIntegralData.category = proteinCategory._id;
+                        arrozRemolachaData.category = proteinCategory._id;
+                        risottoData.category = proteinCategory._id;
 
-                    ensaladaColData.category = vegetarianCategory._id;
-                    tacosFrijolesData.category = vegetarianCategory._id;
-                    pastelesCamoteData.category = vegetarianCategory._id;
+                        ensaladaColData.category = vegetarianCategory._id;
+                        tacosFrijolesData.category = vegetarianCategory._id;
+                        pastelesCamoteData.category = vegetarianCategory._id;
 
-                    berenjenasData.category = veganCategory._id;
-                    salteadoBrocoliData.category = veganCategory._id;
-                    tortillaSinData.category = veganCategory._id;
+                        berenjenasData.category = veganCategory._id;
+                        salteadoBrocoliData.category = veganCategory._id;
+                        tortillaSinData.category = veganCategory._id;
 
-                    return Promise.all([
+                        return Promise.all([
 
-                        // PacksCategory
-                        Product.create(packMuscleData),
-                        Product.create(packBodyTonicData),
-                        Product.create(packBurningData),
-                        Product.create(packHealthyData),
-                        Product.create(packVeganData),
-                        Product.create(packNoGlutenData),
-    
-                        // Products IndividualsCategory
-                        Product.create(polloVerdurasData),
-                        Product.create(terneraData),
-                        Product.create(polloArrozData),
-                        Product.create(sopaVerdurasData),
-                        Product.create(sopaMariscoData),
-                        Product.create(pescadoPlanchaData),
-                        Product.create(salmonData),
-                        Product.create(pescadoVerdurasData),
-                        Product.create(tallarinesData),
-                        Product.create(espaguetiData),
-                        Product.create(macarronesIntegralesData),
-                        Product.create(arrozIntegralData),
-                        Product.create(arrozRemolachaData),
-                        Product.create(risottoData),
-                        Product.create(ensaladaColData),
-                        Product.create(tacosFrijolesData),
-                        Product.create(pastelesCamoteData),
-                        Product.create(berenjenasData),
-                        Product.create(salteadoBrocoliData),
-                        Product.create(tortillaSinData),
-                   ])
-                })
+                            // PacksCategory
+                            Product.create(packMuscleData),
+                            Product.create(packBodyTonicData),
+                            Product.create(packBurningData),
+                            Product.create(packHealthyData),
+                            Product.create(packVeganData),
+                            Product.create(packNoGlutenData),
+
+                            // Products IndividualsCategory
+                            Product.create(polloVerdurasData),
+                            Product.create(terneraData),
+                            Product.create(polloArrozData),
+                            Product.create(sopaVerdurasData),
+                            Product.create(sopaMariscoData),
+                            Product.create(pescadoPlanchaData),
+                            Product.create(salmonData),
+                            Product.create(pescadoVerdurasData),
+                            Product.create(tallarinesData),
+                            Product.create(espaguetiData),
+                            Product.create(macarronesIntegralesData),
+                            Product.create(arrozIntegralData),
+                            Product.create(arrozRemolachaData),
+                            Product.create(risottoData),
+                            Product.create(ensaladaColData),
+                            Product.create(tacosFrijolesData),
+                            Product.create(pastelesCamoteData),
+                            Product.create(berenjenasData),
+                            Product.create(salteadoBrocoliData),
+                            Product.create(tortillaSinData),
+                        ])
+                    })
             })
-            .then(() => mongoose.disconnect())
-            .then(() => console.log('done'))
-       
-       
 
-            //Children IndividualsCategory
-            // new Category(meatCategoryData).save(),
-            // new Category(soupCategoryData).save(),
-            // new Category(fishCategoryData).save(),
-            // new Category(pastaCategoryData).save(),
-            // new Category(proteinCategoryData).save(),
-            // new Category(vegetarianCategoryData).save(),
-            // new Category(veganCategoryData).save(),
-            //Products PacksCategory
-            // new Product(packMuscleData).save(),
-            // new Product(packBodyTonicData).save(),
-            // new Product(packBurningData).save(),
-            // new Product(packHealthyData).save(),
-            // new Product(packVeganData).save(),
-            // new Product(packNoGlutenData).save(),
-            // Products IndividualsCategory
+
+        //Children IndividualsCategory
+        // new Category(meatCategoryData).save(),
+        // new Category(soupCategoryData).save(),
+        // new Category(fishCategoryData).save(),
+        // new Category(pastaCategoryData).save(),
+        // new Category(proteinCategoryData).save(),
+        // new Category(vegetarianCategoryData).save(),
+        // new Category(veganCategoryData).save(),
+        //Products PacksCategory
+        // new Product(packMuscleData).save(),
+        // new Product(packBodyTonicData).save(),
+        // new Product(packBurningData).save(),
+        // new Product(packHealthyData).save(),
+        // new Product(packVeganData).save(),
+        // new Product(packNoGlutenData).save(),
+        // Products IndividualsCategory
         //     new Product(polloVerdurasData).save(),
         //     new Product(terneraData).save(),
         //     new Product(polloArrozData).save(),
@@ -215,57 +212,57 @@ mongoose.connect(DB_URL)
         //         espagueti, macarronesIntegrales, arrozIntegral, arrozRemolacha, risotto, ensaladaCol, tacosFrijoles, pastelesCamote,
         //         berenjenas, salteadoBrocoli, tortillaSin]) => {
 
-                // Set parent to child IndividualsCategory
-                // meatCategory.parent = individualsCategory._id;
-                // soupCategory.parent = individualsCategory._id;
-                // fishCategory.parent = individualsCategory._id;
-                // pastaCategory.parent = individualsCategory._id;
-                // proteinCategory.parent = individualsCategory._id;
-                // vegetarianCategory.parent = individualsCategory._id;
-                // veganCategory.parent = individualsCategory._id;
+        // Set parent to child IndividualsCategory
+        // meatCategory.parent = individualsCategory._id;
+        // soupCategory.parent = individualsCategory._id;
+        // fishCategory.parent = individualsCategory._id;
+        // pastaCategory.parent = individualsCategory._id;
+        // proteinCategory.parent = individualsCategory._id;
+        // vegetarianCategory.parent = individualsCategory._id;
+        // veganCategory.parent = individualsCategory._id;
 
-                // Set category to products packsCategory
-                // packMuscle.category = packsCategory._id;
-                // packBodyTonic.category = packsCategory._id;
-                // packBurning.category = packsCategory._id;
-                // packHealthy.category = packsCategory._id;
-                // packVegan.category = packsCategory._id;
-                // packNoGluten.category = packsCategory._id;
+        // Set category to products packsCategory
+        // packMuscle.category = packsCategory._id;
+        // packBodyTonic.category = packsCategory._id;
+        // packBurning.category = packsCategory._id;
+        // packHealthy.category = packsCategory._id;
+        // packVegan.category = packsCategory._id;
+        // packNoGluten.category = packsCategory._id;
 
-                // Set category to products individualsCategory
-            //     polloVerduras.category = meatCategory._id;
-            //     ternera.category = meatCategory._id;
-            //     polloArroz.category = meatCategory._id;
+        // Set category to products individualsCategory
+        //     polloVerduras.category = meatCategory._id;
+        //     ternera.category = meatCategory._id;
+        //     polloArroz.category = meatCategory._id;
 
-            //     sopaVerduras.category = soupCategory._id;
-            //     sopaMarisco.category = soupCategory._id;
+        //     sopaVerduras.category = soupCategory._id;
+        //     sopaMarisco.category = soupCategory._id;
 
-            //     pescadoPlancha.category = fishCategory._id;
-            //     salmon.category = fishCategory._id;
-            //     pescadoVerduras.category = fishCategory._id;
+        //     pescadoPlancha.category = fishCategory._id;
+        //     salmon.category = fishCategory._id;
+        //     pescadoVerduras.category = fishCategory._id;
 
-            //     tallarines.category = pastaCategory._id;
-            //     espagueti.category = pastaCategory._id;
-            //     macarronesIntegrales.category = pastaCategory._id;
+        //     tallarines.category = pastaCategory._id;
+        //     espagueti.category = pastaCategory._id;
+        //     macarronesIntegrales.category = pastaCategory._id;
 
-            //     arrozIntegral.category = proteinCategory._id;
-            //     arrozRemolacha.category = proteinCategory._id;
-            //     risotto.category = proteinCategory._id;
+        //     arrozIntegral.category = proteinCategory._id;
+        //     arrozRemolacha.category = proteinCategory._id;
+        //     risotto.category = proteinCategory._id;
 
-            //     ensaladaCol.category = vegetarianCategory._id;
-            //     tacosFrijoles.category = vegetarianCategory._id;
-            //     pastelesCamote.category = vegetarianCategory._id;
+        //     ensaladaCol.category = vegetarianCategory._id;
+        //     tacosFrijoles.category = vegetarianCategory._id;
+        //     pastelesCamote.category = vegetarianCategory._id;
 
-            //     berenjenas.category = veganCategory._id;
-            //     salteadoBrocoli.category = veganCategory._id;
-            //     tortillaSin.category = veganCategory._id;
+        //     berenjenas.category = veganCategory._id;
+        //     salteadoBrocoli.category = veganCategory._id;
+        //     tortillaSin.category = veganCategory._id;
 
-            //     return [meatCategory.save(), soupCategory.save(), fishCategory.save(), pastaCategory.save(), proteinCategory.save(),
-            //     vegetarianCategory.save(), veganCategory.save(), packMuscle.save(), packBodyTonic.save(), packBurning.save(), packHealthy.save(), packVegan.save(), packNoGluten.save(),
-            //     polloVerduras.save(), ternera.save(), polloArroz.save(), sopaVerduras.save(), sopaMarisco.save(), pescadoPlancha.save(), salmon.save(), pescadoVerduras.save(), tallarines.save(),
-            //     espagueti.save(), macarronesIntegrales.save(), arrozIntegral.save(), arrozRemolacha.save(), risotto.save(), ensaladaCol.save(), tacosFrijoles.save(), pastelesCamote.save(),
-            //     berenjenas.save(), salteadoBrocoli.save(), tortillaSin.save()]
-            // })
+        //     return [meatCategory.save(), soupCategory.save(), fishCategory.save(), pastaCategory.save(), proteinCategory.save(),
+        //     vegetarianCategory.save(), veganCategory.save(), packMuscle.save(), packBodyTonic.save(), packBurning.save(), packHealthy.save(), packVegan.save(), packNoGluten.save(),
+        //     polloVerduras.save(), ternera.save(), polloArroz.save(), sopaVerduras.save(), sopaMarisco.save(), pescadoPlancha.save(), salmon.save(), pescadoVerduras.save(), tallarines.save(),
+        //     espagueti.save(), macarronesIntegrales.save(), arrozIntegral.save(), arrozRemolacha.save(), risotto.save(), ensaladaCol.save(), tacosFrijoles.save(), pastelesCamote.save(),
+        //     berenjenas.save(), salteadoBrocoli.save(), tortillaSin.save()]
+        // })
         //  .then(() => {
         //      mongoose.connection.close()
         //      console.log('done')
@@ -433,5 +430,7 @@ mongoose.connect(DB_URL)
         //     .then(() => console.log('done'))
 
     })
+    .then(() => User.create({ name: 'John', surname: 'Doe', username: 'johndoe', email: 'jd@mail.com', password: '123', phone: '+34 123 456 789' }))
     .then(() => mongoose.disconnect())
     .then(() => console.log('done'))
+    .catch(console.error)

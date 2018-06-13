@@ -27,7 +27,7 @@ module.exports = new Schema({
         type: String,
     },
     phone: {
-        type: Number,
+        type: String,
     },
     points: {
         type: Number,

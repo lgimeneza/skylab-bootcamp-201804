@@ -7,7 +7,7 @@ const { expect } = require('chai')
 
 const { env: { DB_URL } } = process
 
-describe('models nutrifit', function()  {
+describe('models nutrifit', function () {
     this.timeout(3000)
     let sergioData, johnData, pack_CategoryData, proteinCategoryData, veganCategoryData, pack_S_CategoryData, pack_M_CategoryData, pack_L_CategoryData, pack_L_C_CategoryData, pack_XL_CategoryData, packMuscle_Data, packMuscle_S_Data, packMuscle_M_Data, packMuscle_L_Data, packMuscle_L_C_Data, packMuscle_XL_Data
 
@@ -57,7 +57,7 @@ describe('models nutrifit', function()  {
 
     describe('create category hierarchy', () => {
         it('should succeed on correct data', () => {
-           return Promise.all([
+            return Promise.all([
                 new Category(pack_CategoryData).save(),
                 new Category(pack_S_CategoryData).save(),
                 new Category(pack_M_CategoryData).save(),
@@ -102,22 +102,29 @@ describe('models nutrifit', function()  {
 
     describe('create products', () => {
         it('should succeed on correct data', () => {
-           return Promise.all([
-                new Product(packMuscle_Data).save(),
-                new Product(packMuscle_S_Data).save(),
-                new Product(packMuscle_M_Data).save(),
-            ])
-                .then(([pack_Muscle, packMuscle_S_, packMuscle_M_]) => {
-                    
-                    const arrayProducts = [pack_Muscle, packMuscle_S_, packMuscle_M_];
+            return new Category(pack_CategoryData).save()
+                .then(category => {
+                    packMuscle_Data.category = category._id
+                    packMuscle_S_Data.category = category._id
+                    packMuscle_M_Data.category = category._id
 
-                    expect(arrayProducts.length).to.equal(3)
-                    expect(pack_Muscle._doc._id.toString()).to.exist
-                    expect(pack_Muscle.name).to.equal(packMuscle_Data.name)
-                    expect(packMuscle_S_._doc._id.toString()).to.exist
-                    expect(packMuscle_S_.name).to.equal(packMuscle_S_Data.name)
-                    expect(packMuscle_M_._doc._id.toString()).to.exist
-                    expect(packMuscle_M_.name).to.equal(packMuscle_M_Data.name)
+                    return Promise.all([
+                        new Product(packMuscle_Data).save(),
+                        new Product(packMuscle_S_Data).save(),
+                        new Product(packMuscle_M_Data).save(),
+                    ])
+                        .then(([pack_Muscle, packMuscle_S_, packMuscle_M_]) => {
+
+                            const arrayProducts = [pack_Muscle, packMuscle_S_, packMuscle_M_];
+
+                            expect(arrayProducts.length).to.equal(3)
+                            expect(pack_Muscle._doc._id.toString()).to.exist
+                            expect(pack_Muscle.name).to.equal(packMuscle_Data.name)
+                            expect(packMuscle_S_._doc._id.toString()).to.exist
+                            expect(packMuscle_S_.name).to.equal(packMuscle_S_Data.name)
+                            expect(packMuscle_M_._doc._id.toString()).to.exist
+                            expect(packMuscle_M_.name).to.equal(packMuscle_M_Data.name)
+                        })
                 })
         })
     })

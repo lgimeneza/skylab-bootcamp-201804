@@ -9,48 +9,48 @@ const { expect } = require('chai')
 const { env: { DB_URL } } = process
 
 describe('logic nutrifit', () => {
-    const userDataRegister = { username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword: '123' }
-    const userData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: 123456789, points: 4, orders: [] }
-    const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
-    const dummyUserId = '123456781234567812345678'
-    const dummyNoteId = '123456781234567812345678'
-    const indexes = []
-    // products data
-    const polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
-    const terneraData = { image: 'http://images.com/1234', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
-    const polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }
-    const sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }
-    const sopaMariscoData = { image: 'http://images.com/1234', name: 'Sopa de marisco', description: 'Sopa de marisco desc', price: 3.25 }
-    const pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
-    // categories
-    const pack_CategoryData = { name: 'Pack' }
-
+    let userDataRegister, userData, otherUserData, dummyUserId, indexes, polloVerdurasData, terneraData, polloArrozData, sopaVerdurasData, sopaMariscoData, pescadoPlanchaData, pack_CategoryData
 
     before(() => mongoose.connect(DB_URL))
 
     beforeEach(() => {
+        userDataRegister = { username: 'sergi', email: 'ser@email.com', password: '123', repeatPassword: '123' }
+        userData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: 123456789, points: 4, orders: [] }
+        otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
+        dummyUserId = '123456781234567812345678'
+
+        indexes = []
+        // products data
+        polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
+        terneraData = { image: 'http://images.com/1234', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
+        polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }
+        sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }
+        sopaMariscoData = { image: 'http://images.com/1234', name: 'Sopa de marisco', description: 'Sopa de marisco desc', price: 3.25 }
+        pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
+        // categories
+        pack_CategoryData = { name: 'Pack' }
+
         let count = 10 + Math.floor(Math.random() * 10)
         indexes.length = 0
         while (count--) indexes.push(count)
-
 
         return Promise.all([User.remove(), Product.deleteMany()])
     })
 
     describe('register user', () => {
+        it('should succeed on correct data', () => {
+            const { username, email, password, repeatPassword } = userDataRegister
 
-        const { username, email, password, repeatPassword } = userDataRegister
-
-        it('should succeed on correct data', () =>
-
-            logic.registerUser('sergi', 'ser@email.com', '123', '123')
+            return logic.registerUser('sergi', 'ser@email.com', '123', '123')
                 .then(res => expect(res).to.be.true)
-        )
+        })
 
-        it('should fail no match password', () =>
-            logic.registerUser(username, email, password, '124')
+        it('should fail no match password', () =>{
+            const { username, email, password, repeatPassword } = userDataRegister
+
+            return logic.registerUser(username, email, password, '124')
                 .catch(({ message }) => expect(message).to.equal('the fields password not match'))
-        )
+        })
 
         it('should fail on existing username', () => {
             User.create(userDataRegister)
@@ -84,47 +84,47 @@ describe('logic nutrifit', () => {
         )
 
         it('should fail on no user email', () =>
-            logic.registerUser(username)
+            logic.registerUser(userDataRegister.username)
                 .catch(({ message }) => expect(message).to.equal('email is not a string'))
         )
 
         it('should fail on empty user email', () =>
-            logic.registerUser(username, '')
+            logic.registerUser(userDataRegister.username, '')
                 .catch(({ message }) => expect(message).to.equal('email is empty or blank'))
         )
 
         it('should fail on blank user email', () =>
-            logic.registerUser(username, '     ')
+            logic.registerUser(userDataRegister.username, '     ')
                 .catch(({ message }) => expect(message).to.equal('email is empty or blank'))
         )
 
         it('should fail on no user password', () =>
-            logic.registerUser(username, email)
+            logic.registerUser(userDataRegister.username, userDataRegister.email)
                 .catch(({ message }) => expect(message).to.equal('password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            logic.registerUser(username, email, '')
+            logic.registerUser(userDataRegister.username, userDataRegister.email, '')
                 .catch(({ message }) => expect(message).to.equal('password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            logic.registerUser(username, email, '     ')
+            logic.registerUser(userDataRegister.username, userDataRegister.email, '     ')
                 .catch(({ message }) => expect(message).to.equal('password is empty or blank'))
         )
 
         it('should fail on no user repeatPassword', () =>
-            logic.registerUser(username, email, password)
+            logic.registerUser(userDataRegister.username, userDataRegister.email, userDataRegister.password)
                 .catch(({ message }) => expect(message).to.equal('repeatPassword is not a string'))
         )
 
         it('should fail on empty user repeatPassword', () =>
-            logic.registerUser(username, email, password, '')
+            logic.registerUser(userDataRegister.username, userDataRegister.email, userDataRegister.password, '')
                 .catch(({ message }) => expect(message).to.equal('repeatPassword is empty or blank'))
         )
 
         it('should fail on blank user repeatPassword', () =>
-            logic.registerUser(username, email, password, '     ')
+            logic.registerUser(userDataRegister.username, userDataRegister.email, userDataRegister.password, '     ')
                 .catch(({ message }) => expect(message).to.equal('repeatPassword is empty or blank'))
         )
     })
@@ -138,15 +138,15 @@ describe('logic nutrifit', () => {
                 )
         )
 
-        it('should fail no match email', () =>
-            logic.authenticateUser('fff@as.com', password)
+        it('should fail on wrong email', () =>
+            logic.authenticateUser('fff@as.com', userDataRegister.password)
                 .catch(({ message }) => expect(message).to.equal('Email o password incorrectos'))
         )
 
-        it('should fail no match email', () =>
-            logic.authenticateUser(email, '124')
+        it('should fail on wrong password', () =>
+            logic.authenticateUser(userDataRegister.email, '124')
                 .catch(({ message }) => expect(message).to.equal('Email o password incorrectos'))
-    )
+        )
 
         it('should fail on no user email', () =>
             logic.authenticateUser()
@@ -338,34 +338,39 @@ describe('logic nutrifit', () => {
 
     describe('list all products', () => {
         it('should succeed on correct data', () => {
-            return Promise.all([
-                new Product(polloVerdurasData).save(),
-                new Product(terneraData).save(),
-                new Product(polloArrozData).save(),
-                new Product(sopaVerdurasData).save(),
-                new Product(sopaMariscoData).save(),
-                new Product(pescadoPlanchaData).save(),
+            return new Category(pack_CategoryData).save()
+                .then(category => {
+                    polloVerdurasData.category = category._id
+                    terneraData.category = category._id
+                    polloArrozData.category = category._id
+                    sopaVerdurasData.category = category._id
+                    sopaMariscoData.category = category._id
+                    pescadoPlanchaData.category = category._id
 
-                new Category(pack_CategoryData).save()
-            ])
-                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, packCategory]) => {
+                    return Promise.all([
+                        new Product(polloVerdurasData).save(),
+                        new Product(terneraData).save(),
+                        new Product(polloArrozData).save(),
+                        new Product(sopaVerdurasData).save(),
+                        new Product(sopaMariscoData).save(),
+                        new Product(pescadoPlanchaData).save()
+                    ])
+                        .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, packCategory]) => {
+                            return polloVerduras.save()
+                                .then(() => {
+                                    return logic.listProducts()
+                                        .then(products => {
 
-                    polloVerduras.category = packCategory._id
-                    
-                    return polloVerduras.save()
-                        .then(() => {
-                            return logic.listProducts()
-                                .then(products => {
-                                  
-                                    expect(products.length).to.equal(6)
-                                    
-                                    const product = products.find(product => product.id == polloVerduras._doc._id.toString())
-                                    expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
-                                    expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
-                                    expect(product.name).to.equal(polloVerduras.name)
-                                    expect(product.description).to.equal(polloVerduras.description)
-                                    expect(product.price).to.equal(polloVerduras.price)
-                                    expect(product.categoryId).to.equal(packCategory._id.toString())
+                                            expect(products.length).to.equal(6)
+
+                                            const product = products.find(product => product.id == polloVerduras._doc._id.toString())
+                                            expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
+                                            expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
+                                            expect(product.name).to.equal(polloVerduras.name)
+                                            expect(product.description).to.equal(polloVerduras.description)
+                                            expect(product.price).to.equal(polloVerduras.price)
+                                            expect(product.categoryId).to.equal(category._id.toString())
+                                        })
                                 })
                         })
                 })
