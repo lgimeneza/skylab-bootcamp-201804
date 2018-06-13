@@ -18,7 +18,6 @@ class ListApartment extends Component {
                     apartmentInfo: res
                 })
             })
-            console.log('apartmentInfo',this.state.apartmentInfo)
         })
     }
     

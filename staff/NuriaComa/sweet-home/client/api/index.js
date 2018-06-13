@@ -13,6 +13,9 @@ const shApi = {
         return this._token
     },
         apartmentId: 'NO-ID',
+        noteId:'No-ID',
+        taskId:'No-ID',
+        marketId:'No-ID',
         
     
     /**
@@ -319,13 +322,202 @@ const shApi = {
     listApartment(apartmentId) {
         return Promise.resolve()
             .then(() => {
-                console.log('api-client-axios-apartmentId', apartmentId)
                
                 return axios.get(`${this.url}/listapartment/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                    console.log('api-client-axios-data', data.data)
                     return data.data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
+    addTasks(name, apartmentId){
+        return axios.post(`${this.url}/task/${apartmentId}`, {name, apartmentId },  { headers: { authorization: `Bearer ${this.token()}` } } )
+            .then (({status, data}) =>{
+                if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                
+                this.taskId=data.data
+                console.log(this.taskId)
+                return data
+               
+            })
+            .catch(err => {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                if (err.response) {
+                    const { response: { data: { error: message } } } = err
+
+                    throw Error(message)
+                } else throw err
+            
+            })
+    },
+    listTasks(apartmentId) {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.get(`${this.url}/task/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    return data.data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
+    deleteTask(taskId) {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.delete(`${this.url}/task/${taskId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    return true
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
+    addMarket(name, apartmentId){
+        return axios.post(`${this.url}/market/${apartmentId}`, {name, apartmentId },  { headers: { authorization: `Bearer ${this.token()}` } } )
+            .then (({status, data}) =>{
+                if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                
+                this.marketId=data.data
+              
+                return data
+               
+            })
+            .catch(err => {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                if (err.response) {
+                    const { response: { data: { error: message } } } = err
+
+                    throw Error(message)
+                } else throw err
+            
+            })
+    },
+    listMarket(apartmentId) {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.get(`${this.url}/market/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    return data.data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
+   
+
+    deleteMarket(marketId) {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.delete(`${this.url}/market/${marketId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    return true
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
+    addNotes(name, apartmentId){
+        return axios.post(`${this.url}/note/${apartmentId}`, {name, apartmentId },  { headers: { authorization: `Bearer ${this.token()}` } } )
+            .then (({status, data}) =>{
+                if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                this.noteId=data.data
+              
+                return data
+               
+            })
+            .catch(err => {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                if (err.response) {
+                    const { response: { data: { error: message } } } = err
+
+                    throw Error(message)
+                } else throw err
+            
+            })
+    },
+    listNotes(apartmentId) {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.get(`${this.url}/note/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    return data.data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
+
+    deleteNote(noteId) {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.delete(`${this.url}/note/${noteId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    return true
                 })
                 .catch(err => {
                     if (err.code === 'ECONNREFUSED') throw Error('could not reach server')

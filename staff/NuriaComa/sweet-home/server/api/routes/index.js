@@ -118,12 +118,127 @@ router.post('/register', jsonBodyParser, (req,res) =>{
 
 router.get('/listapartment/:apartmentId', jwtValidator, (req, res) => {
     const{ params: {apartmentId} } =req
-    console.log('api-server-apartmentId', apartmentId)
     return logic.listApartment(apartmentId)
         .then(apartments => {
-            console.log('api-server-apartment', apartments)
             res.status(200)
             res.json({ status: 'OK', data: apartments })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.post('/task/:apartmentId', [jwtValidator, jsonBodyParser], (req,res) =>{
+
+    const { params: { apartmentId }, body: { name} } = req
+    
+    return logic.addTasks(name, apartmentId)
+    .then(taskId=>{
+        res.status(201)
+        res.json({status:'OK', data: taskId})
+    })
+    .catch(({message})=>{
+        res.status(400)
+        res.json({status:'KO', error: message})
+    })
+})
+router.get('/task/:apartmentId', jwtValidator, (req, res) => {
+    const{ params: {apartmentId} } =req
+    return logic.listTasks(apartmentId)
+        .then(tasks => {
+            res.status(200)
+            res.json({ status: 'OK', data: tasks })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.delete('/task/:taskId', jwtValidator, (req, res) => {
+    const { params: { taskId }} = req
+
+    return logic.deleteTask(taskId)
+        .then(() => {
+            res.status(200)
+            res.json({ status: 'OK' })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.post('/market/:apartmentId', [jwtValidator, jsonBodyParser], (req,res) =>{
+
+    const { params: { apartmentId }, body: { name} } = req
+    
+    return logic.addMarket(name, apartmentId)
+    .then(marketId=>{
+        res.status(201)
+        res.json({status:'OK', data: marketId})
+    })
+    .catch(({message})=>{
+        res.status(400)
+        res.json({status:'KO', error: message})
+    })
+})
+router.get('/market/:apartmentId', jwtValidator, (req, res) => {
+    const{ params: {apartmentId} } =req
+    return logic.listMarket(apartmentId)
+        .then(market => {
+            res.status(200)
+            res.json({ status: 'OK', data: market })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.delete('/market/:marketId', jwtValidator, (req, res) => {
+    const { params: { marketId }} = req
+
+    return logic.deleteMarket(marketId)
+        .then(() => {
+            res.status(200)
+            res.json({ status: 'OK' })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.post('/note/:apartmentId', [jwtValidator, jsonBodyParser], (req,res) =>{
+
+    const { params: { apartmentId }, body: { name} } = req
+    
+    return logic.addNotes(name, apartmentId)
+    .then(noteId=>{
+        res.status(201)
+        res.json({status:'OK', data: noteId})
+    })
+    .catch(({message})=>{
+        res.status(400)
+        res.json({status:'KO', error: message})
+    })
+})
+router.get('/note/:apartmentId', jwtValidator, (req, res) => {
+    const{ params: {apartmentId} } =req
+    return logic.listNotes(apartmentId)
+        .then(market => {
+            res.status(200)
+            res.json({ status: 'OK', data: market })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.delete('/market/:noteId', jwtValidator, (req, res) => {
+    const { params: { marketId }} = req
+
+    return logic.deleteMarket(marketId)
+        .then(() => {
+            res.status(200)
+            res.json({ status: 'OK' })
         })
         .catch(({ message }) => {
             res.status(400)

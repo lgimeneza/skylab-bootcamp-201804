@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { User, Apartment } } = require('data')
+const { models: { User, Apartment, Task, Note, Market } } = require('data')
 
 const logic = {
 
@@ -252,16 +252,141 @@ const logic = {
 
         return Promise.resolve()
         .then(()=>{
-            console.log('logic-server-apartmentId', apartmentId)
             return Apartment.findById( apartmentId )
             .then(apartments =>{
                 if (!apartments) throw Error (`no apartment found`)
 
-                console.log('logic-server-apartment', apartments)
                 return apartments
             })
         })
 
+    },
+    addTasks (name,apartmentId){
+        return Promise.resolve()
+        .then(()=>{
+
+            return Task.create({name, apartmentId})
+            .then(task => {
+
+
+                if (!task) throw Error('wrong credentials')
+
+                return { id: task.id }
+            })
+        })
+
+    },
+    listTasks (apartmentId){
+        return Promise.resolve()
+        .then (()=>{
+            return Task.find({apartmentId })
+            .then(tasks => {
+                if (!tasks) throw Error(`no tasks found`)
+
+                return tasks
+            })
+        })
+    },
+    deleteTask (taskId){
+       
+        return Promise.resolve()
+        .then(() => {
+          return Task.findById( taskId )
+        })
+        .then(task => {
+            if (!task) throw Error('wrong credentials')
+
+            if (task.id !== taskId) throw Error(`no task found with id ${taskId} for given credentials`)
+            
+            return Task.findByIdAndRemove({_id:taskId})
+            .then(() => true)
+            
+        })
+    },
+    addMarket (name,apartmentId){
+        return Promise.resolve()
+        .then(()=>{
+
+            return Market.create({name, apartmentId})
+            .then(market => {
+
+
+                if (!market) throw Error('wrong credentials')
+
+                return { id: market.id }
+            })
+        })
+
+    },
+    listMarket (apartmentId){
+        return Promise.resolve()
+        .then (()=>{
+            return Market.find({apartmentId})
+            .then(market => {
+                if (!market) throw Error(`no things found`)
+
+                return market
+            })
+        })
+    },
+    deleteMarket (marketId){
+       
+        return Promise.resolve()
+        .then(() => {
+          return Market.findById( marketId )
+        })
+        .then(market => {
+            if (!market) throw Error('wrong credentials')
+
+            if (market.id !== marketId) throw Error(`no things found with id ${marketId} for given credentials`)
+            
+            return Market.findByIdAndRemove({_id:marketId})
+            .then(() => true)
+            
+        })
+    },
+
+    addNotes (name,apartmentId){
+        return Promise.resolve()
+        .then(()=>{
+
+            return Note.create({name, apartmentId})
+            .then(note => {
+
+
+                if (!note) throw Error('wrong credentials')
+
+                return { id: note.id }
+            })
+        })
+
+    },
+    listNotes (apartmentId){
+        return Promise.resolve()
+        .then (()=>{
+            return Note.find({apartmentId })
+            .then(notes => {
+                if (!notes) throw Error(`no notes found`)
+
+                return notes
+            })
+        })
+    },
+    deleteNote (noteId){
+       
+        return Promise.resolve()
+        .then(() => {
+          return Note.findById( noteId )
+        })
+        .then(note => {
+            if (!note) throw Error('wrong credentials')
+
+            if (note.id !== noteId) throw Error(`no note found with id ${noteId} for given credentials`)
+            
+            return Note.findByIdAndRemove({_id:noteId})
+            .then(() => true)
+            
+        })
     }
 }
 
