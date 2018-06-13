@@ -3,7 +3,7 @@ import {Link } from "react-router-dom";
 import {Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Col} from 'reactstrap';
 
-function CardUser({user:{_id,name,race,gender,description} }) {
+function CardUser({user:{_id,name,race,gender,city} }) {
 
     return <Col xs="12" sm="6" md="4" >
                 <Link to={`/user/${_id}`}>
@@ -13,7 +13,7 @@ function CardUser({user:{_id,name,race,gender,description} }) {
             <CardBody>
                 <CardTitle>{name}</CardTitle>
                 <CardSubtitle>{race}/{gender}</CardSubtitle>
-                <CardText>{description}</CardText>
+                <CardText>{city}</CardText>
                 <Button >Button</Button>
             </CardBody>
         </Card>

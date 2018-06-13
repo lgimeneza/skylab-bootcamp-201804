@@ -119,8 +119,6 @@ const logic = {
      */
     updateUser(id, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate, city, zip) {
         
-        console.log(race,"?????");
-
         return Promise.resolve()
             .then(() => {
 
@@ -380,24 +378,49 @@ const logic = {
 
                 if ((friendId = friendId.trim()).length === 0) throw Error('friendId is empty or blank')
 
-                return User.findById(userId)
+
+                return User.findById(friendId)
                     .then(user => {
 
-                        if (!user) throw Error(`no user found with id ${userId}`)
+                        if (!user) throw Error(`no user found with id ${friendId}`)
 
                         const friend = user.friends.find((element) => {
 
-                            return element == friendId
+                            return element == userId
                         })
 
                         if (friend) throw Error("this user already exists")
-                        user.friends.push(friendId)
+                        user.friends.push(userId)
 
                         return user.save()
                             .then((user) => {
-                                return user.friends
+                                return true
                             })
+                        .then((saveFirstUser)=>{
+
+                            if(!saveFirstUser===true) throw Error("error to save first user")
+
+                            return User.findById(userId)
+
+                        }).then(user =>{
+                           
+                                if (!user) throw Error(`no user found with id ${userId}`)
+
+                                const friend = user.friends.find((element) => {
+
+                                    return element == friendId
+                                })
+
+                                if (friend) throw Error("this user already exists")
+                                user.friends.push(friendId)
+
+                                return user.save()
+                                    .then((user) => {
+                                        return user.friends
+                                    })
+                            }) 
                     })
+
             })
     },
 
@@ -662,7 +685,7 @@ const logic = {
                     .then(() => {
                         return cloudinary.uploader.upload(base64Image, function(data) {
                             url = data.url
-                            console.log("update ok")
+                            console.log("updload cloudinary ok "+url)
                     }).then(()=>{
                         return User.findById(idUser )
                         .then(user => {
@@ -684,7 +707,54 @@ const logic = {
                 //     else return"upload Ok"
                 // })
             })
-    }
+    },
+
+
+
+    /**
+* 
+* @param {string} idUser
+* @param {string} base64Image
+* @param {string} descriptionImg
+* 
+* @returns {Promise<boolean>}
+*/
+saveImagesUser(idUser, base64Image, descriptionImg) {
+    let url =""
+    return Promise.resolve()
+        .then(() => {
+            if (typeof idUser !== 'string') throw Error('idUser is not a string')
+
+            if (!(idUser = idUser.trim()).length) throw Error('idUser is empty or blank')
+
+            if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
+
+           
+           return  Promise.resolve()
+                .then(() => {
+                    return cloudinary.uploader.upload(base64Image, function(data) {
+                        url = data.url
+                        console.log("updload cloudinary ok "+url)
+                }).then(()=>{
+                    return User.findById(idUser )
+                    .then(user => {
+                        return user
+                    })
+                })
+            }).then(user => {
+                const image = new Image({ 
+                    route:url
+                    ,description:descriptionImg,
+                    likes:[]
+                 })
+
+                user.images.push(image)
+                return user.save()
+            })
+            .then((user) => true
+            )
+        })
+}
 }
 
 module.exports = logic

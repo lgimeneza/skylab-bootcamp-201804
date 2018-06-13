@@ -4,7 +4,7 @@ import DropNCrop from '@synapsestudios/react-drop-n-crop';
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 import logic from "../../logic"
 
-class UploadPicture extends Component {
+class UploadPictureProfile extends Component {
 
   urlImageDefault = "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180"
 
@@ -39,7 +39,7 @@ class UploadPicture extends Component {
 
   render() {
     return (<div>
-
+      <h2>Picture Profile</h2>
       <Col xs={{ size: 8, offset: 2 }} sm={{ size: 6, offset: 3 }} md={{ size: 4, offset: 4 }}>
 
         <DropNCrop maxFileSize={3145728} cropperOptions={{ aspectRatio: 1, guides: true, viewMode: 0, autoCropArea: 0 }} canvasHeight={"35vw"} canvasWidth={"35vw"} onChange={this.onChange} value={this.state} />
@@ -56,4 +56,4 @@ class UploadPicture extends Component {
   }
 } 
 
-export default UploadPicture
+export default UploadPictureProfile

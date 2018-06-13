@@ -125,7 +125,7 @@ class EditProfile extends Component {
                 </Col>
                 <Col>
 
-                <NavLink tag={Link} to="/upload-picture">Change picture</NavLink >
+                <NavLink tag={Link} to="/upload-picture-profile">Change picture</NavLink >
                 </Col>
                 <Text data={this.state.name}  handleKeep={this.handleKeepName}/>
                 <Text data={this.state.email}  handleKeep={this.handleKeepEmail}/>

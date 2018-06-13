@@ -6,7 +6,8 @@ import Error404 from './Error404/'
 import CardUser from './CardUser/'
 import Start from './Start/'
 import EditProfile from './EditProfile/'
-import UploadPicture from './UploadPicture'
+import UploadPictureProfile from './UploadPictureProfile'
+import UploadPictureUser from './UploadPictureUser'
 import Select from './Inputs/select'
 import Text from './Inputs/text'
 import User from './User'
@@ -21,7 +22,8 @@ export {
     CardUser,
     Start,
     EditProfile,
-    UploadPicture,
+    UploadPictureProfile,
+    UploadPictureUser,
     Text,
     Select,
     User,

@@ -320,7 +320,46 @@ const socialApi = {
                 if (typeof base64Image !== 'string') throw Error('user base64Image is not a string')
 
 
-                return axios.post(`${this.url}/uploadImageProfile/${userId}`, { base64Image },{ headers: { authorization: `Bearer ${this.token}` } })
+                return axios.post(`${this.url}/upload-image-profile/${userId}`, { base64Image },{ headers: { authorization: `Bearer ${this.token}` } })
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+
+                        return data.status
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            return message
+
+                        } else return err
+                    })
+            })
+    },
+
+
+    /**
+     * 
+     * @param {string} email 
+     * @param {string} password 
+     * @param {string} descriptionImg 
+     * 
+     * @returns {Promise<string>}
+     */
+    uploadImageUser(userId, base64Image,descriptionImg) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user userId is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+
+                if (typeof base64Image !== 'string') throw Error('user base64Image is not a string')
+
+
+                return axios.post(`${this.url}/upload-image-user/${userId}`, { base64Image,descriptionImg },{ headers: { authorization: `Bearer ${this.token}` } })
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

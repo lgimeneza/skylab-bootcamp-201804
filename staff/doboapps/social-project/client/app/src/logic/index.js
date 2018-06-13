@@ -25,7 +25,6 @@ const logic = {
     },
 
     retrieveUser(userId) {
-
         return socialApi.retrieveUser(userId)
     },
 
@@ -36,6 +35,10 @@ const logic = {
     uploadImageProfile(base64Image) {
         return socialApi.uploadImageProfile(localStorage.getItem('id-app'), base64Image)
 
+    },
+
+    uploadImageUser(base64Image,descriptionImg) {
+        return socialApi.uploadImageUser(localStorage.getItem('id-app'), base64Image,descriptionImg)
     },
 
     isLogged() {
@@ -67,7 +70,7 @@ const logic = {
 
         let newNotifications = []
 
-        const notificationsObjects = notifications.map(n => {
+        notifications.forEach(n => {
             //jhon#friendship:5b1bda1968b97485c0ac9cc0
             let slack = n.indexOf("#")
             let colon = n.indexOf(":")

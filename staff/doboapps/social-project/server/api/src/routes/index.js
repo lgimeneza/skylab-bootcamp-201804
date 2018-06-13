@@ -139,7 +139,7 @@ router.delete('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
 })
 
 
-router.post('/users/:userId/friends',  jsonBodyParser, (req, res) => {
+router.post('/users/:userId/friends',  [jwtValidator, jsonBodyParser], (req, res) => {
     const { params: { userId }, body: { friendId } } = req
 
     logic.addFriend(userId, friendId)
@@ -245,10 +245,25 @@ router.delete('/parks/:parkId/user/:userId', [jwtValidator, jsonBodyParser], (re
 })
 
 
-router.post('/uploadImageProfile/:userId', jsonBodyParser, (req, res) => {
+router.post('/upload-image-profile/:userId', jsonBodyParser, (req, res) => {
     const { params: { userId }, body: { base64Image } } = req
 
     logic.saveImageProfile(userId, base64Image)
+        .then(() => {
+            res.status(200)
+            res.json({ status: 'OK' })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+
+
+router.post('/upload-image-user/:userId', jsonBodyParser, (req, res) => {
+    const { params: { userId }, body: { base64Image,descriptionImg } } = req
+
+    logic.saveImagesUser(userId, base64Image,descriptionImg)
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })

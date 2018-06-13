@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { withRouter, Link } from 'react-router-dom'
 import logic from "../../logic"
-import { Container, Button } from 'reactstrap'
+import { Container, Button, Badge,NavLink } from 'reactstrap'
 import { Notifications } from '../'
+
 class User extends Component {
 
     state = {
@@ -14,6 +15,7 @@ class User extends Component {
         photoProfile: undefined,
         city: undefined,
         zip: undefined,
+        images:[],
         friends: [],
         loves: [],
         notifications: [],
@@ -65,20 +67,12 @@ class User extends Component {
 
     handlerAcceptFriendship = (idFriend) => {
 
-        let promises = []
-
-        promises.push(logic.acceptFriendship(localStorage.getItem("id-app"), idFriend))
-        promises.push(logic.acceptFriendship(idFriend, localStorage.getItem("id-app")))
-
-
-        Promise.all(promises)
+        logic.acceptFriendship(localStorage.getItem("id-app"), idFriend)
             .then(res => {
-
-                alert(res)
-                
+                alert(res+" friend add")                
                 logic.sendNotifactionRelationship(idFriend, localStorage.getItem("id-app"), 'acceptFriendship:')
                     .then((res) => {
-                        alert(res)
+                        alert(res+" notification sent")
                         this.clearNotifications()
                     })
             })
@@ -110,18 +104,35 @@ class User extends Component {
             return true
     }
 
+    showIfAreFriends() {
+
+        return this.state.friends.find((friend)=>{
+            if(localStorage.getItem("id-app") === friend)
+            return true
+        })
+    }
+
+    getRaces = () => {
+        return logic.races.map((race,i) => <option key={"r-"+i} value={race}>{race}</option>)
+    }
+    
+
+    getImagesUser = ()=>{
+
+        return this.state.images.map((img,i) =><img key={"img-"+i} src={img.route} alt="image dog" />
+        );
+    }
+
 
     componentDidMount() {
         (this.getUser())
     }
 
     render() {
-
         return (
 
             <Container>
-                <h1>{this.state.requestAlreadySent && "true"}</h1>
-                <h1>{!this.state.requestAlreadySent && "false"}</h1>
+                {this.showInProfile() && <Badge tag={Link} to={`/edit-profile`} color="secondary">Edit Profile</Badge>}
 
                 <h1>{this.state.name}</h1>
 
@@ -132,6 +143,8 @@ class User extends Component {
                 <h4>{this.state.race}</h4>
                 <h4>{this.state.gender}</h4>
                 <h4>{this.state.city}</h4>
+                {this.showInProfile() && <NavLink tag={Link} to="/upload-picture-user">Upload a picture</NavLink >}
+                {(this.showInProfile() || this.showIfAreFriends()) &&  <div>{this.getImagesUser()}</div>}
 
             </Container>
         )
