@@ -130,61 +130,7 @@ describe('logic client', () => {
             logic.registerUser(username, email, password, '     ')
                 .catch(({ message }) => expect(message).to.equal('repeatPassword is empty or blank'))
         )
-
-        describe('on unexpected server behavior', () => {
-            let sandbox
-
-            beforeEach(() => sandbox = sinon.createSandbox())
-
-            afterEach(() => sandbox.restore())
-
-            it('should fail on response status hacked', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    resolve({ status: 201, data: { status: 'KO' } })
-                })
-
-                sandbox.stub(axios, 'post').returns(resolved)
-
-                const { username, email, password, repeatPassword } = userDataRegister
-
-                return logic.registerUser(username, email, password, repeatPassword)
-                    .catch(({ message }) => {
-                        expect(message).to.equal(`unexpected response status 201 (KO)`)
-                    })
-            })
-
-            it('should fail on email hacked', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    reject({ response: { data: { error: 'email is not a string' } } })
-                })
-
-                sandbox.stub(axios, 'post').returns(resolved)
-
-                const { username, email, password, repeatPassword } = userDataRegister
-
-                return logic.registerUser(username, email, password, repeatPassword)
-                    .catch(({ message }) => {
-                        expect(message).to.equal('email is not a string')
-                    })
-            })
-
-            it('should fail on server down', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    reject({ code: 'ECONNREFUSED' })
-                })
-
-                sandbox.stub(axios, 'post').returns(resolved)
-
-                const { username, email, password, repeatPassword } = userDataRegister
-
-                return logic.registerUser(username, email, password, repeatPassword)
-                    .catch(({ message }) => {
-                        expect(message).to.equal('could not reach server')
-                    })
-            })
-        })
     })
-
 
     describe('authenticate user', () => {
 
@@ -198,7 +144,6 @@ describe('logic client', () => {
                             expect(id).to.exist
                             expect(logic.userId).not.to.equal('')
                         })
-
                 })
         )
 
@@ -241,60 +186,6 @@ describe('logic client', () => {
             logic.login(email, '     ')
                 .catch(({ message }) => expect(message).to.equal('password is empty or blank'))
         )
-
-        describe('on unexpected server behavior', () => {
-            
-            let sandbox
-
-            beforeEach(() => sandbox = sinon.createSandbox())
-
-            afterEach(() => sandbox.restore())
-
-            it('should fail on response status hacked', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    resolve({ status: 200, data: { status: 'KO' } })
-                })
-
-                sandbox.stub(axios, 'post').returns(resolved)
-
-                const { email, password } = userDataRegister
-
-                return logic.login(email, password)
-                    .catch(({ message }) => {
-                        expect(message).to.equal(`unexpected response status 200 (KO)`)
-                    })
-            })
-
-            it('should fail on email hacked', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    reject({ response: { data: { error: 'Email o password incorrectos' } } })
-                })
-
-                sandbox.stub(axios, 'post').returns(resolved)
-
-                const { email, password } = userDataRegister
-
-                return logic.login(email, password)
-                    .catch(({ message }) => {
-                        expect(message).to.equal('Email o password incorrectos')
-                    })
-            })
-
-            it('should fail on server down', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    reject({ code: 'ECONNREFUSED' })
-                })
-
-                sandbox.stub(axios, 'post').returns(resolved)
-
-                const { email, password } = userDataRegister
-
-                return logic.login(email, password)
-                    .catch(({ message }) => {
-                        expect(message).to.equal('could not reach server')
-                    })
-            })
-        })
     })
 
     describe('retrieve user', () => {
@@ -327,53 +218,6 @@ describe('logic client', () => {
                     expect(orders).to.be.undefined
                 })
         )
-
-        describe('on unexpected server behavior', () => {
-            let sandbox
-
-            beforeEach(() => sandbox = sinon.createSandbox())
-
-            afterEach(() => sandbox.restore())
-
-            it('should fail on response status hacked', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    resolve({ status: 200, data: { status: 'KO' } })
-                })
-
-                sandbox.stub(axios, 'get').returns(resolved)
-
-                return logic.retrieveUser()
-                    .catch(({ message }) => {
-                        expect(message).to.equal(`unexpected response status 200 (KO)`)
-                    })
-            })
-
-            it('should fail on id hacked', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    reject({ response: { data: { error: 'user id is not a string' } } })
-                })
-
-                sandbox.stub(axios, 'get').returns(resolved)
-
-                return logic.retrieveUser()
-                    .catch(({ message }) => {
-                        expect(message).to.equal('user id is not a string')
-                    })
-            })
-
-            it('should fail on server down', () => {
-                const resolved = new Promise((resolve, reject) => {
-                    reject({ code: 'ECONNREFUSED' })
-                })
-
-                sandbox.stub(axios, 'get').returns(resolved)
-
-                return logic.retrieveUser()
-                    .catch(({ message }) => {
-                        expect(message).to.equal('could not reach server')
-                    })
-            })
-        })
     })
 
     // describe('udpate user', () => {

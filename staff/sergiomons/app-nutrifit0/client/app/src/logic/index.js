@@ -98,9 +98,9 @@ const logic = {
             })
     },
 
-    listParentsCategory() {
-        return clientApi.listParentsCategory()
-                .then(categories => categories)
+    listRootCategories() {
+        return clientApi.listRootCategories()
+                .then(res => res)
     },
 
     listSubcategories(categoryId) {

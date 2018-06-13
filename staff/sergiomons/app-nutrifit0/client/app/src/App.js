@@ -9,6 +9,7 @@ import Home from './components/home'
 import MainCategories from './components/categories/main-categories'
 import Subcategories from './components/categories/sub-categories'
 import Nav from './components/nav'
+import Footer from './components/footer'
 
 class App extends Component {
 
@@ -23,17 +24,7 @@ class App extends Component {
     categories: {}
   }
 
-  componentWillMount() {
-
-    logic.listParentsCategory()
-      .then(parentsCategory => {
-          this.setState({
-            parentsCategory
-          })
-      })
-   
-      console.log(this.state.parentsCategory)
-
+  componentDidMount() {
 
     if (logic.loggedIn) {
     logic.retrieveUser()
@@ -66,6 +57,7 @@ class App extends Component {
             <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Home/>}/>
             <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Home/>} />
         </Switch>
+        <Footer/>
       </div>
     );
   }

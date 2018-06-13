@@ -20,8 +20,7 @@ class Home extends Component {
                 this.setState({
                     products
                 })
-          })
-          
+          })      
     }
 
    render() {
@@ -39,92 +38,7 @@ class Home extends Component {
 
                             <AllProducts/>
                         </div>
-                        <div className="row">
-                            <div className="col-md-4">
-                                <ul>
-                                    <li className="list-item">
-                                        Lorem ipsum dolor sit amet
-                                    </li>
-                                    <li className="list-item">
-                                        Consectetur adipiscing elit
-                                    </li>
-                                    <li className="list-item">
-                                        Integer molestie lorem at massa
-                                    </li>
-                                    <li className="list-item">
-                                        Facilisis in pretium nisl aliquet
-                                    </li>
-                                    <li className="list-item">
-                                        Nulla volutpat aliquam velit
-                                    </li>
-                                    <li className="list-item">
-                                        Faucibus porta lacus fringilla vel
-                                    </li>
-                                    <li className="list-item">
-                                        Aenean sit amet erat nunc
-                                    </li>
-                                    <li className="list-item">
-                                        Eget porttitor lorem
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-md-4">
-                                <ul>
-                                    <li className="list-item">
-                                        Lorem ipsum dolor sit amet
-                                    </li>
-                                    <li className="list-item">
-                                        Consectetur adipiscing elit
-                                    </li>
-                                    <li className="list-item">
-                                        Integer molestie lorem at massa
-                                    </li>
-                                    <li className="list-item">
-                                        Facilisis in pretium nisl aliquet
-                                    </li>
-                                    <li className="list-item">
-                                        Nulla volutpat aliquam velit
-                                    </li>
-                                    <li className="list-item">
-                                        Faucibus porta lacus fringilla vel
-                                    </li>
-                                    <li className="list-item">
-                                        Aenean sit amet erat nunc
-                                    </li>
-                                    <li className="list-item">
-                                        Eget porttitor lorem
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-md-4">
-                                <ul>
-                                    <li className="list-item">
-                                        Lorem ipsum dolor sit amet
-                                    </li>
-                                    <li className="list-item">
-                                        Consectetur adipiscing elit
-                                    </li>
-                                    <li className="list-item">
-                                        Integer molestie lorem at massa
-                                    </li>
-                                    <li className="list-item">
-                                        Facilisis in pretium nisl aliquet
-                                    </li>
-                                    <li className="list-item">
-                                        Nulla volutpat aliquam velit
-                                    </li>
-                                    <li className="list-item">
-                                        Faucibus porta lacus fringilla vel
-                                    </li>
-                                    <li className="list-item">
-                                        Aenean sit amet erat nunc
-                                    </li>
-                                    <li className="list-item">
-                                        Eget porttitor lorem
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>                        

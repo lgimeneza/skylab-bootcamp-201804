@@ -63,9 +63,9 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
 router.get('/categories/root', (req, res) => {
 
     return logic.listRootCategories()
-            .then(categories => {
+            .then(res => {
                 res.status(200)
-                res.json({ status: 'OK', data: categories})
+                res.json({ status: 'OK', data: res})
             })
             .catch(({ message }) => {
                 res.status(400)

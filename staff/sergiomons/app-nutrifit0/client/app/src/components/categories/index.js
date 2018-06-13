@@ -8,7 +8,7 @@ import Carousel from '../../carousel'
 class Subcategories extends Component {
 
     state = {
-        categories: [],
+        subcategories: [],
     }
 
     
@@ -16,10 +16,10 @@ class Subcategories extends Component {
 
         const parentsCategoryId = this.props.parentsCategory._id
 
-         logic.listSubcategories(parentsCategoryId)
-            .then(categories => {
+         logic.listSubsubcategories(parentsCategoryId)
+            .then(subcategories => {
                 if (userData) this.setState({
-                     categories
+                     subcategories
                     })
         })
 

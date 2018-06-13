@@ -41,10 +41,8 @@ class AllProducts extends Component {
                     </div>
                         )})}
                 </div>      
-            </ul>
-            
+            </ul>            
         </div>
-
         )
    }       
 }

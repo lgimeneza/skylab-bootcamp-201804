@@ -377,6 +377,42 @@ describe('logic nutrifit', () => {
         })
     })
 
+    describe('list root categories', () => {
+        it('should succeed on correct data', () => {
+            return new Category(pack_CategoryData).save()
+                .then(category => {
+                    polloVerdurasData.category = category._id
+                    terneraData.category = category._id
+                    polloArrozData.category = category._id
+
+                    return Promise.all([
+                        new Product(polloVerdurasData).save(),
+                        new Product(terneraData).save(),
+                        new Product(polloArrozData).save(),
+                    ])
+                        .then(([polloVerduras, ternera, polloArroz]) => {
+                            return polloVerduras.save()
+                                .then(() => {
+                                    return logic.listProducts()
+                                        .then(products => {
+
+                                            expect(products.length).to.equal(6)
+
+                                            const product = products.find(product => product.id == polloVerduras._doc._id.toString())
+                                            expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
+                                            expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
+                                            expect(product.name).to.equal(polloVerduras.name)
+                                            expect(product.description).to.equal(polloVerduras.description)
+                                            expect(product.price).to.equal(polloVerduras.price)
+                                            expect(product.categoryId).to.equal(category._id.toString())
+                                        })
+                                })
+                        })
+                })
+        })
+    })
+
+
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })
 

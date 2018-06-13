@@ -211,9 +211,15 @@ const logic = {
                 // TODO: check which root categories have children or not and mark it with a flag "hasChildren" true or false, respectively
                 // category.hasChildren = false
 
-                return Category.find({ parent: undefined })
-                    .then(res => res.map(({ _id, name }) => ({ id: _id.toString(), name })))
+                return Category.find({parent: undefined})
+                    .then(res => res.map(({ _id }) => {
+                        return Promise.all([
+
+                        ])
+                    })
+                )
             })
+            // res.map(({ _id, name }) => ({ id: _id.toString(), name })
     },
 
     /**

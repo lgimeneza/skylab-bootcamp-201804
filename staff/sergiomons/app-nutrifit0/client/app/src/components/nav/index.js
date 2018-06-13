@@ -10,12 +10,13 @@ class Nav extends Component {
 
     componentDidMount(props) {
 
-        logic.listParentsCategory()
-            .then(categories => {
-                this.setState({
-                    categories
-                })
-            })
+        // logic.listRootCategories()
+        //     .then(categories => {
+        //         this.setState({
+        //             categories
+        //         })
+        //     })
+        
         //const parentsCategoryId = this.state.categories._id
 
         // console.log(parentsCategoryId)
