@@ -5,6 +5,7 @@ import Landing from './landing'
 import Products from './products'
 import ProductData from './productData'
 import OurTeam from './ourTeam'
+import Cart from './cart'
 
 export {
     Register,
@@ -13,5 +14,6 @@ export {
     Landing,
     Products,
     ProductData,
-    OurTeam
+    OurTeam,
+    Cart
 }

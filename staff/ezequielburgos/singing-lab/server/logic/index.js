@@ -263,13 +263,26 @@ const logic = {
 
                 return product
             })
+    },
+
+
+
+    /**
+     * @param {string} userId
+     * 
+     * @returns {Promise<[Note]>}
+     */
+    listAllProducts() {
+        return Promise.resolve()
+            .then(() => {
+                return Product.find()
+                    .then(products => {
+                        if (!products) throw Error(`no categories where found`)
+
+                        return products
+                    })
+            })
     }
-
-
-
-
-
-
 
 
 

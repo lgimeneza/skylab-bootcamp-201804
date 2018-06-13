@@ -675,5 +675,40 @@ describe('logic (singingLab api)', () => {
         )
     })
 
+
+    describe('list all products', () => {
+        it('should succeed on correct data', () =>
+            Promise.all([
+                Category.create(beginnerCourseCategoryData),
+                Category.create(advancedCourseCategoryData)
+            ])
+                .then(res => {
+                    beginnerCourseData.category = res[0]._id
+                    advancedCourseData.category = res[1]._id
+
+                    return Promise.all([
+                        Product.create(beginnerCourseData),
+                        Product.create(advancedCourseData)
+                    ])
+                        .then(res => {
+                            singingLabApi.listAllProducts()
+                                .then(products => {
+                                    expect(products[0].name).to.equal('Beginner Course I')
+                                    expect(products[0].price).to.equal(50)
+                                    expect(products[0].discount).to.equal(15)
+                                    expect(products[0].description).to.equal('Beginner Course I desc')
+                                    expect(products[0].stock).to.equal(123)
+
+                                    expect(products[1].name).to.equal('Advanced Course I')
+                                    expect(products[1].price).to.equal(100)
+                                    expect(products[1].discount).to.equal(20)
+                                    expect(products[1].description).to.equal('Advanced Course I desc')
+                                    expect(products[1].stock).to.equal(77)
+                                })
+                        })
+                })
+        )
+    })
+
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })

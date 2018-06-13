@@ -4,6 +4,7 @@ import './index.css'
 import Navbar from './../navbar'
 import Footer from './../footer'
 import LandingMain from '../landing-main'
+import LandingProducts from '../landingProducts'
 import LandingChat from '../landing-chat'
 
 class Landing extends Component {
@@ -22,6 +23,7 @@ class Landing extends Component {
                     </div>
                 </section>
                 <LandingMain/>
+                <LandingProducts/>
                 <LandingChat/>
                 <Footer/>
             </main>

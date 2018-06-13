@@ -1,0 +1,18 @@
+.landing-products-body{
+    padding-top: 2%;
+    text-align: center;
+    background: linear-gradient(-40deg, #9824af49, #5c1b535e, transparent);
+}
+
+.landing-products{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 4%;
+}
+
+.landing-card-container{
+    padding: 2%;
+    max-width: 27%;
+    min-width: 20%;
+}

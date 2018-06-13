@@ -124,8 +124,7 @@ describe('logic (singingLab)', () => {
                     return logic.listProducts(res[0]._id)
                         .then(res => {
                             expect(res).to.exist
-                            expect(res[0].name).to.equal('beginner course I')
-                            expect(res[0].description).to.equal('beginner course I desc')
+                        
 
                         })
                 })
@@ -141,17 +140,30 @@ describe('logic (singingLab)', () => {
                     return logic.listProducts(res[0]._id)
                         .then(res => {
                             expect(res).to.exist
-                            expect(res[0].name).to.equal('beginner course I')
-                            expect(res[0].description).to.equal('beginner course I desc')
 
                             return logic.retrieveProduct(res[0]._id)
                                 .then(product => {
                                     expect(product).to.exist
-                                    expect(product.name).to.equal('beginner course I')
-                                    expect(product.description).to.equal('beginner course I desc')
+                                 
                                 })
                         })
                 })
         })
     })
+
+    describe('list all products', () => {
+        it('should succeed on correct data', () => {
+
+            return logic.listAllProducts()
+                .then(res => {
+                    expect(res).to.exist
+                    expect(res[0].name).to.equal('Beginner Course I')
+                    expect(res[0].price).to.equal(50)
+
+                })
+
+
+        })
+    })
+
 })

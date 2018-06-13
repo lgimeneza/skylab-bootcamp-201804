@@ -127,5 +127,18 @@ router.get('/categories/products/:productId', (req, res) => {
 
 })
 
+router.get('/products', (req, res) => {
+
+    logic.listAllProducts()
+        .then(products => {
+            res.status(200)
+            res.json({ status: 'OK', data: products })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+
 
 module.exports = router

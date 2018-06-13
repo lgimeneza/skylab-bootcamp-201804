@@ -15,11 +15,13 @@
 
 .site-header a {
     height: 45px;
-    color: #999;
+    color: rgb(201, 197, 197) !important;
     transition: ease-in-out color .15s;
+    font-size: 17px;
 }
 
 .site-header a:hover {
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
+    text-shadow: 2px 2px 4px#e29c9c;    
 }
