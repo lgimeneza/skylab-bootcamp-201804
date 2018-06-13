@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from 'react-router-dom';
-import { Register, Login, Error404, Start, Profile,UploadPicture, User } from "../index";
+import { Register, Login, Error404, Start, EditProfile,UploadPicture, User } from "../index";
 import logic from "../../logic"
 class Main extends Component {
 
@@ -11,7 +11,7 @@ class Main extends Component {
             <div>
                 <Switch>
                     <Route exact path="/" render={props => <Start  isLogged={this.props.isLogged}/>} />
-                    <Route exact path="/profile" render={props => <Profile />} />               
+                    <Route exact path="/edit-profile" render={props => <EditProfile />} />               
                     <Route exact path="/upload-picture" render={props => <UploadPicture />} />               
                     <Route path="/user" render={props => <User />} />
                     <Route path='/' render={props => <Error404 />} />

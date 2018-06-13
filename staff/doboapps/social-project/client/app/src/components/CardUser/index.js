@@ -6,7 +6,7 @@ import {Card, CardImg, CardText, CardBody,
 function CardUser({user:{_id,name,race,gender,description} }) {
 
     return <Col xs="12" sm="6" md="4" >
-                <Link to={`/user?id=${_id}`}>
+                <Link to={`/user/${_id}`}>
 
         <Card className="mb-4">
             <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />

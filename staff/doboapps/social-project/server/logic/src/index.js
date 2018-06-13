@@ -1,7 +1,7 @@
 'use strict'
 
 const { models: { User, Park, Image, Note } } = require('data')
-const fs = require('file-system')
+// const fs = require('file-system')
 const cloudinary = require('cloudinary');
 
 
@@ -91,7 +91,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, email: 1, race: 1, gender: 1, city: 1, photoProfile:1, images:1, description:1, birthdate:1, zip:1 })
+                return User.findById(id).select({ _id: 0, name: 1, email: 1, race: 1, gender: 1, city: 1, photoProfile:1, images:1, description:1, birthdate:1, zip:1,friends:1,loves:1,notifications:1})
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -345,16 +345,16 @@ const logic = {
                 return User.findById(id)
             })
             .then(user => {
+
                 if (!user) throw Error('wrong credentials')
 
                 if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
 
-                user.notifications.length = 0
+                user.notifications = []
 
                 return user.save()
             })
-            .then((res) => {
-
+            .then(res => {
                 return true
             })
     },
@@ -673,8 +673,8 @@ const logic = {
                     user.photoProfile = url
                     return user.save()
                 })
-                .then((user) => { console.log(user); return true
-                })
+                .then((user) => true
+                )
                 //SAVE ON SERVER
                 // var data = base64Image.replace(/^data:image\/\w+;base64,/, "");
                 // var buf = new Buffer(data, 'base64');

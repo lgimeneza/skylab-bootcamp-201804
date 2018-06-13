@@ -101,6 +101,7 @@ const socialApi = {
      * @returns {Promise<User>} 
      */
     retrieveUser(id) {
+
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -113,13 +114,15 @@ const socialApi = {
                         return data.data
                     })
                     .catch(err => {
+
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
 
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
                             throw Error(message)
-                        } else throw err
+                        } else  throw err
+
                     })
             })
     },
@@ -321,6 +324,126 @@ const socialApi = {
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
+
+                        return data.status
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            return message
+
+                        } else return err
+                    })
+            })
+    },
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} friendId 
+     * 
+     * @returns {Promise<string>}
+     */
+    requestFriendship(userId, friendId) {
+
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user userId is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+
+                if (typeof friendId !== 'string') throw Error('user friendId is not a string')
+
+                if (!(friendId = friendId.trim()).length) throw Error('user friendId is empty or blank')
+
+
+                return axios.post(`${this.url}/users/${userId}/friends`, { friendId },{ headers: { authorization: `Bearer ${this.token}` } })
+                    .then(({ status, data }) => {
+
+                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+
+                        return data.status
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            return message
+
+                        } else return err
+                    })
+            })
+    },
+
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} notification 
+     * 
+     * @returns {Promise<string>}
+     */
+    addNotification(userId, notification) {
+
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user userId is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+
+                if (typeof notification !== 'string') throw Error('user notification is not a string')
+
+                if (!(notification = notification.trim()).length) throw Error('user notification is empty or blank')
+
+
+                return axios.post(`${this.url}/notification/${userId}`, { notification },{ headers: { authorization: `Bearer ${this.token}` } })
+                    .then(({ status, data }) => {
+
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+
+                        return data.status
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            return message
+
+                        } else return err
+                    })
+            })
+    },
+
+
+
+     /**
+     * 
+     * @param {string} userId 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    deleteNotifications(userId) {
+
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user userId is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+
+    
+                return axios.delete(`${this.url}/notification/${userId}`,{},{ headers: { authorization: `Bearer ${this.token}` } })
+                    .then(({ status, data }) => {
+
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
                         return data.status
                     })

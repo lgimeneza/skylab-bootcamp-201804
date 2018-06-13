@@ -42,7 +42,8 @@ router.post('/auth', jsonBodyParser, (req, res) => {
         })
 })
 
-router.get('/users/:userId', jwtValidator, (req, res) => {
+router.get('/users/:userId', (req, res) => {
+   
     const { params: { userId } } = req
 
     return logic.retrieveUser(userId)
@@ -138,7 +139,7 @@ router.delete('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
 })
 
 
-router.post('/users/:userId/friends', [jwtValidator, jsonBodyParser], (req, res) => {
+router.post('/users/:userId/friends',  jsonBodyParser, (req, res) => {
     const { params: { userId }, body: { friendId } } = req
 
     logic.addFriend(userId, friendId)

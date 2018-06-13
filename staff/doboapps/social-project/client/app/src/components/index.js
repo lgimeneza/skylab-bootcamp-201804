@@ -5,11 +5,12 @@ import Login from './Login/'
 import Error404 from './Error404/'
 import CardUser from './CardUser/'
 import Start from './Start/'
-import Profile from './Profile/'
+import EditProfile from './EditProfile/'
 import UploadPicture from './UploadPicture'
 import Select from './Inputs/select'
 import Text from './Inputs/text'
 import User from './User'
+import Notifications from './Notifications'
 
 export {
     Landing,
@@ -19,9 +20,10 @@ export {
     Error404,
     CardUser,
     Start,
-    Profile,
+    EditProfile,
     UploadPicture,
     Text,
     Select,
-    User
+    User,
+    Notifications
 }

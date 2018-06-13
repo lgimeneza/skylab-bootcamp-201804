@@ -8,7 +8,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
 
-class Profile extends Component {
+class EditProfile extends Component {
 
     state = {
         firstEmail:undefined,
@@ -30,7 +30,9 @@ class Profile extends Component {
     }
 
     getUser = () => {
-        logic.retrieveUser().then(({name,email,race,gender,city,photoProfile,zip,description,birthdate})=>{
+        const userId=localStorage.getItem("id-app")
+        
+        logic.retrieveUser(userId).then(({name,email,race,gender,city,photoProfile,zip,description,birthdate})=>{
             if(photoProfile==="")photoProfile="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180"
             if(typeof birthdate ==="object") birthdate =moment()
             birthdate= moment(birthdate)
@@ -146,4 +148,4 @@ class Profile extends Component {
         )
     }
 }
-export default withRouter(Profile);
+export default withRouter(EditProfile);

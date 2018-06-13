@@ -11,8 +11,16 @@ class Home extends Component {
         users: []
     }
 
+    getIdUser = () => {
+        return localStorage.getItem("id-app")
+
+    }
+
+
     getUsersByCity = () => {
-        logic.retrieveUser().then(({city})=>{
+
+
+        logic.retrieveUser(this.getIdUser()).then(({city})=>{
 
             logic.search(undefined, undefined, undefined, city)
                 .then(({ status, users }) => {
@@ -34,7 +42,7 @@ class Home extends Component {
         return (
 
             <Container>
-                <h1>Home</h1><Badge tag={Link} to="/profile" color="secondary">Profile</Badge>
+                <h1>Home</h1><Badge tag={Link} to={`/user/${this.getIdUser()}`} color="secondary">Profile</Badge>
 
                 <h3>Near you...</h3>
                 <Row>
