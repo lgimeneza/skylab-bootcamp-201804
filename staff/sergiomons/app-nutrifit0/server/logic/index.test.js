@@ -198,7 +198,7 @@ describe('logic nutrifit', () => {
                     expect(username).to.equal('sergi')
                     expect(email).to.equal('ser@email.com')
                     expect(address).to.equal('Calle V')
-                    expect(phone).to.equal(123456789)
+                    expect(phone).to.equal('123456789')
 
                     expect(_id).to.be.undefined
                     expect(password).to.be.undefined

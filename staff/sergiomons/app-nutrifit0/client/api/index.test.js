@@ -729,18 +729,30 @@ describe('logic Api (api)', () => {
                 new Category(individuals_CategoryData).save()
             ])
                 .then(([pack_Category, individuals_Category]) => {
-                            return clientApi.listParentsCategory()
-                                .then(categories => {
-                                    
-                                    expect(categories.length).to.equal(2)
+                    return clientApi.listParentsCategory()
+                        .then(categories => {
 
-                                    const category = categories.find(category => category.id == pack_Category._id.toString())
+                            expect(categories.length).to.equal(2)
 
-                                    expect(category.id).to.equal(pack_Category._doc._id.toString())
-                                    expect(category.id).not.to.equal(individuals_Category._doc._id.toString())
-                                    expect(category.name).to.equal(pack_Category.name)
-                                })
-                        
+                            {
+                                const category = categories.find(category => category.id == pack_Category._id.toString())
+
+                                expect(category.id).to.equal(pack_Category._doc._id.toString())
+                                expect(category.id).not.to.equal(individuals_Category._doc._id.toString())
+                                expect(category.name).to.equal(pack_Category.name)
+                                expect(category.hasChildren).to.be.false
+                            }
+
+                            {
+                                const category = categories.find(category => category.id == individuals_Category._id.toString())
+
+                                expect(category.id).to.equal(individuals_Category._doc._id.toString())
+                                expect(category.id).not.to.equal(individuals_Category._doc._id.toString())
+                                expect(category.name).to.equal(individuals_Category.name)
+                                expect(category.hasChildren).to.be.true
+                            }s
+                        })
+
                 })
         })
 
@@ -782,18 +794,18 @@ describe('logic Api (api)', () => {
     describe('list subcategories', () => {
         it('should succeed on correct data', () => {
             return Promise.all([
-     
+
                 new Category(individuals_CategoryData).save(),
 
                 new Category(meat_CategoryData).save(),
-                
+
             ])
                 .then(([individuals_Category, meat_Category]) => {
 
                     meat_Category.parent = individuals_Category._id.toString()
 
                     const individuals_CategoryId = individuals_Category._id.toString()
-                   
+
                     return meat_Category.save()
                         .then(() => {
                             return clientApi.listSubcategories(individuals_CategoryId)
@@ -864,7 +876,7 @@ describe('logic Api (api)', () => {
                     polloArroz.category = individuals_Category._id;
 
                     const individuals_CategoryId = individuals_Category._id.toString()
-                    
+
                     return Promise.all([
                         polloVerduras.save(),
                         ternera.save(),
@@ -934,7 +946,7 @@ describe('logic Api (api)', () => {
                 new Product(sopaMariscoData).save(),
                 new Product(pescadoPlanchaData).save(),
             ])
-                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha ]) => {
+                .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha]) => {
 
                     return polloVerduras.save()
                         .then(() => {

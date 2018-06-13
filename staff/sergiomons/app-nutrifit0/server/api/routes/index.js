@@ -60,9 +60,9 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
         })
 })
 
-router.get('/parentsCategory', (req, res) => {
+router.get('/categories/root', (req, res) => {
 
-    return logic.listParentsCategory()
+    return logic.listRootCategories()
             .then(categories => {
                 res.status(200)
                 res.json({ status: 'OK', data: categories})
@@ -73,7 +73,7 @@ router.get('/parentsCategory', (req, res) => {
             })
 })
 
-router.get('/subcategories/:categoryId', (req, res) => {
+router.get('/categories/:categoryId/subcategories', (req, res) => {
     const { params: { categoryId } } = req
 
     return logic.listSubcategories(categoryId)
@@ -87,7 +87,7 @@ router.get('/subcategories/:categoryId', (req, res) => {
             })
 })
 
-router.get('/productsByCategory/:categoryId', (req, res) => {
+router.get('/categories/:categoryId/products', (req, res) => {
     const { params: { categoryId } } = req
 
     return logic.listProductsByCategory(categoryId)
@@ -113,20 +113,5 @@ router.get('/products', (req, res) => {
                 res.json({ status: 'KO', error: message }) 
             })
 })
-
-router.get('categories/:categoryId', (req, res) => {
-    const { params: {categoryId} } = req
-
-    return logic.listProductsByCategory(categoryId)
-            .then(category => {
-                res.status(200)
-                res.json({ status: 'OK', data: category })
-            })
-            .catch(({ message }) => {
-                res.status(400)
-                res.json({ status: 'KO', error: message }) 
-            })
-})
-
 
 module.exports = router

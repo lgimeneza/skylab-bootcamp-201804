@@ -230,17 +230,13 @@ const clientApi = {
 
      /**
      * 
-     * @param {string} userId
-     * @param {string} text 
-     * 
-     * @returns {Promise<string>}
+     * @returns {Promise<[Object]>}
      */
 
-    listParentsCategory() {
+    listRootCategories() {
         return Promise.resolve()
             .then(() => {
-
-                return axios.get(`${this.url}/parentsCategory`)
+                return axios.get(`${this.url}/categories/root`)
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

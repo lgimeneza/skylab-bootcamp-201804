@@ -200,32 +200,29 @@ const logic = {
     //         .then(() => true)
     // },
 
-     /**
-     * Lists products
-     * 
-     * @param {String} categoryId The category id
-     * 
-     * @returns {Promise<[Product]>}
-     */
-    listParentsCategory() {
+    /**
+    * Lists root categories
+    * 
+    * @returns {Promise<[Category]>}
+    */
+    listRootCategories() {
         return Promise.resolve()
             .then(() => {
+                // TODO: check which root categories have children or not and mark it with a flag "hasChildren" true or false, respectively
+                // category.hasChildren = false
 
-                return Category.find({ parent: undefined})
-                    .then(res => {
-                        const categories = res.map(({ _id: id, name}) => ({ id, name }))
-                        return categories
-                    })
+                return Category.find({ parent: undefined })
+                    .then(res => res.map(({ _id, name }) => ({ id: _id.toString(), name })))
             })
     },
 
-     /**
-     * Lists products
-     * 
-     * @param {String} categoryId The category id
-     * 
-     * @returns {Promise<[Product]>}
-     */
+    /**
+    * Lists products
+    * 
+    * @param {String} categoryId The category id
+    * 
+    * @returns {Promise<[Product]>}
+    */
     listSubcategories(categoryId) {
         if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
 
@@ -234,9 +231,9 @@ const logic = {
         return Promise.resolve()
             .then(() => {
 
-                return Category.find({ parent: categoryId.toString()})
+                return Category.find({ parent: categoryId.toString() })
                     .then(res => {
-                        const categories = res.map(({ _id: id, name, parent}) => ({ id, name, parentId: parent ? parent.toString() : undefined }))
+                        const categories = res.map(({ _id: id, name, parent }) => ({ id, name, parentId: parent ? parent.toString() : undefined }))
                         return categories
                     })
             })
@@ -257,7 +254,7 @@ const logic = {
 
                 if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
 
-                return Product.find({ category: categoryId.toString()})
+                return Product.find({ category: categoryId.toString() })
                     .then(res => {
                         const products = res.map(({ _id: id, name, description, image, price, discount, category }) => ({ id, name, description, image, price, discount, categoryId: category ? category.toString() : undefined }))
                         return products
