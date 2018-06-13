@@ -16,22 +16,86 @@ const logic = {
             return this._userId
     },
 
-    registerUser(username, email, password, repeatPassword) {   
-        return clientApi.registerUser(username, email, password, repeatPassword)
+    registerUser(username, email, password, repeatPassword) {
+        return Promise.resolve()
+        .then(() => {
+            if (typeof username !== 'string') throw Error('username is not a string')
+
+            if (!(username = username.trim()).length) throw Error('username is empty or blank')
+
+            if (typeof email !== 'string') throw Error('email is not a string')
+            
+            if (!(email = email.trim()).length) throw Error('email is empty or blank')
+            
+            if (typeof password !== 'string') throw Error('password is not a string')
+            
+            if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+            
+            if (typeof repeatPassword !== 'string') throw Error('repeatPassword is not a string')
+
+            if ((repeatPassword = repeatPassword.trim()).length === 0) throw Error('repeatPassword is empty or blank')
+
+            return clientApi.registerUser(username, email, password, repeatPassword)
+                .then(() => true)
+                
+            })   
+            .catch(err => {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                if (err.response) {
+                    const { response: { data: { error: message } } } = err
+
+                    throw Error(message)
+                } else throw err
+            })   
     },
 
     
     login(email, password) {
-        return clientApi.authenticateUser(email, password)
-        .then(id => {
-            this.userId(id)
-            return true
+        return Promise.resolve()
+        .then(() => {
+            if (typeof email !== 'string') throw Error('email is not a string')
+
+            if (!(email = email.trim()).length) throw Error('email is empty or blank')
+
+            if (typeof password !== 'string') throw Error('password is not a string')
+
+            if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+
+            return clientApi.authenticateUser(email, password)
+            .then(id => {
+                this.userId(id)
+                return true
+            })
+            .catch(err => {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                if (err.response) {
+                    const { response: { data: { error: message } } } = err
+
+                    throw Error(message)
+                } else throw err
+            })
         })
     },
     
     retrieveUser() {
-        return clientApi.retrieveUser(this.userId())
-                .then(userData => userData)
+        return Promise.resolve()
+            .then(() => {
+
+                return clientApi.retrieveUser(this.userId())
+                    .then(userData => userData)
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                            
+                        } else throw err
+                    })
+            })
     },
 
     listParentsCategory() {
