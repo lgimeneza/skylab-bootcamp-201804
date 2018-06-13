@@ -73,6 +73,12 @@ export class Dropdown extends Component {
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
             <button class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu3">
+              <span>Elige tu servicio</span>
+              <span class="icon is-small">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+            <button class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu3">
               <span>{this.state._year}</span>
               <span class="icon is-small">
                 <i class="fa fa-angle-down" aria-hidden="true"></i>

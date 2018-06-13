@@ -1,17 +1,23 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import 'react-router-dom'
 import { ButtonBackToHome } from './buttonBackToHome'
-import {Login} from './login'
+import { Login } from './login'
 import moment from 'moment'
 import logic from '../logic'
 import '../design/calendar.css'
-import {Register} from './register';
+import { Register } from './register';
+import BookingHours from './bookingHours';
 
 class Calendar extends Component {
   state = {
     data: [],
     monthDays: 0,
-    isChecked: false
+    isChecked: false,
+    year: 2018,
+    month: 6,
+    day: 1,
+    clickDay: false
   }
 
   componentDidMount() {
@@ -28,13 +34,22 @@ class Calendar extends Component {
         this.setState({
           data,
           monthDays,
-          isChecked: true
+          isChecked: true,
+          year,
+          month
         })
       })
-
   }
-
-
+  bookinghoursForDays = (day) => {
+    
+    this.setState({
+      day: day,
+      clickDay: true
+    }, ()=>{
+      const { year, month, day } = this.state
+      this.props.history.push(`/calendar/${year}/${month}/${day}`)
+    })
+  }
 
   renderBookingData = () => {
     if (!this.state.isChecked) {
@@ -47,7 +62,7 @@ class Calendar extends Component {
     for (let i = 1; i < monthDays + 1; i++) {
       cards.push(i)
     }
-
+    let _dayOfMonth = 0
     return cards.map(day => {
       let bookingClass = 'has-text-primary'
 
@@ -57,6 +72,8 @@ class Calendar extends Component {
             bookingClass = 'has-text-danger'
           } else if (bookingHours >= 5) {
             bookingClass = 'has-text-warning'
+          } else if (this.state.clicDay) {
+            _dayOfMonth = day
           }
         }
       })
@@ -64,7 +81,7 @@ class Calendar extends Component {
       return (
         <div key={day} className='card'>
           <div className="card-content card-days">
-            <h1 className={`title ${bookingClass}`}>{day}</h1>
+            <h1 onClick={()=>this.bookinghoursForDays(day)} className={`title ${bookingClass}`}>{day}</h1>
           </div>
         </div>
       )
@@ -76,7 +93,7 @@ class Calendar extends Component {
       <div className="container">
         <section>
           <h1 className="calendar-title subtitle">Calendar</h1>
-          <hr/>
+          <hr />
         </section>
         <section className="container-booking-data">
           {this.renderBookingData()}
@@ -94,6 +111,7 @@ class Calendar extends Component {
             Register
             </Link>
         </div>
+        {this.state.clickDay ? <BookingHours day={this.state.day} /> : <div></div>}
       </div>
     )
   }

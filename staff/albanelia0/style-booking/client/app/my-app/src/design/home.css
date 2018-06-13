@@ -1,6 +1,7 @@
   @import url('https://fonts.googleapis.com/css?family=Poiret+One');
   body {
     font-family: 'Poiret One', cursive;
+    color: white;
   }
 
   img {
@@ -8,6 +9,11 @@
     border: 1px solid #ccc;
   }
 
-  .navbar {
-    color: white;
+  .summary {
+    background: #EB9F55;
+    height: 80px;
+  }
+
+  .header {
+    background: #EB8C74;
   }

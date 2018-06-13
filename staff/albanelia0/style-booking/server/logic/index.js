@@ -120,9 +120,9 @@ const logic = {
   unregisterUser(userId, email, password) {
     return Promise.resolve()
       .then(() => {
-        if (typeof userId !== 'string') throw Error('user userId is not a string')
+        if (typeof userId !== 'string') throw Error('userId is not a string')
 
-        if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
         if (typeof email !== 'string') throw Error('user email is not a string')
 
@@ -137,7 +137,7 @@ const logic = {
       .then(user => {
         if (!user) throw Error('wrong credentials')
 
-        if (user.id !== userId) throw Error(`no user found with id ${id} for given credentials`)
+        if (user.id !== userId) throw Error(`no user found with id ${userId} for given credentials`)
 
         return user.remove()
       })
@@ -191,7 +191,10 @@ const logic = {
     return Promise.resolve()
       .then(() => {
 
-        //TODO VALIDATIONS
+        if (typeof year !== 'number') throw Error('year is not a number')
+
+        if (typeof month !== 'number') throw Error('month email is not a number')
+
         const monthStart = moment(`${year}-${month}-01`, 'YYYY-MM-DD')
         const monthEnd = moment(monthStart).add(1, 'M')
         const monthDays = monthEnd.diff(monthStart, 'days')
@@ -242,6 +245,14 @@ const logic = {
   getBookingHoursForYearMonthDay(year, month, day) { // yyyy-MM-dd
     return Promise.resolve()
       .then(() => {
+
+        if (typeof year !== 'number') throw Error('year is not a number')
+
+        if (typeof month !== 'number') throw Error('month is not a number')
+
+        if (typeof day !== 'number') throw Error('day is not a number')
+
+
         const dayStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
         const dayEnd = moment(dayStart).add(1, 'days')
         return Booking.find({
@@ -252,9 +263,13 @@ const logic = {
         })
           .then(bookings => {
             return bookings.map(booking => {
+
+
               const startHour = moment(booking.date).hour() + (moment(booking.date).minutes() / 60)
               const endHour = moment(booking.endDate).hour() + (moment(booking.endDate).minutes() / 60)
               return { "start": startHour, "end": endHour }
+
+
             })
           });
       })
@@ -378,7 +393,7 @@ const logic = {
           .then((booking) => {
             // if (!user) throw Error(`no user found with id ${userId}`)
             const id = booking._id
-            return Booking.remove({_id:id})
+            return Booking.remove({ _id: id })
               .then(() => true)
           })
 
@@ -398,7 +413,7 @@ const logic = {
     return Promise.resolve()
       .then(() => {
 
-
+        //TODO VALIDATIONS
 
         if (newEmail) {
           return User.findOne({ email: newEmail })
@@ -423,6 +438,61 @@ const logic = {
 
       })
   },
+
+  listServices() {
+    return Promise.resolve()
+      .then(() => {
+        const serviceData = { serviceName: 'Lavado de pelo', duration: 30, price: 15 }
+        const serviceData1 = { serviceName: 'Secado', duration: 40, price: 15 }
+        const serviceData2 = { serviceName: 'Lavado + Secado', duration: 60, price: 25 }
+        const serviceData3 = { serviceName: 'Corte de pelo', duration: 30, price: 15 }
+        const serviceData4 = { serviceName: 'Pack Lavar + Cortar + Secar', duration: 100, price: 50 }
+        const serviceData5 = { serviceName: 'Trenzas pegadas', duration: 180, price: 100 }
+        const serviceData6 = { serviceName: 'Peinado', duration: 40, price: 20 }
+        const serviceData7 = { serviceName: 'Cambio de color', duration: 60, price: 15 }
+        const serviceData8 = { serviceName: 'Baño de brillo', duration: 40, price: 16 }
+        const serviceData9 = { serviceName: 'Mechas degradadas', duration: 80, price: 45 }
+        const serviceData0 = { serviceName: 'Extensiones', duration: 120, price: 150 }
+        const serviceData11 = { serviceName: 'Semirrecogido', duration: 35, price: 37 }
+        const serviceData10 = { serviceName: 'Peinado Novia', duration: 80, price: 50 }
+        const serviceData011 = { serviceName: 'Tratamiento anti-caída', duration: 60, price: 25 }
+        const serviceData111 = { serviceName: 'Manicura express', duration: 35, price: 15 }
+        const serviceData110 = { serviceName: 'Pedicura Vinylux', duration: 60, price: 35 }
+
+        return Promise.all([
+          Service.create(serviceData),
+          Service.create(serviceData1),
+          Service.create(serviceData2),
+          Service.create(serviceData3),
+          Service.create(serviceData4),
+          Service.create(serviceData5),
+          Service.create(serviceData6),
+          Service.create(serviceData7),
+          Service.create(serviceData8),
+          Service.create(serviceData9),
+          Service.create(serviceData0),
+          Service.create(serviceData11),
+          Service.create(serviceData10),
+          Service.create(serviceData011),
+          Service.create(serviceData111),
+          Service.create(serviceData110)
+        ]).then(res => {
+
+          return res.map(res => {
+
+            // const [{ _doc }] = res
+            const data = {
+              serviceId: res._doc._id,
+              serviceName: res._doc.serviceName,
+              duration: res._doc.duration,
+              price: res._doc.price
+            }
+            return data
+          })
+
+        })
+      })
+  }
 
 
 

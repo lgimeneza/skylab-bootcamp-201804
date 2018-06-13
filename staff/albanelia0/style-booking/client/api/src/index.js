@@ -13,13 +13,14 @@ const logic = {
   token: 'NO-TOKEN',
 
   /**
-   * @param {string} name
-   * @param {string} surname
-   * @param {string} gmail
-   * @param {string} password
-   *
-   * @returns {Promise<boolean>}
-   */
+     * 
+     * @param {string} name 
+     * @param {string} surname 
+     * @param {string} email 
+     * @param {string} password 
+     * 
+     * @returns {Promise<boolean>}
+     */
   registerUser(name, surname, email, password) {
     return Promise.resolve()
       .then(() => {
@@ -44,7 +45,6 @@ const logic = {
             if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
             return true
-
           })
           .catch(err => {
             if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
@@ -54,7 +54,6 @@ const logic = {
 
               throw Error(message)
             } else throw err
-
           })
       })
   },
@@ -73,9 +72,9 @@ const logic = {
   updateUser(id, name, surname, email, password, newEmail, newPassword) {
     return Promise.resolve()
       .then(() => {
-        if (typeof id !== 'string') throw Error('user id is not a string')
+        if (typeof id !== 'string') throw Error('userId is not a string')
 
-        if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+        if (!(id = id.trim()).length) throw Error('userId is empty or blank')
 
         if (typeof name !== 'string') throw Error('user name is not a string')
 
@@ -120,9 +119,9 @@ const logic = {
   unregisterUser(userId, email, password) {
     return Promise.resolve()
       .then(() => {
-        if (typeof userId !== 'string') throw Error('user userId is not a string')
+        if (typeof userId !== 'string') throw Error('userId is not a string')
 
-        if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+        if (!(userId = userId.trim()).length) throw Error('userId is empty or blank')
 
         if (typeof email !== 'string') throw Error('user email is not a string')
 
@@ -132,7 +131,7 @@ const logic = {
 
         if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-        return axios.delete(`${this.url}/user`, { userId, email, password })
+        return axios.delete(`${this.url}/user`, { data: { userId, email, password },  headers: { authorization: `Bearer ${this.token}` } })
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -213,7 +212,8 @@ const logic = {
     return Promise.resolve()
       .then(() => {
 
-        //TODO VALIDATIONS
+        if (typeof year !== 'number') throw Error('year is not a number')
+        if (typeof month !== 'number') throw Error('month is not a number')
 
         return axios.get(`${this.url}/booking/hours/${year}/${month}`, { year, month })
           .then(({ status, data }) => {
@@ -255,6 +255,13 @@ const logic = {
   getBookingHoursForYearMonthDay(year, month, day) { // yyyy-MM-dd
     return Promise.resolve()
       .then(() => {
+
+        if (typeof year !== 'number') throw Error('year is not a number')
+        if (typeof month !== 'number') throw Error('month is not a number')
+        if (typeof day !== 'number') throw Error('day is not a number')
+        
+
+        console.log(`${this.url}/booking/hours/${year}/${month}/${day}`)
         return axios.get(`${this.url}/booking/hours/${year}/${month}/${day}`, { year, month, day })
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
@@ -288,7 +295,7 @@ const logic = {
         //TODO VALIDATIONS
         // - Comprobar que la hora de inicio de la reserva no sea menor al inicio de jornada
         //   o mayor al fin de jornada (tirar un error en ese caso)
-        return axios.post(`${this.url}/booking`, { userId, serviceIds, date })
+        return axios.post(`${this.url}/booking`, { userId, serviceIds, date }, { headers: { authorization: `Bearer ${this.token}` } })
           .then(({ status, data }) => {
             if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -316,7 +323,7 @@ const logic = {
   listBookings() {
     return Promise.resolve()
       .then(() => {
-        return axios.get(`${this.url}/booking`, { year, month, day })
+        return axios.get(`${this.url}/booking`, this.token, { year, month, day })
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -343,7 +350,7 @@ const logic = {
   listBookingsUser(userId) {
     return Promise.resolve()
       .then(() => {
-        return axios.get(`${this.url}/booking/${userId}`, { userId})
+        return axios.get(`${this.url}/booking/${userId}`, this.token, { userId})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -372,7 +379,7 @@ const logic = {
   deleteBooking(bookingId, userId) {
     return Promise.resolve()
       .then(() => {
-        return axios.delete(`${this.url}/booking/${bookingId}/${userId}`, { bookingId, userId })
+        return axios.delete(`${this.url}/booking/${bookingId}/${userId}`, this.token, { bookingId, userId })
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -393,5 +400,27 @@ const logic = {
       })
 
   },
+
+  listServices(){
+    return Promise.resolve()
+      .then(() => {
+        return axios.get(`${this.url}/services`)
+          .then(({status, data}) => {
+            if (status !== 200 && data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+            return data.data
+          })
+          .catch(err => {
+            if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+            if (err.response) {
+              const { response: { data: { error: message } } } = err
+
+              throw Error(message)
+            } else throw err
+
+          })
+      })
+  }
 }
 module.exports = logic

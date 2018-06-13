@@ -38,8 +38,8 @@ class Home extends Component {
   render() {
     return (
       <section className="hero is-fullheight is-default is-bold">
-        <div className="hero-head">
-          <nav className="navbar has-background-info">
+        <div className="hero-head  header">
+          <nav className="navbar">
             <div className="container">
               <div className="navbar-brand">
                 <p className="subtitle">Victoria Style</p>
@@ -67,10 +67,12 @@ class Home extends Component {
         </div>
         <div className="hero-body">
           <div className="container has-text-centered">
-          <section class="hero is-small is-primary">
+          <section class="hero is-small">
             <div class="hero-body">
-              <div class="container">
-                  <p className="subtitle">ask for an appointment!
+              <div className="container summary">
+                  <p className="subtitle">
+                    <h3>SCHEDULE: From Monday to Saturday from 8 am to 5 pm</h3> 
+                  ask for an appointment!
                   We will do our best to satisfy your wishes!</p>
               </div>
             </div>

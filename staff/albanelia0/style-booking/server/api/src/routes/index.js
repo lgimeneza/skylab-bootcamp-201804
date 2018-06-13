@@ -137,6 +137,20 @@ router.get('/booking/user/:userId', jwtValidator, (req, res) => {
     })
 })
 
+router.get('/services', (req, res) => {
+  const { params: { userId } } = req
+
+  logic.listServices()
+    .then((services) => {
+      res.status(200)
+      res.json({ status: 'OK', data: services })
+    })
+    .catch(({ message }) => {
+      res.status(400)
+      res.json({ status: 'KO', error: message })
+    })
+})
+
 router.delete('/booking/user/:bookingId/:userId', jwtValidator, (req, res) => {
     const { params: { bookingId, userId } } = req
 
