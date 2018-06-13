@@ -91,7 +91,7 @@ router.post('/users/:userId/notes', [jwtValidator, jsonBodyParser], (req, res) =
     logic.addNote(userId, text)
         .then(id => {
             res.status(201)
-            res.json({ status: 'OK', data: { id } })
+            res.json({ status: 'OK', data: id })
         })
         .catch(({ message }) => {
             res.status(400)
