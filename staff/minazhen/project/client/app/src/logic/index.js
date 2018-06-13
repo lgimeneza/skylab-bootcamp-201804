@@ -18,14 +18,13 @@ const logic = {
     login(username, password, location) {
         return travelApi.authenticateUser(username, password, location)
             .then(userId => {
-                this.userId = userId // va fuera
-                // this.storage.set('id', id)
+                this.userId = userId 
+                sessionStorage.setItem('userId', userId) 
                 return true
             })
     },
 
     loggedIn() { //era get loggedIn
-        //const id = this.storage.get('id')
         const userId = this.userId
         const token = travelApi.token
 
@@ -33,14 +32,13 @@ const logic = {
     },
 
     logout() {
-        //this.storage.clear()
+        sessionStorage.clear();
         this.userId = "NO-ID"
+        travelApi.token = "NO-TOKEN"
         return true
     },
 
     retrieveUser(userId = this.userId) {
-        //const id = this.storage.get('id')
-
         return travelApi.retrieveUser(userId)
             .then((res) => {
                 this.username = res.username
@@ -49,7 +47,6 @@ const logic = {
     },
 
     unregister(username, password) {
-        //const id = this.storage.get('id')
         const userId = this.userId
         return travelApi.unregisterUser(userId, username, password)
             .then(() => this.logout())
@@ -60,8 +57,6 @@ const logic = {
     },
 
     world(userId = this.userId) {
-        //const id = this.storage.get('id')
-
         return travelApi.world(userId)
             .then((res) => res)
     },
@@ -69,6 +64,11 @@ const logic = {
     retrieveCountry(countryName, userId = this.userId) {
         return travelApi.retrieveCountry(userId, countryName)
             .then((res) => res) 
+    },
+
+    uploadPhoto(file){
+        return travelApi.uploadPhoto(file)
+            .then((res) => res)
     },
     
     addPhoto(countryName, url) {

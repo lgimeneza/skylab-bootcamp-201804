@@ -26,8 +26,8 @@ function Header() {
 
     return (
         <header>
-            {/* {(Xtorage.local.get('user')) ? regularNav : landingNav} */}
-            {(logic.loggedIn()) ? regularNav : landingNav}
+            {sessionStorage.getItem('userId') ? regularNav : landingNav}
+            {/* {(logic.loggedIn()) ? regularNav : landingNav} */}
         </header>
     )
 }

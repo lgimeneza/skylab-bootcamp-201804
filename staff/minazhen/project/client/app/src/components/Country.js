@@ -17,7 +17,8 @@ class Country extends Component {
 
         logic.retrieveCountry(this.state.countryName)
             .then(data => {
-                this.setState({ photos: data.photos })
+                console.log(data)
+                if (data !== undefined) this.setState({ photos: data.photos })
             });
 
     }
@@ -25,7 +26,35 @@ class Country extends Component {
     add = (e) => {
         const add = e.target.value
         this.setState({ add })
+    }
 
+    upload = (e) => {
+        let file = e.target.files[0]
+        return logic.uploadPhoto(file)
+        .then(add => {
+            const { username, countryName } = this.state
+            logic.addPhoto(countryName, add)
+            .then(()=> this.props.history.push(`/${countryName}`) 
+        
+        )
+        })
+        // let formData = new FormData()
+        // formData.append("file", file)
+        // formData.append("upload_preset", logic.sign)
+
+        // axios({
+        //     url: `${logic.cloud}/upload`,
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type" : "application/x-form-urlencoded"
+        //     },
+        //     data: formData
+        // }).then(console.log).catch(err => console.error(err))
+            
+    }
+
+    retrievePicture = (e) => {
+        console.log(e.target)
     }
 
     clicking = (e) => {
@@ -75,16 +104,20 @@ class Country extends Component {
         <div className="country">
             
             <h1>{countryName}</h1>
-            <h5>from {username}</h5>
-        
+            {(username === undefined) ? <h5> My photos </h5> : <h5>from {username}</h5> }
+            
             {this.state.photos.map((photo) =>
-                     <div key={photo.id}>
+                     <div key={photo._id} className="photos" onClick={this.retrievePicture}>
                         <img src={photo.url} alt={countryName}/>
                     </div>)}
-            <form onSubmit={this.clicking}>
+                <label className="file-upload-container" htmlFor="file-upload">
+                    <input id="file-upload" onChange={this.upload} type="file" style={{display: "none"}}/>
+                    Select picture
+                </label>
+            {/* <form onSubmit={this.clicking}>
                 <input type="text" onChange={this.add} value={add} placeholder="Paste url" autoComplete="off" />
-                <button type="submit">Add Country</button>
-            </form>
+                <button type="submit">Upload Photo</button>
+            </form> */}
         </div>)
     }
     // render() {

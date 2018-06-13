@@ -43,6 +43,8 @@ const travelApi = {
 
                         const { data: { id, token } } = data
                         this.token = token
+                        //sessionStorage.setItem('token') = token
+
                         return id
                     })
                     .catch(err => {
@@ -103,6 +105,7 @@ const travelApi = {
                 return axios.delete(`${this.url}/users/${userId}`, { headers: { authorization: `Bearer ${this.token}` }, data : { userId, username, password }})
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                        
                         return true
                     })
                     .catch(({ response: { data: { error } } }) => error)
@@ -153,6 +156,25 @@ const travelApi = {
                         } else throw err
                     })
             })
+    },
+
+    uploadPhoto(file) {
+        let formData = new FormData()
+        formData.append("file", file)
+        formData.append("upload_preset", "sjzufyub")
+        
+        return axios({
+            url: "https://api.cloudinary.com/v1_1/dlpsxhpa0/upload",
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/x-www-form-urlencoded"
+            },
+            data: formData
+        }).then(res => {
+            console.log(res)
+            return res.data.secure_url
+        })
+        .catch(err => console.error(err))
     },
 
     addPhoto(userId, countryName, url) {

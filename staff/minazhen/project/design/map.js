@@ -11,7 +11,7 @@ import Home from "./Home"
 import React, { Component } from "react"
 import {
   ComposableMap,
-  ZoomableGlobe,
+  ZoomableGroup,
   Geographies,
   Geography,
 } from "react-simple-maps"
@@ -20,13 +20,6 @@ const wrapperStyles = {
   width: "100%",
   maxWidth: 980,
   margin: "0 auto",
-}
-
-const mapStyles = {
-  width: "90vw",
-  maxWidth: "80vh",
-  height: "auto",
-  maxHeight: "90vw",
 }
 
 let visited = []
@@ -74,17 +67,21 @@ class BasicMap extends Component {
 
     } else {  
       return (   
-        <div>
+        <div style={wrapperStyles}>
           <ComposableMap
-            width={500}
-            height={500}
-            projection="orthographic"
-            projectionConfig={{ scale: 220 }}
-            style={mapStyles}
+            projectionConfig={{
+              scale: 205,
+              rotation: [-11, 0, 0],
+            }}
+            width={980}
+            height={551}
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
           >
-            <ZoomableGlobe>
-              <circle cx={250} cy={250} r={220} fill="transparent" stroke="#CFD8DC" />  
-              <Geographies disableOptimization geography={world}>
+            <ZoomableGroup center={[0, 20]}>
+              <Geographies geography={world}>
                 {(geographies, projection) => geographies.map((geography, i) => {
                   this.visited.push({ index: i, name: geography.properties.name })
   
@@ -119,7 +116,7 @@ class BasicMap extends Component {
                 })
                 }
               </Geographies>
-            </ZoomableGlobe>
+            </ZoomableGroup>
           </ComposableMap>
         </div>
       )
