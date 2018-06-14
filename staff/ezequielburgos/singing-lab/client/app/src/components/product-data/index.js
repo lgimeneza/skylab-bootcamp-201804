@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import './index.css'
-import Navbar from './../Navbar'
-import Footer from './../Footer'
+import Navbar from './../navbar'
+import Footer from './../footer'
 
 class ProductData extends Component {
 

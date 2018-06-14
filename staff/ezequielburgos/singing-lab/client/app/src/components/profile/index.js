@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
 import logic from '../../logic'
-import Navbar from './../Navbar'
+import Navbar from './../navbar'
 
 class Update extends Component {
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
-import Navbar from './../Navbar'
-import Footer from './../Footer'
+import Navbar from './../navbar'
+import Footer from './../footer'
 
 class OurTeam extends Component {
 

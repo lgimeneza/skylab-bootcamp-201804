@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import './index.css'
-import Navbar from './../Navbar'
-import Footer from './../Footer'
-import ListItems from './../ListItems'
+import Navbar from './../navbar'
+import Footer from './../footer'
+import ListItems from './../list-items'
 
 class Products extends Component {
 

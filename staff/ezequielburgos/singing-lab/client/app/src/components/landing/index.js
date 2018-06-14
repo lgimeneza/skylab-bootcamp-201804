@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
-import Navbar from './../Navbar'
-import LandingMain from './LandingMain'
-import LandingProducts from './LandingProducts'
-import LandingChat from '../LandingChat'
-import Footer from './../Footer'
+import Navbar from './../navbar'
+import LandingMain from './landing-main'
+import LandingProducts from './landing-products'
+import LandingChat from '../landing-chat'
+import Footer from './../footer'
 
 function Landing() {
         return (
