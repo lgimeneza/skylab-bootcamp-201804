@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
-import RedirectWithStatus from './redirect-w-status.jsx';
-import Navbar from './navbar.jsx';
-import routeOptions from '../routes/routes';
-import PrivateRoute from './private-route.jsx';
+import React, { Component } from 'react'
+import { Switch, Route, withRouter } from 'react-router-dom'
+import RedirectWithStatus from './redirect-w-status.jsx'
+import Navbar from './navbar.jsx'
+import routeOptions from '../routes/routes'
+import PrivateRoute from './private-route.jsx'
 import logic from '../logic'
 
 class App extends Component {
@@ -33,4 +33,4 @@ class App extends Component {
         );
     }
 }
-export default withRouter(App);
+export default withRouter(App)

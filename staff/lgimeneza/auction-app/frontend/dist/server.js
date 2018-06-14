@@ -776,8 +776,14 @@ var NavBar = function (_Component) {
 
 			var query = _this.state.query;
 
-			_this.props.setQuery(query);
 
+			_this.props.setQuery(query);
+			_this.props.history.push('/');
+		}, _this.handleHomeLink = function (e) {
+			e.preventDefault();
+
+			_this.setState({ query: '' });
+			_this.props.setQuery('');
 			_this.props.history.push('/');
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
@@ -877,7 +883,7 @@ var NavBar = function (_Component) {
 										_react2.default.createElement(
 											'form',
 											{ onSubmit: this.handleSubmit },
-											_react2.default.createElement('input', { className: 'input', placeholder: 'Search here', name: 'query', value: this.query, onChange: this.handleChange }),
+											_react2.default.createElement('input', { className: 'input', placeholder: 'Search here', name: 'query', value: this.state.query, onChange: this.handleChange }),
 											_react2.default.createElement(
 												'button',
 												{ className: 'search-btn' },
@@ -948,7 +954,7 @@ var NavBar = function (_Component) {
 									null,
 									_react2.default.createElement(
 										_reactRouterDom.Link,
-										{ to: '/' },
+										{ to: '/', onClick: this.handleHomeLink },
 										'Home'
 									)
 								)
@@ -1648,7 +1654,6 @@ var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux
 
 function setQuery(query) {
     return async function (dispatch, getState) {
-        console.log('setQuery', query);
         dispatch({ type: _constants.Types.UPDATE_QUERY, query: query });
     };
 }
@@ -1978,7 +1983,6 @@ function query() {
 
     switch (action.type) {
         case _constants.Types.UPDATE_QUERY:
-            console.log('reducerQuery', action.query);
             return action.query;
         default:
             return state;

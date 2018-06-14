@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 
 import { userActions } from './redux/actions/user'
@@ -29,8 +29,16 @@ class NavBar extends Component {
 		e.preventDefault();
 
 		const { query } = this.state
-		this.props.setQuery(query)
 
+		this.props.setQuery(query)
+		this.props.history.push('/')
+	}
+
+	handleHomeLink = e => {
+		e.preventDefault();
+
+		this.setState({ query: '' })
+		this.props.setQuery('')
 		this.props.history.push('/')
 	}
 
@@ -71,7 +79,7 @@ class NavBar extends Component {
 						<div className="col-md-6">
 							<div className="header-search">
 								<form onSubmit={this.handleSubmit}>
-									<input className="input" placeholder="Search here" name='query' value={this.query} onChange={this.handleChange}/>
+									<input className="input" placeholder="Search here" name='query' value={this.state.query} onChange={this.handleChange}/>
 									<button className="search-btn">Search</button>
 								</form>
 							</div>
@@ -109,7 +117,7 @@ class NavBar extends Component {
                 <div id="responsive-nav">
                     {/* <!-- NAV --> */}
                     <ul className="main-nav nav navbar-nav">
-                        <li><Link to='/'>Home</Link></li>
+                        <li><Link to='/' onClick={this.handleHomeLink} >Home</Link></li>
                     </ul>
                     {/* <!-- /NAV --> */}
                 </div>
