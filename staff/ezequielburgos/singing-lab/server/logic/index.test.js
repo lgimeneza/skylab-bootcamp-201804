@@ -437,25 +437,20 @@ describe('logic (singing-lab)', () => {
             ])
                 .then(res => {
                     beginnerCourseData.category = res[0]._id
-                    beginnerCourseData2.category = res[0]._id
                     advancedCourseData.category = res[1]._id
 
                     return Promise.all([
                         Product.create(beginnerCourseData),
-                        Product.create(beginnerCourseData2),
-                        Product.create(advancedCourseData),
+                        Product.create(advancedCourseData)
                     ])
                         .then(res => {
                             return Promise.all([
                                 logic.listProducts(res[0].category),
                             ])
                                 .then(product => {
-
-                                    expect(product[0][1]._id).to.exist
-                                    expect(product[0][1].name).to.equal(beginnerCourseData2.name)
-
                                     expect(product[0][0]._id).to.exist
                                     expect(product[0][0].name).to.equal(beginnerCourseData.name)
+
                                 })
                         })
                 })
