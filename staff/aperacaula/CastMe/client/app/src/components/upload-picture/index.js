@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 //import logic from "../../logic";
-import "./upload-picture.css";
+import "./index.css";
 import DropNCrop from "@synapsestudios/react-drop-n-crop";
 import "@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css";
 

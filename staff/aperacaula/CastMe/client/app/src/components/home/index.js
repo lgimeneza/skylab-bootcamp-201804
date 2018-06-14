@@ -2,7 +2,7 @@ import React,{Component} from "react";
 //import { Link } from "react-router-dom";
 import claqueta from "./images/claqueta.jpg"
 import logic from "../../logic"
-import './home.css'
+import './index.css'
 
 class Home extends Component {
 

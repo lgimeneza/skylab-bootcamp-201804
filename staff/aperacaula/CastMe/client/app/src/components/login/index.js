@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import swal from 'sweetalert'
-import './login.css';
+import './index.css';
 
 class Login extends Component {
 

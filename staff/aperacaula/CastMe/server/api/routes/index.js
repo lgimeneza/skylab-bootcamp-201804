@@ -68,10 +68,10 @@ router.get('/users/:userId', (req, res) => {
 
 })
 
-router.get('/users/:userId/lite', (req, res) => { // TODO logic.retrieveUserWithAppliedProjectionCastings 
+router.get('/users/:userId/lite', (req, res) => {
     const { params: { userId } } = req
-
-    return logic.retrieveUserWithAppliedCastings(userId)
+    
+    return logic.retrieveUserLite(userId)
         .then(user => {
             const {personalData:{name,surname},profilePicture, applications}=user
             res.status(200)

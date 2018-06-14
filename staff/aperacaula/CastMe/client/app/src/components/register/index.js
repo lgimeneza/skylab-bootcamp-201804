@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import swal from "sweetalert";
-import "./register.css";
+import "./index.css";
 
 class RegisterUser extends Component {
   state = {

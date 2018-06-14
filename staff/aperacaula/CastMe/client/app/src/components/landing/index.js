@@ -1,5 +1,5 @@
 import React from "react";
-//import './landing.css'
+//import './index.css'
 import { Link } from "react-router-dom";
 import claqueta from "./images/claqueta.jpg"
 

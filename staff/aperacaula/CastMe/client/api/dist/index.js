@@ -1,8 +1,10 @@
 "use strict";
 
-const axios = require("axios");
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-const castmeApi = {
+var axios = require("axios");
+
+var castmeApi = {
   url: "NO-URL",
 
   /**
@@ -18,78 +20,56 @@ const castmeApi = {
    *
    * @returns {Promise<boolean>}
    */
-  registerUser(
-    email,
-    password,
-    personalData,
-    physicalData,
-    professionalData,
-    videobookLink,
-    profilePicture
-  ) {
-    return Promise.resolve().then(() => {
+  registerUser: function registerUser(email, password, personalData, physicalData, professionalData, videobookLink, profilePicture) {
+    var _this = this;
+
+    return Promise.resolve().then(function () {
       if (typeof email !== "string") throw Error("user email is not a string");
 
-      if (!(email = email.trim()).length)
-        throw Error("user email is empty or blank");
+      if (!(email = email.trim()).length) throw Error("user email is empty or blank");
 
-      if (typeof password !== "string")
-        throw Error("user password is not a string");
+      if (typeof password !== "string") throw Error("user password is not a string");
 
-      if ((password = password.trim()).length === 0)
-        throw Error("user password is empty or blank");
+      if ((password = password.trim()).length === 0) throw Error("user password is empty or blank");
 
-      if (typeof personalData !== "object")
-        throw Error("personal data is not what it should be");
+      if ((typeof personalData === "undefined" ? "undefined" : _typeof(personalData)) !== "object") throw Error("personal data is not what it should be");
 
-      if (typeof professionalData !== "object")
-        throw Error("professional data is not what it should be");
+      if ((typeof professionalData === "undefined" ? "undefined" : _typeof(professionalData)) !== "object") throw Error("professional data is not what it should be");
 
-      if (typeof physicalData !== "object")
-        throw Error("physical data is not what it should be");
+      if ((typeof physicalData === "undefined" ? "undefined" : _typeof(physicalData)) !== "object") throw Error("physical data is not what it should be");
 
-      if (typeof videobookLink !== "string")
-        throw Error("user videobookLink is not a string");
+      if (typeof videobookLink !== "string") throw Error("user videobookLink is not a string");
 
-      if ((videobookLink = videobookLink.trim()).length === 0)
-        throw Error("user videobookLink is empty or blank");
+      if ((videobookLink = videobookLink.trim()).length === 0) throw Error("user videobookLink is empty or blank");
 
-      
+      return axios.post(_this.url + "/users", {
+        email: email,
+        password: password,
+        personalData: personalData,
+        physicalData: physicalData,
+        professionalData: professionalData,
+        videobookLink: videobookLink,
+        profilePicture: profilePicture
+      }).then(function (_ref) {
+        var status = _ref.status,
+            data = _ref.data;
 
-      return axios
-        .post(`${this.url}/users`, {
-          email,
-          password,
-          personalData,
-          physicalData,
-          professionalData,
-          videobookLink,
-          profilePicture 
-        })
-        .then(({ status, data }) => {
-          if (status !== 201 || data.status !== "OK")
-            throw Error(
-              `unexpected response status ${status} (${data.status})`
-            );
+        if (status !== 201 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
-          return true;
-        })
-        .catch(err => {
-          if (err.code === "ECONNREFUSED")
-            throw Error("could not reach server");
+        return true;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
 
-          if (err.response) {
-            const {
-              response: {
-                data: { error: message }
-              }
-            } = err;
+        if (err.response) {
+          var message = err.response.data.error;
 
-            throw Error(message);
-          } else throw err;
-        });
+
+          throw Error(message);
+        } else throw err;
+      });
     });
   },
+
 
   /**
    *
@@ -98,45 +78,35 @@ const castmeApi = {
    *
    * @returns {Promise<string>}
    */
-  authenticateUser(email, password) {
-    return Promise.resolve().then(() => {
+  authenticateUser: function authenticateUser(email, password) {
+    var _this2 = this;
+
+    return Promise.resolve().then(function () {
       if (typeof email !== "string") throw Error("user email is not a string");
 
-      if (!(email = email.trim()).length)
-        throw Error("user email is empty or blank");
+      if (!(email = email.trim()).length) throw Error("user email is empty or blank");
 
-      if (typeof password !== "string")
-        throw Error("user password is not a string");
+      if (typeof password !== "string") throw Error("user password is not a string");
 
-      if ((password = password.trim()).length === 0)
-        throw Error("user password is empty or blank");
+      if ((password = password.trim()).length === 0) throw Error("user password is empty or blank");
 
-      return axios
-        .post(`${this.url}/auth`, { email, password })
-        .then(({ status, data }) => {
-          if (status !== 200 || data.status !== "OK")
-            throw Error(
-              `unexpected response status ${status} (${data.status})`
-            );
+      return axios.post(_this2.url + "/auth", { email: email, password: password }).then(function (_ref2) {
+        var status = _ref2.status,
+            data = _ref2.data;
 
-          
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
-          return data.data;
-        })
-        .catch(err => {
-          if (err.code === "ECONNREFUSED")
-            throw Error("could not reach server");
+        return data.data;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
 
-          if (err.response) {
-            const {
-              response: {
-                data: { error: message }
-              }
-            } = err;
+        if (err.response) {
+          var message = err.response.data.error;
 
-            throw Error(message);
-          } else throw err;
-        });
+
+          throw Error(message);
+        } else throw err;
+      });
     });
   },
 
@@ -147,36 +117,31 @@ const castmeApi = {
    *
    * @returns {Promise<User>}
    */
-  retrieveUserLite(userId) {
-    return Promise.resolve().then(() => {
+  retrieveUserLite: function retrieveUserLite(userId) {
+    var _this3 = this;
+
+    return Promise.resolve().then(function () {
       if (typeof userId !== "string") throw Error("user userId is not a string");
 
       if (!(userId = userId.trim()).length) throw Error("user userId is empty or blank");
 
-      return axios
-        .get(`${this.url}/users/${userId}/lite`)
-        .then(({ status, data }) => {
-          if (status !== 200 || data.status !== "OK")
-            throw Error(
-              `unexpected response status ${status} (${data.status})`
-            );
-            
-          return data.data;
-        })
-        .catch(err => {
-          if (err.code === "ECONNREFUSED")
-            throw Error("could not reach server");
+      return axios.get(_this3.url + "/users/" + userId + "/lite").then(function (_ref3) {
+        var status = _ref3.status,
+            data = _ref3.data;
 
-          if (err.response) {
-            const {
-              response: {
-                data: { error: message }
-              }
-            } = err;
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
-            throw Error(message);
-          } else throw err;
-        });
+        return data.data;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
+
+        if (err.response) {
+          var message = err.response.data.error;
+
+
+          throw Error(message);
+        } else throw err;
+      });
     });
   },
 
@@ -187,38 +152,34 @@ const castmeApi = {
    *
    * @returns {Promise<User>}
    */
-  retrieveUser(id) {
-    return Promise.resolve().then(() => {
+  retrieveUser: function retrieveUser(id) {
+    var _this4 = this;
+
+    return Promise.resolve().then(function () {
       if (typeof id !== "string") throw Error("user id is not a string");
 
       if (!(id = id.trim()).length) throw Error("user id is empty or blank");
 
-      return axios
-        .get(`${this.url}/users/${id}`)
-        .then(({ status, data }) => {
-          if (status !== 200 || data.status !== "OK")
-            throw Error(
-              `unexpected response status ${status} (${data.status})`
-            );
+      return axios.get(_this4.url + "/users/" + id).then(function (_ref4) {
+        var status = _ref4.status,
+            data = _ref4.data;
 
-          return data.data;
-        })
-        .catch(err => {
-          if (err.code === "ECONNREFUSED")
-            throw Error("could not reach server");
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
-          if (err.response) {
-            const {
-              response: {
-                data: { error: message }
-              }
-            } = err;
+        return data.data;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
 
-            throw Error(message);
-          } else throw err;
-        });
+        if (err.response) {
+          var message = err.response.data.error;
+
+
+          throw Error(message);
+        } else throw err;
+      });
     });
   },
+
 
   /**
    *
@@ -234,93 +195,65 @@ const castmeApi = {
    * 
    * @returns {Promise<boolean>}
    */
-  updateUser(
-    email,
-    password,
-    newEmail,
-    newPassword,
-    personalData,
-    physicalData,
-    professionalData,
-    videobookLink,
-    profilePicture
-  ) {
-    return Promise.resolve().then(() => {
+  updateUser: function updateUser(email, password, newEmail, newPassword, personalData, physicalData, professionalData, videobookLink, profilePicture) {
+    var _this5 = this;
+
+    return Promise.resolve().then(function () {
       if (typeof email !== "string") throw Error("user email is not a string");
 
-      if (!(email = email.trim()).length)
-        throw Error("user email is empty or blank");
+      if (!(email = email.trim()).length) throw Error("user email is empty or blank");
 
-      if (typeof password !== "string")
-        throw Error("user password is not a string");
+      if (typeof password !== "string") throw Error("user password is not a string");
 
-      if ((password = password.trim()).length === 0)
-        throw Error("user password is empty or blank");
+      if ((password = password.trim()).length === 0) throw Error("user password is empty or blank");
 
-      if (typeof newEmail !== "string")
-        throw Error("user newEmail is not a string");
+      if (typeof newEmail !== "string") throw Error("user newEmail is not a string");
 
-      if (!(newEmail = newEmail.trim()).length)
-        throw Error("user newEmail is empty or blank");
+      if (!(newEmail = newEmail.trim()).length) throw Error("user newEmail is empty or blank");
 
-      if (typeof newPassword !== "string")
-        throw Error("user newPassword is not a string");
+      if (typeof newPassword !== "string") throw Error("user newPassword is not a string");
 
-      if ((newPassword = newPassword.trim()).length === 0)
-        throw Error("user newPassword is empty or blank");
+      if ((newPassword = newPassword.trim()).length === 0) throw Error("user newPassword is empty or blank");
 
-      if (typeof videobookLink !== "string")
-        throw Error("user videobookLink is not a string");
+      if (typeof videobookLink !== "string") throw Error("user videobookLink is not a string");
 
-      if ((videobookLink = videobookLink.trim()).length === 0)
-        throw Error("user videobookLink is empty or blank");
+      if ((videobookLink = videobookLink.trim()).length === 0) throw Error("user videobookLink is empty or blank");
 
-      if (typeof personalData !== "object")
-        throw Error("personal data is not what it should be");
+      if ((typeof personalData === "undefined" ? "undefined" : _typeof(personalData)) !== "object") throw Error("personal data is not what it should be");
 
-      if (typeof professionalData !== "object")
-        throw Error("professional data is not what it should be");
+      if ((typeof professionalData === "undefined" ? "undefined" : _typeof(professionalData)) !== "object") throw Error("professional data is not what it should be");
 
-      if (typeof physicalData !== "object")
-        throw Error("physical data is not what it should be");
+      if ((typeof physicalData === "undefined" ? "undefined" : _typeof(physicalData)) !== "object") throw Error("physical data is not what it should be");
 
-      
+      return axios.patch(_this5.url + "/users/" + id, {
+        email: email,
+        password: password,
+        personalData: personalData,
+        physicalData: physicalData,
+        professionalData: professionalData,
+        videobookLink: videobookLink,
+        profilePicture: profilePicture
 
-      return axios
-        .patch(`${this.url}/users/${id}`, {
-          email,
-          password,
-          personalData,
-          physicalData,
-          professionalData,
-          videobookLink,
-          profilePicture
+      }).then(function (_ref5) {
+        var status = _ref5.status,
+            data = _ref5.data;
 
-        })
-        .then(({ status, data }) => {
-          if (status !== 200 || data.status !== "OK")
-            throw Error(
-              `unexpected response status ${status} (${data.status})`
-            );
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
-          return true;
-        })
-        .catch(err => {
-          if (err.code === "ECONNREFUSED")
-            throw Error("could not reach server");
+        return true;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
 
-          if (err.response) {
-            const {
-              response: {
-                data: { error: message }
-              }
-            } = err;
+        if (err.response) {
+          var message = err.response.data.error;
 
-            throw Error(message);
-          } else throw err;
-        });
+
+          throw Error(message);
+        } else throw err;
+      });
     });
   },
+
 
   /**
    *
@@ -330,49 +263,42 @@ const castmeApi = {
    *
    * @returns {Promise<boolean>}
    */
-  unregisterUser(id, email, password) {
-    return Promise.resolve().then(() => {
+  unregisterUser: function unregisterUser(id, email, password) {
+    var _this6 = this;
+
+    return Promise.resolve().then(function () {
       if (typeof id !== "string") throw Error("user id is not a string");
 
       if (!(id = id.trim()).length) throw Error("user id is empty or blank");
 
       if (typeof email !== "string") throw Error("user email is not a string");
 
-      if (!(email = email.trim()).length)
-        throw Error("user email is empty or blank");
+      if (!(email = email.trim()).length) throw Error("user email is empty or blank");
 
-      if (typeof password !== "string")
-        throw Error("user password is not a string");
+      if (typeof password !== "string") throw Error("user password is not a string");
 
-      if ((password = password.trim()).length === 0)
-        throw Error("user password is empty or blank");
+      if ((password = password.trim()).length === 0) throw Error("user password is empty or blank");
 
-      return axios
-        .delete(`${this.url}/users/${id}`, { data: { email, password } })
-        .then(({ status, data }) => {
-          if (status !== 200 || data.status !== "OK")
-            throw Error(
-              `unexpected response status ${status} (${data.status})`
-            );
+      return axios.delete(_this6.url + "/users/" + id, { data: { email: email, password: password } }).then(function (_ref6) {
+        var status = _ref6.status,
+            data = _ref6.data;
 
-          return true;
-        })
-        .catch(err => {
-          if (err.code === "ECONNREFUSED")
-            throw Error("could not reach server");
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
-          if (err.response) {
-            const {
-              response: {
-                data: { error: message }
-              }
-            } = err;
+        return true;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
 
-            throw Error(message);
-          } else throw err;
-        });
+        if (err.response) {
+          var message = err.response.data.error;
+
+
+          throw Error(message);
+        } else throw err;
+      });
     });
   },
+
 
   /**
    *
@@ -380,32 +306,27 @@ const castmeApi = {
    *
    * @returns {Promise<array>}
    */
-  listProjects() {
-    return Promise.resolve().then(() => {
-      return axios
-        .get(`${this.url}/projects`)
-        .then(({ status, data }) => {
-          if (status !== 200 || data.status !== "OK")
-            throw Error(
-              `unexpected response status ${status} (${data.status})`
-            );
+  listProjects: function listProjects() {
+    var _this7 = this;
 
-          return data.data;
-        })
-        .catch(err => {
-          if (err.code === "ECONNREFUSED")
-            throw Error("could not reach server");
+    return Promise.resolve().then(function () {
+      return axios.get(_this7.url + "/projects").then(function (_ref7) {
+        var status = _ref7.status,
+            data = _ref7.data;
 
-          if (err.response) {
-            const {
-              response: {
-                data: { error: message }
-              }
-            } = err;
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
-            throw Error(message);
-          } else throw err;
-        });
+        return data.data;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
+
+        if (err.response) {
+          var message = err.response.data.error;
+
+
+          throw Error(message);
+        } else throw err;
+      });
     });
   }
 };

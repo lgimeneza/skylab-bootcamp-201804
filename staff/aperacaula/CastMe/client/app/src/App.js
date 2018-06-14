@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
-import Landing from './components/landing/landing.js'
-import Login from './components/login/login'
-import Register from './components/register/register'
-import UploadPicture from './components/uploadPicture/upload-picture'
-import Home from './components/home/home'
+import Landing from './components/landing'
+import Login from './components/login'
+import Register from './components/register'
+import UploadPicture from './components/upload-picture'
+import Home from './components/home'
 //import logic from './logic'
 //import Profile from './components/Profile/Profile'
 
