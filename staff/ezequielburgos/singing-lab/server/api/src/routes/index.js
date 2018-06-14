@@ -100,10 +100,10 @@ router.get('/categories', (req, res) => {
 router.get('/categories/:id', (req, res) => {
     const { params: { id } } = req
 
-    return logic.listProducts(id)
+    return logic.listProducts(id) // TODO rename to listProductsByCategory
         .then(products => {
             res.status(200)
-            res.json({ status: 'OK', data: products})
+            res.json({ status: 'OK', data: products })
         })
         .catch(({ message }) => {
             res.status(400)
@@ -128,17 +128,19 @@ router.get('/categories/products/:productId', (req, res) => {
 })
 
 router.get('/products', (req, res) => {
+    const { query: { ids } } = req
 
-    logic.listAllProducts()
-        .then(products => {
-            res.status(200)
-            res.json({ status: 'OK', data: products })
-        })
-        .catch(({ message }) => {
-            res.status(400)
-            res.json({ status: 'KO', error: message })
-        })
+    if (!ids)
+        logic.listAllProducts()
+            .then(products => {
+                res.status(200)
+                res.json({ status: 'OK', data: products })
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message })
+            })
+    else logic.listProductsByIds(ids.split(',')) // TODO
 })
-
 
 module.exports = router

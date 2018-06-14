@@ -27,9 +27,18 @@ logic.userId = function (userId) {
   return sessionStorage.getItem('userId')
 }
 
+const _cart = sessionStorage.getItem('cart')
+
+if (_cart)
+  logic._cart = JSON.parse(_cart)
+
+logic.cart = function (cart) {
+  sessionStorage.setItem('cart', JSON.stringify(cart))
+}
+
 ReactDOM.render(
-    <HashRouter>
-        <App />
-    </HashRouter>, document.getElementById('root'));
+  <HashRouter>
+    <App />
+  </HashRouter>, document.getElementById('root'));
 registerServiceWorker();
 

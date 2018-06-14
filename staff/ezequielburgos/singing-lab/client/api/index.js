@@ -349,6 +349,10 @@ const singingLabApi = {
                         } else throw err
                     })
             })
+    },
+
+    listProductsByIds(...ids) {
+        // TODO GET url?ids=id1,id2,id2,id4
     }
 }
 

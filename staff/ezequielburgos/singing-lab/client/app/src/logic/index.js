@@ -3,7 +3,9 @@ const singingLabApi = require('api')
 singingLabApi.url = 'http://localhost:4000/api'
 
 const logic = {
-    // userId: 'NO-ID',
+    _userId: 'NO-USER',
+
+    _cart: [],
 
     userId(userId) {
         if (userId) {
@@ -13,6 +15,20 @@ const logic = {
         }
 
         return this._userId
+    },
+
+    cart(cart) {
+        this._cart = cart
+    },
+
+    addProductToCart(productId) {
+        this._cart.push(productId)
+
+        this.cart(this._cart)
+    },
+
+    listProductsFromCart() {
+        return singingLabApi.listProducts(this.cart())
     },
 
     registerUser(name, surname, address, email, password) {
