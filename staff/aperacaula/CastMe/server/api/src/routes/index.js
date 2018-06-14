@@ -76,15 +76,15 @@ router.get('/home/:userId', (req, res) => {
             const {personalData:{name,surname},profilePicture, _id}=user
             return logic.getUserAppliedProjectCastings(_id.toString())
                 .then(projects=>{
-                    let enrolled=[]
+                    let applications=[]
                     for (let i=0; i<projects.length;i++){
                         for (let j=0; j<projects[i].castings; j++){
                             let {title, publishedDate, endDate, description}= projects[i]
-                            enrolled.push({title,publishedDate,endDate,description, casting: projects[i].castings[j]})
+                            applications.push({title,publishedDate,endDate,description, casting: projects[i].castings[j]})
                         }
                     }
                     res.status(200)
-                    res.json({ status: 'OK', data: {name,surname,profilePicture, enrolled} })
+                    res.json({ status: 'OK', data: {name,surname,profilePicture, applications} })
                 })
 
             // res.status(200)
