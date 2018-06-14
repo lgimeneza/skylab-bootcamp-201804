@@ -50,7 +50,7 @@ const logic = {
             .then(res => res)
     },
 
-    updateUser(name, surname, phone, address, email, newEmail, password, newPassword) {
+    updateUser(name, surname, phone, address, email, password, newEmail, newPassword) {
 
         if (typeof name !== 'string') throw Error('user name is not a string')
 
@@ -76,7 +76,7 @@ const logic = {
 
         if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-        return singingLabApi.updateUser(this.userId(), name, surname, phone, address, email, newEmail, password, newPassword)
+        return singingLabApi.updateUser(this.userId(), name, surname, phone, address, email, password, newEmail, newPassword)
             .then(res => {
                 return true
             })
