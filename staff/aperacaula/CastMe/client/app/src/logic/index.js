@@ -14,16 +14,12 @@ const logic = {
         return api.authenticateUser(email, password)
             .then(id => {
                 this.userId = id
-                
-                sessionStorage.clear()
-                sessionStorage.setItem('id', this.userId)
-                    //console.log(sessionStorage.getItem("user"))
 
-                return id
+                return true
             })
     },
 
-    retrieveUserHomeInfo(id){
+    retrieveUserLite(id){
         return api.retrieveUserHomeInfo(id)
     },
 

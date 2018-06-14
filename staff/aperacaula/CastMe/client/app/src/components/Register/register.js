@@ -32,7 +32,7 @@ class RegisterUser extends Component {
     curriculum: "",
     pics: "",
     videobook: "",
-    profilePic: "",
+    profilePicture: "",
     check: true
   };
 
@@ -171,11 +171,13 @@ class RegisterUser extends Component {
   };
 
 
-  componentDidMount(){
-    if (sessionStorage.getItem('profilePic')) this.setState({profilePic: sessionStorage.getItem('profilePic')})
-    else this.setState({profilePic: "http://via.placeholder.com/150x150"})
+  componentDidMount() {
+    this.setState({ profilePicture: this.props.picture ? this.props.picture : "http://via.placeholder.com/150x150" })
   }
 
+  componentWillReceiveProps(props) {
+    this.setState({ profilePicture: props.picture ? props.picture : "http://via.placeholder.com/150x150" })
+  }
 
   checkFields = () => {
     if (this.state.name === "") {
@@ -306,18 +308,18 @@ class RegisterUser extends Component {
               PhysicalData,
               ProfessionalData,
               this.state.videobook,
-              this.state.profilePic
+              this.state.profilePicture
             )
             .then(resp => {
               swal(
                 "Welcome to CastMe",
-                
+
               )
-              .then(this.props.history.push("/auth"))
-              .then(()=> sessionStorage.removeItem('profilePic'))
-              .then(this.setState({
-                profilePic: "",
-              }));
+                .then(this.props.history.push("/auth"))
+                .then(() => sessionStorage.removeItem('profilePicture'))
+                .then(this.setState({
+                  profilePicture: "",
+                }));
             })
             .catch(err => {
               this.setState({
@@ -337,14 +339,10 @@ class RegisterUser extends Component {
     this.props.history.push("/");
   };
 
-  redirectPicUploading = () => {
-    this.props.history.push("/upload_picture");
-  };
-
   render() {
     return (
       <div className="General">
-    
+
         <div id="wrapper-login">
           <header id="header-wrapper-login">
             <div id="header-login">
@@ -383,348 +381,348 @@ class RegisterUser extends Component {
                   <div className="post">
                     <h2 className="title">Registration</h2>
                     <div className="entry">
-                      
-                        <form className="registration-register" type="submit" onSubmit={this.acceptRegister}>
+
+                      <form className="registration-register" onSubmit={this.acceptRegister}>
+                        <section>
+                          <h3 class="image-header">Profile Picture</h3>
+                          <img
+                            src={this.state.profilePicture}
+                            className="profile-pic"
+                            style={{ borderRadius: '50%' }}
+                            alt=''
+                          />
+                          <button className="link-style" onClick={this.props.onClickUploadPicture}>Upload Picture</button>
+                        </section>
+                        <section id="Data">
+                          <h2 id="PersonalData" className="section-header">
+                            Personal Data
+                            </h2>
                           <section>
-                            <h3 class="image-header">Profile Picture</h3>
-                            <img
-                              src={this.state.profilePic}
-                              className= "profile-pic"
-                              style={{borderRadius:'50%'}}
-                              alt=''
+                            <h3>Name:</h3>
+                            <input
+                              type="text"
+                              className="text_input-register"
+                              name="name"
+                              id="name-input"
+                              placeholder="John"
+                              onChange={this.registerName}
                             />
-                            <button className="link-style" onClick={this.redirectPicUploading}>Upload Picture </button>
-                          </section>
-                          <section id="Data">
-                            <h2 id="PersonalData" className="section-header">
-                              Personal Data
-                            </h2>
-                            <section>
-                              <h3>Name:</h3>
-                              <input
-                                type="text"
-                                className="text_input-register"
-                                name="name"
-                                id="name-input"
-                                placeholder="John"
-                                onChange={this.registerName}
-                              />
-                              <h3>Surname:</h3>
-                              <input
-                                type="text"
-                                className="text_input-register"
-                                name="surname"
-                                id="Lastname"
-                                placeholder="Doe"
-                                onChange={this.registerSurname}
-                              />
-                              <h3>Birthday:</h3>
-                              <input
-                                className="input-text"
-                                type="date"
-                                name="birthday"
-                                onChange={this.registerBirthday}
-                              />
-                              <h3>Sex:</h3>
-                              <select className="short-input" id="sexRadio" onChange={this.registerSex}>
-                                <option value=" " checked>-</option>
-                                <option value="male" >
-                                  Male
+                            <h3>Surname:</h3>
+                            <input
+                              type="text"
+                              className="text_input-register"
+                              name="surname"
+                              id="Lastname"
+                              placeholder="Doe"
+                              onChange={this.registerSurname}
+                            />
+                            <h3>Birthday:</h3>
+                            <input
+                              className="input-text"
+                              type="date"
+                              name="birthday"
+                              onChange={this.registerBirthday}
+                            />
+                            <h3>Sex:</h3>
+                            <select className="short-input" id="sexRadio" onChange={this.registerSex}>
+                              <option value=" " checked>-</option>
+                              <option value="male" >
+                                Male
                                 </option>
 
-                                <option
-                                  value="female"
-                                
-                                >
-                                  Female
+                              <option
+                                value="female"
+
+                              >
+                                Female
                                 </option>
-                              </select>
-                              <h3>Twins:</h3>
-                              <select
-                                className="text_input-register"
-                                id="Twins"
-                                onChange={this.registerTwins}
-                              >
-                                <option value=" " checked>
-                                  -
-                                </option>
-                                <option value="true">Yes</option>
-
-                                <option value="false">No</option>
-                              </select>
-
-                              <h3>Province:</h3>
-                              <input
-                                type="text"
-                                className="text_input-register"
-                                name="province"
-                                id="province-input"
-                                placeholder="Primera mayúscula y con acentos (p.e. Cádiz)"
-                                onChange={this.registerProvince}
-                              />
-
-                              <h3>Phone:</h3>
-                              <input
-                                type="text"
-                                className="text_input-register"
-                                name="phone"
-                                id="phone-input"
-                                placeholder="612345678"
-                                onChange={this.registerPhone}
-                              />
-
-                              <h3>E-mail:</h3>
-                              <input
-                                type="text"
-                                className="text_input-register"
-                                name="email"
-                                id="Email"
-                                placeholder="john.doe@gmail.com"
-                                onChange={this.registerEmail}
-                              />
-                              <h3>Password:</h3>
-                              <input
-                                type="password"
-                                className="text_input-register"
-                                name="password"
-                                id="Password"
-                                placeholder="Insert password"
-                                onChange={this.registerPassword}
-                              />
-                              <h3>Repeat Password:</h3>
-                              <input
-                                type="password"
-                                className="text_input-register"
-                                name="repeat-password"
-                                id="Password"
-                                placeholder="Insert password"
-                                onChange={this.registerRepeatPassword}
-                              />
-
-                              <hr className="horizontal-line" />
-                            </section>
-
-                            <h2 id="PhysicalData" className="section-header">
-                              Physical Data
-                            </h2>
-                            <section>
-                              <h3>Height:</h3>
-                              <input
-                                type="text"
-                                className="short_input"
-                                name="height-input"
-                                placeholder="In meters"
-                                onChange={this.registerHeight}
-                              />
-                              <h3>Weight:</h3>
-                              <input
-                                type="number"
-                                className="short_input"
-                                name="weight-input"
-                                placeholder="In kg"
-                                onChange={this.registerWeight}
-                              />
-                              <h3>Physical Condition</h3>
-                              <select
-                                className="text_input-register"
-                                name="PhysicalCondition"
-                                onChange={this.registerPhysicalCondition}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="muscular">Muscular</option>
-                                <option value="fit">Fit</option>
-                                <option value="fat/chubby">Fat/chubby</option>
-                                <option value="average">Average</option>
-                                <option value="thin/slim">Thin/slim</option>
-                                <option value="null">None</option>
-                              </select>
-                              <h3>Eye Color:</h3>
-                              <select
-                                className="text_input-register"
-                                name="Eyes"
-                                onChange={this.registerEyeColor}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="brown">Brown</option>
-                                <option value="green">Green</option>
-                                <option value="blue">Blue</option>
-                                <option value="dark">Dark</option>
-                                <option value="null">None</option>
-                              </select>
-                              <h3>Hair:</h3>
-                              <select
-                                className="text_input-register"
-                                name="Hair"
-                                onChange={this.registerHairColor}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="brown">Brown</option>
-                                <option value="blond">Blond</option>
-                                <option value="dark/black">Dark/black</option>
-                                <option value="ginger">Ginger</option>
-                                <option value="bald">Bald</option>
-                                <option value="buzzed">Buzzed</option>
-                                <option value="null">None</option>
-                              </select>
-                              <h3>Ethnicity:</h3>
-                              <select
-                                className="text_input-register"
-                                name="Ethnicity"
-                                onChange={this.registerEthnicity}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="caucasian">Caucasian</option>
-                                <option value="latino/hispanic">
-                                  Latino/hispanic
-                                </option>
-                                <option value="african">African</option>
-                                <option value="asian">Asian</option>
-                                <option value="indian">Indian</option>
-                                <option value="arabic">Arabic</option>
-                                <option value="other">other</option>
-                              </select>
-                              <h3>Beard:</h3>
-                              <select
-                                className="text_input-register"
-                                name="Beard"
-                                onChange={this.registerBeard}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="true">Yes</option>
-                                <option value="false">
-                                  No
-                                </option>
-            
-                              </select>
-                              <h3>Tattoos:</h3>
-                              <select
-                                className="text_input-register"
-                                name="Tattoos"
-                                onChange={this.registerTattoos}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="true">Yes</option>
-                                <option value="false">
-                                  No
-                                </option>
-            
-                              </select>
-                              <h3>Piercings:</h3>
-                              <select
-                                className="text_input-register"
-                                name="Piercings"
-                                onChange={this.registerPiercings}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="true">Yes</option>
-                                <option value="false">
-                                  No
-                                </option>
-            
-                              </select>
-                              <hr className="horizontal-line" />
-                            </section>
-                            <h2 id="ProfessionalData" className="section-header">
-                              Professional Data
-                            </h2>
-                            <section>
-                              <h3>Profession</h3>
-                              <select className="text_input-register" name="Profession" onChange={this.registerProfession}>
-                                <option value=" " checked>-</option>
-                                <option value="actor/actress">
-                                  Actor/actress
-                                </option>
-                                <option value="model">Model</option>
-                                <option value="singer">Singer</option>
-                                <option value="dancer">Dancer</option>
-                                <option value="musician">Musician</option>
-                                <option value="other">Other</option>
-                              </select>
-
-                              <h3>Singing:</h3>
-                              <select
-                                className="text_input-register"
-                                name="singing"
-                                onChange={this.registerSinging}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="true">Yes</option>
-                                <option value="false">
-                                  No
-                                </option>
-            
-                              </select>
-                              <h3>Dancing:</h3>
-                              <select
-                                className="text_input-register"
-                                name="dancing"
-                                onChange={this.registerDancing}
-                              >
-                                <option value=" " checked>-</option>
-                                <option value="true">Yes</option>
-                                <option value="false">
-                                  No
-                                </option>
-            
-                              </select>
-                              <h3>Other Habilities:</h3>
-                              <input
-                                type="text"
-                                className="text_input-register"
-                                name="other habilities"
-                                placeholder="Circus, surfing, football, athlete..."
-                                onChange={this.registerOtherHab}
-                              />
-
-                              <h3>Previous experiences:</h3>
-                              <input
-                                type="number"
-                                className="short_input"
-                                name="Previous"
-                                placeholder="How many"
-                                onChange={this.registerPrevExp}
-                              />
-
-                              <h3>Curriculum:</h3>
-                              <input type="file" name="CV" placeholder="PDF" onChange={this.registerCurriculum}/>
-
-                              <hr className="horizontal-line" />
-                            </section>
-                            <h2 id="Media" className="section-header">
-                              Media
-                            </h2>
-                            <section>
-                              <h3>Pictures:</h3>
-                              <span>
-                                (Pdf file gathering all the pictures you want to
-                                show, small sized)
-                              </span>
-                              <input
-                                className="text_input-register"
-                                type="file"
-                                name="pictures"
-                                onChange={this.registerPics}
-                              />
-                              <h3>Videobook Link:</h3>
-                              <input
-                                name="videobook"
-                                className="text_input-register"
-                                type="url"
-                                placeholder="Youtube, Vimeo..."
-                                onChange={this.registerVideobook}
-                              />
-                            </section>
-
-                            <button
-                              id="register-button"
-                              type="submit"
-                              className="link-style"
+                            </select>
+                            <h3>Twins:</h3>
+                            <select
+                              className="text_input-register"
+                              id="Twins"
+                              onChange={this.registerTwins}
                             >
-                              Register
-                            </button>
+                              <option value=" " checked>
+                                -
+                                </option>
+                              <option value="true">Yes</option>
+
+                              <option value="false">No</option>
+                            </select>
+
+                            <h3>Province:</h3>
+                            <input
+                              type="text"
+                              className="text_input-register"
+                              name="province"
+                              id="province-input"
+                              placeholder="Primera mayúscula y con acentos (p.e. Cádiz)"
+                              onChange={this.registerProvince}
+                            />
+
+                            <h3>Phone:</h3>
+                            <input
+                              type="text"
+                              className="text_input-register"
+                              name="phone"
+                              id="phone-input"
+                              placeholder="612345678"
+                              onChange={this.registerPhone}
+                            />
+
+                            <h3>E-mail:</h3>
+                            <input
+                              type="text"
+                              className="text_input-register"
+                              name="email"
+                              id="Email"
+                              placeholder="john.doe@gmail.com"
+                              onChange={this.registerEmail}
+                            />
+                            <h3>Password:</h3>
+                            <input
+                              type="password"
+                              className="text_input-register"
+                              name="password"
+                              id="Password"
+                              placeholder="Insert password"
+                              onChange={this.registerPassword}
+                            />
+                            <h3>Repeat Password:</h3>
+                            <input
+                              type="password"
+                              className="text_input-register"
+                              name="repeat-password"
+                              id="Password"
+                              placeholder="Insert password"
+                              onChange={this.registerRepeatPassword}
+                            />
+
+                            <hr className="horizontal-line" />
                           </section>
-                        </form>
-                      
+
+                          <h2 id="PhysicalData" className="section-header">
+                            Physical Data
+                            </h2>
+                          <section>
+                            <h3>Height:</h3>
+                            <input
+                              type="text"
+                              className="short_input"
+                              name="height-input"
+                              placeholder="In meters"
+                              onChange={this.registerHeight}
+                            />
+                            <h3>Weight:</h3>
+                            <input
+                              type="number"
+                              className="short_input"
+                              name="weight-input"
+                              placeholder="In kg"
+                              onChange={this.registerWeight}
+                            />
+                            <h3>Physical Condition</h3>
+                            <select
+                              className="text_input-register"
+                              name="PhysicalCondition"
+                              onChange={this.registerPhysicalCondition}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="muscular">Muscular</option>
+                              <option value="fit">Fit</option>
+                              <option value="fat/chubby">Fat/chubby</option>
+                              <option value="average">Average</option>
+                              <option value="thin/slim">Thin/slim</option>
+                              <option value="null">None</option>
+                            </select>
+                            <h3>Eye Color:</h3>
+                            <select
+                              className="text_input-register"
+                              name="Eyes"
+                              onChange={this.registerEyeColor}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="brown">Brown</option>
+                              <option value="green">Green</option>
+                              <option value="blue">Blue</option>
+                              <option value="dark">Dark</option>
+                              <option value="null">None</option>
+                            </select>
+                            <h3>Hair:</h3>
+                            <select
+                              className="text_input-register"
+                              name="Hair"
+                              onChange={this.registerHairColor}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="brown">Brown</option>
+                              <option value="blond">Blond</option>
+                              <option value="dark/black">Dark/black</option>
+                              <option value="ginger">Ginger</option>
+                              <option value="bald">Bald</option>
+                              <option value="buzzed">Buzzed</option>
+                              <option value="null">None</option>
+                            </select>
+                            <h3>Ethnicity:</h3>
+                            <select
+                              className="text_input-register"
+                              name="Ethnicity"
+                              onChange={this.registerEthnicity}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="caucasian">Caucasian</option>
+                              <option value="latino/hispanic">
+                                Latino/hispanic
+                                </option>
+                              <option value="african">African</option>
+                              <option value="asian">Asian</option>
+                              <option value="indian">Indian</option>
+                              <option value="arabic">Arabic</option>
+                              <option value="other">other</option>
+                            </select>
+                            <h3>Beard:</h3>
+                            <select
+                              className="text_input-register"
+                              name="Beard"
+                              onChange={this.registerBeard}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="true">Yes</option>
+                              <option value="false">
+                                No
+                                </option>
+
+                            </select>
+                            <h3>Tattoos:</h3>
+                            <select
+                              className="text_input-register"
+                              name="Tattoos"
+                              onChange={this.registerTattoos}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="true">Yes</option>
+                              <option value="false">
+                                No
+                                </option>
+
+                            </select>
+                            <h3>Piercings:</h3>
+                            <select
+                              className="text_input-register"
+                              name="Piercings"
+                              onChange={this.registerPiercings}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="true">Yes</option>
+                              <option value="false">
+                                No
+                                </option>
+
+                            </select>
+                            <hr className="horizontal-line" />
+                          </section>
+                          <h2 id="ProfessionalData" className="section-header">
+                            Professional Data
+                            </h2>
+                          <section>
+                            <h3>Profession</h3>
+                            <select className="text_input-register" name="Profession" onChange={this.registerProfession}>
+                              <option value=" " checked>-</option>
+                              <option value="actor/actress">
+                                Actor/actress
+                                </option>
+                              <option value="model">Model</option>
+                              <option value="singer">Singer</option>
+                              <option value="dancer">Dancer</option>
+                              <option value="musician">Musician</option>
+                              <option value="other">Other</option>
+                            </select>
+
+                            <h3>Singing:</h3>
+                            <select
+                              className="text_input-register"
+                              name="singing"
+                              onChange={this.registerSinging}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="true">Yes</option>
+                              <option value="false">
+                                No
+                                </option>
+
+                            </select>
+                            <h3>Dancing:</h3>
+                            <select
+                              className="text_input-register"
+                              name="dancing"
+                              onChange={this.registerDancing}
+                            >
+                              <option value=" " checked>-</option>
+                              <option value="true">Yes</option>
+                              <option value="false">
+                                No
+                                </option>
+
+                            </select>
+                            <h3>Other Habilities:</h3>
+                            <input
+                              type="text"
+                              className="text_input-register"
+                              name="other habilities"
+                              placeholder="Circus, surfing, football, athlete..."
+                              onChange={this.registerOtherHab}
+                            />
+
+                            <h3>Previous experiences:</h3>
+                            <input
+                              type="number"
+                              className="short_input"
+                              name="Previous"
+                              placeholder="How many"
+                              onChange={this.registerPrevExp}
+                            />
+
+                            <h3>Curriculum:</h3>
+                            <input type="file" name="CV" placeholder="PDF" onChange={this.registerCurriculum} />
+
+                            <hr className="horizontal-line" />
+                          </section>
+                          <h2 id="Media" className="section-header">
+                            Media
+                            </h2>
+                          <section>
+                            <h3>Pictures:</h3>
+                            <span>
+                              (Pdf file gathering all the pictures you want to
+                              show, small sized)
+                              </span>
+                            <input
+                              className="text_input-register"
+                              type="file"
+                              name="pictures"
+                              onChange={this.registerPics}
+                            />
+                            <h3>Videobook Link:</h3>
+                            <input
+                              name="videobook"
+                              className="text_input-register"
+                              type="url"
+                              placeholder="Youtube, Vimeo..."
+                              onChange={this.registerVideobook}
+                            />
+                          </section>
+
+                          <button
+                            id="register-button"
+                            type="submit"
+                            className="link-style"
+                          >
+                            Register
+                            </button>
+                        </section>
+                      </form>
+
                     </div>
                   </div>
                 </div>
@@ -751,7 +749,7 @@ class RegisterUser extends Component {
                   </ul>
                 </div>
 
-                <div style={{clear: 'both'}}>&nbsp;</div>
+                <div style={{ clear: 'both' }}>&nbsp;</div>
               </div>
             </div>
           </div>

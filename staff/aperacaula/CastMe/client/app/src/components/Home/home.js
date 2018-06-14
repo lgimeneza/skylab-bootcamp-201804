@@ -15,13 +15,13 @@ class Home extends Component {
 
 	
 
-	componentWillMount(){
-		const userIdStored= sessionStorage.getItem('id')
+	componentDidMount(){
+		const userIdStored= logic.userId
 		if(!userIdStored) this.props.history.push('/')
-		if (this.props.match.params.userId !== sessionStorage.getItem('id')){
-			this.props.history.push(`/home/${sessionStorage.getItem('id')}`)
+		if (this.props.match.params.userId !== logic.userId){
+			this.props.history.push(`/home/${logic.userId}`)
 		}
-		logic.retrieveUserHomeInfo(userIdStored)
+		logic.retrieveUserLite(userIdStored)
 		.then(({name,surname, profilePicture, applications})=>{
 			
 			this.setState({

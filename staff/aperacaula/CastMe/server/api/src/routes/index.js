@@ -68,13 +68,13 @@ router.get('/users/:userId', (req, res) => {
 
 })
 
-router.get('/home/:userId', (req, res) => {
+router.get('/home/:userId', (req, res) => { // TODO logic.retrieveUserWithAppliedProjectionCastings 
     const { params: { userId } } = req
 
     return logic.retrieveUser(userId)
         .then(user => {
             const {personalData:{name,surname},profilePicture, _id}=user
-            return logic.getUserAppliedProjectCastings(_id.toString())
+            return logic.getUserAppliedProjectCastings(_id.toString()) // WARN _id should never be returned by a logic method
                 .then(projects=>{
                     let applications=[]
                     for (let i=0; i<projects.length;i++){

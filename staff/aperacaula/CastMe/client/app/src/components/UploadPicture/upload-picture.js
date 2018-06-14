@@ -4,7 +4,7 @@ import "./upload-picture.css";
 import DropNCrop from "@synapsestudios/react-drop-n-crop";
 import "@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css";
 
-class UploadPic extends Component {
+class UploadPicture extends Component {
     urlImageDefault = "https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180"
 
     state = {
@@ -34,14 +34,7 @@ class UploadPic extends Component {
   }
 
   uploadHandler = (event) => {
-
-    sessionStorage.setItem('profilePic', this.state.result)
-    this.props.history.push('/users')
-    // logic.uploadImageProfile(this.state.result)
-    //   .then((data) => {
- 
-    //     console.log(data)
-    //   })
+    this.props.onUploadPicture(this.state.result)
   }
 
   onChange = value => {
@@ -124,4 +117,4 @@ class UploadPic extends Component {
   }
 }
 
-export default UploadPic;
+export default UploadPicture;
