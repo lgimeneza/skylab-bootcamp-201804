@@ -24,9 +24,9 @@ export default function renderFullPage(html, preloadedState, helmet) {
 		<!-- Custom stlylesheet -->
 		<link rel="stylesheet" href="/dist/assets/styles/style.css"/>
 
-        ${Object.keys(helmet).length !== 0 && helmet.title.toString()}
-        ${Object.keys(helmet).length !== 0 && helmet.meta.toString()}
-		${Object.keys(helmet).length !== 0 && helmet.link.toString()}
+        ${Object.keys(helmet).length ? helmet.title.toString() : ''}
+        ${Object.keys(helmet).length ? helmet.meta.toString() : ''}
+		${Object.keys(helmet).length ? helmet.link.toString() : ''}
 		
       </head>
 	  <body>

@@ -1,15 +1,13 @@
 'use strict'
 
-import { Types } from '../constants';
+import { Types } from '../constants'
 
-const initialState = {
-    name: null,
-    email: null,
-};
-export default function userReducer(state = initialState, action) {
+const initialState = {}
+
+export default function user(state = initialState, action) {
     switch (action.type) {
-        case Types.UPDATE_NAME:
-            return {...state, name: action.payload.name, email: action.payload.email}
+        case Types.UPDATE_USER:
+            return action.payload
         default:
             return state;
     }

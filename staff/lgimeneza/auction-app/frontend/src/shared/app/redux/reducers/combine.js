@@ -1,14 +1,17 @@
 'use strict'
 
-import { combineReducers } from 'redux';
-import userReducer from './user';
-import productsReducer from './products';
-import productReducer from './product'
+import { combineReducers } from 'redux'
+
+import products from './products'
+import product from './product'
+import user from './user'
+import alert from './alert'
 
 const reducers = combineReducers({
-    user: userReducer,
-    products: productsReducer,
-    product: productReducer
-});
+    products,
+    product,
+    user,
+    alert,
+})
 
-export default reducers;
+export default reducers

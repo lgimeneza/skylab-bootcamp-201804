@@ -1,36 +1,56 @@
 'use strict'
 
-const { models: { Product, User, Bid } } = require('data')
+const { models: { Product, User, Bid }, mongoose: { Types: { ObjectId } }, mongoose } = require('data')
 
 const logic = {
 
     //TODO: Add error handling
     //TODO: Add documentation
 
-    listProducts() {
+    listProducts(query) {
         return Promise.resolve()
             .then(() => {
-                return Product.find()
-            })
-            .then(products => {
-                return products
+
+                const stages = [
+                    { $project : { _id: 1, title : 1 , description : 1, startDate: 1, endDate: 1, 
+                    startPrice: 1, closed: 1, image: 1,  maxBid: { $ifNull: [ { $max: '$bids.price' }, '$startPrice'] } } }
+                ]
+
+                const seachStages = [
+                    { $match: {$text: {$search: query } } } , 
+                    { $sort: { score: { $meta: "textScore" } } },
+                ]
+
+                if (typeof query != 'undefined' && query.length > 0) stages.unshift(...seachStages)
+
+                return Product.aggregate(stages)
+                .then(products => {
+                    if (!products) throw Error(`no products found`)
+
+                    return products
+                })
+
             })
     },
 
     retrieveProduct(productId){
         return Promise.resolve()
+
             .then(() => {
-                if (typeof productId !== 'string') throw Error('product id is not a string')
 
-                if (!(productId = productId.trim()).length) throw Error('product id is empty or blank')
+                return Product.aggregate([
+                    { $match: { _id: ObjectId(productId), }},
+                    { $project : { _id: 1, title : 1 , description : 1, startDate: 1, endDate: 1, 
+                                    startPrice: 1, closed: 1, image: 1,  maxBid: { $ifNull: [ { $max: '$bids.price' }, '$startPrice'] }} },
+                ])
+                .then(product => {
+                    if (!product[0]) throw Error(`no product found with id ${productId}`)
 
-                return Product.findById(productId)
+                    return product[0]
+                })
+
             })
-            .then(product => {
-                if (!product) throw Error(`no product found with id ${productId}`)
 
-                return product
-            })
     },
 
     addProduct(title, description, startDate, endDate, startPrice, closed, image) {
@@ -58,8 +78,47 @@ const logic = {
                             })
                     })
             })
-    }
+    },
+    
+    authenticateUser(email, password) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof email !== 'string') throw Error('user email is not a string')
 
+                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('user password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
+
+                return User.findOne({ email, password })
+            })
+            .then(user => {
+                if (!user) throw Error('wrong credentials')
+
+                return user
+            })
+    },
+
+    /**
+     * @param {string} id
+     * @returns {Promise<User>} 
+     */
+    retrieveUser(id) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof id !== 'string') throw Error('user id is not a string')
+
+                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+                return User.findById(id) //.select({ _id: 0, name: 1, surname: 1, email: 1 })
+            })
+            .then(user => {
+                if (!user) throw Error(`no user found with id ${id}`)
+
+                return user
+            })
+    },
 
 }
 

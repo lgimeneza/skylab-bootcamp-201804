@@ -31,6 +31,7 @@ export default async function renderRoute(req, res) {
 		// safety check for valid component, if no component we initialize an empty shell
 		if (!component)
 			component = {};
+			
 		// safety check for fetchData function, if no function we give it an empty promise
 		if (!component.fetchData)
 			component.fetchData = () => new Promise(resolve => resolve());
@@ -60,6 +61,6 @@ export default async function renderRoute(req, res) {
 			// else send down page with initial state and meta data
 			res.send(renderFullPage(html, preloadedState, helmetData))
 	} catch (error) {
-		res.status(400).send(renderFullPage('An error occured.', {}, {}));
+		res.status(400).send(renderFullPage('', {}, {}));
 	}
 }

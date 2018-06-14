@@ -1,10 +1,38 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-class Home extends Component {
+import { userActions } from './redux/actions/user';
+import * as productsActions from './redux/actions/products'
+
+class NavBar extends Component {
     static fetchData() {
+	}
+
+	state = {
+        query: '',
     }
+	
+	componentDidMount() {
+        this.props.retrieveUser()
+	}
+	
+	handleChange = e => {
+		const { name, value } = e.target;
+        this.setState({ [name]: value });
+	}
+	
+	handleSubmit = e => {
+		e.preventDefault();
+
+		const { query } = this.state;
+		this.props.getProducts(query)
+		this.context.history.push('/')
+	}
+
     render() {
+		const { user } = this.props
         return (
         <div>
         <header>
@@ -16,17 +44,16 @@ class Home extends Component {
 						<li><a href="#"><i className="fa fa-envelope-o"></i> email@email.com</a></li>
 					</ul>
 					<ul className="header-links pull-right">
-						<li><a href="#"><i className="fa fa-user-o"></i> My Account</a></li>
+						<li> 
+							<Link to='/profile'><i className="fa fa-user-o"></i> { Object.keys(user).length ? user.name : 'My Account' } </Link> 
+						</li>
 					</ul>
 				</div>
 			</div>
-			{/* <!-- /TOP HEADER --> */}
 
 			{/* <!-- MAIN HEADER --> */}
 			<div id="header">
-				{/* <!-- container --> */}
 				<div className="container">
-					{/* <!-- row --> */}
 					<div className="row">
 						{/* <!-- LOGO --> */}
 						<div className="col-md-3">
@@ -36,18 +63,16 @@ class Home extends Component {
 								</a>
 							</div>
 						</div>
-						{/* <!-- /LOGO --> */}
 
 						{/* <!-- SEARCH BAR --> */}
 						<div className="col-md-6">
 							<div className="header-search">
-								<form>
-									<input className="input" placeholder="Search here"/>
+								<form onSubmit={this.handleSubmit}>
+									<input className="input" placeholder="Search here" name='query' value={this.query} onChange={this.handleChange}/>
 									<button className="search-btn">Search</button>
 								</form>
 							</div>
 						</div>
-						{/* <!-- /SEARCH BAR --> */}
 
 						{/* <!-- ACCOUNT --> */}
 						<div className="col-md-3 clearfix">
@@ -60,7 +85,6 @@ class Home extends Component {
 										<div className="qty">2</div>
 									</a>
 								</div>
-								{/* <!-- /Wishlist --> */}
 
 								{/* <!-- Menu Toogle --> */}
 								<div className="menu-toggle">
@@ -69,22 +93,16 @@ class Home extends Component {
 										<span>Menu</span>
 									</a>
 								</div>
-								{/* <!-- /Menu Toogle --> */}
 							</div>
 						</div>
 						{/* <!-- /ACCOUNT --> */}
 					</div>
-					{/* <!-- row --> */}
 				</div>
-				{/* <!-- container --> */}
 			</div>
-			{/* <!-- /MAIN HEADER --> */}
 		</header>
         {/* <!-- NAVIGATION --> */}
         <nav id="navigation">
-            {/* <!-- container --> */}
             <div className="container">
-                {/* <!-- responsive-nav --> */}
                 <div id="responsive-nav">
                     {/* <!-- NAV --> */}
                     <ul className="main-nav nav navbar-nav">
@@ -92,13 +110,19 @@ class Home extends Component {
                     </ul>
                     {/* <!-- /NAV --> */}
                 </div>
-                {/* <!-- /responsive-nav --> */}
             </div>
-            {/* <!-- /container --> */}
         </nav>
         {/* <!-- /NAVIGATION --> */}
         </div>
         );
     }
 }
-export default Home;
+function mapStateToProps(state) {
+	const { user } = state
+    return { user }
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ ...userActions, ...productsActions }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(NavBar);

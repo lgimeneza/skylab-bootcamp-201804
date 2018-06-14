@@ -1,6 +1,7 @@
-import User from '../app/user.jsx';
+import Profile from '../app/profile.jsx';
 import Landing from '../app/landing.jsx'
 import Product from '../app/product.jsx'
+import Login from '../app/login.jsx'
 
 export default {
     routes: [
@@ -10,20 +11,27 @@ export default {
             exact: true
         },
         {
-            path: '/user',
-            component: User,
-            exact: true
-        },
-        {
             path: '/product/:id',
             component: Product,
             exact: true
+        },
+        {
+            path: '/login',
+            component: Login,
+            exact: true
         }
+    ],
+    privateRoutes: [
+        {
+            path: '/profile',
+            component: Profile,
+            exact: true
+        },
     ],
     redirects: [
         {
             from: '/people',
-            to: '/user',
+            to: '/profile',
             status: 301
         }
     ]

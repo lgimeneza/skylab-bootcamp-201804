@@ -8,6 +8,7 @@ class Landing extends Component {
     static fetchData({ store }) {
         return store.dispatch(actions.getProducts());
     }
+    
     componentDidMount() {
         this.props.getProducts();
     }
@@ -35,7 +36,7 @@ class Landing extends Component {
                             <div className="product-body">
                                 <p className="product-category">Category</p>
                                 <h3 className="product-name"><a href="#">{product.title}</a></h3>
-                                <h4 className="product-price">{product.startPrice}€</h4>
+                                <h4 className="product-price">{product.maxBid}€</h4>
                                 <div className="product-rating"/>
                                 <button type="button" className="btn btn-primary">Make offer</button>
                             </div>
@@ -50,11 +51,11 @@ class Landing extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-        ...state.products,
-    }
+    const { products } = state
+    return { products }
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
 }
+
 export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Landing);

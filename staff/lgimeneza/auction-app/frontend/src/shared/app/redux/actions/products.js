@@ -3,9 +3,9 @@
 import { Types } from '../constants'
 import logic from '../../../logic'
 
-export function getProducts() {
+export function getProducts(query) {
     return async function (dispatch, getState) {
-        let products = await logic.listProducts()
-        dispatch({ type: Types.UPDATE_PRODUCTS, payload: {products} })
+        const products = await logic.listProducts(query)
+        dispatch({ type: Types.UPDATE_PRODUCTS, products })
     }
 }

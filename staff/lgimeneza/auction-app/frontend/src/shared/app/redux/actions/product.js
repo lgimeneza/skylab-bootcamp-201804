@@ -1,14 +1,18 @@
 'use strict'
 
 import { Types } from '../constants';
-import Request from 'axios';
+import logic from '../../../logic'
 
 export function getProduct(id) {
     return async function (dispatch, getState) {
-        let {data:{data}} = await getProductFromAPI(id);
-        dispatch({ type: Types.UPDATE_PRODUCT, payload: {product: data} });
+        const data  = await logic.retrieveProduct(id)
+        dispatch({ type: Types.UPDATE_PRODUCT, payload: data })
     }
 }
-function getProductFromAPI(id) {
-    return Request.get(`http://localhost:5000/api/product/${id}`);
+
+export function addProductBid(productId, userId, bid) {
+    return async function (dispatch, getState) {
+        const data  = await logic.addProductBid(productId, userId, bid)
+        dispatch({ type: Types.ADD_PRODUCT_BID, payload: data })
+    }
 }

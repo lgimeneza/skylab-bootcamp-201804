@@ -45,4 +45,6 @@ module.exports = new Schema({
         type: ObjectId,
     },
     bids:[Bid]
-})
+
+    // Index for full text search in MongoDB
+}).index({ title: 'text', description: 'text' });

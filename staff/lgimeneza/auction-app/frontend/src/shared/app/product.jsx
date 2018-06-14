@@ -7,12 +7,54 @@ class Product extends Component {
     static fetchData({ store, params: { id } }) {
         return store.dispatch(actions.getProduct(id));
     }
-    componentDidMount() {
-        const { match: { params: { id } } } = this.props;
-        this.props.getProduct(id);
+
+    state = {
+        bid: '',
     }
+
+    componentDidMount = () => {
+        const { match: { params: { id } } } = this.props;
+        this.props.getProduct(id)
+        .then(()=>{
+            
+            this.setState( { bid: this.props.product.maxBid } )
+        })
+    }
+
+    handleChange = e => {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+
+        //TODO check bid
+
+        const { product, user } = this.props
+
+        if (Object.keys(user).length === 0) {
+
+            this.props.history.push('/login')
+
+        } else {
+
+            const { bid } = this.state
+
+            if (product._id && user._id && bid) {
+                this.props.addProductBid(product._id, user._id, bid)
+                .then(() => {
+                    this.props.getProduct(product._id);
+                })
+            }
+
+        }
+
+    }
+
     render() {
-        const { match: { params }, product } = this.props;
+        const { product } = this.props
+        
         return (
 
         <div className="section">
@@ -45,7 +87,7 @@ class Product extends Component {
                 <div className="product-details">
                     <h2 className="product-name">{product.title}</h2>
                     <div>
-                    <h3 className="product-price">{product.startPrice}€ </h3>
+                    <h3 className="product-price">{product.maxBid}€ </h3>
                     <span className="product-available">Active</span>
                     </div>
                     <p>{product.description}</p>
@@ -53,12 +95,12 @@ class Product extends Component {
                     <div className="qty-label">
                         Enter your bid 
                         <div className="input-number">
-                        <input type="number" value={product.startPrice} />
+                            <input type="number" name='bid' value={this.bid} onChange={this.handleChange} />
                         <span className="qty-up">+</span>
                         <span className="qty-down">-</span>
                         </div>
                     </div>
-                    <button className="add-to-cart-btn"><i className="fa fa-shopping-cart" /> Submit bid</button>
+                    <button onClick={this.handleSubmit} className="add-to-cart-btn"><i className="fa fa-shopping-cart" /> Submit bid</button>
                     </div>
                     <ul className="product-links">
                     <li>Share:</li>
@@ -76,9 +118,8 @@ class Product extends Component {
     }}
 
 function mapStateToProps(state) {
-    return {
-        ...state.product,
-    }
+    const { product, user } = state
+    return { product, user }
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);

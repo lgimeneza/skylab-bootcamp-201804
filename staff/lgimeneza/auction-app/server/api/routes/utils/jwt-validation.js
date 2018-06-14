@@ -14,9 +14,9 @@ function jwtValidator(req, res, next) {
 
         const token = auth.split(' ')[1]
 
-        const { id } = jwt.verify(token, _secret)
+        const { user: {_id} } = jwt.verify(token, _secret)
 
-        if (id !== userId) message = `user id ${userId} does not match token user id ${id}`
+        if (_id !== userId) message = `user id ${userId} does not match token user id ${_id}`
 
         if (!message) return next()
     } catch (err) {

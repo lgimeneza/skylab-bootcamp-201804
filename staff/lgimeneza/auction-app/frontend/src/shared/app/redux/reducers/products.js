@@ -5,10 +5,10 @@ import { Types } from '../constants';
 const initialState = {
     products:[]
 };
-export default function productsReducer(state = initialState, action) {
+export default function products(state = initialState, action) {
     switch (action.type) {
         case Types.UPDATE_PRODUCTS:
-            return {...state, products: action.payload.products}
+            return action.products
         default:
             return state;
     }
