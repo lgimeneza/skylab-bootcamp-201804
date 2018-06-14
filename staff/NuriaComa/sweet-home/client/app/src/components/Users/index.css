@@ -42,3 +42,7 @@ li{
 .text{
     overflow: scroll
 }
+
+.swal2-inputdni .swal2-input{
+    display: inline !important;
+}

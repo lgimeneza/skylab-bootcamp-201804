@@ -26,6 +26,7 @@ const logic = {
         return shApi.authenticateUser(dni, password)
             .then(user => {
                 localStorage.setItem('apartmentId', user.apartmentId)
+                localStorage.setItem('userId', user.id)
 
                 this.userId =user.id
                 return this.userId
@@ -79,6 +80,12 @@ const logic = {
         .then(res => {
             this.apartment = res
             return this.apartment
+        })
+    },
+    deleteApartment(apartmentId){
+        return shApi.deleteApartment(apartmentId)
+        .then(()=>{
+            return true
         })
     },
     addTasks(name, apartmentId){

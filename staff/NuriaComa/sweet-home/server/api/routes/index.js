@@ -128,6 +128,19 @@ router.get('/listapartment/:apartmentId', jwtValidator, (req, res) => {
             res.json({ status: 'KO', error: message })
         })
 })
+router.delete('/listapartment/:apartmentId', jwtValidator, (req, res) => {
+    const { params: { apartmentId }} = req
+
+    return logic.deleteApartment(apartmentId)
+        .then(() => {
+            res.status(200)
+            res.json({ status: 'OK' })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
 router.post('/task/:apartmentId', [jwtValidator, jsonBodyParser], (req,res) =>{
 
     const { params: { apartmentId }, body: { name} } = req

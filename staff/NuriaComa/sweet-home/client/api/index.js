@@ -13,6 +13,7 @@ const shApi = {
         return this._token
     },
         apartmentId: 'NO-ID',
+        userId:'NO-ID',
         noteId:'No-ID',
         taskId:'No-ID',
         marketId:'No-ID',
@@ -98,6 +99,7 @@ const shApi = {
                     const { data: { user, token } } = data
 
                     this.token(token)
+                    this.userId==data.id
 
                     return user
                 })
@@ -243,7 +245,7 @@ const shApi = {
      * 
      * @returns {Promise<boolean>}
      */
-    unregisterUser(id, dni, password) {
+    unregisterUser(userId, dni, password) {
         return Promise.resolve()
             .then(() => {
 
@@ -259,7 +261,7 @@ const shApi = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return axios.delete(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token()}` }, data: { dni, password } })
+                return axios.delete(`${this.url}/users/${userId}`, { headers: { authorization: `Bearer ${this.token()}` }, data: { dni, password } })
 
                 .then(({ status, data }) => {
 
@@ -327,6 +329,27 @@ const shApi = {
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
                     return data.data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
+    deleteApartment(apartmentId) {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.delete(`${this.url}/listapartment/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    return true
                 })
                 .catch(err => {
                     if (err.code === 'ECONNREFUSED') throw Error('could not reach server')

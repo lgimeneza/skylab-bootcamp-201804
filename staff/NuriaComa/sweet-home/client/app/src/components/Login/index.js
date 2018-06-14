@@ -32,8 +32,6 @@ class Login extends Component {
                 swal(
                     'Successful login',
                 ).then(this.props.history.push('/home'))
-                
-                
             })
             .catch(err => 
                 {
@@ -44,9 +42,7 @@ class Login extends Component {
         }
 
 
-    redirect= () => {
-        this.props.history.push('/register')
-    }
+    
 
     render() {
         return (

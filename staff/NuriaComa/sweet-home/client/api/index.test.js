@@ -2,7 +2,7 @@
 
 require('dotenv').config()
 
-const { mongoose, models: { User, Apartment } } = require('data')
+const { mongoose, models: { User, Apartment, Task, Note, Market } } = require('data')
 const shApi = require('./index')
 const { expect } = require('chai')
 const axios = require('axios')
@@ -14,23 +14,31 @@ const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 shApi.url = API_URL
 
 describe('logic (sweet-home)', () => {
-    const userData = { name: 'Nur', surname: 'C', phone: '689456739', dni: '45629856L', password: '123' }
+    const userData = { name: 'Nur', surname: 'C', phone: '689456739', dni: '45629856L', password: '123', apartmentId: '5b213682489be107808607bc' }
     const exempleID = '987654321234537812345375'
 
     before(() => mongoose.connect(DB_URL))
+    beforeEach(() => {
 
+        userData = { name: 'Nur', surname: 'C', phone: '689456739', dni: '45629856L', password: '123', apartmentId: '5b213682489be107808607bc' }
+        dummyUserId = '123456781234567812345678'
+        apartData = { name: 'casa', address: 'c', phone: '23445' }
+
+        return Promise.all([Apartment.remove(), User.remove()])
+
+    })
     //beforeEach(() => User.remove())
 
     describe('register user', () => {
         it('should succeed on correct data', () =>
-            shApi.registerUser('Nur', 'C', '689456739', '45629856L', '123', '')
+            shApi.registerUser(userData)
                 .then(res => expect(res).to.be.true)
         )
 
         it('should fail on existing dni', () => {
             User.create(userData)
                 .then(() => {
-                    return shApi.registerUser('Mar', 'L', '685243497', '45629856L', '5678')
+                    return shApi.registerUser(userData)
                 })
                 .catch(({ message }) => expect(message).to.equal(`user with dni ${userData.dni} already exists`))
         })
@@ -95,18 +103,32 @@ describe('logic (sweet-home)', () => {
         )
 
         it('should fail on no user password', () =>
-            shApi.registerUser(userData.name, userData.surname, userData.phone, userData.dni)
+            shApi.registerUser(userData.name, userData.surname, userData.phone, userData.dni, undefined, userData.apartmentId)
                 .catch(({ message }) => expect(message).to.equal('password is not a string'))
         )
 
         it('should fail on empty user password', () =>
-            shApi.registerUser(userData.name, userData.surname,userData.phone, userData.dni, '')
+            shApi.registerUser(userData.name, userData.surname,userData.phone, userData.dni, '', userData.apartmentId)
                 .catch(({ message }) => expect(message).to.equal('password is empty or blank'))
         )
 
         it('should fail on blank user password', () =>
-            shApi.registerUser(userData.name, userData.surname, userData.phone, userData.dni, '     ')
+            shApi.registerUser(userData.name, userData.surname, userData.phone, userData.dni, '     ', userData.apartmentId)
                 .catch(({ message }) => expect(message).to.equal('password is empty or blank'))
+        )
+        it('should fail on no user apartmentId', () =>
+            shApi.registerUser(userData.name, userData.surname, userData.phone, userData.dni,userData.password )
+                .catch(({ message }) => expect(message).to.equal('apartmentId is not a string'))
+        )
+
+        it('should fail on empty user apartmentId', () =>
+            shApi.registerUser(userData.name, userData.surname,userData.phone, userData.dni,userData.password , '')
+                .catch(({ message }) => expect(message).to.equal('apartmentId is empty or blank'))
+        )
+
+        it('should fail on blank user apartmentId', () =>
+            shApi.registerUser(userData.name, userData.surname, userData.phone, userData.dni,userData.password , '     ')
+                .catch(({ message }) => expect(message).to.equal('apartmentId is empty or blank'))
         )
     })
 
@@ -409,5 +431,5 @@ describe('logic (sweet-home)', () => {
 //      })
 
 
-    after(done => (() => mongoose.connection.close(done)))
+after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })
