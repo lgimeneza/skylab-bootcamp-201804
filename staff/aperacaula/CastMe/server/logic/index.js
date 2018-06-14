@@ -132,23 +132,55 @@ const logic = {
       });
   },
 
+
+  retrieveUserLite(userId){
+    return Promise.resolve()
+      .then(() => {
+        if (typeof userId !== "string") throw Error("user userId is not a string");
+
+        if (!(userId = userId.trim()).length) throw Error("user userId is empty or blank");
+
+        return User.findById(userId);
+      })
+      .then(user =>{
+        return logic.getUserAppliedProjectCastings(userId) 
+          .then(projects=>{
+              let applications=[]
+              for (let i=0; i<projects.length;i++){
+                  for (let j=0; j<projects[i].castings; j++){
+                      let {title, publishedDate, endDate, description}= projects[i]
+                      applications.push({title,publishedDate,endDate,description, casting: projects[i].castings[j]})
+                  }
+                }
+              return applications
+          })
+
+          .then(applications=> {
+            const {personalData, profilePicture}= user
+            return {personalData, profilePicture, applications}
+          })
+      })
+
+  },
+
+
   /**
    *
    * @param {string} id
    *
    * @returns {Promise<User>}
    */
-  retrieveUser(id) {
+  retrieveUser(userId) {
     return Promise.resolve()
       .then(() => {
-        if (typeof id !== "string") throw Error("user id is not a string");
+        if (typeof userId !== "string") throw Error("user userId is not a string");
 
-        if (!(id = id.trim()).length) throw Error("user id is empty or blank");
+        if (!(userId = userId.trim()).length) throw Error("user userId is empty or blank");
 
-        return User.findById(id);
+        return User.findById(userId);
       })
       .then(user => {
-        if (!user) throw Error(`no user found with id ${id}`);
+        if (!user) throw Error(`no user found with userId ${userId}`);
 
         const {
           email,
@@ -161,7 +193,7 @@ const logic = {
           applications
         } = user;
         return {
-          id,
+          userId,
           email,
           personalData,
           physicalData,

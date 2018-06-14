@@ -16,24 +16,41 @@ class Home extends Component {
 	
 
 	componentDidMount(){
-		const userIdStored= logic.userId
-		if(!userIdStored) this.props.history.push('/')
-		if (this.props.match.params.userId !== logic.userId){
+
+		if(!logic.userId) this.props.history.push('/')
+		if (this.props.match.params !== logic.userId){
 			this.props.history.push(`/home/${logic.userId}`)
 		}
-		logic.retrieveUserLite(userIdStored)
-		.then(({name,surname, profilePicture, applications})=>{
-			
-			this.setState({
-				name,
-				surname,
-				profilePicture,
-				applications
-
+		logic.retrieveUserLite(logic.userId)
+			.then(({name,surname, profilePicture, applications})=>{
+				
+				this.setState({
+					name,
+					surname,
+					profilePicture,
+					applications
+	
+				})
+				
+				
 			})
-			console.log(this.state.applications)
-			
-		})
+		
+		// if (this.props.onCorrectingRoute(this.props.params.userId) ){
+		// 	console.log('si')
+		// 	logic.retrieveUserLite(logic.userId)
+		// 	.then(({name,surname, profilePicture, applications})=>{
+				
+		// 		this.setState({
+		// 			name,
+		// 			surname,
+		// 			profilePicture,
+		// 			applications
+	
+		// 		})
+				
+				
+		// 	})
+		// }
 		
 	}
 

@@ -1,24 +1,42 @@
 import React, { Component } from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
-import Landing from './components/Landing/landing.js'
-import Login from './components/Login/login'
-import Register from './components/Register/register'
-import UploadPicture from './components/UploadPicture/upload-picture'
-import Home from './components/Home/home'
+import Landing from './components/landing/landing.js'
+import Login from './components/login/login'
+import Register from './components/register/register'
+import UploadPicture from './components/uploadPicture/upload-picture'
+import Home from './components/home/home'
+//import logic from './logic'
 //import Profile from './components/Profile/Profile'
 
 import './index.css'
 
 class App extends Component {
-  state = { picture: undefined }
+  state = { 
+    picture: undefined ,
+    userId: ''
+  }
 
   goToUploadPicture = () => this.props.history.push("/upload_picture")
+  goLanding = () => this.props.history.push("/")
+  goRegister= () => this.props.history.push("/register")
+
 
   uploadPicture = (picture) => {
     this.setState({ picture })
 
-    this.props.history.push('/users')
+    this.props.history.push('/register')
   }
+
+  // correctingRoute = (paramsUserId)=> {
+	// 	if(!logic.userId) this.props.history.push('/')
+	// 	if (paramsUserId !== logic.userId){
+	// 		this.props.history.push(`/home/${logic.userId}`)
+  //   }
+  //   return true
+
+  // }
+
+  goHome = (userId) => this.props.history.push(`/home/${userId}`)
 
   render() {
     return (
@@ -29,8 +47,8 @@ class App extends Component {
 
             }
             <Route exact path="/" component={Landing} />
-            <Route path="/auth" component={Login} />
-            <Route path="/users" render={() => <Register picture={this.state.picture} onClickUploadPicture={this.goToUploadPicture} />} />
+            <Route path="/login" render={()=> <Login onBackLanding={this.goLanding} onRegister={this.goRegister} onLogin={this.goHome}/>} />
+            <Route path="/register" render={() => <Register picture={this.state.picture} onClickUploadPicture={this.goToUploadPicture} onBackLanding={this.goLanding}/>} />
             <Route path="/upload_picture" render={props => <UploadPicture onUploadPicture={this.uploadPicture} />} />
             <Route path="/home/:userId" component={Home} />
             {/* <Route path="/home" render={()=> ((Xtorage.session.get("user") === null)? (<Redirect to="/"/>):(<Home/>))}/> */}

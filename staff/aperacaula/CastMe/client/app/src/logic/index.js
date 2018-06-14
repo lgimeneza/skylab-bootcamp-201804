@@ -19,12 +19,12 @@ const logic = {
             })
     },
 
-    retrieveUserLite(id){
-        return api.retrieveUserHomeInfo(id)
+    retrieveUserLite(userId){
+        return api.retrieveUserLite(userId)
     },
 
-    retrieveUser(id){
-        return api.retrieveUser(id)
+    retrieveUser(userId){
+        return api.retrieveUser(userId)
     },
 
     deleteUser(id,email,password){

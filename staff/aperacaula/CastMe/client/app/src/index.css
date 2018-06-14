@@ -2,7 +2,7 @@
 body {
 	margin: 0;
 	padding: 0;
-	background: #73252F url(./components/Landing/images/main-background-bg.jpg) repeat;
+	background: #73252F url(./components/landing/images/main-background-bg.jpg) repeat;
 	font-family: 'Abel', sans-serif;
 	font-size: 14px;
 	color: #383838;
@@ -52,7 +52,7 @@ a {
 #header-wrapper {
 	overflow: hidden;
 	height: 300px;
-	background: url(./components/Landing/images/header-wrapper-bg.jpg) repeat-x left top;
+	background: url(./components/landing/images/header-wrapper-bg.jpg) repeat-x left top;
 }
 
 #header {
@@ -70,7 +70,7 @@ a {
 	height: 300px;
 	margin: 0px auto;
 	padding: 135px 0 0 0;
-	background: url(./components/Landing/images/logo-bg.jpg) no-repeat left top;
+	background: url(./components/landing/images/logo-bg.jpg) no-repeat left top;
 	color: #FFFFFF;
 }
 

@@ -45,7 +45,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
         .then(id => {
 
             res.status(200)
-            res.json({ status: 'OK', data: { id } })
+            res.json({ status: 'OK', data: id })
         })
         .catch(({ message }) => {
             res.status(400)
@@ -68,28 +68,15 @@ router.get('/users/:userId', (req, res) => {
 
 })
 
-router.get('/home/:userId', (req, res) => { // TODO logic.retrieveUserWithAppliedProjectionCastings 
+router.get('/users/:userId/lite', (req, res) => { // TODO logic.retrieveUserWithAppliedProjectionCastings 
     const { params: { userId } } = req
 
-    return logic.retrieveUser(userId)
+    return logic.retrieveUserWithAppliedCastings(userId)
         .then(user => {
-            const {personalData:{name,surname},profilePicture, _id}=user
-            return logic.getUserAppliedProjectCastings(_id.toString()) // WARN _id should never be returned by a logic method
-                .then(projects=>{
-                    let applications=[]
-                    for (let i=0; i<projects.length;i++){
-                        for (let j=0; j<projects[i].castings; j++){
-                            let {title, publishedDate, endDate, description}= projects[i]
-                            applications.push({title,publishedDate,endDate,description, casting: projects[i].castings[j]})
-                        }
-                    }
-                    res.status(200)
-                    res.json({ status: 'OK', data: {name,surname,profilePicture, applications} })
-                })
-
-            // res.status(200)
-            // res.json({ status: 'OK', data: {name,surname,profilePicture,applications} })
-            // 
+            const {personalData:{name,surname},profilePicture, applications}=user
+            res.status(200)
+            res.json({ status: 'OK', data: {name,surname,profilePicture,applications} })
+            
         })
         .catch(({ message }) => {
             res.status(400)

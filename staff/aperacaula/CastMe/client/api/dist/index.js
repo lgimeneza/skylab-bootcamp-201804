@@ -119,11 +119,9 @@ const castmeApi = {
               `unexpected response status ${status} (${data.status})`
             );
 
-          const {
-            data: { id }
-          } = data;
+          
 
-          return id;
+          return data.data;
         })
         .catch(err => {
           if (err.code === "ECONNREFUSED")
@@ -145,18 +143,18 @@ const castmeApi = {
 
   /**
    *
-   * @param {string} id
+   * @param {string} userId
    *
    * @returns {Promise<User>}
    */
-  retrieveUserHomeInfo(id) {
+  retrieveUserLite(userId) {
     return Promise.resolve().then(() => {
-      if (typeof id !== "string") throw Error("user id is not a string");
+      if (typeof userId !== "string") throw Error("user userId is not a string");
 
-      if (!(id = id.trim()).length) throw Error("user id is empty or blank");
+      if (!(userId = userId.trim()).length) throw Error("user userId is empty or blank");
 
       return axios
-        .get(`${this.url}/home/${id}`)
+        .get(`${this.url}/users/${userId}/lite`)
         .then(({ status, data }) => {
           if (status !== 200 || data.status !== "OK")
             throw Error(

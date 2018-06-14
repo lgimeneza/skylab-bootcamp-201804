@@ -30,14 +30,13 @@ class Login extends Component {
 
                 sessionStorage.clear()
                 sessionStorage.setItem('userId', logic.userId)
-                //console.log(sessionStorage.getItem("user"))
-
+                
+                return true 
+            })        
+            .then(()=> 
                 swal(
                     'Successful login',
-                ).then(this.props.history.push(`/home/${logic.userId}`))
-
-
-            })
+                ).then(this.props.onLogin(logic.userId)))
             .catch(err => {
                 swal(
                     err.message,
@@ -49,13 +48,9 @@ class Login extends Component {
 
     }
 
-    redirect = () => {
-        this.props.history.push('/users')
-    }
+    
 
-    redirectLanding = () => {
-        this.props.history.push("/");
-    };
+    
 
     render() {
         return (
@@ -76,7 +71,7 @@ class Login extends Component {
                             </div>
                             <div id="logo-login">
                                 <h1>
-                                    <a onClick={this.redirectLanding}>CastMe </a>
+                                    <a onClick={this.onBackLanding}>CastMe </a>
                                 </h1>
                             </div>
                             <div id="menu2-login">
@@ -106,7 +101,7 @@ class Login extends Component {
                                 <p>
                                     <button type="submit" className="link-style" id="next" >Login</button>
                                 </p>
-                                <a className="link-style" type="button" onClick={this.redirect}>First time? Register!</a>
+                                <a className="link-style" type="button" onClick={this.props.onRegister}>First time? Register!</a>
                             </form>
                         </div>
 

@@ -335,9 +335,6 @@ class RegisterUser extends Component {
       });
   };
 
-  redirectLanding = () => {
-    this.props.history.push("/");
-  };
 
   render() {
     return (
@@ -349,7 +346,7 @@ class RegisterUser extends Component {
               <div id="menu1-login">
                 <ul>
                   <li className="menu_link">
-                    <a onClick={this.redirectLanding}>Homepage</a>
+                    <a onClick={this.props.onBackLanding}>Homepage</a>
                   </li>
                   <li className="menu_link">
                     <a >Castings</a>
@@ -358,7 +355,7 @@ class RegisterUser extends Component {
               </div>
               <div id="logo-login">
                 <h1>
-                  <a onClick={this.redirectLanding}>CastMe </a>
+                  <a onClick={this.props.onBackLanding}>CastMe </a>
                 </h1>
               </div>
               <div id="menu2-login">

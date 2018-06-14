@@ -35,11 +35,11 @@ function Landing(props) {
 		<div className="entry">
 			<p>This is <strong>CastMe </strong>, a free tool for actors and actresses that want to find a spot in the industry.  <a href="login">Login</a> (or <a href="register">Register</a>) in order to manage your casting, update your profile or promote yourself. We will help you to find the best matches, filtering the results to those that will increase your chances</p>
 			<div id="buttons">
-                <Link className="link-style" to="/auth" >
+                <Link className="link-style" to="/login" >
                     Login
                 </Link>
 				
-                <Link className="link-style" to="/users">
+                <Link className="link-style" to="/register">
                     Register
                 </Link>
 				
