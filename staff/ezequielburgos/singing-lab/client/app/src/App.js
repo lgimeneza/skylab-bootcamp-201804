@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, Cart } from './components'
 import { Switch, Route } from 'react-router-dom'
 
-class App extends Component {
-
-
-  render() {
+function App() {
     return (
       <Switch>
         <Route exact path="/" component={Landing} />
@@ -18,8 +15,6 @@ class App extends Component {
         <Route exact path="/categories/products/:id" component={ProductData} />
       </Switch>
     )
-  }
-
 }
 
 export default App;

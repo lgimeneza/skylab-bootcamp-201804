@@ -7,9 +7,8 @@ import LandingProducts from './LandingProducts'
 import LandingChat from '../LandingChat'
 import Footer from './../Footer'
 
-class Landing extends Component {
+function Landing() {
 
-    render() {
         return (
             <main>
                 <Navbar />
@@ -28,8 +27,6 @@ class Landing extends Component {
                 <Footer />
             </main>
         )
-    }
-
 }
 
 export default Landing

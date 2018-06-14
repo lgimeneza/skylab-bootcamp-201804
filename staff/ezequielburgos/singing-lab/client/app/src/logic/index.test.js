@@ -65,33 +65,37 @@ describe('logic (singingLab)', () => {
         })
     })
 
-    // describe('update user', () => {
-    //     it('should succeed on correct data', () => {
-    //         const { name, surname, address, email, password } = userData
+    describe('update user', () => {
+        it('should succeed on correct data', () => {
+            const { name, surname, address, email, password } = userData
 
-    //         return singingLabApi.registerUser(name, surname, address, email, password)
-    //             .then(() => logic.login(email, password))
-    //             .then(res => {
-    //                 expect(res).to.be.true
-    //                 expect(logic.userId).not.to.equal('NO-ID')
+            return singingLabApi.registerUser(name, surname, address, email, password)
+                .then(() => logic.login(email, password))
+                .then(res => {
+                    expect(res).to.be.true
+                    expect(logic.userId()).not.to.equal('NO-ID')
 
-    //                 return singingLabApi.updateUser(logic.userId, 'John', 'Doe', '+34 111 222 333', 'colorado', 'jd@mail.com', '123', 'jw@mail.com', '456')
-    //                     .then(res => {
+                    return logic.updateUser(logic.userId(), 'James', 'Bond', '+34 111 222 333', 'Roc Boronat 35', 'jd@mail.com', '123', 'jb@mail.com', '456')
+                        .then(res => {
+                            expect(res).to.be.true
 
-    //                         expect(res).to.be.true
-    //                         expect(res.name).to.equal('John')
-    //                         return singingLabApi.retrieveUser(logic.userId)
-    //                             .then(res => {
-    //                                 expect(res.name).to.equal('John')
-    //                                 expect(res.surname).to.equal('Doe')
-    //                                 expect(res.address).to.equal('Roc Boronat 35')
-    //                                 expect(res.email).to.equal('jd@mail.com')
-    //                             })
+                            return singingLabApi.retrieveUser(logic.userId())
+                                .then(res => {
+                                    expect(res.name).to.equal('James')
+                                    expect(res.surname).to.equal('Bond')
+                                    expect(res.address).to.equal('Roc Boronat 35')
+                                    expect(res.email).to.equal('jb@mail.com')
+                                
+                                    return singingLabApi.unregisterUser(logic.userId(), res.email, '456')
+                                        .then(res => {
+                                            expect(res).to.be.true
+                                        })
+                                })
 
-    //                     })
-    //             })
-    //     })
-    // })
+                        })
+                })
+        })
+    })
 
     describe('unregister user', () => {
         it('should succeed on correct data', () => {

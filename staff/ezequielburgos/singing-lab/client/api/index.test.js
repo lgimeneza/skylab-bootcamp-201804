@@ -14,7 +14,7 @@ const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
 
 singingLabApi.url = API_URL
 
-describe('logic (singingLab api)', () => {
+describe('api client (singingLab)', () => {
     let jackData, annaData, otherjackData, beginnerCourseCategoryData, advancedCourseCategoryData, beginnerCourseData, advancedCourseData
     const dummyUserId = '123456781234567812345678'
     const dummyNoteId = '123456781234567812345678'
