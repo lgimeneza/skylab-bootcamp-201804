@@ -35,564 +35,564 @@ describe('api client (singingLab)', () => {
         return Promise.all([User.remove(), Category.deleteMany(), Product.deleteMany()])
     })
 
-    // describe('register user', () => {
-    //     it('should succeed on correct dada', () =>
-    //         singingLabApi.registerUser('John', 'Doe', 'Roc Boronat 35', 'jd@mail.com', '123')
-    //             .then(res => {
-    //                 expect(res).to.be.true
-    //             })
-
-    //     )
-
-    //     it('should fail on already registered user', () =>
-    //         User.create(jackData)
-    //             .then(() => {
-    //                 const { name, surname, address, email, password } = jackData
-
-    //                 return singingLabApi.registerUser(name, surname, address, email, password)
-    //             })
-    //             .catch(({ message }) => {
-    //                 expect(message).to.equal(`user with email ${jackData.email} already exists`)
-    //             })
-    //     )
-
-    //     it('should fail on no user name', () =>
-    //         singingLabApi.registerUser()
-    //             .catch(({ message }) => expect(message).to.equal('user name is not a string'))
-    //     )
-
-    //     it('should fail on empty user name', () =>
-    //         singingLabApi.registerUser('')
-    //             .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user name', () =>
-    //         singingLabApi.registerUser('     ')
-    //             .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-    //     )
-
-    //     it('should fail on no user surname', () =>
-    //         singingLabApi.registerUser(jackData.name)
-    //             .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
-    //     )
-
-    //     it('should fail on empty user surname', () =>
-    //         singingLabApi.registerUser(jackData.name, '')
-    //             .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user surname', () =>
-    //         singingLabApi.registerUser(jackData.name, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-    //     )
-
-    //     it('should fail on no user address', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname)
-    //             .catch(({ message }) => expect(message).to.equal('user address is not a string'))
-    //     )
-
-    //     it('should fail on empty user address', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname, '')
-    //             .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user address', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
-    //     )
-
-    //     it('should fail on no user email', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address)
-    //             .catch(({ message }) => expect(message).to.equal('user email is not a string'))
-    //     )
-
-    //     it('should fail on empty user email', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, '')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user email', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on no user password', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email)
-    //             .catch(({ message }) => expect(message).to.equal('user password is not a string'))
-    //     )
-
-    //     it('should fail on empty user password', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email, '')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user password', () =>
-    //         singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-
-    //     describe('on unexpected server behavior', () => {
-    //         let sandbox
-
-    //         beforeEach(() => sandbox = sinon.createSandbox())
-
-    //         afterEach(() => sandbox.restore())
+    describe('register user', () => {
+        it('should succeed on correct dada', () =>
+            singingLabApi.registerUser('John', 'Doe', 'Roc Boronat 35', 'jd@mail.com', '123')
+                .then(res => {
+                    expect(res).to.be.true
+                })
+
+        )
+
+        it('should fail on already registered user', () =>
+            User.create(jackData)
+                .then(() => {
+                    const { name, surname, address, email, password } = jackData
+
+                    return singingLabApi.registerUser(name, surname, address, email, password)
+                })
+                .catch(({ message }) => {
+                    expect(message).to.equal(`user with email ${jackData.email} already exists`)
+                })
+        )
+
+        it('should fail on no user name', () =>
+            singingLabApi.registerUser()
+                .catch(({ message }) => expect(message).to.equal('user name is not a string'))
+        )
+
+        it('should fail on empty user name', () =>
+            singingLabApi.registerUser('')
+                .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
+        )
+
+        it('should fail on blank user name', () =>
+            singingLabApi.registerUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
+        )
+
+        it('should fail on no user surname', () =>
+            singingLabApi.registerUser(jackData.name)
+                .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
+        )
+
+        it('should fail on empty user surname', () =>
+            singingLabApi.registerUser(jackData.name, '')
+                .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
+        )
+
+        it('should fail on blank user surname', () =>
+            singingLabApi.registerUser(jackData.name, '     ')
+                .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
+        )
+
+        it('should fail on no user address', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname)
+                .catch(({ message }) => expect(message).to.equal('user address is not a string'))
+        )
+
+        it('should fail on empty user address', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname, '')
+                .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
+        )
+
+        it('should fail on blank user address', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname, '     ')
+                .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
+        )
+
+        it('should fail on no user email', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address)
+                .catch(({ message }) => expect(message).to.equal('user email is not a string'))
+        )
+
+        it('should fail on empty user email', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, '')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on blank user email', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, '     ')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on no user password', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email)
+                .catch(({ message }) => expect(message).to.equal('user password is not a string'))
+        )
+
+        it('should fail on empty user password', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email, '')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+
+        it('should fail on blank user password', () =>
+            singingLabApi.registerUser(jackData.name, jackData.surname, jackData.address, jackData.email, '     ')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+
+        describe('on unexpected server behavior', () => {
+            let sandbox
+
+            beforeEach(() => sandbox = sinon.createSandbox())
+
+            afterEach(() => sandbox.restore())
 
-    //         it('should fail on response status hacked', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 resolve({ status: 201, data: { status: 'KO' } })
-    //             })
+            it('should fail on response status hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    resolve({ status: 201, data: { status: 'KO' } })
+                })
 
-    //             sandbox.stub(axios, 'post').returns(resolved)
+                sandbox.stub(axios, 'post').returns(resolved)
 
-    //             const { name, surname, address, email, password } = jackData
+                const { name, surname, address, email, password } = jackData
 
-    //             return singingLabApi.registerUser(name, surname, address, email, password)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal(`unexpected response status 201 (KO)`)
-    //                 })
-    //         })
+                return singingLabApi.registerUser(name, surname, address, email, password)
+                    .catch(({ message }) => {
+                        expect(message).to.equal(`unexpected response status 201 (KO)`)
+                    })
+            })
 
-    //         it('should fail on email hacked', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 reject({ response: { data: { error: 'email is not a string' } } })
-    //             })
+            it('should fail on email hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ response: { data: { error: 'email is not a string' } } })
+                })
 
-    //             sandbox.stub(axios, 'post').returns(resolved)
+                sandbox.stub(axios, 'post').returns(resolved)
 
-    //             const { name, surname, address, email, password } = jackData
+                const { name, surname, address, email, password } = jackData
 
-    //             return singingLabApi.registerUser(name, surname, address, email, password)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal('email is not a string')
-    //                 })
-    //         })
+                return singingLabApi.registerUser(name, surname, address, email, password)
+                    .catch(({ message }) => {
+                        expect(message).to.equal('email is not a string')
+                    })
+            })
 
-    //         it('should fail on server down', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 reject({ code: 'ECONNREFUSED' })
-    //             })
+            it('should fail on server down', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ code: 'ECONNREFUSED' })
+                })
 
-    //             sandbox.stub(axios, 'post').returns(resolved)
+                sandbox.stub(axios, 'post').returns(resolved)
 
-    //             const { name, surname, address, email, password } = jackData
+                const { name, surname, address, email, password } = jackData
 
-    //             return singingLabApi.registerUser(name, surname, address, email, password)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal('could not reach server')
-    //                 })
-    //         })
-    //     })
-    // })
+                return singingLabApi.registerUser(name, surname, address, email, password)
+                    .catch(({ message }) => {
+                        expect(message).to.equal('could not reach server')
+                    })
+            })
+        })
+    })
 
 
-    // describe('authenticate user', () => {
-    //     it('should succeed on correct data', () =>
-    //         User.create(jackData)
-    //             .then(() =>
-    //                 singingLabApi.authenticateUser('jj@mail.com', '123')
-    //                     .then(id => {
-    //                         expect(id).to.exist
+    describe('authenticate user', () => {
+        it('should succeed on correct data', () =>
+            User.create(jackData)
+                .then(() =>
+                    singingLabApi.authenticateUser('jj@mail.com', '123')
+                        .then(id => {
+                            expect(id).to.exist
 
-    //                         expect(singingLabApi.token()).not.to.equal('NO-TOKEN')
-    //                     })
-    //             )
-    //     )
+                            expect(singingLabApi.token()).not.to.equal('NO-TOKEN')
+                        })
+                )
+        )
 
-    //     it('should fail on no user email', () =>
-    //         singingLabApi.authenticateUser()
-    //             .catch(({ message }) => expect(message).to.equal('user email is not a string'))
-    //     )
+        it('should fail on no user email', () =>
+            singingLabApi.authenticateUser()
+                .catch(({ message }) => expect(message).to.equal('user email is not a string'))
+        )
 
-    //     it('should fail on empty user email', () =>
-    //         singingLabApi.authenticateUser('')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user email', () =>
-    //         singingLabApi.authenticateUser('     ')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on no user password', () =>
-    //         singingLabApi.authenticateUser(jackData.email)
-    //             .catch(({ message }) => expect(message).to.equal('user password is not a string'))
-    //     )
-
-    //     it('should fail on empty user password', () =>
-    //         singingLabApi.authenticateUser(jackData.email, '')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user password', () =>
-    //         singingLabApi.authenticateUser(jackData.email, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-
-    //     describe('on unexpected server behavior', () => {
-    //         let sandbox
+        it('should fail on empty user email', () =>
+            singingLabApi.authenticateUser('')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on blank user email', () =>
+            singingLabApi.authenticateUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on no user password', () =>
+            singingLabApi.authenticateUser(jackData.email)
+                .catch(({ message }) => expect(message).to.equal('user password is not a string'))
+        )
+
+        it('should fail on empty user password', () =>
+            singingLabApi.authenticateUser(jackData.email, '')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+
+        it('should fail on blank user password', () =>
+            singingLabApi.authenticateUser(jackData.email, '     ')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+
+        describe('on unexpected server behavior', () => {
+            let sandbox
 
-    //         beforeEach(() => sandbox = sinon.createSandbox())
+            beforeEach(() => sandbox = sinon.createSandbox())
 
-    //         afterEach(() => sandbox.restore())
+            afterEach(() => sandbox.restore())
 
-    //         it('should fail on response status hacked', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 resolve({ status: 200, data: { status: 'KO' } })
-    //             })
+            it('should fail on response status hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    resolve({ status: 200, data: { status: 'KO' } })
+                })
 
-    //             sandbox.stub(axios, 'post').returns(resolved)
+                sandbox.stub(axios, 'post').returns(resolved)
 
-    //             const { email, password } = jackData
+                const { email, password } = jackData
 
-    //             return singingLabApi.authenticateUser(email, password)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal(`unexpected response status 200 (KO)`)
-    //                 })
-    //         })
+                return singingLabApi.authenticateUser(email, password)
+                    .catch(({ message }) => {
+                        expect(message).to.equal(`unexpected response status 200 (KO)`)
+                    })
+            })
 
-    //         it('should fail on email hacked', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 reject({ response: { data: { error: 'email is not a string' } } })
-    //             })
+            it('should fail on email hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ response: { data: { error: 'email is not a string' } } })
+                })
 
-    //             sandbox.stub(axios, 'post').returns(resolved)
+                sandbox.stub(axios, 'post').returns(resolved)
 
-    //             const { email, password } = jackData
+                const { email, password } = jackData
 
-    //             return singingLabApi.authenticateUser(email, password)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal('email is not a string')
-    //                 })
-    //         })
+                return singingLabApi.authenticateUser(email, password)
+                    .catch(({ message }) => {
+                        expect(message).to.equal('email is not a string')
+                    })
+            })
 
-    //         it('should fail on server down', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 reject({ code: 'ECONNREFUSED' })
-    //             })
-
-    //             sandbox.stub(axios, 'post').returns(resolved)
-
-    //             const { email, password } = jackData
-
-    //             return singingLabApi.authenticateUser(email, password)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal('could not reach server')
-    //                 })
-    //         })
-    //     })
-    // })
-
-    // describe('retrieve user', () => {
-    //     it('should succeed on correct data', () =>
-    //         User.create(jackData)
-    //             .then(({ id }) => {
-    //                 const token = jwt.sign({ id }, TOKEN_SECRET)
-
-    //                 singingLabApi.token(token)
+            it('should fail on server down', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ code: 'ECONNREFUSED' })
+                })
+
+                sandbox.stub(axios, 'post').returns(resolved)
+
+                const { email, password } = jackData
+
+                return singingLabApi.authenticateUser(email, password)
+                    .catch(({ message }) => {
+                        expect(message).to.equal('could not reach server')
+                    })
+            })
+        })
+    })
+
+    describe('retrieve user', () => {
+        it('should succeed on correct data', () =>
+            User.create(jackData)
+                .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    singingLabApi.token(token)
 
-    //                 return singingLabApi.retrieveUser(id)
-    //             })
-    //             .then(user => {
-    //                 expect(user).to.exist
+                    return singingLabApi.retrieveUser(id)
+                })
+                .then(user => {
+                    expect(user).to.exist
 
-    //                 const { name, surname, address, email, _id, password, notes } = user
-
-    //                 expect(name).to.equal('Jack')
-    //                 expect(surname).to.equal('Johnson')
-    //                 expect(address).to.equal('Roc Boronat 35')
-    //                 expect(email).to.equal('jj@mail.com')
-
-    //                 expect(_id).to.be.undefined
-    //                 expect(password).to.be.undefined
-    //                 expect(notes).to.be.undefined
-    //             })
-    //     )
-
-    //     it('should fail on no user id', () =>
-    //         singingLabApi.retrieveUser()
-    //             .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-    //     )
-
-    //     it('should fail on empty user id', () =>
-    //         singingLabApi.retrieveUser('')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user id', () =>
-    //         singingLabApi.retrieveUser('     ')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
-
-    //     describe('on unexpected server behavior', () => {
-    //         let sandbox
-
-    //         beforeEach(() => sandbox = sinon.createSandbox())
-
-    //         afterEach(() => sandbox.restore())
-
-    //         it('should fail on response status hacked', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 resolve({ status: 200, data: { status: 'KO' } })
-    //             })
-
-    //             sandbox.stub(axios, 'get').returns(resolved)
-
-    //             return singingLabApi.retrieveUser(fakeUserId)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal(`unexpected response status 200 (KO)`)
-    //                 })
-    //         })
-
-    //         it('should fail on id hacked', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 reject({ response: { data: { error: 'user id is not a string' } } })
-    //             })
-
-    //             sandbox.stub(axios, 'get').returns(resolved)
-
-    //             return singingLabApi.retrieveUser(fakeUserId)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal('user id is not a string')
-    //                 })
-    //         })
-
-    //         it('should fail on server down', () => {
-    //             const resolved = new Promise((resolve, reject) => {
-    //                 reject({ code: 'ECONNREFUSED' })
-    //             })
-
-    //             sandbox.stub(axios, 'get').returns(resolved)
-
-    //             return singingLabApi.retrieveUser(fakeUserId)
-    //                 .catch(({ message }) => {
-    //                     expect(message).to.equal('could not reach server')
-    //                 })
-    //         })
-    //     })
-    // })
-
-    // describe('udpate user', () => {
-    //     it('should succeed on correct data', () =>
-    //         User.create(jackData)
-    //             .then(({ id }) => {
-    //                 const token = jwt.sign({ id }, TOKEN_SECRET)
-
-    //                 singingLabApi.token(token)
-
-    //                 return singingLabApi.updateUser(id, 'Jack', 'Wayne', '+34 111 222 333', 'colorado', 'jj@mail.com', '123', 'jw@mail.com', '456')
-    //                     .then(res => {
-
-    //                         expect(res).to.be.true
-
-    //                         return User.findById(id)
-    //                     })
-    //                     .then(user => {
-    //                         expect(user).to.exist
-
-    //                         const { name, surname, phone, address, email, password } = user
-
-    //                         expect(user.id).to.equal(id)
-    //                         expect(name).to.equal('Jack')
-    //                         expect(surname).to.equal('Wayne')
-    //                         expect(phone).to.equal('+34 111 222 333')
-    //                         expect(address).to.equal('colorado')
-    //                         expect(email).to.equal('jw@mail.com')
-    //                         expect(password).to.equal('456')
-    //                     })
-    //             })
-    //     )
-
-    //     it('should fail on changing email to an already existing user\'s email', () =>
-    //         Promise.all([
-    //             User.create(jackData),
-    //             User.create(otherjackData)
-    //         ])
-    //             .then(([{ id: id1 }, { id: id2 }]) => {
-    //                 const token = jwt.sign({ id: id1 }, TOKEN_SECRET)
-
-    //                 singingLabApi.token(token)
-
-    //                 const { name, surname, phone, address, email, password } = jackData
-
-    //                 return singingLabApi.updateUser(id1, name, surname, phone, address, email, password, otherjackData.email)
-    //             })
-    //             .catch(({ message }) => expect(message).to.equal(`user with email ${otherjackData.email} already exists`))
-    //     )
-
-    //     it('should fail on no user id', () =>
-    //         singingLabApi.updateUser()
-    //             .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-    //     )
-
-    //     it('should fail on empty user id', () =>
-    //         singingLabApi.updateUser('')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user id', () =>
-    //         singingLabApi.updateUser('     ')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
-
-    //     it('should fail on no user name', () =>
-    //         singingLabApi.updateUser(fakeUserId)
-    //             .catch(({ message }) => expect(message).to.equal('user name is not a string'))
-    //     )
-
-    //     it('should fail on empty user name', () =>
-    //         singingLabApi.updateUser(fakeUserId, '')
-    //             .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user name', () =>
-    //         singingLabApi.updateUser(fakeUserId, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-    //     )
-
-    //     it('should fail on no user surname', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name)
-    //             .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
-    //     )
-
-    //     it('should fail on empty user surname', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, '')
-    //             .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user surname', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-    //     )
-
-    //     it('should fail on no user phone', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname)
-    //             .catch(({ message }) => expect(message).to.equal('user phone is not a string'))
-    //     )
-
-    //     it('should fail on empty user phone', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '')
-    //             .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user phone', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
-    //     )
-
-    //     it('should fail on no user address', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone)
-    //             .catch(({ message }) => expect(message).to.equal('user address is not a string'))
-    //     )
-
-    //     it('should fail on empty user address', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone, '')
-    //             .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user address', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
-    //     )
-
-    //     it('should fail on no user email', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address)
-    //             .catch(({ message }) => expect(message).to.equal('user email is not a string'))
-    //     )
-
-    //     it('should fail on empty user email', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user email', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on no user password', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email)
-    //             .catch(({ message }) => expect(message).to.equal('user password is not a string'))
-    //     )
-
-    //     it('should fail on empty user password', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user password', () =>
-    //         singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-    // })
-
-    // describe('unregister user', () => {
-    //     it('should succeed on correct data', () =>
-    //         User.create(jackData)
-    //             .then(({ id }) => {
-    //                 const token = jwt.sign({ id }, TOKEN_SECRET)
-
-    //                 singingLabApi.token(token)
-
-    //                 const { email, password } = jackData
-
-    //                 return singingLabApi.unregisterUser(id, email, password)
-    //                     .then(res => {
-    //                         expect(res).to.be.true
-
-    //                         return User.findById(id)
-    //                     })
-    //                     .then(user => {
-    //                         expect(user).to.be.null
-    //                     })
-    //             })
-    //     )
-
-    //     it('should fail on no user id', () =>
-    //         singingLabApi.unregisterUser()
-    //             .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-    //     )
-
-    //     it('should fail on empty user id', () =>
-    //         singingLabApi.unregisterUser('')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user id', () =>
-    //         singingLabApi.unregisterUser('     ')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
-
-    //     it('should fail on no user email', () =>
-    //         singingLabApi.unregisterUser(fakeUserId)
-    //             .catch(({ message }) => expect(message).to.equal('user email is not a string'))
-    //     )
-
-    //     it('should fail on empty user email', () =>
-    //         singingLabApi.unregisterUser(fakeUserId, '')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user email', () =>
-    //         singingLabApi.unregisterUser(fakeUserId, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on no user password', () =>
-    //         singingLabApi.unregisterUser(fakeUserId, jackData.email)
-    //             .catch(({ message }) => expect(message).to.equal('user password is not a string'))
-    //     )
-
-    //     it('should fail on empty user password', () =>
-    //         singingLabApi.unregisterUser(fakeUserId, jackData.email, '')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user password', () =>
-    //         singingLabApi.unregisterUser(fakeUserId, jackData.email, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-    // })
+                    const { name, surname, address, email, _id, password, notes } = user
+
+                    expect(name).to.equal('Jack')
+                    expect(surname).to.equal('Johnson')
+                    expect(address).to.equal('Roc Boronat 35')
+                    expect(email).to.equal('jj@mail.com')
+
+                    expect(_id).to.be.undefined
+                    expect(password).to.be.undefined
+                    expect(notes).to.be.undefined
+                })
+        )
+
+        it('should fail on no user id', () =>
+            singingLabApi.retrieveUser()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            singingLabApi.retrieveUser('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            singingLabApi.retrieveUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        describe('on unexpected server behavior', () => {
+            let sandbox
+
+            beforeEach(() => sandbox = sinon.createSandbox())
+
+            afterEach(() => sandbox.restore())
+
+            it('should fail on response status hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    resolve({ status: 200, data: { status: 'KO' } })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return singingLabApi.retrieveUser(fakeUserId)
+                    .catch(({ message }) => {
+                        expect(message).to.equal(`unexpected response status 200 (KO)`)
+                    })
+            })
+
+            it('should fail on id hacked', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ response: { data: { error: 'user id is not a string' } } })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return singingLabApi.retrieveUser(fakeUserId)
+                    .catch(({ message }) => {
+                        expect(message).to.equal('user id is not a string')
+                    })
+            })
+
+            it('should fail on server down', () => {
+                const resolved = new Promise((resolve, reject) => {
+                    reject({ code: 'ECONNREFUSED' })
+                })
+
+                sandbox.stub(axios, 'get').returns(resolved)
+
+                return singingLabApi.retrieveUser(fakeUserId)
+                    .catch(({ message }) => {
+                        expect(message).to.equal('could not reach server')
+                    })
+            })
+        })
+    })
+
+    describe('udpate user', () => {
+        it('should succeed on correct data', () =>
+            User.create(jackData)
+                .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    singingLabApi.token(token)
+
+                    return singingLabApi.updateUser(id, 'Jack', 'Wayne', '+34 111 222 333', 'colorado', 'jj@mail.com', '123', 'jw@mail.com', '456')
+                        .then(res => {
+
+                            expect(res).to.be.true
+
+                            return User.findById(id)
+                        })
+                        .then(user => {
+                            expect(user).to.exist
+
+                            const { name, surname, phone, address, email, password } = user
+
+                            expect(user.id).to.equal(id)
+                            expect(name).to.equal('Jack')
+                            expect(surname).to.equal('Wayne')
+                            expect(phone).to.equal('+34 111 222 333')
+                            expect(address).to.equal('colorado')
+                            expect(email).to.equal('jw@mail.com')
+                            expect(password).to.equal('456')
+                        })
+                })
+        )
+
+        it('should fail on changing email to an already existing user\'s email', () =>
+            Promise.all([
+                User.create(jackData),
+                User.create(otherjackData)
+            ])
+                .then(([{ id: id1 }, { id: id2 }]) => {
+                    const token = jwt.sign({ id: id1 }, TOKEN_SECRET)
+
+                    singingLabApi.token(token)
+
+                    const { name, surname, phone, address, email, password } = jackData
+
+                    return singingLabApi.updateUser(id1, name, surname, phone, address, email, password, otherjackData.email)
+                })
+                .catch(({ message }) => expect(message).to.equal(`user with email ${otherjackData.email} already exists`))
+        )
+
+        it('should fail on no user id', () =>
+            singingLabApi.updateUser()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            singingLabApi.updateUser('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            singingLabApi.updateUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on no user name', () =>
+            singingLabApi.updateUser(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('user name is not a string'))
+        )
+
+        it('should fail on empty user name', () =>
+            singingLabApi.updateUser(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
+        )
+
+        it('should fail on blank user name', () =>
+            singingLabApi.updateUser(fakeUserId, '     ')
+                .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
+        )
+
+        it('should fail on no user surname', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name)
+                .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
+        )
+
+        it('should fail on empty user surname', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, '')
+                .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
+        )
+
+        it('should fail on blank user surname', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, '     ')
+                .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
+        )
+
+        it('should fail on no user phone', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname)
+                .catch(({ message }) => expect(message).to.equal('user phone is not a string'))
+        )
+
+        it('should fail on empty user phone', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '')
+                .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
+        )
+
+        it('should fail on blank user phone', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, '     ')
+                .catch(({ message }) => expect(message).to.equal('user phone is empty or blank'))
+        )
+
+        it('should fail on no user address', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone)
+                .catch(({ message }) => expect(message).to.equal('user address is not a string'))
+        )
+
+        it('should fail on empty user address', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.phone, '')
+                .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
+        )
+
+        it('should fail on blank user address', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, '     ')
+                .catch(({ message }) => expect(message).to.equal('user address is empty or blank'))
+        )
+
+        it('should fail on no user email', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address)
+                .catch(({ message }) => expect(message).to.equal('user email is not a string'))
+        )
+
+        it('should fail on empty user email', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on blank user email', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, '     ')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on no user password', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email)
+                .catch(({ message }) => expect(message).to.equal('user password is not a string'))
+        )
+
+        it('should fail on empty user password', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+
+        it('should fail on blank user password', () =>
+            singingLabApi.updateUser(fakeUserId, jackData.name, jackData.surname, jackData.address, jackData.address, jackData.email, '     ')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+    })
+
+    describe('unregister user', () => {
+        it('should succeed on correct data', () =>
+            User.create(jackData)
+                .then(({ id }) => {
+                    const token = jwt.sign({ id }, TOKEN_SECRET)
+
+                    singingLabApi.token(token)
+
+                    const { email, password } = jackData
+
+                    return singingLabApi.unregisterUser(id, email, password)
+                        .then(res => {
+                            expect(res).to.be.true
+
+                            return User.findById(id)
+                        })
+                        .then(user => {
+                            expect(user).to.be.null
+                        })
+                })
+        )
+
+        it('should fail on no user id', () =>
+            singingLabApi.unregisterUser()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            singingLabApi.unregisterUser('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            singingLabApi.unregisterUser('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on no user email', () =>
+            singingLabApi.unregisterUser(fakeUserId)
+                .catch(({ message }) => expect(message).to.equal('user email is not a string'))
+        )
+
+        it('should fail on empty user email', () =>
+            singingLabApi.unregisterUser(fakeUserId, '')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on blank user email', () =>
+            singingLabApi.unregisterUser(fakeUserId, '     ')
+                .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
+        )
+
+        it('should fail on no user password', () =>
+            singingLabApi.unregisterUser(fakeUserId, jackData.email)
+                .catch(({ message }) => expect(message).to.equal('user password is not a string'))
+        )
+
+        it('should fail on empty user password', () =>
+            singingLabApi.unregisterUser(fakeUserId, jackData.email, '')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+
+        it('should fail on blank user password', () =>
+            singingLabApi.unregisterUser(fakeUserId, jackData.email, '     ')
+                .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
+        )
+    })
 
     describe('list categories', () => {
         it('should succeed on correct data', () =>
