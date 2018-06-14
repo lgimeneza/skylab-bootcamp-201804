@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import Main from "./components/Main/";
 import Header from "./components/Header/";
 import logic from "./logic";
+
 
 class App extends Component {
 

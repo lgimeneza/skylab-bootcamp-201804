@@ -1,0 +1,24 @@
+@import '../main.scss';
+
+
+.container-login{
+    img{
+        position: absolute;
+        width: 100%;
+    }
+    .form-login{
+        input{
+            margin: 0
+        }
+
+        background: rgba(255, 255, 255, 0.5)
+        }
+    
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    top: 0;
+
+}

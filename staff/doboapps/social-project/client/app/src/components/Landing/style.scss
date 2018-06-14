@@ -1,15 +1,16 @@
-h1, p {
-  font-family: Lato;
-}
+@import '../main.scss';
 
-.carousel-fade .carousel-item {
-  display: block;
-  position: absolute;
-  opacity: 0;
-  transition: opacity .75s ease-in-out;
-}
-.carousel-fade .carousel-item.active {
-  opacity: 1;
+
+.carousel-fade {
+  .carousel-item.active {
+    opacity: 1;
+  }
+  .carousel-item {
+    display: block;
+    position: absolute;
+    opacity: 0;
+    transition: opacity .75s ease-in-out;
+  }
 }
 
 html,
@@ -29,15 +30,20 @@ body,
 }
 
 .carousel-item:nth-child(1) {
-  background-color: #fd9ff1;
+  background-color:$pink;
 }
 .carousel-item:nth-child(2) {
-  background-color: #78c7c8;
+  background-color: $blue_clear
 }
 .carousel-item:nth-child(3) {
-  background-color: #e8d76b;
+  background-color: $banana
 }
 
+.nav-landing{
+z-index: 1;
+margin-top: -25px;
+border-bottom: solid 1px;
+}
 
 .carousel-item img{
   width: 100%;
@@ -46,10 +52,18 @@ body,
   position: absolute;
 }
 
+.carousel-caption{
+  top:100px
+}
+
+.d-none{
+  display: inherit !important;
+}
+
 
 @media(min-width: 768px){
   
-
+    
     .carousel-item img {
       text-align: center;
       position: absolute;

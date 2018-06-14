@@ -4,6 +4,9 @@ import logic from "../../logic"
 import {CardUser} from '../'
 import {Container,Row, Badge} from 'reactstrap'
 
+import './style.scss';
+
+
 class Home extends Component {
 
     state = {

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Carousel, CarouselItem, CarouselIndicators, CarouselCaption } from 'reactstrap';
+import { withRouter,Link} from "react-router-dom"
+import { Carousel, CarouselItem, CarouselIndicators, CarouselCaption,
+        Navbar, NavbarBrand, Nav,Collapse,NavbarToggler,NavItem,NavLink } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './style.css';
+import './style.scss';
 
 const items = [
   { src: '../../images/carousel/dog-a.jpg',
@@ -69,27 +71,42 @@ class Landing extends Component {
       );
     });
 
-    return (
-      <Carousel
-        activeIndex={activeIndex}
-        next={this.next}
-        previous={this.previous}
-        keyboard={false}
-        pause={false}
-        ride="carousel"
-        interval="3000"
-        slide={false}
-        className="carousel-fade"
-      >
-        {/* <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} /> */}
-        {slides}
-      </Carousel>
-    );
+    return (<div>
+          <Navbar className="nav-landing" color="light" light expand="md">
+            <NavbarBrand href="/">Dogger</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+
+                   
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink  tag={Link}  to="/Login">Login</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink  to="/register">register</NavLink>
+                        </NavItem>
+                    </Nav>
+                
+
+            </Collapse>
+      </Navbar>
+        <Carousel
+          activeIndex={activeIndex}
+          next={this.next}
+          previous={this.previous}
+          keyboard={false}
+          pause={false}
+          ride="carousel"
+          interval="3000"
+          slide={false}
+          className="carousel-fade"
+        >
+          {/* <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} /> */}
+          {slides}
+        </Carousel>
+      </div>);
   }
 }
 
-render(<Landing />, document.getElementById('root'));
-
-
-export default Landing;
+export default withRouter(Landing);
 
