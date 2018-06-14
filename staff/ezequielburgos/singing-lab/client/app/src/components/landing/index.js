@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
-import Navbar from './../navbar'
-import Footer from './../footer'
-import LandingMain from '../landing-main'
-import LandingProducts from '../landingProducts'
-import LandingChat from '../landing-chat'
-import logic from '../../logic'
+import Navbar from './../Navbar'
+import LandingMain from './LandingMain'
+import LandingProducts from './LandingProducts'
+import LandingChat from '../LandingChat'
+import Footer from './../Footer'
 
 class Landing extends Component {
 

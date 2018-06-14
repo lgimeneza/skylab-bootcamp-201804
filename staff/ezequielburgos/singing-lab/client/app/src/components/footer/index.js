@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './index.css'
 
-class Footer extends Component {
-    render() {
+function Footer (){
         return (
             <footer className=" py-5 footer">
             <div className="row">
@@ -78,8 +77,6 @@ class Footer extends Component {
             </div>
           </footer>
         )
-    }
-
 }
 
 export default Footer

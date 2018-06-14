@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import logic from '../../logic'
 import './index.css'
-import popper from 'popper.js'
 
 class Navbar extends Component {
 
@@ -19,7 +18,6 @@ class Navbar extends Component {
             if (sessionStorage.getItem('token')) {
                 logic.retrieveUser()
                     .then(user => {
-                        console.log(user)
                         this.setState({ user, isLogged: true })
                     })
             }

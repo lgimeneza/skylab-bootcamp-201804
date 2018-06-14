@@ -1,11 +1,11 @@
-import Register from './register'
-import Login from './login'
-import Categories from './categories'
-import Landing from './landing'
-import Products from './products'
-import ProductData from './productData'
-import OurTeam from './ourTeam'
-import Cart from './cart'
+import Register from './Register'
+import Login from './Login'
+import Categories from './Categories'
+import Landing from './Landing'
+import Products from './Products'
+import ProductData from './ProductData'
+import OurTeam from './OurTeam'
+import Cart from './Cart'
 
 export {
     Register,

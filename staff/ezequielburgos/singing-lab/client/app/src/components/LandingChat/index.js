@@ -1,10 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './index.css'
 
-
-class LandingChat extends Component {
-
-    render() {
+function LandingChat (){
         return (
                 <div className="jumbotron">
                     <h1 className="display-4">Chat with our teachers!</h1>
@@ -14,8 +11,6 @@ class LandingChat extends Component {
                     <a className="btn btn-outline-secondary" role="button">Chat now</a>
                 </div>
         )
-    }
-
 }
 
 export default LandingChat

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import './index.css'
-import Navbar from './../navbar'
+import Navbar from './../Navbar'
 
 class Login extends Component {
 

@@ -1,10 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './index.css'
 
-
-class LandingMain extends Component {
-
-    render() {
+function LandingMain (){
         return (
             <main>
                 <div className="row">
@@ -52,8 +49,6 @@ class LandingMain extends Component {
                 </div>
             </main>
         )
-    }
-
 }
 
 export default LandingMain
