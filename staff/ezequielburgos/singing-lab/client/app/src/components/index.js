@@ -6,6 +6,7 @@ import Products from './Products'
 import ProductData from './ProductData'
 import OurTeam from './OurTeam'
 import Cart from './Cart'
+import Profile from './Profile'
 
 export {
     Register,
@@ -15,5 +16,6 @@ export {
     Products,
     ProductData,
     OurTeam,
-    Cart
+    Cart,
+    Profile
 }

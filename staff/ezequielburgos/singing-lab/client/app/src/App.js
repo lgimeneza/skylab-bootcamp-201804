@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, Cart } from './components'
+import React from 'react';
+import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, Profile, Cart } from './components'
 import { Switch, Route } from 'react-router-dom'
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
         <Route exact path="/auth" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/cart" component={Cart} />
+        <Route exact path="/profile" component={Profile} />
         <Route exact path="/categories/:id" component={Products} />
         <Route exact path="/categories/products/:id" component={ProductData} />
       </Switch>

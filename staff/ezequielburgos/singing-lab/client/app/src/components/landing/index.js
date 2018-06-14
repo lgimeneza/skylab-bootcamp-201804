@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
 import Navbar from './../Navbar'
@@ -8,7 +8,6 @@ import LandingChat from '../LandingChat'
 import Footer from './../Footer'
 
 function Landing() {
-
         return (
             <main>
                 <Navbar />
