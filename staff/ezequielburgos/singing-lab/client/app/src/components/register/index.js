@@ -72,7 +72,6 @@ class Register extends Component {
         <div className="container">
           <div className="py-5 text-center title">
             <h2>Register</h2>
-            <p className="lead">Below is an example </p>
           </div>
 
           <div className="main-container">
@@ -80,37 +79,30 @@ class Register extends Component {
               <div className="row">
                 <div className="col-md-6 mb-3">
                   <label htmlFor="firstName">First name</label>
-                  <input type="text" className="form-control" id="firstName" name="name" placeholder="name" autoFocus="" onChange={this.handlerCapturingName} value={this.state.name} />
-                  <div className="invalid-feedback">Valid first name is required.</div>
+                  <input type="text" className="form-control" name="name" placeholder="name" autoFocus="" onChange={this.handlerCapturingName} value={this.state.name} />
                 </div>
                 <div className="col-md-6 mb-3">
                   <label htmlFor="lastName">Last name</label>
-                  <input type="text" className="form-control" id="lastName" name="surname" placeholder="surname" onChange={this.handlerCapturingSurname} value={this.state.surname} />
-                  <div className="invalid-feedback">Valid last name is required.</div>
+                  <input type="text" className="form-control" name="surname" placeholder="surname" onChange={this.handlerCapturingSurname} value={this.state.surname} />
                 </div>
               </div>
               <div className="mb-3">
                 <label htmlFor="username">address</label>
                 <div className="input-group">
-                  <input type="text" className="form-control" id="username" name="address" placeholder="address" onChange={this.handlerCapturingAddress} value={this.state.address} />
-                  <div className="invalid-feedback" style={{ width: '100%' }}>Your address is required.</div>
+                  <input type="text" className="form-control" name="address" placeholder="address" onChange={this.handlerCapturingAddress} value={this.state.address} />
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="email">Email
-              </label>
-                <input type="email" className="form-control" id="email" name="email" placeholder="email" onChange={this.handlerCapturingEmail} value={this.state.email} />
-                <div className="invalid-feedback">Please enter a valid email address for shipping updates.</div>
+                <label htmlFor="email">email</label>
+                <input type="email" className="form-control" name="email" placeholder="email" onChange={this.handlerCapturingEmail} value={this.state.email} />
               </div>
               <div className="mb-3">
                 <label htmlFor="address">password</label>
-                <input type="password" className="form-control" id="address" name="password" placeholder="password" onChange={this.handlerCapturingPassword} value={this.state.password} />
-                <div className="invalid-feedback">Please enter your shipping address.</div>
+                <input type="password" className="form-control" name="password" placeholder="password" onChange={this.handlerCapturingPassword} value={this.state.password} />
               </div>
               <div className="mb-3">
-                <label htmlFor="address2">Confirm password
-              </label>
-                <input type="password" className="form-control" id="address2" name="passwordConfirm" placeholder="passwordConfirm" onChange={this.handlerCapturingPasswordConfirm} value={this.state.passwordConfirm} />
+                <label htmlFor="address2">Confirm password</label>
+                <input type="password" className="form-control"  name="passwordConfirm" placeholder="password confirm" onChange={this.handlerCapturingPasswordConfirm} value={this.state.passwordConfirm} />
               </div>
               <hr className="mb-4" />
               <button className="btn btn-primary btn-lg btn-block register-submit" type="submit">Continue to Login</button>

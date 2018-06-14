@@ -125,7 +125,7 @@ class Update extends Component {
                                 <input type="password" className="form-control" name="passwordConfirm" placeholder="passwordConfirm" onChange={this.handlerCapturingNewPassword} value={this.state.user.NewPassword} />
                             </div>
                             <hr className="mb-4" />
-                            <button className="btn btn-primary btn-lg btn-block register-submit" type="submit">Submit changes</button>
+                            <button className="btn btn-primary btn-lg btn-block register-submit" type="submit">Update profile</button>
                         </form>
                     </div>
                 </div>
