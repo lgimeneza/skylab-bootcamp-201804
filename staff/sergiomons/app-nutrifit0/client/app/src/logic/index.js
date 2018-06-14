@@ -104,12 +104,12 @@ const logic = {
     },
 
     listSubcategories(categoryId) {
-        return clientApi.listSubcategories()
+        return clientApi.listSubcategories(categoryId)
                 .then(categories => categories)
     },
 
     listProductsByCategory(categoryId) {
-        return clientApi.listProductsByCategory()
+        return clientApi.listProductsByCategory(categoryId)
                 .then(products => products)
     },
 
@@ -137,7 +137,6 @@ const logic = {
 
         return true
     }
-
 }
 
 module.exports = logic

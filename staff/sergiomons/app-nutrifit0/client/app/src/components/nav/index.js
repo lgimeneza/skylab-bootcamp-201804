@@ -10,22 +10,12 @@ class Nav extends Component {
 
     componentDidMount(props) {
 
-        // logic.listRootCategories()
-        //     .then(categories => {
-        //         this.setState({
-        //             categories
-        //         })
-        //     })
-        
-        //const parentsCategoryId = this.state.categories._id
-
-        // console.log(parentsCategoryId)
-        //  logic.listSubcategories(parentsCategoryId)
-        //     .then(categories => {
-        //         if (categories) this.setState({
-        //              categories
-        //             })
-        // })
+        logic.listRootCategories()
+            .then(categories => {
+                this.setState({
+                    categories
+                })
+            })
     }
 
     logout() {
@@ -36,7 +26,7 @@ class Nav extends Component {
     render() {
 
         return (
-
+            
             <div>
                 <header>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -56,9 +46,9 @@ class Nav extends Component {
                                         Categorías
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        {
+                                        { 
                                             this.state.categories.map(category => {
-                                                return <Link to={`/category/${category.id}${category.root ? '' : '/products'}`} className="dropdown-item" href="">{category.name}</Link>
+                                                return <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`} className="dropdown-item" href="">{category.name}</Link>
                                             })
                                         }
                                         <div className="dropdown-divider"></div>

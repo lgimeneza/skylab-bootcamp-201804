@@ -269,7 +269,7 @@ const clientApi = {
                 if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
                 if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
                
-                return axios.get(`${this.url}/subcategories/${categoryId}`)
+                return axios.get(`${this.url}/category/${categoryId}/subcategories`)
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -302,7 +302,7 @@ const clientApi = {
                 if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
                 if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
                
-                return axios.get(`${this.url}/productsByCategory/${categoryId}`)
+                return axios.get(`${this.url}/category/${categoryId}/products`)
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

@@ -63,9 +63,9 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
 router.get('/categories/root', (req, res) => {
 
     return logic.listRootCategories()
-            .then(res => {
+            .then(category=> {
                 res.status(200)
-                res.json({ status: 'OK', data: res})
+                res.json({ status: 'OK', data: category})
             })
             .catch(({ message }) => {
                 res.status(400)
@@ -73,7 +73,7 @@ router.get('/categories/root', (req, res) => {
             })
 })
 
-router.get('/categories/:categoryId/subcategories', (req, res) => {
+router.get('/category/:categoryId/subcategories', (req, res) => {
     const { params: { categoryId } } = req
 
     return logic.listSubcategories(categoryId)
@@ -87,7 +87,7 @@ router.get('/categories/:categoryId/subcategories', (req, res) => {
             })
 })
 
-router.get('/categories/:categoryId/products', (req, res) => {
+router.get('/category/:categoryId/products', (req, res) => {
     const { params: { categoryId } } = req
 
     return logic.listProductsByCategory(categoryId)

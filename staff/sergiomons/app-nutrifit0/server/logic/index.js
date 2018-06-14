@@ -241,12 +241,19 @@ const logic = {
             .then(() => {
 
                 return Category.find({ parent: categoryId.toString() })
-                    .then(res => {
-                        const categories = res.map(({ _id: id, name, parent }) => ({ id, name, parentId: parent ? parent.toString() : undefined }))
-                        return categories
-                    })
             })
-    },
+                    .then(subcategories => {
+                        
+                        const normalizedSubcategories = subcategories.map(({ _id: id, name, parent }) => ({ id, name, parentId: parent ? parent.toString() : undefined }))
+                        
+                        return Promise.all(subcategories.map(subcategory => Category.find({ parent: subcategory_id })))
+                            .then(res => {
+                                res.forEach((subcategory, index) => normalizedSubcategories[index].hasChildren = !!subcategory.length)
+
+                                return normalizedSubcategories
+                            })
+                    })
+        },
 
     /**
      * Lists products
@@ -258,7 +265,6 @@ const logic = {
     listProductsByCategory(categoryId) {
         return Promise.resolve()
             .then(() => {
-
                 if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
 
                 if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')

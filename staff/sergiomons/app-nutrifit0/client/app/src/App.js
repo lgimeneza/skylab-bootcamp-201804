@@ -6,8 +6,8 @@ import logic from './logic'
 import Register from './components/register'
 import Login from './components/login'
 import Home from './components/home'
-import MainCategories from './components/categories/main-categories'
-import Subcategories from './components/categories/sub-categories'
+import Categories from './components/categories/categories'
+import ProductsByCategory from './components/products/by-category'
 import Nav from './components/nav'
 import Footer from './components/footer'
 
@@ -52,8 +52,8 @@ class App extends Component {
         <Nav userData={this.state.userData} parentsCategoryData={this.state.parentsCategory}/>
         <Switch>
             <Route exact path='/' component={Home}/>
-            <Route path='/categories' component={MainCategories}/>
-            <Route path='/subcategories/:categoryId' component={Subcategories}/>
+            <Route path='/category/:categoryId/subcategories' component={Categories}/>
+            <Route path='/category/:categoryId/products' component={ProductsByCategory}/>
             <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Home/>}/>
             <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Home/>} />
         </Switch>
