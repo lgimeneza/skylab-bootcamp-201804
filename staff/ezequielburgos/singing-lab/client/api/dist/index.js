@@ -384,6 +384,9 @@ var singingLabApi = {
                 } else throw err;
             });
         });
+    },
+    listProductsByIds: function listProductsByIds() {
+        // TODO GET url?ids=id1,id2,id2,id4
     }
 };
 

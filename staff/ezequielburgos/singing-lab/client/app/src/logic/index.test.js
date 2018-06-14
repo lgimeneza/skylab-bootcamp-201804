@@ -75,7 +75,7 @@ describe('logic (singingLab)', () => {
                     expect(res).to.be.true
                     expect(logic.userId()).not.to.equal('NO-ID')
 
-                    return logic.updateUser(logic.userId(), 'James', 'Bond', '+34 111 222 333', 'Roc Boronat 35', 'jd@mail.com', '123', 'jb@mail.com', '456')
+                    return logic.updateUser('James', 'Bond', '+34 111 222 333', 'Roc Boronat 35', 'jd@mail.com', '123', 'jb@mail.com', '456')
                         .then(res => {
                             expect(res).to.be.true
 
