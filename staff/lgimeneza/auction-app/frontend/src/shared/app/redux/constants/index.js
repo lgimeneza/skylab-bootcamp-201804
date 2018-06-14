@@ -5,7 +5,8 @@ export const Types = {
     ADD_PRODUCT_BID: 'ADD_PRODUCT_BID',
     UPDATE_PRODUCTS:'UPDATE_PRODUCTS',
     UPDATE_NAME:'UPDATE_NAME',
-    UPDATE_USER: 'UPDATE_USER'
+    UPDATE_USER: 'UPDATE_USER',
+    UPDATE_QUERY: 'UPDATE_QUERY'
 };
 
 export const alertConstants = {

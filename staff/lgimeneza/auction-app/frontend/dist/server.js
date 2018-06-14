@@ -428,7 +428,7 @@ var Landing = function (_Component) {
     _createClass(Landing, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.props.getProducts();
+            this.props.getProducts(this.props.query);
         }
     }, {
         key: 'render',
@@ -515,9 +515,10 @@ var Landing = function (_Component) {
 }(_react.Component);
 
 function mapStateToProps(state) {
-    var products = state.products;
+    var products = state.products,
+        query = state.query;
 
-    return { products: products };
+    return { products: products, query: query };
 }
 function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)(actions, dispatch);
@@ -732,6 +733,10 @@ var _products = __webpack_require__(/*! ./redux/actions/products */ "./src/share
 
 var productsActions = _interopRequireWildcard(_products);
 
+var _query = __webpack_require__(/*! ./redux/actions/query */ "./src/shared/app/redux/actions/query.js");
+
+var queryActions = _interopRequireWildcard(_query);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -771,8 +776,9 @@ var NavBar = function (_Component) {
 
 			var query = _this.state.query;
 
-			_this.props.getProducts(query);
-			_this.context.history.push('/');
+			_this.props.setQuery(query);
+
+			_this.props.history.push('/');
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
@@ -966,10 +972,10 @@ function mapStateToProps(state) {
 	return { user: user };
 }
 function mapDispatchToProps(dispatch) {
-	return (0, _redux.bindActionCreators)(_extends({}, _user.userActions, productsActions), dispatch);
+	return (0, _redux.bindActionCreators)(_extends({}, _user.userActions, productsActions, queryActions), dispatch);
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(NavBar);
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(NavBar));
 
 /***/ }),
 
@@ -1623,6 +1629,32 @@ function getProducts(query) {
 
 /***/ }),
 
+/***/ "./src/shared/app/redux/actions/query.js":
+/*!***********************************************!*\
+  !*** ./src/shared/app/redux/actions/query.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setQuery = setQuery;
+
+var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux/constants/index.js");
+
+function setQuery(query) {
+    return async function (dispatch, getState) {
+        console.log('setQuery', query);
+        dispatch({ type: _constants.Types.UPDATE_QUERY, query: query });
+    };
+}
+
+/***/ }),
+
 /***/ "./src/shared/app/redux/actions/user.js":
 /*!**********************************************!*\
   !*** ./src/shared/app/redux/actions/user.js ***!
@@ -1722,7 +1754,8 @@ var Types = exports.Types = {
     ADD_PRODUCT_BID: 'ADD_PRODUCT_BID',
     UPDATE_PRODUCTS: 'UPDATE_PRODUCTS',
     UPDATE_NAME: 'UPDATE_NAME',
-    UPDATE_USER: 'UPDATE_USER'
+    UPDATE_USER: 'UPDATE_USER',
+    UPDATE_QUERY: 'UPDATE_QUERY'
 };
 
 var alertConstants = exports.alertConstants = {
@@ -1833,13 +1866,18 @@ var _alert = __webpack_require__(/*! ./alert */ "./src/shared/app/redux/reducers
 
 var _alert2 = _interopRequireDefault(_alert);
 
+var _query = __webpack_require__(/*! ./query */ "./src/shared/app/redux/reducers/query.js");
+
+var _query2 = _interopRequireDefault(_query);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var reducers = (0, _redux.combineReducers)({
     products: _products2.default,
     product: _product2.default,
     user: _user2.default,
-    alert: _alert2.default
+    alert: _alert2.default,
+    query: _query2.default
 });
 
 exports.default = reducers;
@@ -1908,6 +1946,40 @@ function products() {
     switch (action.type) {
         case _constants.Types.UPDATE_PRODUCTS:
             return action.products;
+        default:
+            return state;
+    }
+}
+
+/***/ }),
+
+/***/ "./src/shared/app/redux/reducers/query.js":
+/*!************************************************!*\
+  !*** ./src/shared/app/redux/reducers/query.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = query;
+
+var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux/constants/index.js");
+
+var initialState = '';
+
+function query() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case _constants.Types.UPDATE_QUERY:
+            console.log('reducerQuery', action.query);
+            return action.query;
         default:
             return state;
     }

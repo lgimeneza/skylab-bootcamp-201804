@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom'
 
-import { userActions } from './redux/actions/user';
+import { userActions } from './redux/actions/user'
 import * as productsActions from './redux/actions/products'
+import * as queryActions from './redux/actions/query'
 
 class NavBar extends Component {
     static fetchData() {
@@ -19,16 +21,17 @@ class NavBar extends Component {
 	}
 	
 	handleChange = e => {
-		const { name, value } = e.target;
-        this.setState({ [name]: value });
+		const { name, value } = e.target
+		this.setState({ [name]: value })
 	}
 	
 	handleSubmit = e => {
 		e.preventDefault();
 
-		const { query } = this.state;
-		this.props.getProducts(query)
-		this.context.history.push('/')
+		const { query } = this.state
+		this.props.setQuery(query)
+
+		this.props.history.push('/')
 	}
 
     render() {
@@ -122,7 +125,7 @@ function mapStateToProps(state) {
     return { user }
 }
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ ...userActions, ...productsActions }, dispatch)
+    return bindActionCreators({ ...userActions, ...productsActions, ...queryActions }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(NavBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(NavBar))

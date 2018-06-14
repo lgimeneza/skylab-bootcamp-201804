@@ -10,7 +10,8 @@ class Landing extends Component {
     }
     
     componentDidMount() {
-        this.props.getProducts();
+        this.props.getProducts(this.props.query)
+
     }
     
     onProductClickHandler = id => e => {
@@ -51,8 +52,8 @@ class Landing extends Component {
 }
 
 function mapStateToProps(state) {
-    const { products } = state
-    return { products }
+    const { products, query } = state
+    return { products, query }
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
