@@ -3,8 +3,8 @@
 }
 
 /*
-   * Custom translucent site header
-   */
+* Custom translucent site header
+*/
 
 .site-header {
     /* background-color: rgba(129, 61, 61, 0.85); */
@@ -23,5 +23,9 @@
 .site-header a:hover {
     color: #fff !important;
     text-decoration: none;
-    text-shadow: 2px 2px 4px#e29c9c;    
+    text-shadow: 2px 2px 4px#e29c9c;
+}
+
+.login-navbar {
+    padding-right: 5rem;
 }

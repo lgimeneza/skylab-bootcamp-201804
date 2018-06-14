@@ -52,7 +52,7 @@ class Navbar extends Component {
                         </span>
                         {(!this.state.isLogged) ?
                             <div>
-                                <span className="py-2 d-none d-md-inline-block">
+                                <span className="py-2 d-none d-md-inline-block login-navbar">
                                     <Link to="/auth">Login</Link>
                                 </span>
                                 <span className="py-2 d-none d-md-inline-block">
