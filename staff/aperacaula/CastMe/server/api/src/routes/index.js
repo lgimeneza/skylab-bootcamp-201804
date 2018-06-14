@@ -14,7 +14,11 @@ router.post('/users', jsonBodyParser, (req, res) => {
         physicalData,
         professionalData,
         videobookLink,
+        profilePicture
          } } = req
+    
+    
+    
 
     logic.registerUser(email,
         password,
@@ -22,6 +26,7 @@ router.post('/users', jsonBodyParser, (req, res) => {
         physicalData,
         professionalData,
         videobookLink,
+        profilePicture
         )
         .then(() => {
             res.status(201)
@@ -62,6 +67,37 @@ router.get('/users/:userId', (req, res) => {
         })
 
 })
+
+router.get('/home/:userId', (req, res) => {
+    const { params: { userId } } = req
+
+    return logic.retrieveUser(userId)
+        .then(user => {
+            const {personalData:{name,surname},profilePicture, _id}=user
+            return logic.getUserAppliedProjectCastings(_id.toString())
+                .then(projects=>{
+                    let enrolled=[]
+                    for (let i=0; i<projects.length;i++){
+                        for (let j=0; j<projects[i].castings; j++){
+                            let {title, publishedDate, endDate, description}= projects[i]
+                            enrolled.push({title,publishedDate,endDate,description, casting: projects[i].castings[j]})
+                        }
+                    }
+                    res.status(200)
+                    res.json({ status: 'OK', data: {name,surname,profilePicture, enrolled} })
+                })
+
+            // res.status(200)
+            // res.json({ status: 'OK', data: {name,surname,profilePicture,applications} })
+            // 
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+
+})
+
 
 router.patch('/users/:userId', jsonBodyParser, (req, res) => {
     const { body: { email,

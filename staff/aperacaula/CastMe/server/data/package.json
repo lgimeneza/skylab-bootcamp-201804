@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha models"
+    "test": "mocha models",
+    "populate": "node demos"
   },
   "keywords": [],
   "author": "",

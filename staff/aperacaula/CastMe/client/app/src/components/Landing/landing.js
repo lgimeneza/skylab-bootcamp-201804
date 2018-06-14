@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import claqueta from "./images/claqueta.jpg"
 
 function Landing(props) {
-  return (
+  	return (
 
 
     <div>
@@ -35,12 +35,12 @@ function Landing(props) {
 		<div className="entry">
 			<p>This is <strong>CastMe </strong>, a free tool for actors and actresses that want to find a spot in the industry.  <a href="login">Login</a> (or <a href="register">Register</a>) in order to manage your casting, update your profile or promote yourself. We will help you to find the best matches, filtering the results to those that will increase your chances</p>
 			<div id="buttons">
-                <Link to="/auth" >
-                    <a className="link-style">Login</a>
+                <Link className="link-style" to="/auth" >
+                    Login
                 </Link>
 				
-                <Link to="/users">
-                    <a className="link-style">Register</a>
+                <Link className="link-style" to="/users">
+                    Register
                 </Link>
 				
 			</div>
@@ -53,24 +53,24 @@ function Landing(props) {
 			<div id="page-bgbtm">
 				<div id="content">
 					<div className="post">
-						<h2 className="title"><a >Latest News</a></h2>
+						<h2 className="title"><a >Latest Castings</a></h2>
 						<div className="entry">
 							<p><img src={claqueta} alt="" width="225" height="225" className="alignleft" /> Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.</p>
 						</div>
 					</div>
 				</div>
 				{/*end #content*/}
-				<div class="sidebar">
+				<div className="sidebar">
 					<ul>
 						<li>
 							<h2>Topics</h2>
 							<ul>
-								<li><a >Lilam sucks</a></li>
-								<li><a >Eric too</a></li>
-								<li><a >Lilam sucks</a></li>
-								<li><a >Eric too</a></li>
-								<li><a >Lilam sucks</a></li>
-								<li><a >Eric too</a></li>
+								<li><a >Film</a></li>
+								<li><a >Theatre</a></li>
+								<li><a >Singing</a></li>
+								<li><a >Dancing</a></li>
+								<li><a >Publicity</a></li>
+								
 							</ul>
 						</li>
 					</ul>
@@ -83,18 +83,18 @@ function Landing(props) {
 	{/*end #menu*/}
 	<div id="three-columns">
 		<div id="column1">
-			<h2>Casting 1</h2>
-			<p>Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.</p>
+			<h2>New Talents</h2>
+			<p>For film. We are looking for new talents in an open casting, whatever your age, whatever your background, come and...</p>
 			<p><a  className="link-style">Read More</a></p>
 		</div>
 		<div id="column2">
-			<h2>Casting 2</h2>
-			<p>Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.</p>
+			<h2>Much Ado About Nothing</h2>
+			<p>For theatre. We need an actress between 20-30 years old to perform in "Much Ado About Nothing", of W. Shakespeare, next season at TNC...</p>
 			<p><a  className="link-style">Read More</a></p>
 		</div>
 		<div id="column3">
-			<h2>Casting 3</h2>
-			<p>Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.Lilam sucks and Eric too.</p>
+			<h2>Leading male</h2>
+			<p>For film. Leading role for male actor with singing and dancing notions. Movie to be shot next August between Barcelona and...</p>
 			<p><a  className="link-style">Read More</a></p>
 		</div>
 	</div>

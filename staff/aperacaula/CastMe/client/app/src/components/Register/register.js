@@ -32,6 +32,7 @@ class RegisterUser extends Component {
     curriculum: "",
     pics: "",
     videobook: "",
+    profilePic: "",
     check: true
   };
 
@@ -169,6 +170,13 @@ class RegisterUser extends Component {
     this.setState({ videobook });
   };
 
+
+  componentDidMount(){
+    if (sessionStorage.getItem('profilePic')) this.setState({profilePic: sessionStorage.getItem('profilePic')})
+    else this.setState({profilePic: "http://via.placeholder.com/150x150"})
+  }
+
+
   checkFields = () => {
     if (this.state.name === "") {
       alert("name cannot be empty");
@@ -289,6 +297,7 @@ class RegisterUser extends Component {
             curriculum: this.state.curriculum
           };
 
+
           logic
             .registerUser(
               this.state.email,
@@ -296,13 +305,19 @@ class RegisterUser extends Component {
               PersonalData,
               PhysicalData,
               ProfessionalData,
-              this.state.videobook
+              this.state.videobook,
+              this.state.profilePic
             )
             .then(resp => {
               swal(
                 "Welcome to CastMe",
-                this.props.history.push("/login")
-              );
+                
+              )
+              .then(this.props.history.push("/auth"))
+              .then(()=> sessionStorage.removeItem('profilePic'))
+              .then(this.setState({
+                profilePic: "",
+              }));
             })
             .catch(err => {
               this.setState({
@@ -368,12 +383,13 @@ class RegisterUser extends Component {
                   <div className="post">
                     <h2 className="title">Registration</h2>
                     <div className="entry">
-                      <p>
+                      
                         <form className="registration-register" type="submit" onSubmit={this.acceptRegister}>
                           <section>
                             <h3 class="image-header">Profile Picture</h3>
                             <img
-                              src="http://via.placeholder.com/150x150"
+                              src={this.state.profilePic}
+                              className= "profile-pic"
                               style={{borderRadius:'50%'}}
                               alt=''
                             />
@@ -410,24 +426,28 @@ class RegisterUser extends Component {
                                 onChange={this.registerBirthday}
                               />
                               <h3>Sex:</h3>
-                              <select classNameName="text_input-register" id="sexRadio" onChange={this.registerSex}>
-                                <option value="male" checked>
+                              <select className="short-input" id="sexRadio" onChange={this.registerSex}>
+                                <option value=" " checked>-</option>
+                                <option value="male" >
                                   Male
                                 </option>
 
                                 <option
                                   value="female"
-                                  onChange={this.registerSex}
+                                
                                 >
                                   Female
                                 </option>
                               </select>
                               <h3>Twins:</h3>
                               <select
-                                classNameName="text_input-register"
+                                className="text_input-register"
                                 id="Twins"
                                 onChange={this.registerTwins}
                               >
+                                <option value=" " checked>
+                                  -
+                                </option>
                                 <option value="true">Yes</option>
 
                                 <option value="false">No</option>
@@ -490,7 +510,7 @@ class RegisterUser extends Component {
                             <section>
                               <h3>Height:</h3>
                               <input
-                                type="number"
+                                type="text"
                                 className="short_input"
                                 name="height-input"
                                 placeholder="In meters"
@@ -510,6 +530,7 @@ class RegisterUser extends Component {
                                 name="PhysicalCondition"
                                 onChange={this.registerPhysicalCondition}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="muscular">Muscular</option>
                                 <option value="fit">Fit</option>
                                 <option value="fat/chubby">Fat/chubby</option>
@@ -523,6 +544,7 @@ class RegisterUser extends Component {
                                 name="Eyes"
                                 onChange={this.registerEyeColor}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="brown">Brown</option>
                                 <option value="green">Green</option>
                                 <option value="blue">Blue</option>
@@ -535,6 +557,7 @@ class RegisterUser extends Component {
                                 name="Hair"
                                 onChange={this.registerHairColor}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="brown">Brown</option>
                                 <option value="blond">Blond</option>
                                 <option value="dark/black">Dark/black</option>
@@ -549,6 +572,7 @@ class RegisterUser extends Component {
                                 name="Ethnicity"
                                 onChange={this.registerEthnicity}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="caucasian">Caucasian</option>
                                 <option value="latino/hispanic">
                                   Latino/hispanic
@@ -565,6 +589,7 @@ class RegisterUser extends Component {
                                 name="Beard"
                                 onChange={this.registerBeard}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="true">Yes</option>
                                 <option value="false">
                                   No
@@ -577,6 +602,7 @@ class RegisterUser extends Component {
                                 name="Tattoos"
                                 onChange={this.registerTattoos}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="true">Yes</option>
                                 <option value="false">
                                   No
@@ -589,6 +615,7 @@ class RegisterUser extends Component {
                                 name="Piercings"
                                 onChange={this.registerPiercings}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="true">Yes</option>
                                 <option value="false">
                                   No
@@ -603,6 +630,7 @@ class RegisterUser extends Component {
                             <section>
                               <h3>Profession</h3>
                               <select className="text_input-register" name="Profession" onChange={this.registerProfession}>
+                                <option value=" " checked>-</option>
                                 <option value="actor/actress">
                                   Actor/actress
                                 </option>
@@ -619,6 +647,7 @@ class RegisterUser extends Component {
                                 name="singing"
                                 onChange={this.registerSinging}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="true">Yes</option>
                                 <option value="false">
                                   No
@@ -631,6 +660,7 @@ class RegisterUser extends Component {
                                 name="dancing"
                                 onChange={this.registerDancing}
                               >
+                                <option value=" " checked>-</option>
                                 <option value="true">Yes</option>
                                 <option value="false">
                                   No
@@ -694,7 +724,7 @@ class RegisterUser extends Component {
                             </button>
                           </section>
                         </form>
-                      </p>
+                      
                     </div>
                   </div>
                 </div>

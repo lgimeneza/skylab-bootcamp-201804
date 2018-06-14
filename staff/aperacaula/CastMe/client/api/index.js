@@ -14,6 +14,7 @@ const castmeApi = {
    * @param {object} physicalData
    * @param {object} professionalData
    * @param {string} videobookLink
+   * @param {string} profilePicture
    *
    * @returns {Promise<boolean>}
    */
@@ -63,7 +64,7 @@ const castmeApi = {
           physicalData,
           professionalData,
           videobookLink,
-          profilePicture
+          profilePicture 
         })
         .then(({ status, data }) => {
           if (status !== 201 || data.status !== "OK")
@@ -140,6 +141,47 @@ const castmeApi = {
         });
     });
   },
+
+
+  /**
+   *
+   * @param {string} id
+   *
+   * @returns {Promise<User>}
+   */
+  retrieveUserHomeInfo(id) {
+    return Promise.resolve().then(() => {
+      if (typeof id !== "string") throw Error("user id is not a string");
+
+      if (!(id = id.trim()).length) throw Error("user id is empty or blank");
+
+      return axios
+        .get(`${this.url}/home/${id}`)
+        .then(({ status, data }) => {
+          if (status !== 200 || data.status !== "OK")
+            throw Error(
+              `unexpected response status ${status} (${data.status})`
+            );
+            
+          return data.data;
+        })
+        .catch(err => {
+          if (err.code === "ECONNREFUSED")
+            throw Error("could not reach server");
+
+          if (err.response) {
+            const {
+              response: {
+                data: { error: message }
+              }
+            } = err;
+
+            throw Error(message);
+          } else throw err;
+        });
+    });
+  },
+
 
   /**
    *

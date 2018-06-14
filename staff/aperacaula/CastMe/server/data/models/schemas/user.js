@@ -22,7 +22,7 @@ module.exports = new Schema({
     professionalData: ProfessionalData,
 
     pics: {
-        type: File,
+        type: String,
         
 
     },

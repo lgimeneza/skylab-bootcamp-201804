@@ -10,6 +10,14 @@ const {
     ProfessionalData
   }
 } = require("data");
+const cloudinary= require('cloudinary');
+
+
+cloudinary.config({
+  cloud_name: 'dt6qv2j4j',
+  api_key: '997973713297344',
+  api_secret: '19Oy6OPTOX2qZ05zq9bPQb3aVb8'
+});
 
 const logic = {
   /**
@@ -37,6 +45,8 @@ const logic = {
     videobookLink,
     profilePicture
   ) {
+
+    let urlCloudinary= ''; 
     return Promise.resolve().then(() => {
       if (typeof email !== "string") throw Error("user email is not a string");
 
@@ -64,20 +74,30 @@ const logic = {
       if ((videobookLink = videobookLink.trim()).length === 0)
         throw Error("user videobookLink is empty or blank");
 
+      
+      
+      return Promise.resolve()
+            .then(()=>{
+              return cloudinary.uploader.upload(profilePicture, function(data) {
+                urlCloudinary = data.url
+                console.log("upload ok")})
+            })
+            .then(()=>{
+              return User.findOne({ email }).then(user => {
+                if (user) throw Error(`user with email ${email} already exists`);
+                
+                return User.create({
+                  email,
+                  password,
+                  personalData,
+                  physicalData,
+                  professionalData,
+                  videobookLink,
+                  profilePicture: urlCloudinary
+                }).then(() => true);
+              });
 
-      return User.findOne({ email }).then(user => {
-        if (user) throw Error(`user with email ${email} already exists`);
-
-        return User.create({
-          email,
-          password,
-          personalData,
-          physicalData,
-          professionalData,
-          videobookLink,
-          profilePicture
-        }).then(() => true);
-      });
+            })
     });
   },
 

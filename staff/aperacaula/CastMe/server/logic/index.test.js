@@ -53,7 +53,7 @@ describe('logic', () => {
 
         videobookLink: 'https://youtube.com',
 
-
+        profilePicture: 'sample',
 
         applications: []
     }
@@ -100,7 +100,7 @@ describe('logic', () => {
 
         videobookLink: 'https://youtube.com',
 
-
+        profilePicture: 'sample',
         applications: []
     }
     const dummyUserId = '123456781234567812345678'
@@ -118,7 +118,7 @@ describe('logic', () => {
 
     describe('register user', () => {
         it('should succeed on correct dada', () =>
-            logic.registerUser(userData.email, userData.password, userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink)
+            logic.registerUser(userData.email, userData.password, userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink, userData.profilePicture)
                 .then(res => {
                     expect(res).to.be.true
                 })
@@ -130,7 +130,7 @@ describe('logic', () => {
             User.create(userData)
                 .then(() => {
 
-                    return logic.registerUser(userData.email, userData.password, userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink)
+                    return logic.registerUser(userData.email, userData.password, userData.personalData, userData.physicalData, userData.professionalData, userData.videobookLink, userData.profilePicture)
                 })
                 .catch(({ message }) => {
                     expect(message).to.equal(`user with email ${userData.email} already exists`)

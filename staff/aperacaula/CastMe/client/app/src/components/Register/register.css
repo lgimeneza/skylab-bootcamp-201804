@@ -23,6 +23,11 @@
 
 }
 
+.profile-pic{
+	max-width:150px;
+	max-height:150px;
+}
+
 
 .text_input-register{
 	margin-bottom: 2%;

@@ -26,19 +26,11 @@ class Login extends Component {
         
         
         logic.login(this.state.email, this.state.password)
-            .then(res =>
-                    {
-                    sessionStorage.clear()
-                    
-                    sessionStorage.setItem('user', { email: this.state.email ,id: res.data.id})
-                    //console.log(sessionStorage.getItem("user"))
-                    }            
-            )
-            .then(resp => {
+            .then(() => {
 
                 swal(
                     'Successful login',
-                ).then(this.props.history.push('/home'))
+                ).then(this.props.history.push(`/home/${sessionStorage.getItem('id')}`))
                 
                 
             })

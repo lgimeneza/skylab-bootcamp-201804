@@ -24,7 +24,7 @@ module.exports= new Schema({
         required: true
     },
     curriculum: {
-        type: File,
+        type: String,
         
     }
 
