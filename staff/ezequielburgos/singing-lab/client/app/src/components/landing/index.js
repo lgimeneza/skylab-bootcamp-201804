@@ -20,8 +20,8 @@ function Landing() {
                         </div>
                     </div>
                 </section>
-                <LandingMain />
                 <LandingProducts />
+                <LandingMain />
                 <LandingChat />
                 <Footer />
             </main>
