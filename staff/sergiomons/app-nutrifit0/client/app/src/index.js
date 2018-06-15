@@ -27,6 +27,8 @@ clientApi.token = function (token) {
     return sessionStorage.getItem('userId')
   }
 
+  
+
 ReactDOM.render(
     <Router> 
         <App /> 

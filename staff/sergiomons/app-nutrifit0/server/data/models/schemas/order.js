@@ -20,5 +20,9 @@ module.exports = new Schema({
     paymentMethod: {
         type: String,
         required: true
+    },
+    paymentStatus: {
+        type: Boolean,
+        required: true
     }
 })
