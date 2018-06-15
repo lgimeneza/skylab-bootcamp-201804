@@ -8,7 +8,6 @@ import LandingChat from '../landing-chat'
 import Footer from './../footer'
 
 function Landing() {
-
         return (
             <main>
                 <Navbar />
@@ -21,8 +20,8 @@ function Landing() {
                         </div>
                     </div>
                 </section>
-                <LandingProducts />
                 <LandingMain />
+                <LandingProducts />
                 <LandingChat />
                 <Footer />
             </main>
