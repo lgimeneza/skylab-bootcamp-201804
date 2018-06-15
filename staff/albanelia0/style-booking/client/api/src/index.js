@@ -212,8 +212,8 @@ const logic = {
     return Promise.resolve()
       .then(() => {
 
-        if (typeof year !== 'number') throw Error('year is not a number')
-        if (typeof month !== 'number') throw Error('month is not a number')
+        // if (typeof year !== 'number') throw Error('year is not a number')
+        // if (typeof month !== 'number') throw Error('month is not a number')
 
         return axios.get(`${this.url}/booking/hours/${year}/${month}`, { year, month })
           .then(({ status, data }) => {
@@ -256,9 +256,9 @@ const logic = {
     return Promise.resolve()
       .then(() => {
 
-        if (typeof year !== 'number') throw Error('year is not a number')
-        if (typeof month !== 'number') throw Error('month is not a number')
-        if (typeof day !== 'number') throw Error('day is not a number')
+        // if (typeof year !== 'number') throw Error('year is not a number')
+        // if (typeof month !== 'number') throw Error('month is not a number')
+        // if (typeof day !== 'number') throw Error('day is not a number')
         
 
         console.log(`${this.url}/booking/hours/${year}/${month}/${day}`)

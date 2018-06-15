@@ -32,7 +32,7 @@ mongoose.connect(DB_URL)
                 const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }, { _doc: service3 }] = res
 
                 // first booking data
-                const date = new Date()
+                const date = moment("2018-06-24 10:00").format()
                 const totalDuration = service1.duration
                 const endDate = moment(date).add(totalDuration, 'minutes').toDate()
 

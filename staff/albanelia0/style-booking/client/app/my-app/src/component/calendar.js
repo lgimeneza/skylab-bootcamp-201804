@@ -41,14 +41,20 @@ class Calendar extends Component {
       })
   }
   bookinghoursForDays = (day) => {
-    
+
     this.setState({
       day: day,
       clickDay: true
-    }, ()=>{
+    }, () => {
       const { year, month, day } = this.state
       this.props.history.push(`/calendar/${year}/${month}/${day}`)
     })
+
+    return (
+      <div>
+        {this.state.clickDay ? <BookingHours year={this.state.year} month={this.state.month} day={day} /> : <div></div>}
+      </div>
+    )
   }
 
   renderBookingData = () => {
@@ -81,7 +87,7 @@ class Calendar extends Component {
       return (
         <div key={day} className='card'>
           <div className="card-content card-days">
-            <h1 onClick={()=>this.bookinghoursForDays(day)} className={`title ${bookingClass}`}>{day}</h1>
+            <h1 onClick={() => this.bookinghoursForDays(day)} className={`title ${bookingClass}`}>{day}</h1>
           </div>
         </div>
       )
@@ -111,7 +117,6 @@ class Calendar extends Component {
             Register
             </Link>
         </div>
-        {this.state.clickDay ? <BookingHours day={this.state.day} /> : <div></div>}
       </div>
     )
   }

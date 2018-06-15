@@ -30,6 +30,17 @@ const logic = {
   
   listServices(){
     return logicApi.listServices()
+  },
+  
+   /**
+   * @param {object} userId
+   * @param {Array} serviceIds
+   * @param {Date} date
+   *
+   * @returns {Promise<Data>}
+   */
+  placeBooking(){
+    return logicApi.placeBooking()
   }
 }
 

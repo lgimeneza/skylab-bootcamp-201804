@@ -12,6 +12,10 @@ export class Login extends Component {
     formIsFull: false,
   }
 
+  goToRegister = () => {
+    this.props.history.push('/register')
+  }
+
   handleChange = (e) => {
 
     const { name, value } = e.target
@@ -43,7 +47,7 @@ export class Login extends Component {
 
         if (result) {
           this.storageUserData(result)
-          this.props.history.push('/')
+          this.props.history.push('/profile')
         }
       }).catch(data => {
               swal({
@@ -98,7 +102,7 @@ export class Login extends Component {
                 </form>
               </div>
               <p className="has-text-grey">
-                <a onClick={this.goToHome}>Go to home</a> &nbsp;·&nbsp;
+                <a onClick={this.goToRegister}>Register</a> &nbsp;·&nbsp;
                 <a href="../">Forgot Password</a> &nbsp;·&nbsp;
                 <a href="../">Need Help?</a>
               </p>

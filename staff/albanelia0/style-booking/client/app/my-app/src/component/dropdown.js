@@ -1,7 +1,10 @@
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import logic from '../logic'
 import '../design/dropdown.css'
+import swal from 'sweetalert2'
+import CreateBooking from './createBooking';
 
 let day = new Date()
 const year = day.getFullYear()
@@ -15,15 +18,56 @@ const monthNumber = day.getMonth() + 1
 export class Dropdown extends Component {
 
   state = {
-    _month: ''
+    _month: '',
   }
 
-  componentDidMount(){
+
+  componentDidMount() {
     this.setState({
       _month: month,
-      _monthNumber:6,
-      _year:2018
+      _monthNumber: 6,
+      _year: 2018
     })
+  }
+  listServices = () => {
+    return logic.listServices()
+      .then(async services => {
+        const { value: formValues } = await swal({
+          title: 'Elige tu servicio',
+          html:
+            services.map(service => {
+              return `
+                <div>
+                  <label>
+                    <input id="${service.serviceId}" type="checkbox">
+                    <span>${service.serviceName} Duration=${service.duration} price=${service.price}</span>
+                  </label>
+                </div>`
+            }).join(),
+          focusConfirm: false,
+          preConfirm: () => {
+            const checkedAtLeastOne = services.reduce((someAreChecked, service) => {
+              return someAreChecked || document.getElementById(service.serviceId).checked
+            }, false)
+
+            if (!checkedAtLeastOne) {
+              return swal.showValidationError('No service is selected!')
+            }
+
+            return services.filter(service => document.getElementById(service.serviceId).checked)
+          }
+        })
+
+        if (formValues) {
+          
+          let checkedList = formValues
+
+          CreateBooking(checkedList)
+
+          swal('Servicio elegido! Elige la fecha/hora y listo! ^^')
+
+        }
+      })
   }
 
   changeMonth = (e) => {
@@ -35,15 +79,15 @@ export class Dropdown extends Component {
       })
     } else if (name == 2) {
       this.setState({
-        _month:monthNames[day.getMonth() + 2],
+        _month: monthNames[day.getMonth() + 2],
         _monthNumber: day.getMonth() + 3
       })
-    }else if (name == 3) {
+    } else if (name == 3) {
       this.setState({
-        _month:monthNames[day.getMonth() + 3],
+        _month: monthNames[day.getMonth() + 3],
         _monthNumber: day.getMonth() + 3
       })
-    }else {
+    } else {
       this.setState({
         _month: month,
         _monthNumber: day.getMonth() + 1
@@ -59,7 +103,7 @@ export class Dropdown extends Component {
       })
     } else if (name == 2) {
       this.setState({
-        _year: year+1
+        _year: year + 1
       })
     }
 
@@ -70,14 +114,13 @@ export class Dropdown extends Component {
   render() {
     return (
       <div>
+        <button onClick={this.listServices} class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu3">
+          <span>Elige tu servicio</span>
+          <span class="icon is-small">
+          </span>
+        </button>
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
-            <button class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu3">
-              <span>Elige tu servicio</span>
-              <span class="icon is-small">
-                <i class="fa fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </button>
             <button class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu3">
               <span>{this.state._year}</span>
               <span class="icon is-small">
@@ -90,9 +133,9 @@ export class Dropdown extends Component {
               <a onClick={this.changeYear} name='1' class="dropdown-item">
                 {2018}
               </a>
-              <a  onClick={this.changeYear} name='2' class="dropdown-item">
+              <a onClick={this.changeYear} name='2' class="dropdown-item">
                 {2019}
-            </a>
+              </a>
             </div>
           </div>
         </div>

@@ -191,9 +191,9 @@ const logic = {
     return Promise.resolve()
       .then(() => {
 
-        if (typeof year !== 'number') throw Error('year is not a number')
+        // if (typeof year !== 'number') throw Error('year is not a number')
 
-        if (typeof month !== 'number') throw Error('month email is not a number')
+        // if (typeof month !== 'number') throw Error('month email is not a number')
 
         const monthStart = moment(`${year}-${month}-01`, 'YYYY-MM-DD')
         const monthEnd = moment(monthStart).add(1, 'M')
@@ -246,11 +246,11 @@ const logic = {
     return Promise.resolve()
       .then(() => {
 
-        if (typeof year !== 'number') throw Error('year is not a number')
+        // if (typeof year !== 'number') throw Error('year is not a number')
 
-        if (typeof month !== 'number') throw Error('month is not a number')
+        // if (typeof month !== 'number') throw Error('month is not a number')
 
-        if (typeof day !== 'number') throw Error('day is not a number')
+        // if (typeof day !== 'number') throw Error('day is not a number')
 
 
         const dayStart = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')
@@ -294,30 +294,47 @@ const logic = {
           return Service.findById(serviceId)
             .then(res => {
 
+
               const { _doc: { duration } } = res
               totalDuration += duration
             })
         }))
           .then(() => {
             const endDate = moment(date).add(totalDuration, 'minutes').toDate()
-
-            return Booking.create({
-              userId,
-              services: serviceIds,
-              date,
-              endDate
-            }).then(res => {
-
-              const { _doc: booking } = res
-              const data = {
-                bookingId: booking._id,
-                services: booking.services.map(s => s._id),
-                userId: booking.userId,
-                date: booking.date,
-                endDate: booking.endDate
-              }
-              return data
+            return Booking.find({
+              $and: [
+                { "date": { $gte: date } },
+                { "date": { $lt: endDate } }
+              ]
             })
+              .then(res => {
+                debugger
+                if (res.length !== 0) {
+                  debugger
+                  const hourFull = "unavailable"
+                  return hourFull
+                } else {
+                  return Booking.create({
+                    userId,
+                    services: serviceIds,
+                    date,
+                    endDate
+                  }).then(res => {
+                    debugger
+                    const { _doc: { services, _id, userId, date, endDate } } = res
+                    debugger
+                    const data = {
+                      bookingId: _id,
+                      services: services.map(s => s._id),
+                      userId: userId,
+                      date: date,
+                      endDate: endDate
+                    }
+                    debugger
+                    return data
+                  })
+                }
+              })
           })
       })
   },

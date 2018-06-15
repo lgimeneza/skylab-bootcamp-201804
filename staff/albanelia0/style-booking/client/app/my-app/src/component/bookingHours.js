@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import logic from '../logic'
 import Calendar from './calendar'
+import swal from 'sweetalert2'
+import '../design/bookingHours.css'
+import createBooking from './createBooking';
 
 const START_DAY = 8
 const END_DAY = 17
+let hourClicked = 0
 
 let daysHours = []
 for (let h = START_DAY; h <= END_DAY; h += 0.25) {
@@ -29,29 +33,76 @@ for (let h = START_DAY; h <= END_DAY; h += 0.25) {
 //   }
 // ]
 
+
 class BookingHours extends Component {
 
+  state = {
+    date: [1],
 
-  componentDidMount(props) {
-    const { day } = this.props
-    logic.getBookingHoursForYearMonthDay(2018, 6, 12)
+  }
+
+  finishBooking = (hour) => {
+    const result = createBooking({ date: this.state.date, hour })
+
+    if (result) {
+      alert("perfect! logueate para guardar tu reserva y listo!")
+      this.props.history.push('/login')
+    }
+  }
+
+
+  componentDidMount = (props) => {
+    const { match: { params: { year, month, day } } } = this.props
+    console.log(year, month, day)
+
+    this.setState({
+      date: [year, month, day]
+
+    })
+    logic.getBookingHoursForYearMonthDay(year, month, day)
       .then(apiResponse => {
-        daysHours.map((hour) => {
+        return daysHours.map((hour) => {
           apiResponse.forEach((busyRange) => {
             if (hour.value >= busyRange.start && hour.value < busyRange.end) {
               hour.available = false
             }
           })
+          return hour
         })
-
-        console.log(daysHours)
       })
+      .then((daysHoursApplied) => console.log(daysHoursApplied))
+  }
+
+  displayHours() {
+
+    return daysHours.map(hour => {
+      let bookingClass = 'has-text-primary'
+
+      if (!hour.available) {
+        bookingClass = 'has-text-danger'
+      }
+
+      return (
+        <div key={hour} className='card  card-hours'>
+          <div className="card-content">
+
+            <h1 onClick={() => this.finishBooking(hour.hour)} className={`title ${bookingClass}`}>{hour.hour}</h1>
+          </div>
+        </div>
+      )
+    })
   }
 
   render() {
     return (
       <div>
-        <h1>Hello world</h1>
+        <section>
+          <h1 className="calendar-title subtitle">Hours of day</h1>
+          <hr />
+        </section>
+        <div className="content-hours">
+          {this.displayHours()}
+        </div>
       </div>
     )
   }

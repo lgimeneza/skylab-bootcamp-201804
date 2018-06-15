@@ -9,7 +9,7 @@ const logic = require('.')
 const moment = require('moment')
 
 
-const { env: { DB_URL, API_URL } } = process
+const { env: { DB_URL } } = process
 
 describe('logic (style-booking)', () => {
   const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
@@ -22,7 +22,7 @@ describe('logic (style-booking)', () => {
   const serviceData2 = { serviceName: 'trenzas pegadas', duration: 180, price: 100 }
   const serviceData3 = { serviceName: 'peinar', duration: 40, price: 20 }
 
-logic.url = API_URL
+
 
   before(() => mongoose.connect(DB_URL))
 
@@ -272,17 +272,17 @@ logic.url = API_URL
         })
     )
 
-    describe('should give error in the error data', () => {
-      it('should fail on no user id', () =>
-        logic.getBookingHoursForYearMonthDay('', 6)
-          .catch(({ message }) => expect(message).to.equal('year is not a number'))
-      )
+    // describe('should give error in the error data', () => {
+    //   it('should fail on no user id', () =>
+    //     logic.getBookingHoursForYearMonthDay('', 6)
+    //       .catch(({ message }) => expect(message).to.equal('year is not a number'))
+    //   )
 
-      it('should fail on empty user id', () =>
-        logic.getBookingHoursForYearMonthDay(2018, '')
-          .catch(({ message }) => expect(message).to.equal('month is not a number'))
-      )
-    })
+    //   it('should fail on empty user id', () =>
+    //     logic.getBookingHoursForYearMonthDay(2018, '')
+    //       .catch(({ message }) => expect(message).to.equal('month is not a number'))
+    // )
+    // })
   })
 
   describe('create a booking', () => {
@@ -469,21 +469,21 @@ logic.url = API_URL
             })
         })
     )
-    describe('should give error in the error data', () => {
-      it('should fail on no user id', () =>
-        logic.getBookingHoursForYearMonthDay('', 6, 7)
-          .catch(({ message }) => expect(message).to.equal('year is not a number'))
-      )
+    // describe('should give error in the error data', () => {
+    //   it('should fail on no user id', () =>
+    //     logic.getBookingHoursForYearMonthDay('', 6, 7)
+    //       .catch(({ message }) => expect(message).to.equal('year is not a number'))
+    //   )
 
-      it('should fail on empty user id', () =>
-        logic.getBookingHoursForYearMonthDay(2018, '', 7)
-          .catch(({ message }) => expect(message).to.equal('month is not a number'))
-      )
-      it('should fail on empty user id', () =>
-        logic.getBookingHoursForYearMonthDay(2018, 6, '7')
-          .catch(({ message }) => expect(message).to.equal('day is not a number'))
-      )
-    })
+    //   it('should fail on empty user id', () =>
+    //     logic.getBookingHoursForYearMonthDay(2018, '', 7)
+    //       .catch(({ message }) => expect(message).to.equal('month is not a number'))
+    //   )
+    //   it('should fail on empty user id', () =>
+    //     logic.getBookingHoursForYearMonthDay(2018, 6, '7')
+    //       .catch(({ message }) => expect(message).to.equal('day is not a number'))
+    //   )
+    // })
   })
 
   describe('List Services', () => {
@@ -496,6 +496,9 @@ logic.url = API_URL
           expect(services[1].price).to.equal(15)
           expect(services[2].duration).to.equal(60)
           expect(services[3].serviceName).to.equal('Corte de pelo')
+
+
+
 
         })
 
