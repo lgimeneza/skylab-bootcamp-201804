@@ -82,8 +82,8 @@ const logic = {
             })
     },
 
-    unregisterUser(dni, password) {
-        return singingLabApi.unregisterUser(this.userId(), dni, password)
+    unregisterUser(email, password) {
+        return singingLabApi.unregisterUser(this.userId(), email, password)
             .then(true)
     },
 

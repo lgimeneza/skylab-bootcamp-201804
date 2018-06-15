@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import './index.css'
 import logic from '../../logic'
 import Navbar from './../navbar'
+import Forms from './forms'
+import DeleteProfile from './delete-profile';
 
 class Update extends Component {
 
@@ -22,7 +24,13 @@ class Update extends Component {
     componentDidMount() {
         logic.retrieveUser()
             .then(user => {
-                this.setState({ user })
+                console.log(user)
+                this.setState({
+                    name: user.name,
+                    surname: user.surname,
+                    address: user.address,
+                    email: user.email
+                })
             })
     }
 
@@ -97,37 +105,20 @@ class Update extends Component {
                                     <input type="text" className="form-control" name="surname" placeholder="surname" onChange={this.handlerCapturingSurname} value={this.state.surname} />
                                 </div>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="username">phone</label>
-                                <div className="input-group">
-                                    <input className="form-control" name="phone" placeholder="phone" onChange={this.handlerCapturingPhone} value={this.state.phone} />
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="username">address</label>
-                                <div className="input-group">
-                                    <input type="text" className="form-control" name="address" placeholder="address" onChange={this.handlerCapturingAddress} value={this.state.address} />
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="email">Email</label>
-                                <input type="email" className="form-control" name="email" placeholder="email" onChange={this.handlerCapturingEmail} value={this.state.email} />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="email">New Email</label>
-                                <input type="email" className="form-control" name="new-email" placeholder="new-email" onChange={this.handlerCapturingNewEmail} value={this.state.newEmail} />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="address">password</label>
-                                <input type="password" className="form-control" name="password" placeholder="password" onChange={this.handlerCapturingPassword} value={this.state.password} />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="address2">new password</label>
-                                <input type="password" className="form-control" name="passwordConfirm" placeholder="passwordConfirm" onChange={this.handlerCapturingNewPassword} value={this.state.newPassword} />
-                            </div>
+                            <Forms type="text" label='phone' placeholder="phone" captureInput={this.handlerCapturingPhone} inputField={this.state.phone} />
+                            <Forms type="text" label='address' placeholder="address" captureInput={this.handlerCapturingAddress} inputField={this.state.address} />
+                            <Forms type="text" label='email' placeholder="email" captureInput={this.handlerCapturingEmail} inputField={this.state.email} />
+                            <Forms type="text" label='new email' placeholder="insert new email" captureInput={this.handlerCapturingNewEmail} inputField={this.state.newEmail} />
+                            <Forms type="password" label='password' placeholder="password" captureInput={this.handlerCapturingPassword} inputField={this.state.password} />
+                            <Forms type="password" label='new password' placeholder="insert new password" captureInput={this.handlerCapturingNewPassword} inputField={this.state.newPassword} />
                             <hr className="mb-4" />
                             <button className="btn btn-primary btn-lg btn-block register-submit" type="submit">Update profile</button>
+
                         </form>
+                        <div className="py-5 text-center title">
+                            <h2>Danger Zone: delete profile</h2>
+                        </div>
+                        <DeleteProfile />
                     </div>
                 </div>
             </main>

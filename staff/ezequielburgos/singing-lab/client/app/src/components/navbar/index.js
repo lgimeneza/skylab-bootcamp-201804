@@ -14,6 +14,7 @@ class Navbar extends Component {
     }
 
     componentDidMount() {
+
         if (!this.state.isLogged) {
             if (sessionStorage.getItem('token')) {
                 logic.retrieveUser()
@@ -21,6 +22,8 @@ class Navbar extends Component {
                         this.setState({ user, isLogged: true })
                     })
             }
+        }else{
+            this.setState({ isLogged: false })
         }
     }
 
