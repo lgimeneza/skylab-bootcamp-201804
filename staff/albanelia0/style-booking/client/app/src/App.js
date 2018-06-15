@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Home from './component/home'
 import Calendar from './component/calendar'
+import {PrivateRoute} from './component/privateRoute'
 import { Switch, Route } from 'react-router-dom'
 import { Login } from './component/login';
 import { Register } from './component/register';
@@ -18,7 +19,7 @@ class App extends Component {
           <Route exact path='/calendar/:year/:month/:day' component={BookingHours}/>
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
-          <Route path='/profile' component={Profile}/>
+          <PrivateRoute path="/profile" component={Profile} />
         </Switch>
       </div>
     )
