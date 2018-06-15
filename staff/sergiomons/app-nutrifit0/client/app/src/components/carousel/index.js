@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import './index.css'
 
 
-class Carousel extends Component {
-
-   render() {
+function Carousel () {
 
     return (
         <div className="row">  
@@ -43,6 +41,5 @@ class Carousel extends Component {
 
         )
    }       
-}
 
 export default Carousel

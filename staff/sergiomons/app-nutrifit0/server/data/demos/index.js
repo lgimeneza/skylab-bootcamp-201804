@@ -11,19 +11,18 @@ mongoose.connect(DB_URL)
     .then(() => mongoose.connection.db.dropDatabase())
     .then(() => {
 
-
         // parentCategories
         let packsCategoryData = { image: 'http://images.com/1234', name: "Packs" }
-        let individualsCategoryData = { image: 'http://images.com/1234', name: "Individuals dish" }
+        let individualsCategoryData = { image: 'http://images.com/1234', name: "Individual" }
 
         // Children individualsCategoryData
-        let meatCategoryData = { image: 'http://images.com/1234', name: "Carne" }
-        let soupCategoryData = { image: 'http://images.com/1234', name: "Sopa" }
-        let fishCategoryData = { image: 'http://images.com/1234', name: "Pescado" }
-        let pastaCategoryData = { image: 'http://images.com/1234', name: "Pasta" }
-        let proteinCategoryData = { image: 'http://images.com/1234', name: "Proteinas" }
-        let vegetarianCategoryData = { image: 'http://images.com/1234', name: "Vegetarian" }
-        let veganCategoryData = { image: 'http://images.com/1234', name: "Vegan" }
+        let meatCategoryData = { image: 'https://www.carnes.cl/wp-content/uploads/2015/12/1449681159534_ES_1.jpg', name: "Carne" }
+        let soupCategoryData = { image: 'https://comidasperuanas.net/wp-content/uploads/2017/01/Sopa-de-Pollo-Peruana.jpg', name: "Sopa" }
+        let fishCategoryData = { image: 'http://www.grecotour.com/blog-grecia/wp-content/uploads/2015/03/plato-tipico-griego-pescado.jpg', name: "Pescado" }
+        let pastaCategoryData = { image: 'http://sevilla.abc.es/gurme//wp-content/uploads/2013/03/bucatinis-carbonara-1440x810.jpg', name: "Pasta" }
+        let proteinCategoryData = { image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3Em3ncT1FAjSzG1YYW_N_75fo3MJ2auNuCgBIvVE9kxIOLu6R', name: "Proteinas" }
+        let vegetarianCategoryData = { image: 'http://resize1-doctissimocom.ladmedia.fr/r/940,,force/crop/940,470/img/var/doctissimo/storage/images/common/nutricion/galerias-nutricion/recetas-buddha-bowl/437573-2-esl-ES/buddha-bowl-10-recetas-de-platos-vegetarianos-completos.jpg', name: "Vegetarian" }
+        let veganCategoryData = { image: 'https://voilaelisa.files.wordpress.com/2015/11/buddha_bowl_verduras_horneadas_salteadas_plato_vegetariano_veggie_vegano.jpg', name: "Vegan" }
 
         // products packCategories
         let packMuscleData = { image: 'https://deportesaludable.com/wp-content/uploads/2018/05/six-pack_1000x600.jpg', name: 'Pack Muscle', description: 'Pack Muscle desc', price: 100 }
@@ -168,7 +167,13 @@ mongoose.connect(DB_URL)
                     })
             })
 
+    })
+    .then(() => User.create({ name: 'John', surname: 'Doe', username: 'johndoe', email: 'jd@mail.com', password: '123', phone: '+34 123 456 789' }))
+    .then(() => mongoose.disconnect())
+    .then(() => console.log('done'))
+    .catch(console.error)
 
+    
         //Children IndividualsCategory
         // new Category(meatCategoryData).save(),
         // new Category(soupCategoryData).save(),
@@ -428,9 +433,3 @@ mongoose.connect(DB_URL)
         //     })
         //     .then(() => mongoose.disconnect())
         //     .then(() => console.log('done'))
-
-    })
-    .then(() => User.create({ name: 'John', surname: 'Doe', username: 'johndoe', email: 'jd@mail.com', password: '123', phone: '+34 123 456 789' }))
-    .then(() => mongoose.disconnect())
-    .then(() => console.log('done'))
-    .catch(console.error)

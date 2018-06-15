@@ -1,13 +1,32 @@
 import React, { Component } from 'react'
 import logic from '../../../logic'
-import ItemsProducts from '../items-products'
+import Menu from '../../menu'
+import Carousel from '../../carousel'
+import ItemsList from '../../items-list'
 
 class AllProducts extends Component {
+
+    state = {
+        products: [],
+     }
+ 
+     componentDidMount() {
+ 
+         logic.listProducts()
+           .then(products => {
+                 this.setState({
+                     products
+                 })
+           })       
+     }
     
    render() {
 
     return (          
-        <ItemsProducts/>
+        <div>
+            <ItemsList products={this.state.products} />
+        </div>             
+
         )
    }       
 }

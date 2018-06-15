@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
+// import logic from '../../logic'
 
 class Nav extends Component {
+    
     state = {
         categories: []
     }
@@ -48,13 +50,12 @@ class Nav extends Component {
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                         { 
                                             this.state.categories.map(category => {
-                                                return <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`} className="dropdown-item" href="">{category.name}</Link>
+                                                return <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`} className="dropdown-item" href="" key={category.id}>{category.name}</Link>
                                             })
                                         }
                                         <div className="dropdown-divider"></div>
                                     </div>
                                 </li>
-                                {this.state.categories.id}
                                 <li className="nav-item">
                                     <a className="nav-link" href="">Productos</a>
                                 </li>
@@ -63,7 +64,7 @@ class Nav extends Component {
                                 <input className="form-control-sm mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                                 <button className="btn btn-sm btn-outline-warning my-2 my-sm-0 mr-2" type="submit">Search</button>
                             </form>
-
+                            <i id="iconNav" className="fas fa-shopping-cart mr-4"><span id="numBadget" class="badge badge-pill badge-danger">1</span></i>
                             {!logic.loggedIn ? (
                                 <ul className="nav navbar-nav navbar-right">
                                     <li><Link to="/register"><button className="btn btn-sm btn-secondary my-2 my-sm-0" type="submit">Sing Up</button></Link></li>

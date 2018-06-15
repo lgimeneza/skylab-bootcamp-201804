@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import logic from '../../../logic'
+import logic from '../../logic'
 import {Link} from 'react-router-dom'
-import Menu from '../../menu'
-import Carousel from '../../carousel'
+import Menu from '../menu'
+import Carousel from '../carousel'
 
 
 export default ({products, categories}) => (
@@ -48,7 +48,6 @@ export default ({products, categories}) => (
                     </div>
                 </div>
             </div>
-        </main>          
-         
+        </main>                  
         )
 

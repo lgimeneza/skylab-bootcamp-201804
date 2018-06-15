@@ -60,6 +60,19 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
         })
 })
 
+router.get('/categories', (req, res) => {
+
+    return logic.listAllCategories()
+            .then(categories=> {
+                res.status(200)
+                res.json({ status: 'OK', data: categories})
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message }) 
+            })
+})
+
 router.get('/categories/root', (req, res) => {
 
     return logic.listRootCategories()

@@ -98,6 +98,12 @@ const logic = {
             })
     },
 
+    listAllCategories() {
+        return clientApi.listAllCategories()
+                .then(res => res)
+    },
+
+
     listRootCategories() {
         return clientApi.listRootCategories()
                 .then(res => res)

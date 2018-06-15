@@ -28,9 +28,9 @@ describe('logic nutrifit', () => {
         pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
 
         // categories
-        pack_CategoryData = { name: 'Pack' }
-        individual_CategoryData = { name: 'Individual' }
-        individual_S_CategoryData = { name: 'Inviditual S' }
+        pack_CategoryData = { image: 'http://images.com/1234', name: 'Pack' }
+        individual_CategoryData = { image: 'http://images.com/1234', name: 'Individual' }
+        individual_S_CategoryData = { image: 'http://images.com/1234', name: 'Inviditual S' }
 
         indexes = []
         let count = 10 + Math.floor(Math.random() * 10)
@@ -385,6 +385,7 @@ describe('logic nutrifit', () => {
             return Promise.all([
                 new Category(pack_CategoryData).save(),
                 new Category(individual_CategoryData).save(),
+
                 new Category(individual_S_CategoryData).save()
             ])
                 .then(categories => {
@@ -440,8 +441,59 @@ describe('logic nutrifit', () => {
         })
     })
 
+    describe('list subcategories', () => {
+        it('should succeed on correct data', () => {
+            return Promise.all([
+                new Category(pack_CategoryData).save(),
+                new Category(individual_CategoryData).save(),
+
+                new Category(individual_S_CategoryData).save()
+            ])
+                .then(categories => {
+                    const [packCat, indCat, indSCat] = categories
+
+                    indSCat.parent = indCat._id
+
+                    return indSCat.save()
+                        .then(() => {
+                            polloVerdurasData.category = packCat._id
+                            terneraData.category = packCat._id
+
+                            polloArrozData.category = indSCat._id
+                            sopaVerdurasData.category = indSCat._id
+                            sopaMariscoData.category = indSCat._id
+
+                            return Promise.all([
+                                new Product(polloVerdurasData).save(),
+                                new Product(terneraData).save(),
+                                new Product(polloArrozData).save(),
+                                new Product(sopaVerdurasData).save(),
+                                new Product(sopaMariscoData).save(),
+                            ])
+                        })
+                        .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco]) => {
+                            return logic.listSubcategories(indCat._id.toString())
+                                .then(categories => {
+                                   debugger
+                                    expect(categories).to.exist
+                                    expect(categories.length).to.equal(1)
+
+                                        const category = categories.find(category => {
+                                            return category.parentId == indCat._id.toString()
+                                        })
+     
+                                        expect(category).to.exist
+                                        expect(category.parentId).to.equal(indCat._id.toString())
+                                        expect(category.hasChildren).to.be.false
+                            
+
+                                })
+                        })
+                })
+        })
+    })
+
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })
 
-// [polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha]

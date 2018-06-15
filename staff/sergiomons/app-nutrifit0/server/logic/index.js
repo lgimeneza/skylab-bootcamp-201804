@@ -1,3 +1,5 @@
+
+
 'use strict'
 
 const { models: { User, Order, Product, Category, Subcategory } } = require('data')
@@ -200,6 +202,18 @@ const logic = {
     //         .then(() => true)
     // },
 
+    listAllCategories() {
+        return Promise.resolve()
+            .then(() => {
+
+                return Category.find({ })
+                    .then(allCategories => {
+                        const categories = allCategories.map(({ _id: id, image,  name, parent }) => ({ id, image, name, parentId: parent ? parent.toString() : undefined }))
+                        return categories
+            })
+        })
+    },
+
     /**
     * Lists root categories
     * 
@@ -208,8 +222,6 @@ const logic = {
     listRootCategories() {
         return Promise.resolve()
             .then(() => {
-                // TODO: check which root categories have children or not and mark it with a flag "hasChildren" true or false, respectively
-                // category.hasChildren = false
 
                 return Category.find({ parent: undefined })
             })
@@ -244,9 +256,9 @@ const logic = {
             })
                     .then(subcategories => {
                         
-                        const normalizedSubcategories = subcategories.map(({ _id: id, name, parent }) => ({ id, name, parentId: parent ? parent.toString() : undefined }))
-                        
-                        return Promise.all(subcategories.map(subcategory => Category.find({ parent: subcategory_id })))
+                        const normalizedSubcategories = subcategories.map(({ _id: id, image,  name, parent }) => ({ id, image, name, parentId: parent ? parent.toString() : undefined }))
+
+                        return Promise.all(subcategories.map(subcategory => Category.find({ parent: subcategory._id })))
                             .then(res => {
                                 res.forEach((subcategory, index) => normalizedSubcategories[index].hasChildren = !!subcategory.length)
 
