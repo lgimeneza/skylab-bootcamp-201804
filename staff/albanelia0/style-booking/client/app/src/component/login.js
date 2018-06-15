@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import 'react-router-dom'
 import swal from 'sweetalert2'
 import logic from '../logic'
+import createBooking from '../helpers/createBooking'
+import { create } from 'domain';
 
 
 export class Login extends Component {
@@ -11,6 +13,7 @@ export class Login extends Component {
     password: '',
     formIsFull: false,
   }
+  
 
   goToRegister = () => {
     this.props.history.push('/register')
@@ -42,12 +45,23 @@ export class Login extends Component {
         "email": email,
         "password": password
       }
-
+      
       logic.login(body).then(result => {
-
         if (result) {
           this.storageUserData(result)
-          this.props.history.push('/profile')
+
+          // aqui se tiene que esperar para ver si te lleva al profile o al data
+         createBooking().then(res =>{
+           console.log(res)
+           if (res) {
+             this.props.history.push('/profile')
+           } else {
+             this.props.history.push('/date')
+           }
+         })
+         
+          
+         
         }
       }).catch(data => {
               swal({
@@ -55,8 +69,7 @@ export class Login extends Component {
                 title: 'wrong credentials',
                 text: data.error
               })
-
-          })
+      })
 
       this.setState({
         email: '',

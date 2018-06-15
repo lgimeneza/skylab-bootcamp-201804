@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import logic from '../logic'
 import '../design/dropdown.css'
 import swal from 'sweetalert2'
-import CreateBooking from './createBooking';
 
 let day = new Date()
 const year = day.getFullYear()
@@ -59,10 +58,10 @@ export class Dropdown extends Component {
         })
 
         if (formValues) {
-          
+
           let checkedList = formValues
 
-          CreateBooking(checkedList)
+          localStorage.setItem('checkedList', JSON.stringify(checkedList))
 
           swal('Servicio elegido! Elige la fecha/hora y listo! ^^')
 

@@ -39,8 +39,8 @@ const logic = {
    *
    * @returns {Promise<Data>}
    */
-  placeBooking(){
-    return logicApi.placeBooking()
+  placeBooking(userId, serviceIds, date){
+    return logicApi.placeBooking(userId, serviceIds, date)
   }
 }
 

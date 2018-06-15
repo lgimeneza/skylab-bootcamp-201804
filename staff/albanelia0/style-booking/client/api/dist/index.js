@@ -309,7 +309,7 @@ var logic = {
   */
   placeBooking: function placeBooking(userId, serviceIds, date) {
     var _this7 = this;
-
+    console.log(userId, serviceIds, date)
     return Promise.resolve().then(function () {
       //TODO VALIDATIONS
       // - Comprobar que la hora de inicio de la reserva no sea menor al inicio de jornada

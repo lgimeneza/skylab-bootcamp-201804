@@ -3,7 +3,6 @@ import logic from '../logic'
 import Calendar from './calendar'
 import swal from 'sweetalert2'
 import '../design/bookingHours.css'
-import createBooking from './createBooking';
 
 const START_DAY = 8
 const END_DAY = 17
@@ -42,12 +41,17 @@ class BookingHours extends Component {
   }
 
   finishBooking = (hour) => {
-    const result = createBooking({ date: this.state.date, hour })
 
-    if (result) {
+    localStorage.setItem("date", this.state.date)
+    localStorage.setItem("hour", hour)
+    
+
+    // if (result) {
+
+    // PASARLO A SWEETALERT2
       alert("perfect! logueate para guardar tu reserva y listo!")
       this.props.history.push('/login')
-    }
+    // }
   }
 
 
