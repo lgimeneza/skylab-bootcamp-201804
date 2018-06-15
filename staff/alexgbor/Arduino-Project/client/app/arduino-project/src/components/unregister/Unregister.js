@@ -12,23 +12,19 @@ function _handleUnregister(e) {
     let token = localStorage.getItem('token-app')
     let pass = document.getElementById('passUser').value
 
-    logic.retrieve(id, token).then(resp => {
-        if (resp.status === "OK") {
-            swal(
-                'You unregistered correctly.',
-                'Sorry to see you go..',
-                'success'
-            )
-            return resp.data.name
-        }
-    })
-        .then(resp => {
-            logic.unregister(resp, pass, token, id)
-
-        }).then((r) => {
-            localStorage.removeItem("id-app")
-            localStorage.removeItem("token-app")
-            this.history.push('/')
+    logic.retrieveUser(id, token).then(resp => resp.email)
+        .then(email => logic.unregisterUser(email, pass, token, id))
+        .then((r) => {
+            if (r) {
+                localStorage.removeItem("id-app")
+                localStorage.removeItem("token-app")
+                this.history.push('/')
+            }
+            else {
+                swal(
+                    'Oops! Something went wrong'
+                )
+            }
         }
 
         )

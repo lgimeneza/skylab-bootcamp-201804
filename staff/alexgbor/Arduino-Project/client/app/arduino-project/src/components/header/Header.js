@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import homeicon from "../../images/home-icon.png"
+//import homeicon from "../../images/home-icon.png"
 
 
 function _handleLogout() {
@@ -13,9 +13,9 @@ function Header(props) {
     return <header className="App-header bg-darkcyan">
 
         <nav className="bar">
-            <Link to="/">
+            {/* <Link to="/">
                 <img src={homeicon} alt="home icon" width="100" />
-            </Link>
+            </Link> */}
             {!props.isLogged ?
                 <ul className="bar-ul ">
                     <li className="bar-item">

@@ -14,5 +14,5 @@ export {
     Profile,
     Login,
     Error404,
-    Unregister
+    Unregister,
 }

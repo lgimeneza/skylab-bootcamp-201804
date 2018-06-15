@@ -23,21 +23,13 @@ class Profile extends Component {
 
         if (userId && token) {
 
-            logic.retrieve(userId, token).then(resp => {
+            logic.retrieveUser(userId,token).then(resp => {
                 Promise.resolve().then(() => {
-                    if (resp.data.picture_url) {
-                        this.setState({
-                            name: resp.data.name,
-                            surname: resp.data.surname,
-                            picture_url: resp.data.picture_url
-                        })
-                    }
-                    else {
-                        this.setState({
-                            name: resp.data.name,
-                            surname: resp.data.surname,
-                        })
-                    }
+                    this.setState({
+                        name: resp.name,
+                        surname: resp.surname,
+                        email: resp.email
+                    })
                 })
             })
         }
@@ -76,13 +68,10 @@ class Profile extends Component {
         let name = this.state.name
         let pass = this.state.password
 
-        let newProps = {
-            name,
-            surname: this.state.surname,
-            picture_url
-        }
+        let surname = this.state.surname
+        let email = this.state.email
 
-        logic.update(userId, token, name, pass, newProps).then(resp => {
+        logic.updateUser(userId, token, name, surname, pass, email ).then(resp => {
             if (resp.status === 'OK') {
                 swal({
                     type: 'success',
@@ -132,7 +121,7 @@ class Profile extends Component {
                             </div>
                             <div className="row justify-content-center ">
 
-                                <input className="form-group w-50 mt-4 border pl-3" value={this.state.Surname} onChange={this._handleSurname} id="Surname" type="text" placeholder="Your last name"
+                                <input className="form-group w-50 mt-4 border pl-3" value={this.state.surname} onChange={this._handleSurname} id="Surname" type="text" placeholder="Your last name"
                                 />
                             </div>
                             <div className="row justify-content-center ">
