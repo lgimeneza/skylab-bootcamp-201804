@@ -1,6 +1,7 @@
 .small-image-preview{
     max-width: 40px;
-    max-height: 40px
+    max-height: 40px;
+    margin-right: 0.5em;
 }
 
 /* .small-preview{
@@ -25,8 +26,10 @@
 
 #menu2-home ul {
     list-style-type: none;
-    padding: 20px 0px 0px 0px;
+	padding: 20px 0px 0px 0px;
+	float: right;
 }
+
 
 .post-home{
     width: 100%;
@@ -49,3 +52,29 @@
 	padding-bottom: 20px;
 	text-align: justify;
 }
+
+.applications {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.applications td, .applications th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.applications tr:nth-child(even){background-color:rgb(0, 0, 0, 0.1);}
+
+.applications tbody tr:hover {background-color: rgba(143, 31, 31);}
+
+.applications th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(0,0,0,0.4);
+    color: white;
+}
+
+
+
+

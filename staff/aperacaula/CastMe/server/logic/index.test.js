@@ -53,7 +53,7 @@ describe('logic', () => {
 
         videobookLink: 'https://youtube.com',
 
-        profilePicture: 'sample',
+        profilePicture: 'http://res.cloudinary.com/dt6qv2j4j/image/upload/v1528803579/uvcv0wzsqe9sjrabd9ca.jpg',
 
         applications: []
     }
@@ -100,7 +100,7 @@ describe('logic', () => {
 
         videobookLink: 'https://youtube.com',
 
-        profilePicture: 'sample',
+        profilePicture: 'http://res.cloudinary.com/dt6qv2j4j/image/upload/v1528803579/uvcv0wzsqe9sjrabd9ca.jpg',
         applications: []
     }
     const dummyUserId = '123456781234567812345678'
@@ -223,7 +223,16 @@ describe('logic', () => {
 
         it('should succeed on correct data', () => {
             const user = new User(userData)
-            return user.save()
+            const proj1 = projects[0]
+
+            return Promise.all([proj1.save(), user.save()])
+                .then(([proj1, user]) => {
+                    const { castings: [cast1_1, cast1_2] } = proj1
+
+                    user.applications.push({ project: proj1._id, castings: [cast1_1._id, cast1_2._id] })
+
+                    return user.save()
+                })
                 .then(user => {
 
                     return logic.retrieveUser(user.id)
@@ -239,23 +248,60 @@ describe('logic', () => {
                     expect(_id).to.be.undefined
                     expect(password).to.be.undefined
                     expect(applications).to.exist
+                    expect(applications.length).to.equal(1)
+                    
                 })
         })
 
         it('should fail on no user id', () =>
             logic.retrieveUser()
-                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+                .catch(({ message }) => expect(message).to.equal('user userId is not a string'))
         )
 
         it('should fail on empty user id', () =>
             logic.retrieveUser('')
-                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+                .catch(({ message }) => expect(message).to.equal('user userId is empty or blank'))
         )
 
         it('should fail on blank user id', () =>
             logic.retrieveUser('     ')
-                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+                .catch(({ message }) => expect(message).to.equal('user userId is empty or blank'))
         )
+    })
+
+    describe('retrieve user lite', () => {
+
+        it('should succeed on correct data', () => {
+            const user = new User(userData)
+            const proj1 = projects[0]
+
+            return Promise.all([proj1.save(), user.save()])
+                .then(([proj1, user]) => {
+                    const { castings: [cast1_1, cast1_2] } = proj1
+
+                    user.applications.push({ project: proj1._id, castings: [cast1_1._id, cast1_2._id] })
+
+                    return user.save()
+                })
+                .then(user => {
+
+                    return logic.retrieveUserLite(user.id)
+                })
+                .then(userInfoLite => {
+                    expect(user).to.exist
+
+                    const { _id, password, personalData, profilePicture, applications } = userInfoLite
+
+                    expect(_id).to.be.undefined
+                    expect(password).to.be.undefined
+                    expect (personalData.name).to.equal('Alex')
+                    expect(personalData.surname).to.equal('Peracaula')
+                    expect(applications).to.exist
+                    expect(applications.length).to.equal(2)
+                    expect(applications[0].title).to.equal('Bonded')
+                    
+                })
+        })
     })
 
     describe('udpate user', () => {

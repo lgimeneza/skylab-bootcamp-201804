@@ -26,10 +26,6 @@ module.exports= new Schema({
     },
     physicalReq: PhysicalData,
 
-    status: {
-        type: Boolean,
-        required: true
-    },
 
     applicants: [{type: ObjectId, ref: 'User', required: true}]
     

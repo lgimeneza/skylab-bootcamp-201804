@@ -28,11 +28,13 @@ module.exports = new Schema({
     },
     videobookLink: {
         type: String,
+        default:'none'
 
     },
 
     profilePicture:{
         type: String,
+        default:'none'
     },
 
     

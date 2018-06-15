@@ -11,6 +11,10 @@ class Login extends Component {
         id: '',
     }
 
+    componentDidMount(){
+        if (logic.userId) this.props.onLogin()
+    }
+
     loginEmail = (e) => {
         const email = e.target.value
         this.setState({ email })
@@ -36,7 +40,9 @@ class Login extends Component {
             .then(()=> 
                 swal(
                     'Successful login',
-                ).then(this.props.onLogin(logic.userId)))
+                ))
+                
+            .then(()=>this.props.onLogin(logic.userId))
             .catch(err => {
                 swal(
                     err.message,

@@ -56,7 +56,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 router.get('/users/:userId', (req, res) => {
     const { params: { userId } } = req
 
-    return logic.retrieveUser(userId)
+    logic.retrieveUser(userId)
         .then(user => {
             res.status(200)
             res.json({ status: 'OK', data: user })
@@ -71,7 +71,7 @@ router.get('/users/:userId', (req, res) => {
 router.get('/users/:userId/lite', (req, res) => {
     const { params: { userId } } = req
     
-    return logic.retrieveUserLite(userId)
+    logic.retrieveUserLite(userId)
         .then(user => {
             const {personalData:{name,surname},profilePicture, applications}=user
             res.status(200)

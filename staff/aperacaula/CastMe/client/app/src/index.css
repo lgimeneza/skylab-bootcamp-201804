@@ -261,7 +261,9 @@ a {
 	margin: 0 auto;
 	padding: 0px 40px;
 	background: rgba(0,0,0,.3);
-	color: #F6F6F6
+	color: #F6F6F6;
+	border-radius: 10px;
+	
 }
 
 #page-bgtop {

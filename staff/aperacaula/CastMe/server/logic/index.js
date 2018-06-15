@@ -70,9 +70,7 @@ const logic = {
       if (typeof videobookLink !== "string")
         throw Error("user videobookLink is not a string");
 
-      if ((videobookLink = videobookLink.trim()).length === 0)
-        throw Error("user videobookLink is empty or blank");
-
+      
 
 
       return new Promise((resolve, reject) => {
@@ -142,15 +140,20 @@ const logic = {
 
         return User.findById(userId);
       })
+
       .then(user =>{
         return logic.getUserAppliedProjectCastings(userId) 
           .then(projects=>{
               let applications=[]
+              
               for (let i=0; i<projects.length;i++){
-                  for (let j=0; j<projects[i].castings; j++){
-                      let {title, publishedDate, endDate, description}= projects[i]
-                      applications.push({title,publishedDate,endDate,description, casting: projects[i].castings[j]})
+                  
+                  for (let j=0; j<projects[i].castings.length; j++){
+                      
+                      let {title, publishedDate, endDate, situation}= projects[i]
+                      applications.push({title,publishedDate,endDate,situation, casting: projects[i].castings[j]})
                   }
+                  
                 }
               return applications
           })
@@ -181,6 +184,7 @@ const logic = {
       })
       .then(user => {
         if (!user) throw Error(`no user found with userId ${userId}`);
+        debugger
 
         const {
           email,

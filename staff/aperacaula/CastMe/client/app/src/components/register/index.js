@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import swal from "sweetalert";
 import "./index.css";
+//import ScrollableAnchor from 'react-scrollable-anchor'
 
 class RegisterUser extends Component {
   state = {
@@ -10,29 +11,29 @@ class RegisterUser extends Component {
     birthday: "",
     sex: "",
     twins: true,
-    province: "",
-    phone: "",
+    province: "Albacete",
+    phone: 0,
     email: "",
     password: "",
     repeatpassword: "",
-    height: "",
-    weight: "",
-    physicalCondition: "",
-    eyeColor: "",
-    hairColor: "",
-    ethnicity: "",
+    height: 1.75,
+    weight: "70",
+    physicalCondition: null,
+    eyeColor: null,
+    hairColor: null,
+    ethnicity: "none",
     beard: true,
     tattoos: true,
     piercings: true,
-    profession: "",
+    profession: "other",
     singing: true,
     dancing: true,
-    otherHab: "",
-    prevExp: "",
-    curriculum: "",
-    pics: "",
-    videobook: "",
-    profilePicture: "",
+    otherHab: "none",
+    prevExp: 0,
+    curriculum: "none",
+    pics: "none",
+    videobook: "none",
+    profilePicture: "none",
     check: true
   };
 
@@ -261,7 +262,7 @@ class RegisterUser extends Component {
   acceptRegister = e => {
     e.preventDefault();
     Promise.resolve()
-      .then(() => this.checkFields())
+      //.then(() => this.checkFields())
       .then(() => {
         if (!this.state.check) {
           this.setState({
@@ -323,10 +324,9 @@ class RegisterUser extends Component {
             })
             .catch(err => {
               this.setState({
-                username: "",
-                password: "",
                 email: "",
-                repeatpassword: ""
+                password:"",
+                repeatpassword:'',
               });
 
               alert(err);
@@ -476,6 +476,7 @@ class RegisterUser extends Component {
                               id="Email"
                               placeholder="john.doe@gmail.com"
                               onChange={this.registerEmail}
+                              value={this.state.email}
                             />
                             <h3>Password:</h3>
                             <input
@@ -485,6 +486,7 @@ class RegisterUser extends Component {
                               id="Password"
                               placeholder="Insert password"
                               onChange={this.registerPassword}
+                              value={this.state.password}
                             />
                             <h3>Repeat Password:</h3>
                             <input
@@ -494,6 +496,7 @@ class RegisterUser extends Component {
                               id="Password"
                               placeholder="Insert password"
                               onChange={this.registerRepeatPassword}
+                              value={this.state.repeatpassword}
                             />
 
                             <hr className="horizontal-line" />
@@ -730,16 +733,16 @@ class RegisterUser extends Component {
                       <h2>Steps</h2>
                       <ul>
                         <li>
-                          <a href="#PersonalData">Personal Data</a>
+                          <a >Personal Data</a>
                         </li>
                         <li>
-                          <a href="#PhysicalData">Physical Data</a>
+                          <a >Physical Data</a>
                         </li>
                         <li>
-                          <a href="#ProfessionalData">Professional Data</a>
+                          <a >Professional Data</a>
                         </li>
                         <li>
-                          <a href="Media">Media</a>
+                          <a>Media</a>
                         </li>
                       </ul>
                     </li>

@@ -21,13 +21,8 @@ class UploadPicture extends Component {
     this.setState({ xxx });
   };
 
-  redirectLanding = () => {
-    this.props.history.push("/");
-  };
-
-  redirectRegister = () => {
-    this.props.history.push("/users");
-  };
+  
+ 
 
   clearImage = () => {
     this.setState({ result: this.urlImageDefault, image: "", filename: "", filetype: "", src: "", error: "" });
@@ -100,7 +95,7 @@ class UploadPicture extends Component {
               <div>
               <button className="link-style" onClick={this.uploadHandler}>Upload!</button>
               <button className="link-style" onClick={this.clearImage}>Clear</button>
-              <button className="link-style" onClick={this.redirectRegister}>Back</button>
+              <button className="link-style" onClick={this.props.onRegister}>Back</button>
               </div>
             </section>
             </div>

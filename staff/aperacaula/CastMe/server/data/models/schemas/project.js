@@ -37,5 +37,11 @@ module.exports = new Schema({
         required: true
     },
 
+    situation: {
+        type: String,
+        enum: ['Open', 'Closed', 'Delayed'],
+        required: true
+    },
+
     castings: [Casting]
 })

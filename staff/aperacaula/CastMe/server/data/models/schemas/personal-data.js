@@ -12,15 +12,18 @@ module.exports= new Schema({
     },
     birthDate: {
         type: Date,
-        required: true
+        required: true,
+        default: new Date()
     },
     sex: {
         type: String,
         required: true,
+        default:'male',
         enum: ['male', 'female']
     },
     twins: {
         type: Boolean,
+        
     },
     province: {
         type: String,
@@ -34,6 +37,7 @@ module.exports= new Schema({
     },
     phone: {
         type: Number,
+        default: 0,
         required: true
     }
 

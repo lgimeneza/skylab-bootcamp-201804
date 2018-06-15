@@ -40,7 +40,7 @@ var castmeApi = {
 
       if (typeof videobookLink !== "string") throw Error("user videobookLink is not a string");
 
-      if ((videobookLink = videobookLink.trim()).length === 0) throw Error("user videobookLink is empty or blank");
+      //if ((videobookLink = videobookLink.trim()).length === 0) throw Error("user videobookLink is empty or blank");
 
       return axios.post(_this.url + "/users", {
         email: email,
