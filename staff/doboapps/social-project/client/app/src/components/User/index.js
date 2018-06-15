@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter, Link } from 'react-router-dom'
 import logic from "../../logic"
-import { Container, Button, Badge,NavLink } from 'reactstrap'
+import {Row, Col, Jumbotron,Container, Button, Badge,NavLink,CardImg } from 'reactstrap'
 import { Notifications } from '../'
 
 class User extends Component {
@@ -12,7 +12,7 @@ class User extends Component {
         race: undefined,
         gender: undefined,
         description: undefined,
-        photoProfile: undefined,
+        photoProfile: "../../images/others/profile-dog.jpg",
         city: undefined,
         zip: undefined,
         images:[],
@@ -34,7 +34,6 @@ class User extends Component {
     getUser = () => {
 
         logic.retrieveUser(this.getUserIdParams()).then((user) => {
-
             this.setState(user)
 
             let newNotifications = logic.getNotifications(this.state.notifications)
@@ -109,6 +108,7 @@ class User extends Component {
         return this.state.friends.find((friend)=>{
             if(localStorage.getItem("id-app") === friend)
             return true
+            else return false
         })
     }
 
@@ -119,7 +119,7 @@ class User extends Component {
 
     getImagesUser = ()=>{
 
-        return this.state.images.map((img,i) =><img key={"img-"+i} src={img.route} alt="image dog" />
+        return this.state.images.map((img,i) =><img key={"img-"+i} src={img.route} alt="dog" />
         );
     }
 
@@ -132,17 +132,31 @@ class User extends Component {
         return (
 
             <Container>
-                {this.showInProfile() && <Badge tag={Link} to={`/edit-profile`} color="secondary">Edit Profile</Badge>}
+                <Row>
+                    <Col xs="4">
+                        <CardImg className="rounded-circle" top src={this.state.photoProfile} alt="Card image cap" />
+                    </Col>
+                    <Col xs="8">
+                        <Jumbotron>
+                            {this.showInProfile() && <Badge tag={Link} to={`/edit-profile`} color="secondary">Edit Profile</Badge>}
+                            {this.showInProfile() && <Notifications accept={this.handlerAcceptFriendship} ignore={this.handlerIgnoreFriendship} notifications={this.state.newNotifications} clearNotifications={this.clearNotifications} />}
 
-                <h1>{this.state.name}</h1>
+                            <h1 className="display-5 text-capitalize ">{this.state.name}</h1>
+                            <h5 className="text-capitalize">{this.state.race}</h5>
+                            <h5 className="text-capitalize">{this.state.gender}</h5>
+                            <h5 className="text-capitalize">{this.state.city}</h5>
+                            <h5 className="text-capitalize">{this.state.birthdate}</h5>
+                            <h5 className="text-capitalize">{this.state.friends.length}</h5>
 
-                {!this.showInProfile() && !this.state.requestAlreadySent && (<Button onClick={this.handlerButtonFriendShip} color="danger">request friendship</Button>)}
+                            <hr className="my-2" />
+                            <p>{this.state.description}</p>
+                            <p className="lead">
+                            {!this.showInProfile() && !this.state.requestAlreadySent && (<Button onClick={this.handlerButtonFriendShip} color="danger">request friendship</Button>)}
+                            </p>
+                        </Jumbotron>
+                    </Col>
+                </Row>
 
-                {this.showInProfile() && <Notifications accept={this.handlerAcceptFriendship} ignore={this.handlerIgnoreFriendship} notifications={this.state.newNotifications} clearNotifications={this.clearNotifications} />}
-                <h4>friends:{this.state.friends.length}</h4>
-                <h4>{this.state.race}</h4>
-                <h4>{this.state.gender}</h4>
-                <h4>{this.state.city}</h4>
                 {this.showInProfile() && <NavLink tag={Link} to="/upload-picture-user">Upload a picture</NavLink >}
                 {(this.showInProfile() || this.showIfAreFriends()) &&  <div>{this.getImagesUser()}</div>}
 

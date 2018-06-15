@@ -5,13 +5,13 @@ const { models: { User, Park, Image, Note } } = require('data')
 const cloudinary = require('cloudinary');
 
 
-cloudinary.config({ 
-    cloud_name: 'dpkyftge9', 
-    api_key: '936697417297718', 
-    api_secret: 'lmBzXsTcd8gmgsr3idgRnbPepMo' 
-  });
-  
-  
+cloudinary.config({
+    cloud_name: 'dpkyftge9',
+    api_key: '936697417297718',
+    api_secret: 'lmBzXsTcd8gmgsr3idgRnbPepMo'
+});
+
+
 
 const logic = {
     /**
@@ -91,7 +91,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, email: 1, race: 1, gender: 1, city: 1, photoProfile:1, images:1, description:1, birthdate:1, zip:1,friends:1,loves:1,notifications:1})
+                return User.findById(id).select({ _id: 0, name: 1, email: 1, race: 1, gender: 1, city: 1, photoProfile: 1, images: 1, description: 1, birthdate: 1, zip: 1, friends: 1, loves: 1, notifications: 1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -118,7 +118,7 @@ const logic = {
      * @returns {Promise<boolean>}
      */
     updateUser(id, name, email, password, newEmail, newPassword, race, gender, description, photoProfile, birthdate, city, zip) {
-        
+
         return Promise.resolve()
             .then(() => {
 
@@ -396,14 +396,14 @@ const logic = {
                             .then((user) => {
                                 return true
                             })
-                        .then((saveFirstUser)=>{
+                            .then((saveFirstUser) => {
 
-                            if(!saveFirstUser===true) throw Error("error to save first user")
+                                if (!saveFirstUser === true) throw Error("error to save first user")
 
-                            return User.findById(userId)
+                                return User.findById(userId)
 
-                        }).then(user =>{
-                           
+                            }).then(user => {
+
                                 if (!user) throw Error(`no user found with id ${userId}`)
 
                                 const friend = user.friends.find((element) => {
@@ -418,7 +418,7 @@ const logic = {
                                     .then((user) => {
                                         return user.friends
                                     })
-                            }) 
+                            })
                     })
 
             })
@@ -663,15 +663,15 @@ const logic = {
     },
 
 
-/**
-* 
-* @param {string} idUser
-* @param {string} base64Image
-* 
-* @returns {Promise<boolean>}
-*/
+    /**
+    * 
+    * @param {string} idUser
+    * @param {string} base64Image
+    * 
+    * @returns {Promise<boolean>}
+    */
     saveImageProfile(idUser, base64Image) {
-        let url =""
+        //let url =""
         return Promise.resolve()
             .then(() => {
                 if (typeof idUser !== 'string') throw Error('idUser is not a string')
@@ -680,24 +680,23 @@ const logic = {
 
                 if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
 
-               
-               return  Promise.resolve()
-                    .then(() => {
-                        return cloudinary.uploader.upload(base64Image, function(data) {
-                            url = data.url
-                            console.log("updload cloudinary ok "+url)
-                    }).then(()=>{
-                        return User.findById(idUser )
-                        .then(user => {
-                            return user
-                        })
+
+
+
+                return new Promise((resolve, reject) => {
+                    return cloudinary.v2.uploader.upload(base64Image, function (err, data) {
+                        if (err) return reject(err)
+
+                        resolve(data.url)
                     })
-                }).then(user => {
-                    user.photoProfile = url
-                    return user.save()
                 })
-                .then((user) => true
-                )
+                .then(urlCloudinary => {
+                        return User.findByIdAndUpdate(idUser, { photoProfile: urlCloudinary })
+                            .then(user => {
+                                return true
+                            })
+                    })
+
                 //SAVE ON SERVER
                 // var data = base64Image.replace(/^data:image\/\w+;base64,/, "");
                 // var buf = new Buffer(data, 'base64');
@@ -719,42 +718,42 @@ const logic = {
 * 
 * @returns {Promise<boolean>}
 */
-saveImagesUser(idUser, base64Image, descriptionImg) {
-    let url =""
-    return Promise.resolve()
-        .then(() => {
-            if (typeof idUser !== 'string') throw Error('idUser is not a string')
+    saveImagesUser(idUser, base64Image, descriptionImg) {
+        let url = ""
+        return Promise.resolve()
+            .then(() => {
+                if (typeof idUser !== 'string') throw Error('idUser is not a string')
 
-            if (!(idUser = idUser.trim()).length) throw Error('idUser is empty or blank')
+                if (!(idUser = idUser.trim()).length) throw Error('idUser is empty or blank')
 
-            if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
+                if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
 
-           
-           return  Promise.resolve()
-                .then(() => {
-                    return cloudinary.uploader.upload(base64Image, function(data) {
-                        url = data.url
-                        console.log("updload cloudinary ok "+url)
-                }).then(()=>{
-                    return User.findById(idUser )
-                    .then(user => {
-                        return user
+
+                return Promise.resolve()
+                    .then(() => {
+                        return cloudinary.uploader.upload(base64Image, function (data) {
+                            url = data.url
+                            console.log("updload cloudinary ok " + url)
+                        }).then(() => {
+                            return User.findById(idUser)
+                                .then(user => {
+                                    return user
+                                })
+                        })
+                    }).then(user => {
+                        const image = new Image({
+                            route: url
+                            , description: descriptionImg,
+                            likes: []
+                        })
+
+                        user.images.push(image)
+                        return user.save()
                     })
-                })
-            }).then(user => {
-                const image = new Image({ 
-                    route:url
-                    ,description:descriptionImg,
-                    likes:[]
-                 })
-
-                user.images.push(image)
-                return user.save()
+                    .then((user) => true
+                    )
             })
-            .then((user) => true
-            )
-        })
-}
+    }
 }
 
 module.exports = logic

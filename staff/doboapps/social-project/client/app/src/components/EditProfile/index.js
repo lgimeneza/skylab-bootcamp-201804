@@ -3,9 +3,9 @@ import { withRouter,Link} from 'react-router-dom'
 import logic from "../../logic"
 import {Text} from "../"
 import {Container,CardImg,Col,NavLink,Button} from 'reactstrap'
-import DatePicker from 'react-datepicker';
-import moment from 'moment'; 
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import 'react-datepicker/dist/react-datepicker.css'
 
 
 class EditProfile extends Component {
@@ -33,11 +33,10 @@ class EditProfile extends Component {
         const userId=localStorage.getItem("id-app")
         
         logic.retrieveUser(userId).then(({name,email,race,gender,city,photoProfile,zip,description,birthdate})=>{
-            if(photoProfile==="")photoProfile="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180"
+            if(!photoProfile)photoProfile="../../images/others/profile-dog.jpg"
             if(typeof birthdate ==="object") birthdate =moment()
             birthdate= moment(birthdate)
             this.setState({firstEmail:email,name,email,race,gender,city,photoProfile,description,zip,birthdate})
-
         })
     }
 
@@ -111,10 +110,12 @@ class EditProfile extends Component {
 
     componentDidMount(){
          this.getUser()
+
     }
 
     render() {
 
+       
 
         return (
 
@@ -138,7 +139,7 @@ class EditProfile extends Component {
                     <option value="female">Female</option>
 
                 </select>    
-                <select value={this.state.race} defaultValue={"Common dog"}  onChange={this.handleKeepRace} type="text" placeholder="race">{this.getRaces()}</select>
+                <select value={this.state.race} defaultValue={"Others"}  onChange={this.handleKeepRace} type="text" placeholder="race">{this.getRaces()}</select>
                 <DatePicker   selected={this.state.birthdate} onChange={this.handleChange}
     />
                 <input onChange={this.handleKeepPassword} value={this.state.password} type="password" placeholder="Password"/>

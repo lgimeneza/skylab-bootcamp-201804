@@ -6,13 +6,13 @@ class Main extends Component {
 
 
     render() {
-        return logic.isLogged() ?
 
+        return logic.isLogged() ?
             <div>
                 <Switch>
-                    <Route exact path="/" render={props => <Start  isLogged={this.props.isLogged}/>} />
+                    <Route exact path="/" render={props => <Start dataUser={this.props.dataUser} retrieveUser={this.props.retrieveUser} isLogged={this.props.isLogged}/>} />
                     <Route exact path="/edit-profile" render={props => <EditProfile />} />               
-                    <Route exact path="/upload-picture-profile" render={props => <UploadPictureProfile />} />               
+                    <Route exact path="/upload-picture-profile" render={props => <UploadPictureProfile  />} />               
                     <Route exact path="/upload-picture-user" render={props => <UploadPictureUser />} />               
                     <Route path="/user" render={props => <User />} />
                     <Route path='/' render={props => <Error404 />} />

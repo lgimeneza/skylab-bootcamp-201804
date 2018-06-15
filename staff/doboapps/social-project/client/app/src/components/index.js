@@ -12,6 +12,7 @@ import Select from './Inputs/select'
 import Text from './Inputs/text'
 import User from './User'
 import Notifications from './Notifications'
+import NavBarDisconnection from './NavBarDisconnection'
 
 export {
     Landing,
@@ -27,5 +28,6 @@ export {
     Text,
     Select,
     User,
-    Notifications
+    Notifications,
+    NavBarDisconnection
 }

@@ -1,0 +1,55 @@
+@import '../main.scss';
+
+h6{
+    text-transform: capitalize
+}
+
+a{
+    text-decoration: none !important;
+    color: $gray_link;
+}
+
+a:hover{
+    text-decoration: none !important;
+    color: $gray_link_hover;
+}
+
+.card{
+    h3{
+        text-transform: capitalize;
+        margin-top: 30%;
+        color:$black;
+    }
+    overflow: hidden;
+    box-shadow: 3px 3px 5px #dee2e6;
+}
+
+.card-data {    
+
+    div{
+        width: 50%;
+        text-align: center;
+        display: inline-block;
+        padding: 20px 0 5px 0;
+        box-shadow: 0px 0px 65px gainsboro;
+        border-radius: 5px;
+
+        span{
+        }
+    }
+}
+
+.img-card-user{
+    margin-top: 20px;
+    width: 60%;
+    margin-left: 20%;
+    position: absolute;
+    border: solid 4px white;
+}
+
+.img-card-user-back{
+    margin-top: -60%;
+    width: 100%;
+    filter: blur(5px);
+
+}

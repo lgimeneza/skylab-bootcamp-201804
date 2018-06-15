@@ -1,0 +1,35 @@
+@import '../main.scss';
+
+.logo{
+    text-align: center;
+    width: 100%;
+    position: absolute; 
+    left: 0;
+}
+
+
+.nav-link{
+    display: inline-block;
+
+}
+
+
+.navbar-logged{
+    i{
+        color: $gray_link
+    }
+    li{
+        display: inline-block;
+
+        img{
+            width: 30px   
+           }
+    }
+    border-bottom: solid 1px;
+}
+
+
+.zi-1{
+    z-index: 1;
+}
+

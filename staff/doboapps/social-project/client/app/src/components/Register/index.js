@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom'
 import logic from "../../logic";
+import {Form, Input, Button, Container, Col} from 'reactstrap'
+import './style.scss'
 
 class Register extends Component {
 
@@ -72,7 +74,6 @@ class Register extends Component {
                 .then(res => {
                     if (res === true) {
                         alert("You registered awesomely!")
-
                         this.props.history.push('/login')
                     }
                     else {
@@ -87,33 +88,44 @@ class Register extends Component {
     }
 
     getCities = cities => {
-        return logic.cities.map(city => <option value={city}>{city}</option>)
+        return logic.cities.map((city,i) => <option key={"c-"+i} value={city}>{city}</option>)
     }
+
 
 
     render() {
 
         return (
 
-            <div>
-                <h2>Register </h2>
+            
+    <div className="container-register" >
+    <img src="../../images/others/login-family-golden.jpg" alt="family-dog"/>
+    <Container >
 
-                <form onSubmit={this.handleRegister}>
+        <Col sm={{ size: 10, offset: 1 }} md={{ size: 6, offset: 3 }}>
 
-                    <input value={this.state.userName} onChange={this.handleKeepName} type="text" placeholder="Nombre" autoFocus />
-                    <input value={this.state.UserEmail} onChange={this.handleKeepEmail} type="text" placeholder="Email" />
-                    <select value={this.state.UserCity} onChange={this.handleKeepCity} type="text" placeholder="City">{this.getCities()}</select>
-                    <input value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />
-                    <input value={this.state.repeatPassword} onChange={this.handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
+        <Form className=" text-center  form-register p-3 pl-5 pr-5 rounded " onSubmit={this.handleRegister}>
+            <h3>Register </h3>
+            <hr className="my-4"/>
+            <Input className="m-3" value={this.state.userName}  onChange={this.handleKeepName} type="text" placeholder="Name" autoFocus />
+            <Input className="m-3" value={this.state.UserEmail}  onChange={this.handleKeepEmail} type="text" placeholder="Email"  />            
+            <select className="form-control" value={this.state.UserCity} onChange={this.handleKeepCity} type="text" placeholder="City"><option key="c-first" value={null}>Select city</option>{this.getCities()}</select>
+            <Input  className="m-3" value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />
+            <Input  className="m-3" value={this.state.repeatPassword} onChange={this.handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
+            <p>{this.state.notMatchingMessage}</p>
 
-                    <p>{this.state.notMatchingMessage}</p>
+            <Button className="m-2" type="submit" > Register</Button>
+        </Form>
+        </Col>
 
-                    <input type="submit" value="Register me" />
+    </Container>
 
-                </form>
-            </div>
+</div>
+
         )
     }
 }
 
 export default withRouter(Register);
+
+

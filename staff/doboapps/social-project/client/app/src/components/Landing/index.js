@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import { withRouter,Link} from "react-router-dom"
-import { Carousel, CarouselItem, CarouselIndicators, CarouselCaption,
-        Navbar, NavbarBrand, Nav,Collapse,NavbarToggler,NavItem,NavLink } from 'reactstrap';
+import { Carousel, CarouselItem,  CarouselCaption} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
 
@@ -72,24 +69,6 @@ class Landing extends Component {
     });
 
     return (<div>
-          <Navbar className="nav-landing" color="light" light expand="md">
-            <NavbarBrand href="/">Dogger</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-
-                   
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink  tag={Link}  to="/Login">Login</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink  to="/register">register</NavLink>
-                        </NavItem>
-                    </Nav>
-                
-
-            </Collapse>
-      </Navbar>
         <Carousel
           activeIndex={activeIndex}
           next={this.next}
@@ -108,5 +87,5 @@ class Landing extends Component {
   }
 }
 
-export default withRouter(Landing);
+export default (Landing);
 

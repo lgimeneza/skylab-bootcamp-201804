@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, CardImg, Button } from 'reactstrap'
+import { Col,  Button } from 'reactstrap'
 import DropNCrop from '@synapsestudios/react-drop-n-crop';
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 import logic from "../../logic"
@@ -45,7 +45,7 @@ class UploadPictureUser extends Component {
 
         <DropNCrop maxFileSize={3145728} cropperOptions={{ aspectRatio: 1, guides: true, viewMode: 0, autoCropArea: 0 }} canvasHeight={"35vw"} canvasWidth={"35vw"} onChange={this.onChange} value={this.state} />
         <div style={{ borderRadius: "50%", width: "18vw", height: "18vw", overflow: "hidden", display: "inline-block", position: "relative" }}>
-          <img width="100%" style={{ margin: "0", position: "absolute", left: "0", width: "100%" }} src={this.state.result} alt="image user" />
+          <img width="100%" style={{ margin: "0", position: "absolute", left: "0", width: "100%" }} src={this.state.result} alt="user" />
         </div>
         <Button onClick={this.clearImage} color="secondary">clear</Button>{' '}
       </Col>

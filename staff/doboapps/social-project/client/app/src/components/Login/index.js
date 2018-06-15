@@ -30,7 +30,7 @@ class Login extends Component {
 
                 if (res.status === 'OK') {
 
-                    alert(res.data.id)
+                    // alert(res.data.id)
 
                     this.props.logIn()//change the state "isLogged" of app.js
                     this.props.history.push('/')
@@ -46,15 +46,14 @@ class Login extends Component {
         return (
 
             <div className="container-login" >
-                <img src="../../images/others/login-family-dogs.jpg" alt="family-dog"/>
+                <img src="../../images/others/login-family-golden.jpg" alt="family-dog"/>
                 <Container >
 
-                    <Col sm={{ size: 10, offset: 1 }} sm={{ size: 6, offset: 3 }}>
+                    <Col sm={{ size: 10, offset: 1 }} md={{ size: 6, offset: 3 }}>
 
-                    <Form className=" text-center  form-login p-5 rounded " onSubmit={this.handleLogin}>
-                        <h3 className="mt-3 mb-2">Login </h3>
-                        <h4 className="">Wellcome to Dogger </h4>
-
+                    <Form className=" text-center  form-login p-3 pl-5 pr-5 rounded " onSubmit={this.handleLogin}>
+                        <h3 >Login </h3>
+                        <hr className="my-4"/>
                         <Input className="m-3" value={this.state.userEmail} onChange={this.handleKeepEmail} type="text" placeholder="Email" />
                         <Input  className="m-3" value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />
                         <Button className="m-3" type="submit" > Log me in</Button>

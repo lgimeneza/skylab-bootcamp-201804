@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody, Alert } from 'reactstrap';
+import { Button, Popover, PopoverHeader, Alert } from 'reactstrap';
 
 export default class Notifications extends Component {
 
@@ -17,7 +17,7 @@ export default class Notifications extends Component {
 
   drawNotifications = ()=>{
     return this.props.notifications.map((n, key)=>{
-     console.log(n)
+
       if(n.type ==="#friendship")
       return(<Alert key={"alert_n"+key} color="info" isOpen={this.state.visible} toggle={this.onDismiss}>
           {`${n.user} ${n.notification}`}
@@ -25,10 +25,9 @@ export default class Notifications extends Component {
                 <Button onClick={()=>{this.props.ignore(n.id)}} color="danger">ignore</Button>
             </Alert>)
 
-      else if(n.type ==="#acceptFriendship")
-      return (<Alert key={"alert_n"+key} color="info" isOpen={this.state.visible} toggle={this.onDismiss}>
-            {`${n.user} ${n.notification}`}
-              </Alert>)
+      else return (<Alert key={"alert_n"+key} color="info" isOpen={this.state.visible} toggle={this.onDismiss}>
+                    {`${n.user} ${n.notification}`}
+                  </Alert>)
     })    
   }
 

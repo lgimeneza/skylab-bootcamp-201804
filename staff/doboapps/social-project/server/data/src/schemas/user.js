@@ -19,6 +19,7 @@ module.exports = new Schema({
     },
     race: {
         type: String,
+        default: "Others"
     },
     gender: {
         type: String,
