@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logic from '../logic'
 import Calendar from './calendar'
 import swal from 'sweetalert2'
+import createBooking from '../helpers/createBooking'
 import '../design/bookingHours.css'
 
 const START_DAY = 8
@@ -44,14 +45,38 @@ class BookingHours extends Component {
 
     localStorage.setItem("date", this.state.date)
     localStorage.setItem("hour", hour)
-    
+
 
     // if (result) {
 
     // PASARLO A SWEETALERT2
-      alert("perfect! logueate para guardar tu reserva y listo!")
+
+    let token = localStorage.getItem("token")
+    if (!token) {
+      swal({
+        type: 'success',
+        title: 'perfect! logueate para guardar tu reserva y listo!',
+      })
+
       this.props.history.push('/login')
-    // }
+    } else {
+      createBooking().then(res => {
+        console.log(res)
+        if (res) {
+          swal({
+            type: 'success',
+            title: 'Reserva completada! ves a tu perfil!',
+          })
+          this.props.history.push('/profile')
+        } else {
+          let date = localStorage.getItem("date")
+          console.log(date)
+          let _date = date.replace(/\,/g, "/")
+          console.log(_date)
+          this.props.history.push(`/calendar/${_date}`)
+        }
+      })
+    }
   }
 
 

@@ -13,7 +13,7 @@ export class Login extends Component {
     password: '',
     formIsFull: false,
   }
-  
+
 
   goToRegister = () => {
     this.props.history.push('/register')
@@ -45,30 +45,36 @@ export class Login extends Component {
         "email": email,
         "password": password
       }
-      
+
       logic.login(body).then(result => {
         if (result) {
           this.storageUserData(result)
 
           // aqui se tiene que esperar para ver si te lleva al profile o al data
-         createBooking().then(res =>{
-           console.log(res)
-           if (res) {
-             this.props.history.push('/profile')
-           } else {
-             this.props.history.push('/date')
-           }
-         })
-         
-          
-         
+          createBooking().then(res => {
+            console.log(res)
+            if (res) {
+              swal({
+                type: 'success',
+                title: 'Reserva completada! ves a tu perfil!',
+              })
+              this.props.history.push('/profile')
+            } else {
+              let date = localStorage.getItem("date")
+              console.log(date)
+              let _date = date.replace(/\,/g, "/")
+              console.log(_date)
+              this.props.history.push(`/calendar/${_date}`)
+            }
+          })
+
         }
       }).catch(data => {
-              swal({
-                type: 'error',
-                title: 'wrong credentials',
-                text: data.error
-              })
+        swal({
+          type: 'error',
+          title: 'wrong credentials',
+          text: data.error
+        })
       })
 
       this.setState({
@@ -97,7 +103,7 @@ export class Login extends Component {
                 <form>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name='email' className="input is-large" type="email" placeholder="Your Email" autoFocus value={this.state.email}/>
+                      <input onChange={this.handleChange} name='email' className="input is-large" type="email" placeholder="Your Email" autoFocus value={this.state.email} />
                     </div>
                   </div>
                   <div className="field">
@@ -111,7 +117,7 @@ export class Login extends Component {
                       Remember me
                     </label>
                   </div>
-                    <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Login</button>
+                  <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Login</button>
                 </form>
               </div>
               <p className="has-text-grey">

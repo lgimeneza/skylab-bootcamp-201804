@@ -300,6 +300,7 @@ const logic = {
             })
         }))
           .then(() => {
+            // .tz("Europe/London")
             const endDate = moment(date).add(totalDuration, 'minutes').toDate()
             return Booking.find({
               $and: [

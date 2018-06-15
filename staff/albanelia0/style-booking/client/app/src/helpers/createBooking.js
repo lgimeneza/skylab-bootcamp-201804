@@ -1,6 +1,7 @@
 import React from 'react'
 import logic from '../logic'
 import moment from 'moment'
+import swal from 'sweetalert2'
 
 function createBooking() {
   let checkedList = localStorage.getItem("checkedList")
@@ -25,7 +26,12 @@ function createBooking() {
     .then(booking => {
       if (booking == "unavailable") {
         // alerta de prueba
-        alert("los servicios superan el limite de horas disponibles!lo siento! pero deberias elegir otra hora dispobible")
+        swal({
+          type: 'error',
+          title: 'los servicios superan el limite de horas disponibles!lo siento! pero deberias elegir otra hora dispobible',
+          // text: data.error
+        })
+        // alert("los servicios superan el limite de horas disponibles!lo siento! pero deberias elegir otra hora dispobible")
         return false
       } else {
         return true
