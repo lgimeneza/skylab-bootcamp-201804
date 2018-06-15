@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import './index.css'
-import Navbar from './../navbar'
 
 class Login extends Component {
-
     constructor() {
         super()
         this.state = {
-            isRegistered: false,
-            isLogged: false,
             email: '',
             password: ''
         }
@@ -24,7 +20,7 @@ class Login extends Component {
             logic.login(email, password)
                 .then(res => {
                     if (res) {
-                        this.props.history.push('/')
+                        this.props.onLogin()
 
                     } else {
                         console.log('Error, username and/or password wrong')
@@ -50,7 +46,6 @@ class Login extends Component {
     render() {
         return (
             <div className="login-app">
-                <Navbar />
                 <form className="form-signin" onSubmit={this.handleSubmitLogin}>
                     <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                     <label htmlFor="inputEmail" className="sr-only">Email address</label>
@@ -66,12 +61,8 @@ class Login extends Component {
                     <button className="btn btn-lg btn-primary btn-block login-submit" type="submit">Sign in</button>
                     <p className="mt-5 mb-3 text-muted">© 2017-2018</p>
                 </form>
-
             </div>
-
-
         )
-
     }
 }
 export default Login

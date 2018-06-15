@@ -1,3 +1,4 @@
+import Navbar from './navbar'
 import Register from './register'
 import Login from './login'
 import Categories from './categories'
@@ -9,6 +10,7 @@ import Cart from './cart'
 import Profile from './profile'
 
 export {
+    Navbar,
     Register,
     Login,
     Categories,

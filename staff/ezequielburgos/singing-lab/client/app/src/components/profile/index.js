@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
 import logic from '../../logic'
-import Navbar from './../navbar'
 import Forms from './forms'
 import DeleteProfile from './delete-profile';
 
@@ -88,7 +87,6 @@ class Update extends Component {
     render() {
         return (
             <main className="my_container register-app">
-                <Navbar />
                 <div className="container">
                     <div className="py-5 text-center title">
                         <h2>Update</h2>

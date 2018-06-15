@@ -1,35 +1,37 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import logic from '../../logic'
 import './index.css'
+import logic from '../../logic'
 
 class Navbar extends Component {
+    state = {
+        user: {}
+    }
 
-    constructor() {
-        super()
-        this.state = {
-            isLogged: false,
-            user: []
-        }
+    retrieveUser() {
+        if (this.props.loggedIn)
+            logic.retrieveUser()
+                .then(user => {
+                    this.setState({ user })
+                })
     }
 
     componentDidMount() {
+        if (this.props.loggedIn) {
+            this.retrieveUser()
+        }
+    }
 
-        if (!this.state.isLogged) {
-            if (sessionStorage.getItem('token')) {
-                logic.retrieveUser()
-                    .then(user => {
-                        this.setState({ user, isLogged: true })
-                    })
-            }
-        } else {
-            this.setState({ isLogged: false })
+    componentWillReceiveProps(props) {
+        if (props.loggedIn) {
+            this.retrieveUser()
         }
     }
 
     logout() {
-        sessionStorage.clear()
-        this.setState({ isLogged: false })
+        logic.logout()
+
+        this.props.onLogout()
     }
 
     render() {
@@ -54,7 +56,7 @@ class Navbar extends Component {
                             {/* <Link to="/cart"><span role="img" aria-label="cart">🛒</span></Link> */}
                             <Link to="/cart"><span role="img" aria-label="cart"><i class="fas fa-shopping-cart"><span class="badge badge-pill badge-info">2</span></i> </span></Link>
                         </span>
-                        {(!this.state.isLogged) ?
+                        {(!this.props.loggedIn) ?
                             <div>
                                 <span className="py-2 d-none d-md-inline-block login-navbar">
                                     <Link to="/auth">Login</Link>

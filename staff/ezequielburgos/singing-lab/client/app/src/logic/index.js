@@ -3,12 +3,12 @@ const singingLabApi = require('api')
 singingLabApi.url = 'http://localhost:4000/api'
 
 const logic = {
-    _userId: 'NO-USER',
+    _userId: null,
 
     _cart: [],
 
     userId(userId) {
-        if (userId) {
+        if (userId !== undefined) {
             this._userId = userId
 
             return
@@ -43,6 +43,14 @@ const logic = {
 
                 return true
             })
+    },
+
+    get loggedIn() {
+        return !!this.userId()
+    },
+
+    logout() {
+        this.userId(null)
     },
 
     retrieveUser() {
@@ -84,7 +92,11 @@ const logic = {
 
     unregisterUser(email, password) {
         return singingLabApi.unregisterUser(this.userId(), email, password)
-            .then(true)
+            .then(() => {
+                this.logout()
+
+                return true
+            })
     },
 
     listCategories() {

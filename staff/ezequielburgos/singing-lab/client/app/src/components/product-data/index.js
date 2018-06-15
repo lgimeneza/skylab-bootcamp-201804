@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import './index.css'
-import Navbar from './../navbar'
 import Footer from './../footer'
 
 class ProductData extends Component {
@@ -23,7 +22,6 @@ class ProductData extends Component {
     render() {
         return (
             <main>
-                <Navbar />
                 <h2 className="main-title">this is the product</h2>
                 <section className="productData">
                     <div className="productDataSub">

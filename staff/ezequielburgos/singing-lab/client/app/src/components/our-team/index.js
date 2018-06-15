@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './index.css'
-import Navbar from './../navbar'
 import Footer from './../footer'
 
 class OurTeam extends Component {
@@ -9,7 +8,6 @@ class OurTeam extends Component {
     render() {
         return (
             <main>
-                <Navbar />
                 <div className="container">
                     {/* Introduction Row */}
                     <h1 className="my-4">About Us

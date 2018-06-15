@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import './index.css'
-import Navbar from './../navbar'
 
 class Register extends Component {
 
@@ -68,7 +67,6 @@ class Register extends Component {
   render() {
     return (
       <main className="my_container register-app">
-        <Navbar />
         <div className="container">
           <div className="py-5 text-center title">
             <h2>Register</h2>

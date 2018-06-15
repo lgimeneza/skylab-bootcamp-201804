@@ -18,7 +18,9 @@ singingLabApi.token = function (token) {
 }
 
 logic.userId = function (userId) {
-  if (userId) {
+  if (userId === null)
+    sessionStorage.removeItem('userId')
+  else if (userId !== undefined) {
     sessionStorage.setItem('userId', userId)
 
     return
