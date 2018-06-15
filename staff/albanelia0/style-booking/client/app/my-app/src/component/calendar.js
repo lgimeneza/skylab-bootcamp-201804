@@ -106,16 +106,6 @@ class Calendar extends Component {
         </section>
         <div className="footerCalendar">
           <ButtonBackToHome />
-          <Link
-            className='button is-info'
-            to='/login' component={Login}>
-            Login
-          </Link>
-          <Link
-            className='button is-info'
-            to='/register' component={Register}>
-            Register
-            </Link>
         </div>
       </div>
     )
