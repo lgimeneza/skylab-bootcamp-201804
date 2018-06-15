@@ -3,6 +3,7 @@ import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, P
 import { Switch, Route } from 'react-router-dom'
 
 function App() {
+
     return (
       <Switch>
         <Route exact path="/" component={Landing} />

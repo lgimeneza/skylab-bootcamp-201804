@@ -29,3 +29,9 @@
 .login-navbar {
     padding-right: 5rem;
 }
+
+.badge{
+    position: relative;
+    bottom: 5px;
+    right: 3px;
+}

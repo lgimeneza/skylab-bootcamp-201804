@@ -8,6 +8,7 @@ import LandingChat from '../landing-chat'
 import Footer from './../footer'
 
 function Landing() {
+
         return (
             <main>
                 <Navbar />

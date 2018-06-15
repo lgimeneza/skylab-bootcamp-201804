@@ -22,7 +22,7 @@ class Navbar extends Component {
                         this.setState({ user, isLogged: true })
                     })
             }
-        }else{
+        } else {
             this.setState({ isLogged: false })
         }
     }
@@ -51,7 +51,8 @@ class Navbar extends Component {
                             <Link to="/our-team">Our Team</Link>
                         </span>
                         <span className="py-2 d-none d-md-inline-block">
-                            <Link to="/cart"><span role="img" aria-label="cart">🛒</span></Link>
+                            {/* <Link to="/cart"><span role="img" aria-label="cart">🛒</span></Link> */}
+                            <Link to="/cart"><span role="img" aria-label="cart"><i class="fas fa-shopping-cart"><span class="badge badge-pill badge-info">2</span></i> </span></Link>
                         </span>
                         {(!this.state.isLogged) ?
                             <div>
