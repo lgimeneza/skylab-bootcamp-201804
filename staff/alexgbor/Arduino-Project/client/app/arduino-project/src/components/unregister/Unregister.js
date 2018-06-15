@@ -41,7 +41,7 @@ function Unregister(props) {
                     <h1 className="text-center">Unregister</h1>
                     <form onSubmit={_handleUnregister.bind(props)}  >
                         <div className="row justify-content-center ">
-                            <input className="form-group col-xs-4 m-4 border pl-3" type="password" id='passUser' placeholder="type your password here" />
+                            <input className="form-group col-xs-4 m-4 border pl-3" type="password" id='passUser' placeholder="Password" />
                         </div>
                         <div className="row justify-content-center ">
 

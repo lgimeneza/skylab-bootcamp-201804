@@ -3,15 +3,22 @@ import logic from '../../logic'
 import swal from 'sweetalert2'
 import { Link, withRouter } from 'react-router-dom'
 import { Bar } from 'react-chartjs-2'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
 
-    state = {
-        ip: '',
-        port: '',
-        selectedArduino: '',
-        arduData:[]
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            dropdownOpen: false,
+            ip: '',
+            port: '',
+            selectedArduino: '',
+            chartData: []
+        };
     }
+
 
     componentDidMount() {
         let userId = localStorage.getItem('id-app')
@@ -76,17 +83,25 @@ class Home extends Component {
         })
         logic.retrieveArduinoData(userId, arduId.id, token)
             .then(data => {
-                let Yaxis = data.map(({timestamp}) => timestamp.toLocaleTimeString())
+                let Yaxis = data.map(({ timestamp }) => {
+                    let parsedTime = new Date(timestamp).toLocaleTimeString()
+                    return parsedTime
+                })
                 let Xaxis = data.map(ele => ele.value)
-                let arduData = {
+                let chartData = {
                     labels: Yaxis,
                     datasets: {
                         label: `Data from arduino ${this.state.selectedArduino}`,
                         data: Xaxis
                     }
                 }
-                this.setState({ arduData })
+                this.setState({ chartData })
             })
+    }
+    toggle() {
+        this.setState(prevState => ({
+            dropdownOpen: !prevState.dropdownOpen
+        }));
     }
 
     _dummyAddData = () => {
@@ -102,42 +117,75 @@ class Home extends Component {
     render() {
 
         if (this.props.isLogged()) {
-            return <div className="text-center">
-                <h3>Add arduino:</h3>
-                <form onSubmit={this._handleAddArduino}>
-                    <div className="row justify-content-center ">
-                        <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.ip} onChange={this._handleKeepIp} type="text" placeholder="Ip" />
-                    </div>
-                    <div className="row justify-content-center ">
-                        <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.port} onChange={this._handleKeepPort} type="text" placeholder="Port" />
-                    </div>
-
-                    <div className="row justify-content-center ">
-
-                        <div className="form-group justify-content-center ">
-                            <input className="btn bg-darkcyan mt-4" type="submit" value="Add Arduino" />
+            if (this.state.chartData.labels) {
+                return <div className="text-center">
+                    <h3>Add arduino:</h3>
+                    <form onSubmit={this._handleAddArduino}>
+                        <div className="row justify-content-center ">
+                            <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.ip} onChange={this._handleKeepIp} type="text" placeholder="Ip" />
                         </div>
-                    </div>
+                        <div className="row justify-content-center ">
+                            <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.port} onChange={this._handleKeepPort} type="text" placeholder="Port" />
+                        </div>
 
-                </form>
-                <h3>Lista de Arduinos:</h3>
-                <button onClick={this.listArduinos}>Retrieve arduinos</button>
+                        <div className="row justify-content-center ">
 
-                <select value={this.state.selectedArduino} onChange={this.arduHandler}>
-                    <option>Select an arduino:</option>
-                    {this.state.options}
-                </select>
+                            <div className="form-group justify-content-center ">
+                                <input className="btn bg-darkcyan mt-4" type="submit" value="Add Arduino" />
+                            </div>
+                        </div>
 
-                <button onClick={this._handleRemoveArdu}>Remove Arduino</button>
+                    </form>
+                    <h3>Lista de Arduinos:</h3>
+                    <button onClick={this.listArduinos}>Retrieve arduinos</button>
 
-                <button onClick={this._dummyAddData}>add dummy data to selected</button>
+                    <select value={this.state.selectedArduino} onChange={this.arduHandler}>
+                        <option>Select an arduino:</option>
+                        {this.state.options}
+                    </select>
+
+                    <button onClick={this._handleRemoveArdu}>Remove Arduino</button>
+                    <button onClick={this._handleData}>Retrieve data from arduino</button>
+
+                    <Bar
+                        data={this.state.chartData}
+                        width={100}
+                        height={50}
+                        options={{ maintainAspectRatio: false }}
+                    />
+                </div>
+            } else {
+                return <div className="text-center">
+                    <h3>Add arduino:</h3>
+                    <form onSubmit={this._handleAddArduino}>
+                        <div className="row justify-content-center ">
+                            <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.ip} onChange={this._handleKeepIp} type="text" placeholder="Ip" />
+                        </div>
+                        <div className="row justify-content-center ">
+                            <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.port} onChange={this._handleKeepPort} type="text" placeholder="Port" />
+                        </div>
+
+                        <div className="row justify-content-center ">
+
+                            <div className="form-group justify-content-center ">
+                                <input className="btn bg-darkcyan mt-4" type="submit" value="Add Arduino" />
+                            </div>
+                        </div>
+
+                    </form>
+                    <h3>Lista de Arduinos:</h3>
+                    <button onClick={this.listArduinos}>Retrieve arduinos</button>
 
 
+                    <select value={this.state.selectedArduino} onChange={this.arduHandler}>
+                        <option>Select an arduino:</option>
+                        {this.state.options}
+                    </select>
 
-                <button onClick={this._handleData}>Retrieve data from arduino</button>
-
-                <Bar data={this.state.arduData} width={100} height={50} options={{ maintainAspectRatio: false }} />
-            </div>
+                    <button onClick={this._handleRemoveArdu}>Remove Arduino</button>
+                    <button onClick={this._handleData}>Retrieve data from arduino</button>
+                </div>
+            }
 
         } else {
             return <h2>You are not allowed</h2>
