@@ -1,11 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
-import Navbar from './../navbar'
 import LandingMain from './landing-main'
 import LandingProducts from './landing-products'
 import LandingChat from '../landing-chat'
-import Footer from './../footer'
+import Footer from '../footer'
 
 function Landing() {
         return (
@@ -19,10 +18,10 @@ function Landing() {
                         </div>
                     </div>
                 </section>
-                <LandingMain />
                 <LandingProducts />
+                <LandingMain />
                 <LandingChat />
-                <Footer />
+                <Footer/>
             </main>
         )
 }

@@ -351,8 +351,36 @@ const singingLabApi = {
             })
     },
 
-    listProductsByIds(...ids) {
+
+
+    /**
+    * @returns {Promise<User>} 
+    */
+    listProductsByIds(cart) {
         // TODO GET url?ids=id1,id2,id2,id4
+        
+        return Promise.resolve()
+        .then(() => {
+                const ids = cart.join(',')
+
+                return axios.get(`${this.url}/products/?ids=${ids}`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                                                
+                        return data.data
+ 
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
+            })
+
     }
 }
 

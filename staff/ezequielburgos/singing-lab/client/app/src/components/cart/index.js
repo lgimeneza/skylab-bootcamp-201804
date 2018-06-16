@@ -1,31 +1,60 @@
 import React, { Component } from 'react'
+import Footer from '../footer'
 import './index.css'
-import Footer from './../footer'
+import logic from '../../logic'
 
-class ProductData extends Component {
+class Cart extends Component {
+
+    constructor() {
+        super()
+        this.state = {
+            cart: []
+        }
+    }
+
+    componentDidMount() {
+        this.getItems()
+    }
+
+    getItems = () => {
+        if (logic._cart.length && logic._cart !== 'undefined') {
+            logic.listProductsByIds()
+                .then(cart => this.setState({ cart }))
+        }else{
+            this.setState({ cart: [] })
+        }
+    }
+
+    onRemoveFromCart = (product) => {
+        logic.removeProductFromCart(product)
+        this.getItems()
+    }
 
     render() {
         return (
             <main>
                 <h2 className="main-title">this is the Cart</h2>
-                <section className="productData">
-                    <div className="productDataSub">
-                     
+
+                <ul className="listitems-body">
+                    <div className="thumbnail listitems-subbody">
+                        {this.state.cart.map(item => (
+                            <li key={item._id} className="items">
+                                    <div className="card" style={{ width: '18rem' }}>
+                                        <img className="card-img-top" src={item.image} alt="course or category" />
+                                        <div className="card-body">
+                                            <h5 className="card-title">{item.name}</h5>
+                                            <a className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</a>
+                                        </div>
+                                    </div>
+                            </li>
+                        ))}
                     </div>
-                </section>
-                <div className="jumbotron">
-                    <h1 className="display-4">Chat with our teachers!</h1>
-                    <p className="lead">Use the firebase chat example from the Firebase workshop</p>
-                    <hr className="my-4" />
-                    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                    <a className="btn btn-outline-secondary" role="button">Chat now</a>
-                </div>
+                </ul>
 
                 <Footer />
             </main>
         )
     }
-
 }
 
-export default ProductData
+export default Cart

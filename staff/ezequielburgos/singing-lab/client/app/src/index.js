@@ -31,8 +31,10 @@ logic.userId = function (userId) {
 
 const _cart = sessionStorage.getItem('cart')
 
-if (_cart)
-  logic._cart = JSON.parse(_cart)
+
+if (_cart && _cart !== 'undefined'){
+    logic._cart = JSON.parse(_cart)
+}
 
 logic.cart = function (cart) {
   sessionStorage.setItem('cart', JSON.stringify(cart))

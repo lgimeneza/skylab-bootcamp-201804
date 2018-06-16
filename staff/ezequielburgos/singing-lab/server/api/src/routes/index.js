@@ -129,7 +129,6 @@ router.get('/categories/products/:productId', (req, res) => {
 
 router.get('/products', (req, res) => {
     const { query: { ids } } = req
-
     if (!ids)
         logic.listAllProducts()
             .then(products => {
@@ -140,7 +139,18 @@ router.get('/products', (req, res) => {
                 res.status(400)
                 res.json({ status: 'KO', error: message })
             })
-    else logic.listProductsByIds(ids.split(',')) // TODO
+    else
+        return logic.listProductsByIds(ids) // TODOs
+            .then(products => {
+                res.status(200)
+                res.json({ status: 'OK', data: products })
+
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message })
+            })
+
 })
 
 module.exports = router

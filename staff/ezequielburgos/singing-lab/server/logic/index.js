@@ -18,7 +18,7 @@ const logic = {
     registerUser(name, surname, address, email, password) {
         return Promise.resolve()
             .then(() => {
-                
+
                 if (typeof name !== 'string') throw Error('name is not a string')
 
                 if (!(name = name.trim()).length) throw Error('name is empty or blank')
@@ -45,11 +45,11 @@ const logic = {
                         if (user) throw Error(`user with email ${email} already exists`)
 
                         return User.create({ name, surname, address, email, password })
-                        .then(() => true)
-                })
+                            .then(() => true)
+                    })
             })
     },
-    
+
     /**
      * 
      * @param {string} email
@@ -125,11 +125,11 @@ const logic = {
                 if (typeof surname !== 'string') throw Error('user surname is not a string')
 
                 if ((surname = surname.trim()).length === 0) throw Error('user surname is empty or blank')
-             
+
                 if (typeof phone !== 'string') throw Error('user phone is not a string')
 
                 if ((phone = phone.trim()).length === 0) throw Error('user phone is empty or blank')
-             
+
                 if (typeof address !== 'string') throw Error('user address is not a string')
 
                 if ((address = address.trim()).length === 0) throw Error('user address is empty or blank')
@@ -211,7 +211,7 @@ const logic = {
     /**
      * @param {string} userId
      * 
-     * @returns {Promise<[Note]>}
+     * @returns {Promise<[Category]>}
      */
     listCategories() {
         return Promise.resolve()
@@ -228,7 +228,7 @@ const logic = {
     /**
      * @param {string} userId
      * 
-     * @returns {Promise<[Note]>}
+     * @returns {Promise<[Product]>}
      */
     listProducts(category) {
         return Promise.resolve()
@@ -247,7 +247,7 @@ const logic = {
      * 
      * @param {string} id
      * 
-     * @returns {Promise<User>} 
+     * @returns {Promise<[Product]>} 
      */
     retrieveProduct(productId) {
         return Promise.resolve()
@@ -255,7 +255,7 @@ const logic = {
                 if (typeof productId !== 'string') throw Error('user productId is not a string')
 
                 if (!(productId = productId.trim()).length) throw Error('user productId is empty or blank')
-                
+
                 return Product.findById(productId)
             })
             .then(product => {
@@ -270,7 +270,7 @@ const logic = {
     /**
      * @param {string} userId
      * 
-     * @returns {Promise<[Note]>}
+     * @returns {Promise<[Product]>}
      */
     listAllProducts() {
         return Promise.resolve()
@@ -282,9 +282,28 @@ const logic = {
                         return products
                     })
             })
+    },
+
+    /**
+      * @param {array} ids
+      * 
+      * @returns {Promise<[Product]>}
+      */
+    listProductsByIds(ids) {
+        const idsArray = ids.split(',')
+        
+        return Promise.resolve()
+            .then(() => {
+                return Product.find({
+                    _id: { $in: idsArray }
+                })
+                    .then(products => {
+                        if (!products) throw Error(`no categories where found`)
+
+                        return products
+                    })
+            })
     }
-
-
 
 }
 

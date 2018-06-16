@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import Footer from '../footer'
 import logic from '../../logic'
 import './index.css'
-import Footer from './../footer'
 import ListItems from './../list-items'
 
 class Products extends Component {
@@ -20,14 +20,14 @@ class Products extends Component {
 
     render() {
         return (
+
             <main>
                 <h2 className="main-title">These are my products</h2>
-
-                <ListItems
-                    productDetail
-                    items={this.state.products}
-                />
-
+                    <ListItems
+                        productDetail
+                        cartProducts
+                        items={this.state.products}
+                    />
                 <Footer />
             </main>
         )

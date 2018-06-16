@@ -385,8 +385,37 @@ var singingLabApi = {
             });
         });
     },
-    listProductsByIds: function listProductsByIds() {
+
+
+    /**
+    * @returns {Promise<User>} 
+    */
+    listProductsByIds: function listProductsByIds(cart) {
+        var _this10 = this;
+
         // TODO GET url?ids=id1,id2,id2,id4
+
+        return Promise.resolve().then(function () {
+            var ids = cart.join(',');
+
+            return axios.get(_this10.url + '/products/?ids=' + ids).then(function (_ref10) {
+                var status = _ref10.status,
+                    data = _ref10.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
     }
 };
 

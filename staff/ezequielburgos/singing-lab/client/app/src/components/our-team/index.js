@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import Footer from './../footer'
+import Footer from '../footer'
 
 class OurTeam extends Component {
 
@@ -63,7 +63,7 @@ class OurTeam extends Component {
                         </div>
                     </div>
                 </div>
-                <Footer />
+<Footer/>
             </main>
         )
     }

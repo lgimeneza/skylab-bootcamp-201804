@@ -710,5 +710,29 @@ describe('api client (singingLab)', () => {
         )
     })
 
+    describe('list products by ids', () => {
+        it('should succeed on correct data', () =>
+            Promise.all([
+                Category.create(beginnerCourseCategoryData),
+                Category.create(advancedCourseCategoryData)
+            ])
+                .then(res => {
+                    beginnerCourseData.category = res[0]._id
+                    advancedCourseData.category = res[1]._id
+
+                    return Promise.all([
+                        Product.create(beginnerCourseData),
+                        Product.create(advancedCourseData)
+                    ])
+                        .then(products => {
+                            singingLabApi.listProductsByIds([products[0]._doc._id, products[1]._doc._id])
+                                .then(product => {
+                                    console.log(product[0].name)
+                                })
+                        })
+                })
+        )
+    })
+
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })

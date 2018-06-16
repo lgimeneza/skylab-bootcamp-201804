@@ -27,8 +27,16 @@ const logic = {
         this.cart(this._cart)
     },
 
-    listProductsFromCart() {
-        return singingLabApi.listProducts(this.cart())
+    removeProductFromCart(productId) {
+        this._cart = this._cart.filter(id => {
+            return id !== productId
+        }) 
+        this.cart(this._cart)
+    },
+
+    listProductsByIds() {
+
+        return singingLabApi.listProductsByIds(this._cart)
     },
 
     registerUser(name, surname, address, email, password) {

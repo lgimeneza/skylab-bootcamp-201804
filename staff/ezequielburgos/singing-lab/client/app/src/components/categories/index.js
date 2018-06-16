@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
+import Footer from '../footer'
 import './index.css'
-import Footer from './../footer'
 import ListItems from './../list-items'
 
 class Categories extends Component {
@@ -28,8 +28,7 @@ class Categories extends Component {
                     btnShow
                     items={this.state.categories}
                 />
-
-                <Footer />
+            <Footer/>
             </main>
         )
     }

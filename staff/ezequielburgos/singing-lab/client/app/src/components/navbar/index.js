@@ -54,7 +54,7 @@ class Navbar extends Component {
                         </span>
                         <span className="py-2 d-none d-md-inline-block">
                             {/* <Link to="/cart"><span role="img" aria-label="cart">🛒</span></Link> */}
-                            <Link to="/cart"><span role="img" aria-label="cart"><i class="fas fa-shopping-cart"><span class="badge badge-pill badge-info">2</span></i> </span></Link>
+                            <Link to="/cart"><span role="img" aria-label="cart"><i className="fas fa-shopping-cart"><span className="badge badge-pill badge-info">{this.props.cartLength}</span></i> </span></Link>
                         </span>
                         {(!this.props.loggedIn) ?
                             <div>

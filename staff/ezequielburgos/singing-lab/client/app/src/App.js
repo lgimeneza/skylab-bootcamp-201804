@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, Profile, Cart, Navbar } from './components'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import logic from './logic'
 
 class App extends Component {
-  state = { loggedIn: logic.loggedIn }
+  state = { 
+    loggedIn: logic.loggedIn,
+    cartLength: logic._cart.length,
+  }
 
   onLogin = () => {
     this.setState({ loggedIn: true })
@@ -16,10 +19,11 @@ class App extends Component {
     this.setState({ loggedIn: false })
   }
 
+
   render() {
     return (
       <div>
-        <Navbar loggedIn={this.state.loggedIn} onLogout={this.onLogout} />
+        <Navbar loggedIn={this.state.loggedIn} onLogout={this.onLogout} cartLength={this.state.cartLength}/>
         <Switch>
           <Route exact path="/" render={() => <Landing />} />
           <Route exact path="/categories" component={Categories} />
@@ -30,6 +34,7 @@ class App extends Component {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/categories/:id" component={Products} />
           <Route exact path="/categories/products/:id" component={ProductData} />
+          <Redirect to="/" />
         </Switch >
       </div>
     )

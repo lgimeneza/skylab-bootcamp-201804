@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import logic from '../../../logic'
-import { Redirect } from 'react-router'
 import Forms from '../forms'
 
 class DeleteProfile extends Component {
