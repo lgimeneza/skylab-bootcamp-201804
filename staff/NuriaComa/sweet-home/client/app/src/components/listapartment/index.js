@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import {Link} from 'react-router-dom'
 import './index.css'
-import swal from 'sweetalert2'
+
 
 class ListApartment extends Component {
    
@@ -16,7 +16,7 @@ class ListApartment extends Component {
         .then(()=>{
             const apartmentId = localStorage.getItem('apartmentId')
             logic.listApartment(apartmentId).then(res => { 
-                
+                console.log(res)
                 this.setState({
                     apartmentInfo: res
                 })
@@ -26,56 +26,36 @@ class ListApartment extends Component {
             })
         })
     }
-    deleteApartment = apartmentId =>{
-        const apartId = localStorage.getItem('apartmentId')
-
-        Promise.resolve()
-        .then(()=>{
-            swal({
-                title: 'Are you sure?',
-                text: "All users will be removed",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-              })
-              .then((result) => {
-                if (result.value) {
-                  swal(
-                    'Deleted!',
-                    'Your apartment has been deleted.',
-                    'success'
-                    )
-                    logic.deleteApartment(apartId)
-                    .then(this.props.history.push('/'))     
-                    
-                }
-            })
-            .then(localStorage.clear())     
-                       
-        })
-    }
     
+    update= (_id) => {
+       
+        (this.props.history.push(`/updatepartment/${_id}`))
+        console.log('this.props: ', this.props);
+        
+    }
+  
     
     render() {
         return (
             <div >
                 <div>
                     <section>
-                       
-                        <h2 className="ap">APARTMENT</h2><button onClick={() => this.deleteApartment(this.state.apartmentId)}>DELETE</button>
-                        <ul className="text">
+                        <h2 className="ap">APARTMENT</h2>
+
+                        <ul className="textA">
                             {this.state.apartmentInfo ? 
-                                <div className="listApartment"><li><span className="info">Name:</span> {this.state.apartmentInfo.name}</li>
-                                
+                                <div className="listApartment2"><button  className="smallButA" type="submit" onClick={() => this.update(this.state.apartmentInfo._id)}>EDIT</button>
+                                <li><span className="info">Id apartment:</span> {this.state.apartmentInfo._id}</li><li><span className="info">Name:</span> {this.state.apartmentInfo.name}</li>
                                 <li><span className="info">Address:</span> {this.state.apartmentInfo.address}</li>
-                                <li><span className="info">Phone:</span> {this.state.apartmentInfo.phone}</li></div>
+                                <li><span className="info">Phone:</span> {this.state.apartmentInfo.phone}</li>
+                                <li><span className="info">Owner:</span> {this.state.apartmentInfo.owner}</li>
+                                <li><span className="info">Real State:</span> {this.state.apartmentInfo.realState}</li>
+                                </div>
                             : undefined
                             }
                         </ul>
                         <Link to="/home">
-                             <button className="backb">Back</button>
+                             <button className="backAp">Back</button>
                         </Link>
                        
                     </section>

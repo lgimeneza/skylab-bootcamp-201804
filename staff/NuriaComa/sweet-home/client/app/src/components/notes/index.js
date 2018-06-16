@@ -70,16 +70,16 @@ class Notes extends Component {
             <div>
                 <div className="general">
                     <section>
-                        <h2 className="us">NOTES</h2>
+                        <h2 className="usN">NOTES</h2>
                          <form onSubmit={this.addNotes}>
-                            <p className="words1"> Add note: </p>
-                            <input autocomplete="off" className="formularior" type="text" value={this.state.name}onChange={this.nameNotes} name="name" ></input>
+                            <p className="wordsN"> Add note: </p>
+                            <input autocomplete="off" className="formularioN" type="text" value={this.state.name}onChange={this.nameNotes} name="name" ></input>
                             <button>ADD</button>
                          </form>
-                         <ul className="text">
+                         <ul className="textN">
                          {this.state.notes ? this.state.notes.map(notes => {
                                 return(
-                                <div key={notes._id} className="listnotes"><li> {notes.name}</li><button onClick={() => this.deleteNote(notes._id)}>✘</button></div>)
+                                <div key={notes._id} className="listNotes"><li className="dataN">🖊 {notes.name}<button  className="deleteN" onClick={() => this.deleteNote(notes._id)}>✘</button></li></div>)
                             }) : undefined
                         }
                         </ul>

@@ -57,7 +57,7 @@ const shApi = {
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
                 
-                return axios.post(`${this.url}/registeruser/${this.apartmentId}`,{ name, surname, phone, dni, password, apartmentId} )
+                return axios.post(`${this.url}/registeruser/${apartmentId}`,{ name, surname, phone, dni, password} )
                 .then(({ status, data }) => {
                     if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
                     return true
@@ -128,13 +128,13 @@ const shApi = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                debugger
+  
 
                 return axios.get(`${this.url}/users/${id}`, { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-
-                    return data.data
+                    
+                    return data
                 })
                 .catch(err => {
                     if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
@@ -161,6 +161,7 @@ const shApi = {
      * @returns {Promise<boolean>}
      */
     updateUser(id, name, surname, phone, dni, password, newPassword) {
+       
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -245,23 +246,16 @@ const shApi = {
      * 
      * @returns {Promise<boolean>}
      */
-    unregisterUser(userId, dni, password) {
+    unregisterUser(userId) {
         return Promise.resolve()
             .then(() => {
+                
+                if (typeof userId !== 'string') throw Error('user userId is not a string')
 
-                if (typeof id !== 'string') throw Error('user id is not a string')
+                if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
 
-                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
-
-                if (typeof dni !== 'string') throw Error('user dni is not a string')
-
-                if (!(dni = dni.trim()).length) throw Error('user dni is empty or blank')
-
-                if (typeof password !== 'string') throw Error('user password is not a string')
-
-                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-
-                return axios.delete(`${this.url}/users/${userId}`, { headers: { authorization: `Bearer ${this.token()}` }, data: { dni, password } })
+                
+                return axios.delete(`${this.url}/users/${userId}`, { headers: { authorization: `Bearer ${this.token()}` } })
 
                 .then(({ status, data }) => {
 
@@ -342,6 +336,76 @@ const shApi = {
                 })
             })
     },
+    updateApartment(id, name, address, phone, owner, realState) {
+       
+        return Promise.resolve()
+            .then(() => {
+                if (typeof id !== 'string') throw Error('user id is not a string')
+
+                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof name !== 'string') throw Error('user name is not a string')
+
+                if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+                if (typeof address !== 'string') throw Error('user address is not a string')
+
+                if ((address = address.trim()).length === 0) throw Error('user address is empty or blank')
+
+                if (typeof phone !== 'string') throw Error('user phone is not a string')
+
+                if (!(phone = phone.trim()).length) throw Error('user phone is empty or blank')
+
+                if (typeof owner !== 'string') throw Error('user owner is not a string')
+
+                if (!(owner = owner.trim()).length) throw Error('user owner is empty or blank')
+
+                if (typeof realState !== 'string') throw Error('user realState is not a string')
+
+                if ((realState = realState.trim()).length === 0) throw Error('user realState is empty or blank')
+
+                return axios.patch(`${this.url}/updateapartment/${id}`, { name, address, phone, owner, realState},{ headers: { authorization: `Bearer ${this.token()}`}})
+                .then(({ status, data }) => {
+
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                    return true
+                })
+                .catch(err => {
+
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                    } else throw err
+                })
+                
+            })
+            
+    },
+    listExistingApartment(apartmentId) {
+        return Promise.resolve()
+            .then(() => {
+               
+                return axios.get(`${this.url}/apartment/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+                .then(({ status, data }) => {
+                    if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    return data.data
+                })
+                .catch(err => {
+                    if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                    if (err.response) {
+                        const { response: { data: { error: message } } } = err
+
+                        throw Error(message)
+                        
+                    } else throw err
+                })
+            })
+    },
     deleteApartment(apartmentId) {
         return Promise.resolve()
             .then(() => {
@@ -369,8 +433,8 @@ const shApi = {
                 if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
                 
                 this.taskId=data.data
-                console.log(this.taskId)
-                return data
+                
+                return data.data
                
             })
             .catch(err => {
@@ -404,6 +468,27 @@ const shApi = {
                     } else throw err
                 })
             })
+    },
+    relateUserTask(userId, taskId) {
+        return Promise.resolve()
+        .then(() => {
+           
+            return axios.patch(`${this.url}/user/${userId}/task/${taskId}`, {}, { headers: { authorization: `Bearer ${this.token()}` } } )
+            .then(({ status, data }) => {
+                if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                return data
+            })
+            .catch(err => {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                if (err.response) {
+                    const { response: { data: { error: message } } } = err
+
+                    throw Error(message)
+                    
+                } else throw err
+            })
+        })
     },
     deleteTask(taskId) {
         return Promise.resolve()

@@ -1,0 +1,68 @@
+
+
+.backt {
+    width:78vw;
+    color:white;
+    font-size: 5vw;
+    margin: 10vw 12vw;
+    padding: 2vw;
+    background-color: #bd8215;
+    border:0;
+    font-family: 'Montserrat', sans-serif;
+}
+.formulariot{
+    margin-bottom: 7vw;
+    border: 1px solid #bd8215;
+    font-size: 5vw;
+    border-radius: 1vw;
+  }
+  .wordst{
+      font-size: 4vw
+  }
+  .butAddT{
+      color: white;
+      font-size: 5vw;
+      background-color: #bd8215;
+      border-top-right-radius: 2vw;
+      border-bottom-right-radius: 2vw;
+
+  }
+ 
+.ust{
+   
+    padding: 2vw;
+    color:#bd8215;
+    text-align: center;
+    margin: 5vw 12vw;
+    font-family: 'Montserrat', sans-serif;
+}
+.listTasks{
+    border-bottom: 1px solid #bd8215;
+    margin-right: 10vw;
+    font-family: 'Montserrat', sans-serif;
+    
+}
+.deleteT{
+    float: right;
+    margin-right: 2vw;
+    font-size: 5vw
+   
+   
+}
+.textt{
+    height: 93vw ;
+    overflow: scroll;
+    font-family: 'Montserrat', sans-serif;
+}
+ .datat{
+     margin-right: 5vw;
+     color:#bd8215;
+     font-size: 5vw;
+ }
+li{
+    margin: 2vw 5vw;
+    list-style:none;
+    
+}
+
+

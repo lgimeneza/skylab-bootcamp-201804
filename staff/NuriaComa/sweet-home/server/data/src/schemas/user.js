@@ -26,6 +26,11 @@ module.exports = new Schema({
         type: ObjectId,
         ref: 'Apartment',
         required: true
+    },
+    taskId: {
+        type: ObjectId,
+        ref: 'Task'
+        
     }
 
 })

@@ -1,0 +1,55 @@
+
+.backm {
+    width:78vw;
+    color:white;
+    font-size: 5vw;
+    margin: 10vw 12vw;
+    padding: 2vw;
+    background-color: #9c1212;
+    border:0;
+    font-family: 'Montserrat', sans-serif;
+}
+.formulariom{
+    margin-bottom: 7vw;
+    border: 1px solid #9c1212;
+    font-size: 5vw;
+    border-radius: 1vw;
+  }
+  .wordsm{
+      font-size: 3vw
+  }
+.usm{
+   
+    padding: 2vw;
+    color:#9c1212;
+    text-align: center;
+    margin: 5vw 12vw;
+    font-family: 'Montserrat', sans-serif;
+}
+.listmarket{
+    border-bottom: 1px solid #9c1212;
+    margin-right: 10vw;
+    font-family: 'Montserrat', sans-serif;
+    
+}
+.textM{
+    height: 100vw ;
+    overflow: scroll;
+    font-family: 'Montserrat', sans-serif;
+}
+.deleteM{
+    float: right;
+    margin-right: 2vw;
+    font-size: 5vw
+}
+ .dataM{
+    margin-left: 5vw;
+    text-align: left;
+    font-size: 5vw;
+ }
+li{
+    margin: 2vw 5vw;
+    list-style:none;
+    
+}
+

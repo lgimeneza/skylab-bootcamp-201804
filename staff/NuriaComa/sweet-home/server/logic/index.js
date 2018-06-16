@@ -119,7 +119,7 @@ const logic = {
     * 
     * @returns {Promise<boolean>}
     */
-    updateUser(id, name, surname, phone, dni, password, newPassword, ) {
+    updateUser(id, name, surname, phone, dni, password, newPassword,  ) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -146,7 +146,7 @@ const logic = {
 
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-                return User.findOne({ dni, password })
+                return User.findById(id )
             })
             .then(user => {
                 if (!user) throw Error('wrong credentials')
@@ -158,11 +158,38 @@ const logic = {
             .then(user => {
                 user.name = name
                 user.surname = surname
+                user.phone=phone
+                user.dni=dni
                 user.password = newPassword ? newPassword : password
 
                 return user.save()
             })
             .then(() => true)
+    },
+
+    relateUserTask(userId, taskId){
+        return Promise.resolve()
+        .then(() => User.findById( userId )
+        )
+        .then(user =>{
+            if (!user) throw Error('wrong credentials')
+           return user
+        })
+        .then(user =>{
+            if (!user.taskId || user.taskId === ''){
+                
+                Task.findById(taskId)
+                
+                .then(task =>{
+                    if(task.apartmentId.toString() === user.apartmentId.toString()) {
+                        user.taskId = taskId;
+                        user.save()
+                        return user; 
+                    }
+                })
+            }
+           return user
+        })
     },
 
     listUsers(apartmentId) {
@@ -171,7 +198,6 @@ const logic = {
             .then(() => {
                 return User.find({ apartmentId })
                     .then(users => {
-
                         if (!users) throw Error(`no users found`)
 
                         return users
@@ -188,25 +214,18 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
-    unregisterUser(id, dni, password) {
+    unregisterUser(id) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                if (typeof dni !== 'string') throw Error('user dni is not a string')
-
-                if (!(dni = dni.trim()).length) throw Error('user dni is empty or blank')
-
-                if (typeof password !== 'string') throw Error('user password is not a string')
-
-                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-
-                return User.findOne({ dni, password })
+                
+                return User.findById({ _id: id })
             })
             .then(user => {
-                if (!user) throw Error('wrong credentials')
+              
 
                 if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
 
@@ -243,6 +262,54 @@ const logic = {
                     })
             })
     },
+    updateApartment(id, name, address, phone, owner, realState  ) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof id !== 'string') throw Error('user id is not a string')
+
+                if (!(id = id.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof name !== 'string') throw Error('user name is not a string')
+
+                if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+                if (typeof address !== 'string') throw Error('user address is not a string')
+
+                if ((address = address.trim()).length === 0) throw Error('user address is empty or blank')
+
+                if (typeof phone !== 'string') throw Error('user phone is not a string')
+
+                if (!(phone = phone.trim()).length) throw Error('user phone is empty or blank')
+
+                if (typeof owner !== 'string') throw Error('user owner is not a string')
+
+                if (!(owner = owner.trim()).length) throw Error('user owner is empty or blank')
+
+                if (typeof realState !== 'string') throw Error('user realState is not a string')
+
+                if ((realState = realState.trim()).length === 0) throw Error('user realState is empty or blank')
+
+                return Apartment.findById(id )
+            })
+            .then(apartment => {
+                if (!apartment) throw Error('wrong credentials')
+
+                if (apartment.id !== id) throw Error(`no apartment found with id ${id} for given credentials`)
+
+                return apartment
+            })
+            .then(apartment => {
+                apartment.name = name
+                apartment.address = address
+                apartment.phone=phone
+                apartment.owner=owner
+                apartment.realState = realState
+
+                return apartment.save()
+            })
+            .then(() => true)
+    },
+
 
     listApartment(apartmentId) {
 
@@ -308,13 +375,21 @@ const logic = {
             })
             .then(task => {
                 if (!task) throw Error('wrong credentials')
-
+                
                 if (task.id !== taskId) throw Error(`no task found with id ${taskId} for given credentials`)
+                    return Task.findByIdAndRemove({ _id: taskId })
+                        .then(() => {
 
-                return Task.findByIdAndRemove({ _id: taskId })
-                    .then(() => true)
+                            return User.findOne({"taskId": taskId})
+                            .then( user =>{
+                                /* user = Object.assign({}, {name: user.name, surname: user.surname, phone: user.phone, dni: user.dni, password: user.password, apartmentId: user.apartmentId, _id: user._id}) */
 
-            })
+                                User.update({_id: user.id}, { $unset: { taskId: null } }).then(result => console.info({result}))
+                        })
+                })
+                        
+                    
+                })
     },
     addMarket(name, apartmentId) {
         return Promise.resolve()
@@ -338,6 +413,16 @@ const logic = {
                     .then(market => {
                         if (!market) throw Error(`no things found`)
                         return market
+                    })
+            })
+    },
+    apartmentExists(apartmentId) {
+        return Promise.resolve()
+            .then(() => {
+                return Apartment.findById(apartmentId)
+                    .then(apartment => {
+                        if (!apartment) throw Error(`no apartment found`)
+                        return apartment
                     })
             })
     },

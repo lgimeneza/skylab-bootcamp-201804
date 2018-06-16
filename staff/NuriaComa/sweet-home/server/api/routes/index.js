@@ -86,10 +86,10 @@ router.get('/list/:apartmentId',jwtValidator, (req, res) => {
         })
 
 })
-router.delete('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
-    const { params: { userId }, body: { dni, password } } = req
+router.delete('/users/:userId', jwtValidator, (req, res) => {
+    const { params: { userId } } = req
 
-    logic.unregisterUser(userId, dni, password)
+    logic.unregisterUser(userId)
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })
@@ -122,6 +122,19 @@ router.get('/listapartment/:apartmentId', jwtValidator, (req, res) => {
         .then(apartments => {
             res.status(200)
             res.json({ status: 'OK', data: apartments })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.patch('/updateapartment/:apartmentId', [jwtValidator, jsonBodyParser], (req, res) => {
+    const { params: { apartmentId }, body: { name, address, phone, owner, realState} } = req
+
+    logic.updateApartment(apartmentId, name, address, phone, owner, realState)
+        .then(() => {
+            res.status(200)
+            res.json({ status: 'OK' })
         })
         .catch(({ message }) => {
             res.status(400)
@@ -161,6 +174,18 @@ router.get('/task/:apartmentId', jwtValidator, (req, res) => {
         .then(tasks => {
             res.status(200)
             res.json({ status: 'OK', data: tasks })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.patch('/user/:userId/task/:taskId', jwtValidator, (req, res) => {
+    const{ params: {userId, taskId} } =req
+    return logic.relateUserTask(userId, taskId)
+        .then(user => {
+            res.status(200)
+            res.json({ status: 'OK', data: user })
         })
         .catch(({ message }) => {
             res.status(400)
@@ -245,15 +270,27 @@ router.get('/note/:apartmentId', jwtValidator, (req, res) => {
             res.json({ status: 'KO', error: message })
         })
 })
-router.delete('/market/:noteId', jwtValidator, (req, res) => {
-    const { params: { marketId }} = req
+router.delete('/note/:noteId', jwtValidator, (req, res) => {
+    const { params: { noteId }} = req
 
-    return logic.deleteMarket(marketId)
+    return logic.deleteNote(noteId)
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })
         })
         .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+router.get('/apartment/:apartmentId', (req, res) => {
+    const { params: { apartmentId } } = req;
+    return logic.apartmentExists(apartmentId)
+        .then(apartment => {
+            res.status(200)
+            res.json({ status: 'OK', data: apartment})
+        })
+                .catch(({ message }) => {
             res.status(400)
             res.json({ status: 'KO', error: message })
         })

@@ -1,44 +1,57 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-.backb {
+.backAp {
     width:78vw;
     color:white;
     font-size: 5vw;
-    margin: 10vw 12vw;
+    margin: 10vw 10vw;
     padding: 2vw;
-    background-color: #92ac19;
+    background-color: #105380;
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
 .ap{
    
     padding: 2vw;
-    color:#92ac19;
+    color:#105380;
     text-align: center;
     margin: 7vw 12vw;
     font-family: 'Montserrat', sans-serif;
 }
-.listUsers{
-    border-bottom: 1px solid #0d292d;
+.listApartment2{
+    
     margin-right: 10vw;
     font-family: 'Montserrat', sans-serif;
     
 }
-.text{
+.textA{
     height: 120vw ;
     overflow: scroll;
     font-family: 'Montserrat', sans-serif;
+    
 }
  .info{
-     margin-right: 2vw;
-     color:#92ac19;
+     margin-top: 3vw;
+     margin-bottom: 1vw;
+     color:#105380;
      font-size: 5vw;
+     display: block;
  }
 li{
     margin: 2vw 5vw;
     list-style:none;
     
 }
-.text{
-    overflow: scroll
+
+.smallButA{
+    display: inline;
+    color:white;
+    font-size: 3vw;
+    margin: 3vw 12vw 3vw auto;
+    padding: 1vw;
+    background-color: #105380;
+    border:0;
+    font-family: 'Montserrat', sans-serif;
+
 }
+

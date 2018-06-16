@@ -1,0 +1,58 @@
+
+.backn {
+    width:78vw;
+    color:white;
+    font-size: 5vw;
+    margin: 10vw 12vw;
+    padding: 2vw;
+    background-color: #5a4280;
+    border:0;
+    font-family: 'Montserrat', sans-serif;
+}
+.formularioN{
+    margin-bottom: 7vw;
+    border: 1px solid #5a4280;
+    font-size: 5vw;
+    border-radius: 1vw;
+  }
+  .wordsN{
+    font-size: 4vw
+}
+.usN{
+   
+    padding: 2vw;
+    color:#5a4280;
+    text-align: center;
+    margin: 5vw 12vw;
+    font-family: 'Montserrat', sans-serif;
+}
+.listNotes{
+    
+    margin-right: 10vw;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 1px solid #5a4280
+}
+.dataN{
+    margin-left: 5vw;
+    text-align: left;
+    font-size: 5vw;
+    
+}
+.deleteN{
+    float: right;
+    margin-right: 2vw;
+    font-size: 5vw
+   
+   
+}
+.textN{
+    height: 93vw ;
+    overflow: scroll;
+    font-family: 'Montserrat', sans-serif;
+}
+ 
+li{
+    margin: 2vw 5vw;
+    list-style:none;
+    
+}

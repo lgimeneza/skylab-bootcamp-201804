@@ -78,6 +78,7 @@ class Register extends Component {
    
 
     acceptRegister = (e) =>{
+        
         e.preventDefault()
         Promise.resolve()
         
@@ -91,8 +92,9 @@ class Register extends Component {
                 }
                 
                 else{
-                    logic.registerUser(this.state.name,this.state.surname, this.state.phone, this.state.dni, this.state.password, this.state.apartmentId)
-                    .then(resp => {
+                    const apartId = localStorage.getItem('apartmentId')
+                    logic.registerUser(this.state.name,this.state.surname, this.state.phone, this.state.dni, this.state.password, apartId)
+                    .then(()=> {
                         
 
                 swal({
@@ -115,7 +117,7 @@ class Register extends Component {
                     password:'',
                     repeatpassword:'',
                     })
-                    console.log('app-catch', err)     
+                         
                 alert(err)})
             }
         })

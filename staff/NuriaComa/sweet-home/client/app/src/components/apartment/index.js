@@ -59,7 +59,8 @@ class Apartment extends Component {
         }
         return false
     }
-    checkId = (apartId, apartmentId) =>{
+    checkApartment = apartId => logic.listExistingApartment(apartId);
+    checkId = (apartId) =>{
         
         if (this.apartId === this.apartmentId){
             this.setState.check({check:true})
@@ -67,9 +68,9 @@ class Apartment extends Component {
     }
     acceptRegister = (e) => {
         e.preventDefault() 
-        const { name, address, phone,apartId, apartmentId } = this.state
+        const { name, address, phone, apartId, apartmentId } = this.state
 
-                if ( apartId ==='' && apartmentId ===null) {
+                if ( apartId === '' && apartmentId ===null) {
                     if(this.checkInput(name,address,phone)) return
                     logic.registerApartment(name,address,phone)
                     .then(res => {
@@ -92,14 +93,17 @@ class Apartment extends Component {
                             alert(err)
                         })
 
-                }if (apartId !== '' && apartmentId ===null) {
+                }
+                if (apartId !== '') {
 
-                    if (!this.state.check) {
-                    alert("apartmentid don't match")
-                    }
-                    if (this.state.check) {
+                    this.checkApartment(apartId).then(() => {
+                        localStorage.setItem('apartmentId', apartId);
+                        console.info('ola ke ase')
                         this.props.history.push("/registerUser")
-                     }
+                    })
+                    .catch(err => 
+                        alert(`apartmentid don't match ${err}`)
+                    )
             }
             
     }

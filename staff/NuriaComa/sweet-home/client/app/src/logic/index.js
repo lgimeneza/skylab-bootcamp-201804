@@ -39,13 +39,15 @@ const logic = {
 
                 this.data = res.data
 
-                return true
+                return this.data
             })
     },
 
     updateUser(id, name, surname, phone, dni, password, newPassword) {
+        console.log('logic', password)
         return shApi.updateUser(id, name, surname, phone, dni, password, newPassword)
             .then(users => {
+
                 return users
             })
     },
@@ -57,9 +59,9 @@ const logic = {
         })
     },
 
-    unregisterUser(id, dni, password) {
-        return shApi.unregisterUser(id, dni, password)
-            .then((res) => true)
+    unregisterUser(id) {
+        return shApi.unregisterUser(id)
+            .then(() => true)
     },
 
     registerApartment(name, address, phone){
@@ -82,6 +84,21 @@ const logic = {
             return this.apartment
         })
     },
+    updateApartment(id, name, address, phone, owner, realState) {
+        return shApi.updateApartment(id, name, address, phone, owner, realState)
+            .then(apartment => {
+
+                return apartment
+            })
+    },
+
+    listExistingApartment(apartmentId) {
+        return shApi.listExistingApartment(apartmentId)
+        .then(res => {
+            this.apartment = res
+            return this.apartment
+        })
+    },
     deleteApartment(apartmentId){
         return shApi.deleteApartment(apartmentId)
         .then(()=>{
@@ -90,7 +107,7 @@ const logic = {
     },
     addTasks(name, apartmentId){
         return shApi.addTasks(name, apartmentId)
-        .then(res => true)
+        .then(id => id)
 
      
     },
@@ -101,6 +118,11 @@ const logic = {
             return this.tasks
         })
     },
+    relateUserTask(userId, taskId){
+        return shApi.relateUserTask(userId, taskId)
+        .then(user => user)
+    },
+    
     deleteTask(taskId){
         return shApi.deleteTask(taskId)
         .then(() => {

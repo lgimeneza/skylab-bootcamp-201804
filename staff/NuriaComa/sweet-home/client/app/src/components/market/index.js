@@ -70,21 +70,21 @@ class Market extends Component {
             <div>
                 <div className="general">
                     <section>
-                        <h2 className="us">MARKET</h2>
+                        <h2 className="usm">MARKET</h2>
                          <form onSubmit={this.addMarket}>
-                            <p className="words1"> Add MARKET: </p>
-                            <input autocomplete="off" className="formularior" type="text" value={this.state.name}onChange={this.nameMarket} name="name" ></input>
+                            <p className="wordsm"> Add MARKET: </p>
+                            <input autocomplete="off" className="formulariom" type="text" value={this.state.name}onChange={this.nameMarket} name="name" ></input>
                             <button>ADD</button>
                          </form>
-                         <ul className="text">
+                         <ul className="textM">
                          {this.state.market ? this.state.market.map(market => {
                                 return(
-                                <div key={market._id} className="listmarket"><li> {market.name}</li><button onClick={() => this.deleteMarket(market._id)}>✘</button></div>)
+                                <div key={market._id} className="listmarket"><li  className="dataM">🛒   {market.name}<button className="deleteM" onClick={() => this.deleteMarket(market._id)}>✘</button></li></div>)
                             }) : undefined
                         }
                         </ul>
                         <Link to="/home">
-                             <button className="backn">Back</button>
+                             <button className="backm">Back</button>
                         </Link>
                     </section>
                 </div>

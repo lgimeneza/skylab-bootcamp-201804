@@ -1,37 +1,57 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-.back {
+.backU {
     width:78vw;
     color:white;
     font-size: 5vw;
-    margin: 10vw 12vw;
+    margin: 10vw 11vw;
     padding: 2vw;
-    background-color: #0d292d;
+    background-color: #7b9214;
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
-.us{
+.smallBut{
+    display:inline;
+    color:white;
+    font-size: 3vw;
+    margin: 2vw 7vw;
+    padding: 1vw;
+    background-color: #7b9214;
+    border:0;
+    font-family: 'Montserrat', sans-serif;
+}
+.smallButN{
+    display:inline;
+    color:white;
+    font-size: 3vw;
+    margin: 2vw 15vw;
+    padding: 1vw;
+    background-color: #7b9214;
+    border:0;
+    font-family: 'Montserrat', sans-serif;
+}
+.usU{
    
     padding: 2vw;
-    color:#0d292d;
+    color:#7b9214;
     text-align: center;
     margin: 7vw 12vw;
     font-family: 'Montserrat', sans-serif;
 }
 .listUsers{
-    border-bottom: 1px solid #0d292d;
-    margin-right: 10vw;
+    border-bottom: 1px solid #7b9214;
+    margin-right: 7vw;
     font-family: 'Montserrat', sans-serif;
     
 }
 .text{
-    height: 120vw ;
+    height: 110vw ;
     overflow: scroll;
     font-family: 'Montserrat', sans-serif;
 }
  .data{
      margin-right: 2vw;
-     color:#0d292d;
+     color:#7b9214;
      font-size: 5vw;
  }
 li{
@@ -39,10 +59,4 @@ li{
     list-style:none;
     
 }
-.text{
-    overflow: scroll
-}
 
-.swal2-inputdni .swal2-input{
-    display: inline !important;
-}

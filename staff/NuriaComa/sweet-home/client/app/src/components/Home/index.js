@@ -49,7 +49,7 @@ class Home extends Component {
             </Link>
             </div>
             <div className="box6">
-            <Link to="/config">
+            <Link to="/settings">
                 <img src={config} alt=""/>
             </Link>
             </div>

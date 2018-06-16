@@ -7,11 +7,15 @@ import Home from './components/home/'
 import Login from './components/login/'
 import Register from './components/register/'
 import Users from './components/users/'
+import UpdateUser from './components/updateuser/'
 import Apartment from './components/apartment/'
 import ListApartment from './components/listapartment/'
 import Tasks from './components/tasks/'
 import Notes from './components/notes/'
 import Market from './components/market/'
+import UpdateApartment from './components/updateapartment'
+import Settings from './components/settings'
+
 
 
 
@@ -21,22 +25,25 @@ import Market from './components/market/'
 class App extends Component {
   render() {
     return (
-      <Switch>
-        
-          <div className="App">
+      
+      <div className="App">
+        <Switch>
             <Route exact path="/" component={Landing} />
             <Route path="/register" component={Apartment} />
             <Route path="/auth" component={Login} />
             <Route path="/registeruser/" component={Register} />
             <Route path="/home" component={Home} />
             <Route path="/users" component={Users} />
+            <Route path="/updateuser/:id" component={UpdateUser} />
             <Route path="/house" component={ListApartment} />
+            <Route path="/updatepartment/:id" component={UpdateApartment} />
             <Route path="/tasks" component={Tasks} />
             <Route path="/market" component={Market} />
             <Route path="/notes" component={Notes} />
+            <Route path="/settings" component={Settings} />
+        </Switch>
             </div>
         
-      </Switch>
     );
   }
 }

@@ -10,13 +10,24 @@ class Tasks extends Component {
         name:'',
         tasks:[],
         taskId:'',
+        users:[],
+       
     }
-    componentDidMount() {
-        const apartId = localStorage.getItem('apartmentId')
+    getTask =()=>{
+        const apartId = localStorage.getItem('apartmentId') 
+        
+        
+        logic.listUsers(apartId)
+        .then(users =>{
+            this.setState(prevState=>({users}))
+        })
         logic.listTasks(apartId)
         .then((tasks)=>{
             this.setState(prevState => ({tasks}))
 })
+    }
+    componentDidMount() {
+        this.getTask()
     }
     nameTask =(e) => {
         const name = e.target.value
@@ -39,14 +50,21 @@ class Tasks extends Component {
         .then(() => this.checkInput())
         .then(()=>{
             logic.addTasks(this.state.name, apartId)
-            .then(()=>{
-                this.state.name=''
-                logic.listTasks(apartId)
-                .then((tasks)=>{
-                    this.setState(prevState => ({tasks}))
+            .then(task=>{
+                
+                const userWithoutTask = this.state.users.find(user => user.taskId === '' || !user.taskId)
+                    if(userWithoutTask) {
+                        console.log('userWithoutTask: ', userWithoutTask);
+                        this.state.name=''
+
+                        logic.relateUserTask(userWithoutTask._id, task.id).then( () => {
+                            this.getTask()
+                        })
+                    }
                 })
+
             })
-        })
+        
 
     }
     deleteTask = id =>{
@@ -56,10 +74,7 @@ class Tasks extends Component {
         .then(()=>{
            logic.deleteTask(id)
            .then(() => {
-            logic.listTasks(apartId)
-                .then((tasks) => {
-                    this.setState(prevState => ({tasks}))
-                })
+                this.getTask()
            })
 
         })
@@ -72,20 +87,34 @@ class Tasks extends Component {
             <div>
                 <div className="general">
                     <section>
-                        <h2 className="us">TASKS</h2>
-                         <form onSubmit={this.addTask}>
-                            <p className="words1"> Add task: </p>
-                            <input autocomplete="off" className="formularior" type="text" value={this.state.name}onChange={this.nameTask} name="name" ></input>
-                            <button type='submit' >ADD</button>
+                        
+                        <h2 className="ust">TASKS</h2>
+                        {this.state.users.length > this.state.tasks.length ? 
+                         <form  onSubmit={this.addTask}>
+                            <p className="wordst"> Add task: </p>
+                            <input autoComplete="off" className="formulariot" type="text" value={this.state.name}onChange={this.nameTask} name="name" ></input>
+                            <button className="butAddT" type='submit' >ADD</button>
                          </form>
-                         <ul className="text">
-                         {this.state.tasks ? this.state.tasks.map(tasks => {
+                           : undefined
+                        }
+                         <ul className="textt">
+                       
+                         {this.state.tasks ? this.state.tasks.map( (tasks, index) => {
+                             console.log('tasks: ', tasks);
+                            const user = this.state.users.filter(user => user.taskId === tasks._id)
+                            console.log('this.state.users: ', this.state.users);
+                            console.log('user: ', user);
+                            if (user.length > 0) {
                                 return(
-                                <div key={tasks.name} className="listTasks"><li> {tasks.name}</li><button onClick={() => this.deleteTask(tasks._id)}>✘</button></div>)
-                                
+                                    <div key={tasks.name} className="listTasks"><li className="datat">{user[0].name}: {tasks.name} <button className="deleteT" onClick={() => this.deleteTask(tasks._id)}>✘</button></li></div>
+                                )
+                            }
+
+                            return null
                             }) : undefined
                         }
                         </ul>
+                        
                         <Link to="/home">
                              <button className="backt">Back</button>
                         </Link>
