@@ -10,14 +10,31 @@ class App extends Component {
 
 
   state = {
-    isLogged:undefined,
+    isLogged:false,
     photoProfile: undefined,
     name: undefined,
     city: undefined,
+    newNotifications:[],
+    notifications:[],
     idUser: localStorage.getItem("id-app"),
+    allDataUser:{}
 
-  };
+  }
 
+  clearNotifications=()=>{
+    this.setState({ newNotifications:[] })
+  }
+
+  getNotifications=()=>{    
+
+    logic.retrieveUser(this.idUser()).then(({notifications})=>{
+
+      let newNotifications = logic.getNotifications(notifications)
+      this.setState({ newNotifications })
+      return newNotifications
+    })
+
+  }
 
   idUser = () => {
     return localStorage.getItem("id-app")
@@ -42,16 +59,18 @@ class App extends Component {
   retrieveUser = (idUser) => {
 
     if (idUser) return logic.retrieveUser(idUser).then(data => data)
-
-      .then(({ photoProfile, name, city }) => {
+    .then(allDataUser => {
+       
+        let { photoProfile, name, city, notifications } =allDataUser
         if(!photoProfile)photoProfile ="../../images/others/profile-dog.jpg"
-        
         this.setState({
           photoProfile,
           name,
           city,
           idUser,
-          isLogged:true
+          notifications,
+          isLogged:true,
+          allDataUser
         })
       })  
   }
@@ -65,8 +84,8 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header dataUser={this.state} logOut={this.logOut} />
-        <Main dataUser={this.state} retrieveUser={this.retrieveUser}  logIn={this.logIn}  isLogged={this.state.isLogged} />
+        <Header dataUser={this.state} logOut={this.logOut} clearNotifications={this.clearNotifications}  />
+        <Main  dataUser={this.state}  retrieveUser={this.state.allDataUser} getNotifications={this.getNotifications}   logIn={this.logIn}  isLogged={this.state.isLogged} />
       </div>
     )
   }

@@ -1,5 +1,18 @@
 @import '../main.scss';
 
+
+.return{
+    z-index: 2;
+    cursor: pointer;
+}
+
+.return-disable{
+    z-index: 2;
+    color: $disabled;
+    cursor:not-allowed ;
+
+}
+
 .logo{
     text-align: center;
     width: 100%;
@@ -13,11 +26,8 @@
 
 }
 
-
 .navbar-logged{
-    i{
-        color: $gray_link
-    }
+ 
     li{
         display: inline-block;
 
@@ -27,6 +37,15 @@
     }
     border-bottom: solid 1px;
 }
+
+.one-notification{
+    color: $notification;
+}
+
+.without-notification{
+    color: $disabled;
+}
+
 
 
 .zi-1{

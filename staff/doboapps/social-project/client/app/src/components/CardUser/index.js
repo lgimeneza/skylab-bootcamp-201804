@@ -17,7 +17,7 @@ function CardUser({user:{_id,name,race,gender,city,friends,photoProfile} }) {
         default:  gender="undefined"; iconGender= "transgender";
     }
 
-    return <Col className="card-img" xs="6" md="4" >
+    return <Col className="card-img" xs="12" sm="6" md="4" >
                 <Link to={`/user/${_id}`}>
 
         <Card className="mb-4 bg-light">

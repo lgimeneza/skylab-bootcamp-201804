@@ -1,7 +1,7 @@
 import React from "react"
 import { Link ,withRouter,} from "react-router-dom"
 import logic from "../../logic"
-import { NavBarDisconnection } from "../index";
+import { NavBarDisconnection, Notifications } from "../index";
 import { CardImg, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 import './style.scss'
@@ -10,27 +10,33 @@ import './style.scss'
 class Header extends React.Component {
 
 
-    toggle = this.toggle.bind(this);
     state = {
         isOpen: false,
     }
  
-    toggle() {
+    toggle=() =>{
         this.setState({
             isOpen: !this.state.isOpen
         })
     }
 
+    isHome(){
+       return (this.props.location.pathname==="/") ? true : false
+    }
+
     goBack=()=>{
-        this.props.history.goBack();
+        if(!this.isHome())   this.props.history.goBack();
     }
 
     render() {
+        
+        let btnRetrun = "return" 
+        if(this.isHome()) btnRetrun="return-disable"
 
         if(logic.isLogged()) return (
             <div>
                 <Navbar className="navbar-logged" color="light" light expand="md">
-                    <i  onClick={this.goBack} className="rotate fas fa-caret-square-left fa-2x "></i>
+                    <i  onClick={this.goBack} className={`${btnRetrun} fas  fa-long-arrow-alt-left fa-2x`}></i>
                     <NavbarBrand className="logo zi-1" tag={Link}  to="/" >Dogger</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
@@ -44,6 +50,10 @@ class Header extends React.Component {
                                     <span >{this.props.dataUser.name} </span>
                                     <CardImg className="rounded-circle" top src={this.props.dataUser.photoProfile} alt="Card image cap" />
                                 </NavLink>
+                                </li>
+                                <li>
+                                <Notifications notifications={this.props.dataUser.newNotifications} accept={this.handlerAcceptFriendship} ignore={this.handlerIgnoreFriendship} clearNotifications={this.props.clearNotifications} />
+
                                 </li>
                             </ul>
                         </Nav>

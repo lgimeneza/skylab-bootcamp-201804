@@ -81,9 +81,12 @@ class Home extends Component {
     }
 
 
-    componentDidMount() {
-        if(logic.isLogged())  this.getUsersByCity()
+    componentDidMount(){
+       console.log( this.props.getNotifications())
+        this.getUsersByCity()
     }
+  
+
 
     render() {
 
