@@ -9,6 +9,7 @@
 .form-group {
     font-size: 1.3rem;
     color: white;
+    margin-top: 25px;
 }
 .btn:nth-child(5) {
     color: #fff;
@@ -26,3 +27,6 @@
 input[placeholder] {
     text-align: center;
 }
+/* .form {
+    margin-top: 20px
+} */

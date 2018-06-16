@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import logic from '../../../logic'
 import {Link} from 'react-router-dom'
 import ItemsList from '../../items-list'
-import Menu from '../../menu'
-import Carousel from '../../carousel'
+import {Animated} from "react-animated-css";
+
 
 class ProductsByCategory extends Component {
 
@@ -39,8 +39,8 @@ class ProductsByCategory extends Component {
 
     return (
         <div>
-            <ItemsList products={this.state.products}/>                       
-        </div>                   
+            <ItemsList products={this.state.products}/>                                   
+        </div>  
     )
    }       
 }

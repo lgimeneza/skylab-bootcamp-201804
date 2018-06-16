@@ -17,20 +17,20 @@ class Menu extends Component {
                 categories
             })
         })       
+        
     }
 
    render() {
 
     return ( 
-            <div className="col-lg-2 col-md-4 col-sm-4 col-xs-12 mb-5">
+        <div className="col-lg-2 col-md-4 col-sm-4 col-xs-12 mb-5">
                 <div className="list-group" id="list-tab" role="tablist">
-                    <Link to='/'><p className="list-group-item list-group-item-action active" id="list-profile-list" data-toggle="list" role="tab" aria-controls="profile">Productos</p></Link>
+                    {/* <Link to='/' className="list-group-item list-group-item-action" >Productos</Link> */}
                     {/* <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`}  ><a className="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="" role="tab" aria-controls="home">Packs</a></Link> */}
                     {this.state.categories.map(category => {
-                        if (category.name !== 'Individual') {
-                        return  <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`}>{category.name}</Link>
+                        // if (category.name !== 'Individual')
+                        return <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`} key={category.id} className="list-group-item list-group-item-action">{category.name}</Link>
                     }
-                }
                             
                     )}
                     {/* <a className="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="" role="tab" aria-controls="profile">Carnes</a>

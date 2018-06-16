@@ -6,7 +6,7 @@
     text-decoration: none
 }
 .list-group-item:hover {
-    background-color: rgba(128, 128, 128, 0.651);
+    background-color: #6c757d;
     color: white;
 }
   
@@ -23,5 +23,10 @@
 .list-group-item.active {
     background-color: #6c757d;
     border-color: #7b838f;
+}
+
+.linkMenu{
+    background-color: red;
+    color: white
 }
 

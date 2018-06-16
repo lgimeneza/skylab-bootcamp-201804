@@ -3,8 +3,8 @@ import logic from '../../../logic'
 import {Link} from 'react-router-dom'
 import './index.css'
 import ItemsList from '../../items-list'
-import Menu from '../../menu'
-import Carousel from '../../carousel'
+import {Animated} from 'react-animated-css'
+
 
 
 class Categories extends Component {
@@ -29,9 +29,10 @@ class Categories extends Component {
 
     return (       
         <div>
-        <ItemsList 
-            categories={this.state.categories}
-        />                       
+        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
+
+            <ItemsList categories={this.state.categories}/>                       
+        </Animated>   
         </div>  
         )
    }       

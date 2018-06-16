@@ -27,7 +27,14 @@ clientApi.token = function (token) {
     return sessionStorage.getItem('userId')
   }
 
-  
+  const _cart = sessionStorage.getItem('cart')
+
+  if (_cart && _cart !== 'undefined' )
+      clientLogic._cart = JSON.parse(_cart)
+
+      clientLogic.cart = function (cart) {
+        sessionStorage.setItem('cart', JSON.stringify(cart))
+  }
 
 ReactDOM.render(
     <Router> 

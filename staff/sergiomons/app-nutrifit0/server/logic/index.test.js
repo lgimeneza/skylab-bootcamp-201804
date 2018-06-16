@@ -363,10 +363,11 @@ describe('logic nutrifit', () => {
                                 .then(() => {
                                     return logic.listProducts()
                                         .then(products => {
-
+                                            
                                             expect(products.length).to.equal(6)
 
                                             const product = products.find(product => product.id == polloVerduras._doc._id.toString())
+
                                             expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
                                             expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
                                             expect(product.name).to.equal(polloVerduras.name)
@@ -375,6 +376,39 @@ describe('logic nutrifit', () => {
                                             expect(product.categoryId).to.equal(category._id.toString())
                                         })
                                 })
+                        })
+                })
+        })
+    })
+
+    describe('list product details', () => {
+        it('should succeed on correct data', () => {
+            return Promise.all([
+                Category.create(pack_CategoryData),
+                Category.create(individual_CategoryData)
+            ])
+                .then(([pack_Category, individual_Category])=> {
+                    polloVerdurasData.category = individual_Category._id
+                    terneraData.category = individual_Category._id
+
+                    return Promise.all([
+                        Product.create(polloVerdurasData),
+                        Product.create(terneraData)
+                    ])
+                        .then(([polloVerduras, ternera]) => {
+
+                            return logic.productDetails(polloVerduras._id.toString())
+                                .then(product => {
+                                    expect(product).to.exist
+                                    expect(product.length).to.equal(1)
+
+                                    const productDet = product.find(product => product._id == polloVerduras._id.toString())
+
+                                    expect(productDet.name).to.equal('Pollo con verduras')
+                                    expect(productDet._id.toString()).to.equal(polloVerduras._id.toString())
+                                    expect(productDet.category.toString()).to.equal(individual_Category._id.toString())
+                                })
+
                         })
                 })
         })
@@ -441,6 +475,68 @@ describe('logic nutrifit', () => {
         })
     })
 
+    describe('list root categories', () => {
+        it('should succeed on correct data', () => {
+            return Promise.all([
+                new Category(pack_CategoryData).save(),
+                new Category(individual_CategoryData).save(),
+
+                new Category(individual_S_CategoryData).save()
+            ])
+                .then(categories => {
+                    const [packCat, indCat, indSCat] = categories
+
+                    indSCat.parent = indCat._id
+
+                    return indSCat.save()
+                        .then(() => {
+                            polloVerdurasData.category = packCat._id
+                            terneraData.category = packCat._id
+
+                            polloArrozData.category = indSCat._id
+                            sopaVerdurasData.category = indSCat._id
+                            sopaMariscoData.category = indSCat._id
+
+                            return Promise.all([
+                                new Product(polloVerdurasData).save(),
+                                new Product(terneraData).save(),
+                                new Product(polloArrozData).save(),
+                                new Product(sopaVerdurasData).save(),
+                                new Product(sopaMariscoData).save(),
+                            ])
+                        })
+                        .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco]) => {
+                            return logic.listAllCategories()
+                                .then(categories => {
+                                    console.log(categories)
+                                    expect(categories).to.exist
+                                    expect(categories.length).to.equal(3)
+
+                                    {
+                                        const category = categories.find(category => {
+                                            return category.id === packCat._id.toString()
+                                        })
+
+                                        expect(category).to.exist
+                                        expect(category.id).to.equal(packCat._id.toString())
+                                        expect(category.hasChildren).to.be.false
+                                    }
+
+                                    {
+                                        const category = categories.find(category => {
+                                            return category.id === indCat._id.toString()
+                                        })
+
+                                        expect(category).to.exist
+                                        expect(category.id).to.equal(indCat._id.toString())
+                                        expect(category.hasChildren).to.be.true
+                                    }
+                                })
+                        })
+                })
+        })
+    })
+
     describe('list subcategories', () => {
         it('should succeed on correct data', () => {
             return Promise.all([
@@ -474,7 +570,6 @@ describe('logic nutrifit', () => {
                         .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco]) => {
                             return logic.listSubcategories(indCat._id.toString())
                                 .then(categories => {
-                                   debugger
                                     expect(categories).to.exist
                                     expect(categories.length).to.equal(1)
 

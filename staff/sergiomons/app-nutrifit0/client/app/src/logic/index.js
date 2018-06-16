@@ -6,6 +6,7 @@ clientApi.url = 'http://localhost:5000/api'
 
 const logic = {
     // userId: 'NO-ID',
+    _cart: [],                   
 
     userId(userId) {
         if (userId) {
@@ -14,6 +15,38 @@ const logic = {
             return;
         }
             return this._userId
+    },
+
+    cart(cart) {
+        this._cart = cart
+    },
+
+    addProductToCart(productId) {
+        this._cart.push(productId)
+
+        this.cart(this._cart)
+    },
+
+    removeProductFromCart(productId) {
+        this._cart = this._cart.filter(id => {
+            return id !== productId
+        }) 
+        this.cart(this._cart)
+    },
+
+    listProductsByIds() {
+        return clientApi.listProductsByIds(this._cart)
+    },
+
+    listCartById(callback) {
+        if (logic._cart && logic._cart.length > 0 ) {
+
+            clientApi.listProductsByIds(this._cart)
+                .then(products => callback(products))
+        } else {
+            callback([]);
+        }
+
     },
 
     registerUser(username, email, password, repeatPassword) {
@@ -117,6 +150,11 @@ const logic = {
     listProductsByCategory(categoryId) {
         return clientApi.listProductsByCategory(categoryId)
                 .then(products => products)
+    },
+
+    productDetails(productId) {
+        return clientApi.productDetails(productId)
+                .then(product => product)
     },
 
     listProducts() {

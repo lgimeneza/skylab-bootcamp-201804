@@ -1,5 +1,3 @@
-
-
 'use strict'
 
 const { models: { User, Order, Product, Category, Subcategory } } = require('data')
@@ -207,12 +205,18 @@ const logic = {
             .then(() => {
 
                 return Category.find({ })
-                    .then(allCategories => {
-                        const categories = allCategories.map(({ _id: id, image,  name, parent }) => ({ id, image, name, parentId: parent ? parent.toString() : undefined }))
-                        return categories
+                        .then(categories => {
+                            const normalizedCategories = categories.map(({ _id, image, name, parent }) => ({ id: _id.toString(), image, name, parentId: parent ? parent.toString() : undefined }))
+    
+                            return Promise.all(categories.map(category => Category.find({ parent: category._id })))
+                                 .then(res => {
+                                   res.forEach((categories, index) => normalizedCategories[index].hasChildren = !!categories.length)
+    
+                            return normalizedCategories
+                        })
+                  })
             })
-        })
-    },
+},
 
     /**
     * Lists root categories
@@ -308,6 +312,36 @@ const logic = {
             })
     },
 
+    productDetails(productId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof productId !== 'string') throw Error('user productId is not a string')
+
+                if (!(productId = productId.trim()).length) throw Error('user productId is empty or blank')
+
+                return Product.find({ _id: productId })
+                    .then(res => res)
+            })
+    },
+
+
+    listProductsByIds(ids) {
+
+        const arrayIds = ids.split(',')
+
+        return Promise.resolve()
+            .then(() => {
+
+                return Product.find({
+                    _id: { $in: arrayIds}
+                })
+                    .then(res => {
+                        if(!res) throw Error ('No products')
+                        const products = res.map(({ _id: id, name, description, image, price, discount, category }) => ({ id, name, description, image, price, discount, categoryId: category ? category.toString() : undefined }))
+                        return products
+                    })
+            })
+    },
     /**
      * Lists products by a given category
      * 

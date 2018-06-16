@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Register, Login, Home, Categories, ProductsByCategory, Nav, Footer } from './components'
+import { Register, Login, Home, Categories, ProductsByCategory, Nav, Footer, Cart } from './components'
 import './App.css';
 import logic from './logic'
-
+import ProductDetails from './components/products/details-product';
+import {Animated} from "react-animated-css";
 
 class App extends Component {
 
   state = {
     userData: {},
+    removeCartItem: false 
   }
 
   componentDidMount() {
@@ -33,17 +35,30 @@ class App extends Component {
         })
   }
 
+  onRemoveFromCart = () => {
+
+    console.log('adfasd')
+     this.setState({
+      removeCartItem: true
+     })
+  }
+
   render() {
+console.log(this.state);
     return (
       <div className="App">
         <Nav userData={this.state.userData}/>
+        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
         <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/category/:categoryId/subcategories' component={Categories}/>
             <Route path='/category/:categoryId/products/' component={ProductsByCategory}/>
+            <Route path='/product/:productId' component={ProductDetails}/>
+            <Route path='/cart' render={() => <Cart onRemoveItems={this.onRemoveFromCart}/>} /> 
             <Route path='/register' render={() => (!logic.loggedIn) ? <Register/> : <Home/>}/>
             <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Home/>} />
         </Switch>
+        </Animated>
         <Footer/>
       </div>
     );

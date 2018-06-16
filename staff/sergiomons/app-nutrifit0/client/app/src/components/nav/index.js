@@ -2,22 +2,27 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
-// import logic from '../../logic'
 
 class Nav extends Component {
     
     state = {
-        categories: []
+        categories: [],
+        cartLength: 0
     }
 
     componentDidMount(props) {
 
-        logic.listRootCategories()
-            .then(categories => {
+        logic.listAllCategories()
+            .then(listCategories => {
+                const categories = listCategories.filter(category => { return category.parentId === undefined })
                 this.setState({
                     categories
                 })
             })
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({})
     }
 
     logout() {
@@ -64,7 +69,7 @@ class Nav extends Component {
                                 <input className="form-control-sm mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                                 <button className="btn btn-sm btn-outline-warning my-2 my-sm-0 mr-2" type="submit">Search</button>
                             </form>
-                            <i id="iconNav" className="fas fa-shopping-cart mr-4"><span id="numBadget" class="badge badge-pill badge-danger">1</span></i>
+                            <Link to='/cart'><i id="iconNav" className="fas fa-shopping-cart mr-4"><span id="numBadget" className="badge badge-pill badge-danger">{logic._cart.length}</span></i></Link>
                             {!logic.loggedIn ? (
                                 <ul className="nav navbar-nav navbar-right">
                                     <li><Link to="/register"><button className="btn btn-sm btn-secondary my-2 my-sm-0" type="submit">Sing Up</button></Link></li>
@@ -77,7 +82,7 @@ class Nav extends Component {
                                             </a>
                                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <a className="dropdown-item" href="">Mi Cuenta</a>
-                                                <div class="dropdown-divider"></div>
+                                                <div className="dropdown-divider"></div>
                                                 <a className="dropdown-item" href="" onClick={this.logout}>Cerrar sesión</a>
                                                 <div className="dropdown-divider"></div>
                                             </div>

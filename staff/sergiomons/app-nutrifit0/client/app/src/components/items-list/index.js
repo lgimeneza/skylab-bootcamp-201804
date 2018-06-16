@@ -3,9 +3,13 @@ import logic from '../../logic'
 import {Link} from 'react-router-dom'
 import Menu from '../menu'
 import Carousel from '../carousel'
+import {Animated} from "react-animated-css";
+ 
 
 
-export default ({products, categories}) => (
+export default ({products, categories, removeButton = false}) => (
+    <div>
+    <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
         <main>    
             <div className="container-fluid">
                 <div className="row">
@@ -14,7 +18,7 @@ export default ({products, categories}) => (
                         <div className="row">
                             <Menu />
                                 <div className="col-10 col-lg-10 col-md-8 col-sm-8 col-xs-12">   
-                                    <ul>
+                                    <ul>                                  
                                         <div className="row ml-1">
                                             {products && products.map(product => (
                                                 <div className="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12" key={product.id}>
@@ -24,8 +28,9 @@ export default ({products, categories}) => (
                                                             <h5 className="card-title">{product.name}</h5>
                                                             <p className="card-text">Precio: {product.price} €/und</p>
                                                             <p className="card-bottom">
-                                                                <button className="btn btn-md btn-outline-secondary my-2 my-sm-0 ml-1" type="submit">Detalles</button> 
-                                                                <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-4" type="submit"><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir al carrito</button>                                                  
+                                                                <Link to={`/product/${product.id}`}><button className="btn btn-md btn-outline-secondary my-2 my-sm-0 ml-1" type="submit">Detalles</button> </Link>
+                                                                <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-4" type="submit" onClick={() => logic.addProductToCart(product.id)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir al carrito</button>                                                  
+                                                                {removeButton && <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-4" type="submit" onClick={() => logic.removeProductFromCart(product.id)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Remove item</button>}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -36,18 +41,22 @@ export default ({products, categories}) => (
                                                     <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`}  ><img className="card-img-top" alt={category.name} src={category.image}/>
                                                     <div className="card-block">
                                                         <h5 className="card-title mt-3">{category.name}</h5>
+                                                        
                                                         {/* <button className="btn btn-md btn-secondary my-2 my-sm-0 w-100 ">{category.name}</button> */}
                                                     </div>
                                                     </Link>
                                                 </div>
                                             </div>))}
-                                        </div>      
+                                        </div> 
+                                            
                                     </ul>  
                                 </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>                  
+        </main>  
+        </Animated> 
+        </div>                
         )
 

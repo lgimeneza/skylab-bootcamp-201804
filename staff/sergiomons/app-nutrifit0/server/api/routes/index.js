@@ -114,16 +114,41 @@ router.get('/category/:categoryId/products', (req, res) => {
             })
 })
 
-router.get('/products', (req, res) => {
+router.get('/product/:productId', (req, res) => {
+    const { params: { productId } } = req
 
-    return logic.listProducts()
-            .then(products => {
+        logic.productDetails(productId)
+            .then(product => {
                 res.status(200)
-                res.json({ status: 'OK', data: products})
+                res.json({ status: 'OK', data: product })
             })
             .catch(({ message }) => {
                 res.status(400)
-                res.json({ status: 'KO', error: message }) 
+                res.json({ status: 'KO', error: message })
+            })
+})
+
+router.get('/products', (req, res) => {
+    const { query: { ids } } = req
+
+    if (!ids)
+        logic.listProducts()
+            .then(products => {
+                res.status(200)
+                res.json({ status: 'OK', data: products })
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message })
+            })
+    else logic.listProductsByIds(ids)
+            .then(products => {
+                res.status(200)
+                res.json({ status: 'OK', data: products })
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message })
             })
 })
 
