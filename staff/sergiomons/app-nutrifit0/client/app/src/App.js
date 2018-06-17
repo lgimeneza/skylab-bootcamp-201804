@@ -10,7 +10,6 @@ class App extends Component {
 
   state = {
     userData: {},
-    removeCartItem: false 
   }
 
   componentDidMount() {
@@ -35,16 +34,7 @@ class App extends Component {
         })
   }
 
-  onRemoveFromCart = () => {
-
-    console.log('adfasd')
-     this.setState({
-      removeCartItem: true
-     })
-  }
-
   render() {
-console.log(this.state);
     return (
       <div className="App">
         <Nav userData={this.state.userData}/>

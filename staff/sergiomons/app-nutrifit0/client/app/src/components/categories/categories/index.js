@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../../../logic'
-import {Link} from 'react-router-dom'
 import './index.css'
-import ItemsList from '../../items-list'
+import ItemsCategories from '../../items-list/items-categories'
 import {Animated} from 'react-animated-css'
 
 
@@ -31,7 +30,7 @@ class Categories extends Component {
         <div>
         <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
 
-            <ItemsList categories={this.state.categories}/>                       
+            <ItemsCategories categories={this.state.categories}/>                       
         </Animated>   
         </div>  
         )
