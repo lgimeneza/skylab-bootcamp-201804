@@ -55,7 +55,7 @@ class Login extends Component {
                         <input autocomplete="off" className="formulariol" type="text" value={this.state.dni} onChange={this.loginDni}  name="DNI" ></input>
                         <p className="text2"> Password:</p>
                         <input autocomplete="off" className="formulariol" type="password" value={this.state.password} onChange={this.loginPassword} name="password"></input>
-                    <button type="submit" className="login-button">Login</button>
+                    <button type="submit" className="login-buttonL">Login</button>
                     </form>
                    
                   

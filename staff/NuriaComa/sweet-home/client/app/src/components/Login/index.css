@@ -2,7 +2,7 @@
     text-align: center;
   }
 .text1{
-  margin-top:20vw;
+  margin-top:30vw;
 }
 .formulariol{
   margin-bottom: 7vw;
@@ -18,3 +18,14 @@ p{
     color:#92ac19;
     font-size:6vw;
   }
+.login-buttonL{
+  
+  width:80vw;
+  color:white;
+  font-size: 5vw;
+  margin: 5vw 7vw 11vw;
+  padding: 2vw;
+  background-color: #92ac19;
+  border:0;
+  font-family: 'Montserrat', sans-serif;
+}

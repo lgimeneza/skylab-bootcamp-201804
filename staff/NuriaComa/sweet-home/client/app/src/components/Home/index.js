@@ -19,7 +19,7 @@ class Home extends Component {
         <div className="general">
             <div >
         <header >
-            <h1>SWEET HOME</h1>
+            <h1 className="tittleH">SWEET HOME</h1>
         </header>
         <main>
         <section >

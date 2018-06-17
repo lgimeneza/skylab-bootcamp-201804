@@ -132,7 +132,7 @@ class Register extends Component {
                 <div className="general">
                     <section>
                         <form onSubmit={this.acceptRegister}>
-                            <p className="words1"> Name: </p>
+                            <p className="wordsR"> Name: </p>
                             <input autocomplete="off" className="formularior" type="text" value={this.state.name}onChange={this.registerName} name="name" ></input>
                             <p className="words">Surname:</p>
                             <input autocomplete="off" className="formularior" type="text" value={this.state.surname}onChange={this.registerSurname} name="apellido"></input>

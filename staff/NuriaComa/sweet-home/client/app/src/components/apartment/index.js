@@ -117,7 +117,7 @@ class Apartment extends Component {
                 <div className="general">
                     <section>
                         <form onSubmit={this.acceptRegister}>
-                            <p className="words1"> Name: </p>
+                            <p className="wordsRA"> Name: </p>
                             <input autocomplete="off" className="formularior" type="text" value={this.state.name} onChange={this.registerName} name="name" ></input>
                             <p className="words">Address:</p>
                             <input autocomplete="off" className="formularior" type="text" value={this.state.address} onChange={this.registerAddress} name="address"></input>
