@@ -49,8 +49,8 @@ class Profile extends Component {
                   <ul>
                     {<li>Date:{result.date}</li>}
                     {<li>EndDate:{result.endDate}</li>}
-                    {<li>Duration:{result.services.map(service => service.duration)}</li>}
-                    {<li>Price:{result.services.map(service => service.price)}</li>}
+                    {<li>Duration:{result.services.map(service => service.duration)}min</li>}
+                    {<li>Price:{result.services.map(service => service.price)}€</li>}
                   </ul>
                 </p>
               </div>
