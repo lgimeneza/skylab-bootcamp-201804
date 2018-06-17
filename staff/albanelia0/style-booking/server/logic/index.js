@@ -304,10 +304,27 @@ const logic = {
             // .tz("Europe/London")
             const endDate = moment(date).add(totalDuration, 'minutes').toDate()
             return Booking.find({
-              $and: [
-                { "date": { $gte: date } },
-                { "date": { $lt: endDate } }
+              $or: [
+                {
+                  $and: [
+                    { "date": { $lte: date } },
+                    { "endDate": { $gte: endDate } }
+                  ]
+                },
+                {
+                  $and: [
+                    { "date": { $gte: date } },
+                    { "date": { $lt: endDate } }
+                  ]
+                },
+                {
+                  $and: [
+                    { "endDate": { $gt: date } },
+                    { "endDate": { $lte: endDate } }
+                  ]
+                },
               ]
+              
             })
               .then(res => {
                 debugger

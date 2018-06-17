@@ -51,22 +51,7 @@ export class Login extends Component {
           this.storageUserData(result)
 
           // aqui se tiene que esperar para ver si te lleva al profile o al data
-          createBooking().then(res => {
-            console.log(res)
-            if (res) {
-              swal({
-                type: 'success',
-                title: 'Reserva completada! ves a tu perfil!',
-              })
-              this.props.history.push('/profile')
-            } else {
-              let date = localStorage.getItem("date")
-              console.log(date)
-              let _date = date.replace(/\,/g, "/")
-              console.log(_date)
-              this.props.history.push(`/calendar/${_date}`)
-            }
-          })
+          this.props.history.push('/confirmBooking')
 
         }
       }).catch(data => {

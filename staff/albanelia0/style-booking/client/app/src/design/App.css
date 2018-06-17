@@ -5,3 +5,15 @@
 .header .navbar {
   background-color: #EB8C74;
 }
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .the-image {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+} */
