@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
 import logic from '../../logic'
+import CategoriesDropdown from './categories-dropdown'
 
 class Navbar extends Component {
     state = {
-        user: {}
+        user: {},
+        categories: []
+
     }
 
     retrieveUser() {
@@ -20,6 +23,12 @@ class Navbar extends Component {
         if (this.props.loggedIn) {
             this.retrieveUser()
         }
+
+        logic.listCategories()
+            .then(categories => {
+                this.setState({ categories })
+
+            })
     }
 
     componentWillReceiveProps(props) {
@@ -40,21 +49,14 @@ class Navbar extends Component {
                 <nav className="site-header sticky-top py-1">
                     <div className="container d-flex flex-column flex-md-row justify-content-between">
                         <div className="py-2 d-none d-md-inline-block">
-                            {/* <i className="fas fa-music" />
-                            <i className="fas fa-music" /> */}
+                            <i className="fas fa-music" />
                         </div>
                         <span className="py-2 d-none d-md-inline-block">
                             <Link to="/">Home</Link>
                         </span>
-                        <span className="py-2 d-none d-md-inline-block">
-                            <Link to="/categories">Products</Link>
-                        </span>
+                        <CategoriesDropdown items={this.state.categories}/>
                         <span className="py-2 d-none d-md-inline-block">
                             <Link to="/our-team">Our Team</Link>
-                        </span>
-                        <span className="py-2 d-none d-md-inline-block">
-                            {/* <Link to="/cart"><span role="img" aria-label="cart">🛒</span></Link> */}
-                            <Link to="/cart"><span role="img" aria-label="cart"><i className="fas fa-shopping-cart"><span className="badge badge-pill badge-info">{this.props.cartLength}</span></i> </span></Link>
                         </span>
                         {(!this.props.loggedIn) ?
                             <div>
@@ -75,6 +77,10 @@ class Navbar extends Component {
                                 </div>
                             </div>
                         }
+                        <span className="py-2 d-none d-md-inline-block">
+                            {/* <Link to="/cart"><span role="img" aria-label="cart">🛒</span></Link> */}
+                            <Link to="/cart"><span role="img" aria-label="cart"><i className="fas fa-shopping-cart"><span className="badge badge-pill badge-info">{this.props.cartLength}</span></i> </span></Link>
+                        </span>
                     </div>
                 </nav>
             </main>

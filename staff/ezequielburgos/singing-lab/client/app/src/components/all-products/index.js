@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Footer from '../footer'
 import logic from '../../logic'
+import Footer from '../footer'
 import './index.css'
 import ListItems from './../list-items'
 
-class Products extends Component {
+class AllProducts extends Component {
 
     constructor() {
         super()
@@ -14,32 +14,26 @@ class Products extends Component {
     }
 
     componentDidMount() {
-        logic.listProducts(this.props.match.params.id)
+        logic.listAllProducts()
             .then(products => this.setState({ products }))
-    }
-
-    componentDidUpdate(prevProps) {
-        if(prevProps.match.params.id !== this.props.match.params.id){
-            logic.listProducts(this.props.match.params.id)
-                .then(products => this.setState({ products }))   
-        }
     }
 
     render() {
         return (
-
             <main>
                 <h2 className="main-title">These are my products</h2>
+                <hr/>
+
                 <ListItems
-                    productDetail
-                    cartProducts
+                      productDetail
+                      cartProducts
                     items={this.state.products}
                 />
-                <Footer />
+            <Footer/>
             </main>
         )
     }
 
 }
 
-export default Products
+export default AllProducts

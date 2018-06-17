@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, Profile, Cart, Navbar } from './components'
+import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, Profile, Cart, Order, Navbar, AllProducts } from './components'
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import logic from './logic'
 
@@ -27,6 +27,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" render={() => <Landing />} />
           <Route exact path="/categories" component={Categories} />
+          <Route exact path="/products" component={AllProducts} />
           <Route exact path="/our-team" component={OurTeam} />
           <Route exact path="/auth" render={() => <Login onLogin={this.onLogin} />} />
           <Route exact path="/register" component={Register} />

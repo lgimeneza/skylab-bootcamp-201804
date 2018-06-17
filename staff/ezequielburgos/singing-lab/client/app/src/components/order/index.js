@@ -3,6 +3,7 @@ import Footer from '../footer'
 import './index.css'
 import logic from '../../logic'
 
+
 class Cart extends Component {
 
     constructor() {
@@ -25,15 +26,15 @@ class Cart extends Component {
         }
     }
 
-    onRemoveFromCart = (product) => {
-        logic.removeProductFromCart(product)
-        this.getItems()
-    }
+    // onRemoveFromCart = (product) => {
+    //     logic.removeProductFromCart(product)
+    //     this.getItems()
+    // }
 
     render() {
         return (
             <main>
-                <h2 className="main-title">this is the Cart</h2>
+                <h2 className="main-title">this is the order</h2>
 
                 <ul className="listitems-body">
                     <div className="thumbnail listitems-subbody">
@@ -43,11 +44,11 @@ class Cart extends Component {
                                         <img className="card-img-top" src={item.image} alt="course or category" />
                                         <div className="card-body">
                                             <h5 className="card-title">{item.name}</h5>
-                                            <a className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</a>
                                         </div>
                                     </div>
                             </li>
                         ))}
+                        {/* <a className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</a> */}
                     </div>
                 </ul>
 

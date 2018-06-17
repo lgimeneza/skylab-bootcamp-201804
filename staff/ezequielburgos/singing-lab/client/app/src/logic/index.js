@@ -5,6 +5,8 @@ singingLabApi.url = 'http://localhost:4000/api'
 const logic = {
     _userId: null,
 
+    _date: 'no-date',
+
     _orderStatus: 'unpaid',
 
     _cart: [],
@@ -133,10 +135,10 @@ const logic = {
 
     createOrder(paymentMethod, products, orderAdress) {
         if (this._orderStatus !== 'unpaid') {
-            const date = this.date.getHours()
+            // this._ date = date().getHours()
         }
 
-        return singingLabApi.createOrder(paymentMethod, this._orderStatus, products, this.userId(), orderAdress, date)
+        return singingLabApi.createOrder(paymentMethod, this._orderStatus, products, this.userId(), orderAdress, this._date)
     }
 }
 

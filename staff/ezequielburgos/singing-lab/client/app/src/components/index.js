@@ -9,6 +9,7 @@ import OurTeam from './our-team'
 import Cart from './cart'
 import Order from './order'
 import Profile from './profile'
+import AllProducts from './all-products'
 
 export {
     Navbar,
@@ -20,5 +21,7 @@ export {
     ProductData,
     OurTeam,
     Cart,
-    Profile
+    Order,
+    Profile,
+    AllProducts
 }

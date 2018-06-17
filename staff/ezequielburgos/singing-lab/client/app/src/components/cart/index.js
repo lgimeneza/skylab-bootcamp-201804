@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Footer from '../footer'
 import './index.css'
 import logic from '../../logic'
+import { Link } from 'react-router-dom'
 
 class Cart extends Component {
 
@@ -48,9 +49,9 @@ class Cart extends Component {
                                 </div>
                             </li>
                         ))}
+                <Link to="/order" className="btn btn-outline-secondary" role="button">Buy the products</Link>
                     </div>
                 </ul>
-                <Link to="/order" className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</Link>
                 <Footer />
             </main>
         )
