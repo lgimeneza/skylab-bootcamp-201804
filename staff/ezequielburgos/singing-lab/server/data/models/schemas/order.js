@@ -1,20 +1,31 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
-    date: {
-        type: Date,
-        required: true
-    },
     paymentMethod: {
         type: String,
         required: true
     },
     status: {
-        type: String
+        type: String,
+        enum: ['unpaid', 'rejected', 'processing', 'paid'],
+        default: 'unpaid'
     },
     products: [{
         type: ObjectId,
         ref: 'Product',
         required: true
-    }]
+    }],
+    orderAdress: {
+        type: String,
+        // required: true
+    },
+    date: {
+        type: Date,
+        // required: true
+    },
+    userId: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
 })

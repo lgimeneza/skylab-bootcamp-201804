@@ -20,7 +20,7 @@ class Cart extends Component {
         if (logic._cart.length && logic._cart !== 'undefined') {
             logic.listProductsByIds()
                 .then(cart => this.setState({ cart }))
-        } else {
+        }else{
             this.setState({ cart: [] })
         }
     }
@@ -39,18 +39,18 @@ class Cart extends Component {
                     <div className="thumbnail listitems-subbody">
                         {this.state.cart.map(item => (
                             <li key={item._id} className="items">
-                                <div className="card" style={{ width: '18rem' }}>
-                                    <img className="card-img-top" src={item.image} alt="course or category" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{item.name}</h5>
-                                        <a className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</a>
+                                    <div className="card" style={{ width: '18rem' }}>
+                                        <img className="card-img-top" src={item.image} alt="course or category" />
+                                        <div className="card-body">
+                                            <h5 className="card-title">{item.name}</h5>
+                                            <a className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</a>
+                                        </div>
                                     </div>
-                                </div>
                             </li>
                         ))}
                     </div>
                 </ul>
-                <Link to="/order" className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</Link>
+
                 <Footer />
             </main>
         )

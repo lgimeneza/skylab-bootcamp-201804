@@ -31,6 +31,7 @@ class App extends Component {
           <Route exact path="/auth" render={() => <Login onLogin={this.onLogin} />} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/cart" component={Cart} />
+          <Route exact path="/order" component={Order} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/categories/:id" component={Products} />
           <Route exact path="/categories/products/:id" component={ProductData} />

@@ -616,6 +616,33 @@ describe('logic (singing-lab)', () => {
     })
 
 
+    // describe('create order', () => {
+    //     it('should succeed on correct data', () =>
+    //         Promise.all([
+    //             Category.create(beginnerCourseCategoryData),
+    //             Category.create(advancedCourseCategoryData)
+    //         ])
+    //             .then(res => {
+    //                 beginnerCourseData.category = res[0]._id
+    //                 advancedCourseData.category = res[1]._id
+
+    //                 return Promise.all([
+    //                     Product.create(beginnerCourseData),
+    //                     Product.create(advancedCourseData)
+    //                 ])
+    //                     .then(res => {
+
+
+    //                         return logic.createOrder(query)
+    //                             .then(products => {
+                              
+    //                                 products
+
+    //                             })
+    //                     })
+    //             })
+    //     )
+    // })
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })

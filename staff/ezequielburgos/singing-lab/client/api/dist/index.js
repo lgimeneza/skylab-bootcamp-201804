@@ -416,6 +416,65 @@ var singingLabApi = {
                 } else throw err;
             });
         });
+    },
+
+
+    /**
+     * 
+     * @param {string} paymentMethod 
+     * @param {string} status 
+     * @param {string} products
+     * @param {string} orderAdress 
+     * @param {string} date 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    createOrder: function createOrder(paymentMethod, status, products, userId, orderAdress, date) {
+        var _this11 = this;
+
+        return Promise.resolve().then(function () {
+            if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string');
+
+            if (!(paymentMethod = paymentMethod.trim())) throw Error('paymentMethod is empty or blank');
+
+            if (typeof status !== 'string') throw Error('status is not a string');
+
+            if ((status = status.trim()).length === 0) throw Error('status is empty or blank');
+
+            if (!Array.isArray(products)) throw Error('products should be an array');
+
+            if (!products.length) throw Error('no products where found');
+
+            if (orderAdress !== undefined) {
+                if (typeof orderAdress !== 'string') throw Error('orderAdress is not a string');
+
+                if ((orderAdress = orderAdress.trim()).length === 0) throw Error('orderAdress is empty or blank');
+            }
+
+            if (date !== undefined) {
+                if (typeof date !== 'date') throw Error('date is not a date');
+
+                if (!(date = date.trim()).length) throw Error('date is empty or blank');
+            }
+
+            return axios.post(_this11.url + '/order', { paymentMethod: paymentMethod, status: status, products: products, userId: userId, orderAdress: orderAdress, date: date }).then(function (_ref11) {
+                var status = _ref11.status,
+                    data = _ref11.data;
+
+                if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return true;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
     }
 };
 

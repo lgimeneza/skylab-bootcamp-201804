@@ -358,17 +358,17 @@ const singingLabApi = {
     */
     listProductsByIds(cart) {
         // TODO GET url?ids=id1,id2,id2,id4
-        
+
         return Promise.resolve()
-        .then(() => {
+            .then(() => {
                 const ids = cart.join(',')
 
                 return axios.get(`${this.url}/products/?ids=${ids}`)
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                                                
+
                         return data.data
- 
+
                     })
                     .catch(err => {
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
@@ -381,6 +381,61 @@ const singingLabApi = {
                     })
             })
 
+    },
+
+    /**
+     * 
+     * @param {string} paymentMethod 
+     * @param {string} status 
+     * @param {string} products
+     * @param {string} orderAdress 
+     * @param {string} date 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    createOrder(paymentMethod, status, products, userId, orderAdress, date) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
+
+                if (!(paymentMethod = paymentMethod.trim())) throw Error('paymentMethod is empty or blank')
+
+                if (typeof status !== 'string') throw Error('status is not a string')
+
+                if ((status = status.trim()).length === 0) throw Error('status is empty or blank')
+
+                if (!Array.isArray(products)) throw Error('products should be an array')
+
+                if (!products.length) throw Error('no products where found')
+
+                if (orderAdress !== undefined) {
+                    if (typeof orderAdress !== 'string') throw Error('orderAdress is not a string')
+
+                    if ((orderAdress = orderAdress.trim()).length === 0) throw Error('orderAdress is empty or blank')
+                }
+
+                if (date !== undefined) {
+                    if (typeof date !== 'date') throw Error('date is not a date')
+
+                    if (!(date = date.trim()).length) throw Error('date is empty or blank')
+                }
+
+                return axios.post(`${this.url}/order`, { paymentMethod, status, products, userId, orderAdress, date })
+                    .then(({ status, data }) => {
+                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return true
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
+            })
     }
 }
 

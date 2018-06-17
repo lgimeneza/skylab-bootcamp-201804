@@ -90,7 +90,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, surname: 1, address: 1, email: 1 })
+                return User.findById(id).select({ _id: 0, name: 1, surname: 1, address: 1, email: 1, phone: 1, orders: 1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -291,7 +291,7 @@ const logic = {
       */
     listProductsByIds(ids) {
         const idsArray = ids.split(',')
-        
+
         return Promise.resolve()
             .then(() => {
                 return Product.find({
@@ -303,8 +303,57 @@ const logic = {
                         return products
                     })
             })
-    }
+    },
 
+    /**
+    * 
+    * @param {string} name 
+    * @param {string} surname 
+    * @param {string} address
+    * @param {string} email
+    * @param {string} password 
+    * 
+    * @returns {Promise<boolean>}
+    */
+    createOrder(paymentMethod, status, products, userId, orderAdress, date) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
+
+                if (!(paymentMethod = paymentMethod.trim())) throw Error('paymentMethod is empty or blank')
+
+                if (typeof status !== 'string') throw Error('status is not a string')
+
+                if ((status = status.trim()).length === 0) throw Error('status is empty or blank')
+
+                if (!Array.isArray(products)) throw Error('products should be an array')
+
+                if (!products.length) throw Error('no products where found')
+
+                if (orderAdress !== undefined) {
+                    if (typeof orderAdress !== 'string') throw Error('orderAdress is not a string')
+
+                    if ((orderAdress = orderAdress.trim()).length === 0) throw Error('orderAdress is empty or blank')
+                }
+
+                if (date !== undefined) {
+                    if (typeof date !== 'date') throw Error('date is not a date')
+
+                    if (!(date = date.trim()).length) throw Error('date is empty or blank')
+                }
+
+                return Order.create({ paymentMethod, status, products, userId, orderAdress, date })
+                    .then(order => {
+                        // return User.findById(userId)
+                        //     .then(user => {
+                        //         user.orders.push(order)
+                        //         user.save()
+                        //     })
+                        return User.findByIdAndUpdate(userId, {$push: { orders: order } })
+                    })
+
+            })
+    }
 }
 
 module.exports = logic

@@ -7,6 +7,7 @@ import Products from './products'
 import ProductData from './product-data'
 import OurTeam from './our-team'
 import Cart from './cart'
+import Order from './order'
 import Profile from './profile'
 
 export {
