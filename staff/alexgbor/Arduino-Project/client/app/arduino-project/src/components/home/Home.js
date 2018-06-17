@@ -90,10 +90,10 @@ class Home extends Component {
                 let Xaxis = data.map(ele => ele.value)
                 let chartData = {
                     labels: Yaxis,
-                    datasets: {
+                    datasets: [{
                         label: `Data from arduino ${this.state.selectedArduino}`,
                         data: Xaxis
-                    }
+                    }]
                 }
                 this.setState({ chartData })
             })

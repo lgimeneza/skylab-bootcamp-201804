@@ -117,8 +117,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -170,8 +170,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -211,8 +211,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -247,8 +247,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -283,8 +283,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -313,8 +313,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -354,8 +354,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -391,8 +391,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -427,8 +427,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -463,8 +463,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     },
@@ -499,8 +499,8 @@ const arduApi = {
                         if (err.response) {
                             const { response: { data: { error: message } } } = err
 
-                            throw Error(message)
-                        } else throw err
+                            return message
+                        } else return err
                     })
             })
     }

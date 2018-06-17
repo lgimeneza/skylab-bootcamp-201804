@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter, Link } from 'react-router-dom'
-//import './Profile.css'
+import './Profile.css'
 import swal from 'sweetalert2'
 
 class Profile extends Component {

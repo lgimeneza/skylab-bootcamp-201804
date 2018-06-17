@@ -2,18 +2,19 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
 import swal from 'sweetalert2'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class Register extends Component {
     state = {
         name: "",
         surname: "",
         password: "",
-        email:"",
+        email: "",
         repeatPassword: "",
         notMatchingMessage: "",
         registerFailedMessage: ""
     }
-    
+
 
     _comparePassword() {
 
@@ -68,7 +69,7 @@ class Register extends Component {
         e.preventDefault();
         if (this.state.notMatchingMessage === '') {
 
-            logic.registerUser(this.state.name,this.state.surname,this.state.email, this.state.password)
+            logic.registerUser(this.state.name, this.state.surname, this.state.email, this.state.password)
                 .then(res => {
                     if (res.status === 'OK') {
                         swal({
@@ -83,7 +84,8 @@ class Register extends Component {
                             type: 'error',
                             title: 'Oops...',
                             text: res,
-                        })                    }
+                        })
+                    }
                 })
         } else {
             swal({
@@ -99,27 +101,29 @@ class Register extends Component {
         return <div className="container">
             <h2 className="text-center ">REGISTER </h2>
 
-            <form onSubmit={this._handleRegister}>
-                <div className="row justify-content-center">
-                    <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.name} onChange={this._handleKeepName} type="text"
-                        placeholder="Name" />
-                </div>
-                <div className="row justify-content-center  ">
-                    <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.surname} onChange={this._handleKeepSurname} type="text"
-                        placeholder="Surname" />
-                </div>
-                <div className="row justify-content-center  ">
-                    <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.email} onChange={this._handleKeepEmail} type="text"
-                        placeholder="Email" />
-                </div>
-                <div className="row justify-content-center ">
-                    <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.password} onChange={this._handleKeepPassword} type="password"
-                        placeholder="Password" />
-                </div>
-                <div className="row justify-content-center ">
-                    <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword}
-                        type="password" placeholder="Repeat Password" />
-                </div>
+            <Form onSubmit={this._handleRegister}>
+                <FormGroup>
+                    <Label>Name</Label>
+                    <Input autoFocus value={this.state.name} onChange={this._handleKeepName} type="text" placeholder="Name" />
+                </FormGroup>
+                <FormGroup>
+                    <Label>Surname</Label>
+                    <Input value={this.state.surname} onChange={this._handleKeepSurname} type="text" placeholder="Surname" />
+                </FormGroup>
+                <FormGroup>
+                    <Label>Email</Label>
+                    <Input value={this.state.email} onChange={this._handleKeepEmail} type="text" placeholder="Email" />
+                </FormGroup>
+                <FormGroup>
+                    <Label>Password</Label>
+                    <Input value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
+                </FormGroup>
+                <FormGroup>
+                    <Label>Repeat Password</Label>
+                    <Input value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
+                </FormGroup>
+                <Button type="submit">Register</Button>
+            </Form>
                 <div className="row justify-content-center ">
 
                     <p className="text-danger text-capitalize">{this.state.notMatchingMessage}</p>
@@ -128,11 +132,6 @@ class Register extends Component {
                 <div className="row justify-content-center ">
 
                 </div>
-                <div className="row justify-content-center ">
-
-                    <input className="row justify-content-center mb-3 btn bg-darkcyan" type="submit" value="Register" />
-                </div>
-            </form>
 
         </div>
     }
