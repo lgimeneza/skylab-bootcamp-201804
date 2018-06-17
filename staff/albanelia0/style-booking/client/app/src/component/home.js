@@ -38,33 +38,6 @@ class Home extends Component {
   render() {
     return (
       <section className="hero is-fullheight is-default is-bold">
-        <div className="hero-head  header">
-          <nav className="navbar">
-            <div className="container">
-              <div className="navbar-brand">
-                <p className="subtitle">Victoria Style</p>
-                <span className="navbar-burger burger" data-target="navbarMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-                </span>
-              </div>
-              <div id="navbarMenu" className="navbar-menu">
-                <div className="navbar-end">
-                  <div className="tabs is-right">
-                    <ul className="subtitle is-4">
-                      <li className="is-active"><a>Home</a></li>
-                      <li><a href="">Examples</a></li>
-                      <li><a href="">Features</a></li>
-                      <li><a href="">Team</a></li>
-                      <li><a href="">Help</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
         <div className="hero-body">
           <div className="container has-text-centered">
           <section class="hero is-small">

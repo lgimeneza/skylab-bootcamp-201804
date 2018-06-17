@@ -96,7 +96,7 @@ router.get('/booking/hours/:year/:month', (req, res) => {
       })
   }),
 
-  router.post('/booking',  bodyParser.json(), (req, res) => {
+  router.post('/booking', [jwtValidator, bodyParser.json()], (req, res) => {
     const { body: { userId, serviceIds, date } } = req
 
   logic.placeBooking(userId, serviceIds, date)
@@ -110,9 +110,10 @@ router.get('/booking/hours/:year/:month', (req, res) => {
       })
   })
 
-router.get('/booking', jwtValidator, (req, res) => {
+router.get('/ownerId/:ownerId/booking', jwtValidator, (req, res) => {
+  const { params: {ownerId} } = req
 
-  logic.listBookings()
+  logic.listBookings(ownerId)
     .then((booking) => {
       res.status(200)
       res.json({ status: 'OK', data: booking })

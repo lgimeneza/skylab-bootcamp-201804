@@ -9,43 +9,18 @@ const START_DAY = 8
 const END_DAY = 17
 let hourClicked = 0
 
-let daysHours = []
-for (let h = START_DAY; h <= END_DAY; h += 0.25) {
-  const justTheHour = Math.floor(h)
-  const justTheMinutes = (h - justTheHour) * 60
-
-  daysHours.push({
-    value: h,
-    hour: `${justTheHour}:${justTheMinutes || '00'}`,
-    available: true
-  })
-}
-// GENERATES SOMETHING LIKE THIS:
-// let daysHours = [
-//   {
-//     hour: "8:00", value: 8, available: true
-//   },
-//   {
-//     hour: "8:15", value: 8.25, available: true
-//   },
-//   {
-//     hour: "8:30", value: 8.5, available: true
-//   }
-// ]
-
 
 class BookingHours extends Component {
 
   state = {
     date: [1],
-
+    daysHours: [],
   }
 
   finishBooking = (hour) => {
 
     localStorage.setItem("date", this.state.date)
     localStorage.setItem("hour", hour)
-
 
     // if (result) {
 
@@ -60,37 +35,39 @@ class BookingHours extends Component {
 
       this.props.history.push('/login')
     } else {
-      createBooking().then(res => {
-        console.log(res)
-        if (res) {
-          swal({
-            type: 'success',
-            title: 'Reserva completada! ves a tu perfil!',
-          })
-          this.props.history.push('/profile')
-        } else {
-          let date = localStorage.getItem("date")
-          console.log(date)
-          let _date = date.replace(/\,/g, "/")
-          console.log(_date)
-          this.props.history.push(`/calendar/${_date}`)
-        }
-      })
+      this.props.history.push('/confirmBooking')
     }
   }
 
 
-  componentDidMount = (props) => {
+  componentWillMount = (props) => {
+    for (let h = START_DAY; h <= END_DAY; h += 0.25) {
+      const justTheHour = Math.floor(h)
+      const justTheMinutes = (h - justTheHour) * 60
+
+      this.state.daysHours.push({
+        value: h,
+        hour: `${justTheHour}:${justTheMinutes || '00'}`,
+        available: true
+      })
+    }
+// GENERATES SOMETHING LIKE THIS:
+// this.state.daysHours = [
+//   {
+//     hour: "8:00", value: 8, available: true
+//   }
+// ]
+
     const { match: { params: { year, month, day } } } = this.props
     console.log(year, month, day)
 
     this.setState({
-      date: [year, month, day]
-
+      date: [year, month, day],
     })
+
     logic.getBookingHoursForYearMonthDay(year, month, day)
       .then(apiResponse => {
-        return daysHours.map((hour) => {
+        return this.state.daysHours.map((hour) => {
           apiResponse.forEach((busyRange) => {
             if (hour.value >= busyRange.start && hour.value < busyRange.end) {
               hour.available = false
@@ -99,12 +76,15 @@ class BookingHours extends Component {
           return hour
         })
       })
-      .then((daysHoursApplied) => console.log(daysHoursApplied))
+      .then((daysHoursApplied) => {
+        console.log(daysHoursApplied)
+        this.setState({ daysHours: daysHoursApplied })
+      })
   }
 
-  displayHours() {
+  displayHours = () => {
 
-    return daysHours.map(hour => {
+    return this.state.daysHours.map(hour => {
       let bookingClass = 'has-text-primary'
 
       if (!hour.available) {
@@ -114,7 +94,6 @@ class BookingHours extends Component {
       return (
         <div key={hour} className='card  card-hours'>
           <div className="card-content">
-
             <h1 onClick={() => this.finishBooking(hour.hour)} className={`title ${bookingClass}`}>{hour.hour}</h1>
           </div>
         </div>

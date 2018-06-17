@@ -290,10 +290,11 @@ const logic = {
 
         let totalDuration = 0
 
+        if (serviceIds.length <= 0) throw Error("The service is not selected!")
+
         return Promise.all(serviceIds.map(serviceId => {
           return Service.findById(serviceId)
             .then(res => {
-
 
               const { _doc: { duration } } = res
               totalDuration += duration
@@ -344,9 +345,10 @@ const logic = {
    * 
    * @returns {Promise<Data>}
    */
-  listBookings() {
+  listBookings(ownerId) {
     return Promise.resolve()
       .then(() => {
+        // terminar de implementar
         return Booking.find()
           .then(res => {
             return res.map((obj) => {
@@ -375,12 +377,20 @@ const logic = {
 
 
         return Booking.find({ userId })
+          .populate('services')
+          .exec()
           .then(result => {
             return result.map(obj => {
               const { _id, services, userId, date, endDate } = obj
+
               const data = {
                 bookingId: _id,
-                services: services.map(s => s._id),
+                services: services.map(s => {
+                  const { _doc: { serviceName, duration, price } } = s
+                  const dataService = { serviceName, duration, price }
+                  debugger
+                  return dataService
+                }),
                 userId: userId,
                 date: date,
                 endDate: endDate

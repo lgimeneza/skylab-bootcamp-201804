@@ -1,19 +1,21 @@
-  @import url('https://fonts.googleapis.com/css?family=Poiret+One');
-  body {
-    font-family: 'Poiret One', cursive;
-    color: white;
-  }
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+body {
+  font-family: 'Nunito', sans-serif;
+  
+}
 
-  img {
-    padding: 5px;
-    border: 1px solid #ccc;
-  }
+img {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  margin-left: 20px;
+}
 
-  .summary {
-    background: #EB9F55;
-    height: 80px;
-  }
-
-  .header {
-    background: #EB8C74;
-  }
+.summary {
+  background: #EB9F55;
+  /* height: 80px; */
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border-radius: 7px;
+  margin-bottom: 20px;
+}

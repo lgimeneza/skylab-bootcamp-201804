@@ -41,6 +41,22 @@ const logic = {
    */
   placeBooking(userId, serviceIds, date){
     return logicApi.placeBooking(userId, serviceIds, date)
+  },
+
+  listBookingUser(userId){
+    return logicApi.listBookingsUser(userId)
+  },
+  
+  localStorageGetItem(...item) {
+    return localStorage.getItem(...item)
+  },
+
+  localStorageSetItem(...item) {
+     localStorage.setItem(...item)
+  },
+
+  setToken(token){
+    logicApi.setToken(token)
   }
 }
 

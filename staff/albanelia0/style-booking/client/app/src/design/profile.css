@@ -1,0 +1,18 @@
+.bookingBox {
+  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.booking {
+  display: flex;
+  padding: 7px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+.delete-booking{
+  margin-left: 30px
+  
+}

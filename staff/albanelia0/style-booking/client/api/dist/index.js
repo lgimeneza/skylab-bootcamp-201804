@@ -97,7 +97,7 @@ var logic = {
 
       if ((password = password.trim()).length === 0) throw Error('user password is empty or blank');
 
-      return axios.patch(_this2.url + '/user', { id: id, name: name, surname: surname, email: email, password: password, newEmail: newEmail, newPassword: newPassword }).then(function (_ref2) {
+      return axios.patch(_this2.url + '/user', { id: id, name: name, surname: surname, email: email, password: password, newEmail: newEmail, newPassword: newPassword }, { headers: { authorization: 'Bearer ' + _this3.token } }).then(function (_ref2) {
         var status = _ref2.status,
             data = _ref2.data;
 
@@ -125,7 +125,7 @@ var logic = {
    *
    */
   unregisterUser: function unregisterUser(userId, email, password) {
-    var _this3 = this;
+    var _this4 = this;
 
     return Promise.resolve().then(function () {
       if (typeof userId !== 'string') throw Error('userId is not a string');
@@ -140,7 +140,7 @@ var logic = {
 
       if ((password = password.trim()).length === 0) throw Error('user password is empty or blank');
 
-      return axios.delete(_this3.url + '/user', { data: { userId: userId, email: email, password: password }, headers: { authorization: 'Bearer ' + _this3.token } }).then(function (_ref3) {
+      return axios.delete(_this4.url + '/user', { headers: { authorization: 'Bearer ' + _this4.token }, data: { userId: userId, email: email, password: password } }).then(function (_ref3) {
         var status = _ref3.status,
             data = _ref3.data;
 
@@ -169,7 +169,7 @@ var logic = {
      * @returns {Promise<string>}
      */
   authenticateUser: function authenticateUser(email, password) {
-    var _this4 = this;
+    var _this5 = this;
 
     return Promise.resolve().then(function () {
       if (typeof email !== 'string') throw Error('user email is not a string');
@@ -180,7 +180,7 @@ var logic = {
 
       if ((password = password.trim()).length === 0) throw Error('user password is empty or blank');
 
-      return axios.post(_this4.url + '/auth', { email: email, password: password }).then(function (_ref4) {
+      return axios.post(_this5.url + '/auth', { email: email, password: password }).then(function (_ref4) {
         var status = _ref4.status,
             data = _ref4.data;
 
@@ -190,7 +190,7 @@ var logic = {
             token = _data$data.token;
 
 
-        _this4.token = token;
+        _this5.token = token;
 
         return { id: id, token: token };
       }).catch(function (err) {
@@ -205,6 +205,10 @@ var logic = {
       });
     });
   },
+  setToken: function setToken(token) {
+    this.token = token;
+  },
+
 
   /**
      * Returns the booking hours (on existing days) for a given year and month
@@ -224,14 +228,14 @@ var logic = {
      * @returns {Promise<[{day<Number>, bookingHours<Number>}]>}
      */
   getBookingHoursForYearMonth: function getBookingHoursForYearMonth(year, month) {
-    var _this5 = this;
+    var _this6 = this;
 
     return Promise.resolve().then(function () {
 
       // if (typeof year !== 'number') throw Error('year is not a number')
       // if (typeof month !== 'number') throw Error('month is not a number')
 
-      return axios.get(_this5.url + '/booking/hours/' + year + '/' + month, { year: year, month: month }).then(function (_ref5) {
+      return axios.get(_this6.url + '/booking/hours/' + year + '/' + month, { headers: { authorization: 'Bearer ' + _this6.token } }).then(function (_ref5) {
         var status = _ref5.status,
             data = _ref5.data;
 
@@ -268,7 +272,7 @@ var logic = {
    * @param {Number} day
    */
   getBookingHoursForYearMonthDay: function getBookingHoursForYearMonthDay(year, month, day) {
-    var _this6 = this;
+    var _this7 = this;
 
     // yyyy-MM-dd
     return Promise.resolve().then(function () {
@@ -278,8 +282,8 @@ var logic = {
       // if (typeof day !== 'number') throw Error('day is not a number')
 
 
-      console.log(_this6.url + '/booking/hours/' + year + '/' + month + '/' + day);
-      return axios.get(_this6.url + '/booking/hours/' + year + '/' + month + '/' + day, { year: year, month: month, day: day }).then(function (_ref6) {
+      console.log(_this7.url + '/booking/hours/' + year + '/' + month + '/' + day);
+      return axios.get(_this7.url + '/booking/hours/' + year + '/' + month + '/' + day, { headers: { authorization: 'Bearer ' + _this7.token } }).then(function (_ref6) {
         var status = _ref6.status,
             data = _ref6.data;
 
@@ -308,13 +312,13 @@ var logic = {
   * @returns {Promise<Data>}
   */
   placeBooking: function placeBooking(userId, serviceIds, date) {
-    var _this7 = this;
-    console.log(userId, serviceIds, date)
+    var _this8 = this;
+
     return Promise.resolve().then(function () {
       //TODO VALIDATIONS
       // - Comprobar que la hora de inicio de la reserva no sea menor al inicio de jornada
       //   o mayor al fin de jornada (tirar un error en ese caso)
-      return axios.post(_this7.url + '/booking', { userId: userId, serviceIds: serviceIds, date: date }, { headers: { authorization: 'Bearer ' + _this7.token } }).then(function (_ref7) {
+      return axios.post(_this8.url + '/booking', { userId: userId, serviceIds: serviceIds, date: date }, { headers: { authorization: 'Bearer ' + _this8.token } }).then(function (_ref7) {
         var status = _ref7.status,
             data = _ref7.data;
 
@@ -340,11 +344,11 @@ var logic = {
    * 
    * @returns {Promise<Data>}
    */
-  listBookings: function listBookings() {
-    var _this8 = this;
+  listBookings: function listBookings(ownerId) {
+    var _this9 = this;
 
     return Promise.resolve().then(function () {
-      return axios.get(_this8.url + '/booking', _this8.token, { year: year, month: month, day: day }).then(function (_ref8) {
+      return axios.get(_this9.url + '/user/' + ownerId + '/booking', { headers: { authorization: 'Bearer ' + _this9.token } }).then(function (_ref8) {
         var status = _ref8.status,
             data = _ref8.data;
 
@@ -370,10 +374,11 @@ var logic = {
    * @returns {Promise<Data>}
    */
   listBookingsUser: function listBookingsUser(userId) {
-    var _this9 = this;
+    var _this10 = this;
 
     return Promise.resolve().then(function () {
-      return axios.get(_this9.url + '/booking/' + userId, _this9.token, { userId: userId }).then(function (_ref9) {
+      console.log(_this10.token);
+      return axios.get(_this10.url + '/booking/user/' + userId, { headers: { authorization: 'Bearer ' + _this10.token } }).then(function (_ref9) {
         var status = _ref9.status,
             data = _ref9.data;
 
@@ -401,10 +406,10 @@ var logic = {
    * @returns {Promise<boolean>}
    */
   deleteBooking: function deleteBooking(bookingId, userId) {
-    var _this10 = this;
+    var _this11 = this;
 
     return Promise.resolve().then(function () {
-      return axios.delete(_this10.url + '/booking/' + bookingId + '/' + userId, _this10.token, { bookingId: bookingId, userId: userId }).then(function (_ref10) {
+      return axios.delete(_this11.url + '/booking/' + bookingId + '/' + userId, { headers: { authorization: 'Bearer ' + _this11.token } }).then(function (_ref10) {
         var status = _ref10.status,
             data = _ref10.data;
 
@@ -424,10 +429,10 @@ var logic = {
     });
   },
   listServices: function listServices() {
-    var _this11 = this;
+    var _this12 = this;
 
     return Promise.resolve().then(function () {
-      return axios.get(_this11.url + '/services').then(function (_ref11) {
+      return axios.get(_this12.url + '/services').then(function (_ref11) {
         var status = _ref11.status,
             data = _ref11.data;
 

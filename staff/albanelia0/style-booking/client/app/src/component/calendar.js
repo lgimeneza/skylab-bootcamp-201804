@@ -16,8 +16,12 @@ class Calendar extends Component {
     isChecked: false,
     year: 2018,
     month: 6,
-    day: 1,
-    clickDay: false
+    day: 0,
+    clickDay:false
+  }
+
+  componentWillMount(){
+    this.renderBookingData()
   }
 
   componentDidMount() {
@@ -36,7 +40,7 @@ class Calendar extends Component {
           monthDays,
           isChecked: true,
           year,
-          month
+          month,
         })
       })
   }
@@ -68,7 +72,7 @@ class Calendar extends Component {
     for (let i = 1; i < monthDays + 1; i++) {
       cards.push(i)
     }
-    let _dayOfMonth = 0
+
     return cards.map(day => {
       let bookingClass = 'has-text-primary'
 
@@ -76,40 +80,39 @@ class Calendar extends Component {
         if (bookingDay === day) {
           if (bookingHours >= 9) {
             bookingClass = 'has-text-danger'
-          } else if (bookingHours >= 5) {
+          } else if (bookingHours >= 1 && bookingHours < 9 ) {
             bookingClass = 'has-text-warning'
-          } else if (this.state.clicDay) {
-            _dayOfMonth = day
           }
         }
       })
 
-      return (
-        <div key={day} className='card'>
-          <div className="card-content card-days">
-            <h1 onClick={() => this.bookinghoursForDays(day)} className={`title ${bookingClass}`}>{day}</h1>
-          </div>
-        </div>
-      )
-    })
-  }
-
-  render() {
     return (
-      <div className="container">
-        <section>
-          <h1 className="calendar-title subtitle">Calendar</h1>
-          <hr />
-        </section>
-        <section className="container-booking-data">
-          {this.renderBookingData()}
-        </section>
-        <div className="footerCalendar">
-          <ButtonBackToHome />
+      <div key={day} className='card'>
+        <div className="card-content card-days">
+          <h1 onClick={() => this.bookinghoursForDays(day)} className={`title ${bookingClass}`}>{day}</h1>
         </div>
       </div>
     )
-  }
+  })
+}
+
+render() {
+  const monthOfYear = moment(new Date(this.state.year, this.state.month, this.state.day)).format("MMM")
+  return (
+    <div className="container">
+      <section>
+        <h1 className="calendar-title subtitle">{`Calendar of ${monthOfYear}`} </h1>
+        <hr />
+      </section>
+      <section className="container-booking-data">
+        {this.renderBookingData()}
+      </section>
+      <div className="footerCalendar">
+        <ButtonBackToHome />
+      </div>
+    </div>
+  )
+}
 }
 
 export default Calendar

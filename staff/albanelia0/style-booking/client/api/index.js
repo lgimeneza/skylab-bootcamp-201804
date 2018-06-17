@@ -92,7 +92,7 @@ const logic = {
 
         if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-        return axios.patch(`${this.url}/user`, { id, name, surname, email, password, newEmail, newPassword })
+        return axios.patch(`${this.url}/user`, { id, name, surname, email, password, newEmail, newPassword }, {headers: { authorization: 'Bearer ' + _this3.token }} )
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -131,7 +131,7 @@ const logic = {
 
         if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-        return axios.delete(`${this.url}/user`, { data: { userId, email, password },  headers: { authorization: `Bearer ${this.token}` } })
+        return axios.delete(`${this.url}/user`, { headers: { authorization: `Bearer ${this.token}` }, data: { userId, email, password } })
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -191,6 +191,11 @@ const logic = {
           })
       })
   },
+
+  setToken(token){
+    this.token = token
+  },
+
   /**
      * Returns the booking hours (on existing days) for a given year and month
      *
@@ -215,7 +220,7 @@ const logic = {
         // if (typeof year !== 'number') throw Error('year is not a number')
         // if (typeof month !== 'number') throw Error('month is not a number')
 
-        return axios.get(`${this.url}/booking/hours/${year}/${month}`, { year, month })
+        return axios.get(`${this.url}/booking/hours/${year}/${month}`, {headers: { authorization: `Bearer ${this.token}` }})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -262,7 +267,7 @@ const logic = {
         
 
         console.log(`${this.url}/booking/hours/${year}/${month}/${day}`)
-        return axios.get(`${this.url}/booking/hours/${year}/${month}/${day}`, { year, month, day })
+        return axios.get(`${this.url}/booking/hours/${year}/${month}/${day}`, { headers: { authorization: `Bearer ${this.token}` }})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -320,10 +325,10 @@ const logic = {
    * 
    * @returns {Promise<Data>}
    */
-  listBookings() {
+  listBookings(ownerId) {
     return Promise.resolve()
       .then(() => {
-        return axios.get(`${this.url}/booking`, this.token, { year, month, day })
+        return axios.get(`${this.url}/user/${ownerId}/booking`, { headers: { authorization: `Bearer ${this.token}` }})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -350,7 +355,8 @@ const logic = {
   listBookingsUser(userId) {
     return Promise.resolve()
       .then(() => {
-        return axios.get(`${this.url}/booking/${userId}`, this.token, { userId})
+        console.log(this.token)
+        return axios.get(`${this.url}/booking/user/${userId}`, { headers: { authorization: `Bearer ${this.token}` }})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -379,7 +385,7 @@ const logic = {
   deleteBooking(bookingId, userId) {
     return Promise.resolve()
       .then(() => {
-        return axios.delete(`${this.url}/booking/${bookingId}/${userId}`, this.token, { bookingId, userId })
+        return axios.delete(`${this.url}/booking/${bookingId}/${userId}`, { headers: { authorization: `Bearer ${this.token}` }})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

@@ -18,6 +18,7 @@ export class Dropdown extends Component {
 
   state = {
     _month: '',
+    checkedList: []
   }
 
 
@@ -25,9 +26,17 @@ export class Dropdown extends Component {
     this.setState({
       _month: month,
       _monthNumber: 6,
-      _year: 2018
+      _year: 2018, 
     })
   }
+
+  alertSelectedServices(){
+    swal({
+      type: 'error',
+      title: 'Please, first select the service',
+    })
+  }
+
   listServices = () => {
     return logic.listServices()
       .then(async services => {
@@ -36,13 +45,13 @@ export class Dropdown extends Component {
           html:
             services.map(service => {
               return `
-                <div>
+                <div class="drobdownList">
                   <label>
                     <input id="${service.serviceId}" type="checkbox">
-                    <span>${service.serviceName} Duration=${service.duration} price=${service.price}</span>
+                    <span>${service.serviceName} Duration=${service.duration}min price=${service.price}€</span>
                   </label>
                 </div>`
-            }).join(),
+            }).join(''),
           focusConfirm: false,
           preConfirm: () => {
             const checkedAtLeastOne = services.reduce((someAreChecked, service) => {
@@ -63,7 +72,9 @@ export class Dropdown extends Component {
 
           localStorage.setItem('checkedList', JSON.stringify(checkedList))
 
-          swal('Servicio elegido! Elige la fecha/hora y listo! ^^')
+          this.setState({ checkedList }, () => {
+            swal('Perfect! chosen service, choose the date / time and go!')
+          })
 
         }
       })
@@ -162,7 +173,9 @@ export class Dropdown extends Component {
           </div>
         </div>
         <div>
-          <Link to={`/calendar/${this.state._year}/${this.state._monthNumber}`} className="button is-info is-medium">check days</Link>
+          {this.state.checkedList.length > 0 ? <Link to={`/calendar/${this.state._year}/${this.state._monthNumber}`} className="button is-info is-medium">check days</Link> :
+            <Link to='/' className="button is-info is-medium"  title="Disabled button" onClick={this.alertSelectedServices} >check days</Link>
+          }
         </div>
       </div>
     )
