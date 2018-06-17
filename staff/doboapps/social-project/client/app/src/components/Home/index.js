@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import logic from "../../logic"
 import { CardUser } from '../'
-import { Nav, NavLink, CardImg, Container, Col, Row, Badge } from 'reactstrap'
+import {  Container, Col, Row } from 'reactstrap'
 
 
 import './style.scss';
@@ -92,8 +92,6 @@ class Home extends Component {
 
 
         return (
-
-
             <Container className="container-home">
                <form > 
                 <Row>

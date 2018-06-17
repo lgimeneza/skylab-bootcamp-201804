@@ -1,12 +1,11 @@
 import React from "react";
-import { Landing, Home } from "../"
 import {Row } from 'reactstrap'
 
 function Gallery(props) {
                 return <div>
 
                         <Row>
-                                {props.images}
+                                {(props.images.length>0)?props.images:<h2>No uploaded images</h2>}
                         </Row>
 
 

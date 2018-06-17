@@ -25,6 +25,15 @@ class App extends Component {
     this.setState({ newNotifications:[] })
   }
 
+
+  changePhotoProfile=(photoProfile)=>{
+    this.setState({ photoProfile})
+    console.log(this.state.photoProfile,photoProfile)
+
+  }
+
+
+
   getNotifications=()=>{    
 
     logic.retrieveUser(this.idUser()).then(({notifications})=>{
@@ -85,7 +94,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header dataUser={this.state} logOut={this.logOut} clearNotifications={this.clearNotifications}  />
-        <Main  dataUser={this.state}  retrieveUser={this.state.allDataUser} getNotifications={this.getNotifications}   logIn={this.logIn}  isLogged={this.state.isLogged} />
+        <Main  dataUser={this.state} changePhotoProfile={this.changePhotoProfile}  retrieveUser={this.state.allDataUser} getNotifications={this.getNotifications}   logIn={this.logIn}  isLogged={this.state.isLogged} />
       </div>
     )
   }

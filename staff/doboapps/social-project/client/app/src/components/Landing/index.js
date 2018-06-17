@@ -5,14 +5,11 @@ import './style.scss';
 
 const items = [
   { src: '../../images/carousel/dog-a.jpg',
-    altText: 'dog1',
-    caption: 'Antonio' },
+    caption: 'Wellcome to Dogger' },
   { src: '../../images/carousel/dog-b.jpg',
-    altText: 'dog2',
-    caption: 'Pepe' },
+    caption: 'the first social network ...' },
   { src:'../../images/carousel/dog-c.jpg',
-    altText: 'dog3',
-    caption: 'Manuel'
+    caption: '... for your dog'
   }
 ]
 
@@ -63,7 +60,7 @@ class Landing extends Component {
           key={item.src}
         >
           <img src={item.src} alt={item.altText} className="img-fluid" />
-          <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+          <CarouselCaption captionText="" captionHeader={item.caption} />
         </CarouselItem>
       );
     });

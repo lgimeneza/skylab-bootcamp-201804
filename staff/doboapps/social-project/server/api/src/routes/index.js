@@ -249,9 +249,9 @@ router.post('/upload-image-profile/:userId', jsonBodyParser, (req, res) => {
     const { params: { userId }, body: { base64Image } } = req
 
     logic.saveImageProfile(userId, base64Image)
-        .then(() => {
+        .then((urlImg) => {
             res.status(200)
-            res.json({ status: 'OK' })
+            res.json({ status: 'OK',urlImg })
         })
         .catch(({ message }) => {
             res.status(400)
@@ -264,9 +264,9 @@ router.post('/upload-image-user/:userId', jsonBodyParser, (req, res) => {
     const { params: { userId }, body: { base64Image,descriptionImg } } = req
 
     logic.saveImagesUser(userId, base64Image,descriptionImg)
-        .then(() => {
+        .then((urlImg) => {
             res.status(200)
-            res.json({ status: 'OK' })
+            res.json({ status: 'OK',urlImg })
         })
         .catch(({ message }) => {
             res.status(400)

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom'
 import { Button, Popover, PopoverHeader, Alert } from 'reactstrap';
 import logic from "../../logic"
+import './style.scss';
+
 
 class Notifications extends Component {
 
@@ -58,8 +60,12 @@ clearNotifications = () => {
       if(n.type ==="#friendship")
       return(<Alert key={"alert_n"+key} color="info" isOpen={this.state.visible} toggle={this.onDismiss}>
           {`${n.user} ${n.notification}`}
-                <Button tag={Link} to={`/user/${n.id}`}   onClick={()=>{this.handlerAcceptFriendship(n.id)}} color="success">accept</Button>
-                <Button onClick={()=>{this.handlerIgnoreFriendship()}} color="danger">ignore</Button>
+                <Button tag={Link} to={`/user/${n.id}`}   onClick={()=>{this.handlerAcceptFriendship(n.id)}} color="primary">
+                  <i className="fas fa-check-circle fa-2x"></i>
+                </Button>
+                <Button onClick={()=>{this.handlerIgnoreFriendship()}}  color="danger">
+                  <i className="fas fa-times-circle fa-2x"></i>
+                </Button>
             </Alert>)
 
       else return (<Alert key={"alert_n"+key} color="info" isOpen={this.state.visible} toggle={this.onDismiss}>

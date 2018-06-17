@@ -1,8 +1,8 @@
 import React from "react"
 import { Link ,withRouter,} from "react-router-dom"
 import logic from "../../logic"
-import { NavBarDisconnection, Notifications } from "../index";
-import { CardImg, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { NavBarDisconnection, Notifications } from "../index"
+import { CardImg,  Navbar,  NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
 
 import './style.scss'
 
@@ -38,16 +38,14 @@ class Header extends React.Component {
                 <Navbar className="navbar-logged" color="light" light expand="md">
                     <i  onClick={this.goBack} className={`${btnRetrun} fas  fa-long-arrow-alt-left fa-2x`}></i>
                     <NavbarBrand className="logo zi-1" tag={Link}  to="/" >Dogger</NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
                         {logic.isLogged() ? <Nav className="ml-auto"  navbar>
                             <ul className="zi-1">
                                 <li>
-                                    <NavLink  onClick={this.props.logOut} tag={Link}  to="/" >LogOut</NavLink>
+                                    <NavLink  onClick={this.props.logOut} tag={Link}  to="/" ><i className="fas logout-icon fa-sign-out-alt "></i><span className="logout-text">LogOut</span></NavLink>
                                 </li>
                                 <li>
                                 <NavLink  tag={Link}  to={`/user/${localStorage.getItem("id-app")}`} >
-                                    <span >{this.props.dataUser.name} </span>
+                                    <span className="span-name-user">{this.props.dataUser.name} </span>
                                     <CardImg className="rounded-circle" top src={this.props.dataUser.photoProfile} alt="Card image cap" />
                                 </NavLink>
                                 </li>
@@ -67,7 +65,6 @@ class Header extends React.Component {
                                 </NavItem>
                             </Nav>
                         }
-                    </Collapse>
                 </Navbar>
             </div>
         )

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { withRouter, Link } from 'react-router-dom'
-import logic from "../../logic"
+import { withRouter } from 'react-router-dom'
 import OtherUser  from './users/OtherUser'
 import UserProfile  from './users/UserProfile'
 import './style.scss';

@@ -3,15 +3,6 @@
     h1{
         display: inline-block;
     }
-    .btn-outline-secondary{
-        margin-top: 10px;
-        right: 15px;
-        padding: 1px 20px 1px 20px;
-
-        i{
-            margin-right: 10px;
-        }
-    }
 }
 
 .jumbotron{ 
@@ -28,12 +19,21 @@
     text-align: center
 }
 
-.container-info-user img , .container-info-profile img{
+.container-info-user , .container-info-profile{
 
+
+    
+    .row h2{
+        text-align: center;
+        padding: 40px 0 60px 0;
+        width: 100%
+    }
+    img{
         width: 100%;
         box-shadow: 3px 3px 5px #dee2e6;
         border-radius: 5px;
         margin: 15px 0 15px 0;
+    }
 
    
 }

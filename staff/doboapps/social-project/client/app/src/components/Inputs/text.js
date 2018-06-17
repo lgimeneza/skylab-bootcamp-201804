@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Button} from 'reactstrap'
+import {Input} from 'reactstrap'
 
 class Text extends Component {
 
@@ -13,8 +13,14 @@ class Text extends Component {
 
     render() {
 
-       if (!this.state.edit) return (<p>{this.props.data} <Button  onClick={()=>{this.handleEdit(true)}} outline color="info">Edit</Button>{' '}</p>)
-       else  return (<div><input onChange={this.props.handleKeep} type="text" value={this.props.data} autoFocus /><Button onClick={()=>{this.handleEdit(false)}} outline color="info">ok</Button>{' '}</div>)
+        
+
+       if (!this.state.edit) return (<legend onClick={()=>{this.handleEdit(true)}} >
+            {this.props.data}
+            <i onClick={()=>{this.handleEdit(false)}} className="far fa-edit"></i>
+            <hr className="my-2" />
+       </legend>)
+       else  return (<div><Input onChange={this.props.handleKeep} type="text" value={this.props.data} autoFocus /><i onClick={()=>{this.handleEdit(false)}} className="far fa-check-square"></i></div>)
     }
 }
 

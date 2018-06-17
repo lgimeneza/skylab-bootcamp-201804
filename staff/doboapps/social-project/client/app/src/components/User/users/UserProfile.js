@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { withRouter, Link } from 'react-router-dom'
 import logic from "../../../logic"
-import {Row, Col, Jumbotron,Container, Button, Badge,NavLink,CardImg } from 'reactstrap'
-import { Notifications } from '../../'
+import {Row, Col, Jumbotron,Container, Button, CardImg } from 'reactstrap'
 import Gallery  from '../gallery/'
 
 class UserProfile extends Component {
@@ -84,7 +83,7 @@ class UserProfile extends Component {
 
             <Container className="container-info-profile">
                 
-                        <Jumbotron className="bg-white">
+                        <Jumbotron>
 
                         <Row>
                             <Col  xs="4">
@@ -93,7 +92,7 @@ class UserProfile extends Component {
                             <Col xs={{ size: 7,  offset: 1 }} >
                                 <div>
                                     <h1 className="display-5 text-capitalize ">{this.state.name}</h1>
-                                    <Button tag={Link} to={`/edit-profile`}  outline color="secondary"><i class="far fa-sun"></i><span className="hidden-mov">Request friendship</span></Button>
+                                    <Button tag={Link} to={`/edit-profile`}  outline color="secondary"><i className="far fa-sun"></i><span className="hidden-mov">Request friendship</span></Button>
                                 </div>
                                 <h5 className="text-capitalize">{this.state.race}</h5>
                                 <h5 className="text-capitalize">{this.state.gender}</h5>
@@ -108,7 +107,7 @@ class UserProfile extends Component {
                         </Jumbotron>
                   
                 <div className="content-gallery-user">
-                    <Button tag={Link} to="/upload-picture-user"  outline color="secondary"><i class="far fa-sun"></i> Upload a picture</Button>{' '}
+                    <Button tag={Link} to="/upload-picture-user"  outline color="secondary"><i className="far fa-images"></i> Upload a picture</Button>
                     <Gallery images={this.getImagesUser()} />
                 </div>
             </Container>

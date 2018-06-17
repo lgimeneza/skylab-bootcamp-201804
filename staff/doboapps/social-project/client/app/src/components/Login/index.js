@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { withRouter } from 'react-router-dom'
+import {ModalApp} from '../'
 import logic from "../../logic"
 import {Form, Input, Button, Container, Col} from 'reactstrap'
 
@@ -11,6 +12,9 @@ class Login extends Component {
     state = {
         userEmail: "",
         password: "",
+        activateModal: false,
+        msgModal:undefined,
+        titleModal:undefined
     }
 
     handleKeepEmail = (e) => {
@@ -29,24 +33,40 @@ class Login extends Component {
             .then(res => {
 
                 if (res.status === 'OK') {
-
-                    // alert(res.data.id)
-
-                    this.props.logIn()//change the state "isLogged" of app.js
+                    this.props.logIn() //change the state "isLogged" of app.js
                     this.props.history.push('/')
-
-                } else {
-                    alert("error logeo " + res)
                 }
+
+            }).catch(e=>{
+                if(e=="TypeError: Cannot read property 'id' of undefined")
+                e="Credentials error"
+                this.toggleModal("Error",e)
             })
     }
+
+
+
+      toggleModal=(titleModal,msgModal,redirect)=> {
+
+        if(!titleModal || !msgModal) titleModal = msgModal = ""
+
+        this.setState({
+            activateModal: !this.state.activateModal,
+            titleModal,
+            msgModal:msgModal.toString(),
+            redirect
+        })
+      }
+
+
+    
 
     render() {
 
         return (
 
             <div className="container-login" >
-                <img src="../../images/others/login-family-golden.jpg" alt="family-dog"/>
+                <img src="../../images/others/login-bulldog.jpg" alt="family-dog"/>
                 <Container >
 
                     <Col sm={{ size: 10, offset: 1 }} md={{ size: 6, offset: 3 }}>
@@ -59,6 +79,8 @@ class Login extends Component {
                         <Button className="m-3" type="submit" > Log me in</Button>
                     </Form>
                     </Col>
+                    <ModalApp headerMsg={this.state.titleModal} bodyMsg={this.state.msgModal} afterModal={null}  toggle={this.toggleModal} activate={this.state.activateModal}/>
+                    <ModalApp headerMsg={this.state.titleModal} bodyMsg={this.state.msgModal}  modalRedirect={this.modalRedirect} toggle={this.toggleModal} activate={this.state.activateModal}/>
 
                 </Container>
 

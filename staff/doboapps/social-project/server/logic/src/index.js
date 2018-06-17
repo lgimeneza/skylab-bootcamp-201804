@@ -681,19 +681,16 @@ const logic = {
                 if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
 
 
-
-
                 return new Promise((resolve, reject) => {
                     return cloudinary.v2.uploader.upload(base64Image, function (err, data) {
                         if (err) return reject(err)
-
                         resolve(data.url)
                     })
                 })
                 .then(urlCloudinary => {
-                        return User.findByIdAndUpdate(idUser, { photoProfile: urlCloudinary })
+                        return User.findByIdAndUpdate(idUser, { photoProfile: urlCloudinary }, {new: true})
                             .then(user => {
-                                return true
+                                return user.photoProfile
                             })
                     })
 
@@ -720,7 +717,8 @@ const logic = {
 */
     saveImagesUser(idUser, base64Image, descriptionImg) {
         let url = ""
-        return Promise.resolve()
+
+            return Promise.resolve()
             .then(() => {
                 if (typeof idUser !== 'string') throw Error('idUser is not a string')
 
@@ -728,30 +726,26 @@ const logic = {
 
                 if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
 
-
-                return Promise.resolve()
-                    .then(() => {
-                        return cloudinary.uploader.upload(base64Image, function (data) {
-                            url = data.url
-                            console.log("updload cloudinary ok " + url)
-                        }).then(() => {
-                            return User.findById(idUser)
-                                .then(user => {
-                                    return user
-                                })
-                        })
-                    }).then(user => {
-                        const image = new Image({
-                            route: url
-                            , description: descriptionImg,
-                            likes: []
-                        })
-
-                        user.images.push(image)
-                        return user.save()
+                return new Promise((resolve, reject) => {
+                    return cloudinary.v2.uploader.upload(base64Image, function (err, data) {
+                        if (err) return reject(err)
+                        resolve(data.url)
                     })
-                    .then((user) => true
-                    )
+                })
+                .then(urlCloudinary => {
+
+                    url=urlCloudinary
+                    const image = new Image({
+                        route: urlCloudinary
+                        , description: descriptionImg,
+                        likes: []
+                    })
+
+                    return User.findByIdAndUpdate(idUser, { $push: { images: image } }, { new: true })
+                            .then(user => {
+                                return url
+                            })
+                    })
             })
     }
 }

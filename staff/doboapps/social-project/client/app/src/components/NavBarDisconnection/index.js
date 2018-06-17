@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Alert, Navbar, NavbarBrand, Nav} from 'reactstrap';
+import { Button, Navbar, NavbarBrand, Nav} from 'reactstrap';
 import { withRouter,Link} from "react-router-dom"
 import './style.scss';
 
@@ -17,12 +17,12 @@ import './style.scss';
            
             <Nav className="ml-auto" navbar>
 
-            <Alert color="light p-0 m-0">
+            <div>
                      {(route!=="/login")&&<Button color="link text-muted" tag={Link}  to="/login">Login</Button>}
                      {(route!=="/register")&&<Button color="link text-muted" tag={Link}  to="/register">Register</Button>}
 
 
-            </Alert>
+            </div>
             </Nav>
         
     

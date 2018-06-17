@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom'
 import logic from "../../logic";
+import {ModalApp} from '../'
 import {Form, Input, Button, Container, Col} from 'reactstrap'
 import './style.scss'
 
@@ -12,13 +13,16 @@ class Register extends Component {
         password: "",
         repeatPassword: "",
         userCity: "",
-        RegisterFailedMessage: "",
-
+        activateModal: false,
+        msgModal:undefined,
+        titleModal:undefined,
+        RegisterFailedMessage:"",
+        redirect: undefined
     }
 
-    comparePassword() {
+    comparePassword(pass, repeatPass) {
 
-        if ((this.state.password !== this.state.repeatPassword) && this.state.repeatPassword.length) {
+        if ((pass !== repeatPass)) {
             this.setState({
                 notMatchingMessage: "Passwords don't match"
             })
@@ -48,42 +52,32 @@ class Register extends Component {
 
     handleKeepPassword = (e) => {
         let password = e.target.value;
-
-        Promise.resolve().then(() => {
             this.setState({ password })
-        }).then(() => {
-            this.comparePassword()
-        })
+            this.comparePassword(password,this.state.repeatPassword)       
     }
 
     handleKeepRepeatPassword = (e) => {
         let repeatPassword = e.target.value;
 
-        Promise.resolve().then(() => {
             this.setState({ repeatPassword })
-        }).then(() => {
-            this.comparePassword()
-        })
+            this.comparePassword(this.state.password,repeatPassword)    
     }
 
     handleRegister = (e) => {
         e.preventDefault();
-        if (this.state.notMatchingMessage === '') {
+        if (this.state.notMatchingMessage === '' ) {
 
             logic.registerUser(this.state.userName, this.state.userEmail, this.state.password,this.state.userCity)
                 .then(res => {
                     if (res === true) {
-                        alert("You registered awesomely!")
-                        this.props.history.push('/login')
+                        this.toggleModal("Success","Congratulations! Successful registration","/login")
                     }
                     else {
-                        alert("opps error " + res)
-
-                        this.setState({ registerFailedMessage: res.error })
+                        this.toggleModal("Error",res)
                     }
-                })
+                }).catch(e =>{this.toggleModal("Error",e)})
         } else {
-            alert("password no coincide")
+            this.toggleModal("Error","Passwords do not match")
         }
     }
 
@@ -92,38 +86,50 @@ class Register extends Component {
     }
 
 
+    toggleModal=(titleModal,msgModal,redirect)=> {
 
-    render() {
+        if(!titleModal || !msgModal) titleModal = msgModal = ""
 
-        return (
+        this.setState({
+            activateModal: !this.state.activateModal,
+            titleModal,
+            msgModal:msgModal.toString(),
+            redirect
+        })
+      }
 
-            
-    <div className="container-register" >
-    <img src="../../images/others/login-family-golden.jpg" alt="family-dog"/>
-    <Container >
-
-        <Col sm={{ size: 10, offset: 1 }} md={{ size: 6, offset: 3 }}>
-
-        <Form className=" text-center  form-register p-3 pl-5 pr-5 rounded " onSubmit={this.handleRegister}>
-            <h3>Register </h3>
-            <hr className="my-4"/>
-            <Input className="m-3" value={this.state.userName}  onChange={this.handleKeepName} type="text" placeholder="Name" autoFocus />
-            <Input className="m-3" value={this.state.UserEmail}  onChange={this.handleKeepEmail} type="text" placeholder="Email"  />            
-            <select className="form-control" value={this.state.UserCity} onChange={this.handleKeepCity} type="text" placeholder="City"><option key="c-first" value={null}>Select city</option>{this.getCities()}</select>
-            <Input  className="m-3" value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />
-            <Input  className="m-3" value={this.state.repeatPassword} onChange={this.handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
-            <p>{this.state.notMatchingMessage}</p>
-
-            <Button className="m-2" type="submit" > Register</Button>
-        </Form>
-        </Col>
-
-    </Container>
-
-</div>
-
-        )
+      modalRedirect=(route)=>{
+        this.props.history.push(route)
     }
+
+    
+    render() { 
+
+        return (<div className="container-register" >
+                <img src="../../images/others/register-family-golden.jpg" alt="family-dog"/>
+                <Container >
+
+                    <Col sm={{ size: 10, offset: 1 }} md={{ size: 6, offset: 3 }}>
+
+                    <Form className=" text-center  form-register p-3 pl-5 pr-5 rounded " onSubmit={this.handleRegister}>
+                        <h3>Register </h3>
+                        <hr className="my-4"/>
+                        <Input className="m-3" value={this.state.userName}  onChange={this.handleKeepName} type="text" placeholder="Name" autoFocus />
+                        <Input className="m-3" value={this.state.UserEmail}  onChange={this.handleKeepEmail} type="text" placeholder="Email"  />            
+                        <select className="form-control" value={this.state.UserCity} onChange={this.handleKeepCity} type="text" placeholder="City"><option key="c-first" value={null}>Select city</option>{this.getCities()}</select>
+                        <Input  className="m-3" value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />
+                        <Input  className="m-3" value={this.state.repeatPassword} onChange={this.handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
+                        <p>{this.state.notMatchingMessage}</p>
+
+                        <Button className="m-2" type="submit" > Register</Button>
+                    </Form>
+                    </Col>
+                    <ModalApp headerMsg={this.state.titleModal} bodyMsg={this.state.msgModal} redirectState={this.state.redirect} modalRedirect={this.modalRedirect} toggle={this.toggleModal} activate={this.state.activateModal}/>
+
+                </Container>
+                </div>
+                )
+            }
 }
 
 export default withRouter(Register);

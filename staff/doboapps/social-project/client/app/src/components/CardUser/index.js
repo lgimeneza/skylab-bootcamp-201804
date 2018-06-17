@@ -1,6 +1,6 @@
 import React from "react";
 import {Link } from "react-router-dom";
-import {Card, CardImg, CardText, CardBody, Col} from 'reactstrap';
+import {Card, CardImg, CardBody, Col} from 'reactstrap';
 
 import './style.scss'
 

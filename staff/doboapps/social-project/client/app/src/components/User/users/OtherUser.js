@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import logic from "../../../logic"
-import {Row, Col, Jumbotron,Container, Button, Badge,NavLink,CardImg } from 'reactstrap'
+import {Row, Col, Jumbotron,Container, Button, CardImg } from 'reactstrap'
 import Gallery  from '../gallery/'
 
 class OtherUser extends Component {
@@ -21,7 +21,6 @@ class OtherUser extends Component {
         notifications: [],
         newNotifications: [],
         requestAlreadySent: false,
-        url:this.props.localStorage
     }
 
     getUser = () => {
@@ -65,17 +64,16 @@ class OtherUser extends Component {
 
 
     showIfAreFriends() {
-        console.log(this.state)
+
         return this.state.friends.find((friend)=>{
-            if(localStorage.getItem("id-app") === friend)
-            return true
-            else return false
+            
+           return (localStorage.getItem("id-app") === friend)? true: false
         })
     }
 
     getImagesUser = ()=>{
 
-        return this.state.images.map((img,i) =><Col xs="6" md="4" ><img key={"img-"+i} src={img.route} alt="dog" /></Col>
+        return this.state.images.map((img,i) =><Col key={"c-i-"+i} xs="6" md="4" ><img key={"img-"+i} src={img.route} alt="dog" /></Col>
         );
     }
 
@@ -86,17 +84,15 @@ class OtherUser extends Component {
 
     render() {
 
-                    console.log(this.state.requestAlreadySent)
-
         return (
 
             <Container className="container-info-user">
-                <Row>
-                    <Col xs="4">
-                        <CardImg className="rounded-circle" top src={this.state.photoProfile} alt="Card image cap" />
-                    </Col>
-                    <Col xs="8">
-                        <Jumbotron>
+                <Jumbotron>
+                    <Row>
+                        <Col xs="4">
+                            <CardImg className="rounded-circle" top src={this.state.photoProfile} alt="Card image cap" />
+                        </Col>
+                        <Col xs={{ size: 7,  offset: 1 }} >
 
                             <h1 className="display-5 text-capitalize ">{this.state.name}</h1>
                             <h5 className="text-capitalize">{this.state.race}</h5>
@@ -104,15 +100,12 @@ class OtherUser extends Component {
                             <h5 className="text-capitalize">{this.state.city}</h5>
                             <h5 className="text-capitalize">{this.state.birthdate}</h5>
                             <h5 className="text-capitalize">{this.state.friends.length}</h5>
-
                             <hr className="my-2" />
                             <p>{this.state.description}</p>
-                            <p className="lead">
-                            {(!this.showIfAreFriends() && !this.state.requestAlreadySent) && <Button onClick={this.handlerButtonFriendShip} color="danger">Request friendship</Button>}
-                            </p>
-                        </Jumbotron>
-                    </Col>
-                </Row>
+                            {(!this.showIfAreFriends() && !this.state.requestAlreadySent) && <Button onClick={this.handlerButtonFriendShip} outline color="secondary"><i className="far fa-heart"></i> Request friendship</Button>}
+                        </Col>
+                    </Row>
+                </Jumbotron>
 
                 {this.showIfAreFriends() &&<Gallery images={this.getImagesUser()} />}
 
