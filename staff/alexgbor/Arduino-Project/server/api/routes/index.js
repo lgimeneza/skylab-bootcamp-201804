@@ -152,7 +152,7 @@ router.patch('/users/:userId/arduinos/:arduId', [jwtValidator, jsonBodyParser], 
         })
 })
 
-router.post('/users/:userId/arduinos/:arduId/data', [jwtValidator, jsonBodyParser], (req, res) => {
+router.post('/users/:userId/arduinos/:arduId/data', jsonBodyParser, (req, res) => {
     const { params: { userId, arduId }, body: { value } } = req
 
     logic.addArduinoData(userId, arduId, value)
@@ -177,6 +177,18 @@ router.get('/users/:userId/arduinos/:arduId/data/', jwtValidator, (req, res) => 
             res.status(400)
             res.json({ status: 'KO', error: message })
         })
+})
+
+router.get('/users/:userId/arduinos/:arduId/control', (req, res) => {
+    const { params: { userId, arduId }, query: { q } } = req
+    if (q === 'on' || q === 'off') {
+        logic.controlArduino(userId, arduId, q)
+            .then(({ stat }) => res.json({ status: 'OK', data: stat }))
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message })
+            })
+    }
 })
 
 module.exports = router

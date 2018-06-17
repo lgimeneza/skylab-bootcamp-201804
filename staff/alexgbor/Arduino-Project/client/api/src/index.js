@@ -451,7 +451,7 @@ const arduApi = {
 
                 if ((arduId = arduId.trim()).length === 0) throw Error('arduId is empty or blank')
 
-                return axios.post(`${this.url}/users/${userId}/arduinos/${arduId}/data`, { value }, { headers: { authorization: `Bearer ${this.token}` } })
+                return axios.post(`${this.url}/users/${userId}/arduinos/${arduId}/data`, { value })
                     .then(({ status, data }) => {
                         if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
@@ -492,6 +492,39 @@ const arduApi = {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
                         return data.data
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            return message
+                        } else return err
+                    })
+            })
+    },
+
+    controlArduino(userId, arduId, q) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof arduId !== 'string') throw Error('arduId is not a string')
+
+                if (!arduId.length) throw Error('arduId is empty')
+
+                if (typeof q !== 'string') throw Error('query is not a string')
+
+                if (q !== 'on' && q !== 'off') throw Error('query must be "on" or "off"')
+
+                return axios.get(`${this.url}/users/${userId}/arduinos/${arduId}/control?q=${q}`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return true
                     })
                     .catch(err => {
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')

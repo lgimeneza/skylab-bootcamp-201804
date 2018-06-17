@@ -1,6 +1,9 @@
 'use strict'
+const fetch = require('node-fetch');
 
 const { models: { User, Arduino, ArduinoData } } = require('data')
+
+global.Headers = fetch.Headers;
 
 const logic = {
     /**
@@ -12,6 +15,8 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
+
+
     registerUser(name, surname, email, password) {
         return Promise.resolve()
             .then(() => {
@@ -369,7 +374,7 @@ const logic = {
             })
     },
 
-    retrieveArduinoData(id,arduId) {
+    retrieveArduinoData(id, arduId) {
         return Promise.resolve()
             .then(() => {
                 if (typeof arduId !== 'string') throw Error('arduId is not a string')
@@ -385,9 +390,34 @@ const logic = {
                         return user.arduinos[index].data
                     })
             })
+    },
+
+    controlArduino(userId, arduId, q) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof arduId !== 'string') throw Error('arduId is not a string')
+
+                if (typeof userId !== 'string') throw Error('userId is not a string')
+
+                if (typeof q !== 'string') throw Error('query is not a string')
+
+                if (q !== 'on' && q !== 'off') throw Error('Query can only be ON or OFF.')
+
+                let dataPackage = {
+                    method: 'GET',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                }
+                return fetch(`http://192.168.1.34/${userId}/${arduId}/${q}`, dataPackage)
+                    .then((res) => res.json())
+                    .catch(err => err.message)
+
+            })
+
+
     }
 
-    //filtrado por fecha?
 }
 
 module.exports = logic

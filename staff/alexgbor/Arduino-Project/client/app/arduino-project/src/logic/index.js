@@ -50,14 +50,18 @@ const logic = {
         return arduApi.removeArduino(userId, arduId)
     },
 
-    addArduinoData(userId,arduId,value,token) {
-        arduApi.token = token
-        return arduApi.addArduinoData(userId, arduId,value, token)
+    addArduinoData(userId,arduId,value) {
+
+        return arduApi.addArduinoData(userId, arduId,value)
     },
 
     retrieveArduinoData(userId, arduId, token) {
         arduApi.token = token
         return arduApi.retrieveArduinoData(userId, arduId, token)
+    },
+
+    controlArduino(userId, arduId, q) {
+        return arduApi.controlArduino(userId,arduId,q)
     }
 }
 
