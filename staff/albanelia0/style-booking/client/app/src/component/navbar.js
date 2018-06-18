@@ -11,12 +11,12 @@ class Navbar extends Component {
 
   componentDidMount() {
 
-    // let token = logic.getToken(token)
-    // if (token) {
-    //   this.setState({
-    //     token: token
-    //   })
-    // }
+    let token = logic.localStorageGetItem("token")
+    if (token) {
+      this.setState({
+        token: token
+      })
+    }
 
   }
 
@@ -40,17 +40,19 @@ class Navbar extends Component {
               <div id="navbarMenu" className="navbar-menu">
                 <div className="navbar-end">
                   <div className="tabs is-right">
-                    <ul className="subtitle is-4">
-                      {/* {this.state.token.length > 0 ? */}
-                      <li className="is-active"><Link to="/" >Home</Link></li>
-                      <li><a href="">Contacta</a></li>
-                      <li><Link to="/profile">Profile</Link></li>
-                      <li><Link to="/login">Login</Link></li>
-                      {/* :
+                    {this.state.token ?
+                      <ul className="subtitle is-4">
+                        <li className="is-active"><Link to="/" >Home</Link></li>
+                        <li><a href="">Contacta</a></li>
+                        <li><Link to="/profile">Profile</Link></li>
+                        <li><Link to="/">Logout</Link></li>
+                      </ul>
+                      :
+                      <ul className="subtitle is-4">
                         <li><Link to="/" >Home</Link></li>
-                        <li><Link to="/login">Login</Link></li>  */}
-                      {/* } */}
-                    </ul>
+                        <li><Link to="/login">Login</Link></li>
+                      </ul>
+                    }
                   </div>
                 </div>
               </div>
