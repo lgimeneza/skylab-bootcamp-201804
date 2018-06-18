@@ -44,7 +44,6 @@ const logic = {
     },
 
     updateUser(id, name, surname, phone, dni, password, newPassword) {
-        console.log('logic', password)
         return shApi.updateUser(id, name, surname, phone, dni, password, newPassword)
             .then(users => {
 
@@ -118,6 +117,15 @@ const logic = {
             return this.tasks
         })
     },
+    rotateUsersTasks(apartmentId){
+        return shApi.rotateUsersTasks(apartmentId)
+        .then(res=> {
+            this.tasks = res
+            return this.tasks
+        })
+    },
+    
+    
     relateUserTask(userId, taskId){
         return shApi.relateUserTask(userId, taskId)
         .then(user => user)

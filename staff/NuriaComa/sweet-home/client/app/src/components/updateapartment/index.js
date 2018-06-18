@@ -144,9 +144,9 @@ render() {
                                     <input className='fUpdA' type="realState" name="realState" value={this.staterealState} onChange={this.updaterealState} />
                                     <div className="butUA">
                                         <button className="smallButUA" type="submit">SAVE</button>
-                                        <button className="smallButUA" onClick={() => this.deleteApartment(this.state.apartmentId)}>DELETE</button>
                                     </div>
                                  </form>
+                                        <button className="smallButUA" onClick={() => this.deleteApartment(this.state.apartmentId)}>DELETE</button>
                       
                         
                     </ul>

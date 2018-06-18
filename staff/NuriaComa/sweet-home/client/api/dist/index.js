@@ -499,14 +499,38 @@ var shApi = {
             });
         });
     },
-    relateUserTask: function relateUserTask(userId, taskId) {
+    rotateUsersTasks: function rotateUsersTasks(apartmentId) {
         var _this14 = this;
 
         return Promise.resolve().then(function () {
 
-            return axios.patch(_this14.url + '/user/' + userId + '/task/' + taskId, {}, { headers: { authorization: 'Bearer ' + _this14.token() } }).then(function (_ref14) {
+            return axios.patch(_this14.url + '/task/' + apartmentId, {}, { headers: { authorization: 'Bearer ' + _this14.token() } }).then(function (_ref14) {
                 var status = _ref14.status,
                     data = _ref14.data;
+
+                if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
+                return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
+    },
+    relateUserTask: function relateUserTask(userId, taskId) {
+        var _this15 = this;
+
+        return Promise.resolve().then(function () {
+
+            return axios.patch(_this15.url + '/user/' + userId + '/task/' + taskId, {}, { headers: { authorization: 'Bearer ' + _this15.token() } }).then(function (_ref15) {
+                var status = _ref15.status,
+                    data = _ref15.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
                 return data;
@@ -523,13 +547,13 @@ var shApi = {
         });
     },
     deleteTask: function deleteTask(taskId) {
-        var _this15 = this;
+        var _this16 = this;
 
         return Promise.resolve().then(function () {
 
-            return axios.delete(_this15.url + '/task/' + taskId, { headers: { authorization: 'Bearer ' + _this15.token() } }).then(function (_ref15) {
-                var status = _ref15.status,
-                    data = _ref15.data;
+            return axios.delete(_this16.url + '/task/' + taskId, { headers: { authorization: 'Bearer ' + _this16.token() } }).then(function (_ref16) {
+                var status = _ref16.status,
+                    data = _ref16.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
                 return true;
@@ -546,15 +570,15 @@ var shApi = {
         });
     },
     addMarket: function addMarket(name, apartmentId) {
-        var _this16 = this;
+        var _this17 = this;
 
-        return axios.post(this.url + '/market/' + apartmentId, { name: name, apartmentId: apartmentId }, { headers: { authorization: 'Bearer ' + this.token() } }).then(function (_ref16) {
-            var status = _ref16.status,
-                data = _ref16.data;
+        return axios.post(this.url + '/market/' + apartmentId, { name: name, apartmentId: apartmentId }, { headers: { authorization: 'Bearer ' + this.token() } }).then(function (_ref17) {
+            var status = _ref17.status,
+                data = _ref17.data;
 
             if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
 
-            _this16.marketId = data.data;
+            _this17.marketId = data.data;
 
             return data;
         }).catch(function (err) {
@@ -569,13 +593,13 @@ var shApi = {
         });
     },
     listMarket: function listMarket(apartmentId) {
-        var _this17 = this;
+        var _this18 = this;
 
         return Promise.resolve().then(function () {
 
-            return axios.get(_this17.url + '/market/' + apartmentId, { headers: { authorization: 'Bearer ' + _this17.token() } }).then(function (_ref17) {
-                var status = _ref17.status,
-                    data = _ref17.data;
+            return axios.get(_this18.url + '/market/' + apartmentId, { headers: { authorization: 'Bearer ' + _this18.token() } }).then(function (_ref18) {
+                var status = _ref18.status,
+                    data = _ref18.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
                 return data.data;
@@ -592,13 +616,13 @@ var shApi = {
         });
     },
     deleteMarket: function deleteMarket(marketId) {
-        var _this18 = this;
+        var _this19 = this;
 
         return Promise.resolve().then(function () {
 
-            return axios.delete(_this18.url + '/market/' + marketId, { headers: { authorization: 'Bearer ' + _this18.token() } }).then(function (_ref18) {
-                var status = _ref18.status,
-                    data = _ref18.data;
+            return axios.delete(_this19.url + '/market/' + marketId, { headers: { authorization: 'Bearer ' + _this19.token() } }).then(function (_ref19) {
+                var status = _ref19.status,
+                    data = _ref19.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
                 return true;
@@ -615,14 +639,14 @@ var shApi = {
         });
     },
     addNotes: function addNotes(name, apartmentId) {
-        var _this19 = this;
+        var _this20 = this;
 
-        return axios.post(this.url + '/note/' + apartmentId, { name: name, apartmentId: apartmentId }, { headers: { authorization: 'Bearer ' + this.token() } }).then(function (_ref19) {
-            var status = _ref19.status,
-                data = _ref19.data;
+        return axios.post(this.url + '/note/' + apartmentId, { name: name, apartmentId: apartmentId }, { headers: { authorization: 'Bearer ' + this.token() } }).then(function (_ref20) {
+            var status = _ref20.status,
+                data = _ref20.data;
 
             if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
-            _this19.noteId = data.data;
+            _this20.noteId = data.data;
 
             return data;
         }).catch(function (err) {
@@ -637,13 +661,13 @@ var shApi = {
         });
     },
     listNotes: function listNotes(apartmentId) {
-        var _this20 = this;
+        var _this21 = this;
 
         return Promise.resolve().then(function () {
 
-            return axios.get(_this20.url + '/note/' + apartmentId, { headers: { authorization: 'Bearer ' + _this20.token() } }).then(function (_ref20) {
-                var status = _ref20.status,
-                    data = _ref20.data;
+            return axios.get(_this21.url + '/note/' + apartmentId, { headers: { authorization: 'Bearer ' + _this21.token() } }).then(function (_ref21) {
+                var status = _ref21.status,
+                    data = _ref21.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
                 return data.data;
@@ -660,13 +684,13 @@ var shApi = {
         });
     },
     deleteNote: function deleteNote(noteId) {
-        var _this21 = this;
+        var _this22 = this;
 
         return Promise.resolve().then(function () {
 
-            return axios.delete(_this21.url + '/note/' + noteId, { headers: { authorization: 'Bearer ' + _this21.token() } }).then(function (_ref21) {
-                var status = _ref21.status,
-                    data = _ref21.data;
+            return axios.delete(_this22.url + '/note/' + noteId, { headers: { authorization: 'Bearer ' + _this22.token() } }).then(function (_ref22) {
+                var status = _ref22.status,
+                    data = _ref22.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
                 return true;

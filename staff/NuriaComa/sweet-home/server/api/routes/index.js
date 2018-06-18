@@ -193,6 +193,19 @@ router.get('/task/:apartmentId', jwtValidator, (req, res) => {
             res.json({ status: 'KO', error: message })
         })
 })
+router.patch('/task/:apartmentId', jwtValidator, (req, res) => {
+    const{ params: {apartmentId} } =req
+    return logic.rotateUsersTasks(apartmentId)
+        .then(tasks => {
+
+            res.status(200)
+            res.json({ status: 'OK', data: tasks })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
 router.patch('/user/:userId/task/:taskId', jwtValidator, (req, res) => {
     const{ params: {userId, taskId} } =req
     return logic.relateUserTask(userId, taskId)

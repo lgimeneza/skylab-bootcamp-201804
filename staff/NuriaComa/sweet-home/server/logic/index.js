@@ -191,38 +191,8 @@ const logic = {
            return user
         })
     },
-    deleteUserTask(taskId, userId, apartmentId){
-        return Promise.resolve()
-        .then(() => this.listUsers( apartmentId ))
-        
-        .then(users =>{
-            
-           const filteredUsersWithTask = users.filter(users =>{
-               return users.taskId
-           })
-           if( users.length=== filteredUsersWithTask.length){
-            let saveTaskId = []
-                for (let i=0; i<users.length; i++){
-                   saveTaskId.push(users[i].taskId)
-                }
-              User.update({_id: user.id}, { $unset: { taskId: null } }).then(result => console.info({result}))
-              return saveTaskId
-          }
-
-            
-        })
-    },
-    addUserTask(apartemntId, saveTaskId){
-        return Promise.resolve()
-        .then(() => this.listUsers( apartmentId ))
-        
-        .then(users =>{
-            User.assign
-
-            
-
-    })
-    },
+   
+   
 
     // rotateUsersTasks(apartmentId){
     //     return Promise.resolve()
@@ -258,59 +228,52 @@ const logic = {
     //         })
     //     })   
     // },
+
+    doAssociations(tasks, users) {
+        let newAssociation = [];
+        let usersInUse = users.slice();
+        tasks.forEach(task => {
+            const notAssociatedUsers = usersInUse.filter(user => JSON.stringify(user.taskId) !== JSON.stringify(task.id) ? user.id : null );
+            if (notAssociatedUsers.length === 0) {
+                newAssociation = this.doAssociations(tasks, users)
+            } else {
+                var randomUser = notAssociatedUsers[Math.floor(Math.random()*notAssociatedUsers.length)];
+                newAssociation.push({
+                    taskId: task.id,
+                    userId: randomUser.id
+                });
+                usersInUse = usersInUse.filter(user => JSON.stringify(user.id) !== JSON.stringify(randomUser.id));
+            }
+        });
+      return newAssociation;
+    },
+    
+
+
     rotateUsersTasks(apartmentId){
-
         return Promise.resolve()
-            .then(() => {
-                return Task.find({ apartmentId })
-                    .then(tasks => {
-                        const tasks2= tasks.slice
-                        console.log('tasks2: ', tasks2)
-                        .then(() => {
-                                return Users.find({ apartmentId })
-                                .then(users => {
-                                    const users2= users.slice
-                                    
-                                    console.log('users2: ', users2)
-                                        return users2
-                                    .then (()=>{
-                                        const users = [
-                                            { id: '1', taskId: '1' },
-                                            { id: '2', taskId: '2' },
-                                            { id: '3', taskId: '3' }
-                                            ];
-                                            
-                                            const tasks = [
-                                            { id: '1', name: 'task1' },
-                                            { id: '2', name: 'task2' },
-                                            { id: '3', name: 'task3' }
-                                            ];
-                                            
-                                            let newAssociation = [];
-                                            
-                                            function doAssociations(tasks2, users2) {
-                                                tasks2.forEach(task => {
-                                                  const notAssociatedUsers = users2.filter(user => user.taskId !== task.id ? user.id : null );
-                                                console.info('task', task)
-                                                console.info('not associated users', notAssociatedUsers)
-                                                var randomItem = notAssociatedUsers[Math.floor(Math.random()*notAssociatedUsers.length)];
-                                                newAssociation.push({
-                                                taskId: task.id,
-                                                userId: randomItem.id
-                                                })
-                                              });
-                                              console.info(newAssociation);
-                                            }
-                                            
-                                            doAssociations(tasks, users);
-                                })
-                                })
-                        })
-            })
+            .then(() => 
+                Task.find({ apartmentId })
+                    .then(tasks => 
+                        User.find({ apartmentId })
+                            .then(users => {
+                            
+                                const newAssociation = this.doAssociations(tasks, users);
 
-
-            })
-        
+                                
+                                users.forEach(user => 
+                                    User.update({_id: user.id}, { $unset: { taskId: null } }).then(() => {
+                                        const selectedAssociation = newAssociation.find(association =>
+                                            JSON.stringify(association.userId) === JSON.stringify(user.id)
+                                        );
+                                        if (selectedAssociation) {
+                                            User.update({_id: selectedAssociation.userId},{ taskId: selectedAssociation.taskId} ).then(() => true)
+                                        }
+                                    })
+                                )
+                             })
+                    )
+            )
     },
     
     listUsers(apartmentId) {
@@ -341,17 +304,11 @@ const logic = {
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
-
                 
-                return User.findById({ _id: id })
+                console.log('_id: id : ', id );
+                return User.findByIdAndRemove({ _id : id })
             })
-            .then(user => {
-              
-
-                if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
-
-                return user.remove()
-            })
+           
             .then(() => true)
     },
 
@@ -498,7 +455,7 @@ const logic = {
             })
     },
     deleteTask(taskId) {
-
+ 
         return Promise.resolve()
             .then(() => {
                 return Task.findById(taskId)
@@ -513,7 +470,8 @@ const logic = {
                             return User.findOne({"taskId": taskId})
                             .then( user =>{
 
-                                User.update({_id: user.id}, { $unset: { taskId: null } })
+                               User.update({_id: user.id}, { $unset: { taskId: null } }).then(() => true)
+                             
                         })
                 })
                         

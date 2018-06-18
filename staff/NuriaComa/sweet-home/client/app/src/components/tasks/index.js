@@ -61,7 +61,8 @@ class Tasks extends Component {
                     if(userWithoutTask) {
                         this.state.name=''
 
-                        logic.relateUserTask(userWithoutTask._id, task.id).then( () => {
+                        logic.relateUserTask(userWithoutTask._id, task.id)
+                        .then( () => {
                             this.getTask()
                         })
                     }
@@ -71,7 +72,7 @@ class Tasks extends Component {
         
 
     }
-    deleteTask = id =>{
+    deleteTask = (id) =>{
 
         Promise.resolve()
         .then(()=>{
@@ -83,7 +84,13 @@ class Tasks extends Component {
         })
     }
 
-
+    rotateTask = ()=>{
+        const apartId = localStorage.getItem('apartmentId')
+        logic.rotateUsersTasks(apartId)
+        .then(() => {
+            this.getTask()
+       })
+    }
 
     render() {
         return (
@@ -107,7 +114,7 @@ class Tasks extends Component {
                             if (user.length > 0) {
                                 return(
                                     <div key={tasks.name} className="listTasks"><li className="datat">{user[0].name}: {tasks.name} <button className="deleteT" onClick={() => this.deleteTask(tasks._id)}>✘</button></li>
-                                    <button onClick={() => this.rotateTask(tasks._id)}>rotate</button></div>
+                                    </div>
                                 )
                             }
 
@@ -115,7 +122,7 @@ class Tasks extends Component {
                             }) : undefined
                         }
                         </ul>
-                        
+                        <button onClick={() => this.rotateTask()}>rotate</button>
                         <Link to="/home">
                              <button className="backt">Back</button>
                         </Link>

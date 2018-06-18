@@ -90,9 +90,9 @@ class UpdateUser extends Component {
           
     }
     
-    deleteUser = (e) => {
+    deleteUser = () => {
         const uId = localStorage.getItem('userId')
-        e.preventDefault()
+        
         Promise.resolve()
         .then(()=>{
             swal({
@@ -143,13 +143,11 @@ render() {
                                     <input className='fUpd' type="password" name="password" value={this.statePassword} onChange={this.updatePassword} />
                                     <p className="t">NEW PASSWORD: </p>
                                     <input className='fUpd' type="password" name="password" value={this.stateNewPassword} onChange={this.updateNewPassword} />
-                                    <div className="butU">
                                         <button className="smallBut" type="submit">SAVE</button>
+                                 </form>
+                                    <div className="butU">
                                         <button className="smallBut" onClick={() => this.deleteUser(this.state.userId)}>DELETE</button>
                                     </div>
-                                 </form>
-                      
-                        
                     </ul>
                     <Link to="/users">
                         <button className="backU">Back</button>
