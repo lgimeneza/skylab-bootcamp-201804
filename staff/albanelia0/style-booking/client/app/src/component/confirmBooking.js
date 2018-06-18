@@ -13,10 +13,12 @@ class ConfirmBooking extends Component {
   }
 
   componentWillMount() {
-    let checkedList = localStorage.getItem('checkedList')
+
+    let checkedList = logic.localStorageGetItem("checkedList")
     checkedList = JSON.parse(checkedList)
-    let date = localStorage.getItem('date')
-    let hour = localStorage.getItem('hour')
+    
+    let date = logic.localStorageGetItem("date")
+    let hour = logic.localStorageGetItem("hour")
 
     this.setState({
       selectedServices: checkedList,
@@ -26,7 +28,7 @@ class ConfirmBooking extends Component {
   }
 
   createTheBookingUser = () => {
-    let token = localStorage.getItem('token')
+    let token = logic.localStorageGetItem("token")
     logic.setToken(token)
     createBooking().then(res => {
       console.log(res)
@@ -37,7 +39,7 @@ class ConfirmBooking extends Component {
         })
         this.props.history.push('/profile')
       } else {
-        let date = localStorage.getItem("date")
+        let date = logic.localStorageGetItem("date")
         console.log(date)
         let _date = date.replace(/\,/g, "/")
         console.log(_date)

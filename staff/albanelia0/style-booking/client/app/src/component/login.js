@@ -69,8 +69,9 @@ export class Login extends Component {
     }
   }
   storageUserData(result) {
-    localStorage.setItem('token', result.token)
-    localStorage.setItem('id', result.id)
+    
+    logic.localStorageSetItem('token', result.token)
+    logic.localStorageSetItem('id', result.id)
   }
 
   render() {

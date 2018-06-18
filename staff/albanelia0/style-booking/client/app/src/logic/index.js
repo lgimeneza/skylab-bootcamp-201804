@@ -47,12 +47,12 @@ const logic = {
     return logicApi.listBookingsUser(userId)
   },
   
-  localStorageGetItem(...item) {
-    return localStorage.getItem(...item)
+  localStorageGetItem(name, value) {
+    return localStorage.getItem(name, value)
   },
 
-  localStorageSetItem(...item) {
-     localStorage.setItem(...item)
+  localStorageSetItem(name, value) {
+    localStorage.setItem(name, value)
   },
 
   setToken(token){

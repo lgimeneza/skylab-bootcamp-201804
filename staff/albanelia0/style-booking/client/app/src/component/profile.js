@@ -15,11 +15,12 @@ class Profile extends Component {
   }
 
   listBookingUser = () => {
-    let token = localStorage.getItem("token")
+
+    let token = logic.localStorageGetItem("token")
     logic.setToken(token)
     if (token) {
 
-      let userId = localStorage.getItem("id")
+      let userId = logic.localStorageGetItem("id")
       return logic.listBookingUser(userId)
         .then(result => {
           if (result.length > 0) {

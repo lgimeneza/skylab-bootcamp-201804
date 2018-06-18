@@ -18,15 +18,15 @@ class BookingHours extends Component {
   }
 
   finishBooking = (hour) => {
-
-    localStorage.setItem("date", this.state.date)
-    localStorage.setItem("hour", hour)
-
+    
+    logic.localStorageSetItem("date", this.state.date)
+    logic.localStorageSetItem("hour", hour)
+    
     // if (result) {
 
     // PASARLO A SWEETALERT2
-
-    let token = localStorage.getItem("token")
+    
+    let token = logic.localStorageGetItem("token")
     if (!token) {
       swal({
         type: 'success',

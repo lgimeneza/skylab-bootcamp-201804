@@ -70,7 +70,7 @@ export class Dropdown extends Component {
 
           let checkedList = formValues
 
-          localStorage.setItem('checkedList', JSON.stringify(checkedList))
+          logic.localStorageSetItem('checkedList', JSON.stringify(checkedList))
 
           this.setState({ checkedList }, () => {
             swal('Perfect! chosen service, choose the date / time and go!')
