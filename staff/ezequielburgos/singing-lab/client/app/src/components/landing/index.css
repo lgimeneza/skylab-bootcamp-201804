@@ -40,5 +40,6 @@ Home page CSS
     background-repeat: no-repeat;
     margin: 0px !important;
     color: white;
+    max-height: 400px;
     
 }

@@ -1,0 +1,15 @@
+.cart-image{
+    max-width: 50%;
+}
+
+.my-cart-title{
+    text-align: left;
+}
+
+.total-price-card{
+    width: 18rem;
+}
+
+.main-section-cart{
+    display: flex;
+}

@@ -9,7 +9,8 @@ class Cart extends Component {
     constructor() {
         super()
         this.state = {
-            cart: []
+            cart: [],
+            total: []
         }
     }
 
@@ -20,7 +21,7 @@ class Cart extends Component {
     getItems = () => {
         if (logic._cart.length && logic._cart !== 'undefined') {
             logic.listProductsByIds()
-                .then(cart => this.setState({ cart }))
+                .then(cart => this.setState({ cart, total: [] }))
         } else {
             this.setState({ cart: [] })
         }
@@ -28,30 +29,54 @@ class Cart extends Component {
 
     onRemoveFromCart = (product) => {
         logic.removeProductFromCart(product)
+
         this.getItems()
     }
 
     render() {
+
+        this.state.cart.map(item => this.state.total.push(item.price))
+
         return (
             <main>
-                <h2 className="main-title">this is the Cart</h2>
-
-                <ul className="listitems-body">
-                    <div className="thumbnail listitems-subbody">
+                <section className="main-title my-cart-title">
+                    <i className="fas fa-shopping-cart"></i>
+                    <span> My Cart</span>
+                </section>
+                <section className="main-section-cart">
+        
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Course</th>
+                            <th scope="col">Units available</th>
+                            <th scope="col">discount</th>
+                            <th scope="col">Price</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {this.state.cart.map(item => (
-                            <li key={item._id} className="items">
-                                <div className="card" style={{ width: '18rem' }}>
-                                    <img className="card-img-top" src={item.image} alt="course or category" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{item.name}</h5>
-                                        <a className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</a>
-                                    </div>
-                                </div>
-                            </li>
+                            <tr key={item._id}>
+                                <td width="10%"><img className="card-img-top cart-image" src={item.image} alt="course or category" /></td>
+                                <td> <h5 className="card-title">{item.name}</h5></td>
+                                <td>{item.stock}</td>
+                                <td>{item.discount}%</td>
+                                <td> <h5 className="card-title">{item.price} €</h5></td>
+                                <td><a className="btn btn-outline-secondary" onClick={() => this.onRemoveFromCart(item._id)} role="button">Remove from cart</a></td>
+                            </tr>
                         ))}
-                <Link to="/order" className="btn btn-outline-secondary" role="button">Buy the products</Link>
+                    </tbody>
+                </table>
+                {<div class="card text-right total-price-card">
+                    <div class="card-body">
+                    <h2>Total price</h2>
+                        <h2 class="card-title">{this.state.total.length && this.state.total.reduce((accumulator, currentValue) => accumulator + currentValue)}€</h2>
+                        <Link to="/order" className="btn btn-outline-secondary" role="button">Buy the products</Link>
                     </div>
-                </ul>
+                </div>}
+                </section>
                 <Footer />
             </main>
         )
