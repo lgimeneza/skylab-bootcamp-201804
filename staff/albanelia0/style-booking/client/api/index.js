@@ -169,7 +169,6 @@ const logic = {
 
         if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
-
         return axios.post(`${this.url}/auth`, { email, password })
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
@@ -355,7 +354,6 @@ const logic = {
   listBookingsUser(userId) {
     return Promise.resolve()
       .then(() => {
-        console.log(this.token)
         return axios.get(`${this.url}/booking/user/${userId}`, { headers: { authorization: `Bearer ${this.token}` }})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
@@ -385,12 +383,11 @@ const logic = {
   deleteBooking(bookingId, userId) {
     return Promise.resolve()
       .then(() => {
-        return axios.delete(`${this.url}/booking/${bookingId}/${userId}`, { headers: { authorization: `Bearer ${this.token}` }})
+        return axios.delete(`${this.url}/booking/user/${bookingId}/${userId}`, { headers: { authorization: `Bearer ${this.token}` }})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
             return true
-
           })
           .catch(err => {
             if (err.code === 'ECONNREFUSED') throw Error('could not reach server')

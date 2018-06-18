@@ -57,7 +57,14 @@ const logic = {
 
   setToken(token){
     logicApi.setToken(token)
+  },
+
+  deleteBooking(bookingId, userId){
+    return logicApi.deleteBooking(bookingId, userId)
+      .then(() => true)
+      .catch(({message}) => Promise.reject(message))
   }
+  
 }
 
 export default logic

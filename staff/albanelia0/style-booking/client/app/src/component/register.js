@@ -115,17 +115,17 @@ export class Register extends Component {
                 <form >
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name="name" className="input is-large" type="text" placeholder="Your name" autofocus="" />
+                      <input onChange={this.handleChange} name="name" className="input is-large" type="text" placeholder="Your name" autoFocus="" />
                     </div>
                   </div>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name="surname" className="input is-large" type="text" placeholder="Your surname" autofocus="" />
+                      <input onChange={this.handleChange} name="surname" className="input is-large" type="text" placeholder="Your surname" autoFocus="" />
                     </div>
                   </div>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name="email" className="input is-large" type="text" placeholder="Your gmail" autofocus="" />
+                      <input onChange={this.handleChange} name="email" className="input is-large" type="text" placeholder="Your gmail" autoFocus="" />
                     </div>
                   </div>
                   <div className="field">

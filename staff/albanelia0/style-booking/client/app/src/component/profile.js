@@ -1,50 +1,60 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import swal from 'sweetalert2'
+// import 'font-awesome'
 import '../design/profile.css'
 
 class Profile extends Component {
   state = {
-    userBookings: <div />,
-    result: [],
+    result: []
   }
 
-  componentWillMount() {
-    this.listBookingUser().then(bookings => {
-      this.setState({ userBookings: bookings })
-    })
+  //chapuzas eze
+  componentDidMount(){
+    this.listBookingUser()
   }
 
   listBookingUser = () => {
-
     let token = logic.localStorageGetItem("token")
     logic.setToken(token)
-    if (token) {
 
+    if (token) {
       let userId = logic.localStorageGetItem("id")
-      return logic.listBookingUser(userId)
+
+      logic.listBookingUser(userId)
         .then(result => {
-          if (result.length > 0) {
-            this.setState({ result })
-          } else {
-            return <div>No bookings!</div>
-          }
+          this.setState({ result })
         })
     }
   }
-  aler(){
-    alert('funciona!!')
+  cancelBooking = (bookingId, userId) => {
+    swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it!'
+    }).then((result) => {
+      if (result.value) {
+        logic.deleteBooking(bookingId, userId).then(() => {
+          this.listBookingUser()
+        })
+      }
+    })
   }
 
   listBookingBox = () => {
     return this.state.result.map(result => {
       return (
-        < div className="booking">
+        < div key={result.bookingId} className="booking">
           <article className="media">
             <div className="media-left">
             </div>
             <div className="media-content">
               <div className="content">
-                <p>
+                <div>
                   <strong className="tag is-primary">{result.services.map(service => service.serviceName)}</strong>
                   <br />
                   <ul>
@@ -53,7 +63,7 @@ class Profile extends Component {
                     {<li>Duration:{result.services.map(service => service.duration)}min</li>}
                     {<li>Price:{result.services.map(service => service.price)}€</li>}
                   </ul>
-                </p>
+                </div>
               </div>
               <nav className="level is-mobile">
                 <div className="level-left">
@@ -62,8 +72,11 @@ class Profile extends Component {
                       <i className="fa fa-heart" aria-hidden="true"></i>
                     </span>
                     <span className="icon is-small">
-                      <i onClick={this.aler} className=" delete  delete-booking is-danger" aria-hidden="true"></i>
+                      <i onClick={() => this.cancelBooking(result.bookingId, result.userId)} className=" delete  delete-booking is-danger" aria-hidden="true"></i>
                     </span>
+                    {/* <span className="icon is-small">
+                      <i className="fa fa-pencil-alt" aria-hidden="true"></i>
+                    </span> */}
                   </a>
                 </div>
               </nav>
@@ -76,12 +89,12 @@ class Profile extends Component {
 
   render() {
     return (
-      <di>
+      <div>
         <h1 className="subtitle">Mys Bookings</h1>
         <div className="box bookingBox">
-          {this.listBookingBox()}
+          {this.state.result.length ? this.listBookingBox() : <span>No bookings</span>}
         </div>
-      </di>
+      </div>
     )
   }
 

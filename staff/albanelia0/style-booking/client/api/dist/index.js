@@ -409,7 +409,7 @@ var logic = {
     var _this11 = this;
 
     return Promise.resolve().then(function () {
-      return axios.delete(_this11.url + '/booking/' + bookingId + '/' + userId, { headers: { authorization: 'Bearer ' + _this11.token } }).then(function (_ref10) {
+      return axios.delete(_this11.url + '/booking/user/' + bookingId + '/' + userId, { headers: { authorization: 'Bearer ' + _this11.token } }).then(function (_ref10) {
         var status = _ref10.status,
             data = _ref10.data;
 

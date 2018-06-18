@@ -82,17 +82,17 @@ export class Dropdown extends Component {
 
   changeMonth = (e) => {
     const name = e.target.getAttribute('name')
-    if (name == 1) {
+    if (name === 1) {
       this.setState({
         _month: monthNames[day.getMonth() + 1],
         _monthNumber: day.getMonth() + 2
       })
-    } else if (name == 2) {
+    } else if (name === 2) {
       this.setState({
         _month: monthNames[day.getMonth() + 2],
         _monthNumber: day.getMonth() + 3
       })
-    } else if (name == 3) {
+    } else if (name === 3) {
       this.setState({
         _month: monthNames[day.getMonth() + 3],
         _monthNumber: day.getMonth() + 3
@@ -107,11 +107,11 @@ export class Dropdown extends Component {
 
   changeYear = (e) => {
     const name = e.target.getAttribute('name')
-    if (name == 1) {
+    if (name === 1) {
       this.setState({
         _year: year
       })
-    } else if (name == 2) {
+    } else if (name === 2) {
       this.setState({
         _year: year + 1
       })

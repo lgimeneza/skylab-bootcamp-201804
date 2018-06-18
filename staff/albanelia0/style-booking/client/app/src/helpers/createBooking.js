@@ -22,7 +22,7 @@ function createBooking() {
     })
   }
   console.log({userId, serviceIds, _date})
-  return logic.placeBooking(userId, serviceIds, _date)//falta la hora
+  return logic.placeBooking(userId, serviceIds, _date)
     .then(booking => {
       if (booking == "unavailable") {
         // alerta de prueba
