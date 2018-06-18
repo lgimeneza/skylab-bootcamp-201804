@@ -66,7 +66,6 @@ class EditProfile extends Component {
     }
 
     handleKeepBirthdate = ({target:{value:birthdate}}) => {
-        console.log("bir",birthdate)
         this.setState({ birthdate })
     }
 

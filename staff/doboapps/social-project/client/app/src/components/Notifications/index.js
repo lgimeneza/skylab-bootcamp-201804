@@ -3,6 +3,7 @@ import { withRouter, Link } from 'react-router-dom'
 import { Button, Popover, PopoverHeader, Alert } from 'reactstrap';
 import logic from "../../logic"
 import './style.scss';
+import {ModalApp} from '../'
 
 
 class Notifications extends Component {
@@ -25,12 +26,12 @@ class Notifications extends Component {
 
     logic.acceptFriendship(localStorage.getItem("id-app"), idFriend)
         .then(res => {
-            alert(res+" friend add")                
             logic.sendNotifactionRelationship(idFriend, localStorage.getItem("id-app"), 'acceptFriendship:')
                 .then((res) => {
-                    alert(res+" notification sent")
                     this.clearNotifications()
                 })
+        }).catch(e=>{
+          this.toggleModal("Error",e)
         })
 }
 
@@ -44,8 +45,8 @@ handlerIgnoreFriendship = () => {
 clearNotifications = () => {
   logic.deleteNotifications()
       .then((res) => {
-          alert("clear:"+res)
-          this.props.clearNotifications()
+        // this.toggleModal("Success","Congratulations! correctly sent request")
+        this.props.clearNotifications()
       })
 }
 
@@ -55,7 +56,6 @@ clearNotifications = () => {
   drawNotifications = ()=>{
     
     return this.props.notifications.map((n, key)=>{
-      console.log(n.type)
 
       if(n.type ==="#friendship")
       return(<Alert key={"alert_n"+key} color="info" isOpen={this.state.visible} toggle={this.onDismiss}>
@@ -73,6 +73,23 @@ clearNotifications = () => {
                   </Alert>)
     })    
   }
+
+
+  toggleModal=(titleModal,msgModal,redirect)=> {
+
+    if(!titleModal || !msgModal) titleModal = msgModal = ""
+
+    this.setState({
+        activateModal: !this.state.activateModal,
+        titleModal,
+        msgModal:msgModal.toString(),
+        redirect
+    })
+  }
+
+  modalRedirect=(route)=>{
+    this.props.history.push(route)
+}
 
 
   render() {
@@ -94,8 +111,9 @@ clearNotifications = () => {
             <PopoverHeader onClick={this.clearNotifications}  className="text-center">Clear Notifications</PopoverHeader>
             : <PopoverHeader  className="text-center">Without  Notifications</PopoverHeader>}
         </Popover>
+        <ModalApp headerMsg={this.state.titleModal} bodyMsg={this.state.msgModal} redirectState={this.state.redirect} modalRedirect={this.modalRedirect} toggle={this.toggleModal} activate={this.state.activateModal}/>
       </div>
-    );
+    )
   }
 }
 
