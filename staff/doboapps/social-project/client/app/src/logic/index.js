@@ -100,6 +100,23 @@ const logic = {
         return socialApi.deleteNotifications(localStorage.getItem('id-app'))
     },
 
+    getAge(birthday){
+
+        if(birthday){
+
+            birthday = new Date(birthday)
+            let today = new Date();
+            var years = today.getFullYear() - birthday.getFullYear()
+            birthday.setFullYear(today.getFullYear())
+            
+            if(today < birthday)  years--;
+            
+            return (years<1)?"Months": years+" years" 
+        }
+
+
+    },
+
     logOut() {
         localStorage.removeItem('token')
         localStorage.removeItem('id-app')

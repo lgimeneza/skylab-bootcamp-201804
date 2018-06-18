@@ -22,6 +22,7 @@ class UploadPictureUser extends Component {
   }
 
   onChange = value => {
+    console.log(value)
     this.setState(value);
   }
 

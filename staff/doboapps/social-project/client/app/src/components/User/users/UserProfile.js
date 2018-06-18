@@ -73,6 +73,8 @@ class UserProfile extends Component {
         );
     }
 
+    
+
 
     componentDidMount() {
         (this.getUser())
@@ -97,8 +99,8 @@ class UserProfile extends Component {
                                 <h5 className="text-capitalize">{this.state.race}</h5>
                                 <h5 className="text-capitalize">{this.state.gender}</h5>
                                 <h5 className="text-capitalize">{this.state.city}</h5>
-                                <h5 className="text-capitalize">{this.state.birthdate}</h5>
-                                <h5 className="text-capitalize">{this.state.friends.length}</h5>
+                                <h5 className="text-capitalize">{logic.getAge(this.state.birthdate)}</h5>
+                                <h5 className="text-capitalize">{this.state.friends.length} friends</h5>
                                 <hr className="my-2" />
                                 <p>{this.state.description}</p>
                                 <p className="lead"></p>

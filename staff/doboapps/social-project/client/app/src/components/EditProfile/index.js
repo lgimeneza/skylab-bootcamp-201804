@@ -66,6 +66,7 @@ class EditProfile extends Component {
     }
 
     handleKeepBirthdate = ({target:{value:birthdate}}) => {
+        console.log("bir",birthdate)
         this.setState({ birthdate })
     }
 
@@ -89,7 +90,6 @@ class EditProfile extends Component {
         logic.updateUser(this.state.name, this.state.firstEmail,this.state.email, this.state.password, this.state.race, this.state.gender, this.state.description, this.state.photoProfile, this.state.birthdate,this.state.city,this.state.zip)
         .then((res)=>{
             this.toggleModal("Success","Congratulations! correctly updated data")
-
         })
         .catch((res)=>{
              this.toggleModal("Error",res)

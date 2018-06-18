@@ -680,7 +680,6 @@ const logic = {
 
                 if (typeof base64Image !== 'string') throw Error('base64Image is not a string')
 
-
                 return new Promise((resolve, reject) => {
                     return cloudinary.v2.uploader.upload(base64Image, function (err, data) {
                         if (err) return reject(err)
