@@ -407,7 +407,6 @@ const logic = {
                                 if (!user) throw Error(`no user found with id ${userId}`)
 
                                 const friend = user.friends.find((element) => {
-
                                     return element == friendId
                                 })
 
