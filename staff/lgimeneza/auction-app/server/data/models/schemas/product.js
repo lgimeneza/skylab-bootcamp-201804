@@ -23,8 +23,9 @@ module.exports = new Schema({
         type: Number,
         required: true
     },
-    soldPrice:{
+    currentPrice: {
         type: Number,
+        required: true
     },
     closed: {
         type: Boolean,

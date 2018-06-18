@@ -61,6 +61,7 @@ mongoose.connect(DB_URL)
             startDate: '2018-05-23T18:25:43.511Z',
             endDate: '2018-06-23T16:20:16.511Z',
             startPrice: 100,
+            currentPrice: 100,
             closed: false,
             images: [image01, image03, image06, image08],
             category: category01,
@@ -75,6 +76,7 @@ mongoose.connect(DB_URL)
             startDate: '2018-05-20T19:10:10.511Z',
             endDate: '2018-06-24T12:15:05.511Z',
             startPrice: 100,
+            currentPrice: 100,
             closed: false,
             images: [image02, image05, image02, image05],
             category: category04,
@@ -89,6 +91,7 @@ mongoose.connect(DB_URL)
             startDate: '2018-04-10T11:18:12.511Z',
             endDate: '2018-06-24T13:15:12.511Z',
             startPrice: 100,
+            currentPrice: 100,
             closed: false,
             images: [image01, image03, image06, image08],
             category: category04,
@@ -103,6 +106,7 @@ mongoose.connect(DB_URL)
             startDate: '2018-04-10T11:18:12.511Z',
             endDate: '2018-06-18T11:05:12.511Z',
             startPrice: 100,
+            currentPrice: 100,
             closed: false,
             images: [image01, image03, image06, image08],
             category: category04,
@@ -136,6 +140,6 @@ mongoose.connect(DB_URL)
         return true;
 
     })
-    .then(() => mongoose.disconnect())
     .then(() => console.log('done'))
     .catch(console.error)
+    .then(() => mongoose.disconnect())

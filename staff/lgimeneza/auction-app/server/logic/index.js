@@ -7,57 +7,75 @@ const logic = {
     //TODO: Add error handling
     //TODO: Add documentation
 
-    listProducts(query) {
+    /**
+     * 
+     * @param {string} query 
+     * @param {[string]} categories 
+     * @param {[number]} prices 
+     */
+    listProducts(query, categories, prices) {
         return Promise.resolve()
             .then(() => {
-
-                const stages = [
-                    { $project : { _id: 1, title : 1 , description : 1, startDate: 1, endDate: 1, 
-                    startPrice: 1, closed: 1, images: 1,  maxBid: { $ifNull: [ { $max: '$bids.price' }, '$startPrice'] } } },
-                ]
-
-                const seachStages = [
-                    { $match: {$text: {$search: query } } } , 
-                    { $sort: { score: { $meta: "textScore" } } },
-                ]
+                const criteria = { $match: {} }
+                const sort = { $sort: { endDate: -1 } }
 
                 if (typeof query != 'undefined' && query.length > 0) {
-                    stages.unshift(...seachStages)
-                } else {
-
+                    criteria.$match.$text = { $search: query }
+                    sort.score = { $meta: "textScore" }
                 }
-                
-                // {
-                   
-                // } else {
-                //     stages.push({ $sort: { endDate: 1 } },)
-                // }
+
+                if (categories instanceof Array && categories.length) {
+                    criteria.$match.category = { $in: categories }
+                }
+
+                if (prices instanceof Array && prices.length) {
+                    const [min, max] = prices
+
+                    criteria.$match.currentPrice = {}
+
+                    if (min) criteria.$match.currentPrice.$gte = min
+                    if (max) criteria.$match.currentPrice.$lte = max
+                }
+
+                const stages = [criteria, sort]
+
+                stages.push({
+                    $project: {
+                        _id: 1, title: 1, description: 1, startDate: 1, endDate: 1,
+                        //startPrice: 1, closed: 1, images: 1, maxBid: { $ifNull: [{ $max: '$bids.price' }, '$startPrice'] }
+                        startPrice: 1, closed: 1, images: 1, currentPrice: 1
+                    }
+                })
 
                 return Product.aggregate(stages)
-                .then(products => {
-                    if (!products) throw Error(`no products found`)
+                    .then(products => {
+                        if (!products) throw Error(`no products found`)
 
-                    return products
-                })
+                        return products
+                    })
 
             })
     },
 
-    retrieveProduct(productId){
+    retrieveProduct(productId) {
         return Promise.resolve()
 
             .then(() => {
 
                 return Product.aggregate([
-                    { $match: { _id: ObjectId(productId), }},
-                    { $project : { _id: 1, title : 1 , description : 1, startDate: 1, endDate: 1, 
-                                    startPrice: 1, closed: 1, images: 1,  maxBid: { $ifNull: [ { $max: '$bids.price' }, '$startPrice'] }} },
+                    { $match: { _id: ObjectId(productId), } },
+                    {
+                        $project: {
+                            _id: 1, title: 1, description: 1, startDate: 1, endDate: 1,
+                            startPrice: 1, closed: 1, images: 1, maxBid: { $ifNull: [{ $max: '$bids.price' }, '$startPrice'] }
+                        }
+                    },
                 ])
-                .then(product => {
-                    if (!product[0]) throw Error(`no product found with id ${productId}`)
+                    .then(product => {
+                        if (!product[0]) throw Error(`no product found with id ${productId}`)
 
-                    return product[0]
-                })
+                        return product[0]
+                    })
 
             })
 
@@ -83,14 +101,14 @@ const logic = {
                         return Product.findByIdAndUpdate(productId, { $push: { bids: bid } }, { new: true })
                             .then(product => {
                                 if (!product) throw Error(`no product found with id ${productId}`)
-        
+
                                 return bid._id.toString()
                             })
                     })
             })
     },
 
-    listCategories(){
+    listCategories() {
         return Promise.resolve()
             .then(() => {
                 return Category.find()
@@ -101,7 +119,7 @@ const logic = {
                     })
             })
     },
-    
+
     authenticateUser(email, password) {
         return Promise.resolve()
             .then(() => {
