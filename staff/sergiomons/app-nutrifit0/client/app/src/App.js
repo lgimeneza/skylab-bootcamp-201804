@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Register, Login, Home, Categories, ProductsByCategory, Nav, Footer, Cart } from './components'
+import { Register, Login, Home, Categories, ProductsByCategory, Nav, Footer, Cart, Order } from './components'
 import './App.css';
 import logic from './logic'
 import ProductDetails from './components/products/details-product';
@@ -45,8 +45,9 @@ class App extends Component {
             <Route path='/category/:categoryId/products/' component={ProductsByCategory}/>
             <Route path='/product/:productId' component={ProductDetails}/>
             <Route path='/cart' render={() => <Cart onRemoveItems={this.onRemoveFromCart}/>} /> 
-            <Route path='/register' render={() => (!logic.loggedIn) ? <Register/> : <Home/>}/>
-            <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Home/>} />
+            <Route path='/order' render={() => <Order onRemoveItems={this.onRemoveFromCart}/>} />
+            <Route path='/register' render={() => (!logic.loggedIn) ? <Register/> : <Redirect to='/' />}/>
+            <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Redirect to='/' />} />
         </Switch>
         </Animated>
         <Footer/>

@@ -6,7 +6,8 @@ clientApi.url = 'http://localhost:5000/api'
 
 const logic = {
     // userId: 'NO-ID',
-    _cart: [],                   
+    _cart: [],    
+    _statusOrder: 'unpaid',               
 
     userId(userId) {
         if (userId) {
@@ -20,6 +21,8 @@ const logic = {
     cart(cart) {
         this._cart = cart
     },
+
+    
 
     addProductToCart(productId) {
         this._cart.push(productId)
@@ -160,6 +163,10 @@ const logic = {
     listProducts() {
         return clientApi.listProducts()
                 .then(products => products)
+    },
+
+    createOrder(deliveryAddress, date, products, paymentMethod) {
+        return clientApi.createOrder(this.userId(), deliveryAddress, date, products, paymentMethod, this._statusOrder)
     },
 
     get loggedIn() {

@@ -20,8 +20,7 @@ export default ({categories}) => (
                                 <div className="card mb-5">
                                     <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`}  ><img className="card-img-top" alt={category.name} src={category.image}/>
                                     <div className="card-block">
-                                        <h5 className="card-title mt-3">{category.name}</h5>
-                                    
+                                        <h5 className="card-title mt-3">{category.name}</h5>                            
                                         {/* <button className="btn btn-md btn-secondary my-2 my-sm-0 w-100 ">{category.name}</button> */}
                                     </div>
                                     </Link>

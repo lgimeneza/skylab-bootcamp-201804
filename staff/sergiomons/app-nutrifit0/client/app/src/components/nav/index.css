@@ -47,7 +47,8 @@ nav.navbar ul.nav li {
 }
 #numBadget {
   position: relative;
-  bottom: 10px;
+  bottom: 15px;
+  right:9px;
   font-size: 0.7rem
 }
 

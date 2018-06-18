@@ -152,4 +152,18 @@ router.get('/products', (req, res) => {
             })
 })
 
+router.post('/order', jsonBodyParser, (req, res) => {
+    const { body: { userId, deliveryAddress, date, products, paymentMethod, status } } = req
+
+        logic.createOrder(userId, deliveryAddress, date, products, paymentMethod, status)
+            .then(() => {
+                res.status(201)
+                res.json({ status: 'OK' })
+            })
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message })
+            })
+})
+
 module.exports = router

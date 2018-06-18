@@ -404,7 +404,6 @@ const clientApi = {
                 return axios.get(`${this.url}/products/?ids=${ids}`)
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        console.log(data.data)
                         return data.data
                     })
                     .catch(err => {
@@ -417,7 +416,47 @@ const clientApi = {
                         } else throw err
                     })
             })
+    },
 
+    createOrder(userId, deliveryAddress, date, products, paymentMethod, status) {
+
+        return Promise.resolve()
+            .then(() => {
+                if(deliveryAddress !== undefined) {
+
+                    if (typeof deliveryAddress !== 'string') throw Error('deliveryAddress is not a string')
+                    if (!(deliveryAddress = deliveryAddress.trim()).length) throw Error('deliveryAddress is empty or blank')
+                }
+
+                if(date !== undefined) {
+                if (typeof date !== 'string') throw Error('ate is not a string')
+                if (!(date = date.trim()).length) throw Error('date is empty or blank')
+                }
+                
+                if (!Array.isArray(products)) throw Error('products is not an array')
+                if (!products.length) throw Error('products is empty or blank')
+
+                if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
+                if ((paymentMethod = paymentMethod.trim()).length === 0) throw Error('paymentMethod is empty or blank')
+
+                if (typeof status !== 'string') throw Error('status is not a string')
+                if ((status = status.trim()).length === 0) throw Error('status is empty or blank')
+
+                return axios.post(`${this.url}/order`, {userId, deliveryAddress, date, products, paymentMethod, status})
+                    .then(({ status, data }) => {
+                        if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                        return true
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
+            })
     }
    
     /**

@@ -3,15 +3,20 @@ const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 module.exports = new Schema({
     deliveryAddress: {
         type: String,
-        required: true
+        // required: true
     },
     date: {
         type: Date,
+        // required: true
+    },
+    userId: [{
+        type: ObjectId,
+        ref: 'User',
         required: true
-    },
-    discount: {
-        type: Number,
-    },
+    }],
+    // discount: {
+    //     type: Number,
+    // },
     products: [{
         type: ObjectId,
         ref: 'Product',
@@ -21,8 +26,10 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    paymentStatus: {
-        type: Boolean,
+    status: {
+        type: String,
+        enum: ['unpaid', 'processing', 'paid'],
+        default: 'unpaid',
         required: true
     }
 })

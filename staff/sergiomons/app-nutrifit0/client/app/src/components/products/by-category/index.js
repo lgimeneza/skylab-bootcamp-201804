@@ -23,9 +23,11 @@ class ProductsByCategory extends Component {
           })      
     }
 
-    componentWillReceiveProps(props) {
+    componentDidUpdate(prevProps) {
 
-        const categoryId = props.match.params.categoryId
+        const categoryId = this.props.match.params.categoryId
+
+        if(prevProps.match.params.categoryId!== categoryId){
 
         logic.listProductsByCategory(categoryId)
           .then(products => {
@@ -33,6 +35,7 @@ class ProductsByCategory extends Component {
                     products
                 })
           })      
+        }    
     }
 
    render() {

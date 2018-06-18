@@ -6,6 +6,7 @@ import ProductsByCategory from './products/by-category'
 import Nav from './nav'
 import Footer from './footer'
 import Cart from './cart'
+import Order from './order'
 
 export {
     Register,
@@ -15,5 +16,6 @@ export {
     ProductsByCategory,
     Nav,
     Footer,
-    Cart
+    Cart,
+    Order
 }

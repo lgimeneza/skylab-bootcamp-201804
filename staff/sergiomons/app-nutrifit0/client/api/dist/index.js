@@ -443,8 +443,49 @@ var clientApi = {
                     data = _ref10.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
-                console.log(data.data);
                 return data.data;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
+            });
+        });
+    },
+    createOrder: function createOrder(userId, deliveryAddress, date, products, paymentMethod, status) {
+        var _this11 = this;
+
+        return Promise.resolve().then(function () {
+            if (deliveryAddress !== undefined) {
+
+                if (typeof deliveryAddress !== 'string') throw Error('deliveryAddress is not a string');
+                if (!(deliveryAddress = deliveryAddress.trim()).length) throw Error('deliveryAddress is empty or blank');
+            }
+
+            if (date !== undefined) {
+                if (typeof date !== 'string') throw Error('ate is not a string');
+                if (!(date = date.trim()).length) throw Error('date is empty or blank');
+            }
+
+            if (!Array.isArray(products)) throw Error('products is not an array');
+            if (!products.length) throw Error('products is empty or blank');
+
+            if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string');
+            if ((paymentMethod = paymentMethod.trim()).length === 0) throw Error('paymentMethod is empty or blank');
+
+            if (typeof status !== 'string') throw Error('status is not a string');
+            if ((status = status.trim()).length === 0) throw Error('status is empty or blank');
+
+            return axios.post(_this11.url + '/order', { userId: userId, deliveryAddress: deliveryAddress, date: date, products: products, paymentMethod: paymentMethod, status: status }).then(function (_ref11) {
+                var status = _ref11.status,
+                    data = _ref11.data;
+
+                if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+                return true;
             }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
 

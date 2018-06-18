@@ -10,7 +10,7 @@ class Nav extends Component {
         cartLength: 0
     }
 
-    componentDidMount(props) {
+    componentDidMount() {
 
         logic.listAllCategories()
             .then(listCategories => {
@@ -21,9 +21,7 @@ class Nav extends Component {
             })
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({})
-    }
+
 
     logout() {
         logic.logout()
@@ -32,8 +30,7 @@ class Nav extends Component {
 
     render() {
 
-        return (
-            
+        return (         
             <div>
                 <header>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
