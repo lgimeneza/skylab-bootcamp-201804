@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Footer from '../footer'
 import logic from '../../logic'
+import Footer from '../footer'
 import './index.css'
 import ListItems from './../list-items'
 

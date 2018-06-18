@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import swal from 'sweetalert2'
 import logic from '../../logic'
 import './index.css'
 
@@ -28,13 +29,10 @@ class Register extends Component {
 
         logic.registerUser(name, surname, address, email, password)
           .then(res => {
-            if (res) {
               this.props.history.push('/auth')
-            } else {
-              console.log('Error, username and/or password wrong')
-            }
+              swal('You signed up successfully')
 
-          }).catch(err => err.message)
+          }).catch(err => swal(err.message))
       }
     }
   }
@@ -100,7 +98,7 @@ class Register extends Component {
               </div>
               <div className="mb-3">
                 <label htmlFor="address2">Confirm password</label>
-                <input type="password" className="form-control"  name="passwordConfirm" placeholder="password confirm" onChange={this.handlerCapturingPasswordConfirm} value={this.state.passwordConfirm} />
+                <input type="password" className="form-control" name="passwordConfirm" placeholder="password confirm" onChange={this.handlerCapturingPasswordConfirm} value={this.state.passwordConfirm} />
               </div>
               <hr className="mb-4" />
               <button className="btn btn-primary btn-lg btn-block register-submit" type="submit">Continue to Login</button>

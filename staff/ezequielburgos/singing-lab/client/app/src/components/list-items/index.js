@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import logic from '../../logic'
 import './index.css'
 import { Animated } from "react-animated-css"
 

@@ -69,10 +69,10 @@ class Cart extends Component {
                         ))}
                     </tbody>
                 </table>
-                {<div class="card text-right total-price-card">
-                    <div class="card-body">
+                {<div className="card text-right total-price-card">
+                    <div className="card-body">
                     <h2>Total price</h2>
-                        <h2 class="card-title">{this.state.total.length && this.state.total.reduce((accumulator, currentValue) => accumulator + currentValue)}€</h2>
+                        <h2 className="card-title">{this.state.total.length && this.state.total.reduce((accumulator, currentValue) => accumulator + currentValue)}€</h2>
                         <Link to="/order" className="btn btn-outline-secondary" role="button">Buy the products</Link>
                     </div>
                 </div>}

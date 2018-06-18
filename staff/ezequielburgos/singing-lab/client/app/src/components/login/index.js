@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import swal from 'sweetalert2'
 import logic from '../../logic'
 import './index.css'
 
@@ -14,19 +16,16 @@ class Login extends Component {
     handleSubmitLogin = (e) => {
         e.preventDefault()
 
+
         const { email, password } = this.state
         if (email !== "" || password !== "") {
 
             logic.login(email, password)
                 .then(res => {
-                    if (res) {
-                        this.props.onLogin()
+                    this.props.onLogin()
+                    swal('Successful login')
 
-                    } else {
-                        console.log('Error, username and/or password wrong')
-                    }
-
-                }).catch(err => err.message)
+                }).catch(err => swal(err.message))
         }
     }
 
@@ -58,8 +57,9 @@ class Login extends Component {
                             <input type="checkbox" defaultValue="remember-me" /> Remember me
                         </label>
                     </div>
+                    <p className="mt-2">You don't have an account? <Link to="/register" style={{color: "lightblue", fontWeight: "bold"}}>Sign up</Link></p>
                     <button className="btn btn-lg btn-primary btn-block login-submit" type="submit">Sign in</button>
-                    <p className="mt-5 mb-3 text-muted">© 2017-2018</p>
+                    
                 </form>
             </div>
         )

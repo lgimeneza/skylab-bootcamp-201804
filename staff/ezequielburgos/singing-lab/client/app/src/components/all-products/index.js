@@ -19,17 +19,19 @@ class AllProducts extends Component {
     }
 
     render() {
+
         return (
             <main>
                 <h2 className="main-title">These are my products</h2>
-                <hr/>
+                <hr />
 
                 <ListItems
-                      productDetail
-                      cartProducts
+                    productDetail
+                    cartProducts
                     items={this.state.products}
+                    onAddToCart={this.props.onAddToCart}
                 />
-            <Footer/>
+                <Footer />
             </main>
         )
     }
