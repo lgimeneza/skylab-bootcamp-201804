@@ -1,25 +1,26 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Cart extends Component {
 
     state = {
         cart: [],
-        productTotal:"",
-        cartTotal:[]
-     }
+        productTotal: "",
+        cartTotal: []
+    }
 
-     componentWillMount() {
+    componentWillMount() {
 
-     }
+    }
 
-     componentDidMount() {
-         this.getItems()
-     }
+    componentDidMount() {
+        this.getItems()
+    }
 
-     getItems = () => {
-         logic.listCartById((products)=> this.setState({ cart: products, cartTotal: [] }))
+    getItems = () => {
+        logic.listProductsFromCart()
+            .then(products => this.setState({ cart: products, cartTotal: [] }))
     }
 
     onRemoveFromCart = (product) => {
@@ -28,7 +29,7 @@ class Cart extends Component {
     }
 
     getTotalCart() {
-       return this.state.cart.length ? this.state.cartTotal.reduce((accum, current) => {return accum + current}) : "0"
+        return this.state.cart.length ? this.state.cartTotal.reduce((accum, current) => { return accum + current }) : "0"
     }
 
     quantitytProduct = e => {
@@ -40,7 +41,7 @@ class Cart extends Component {
     }
 
     render() {
-        this.state.cart.map(product => {this.state.cartTotal.push(product.price)})
+        this.state.cart.map(product => { this.state.cartTotal.push(product.price) })
         return (
             <main>
                 <div className="container-fluid">
@@ -60,19 +61,19 @@ class Cart extends Component {
                                 </thead>
                                 <tbody>
                                     {this.state.cart.map(product => {
-                                        return(
-                                    <tr>
-                                        <td><img style={{ width: '4rem', height: '2rem' }} src={product.image}/></td>
-                                        <td><span style={{ width: '12rem', height: '2rem'}}>{product.name}</span></td>
-                                        <td><span>{product.price} €/ud</span></td>
-                                        <td><input id="quantity" type="number" min="1" step="1"  value="1" style={{ width: '2.5rem', height: '1.4rem', }}/></td>
-                                        <td>                          
-                                            <span>{product.price} €</span>
-                                        </td>
-                                        <td>
-                                            <button onClick={() => this.onRemoveFromCart(product.id)} style={{backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem', }}>X</button>
-                                        </td>
-                                    </tr>)
+                                        return (
+                                            <tr>
+                                                <td><img style={{ width: '4rem', height: '2rem' }} src={product.image} /></td>
+                                                <td><span style={{ width: '12rem', height: '2rem' }}>{product.name}</span></td>
+                                                <td><span>{product.price} €/ud</span></td>
+                                                <td><input id="quantity" type="number" min="1" step="1" defaultValue={product.quantity} style={{ width: '2.5rem', height: '1.4rem', }} /></td>
+                                                <td>
+                                                    <span>{product.price} €</span>
+                                                </td>
+                                                <td>
+                                                    <button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem', }}>X</button>
+                                                </td>
+                                            </tr>)
                                     })}
                                 </tbody>
                                 <tfoot>
@@ -89,18 +90,18 @@ class Cart extends Component {
 
                         <div className="col-xl-2 col-lg-4 col-md-4 col-sm-7 col-xs-8 mx-auto mb-4">
                             <div class="card">
-                                <h5 class="card-header" style={{borderTopLeftRadius: "calc(1rem - 1px)", borderTopRightRadius: "calc(1rem - 1px)"}}>
-                                Total Carrito
+                                <h5 class="card-header" style={{ borderTopLeftRadius: "calc(1rem - 1px)", borderTopRightRadius: "calc(1rem - 1px)" }}>
+                                    Total Carrito
                                 </h5>
                                 <div class="card-body">
-                                    <p class="card-text" style={{fontSize: "2rem"}}>{this.getTotalCart()} €</p>
+                                    <p class="card-text" style={{ fontSize: "2rem" }}>{this.getTotalCart()} €</p>
                                 </div>
                                 <div class="card-footer">
-                                    <Link to='/order'><button className="btn btn-lg btn-dark my-2 my-sm-0 btn-block mb-3" style={{ border:"1px solid #c6c6c6"}} type="submit">Pagar</button></Link>                                                	
+                                    <Link to='/order'><button className="btn btn-lg btn-dark my-2 my-sm-0 btn-block mb-3" style={{ border: "1px solid #c6c6c6" }} type="submit">Pagar</button></Link>
                                 </div>
-                            </div>                   
+                            </div>
                         </div>
-                    <Link to='/'><button className="btn btn-md btn-secondary mt-1 mb-3 ml-3 mr-auto" style={{ border:"1px solid #c6c6c6"}} type="submit">Seguir comprando</button></Link>
+                        <Link to='/'><button className="btn btn-md btn-secondary mt-1 mb-3 ml-3 mr-auto" style={{ border: "1px solid #c6c6c6" }} type="submit">Seguir comprando</button></Link>
                     </div>
                 </div>
             </main>

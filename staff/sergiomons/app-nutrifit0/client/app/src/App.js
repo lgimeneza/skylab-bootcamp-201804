@@ -2,9 +2,55 @@ import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Register, Login, Home, Categories, ProductsByCategory, Nav, Footer, Cart, Order } from './components'
 import './App.css';
+import api from 'client-api';
 import logic from './logic'
 import ProductDetails from './components/products/details-product';
 import {Animated} from "react-animated-css";
+
+
+api.token = function (token) {
+  if (typeof token === 'undefined') {
+    if (token === null)
+      sessionStorage.removeItem('token')
+    else
+      sessionStorage.setItem('token', token)
+
+    return
+  }
+  return sessionStorage.getItem('token')
+}
+
+logic.userId = function (userId) {
+  if (typeof userId !== 'undefined') {
+    if (userId === null)
+      sessionStorage.removeItem('userId')
+    else
+      sessionStorage.setItem('userId', userId)
+
+    return
+  }
+
+  return sessionStorage.getItem('userId')
+}
+
+const cart = sessionStorage.getItem('cart')
+
+if (cart && cart !== 'undefined')
+  logic._cart = JSON.parse(cart)
+
+logic.cart = function (cart) {
+  if (typeof cart !== 'undefined') {
+    if (cart === null)
+      sessionStorage.removeItem('cart')
+    else
+      sessionStorage.setItem('cart', JSON.stringify(cart))
+
+    return
+  }
+
+  return this._cart
+}
+
 
 class App extends Component {
 

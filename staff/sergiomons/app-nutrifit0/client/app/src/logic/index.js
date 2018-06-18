@@ -6,8 +6,8 @@ clientApi.url = 'http://localhost:5000/api'
 
 const logic = {
     // userId: 'NO-ID',
-    _cart: [],    
-    _statusOrder: 'unpaid',               
+    _cart: [],
+    _statusOrder: 'unpaid',
 
     userId(userId) {
         if (userId) {
@@ -15,66 +15,70 @@ const logic = {
 
             return;
         }
-            return this._userId
+        return this._userId
     },
 
     cart(cart) {
-        this._cart = cart
+        if (typeof cart !== 'undefined') {
+            this._cart = cart
+
+            return
+        }
+
+        return this._cart
     },
 
-    
-
     addProductToCart(productId) {
-        this._cart.push(productId)
+        this.cart().push(productId)
 
-        this.cart(this._cart)
+        this.cart(this.cart())
     },
 
     removeProductFromCart(productId) {
-        this._cart = this._cart.filter(id => {
+        this.cart(this.cart().filter(id => {
             return id !== productId
-        }) 
-        this.cart(this._cart)
+        }))
     },
 
-    listProductsByIds() {
-        return clientApi.listProductsByIds(this._cart)
-    },
+    listProductsFromCart() {
+        return clientApi.listProductsByIds(this.cart())
+            .then(products => {
+                const quantities = this.cart().reduce((accum, productId) => {
+                    if (accum[productId]) accum[productId]++
+                    else accum[productId] = 1
 
-    listCartById(callback) {
-        if (logic._cart && logic._cart.length > 0 ) {
+                    return accum
+                }, {})
 
-            clientApi.listProductsByIds(this._cart)
-                .then(products => callback(products))
-        } else {
-            callback([]);
-        }
+                products.forEach(product => product.quantity = quantities[product.id])
 
+                return products
+            })
     },
 
     registerUser(username, email, password, repeatPassword) {
         return Promise.resolve()
-        .then(() => {
-            if (typeof username !== 'string') throw Error('username is not a string')
+            .then(() => {
+                if (typeof username !== 'string') throw Error('username is not a string')
 
-            if (!(username = username.trim()).length) throw Error('username is empty or blank')
+                if (!(username = username.trim()).length) throw Error('username is empty or blank')
 
-            if (typeof email !== 'string') throw Error('email is not a string')
-            
-            if (!(email = email.trim()).length) throw Error('email is empty or blank')
-            
-            if (typeof password !== 'string') throw Error('password is not a string')
-            
-            if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
-            
-            if (typeof repeatPassword !== 'string') throw Error('repeatPassword is not a string')
+                if (typeof email !== 'string') throw Error('email is not a string')
 
-            if ((repeatPassword = repeatPassword.trim()).length === 0) throw Error('repeatPassword is empty or blank')
+                if (!(email = email.trim()).length) throw Error('email is empty or blank')
 
-            return clientApi.registerUser(username, email, password, repeatPassword)
-                .then(() => true)
-                
-            })   
+                if (typeof password !== 'string') throw Error('password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+
+                if (typeof repeatPassword !== 'string') throw Error('repeatPassword is not a string')
+
+                if ((repeatPassword = repeatPassword.trim()).length === 0) throw Error('repeatPassword is empty or blank')
+
+                return clientApi.registerUser(username, email, password, repeatPassword)
+                    .then(() => true)
+
+            })
             .catch(err => {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
 
@@ -83,38 +87,38 @@ const logic = {
 
                     throw Error(message)
                 } else throw err
-            })   
+            })
     },
 
-    
+
     login(email, password) {
         return Promise.resolve()
-        .then(() => {
-            if (typeof email !== 'string') throw Error('email is not a string')
+            .then(() => {
+                if (typeof email !== 'string') throw Error('email is not a string')
 
-            if (!(email = email.trim()).length) throw Error('email is empty or blank')
+                if (!(email = email.trim()).length) throw Error('email is empty or blank')
 
-            if (typeof password !== 'string') throw Error('password is not a string')
+                if (typeof password !== 'string') throw Error('password is not a string')
 
-            if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+                if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
-            return clientApi.authenticateUser(email, password)
-            .then(id => {
-                this.userId(id)
-                return true
+                return clientApi.authenticateUser(email, password)
+                    .then(id => {
+                        this.userId(id)
+                        return true
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
             })
-            .catch(err => {
-                if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
-
-                if (err.response) {
-                    const { response: { data: { error: message } } } = err
-
-                    throw Error(message)
-                } else throw err
-            })
-        })
     },
-    
+
     retrieveUser() {
         return Promise.resolve()
             .then(() => {
@@ -128,7 +132,7 @@ const logic = {
                             const { response: { data: { error: message } } } = err
 
                             throw Error(message)
-                            
+
                         } else throw err
                     })
             })
@@ -136,33 +140,33 @@ const logic = {
 
     listAllCategories() {
         return clientApi.listAllCategories()
-                .then(res => res)
+            .then(res => res)
     },
 
 
     listRootCategories() {
         return clientApi.listRootCategories()
-                .then(res => res)
+            .then(res => res)
     },
 
     listSubcategories(categoryId) {
         return clientApi.listSubcategories(categoryId)
-                .then(categories => categories)
+            .then(categories => categories)
     },
 
     listProductsByCategory(categoryId) {
         return clientApi.listProductsByCategory(categoryId)
-                .then(products => products)
+            .then(products => products)
     },
 
     productDetails(productId) {
         return clientApi.productDetails(productId)
-                .then(product => product)
+            .then(product => product)
     },
 
     listProducts() {
         return clientApi.listProducts()
-                .then(products => products)
+            .then(products => products)
     },
 
     createOrder(deliveryAddress, date, products, paymentMethod) {
@@ -170,9 +174,7 @@ const logic = {
     },
 
     get loggedIn() {
-        if (sessionStorage.getItem('token')) return true
-
-        return false
+        return !!this.userId()
     },
 
     /**
@@ -184,7 +186,9 @@ const logic = {
  * @returns {boolean} - Confirms log-out 
  */
     logout() {
-        sessionStorage.clear()
+        this.userId(null)
+
+        clientApi.token(null)
 
         return true
     }
