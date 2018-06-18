@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
 import swal from 'sweetalert2'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-
+import { Button, Row, Col } from 'reactstrap';
+import './style.css'
 
 class Login extends Component {
 
@@ -52,20 +52,23 @@ class Login extends Component {
 
         return (
 
-            <div className="container login-form">
-                <h2 className="text-center ">LOGIN </h2>
-
-                <Form onSubmit={this._handleLogin}>
-                <FormGroup>
-                    <Label>Email</Label>
-                    <Input value={this.state.email} autoFocus onChange={this._handleKeepEmail} type="text" placeholder="Email" />
-                </FormGroup>
-                <FormGroup>
-                    <Label>Password</Label>
-                    <Input value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
-                </FormGroup>
-                <Button type="submit">Log me In</Button>
-            </Form>
+            <div className="forms">
+                <h2 className="text-center mt-5">LOGIN</h2>
+                <Row>
+                    <Col xs='12' md={{ size: '6', offset: '3' }}>
+                        <form onSubmit={this._handleLogin}>
+                            <div className="field mb-4">
+                                <input type="text" name="email" id="email" placeholder="johndoe@gmail.com" value={this.state.email} autoFocus onChange={this._handleKeepEmail} />
+                                <label htmlFor="email">Email</label>
+                            </div>
+                            <div className="field mb-4">
+                                <input type="password" name="password" id="password" placeholder="123123ab" value={this.state.password} onChange={this._handleKeepPassword} />
+                                <label htmlFor="password">Password</label>
+                            </div>
+                            <Button type="submit">Log me In</Button>
+                        </form>
+                    </Col>
+                </Row>
             </div>
         )
     }

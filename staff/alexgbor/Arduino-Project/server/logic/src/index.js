@@ -409,13 +409,38 @@ const logic = {
                         'Content-Type': 'application/json'
                     })
                 }
-                return fetch(`http://192.168.1.34/${userId}/${arduId}/${q}`, dataPackage)
+                return fetch(`http://192.168.1.47/${userId}/${arduId}/${q}`, dataPackage)
                     .then((res) => res.json())
                     .catch(err => err.message)
 
             })
+    },
 
+    removeArduinoData(userId, arduId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof arduId !== 'string') throw Error('arduino id is not a string')
+
+                if (!(arduId = arduId.trim())) throw Error('arduino id is empty or blank')
+
+                return User.findById(userId)
+                    .then(user => {
+                        if (!user) throw Error(`no user found with id ${userId}`)
+
+                        const ardu = user.arduinos.id(arduId)
+
+                        if (!ardu) throw Error(`no arduino found with id ${arduId}`)
+
+                        ardu.data=[];
+
+                        return user.save()
+                    })
+                    .then(() => true)
+            })
     }
 
 }

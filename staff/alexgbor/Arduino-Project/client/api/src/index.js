@@ -536,6 +536,35 @@ const arduApi = {
                         } else return err
                     })
             })
+    },
+    removeArduinoData(userId, arduId) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof userId !== 'string') throw Error('user id is not a string')
+
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+
+                if (typeof arduId !== 'string') throw Error('arduino id is not a string')
+
+                if (!(arduId = arduId.trim())) throw Error('arduino id is empty or blank')
+
+                return axios.delete(`${this.url}/users/${userId}/arduinos/${arduId}/delete`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return true
+                    })
+                    .catch(err => {
+
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            return message
+                        } else return err
+                    })
+            })
     }
 }
 

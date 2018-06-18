@@ -1,28 +1,32 @@
 import React, { Component } from "react"
 import logic from '../../logic'
 import swal from 'sweetalert2'
-import { Link, withRouter } from 'react-router-dom'
-import { Bar } from 'react-chartjs-2'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { withRouter } from 'react-router-dom'
+import { Line } from 'react-chartjs-2'
+import { Col, Row, Container } from 'reactstrap';
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
 
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            dropdownOpen: false,
-            ip: '',
-            port: '',
-            selectedArduino: '',
-            chartData: []
-        };
+
+    state = {
+        dropdownOpen: false,
+        ip: '',
+        port: '',
+        selectedArduino: '',
+        chartData: {},
+        timer: null,
+        counter: 0
     }
 
-
     componentDidMount() {
-        let userId = localStorage.getItem('id-app')
-        let token = localStorage.getItem('token-app')
+
+        let timer = setInterval(this._handleData, 3000)
+        this.setState({ timer })
+
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.timer)
     }
 
     arduHandler = e => {
@@ -45,13 +49,11 @@ class Home extends Component {
         })
     }
 
-    _handleKeepIp = (e) => {
-        let ip = e.target.value;
+    _handleKeepIp = ({target:{value:ip}}) => {
         this.setState({ ip })
     }
 
-    _handleKeepPort = (e) => {
-        let port = e.target.value;
+    _handleKeepPort = ({target:{value:port}}) => {
         this.setState({ port })
     }
 
@@ -78,114 +80,102 @@ class Home extends Component {
         const userId = localStorage.getItem('id-app')
         const token = localStorage.getItem('token-app')
         const targetArduino = this.state.selectedArduino
-        const arduId = this.state.data.find(function (ele) {
-            return ele.ip === targetArduino
-        })
-        logic.retrieveArduinoData(userId, arduId.id, token)
-            .then(data => {
-                let Yaxis = data.map(({ timestamp }) => {
-                    let parsedTime = new Date(timestamp).toLocaleTimeString()
-                    return parsedTime
-                })
-                let Xaxis = data.map(ele => ele.value)
-                let chartData = {
-                    labels: Yaxis,
-                    datasets: [{
-                        label: `Data from arduino ${this.state.selectedArduino}`,
-                        data: Xaxis
-                    }]
-                }
-                this.setState({ chartData })
+        if (this.state.data && this.state.selectedArduino) {
+            const arduId = this.state.data.find(function (ele) {
+                return ele.ip === targetArduino
             })
+
+            logic.retrieveArduinoData(userId, arduId.id, token)
+                .then(data => {
+                    let Yaxis = data.map(({ timestamp }) => {
+                        let parsedTime = new Date(timestamp).toLocaleTimeString()
+                        return parsedTime
+                    })
+                    let Xaxis = data.map(ele => ele.value)
+                    let chartData = {
+                        labels: Yaxis,
+                        datasets: [{
+                            label: `Data from arduino ${this.state.selectedArduino}`,
+                            data: Xaxis
+                        }]
+                    }
+                    this.setState({ chartData, counter: this.state.counter + 1 })
+                })
+        }
     }
-    toggle() {
+    toggle = () => {
         this.setState(prevState => ({
             dropdownOpen: !prevState.dropdownOpen
         }));
     }
 
-    _dummyAddData = () => {
+    controlArduino = (state) => {
         const userId = localStorage.getItem('id-app')
-        const token = localStorage.getItem('token-app')
         const targetArduino = this.state.selectedArduino
         const arduId = this.state.data.find(function (ele) {
             return ele.ip === targetArduino
         })
-        logic.addArduinoData(userId, arduId.id, 123123123, token)
+        logic.controlArduino(userId, arduId.id, state)
+    }
+
+    removeArduinoData = () => {
+        const userId = localStorage.getItem('id-app')
+        const targetArduino = this.state.selectedArduino
+        const arduId = this.state.data.find(function (ele) {
+            return ele.ip === targetArduino
+        })
+        logic.removeArduinoData(userId, arduId.id)
     }
 
     render() {
 
         if (this.props.isLogged()) {
-            if (this.state.chartData.labels) {
-                return <div className="text-center">
-                    <h3>Add arduino:</h3>
-                    <form onSubmit={this._handleAddArduino}>
-                        <div className="row justify-content-center ">
-                            <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.ip} onChange={this._handleKeepIp} type="text" placeholder="Ip" />
-                        </div>
-                        <div className="row justify-content-center ">
-                            <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.port} onChange={this._handleKeepPort} type="text" placeholder="Port" />
-                        </div>
-
-                        <div className="row justify-content-center ">
-
-                            <div className="form-group justify-content-center ">
-                                <input className="btn bg-darkcyan mt-4" type="submit" value="Add Arduino" />
+            return <Container>
+                <Row>
+                    <Col xs="12" md="6">
+                        <h3>Add arduino:</h3>
+                        <form onSubmit={this._handleAddArduino}>
+                            <div className="row justify-content-center ">
+                                <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.ip} onChange={this._handleKeepIp} type="text" placeholder="Ip" />
                             </div>
-                        </div>
-
-                    </form>
-                    <h3>Lista de Arduinos:</h3>
-                    <button onClick={this.listArduinos}>Retrieve arduinos</button>
-
-                    <select value={this.state.selectedArduino} onChange={this.arduHandler}>
-                        <option>Select an arduino:</option>
-                        {this.state.options}
-                    </select>
-
-                    <button onClick={this._handleRemoveArdu}>Remove Arduino</button>
-                    <button onClick={this._handleData}>Retrieve data from arduino</button>
-
-                    <Bar
-                        data={this.state.chartData}
-                        width={100}
-                        height={50}
-                        options={{ maintainAspectRatio: false }}
-                    />
-                </div>
-            } else {
-                return <div className="text-center">
-                    <h3>Add arduino:</h3>
-                    <form onSubmit={this._handleAddArduino}>
-                        <div className="row justify-content-center ">
-                            <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.ip} onChange={this._handleKeepIp} type="text" placeholder="Ip" />
-                        </div>
-                        <div className="row justify-content-center ">
-                            <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.port} onChange={this._handleKeepPort} type="text" placeholder="Port" />
-                        </div>
-
-                        <div className="row justify-content-center ">
-
-                            <div className="form-group justify-content-center ">
-                                <input className="btn bg-darkcyan mt-4" type="submit" value="Add Arduino" />
+                            <div className="row justify-content-center ">
+                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.port} onChange={this._handleKeepPort} type="text" placeholder="Port" />
                             </div>
-                        </div>
 
-                    </form>
-                    <h3>Lista de Arduinos:</h3>
-                    <button onClick={this.listArduinos}>Retrieve arduinos</button>
+                            <div className="row justify-content-center ">
 
+                                <div className="form-group justify-content-center ">
+                                    <input className="btn bg-darkcyan mt-4" type="submit" value="Add Arduino" />
+                                </div>
+                            </div>
 
-                    <select value={this.state.selectedArduino} onChange={this.arduHandler}>
-                        <option>Select an arduino:</option>
-                        {this.state.options}
-                    </select>
+                        </form>
 
-                    <button onClick={this._handleRemoveArdu}>Remove Arduino</button>
-                    <button onClick={this._handleData}>Retrieve data from arduino</button>
-                </div>
-            }
+                        <h3>Lista de Arduinos:</h3>
+
+                        <select value={this.state.selectedArduino} onChange={this.arduHandler}>
+                            <option>Select an arduino:</option>
+                            {this.state.options}
+                        </select>
+
+                        <button onClick={this.listArduinos}>Retrieve arduinos</button>
+                        <h3>Arduino Controls:</h3>
+                        {/* <button onClick={this._handleData}>Retrieve data from arduino</button> */}
+                        <button onClick={() => this.controlArduino('on')}>ON</button>
+                        <button onClick={() => this.controlArduino('off')}>OFF</button>
+                        <button onClick={this.removeArduinoData}>Remove Arduino Data</button>
+                        <button onClick={this._handleRemoveArdu}>Remove Arduino</button>
+                    </Col>
+
+                    <Col xs="12" md="6">
+                        <Line
+                            data={this.state.chartData}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </Col>
+                </Row>
+            </Container>
+
 
         } else {
             return <h2>You are not allowed</h2>

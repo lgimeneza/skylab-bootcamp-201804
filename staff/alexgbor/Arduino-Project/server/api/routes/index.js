@@ -191,4 +191,17 @@ router.get('/users/:userId/arduinos/:arduId/control', (req, res) => {
     }
 })
 
+router.delete('/users/:userId/arduinos/:arduId/delete', (req, res) => {
+    const { params: { userId, arduId } } = req
+
+    logic.removeArduinoData(userId, arduId)
+        .then(() => {
+            res.json({ status: 'OK' })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+})
+
 module.exports = router

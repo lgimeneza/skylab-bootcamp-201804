@@ -2,7 +2,7 @@
 
 const arduApi = require('api')
 
-arduApi.url = 'http://localhost:5000/api'
+arduApi.url = 'http://192.168.1.34:5000/api'
 
 const logic = {
     userId: 'NO-ID',
@@ -62,6 +62,10 @@ const logic = {
 
     controlArduino(userId, arduId, q) {
         return arduApi.controlArduino(userId,arduId,q)
+    },
+
+    removeArduinoData(userId,arduId) {
+        return arduApi.removeArduinoData(userId,arduId)
     }
 }
 

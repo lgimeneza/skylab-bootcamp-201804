@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
 import swal from 'sweetalert2'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap';
+import './style.css'
 
 class Register extends Component {
     state = {
@@ -98,40 +99,39 @@ class Register extends Component {
 
 
     render() {
-        return <div className="container">
-            <h2 className="text-center ">REGISTER </h2>
+        return <div className="forms">
+            <h2 className="text-center mt-3">REGISTER</h2>
+            <Row>
+                <Col xs='12' md={{ size: '6', offset: '3' }}>
+                    <form onSubmit={this._handleRegister}>
+                        <div className="field mb-4">
+                            <input type="text" name="name" id="name" placeholder="John" autoFocus value={this.state.name} onChange={this._handleKeepName} />
+                            <label htmlFor="name">Name</label>
+                        </div><div className="field mb-4">
+                            <input type="text" name="surname" id="surname" placeholder="Doe" value={this.state.surname} onChange={this._handleKeepSurname}  />
+                            <label htmlFor="surname">Surname</label>
+                        </div><div className="field mb-4">
+                            <input type="text" name="email" id="email" placeholder="johndoe@gmail.com" value={this.state.email} onChange={this._handleKeepEmail} />
+                            <label htmlFor="email">Email</label>
+                        </div><div className="field mb-4">
+                            <input type="password" name="Password" id="Password" placeholder="123123ab" value={this.state.password} onChange={this._handleKeepPassword}/>
+                            <label htmlFor="password">Password</label>
+                        </div><div className="field mb-4">
+                            <input type="password" name="repeatpassword" id="repeatpassword" placeholder="123123ab" value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword} type="password" />
+                            <label htmlFor="repeatpassword">Repeat Password</label>
+                        </div>
+                        <Button type="submit">Register</Button>
+                    </form>
+                </Col>
+            </Row>
+            <div className="row justify-content-center ">
 
-            <Form onSubmit={this._handleRegister}>
-                <FormGroup>
-                    <Label>Name</Label>
-                    <Input autoFocus value={this.state.name} onChange={this._handleKeepName} type="text" placeholder="Name" />
-                </FormGroup>
-                <FormGroup>
-                    <Label>Surname</Label>
-                    <Input value={this.state.surname} onChange={this._handleKeepSurname} type="text" placeholder="Surname" />
-                </FormGroup>
-                <FormGroup>
-                    <Label>Email</Label>
-                    <Input value={this.state.email} onChange={this._handleKeepEmail} type="text" placeholder="Email" />
-                </FormGroup>
-                <FormGroup>
-                    <Label>Password</Label>
-                    <Input value={this.state.password} onChange={this._handleKeepPassword} type="password" placeholder="Password" />
-                </FormGroup>
-                <FormGroup>
-                    <Label>Repeat Password</Label>
-                    <Input value={this.state.repeatPassword} onChange={this._handleKeepRepeatPassword} type="password" placeholder="Repeat Password" />
-                </FormGroup>
-                <Button type="submit">Register</Button>
-            </Form>
-                <div className="row justify-content-center ">
+                <p className="text-danger text-capitalize">{this.state.notMatchingMessage}</p>
+            </div>
 
-                    <p className="text-danger text-capitalize">{this.state.notMatchingMessage}</p>
-                </div>
+            <div className="row justify-content-center ">
 
-                <div className="row justify-content-center ">
-
-                </div>
+            </div>
 
         </div>
     }
