@@ -2,7 +2,7 @@
 
 require('dotenv').config()
 
-const { mongoose, models: { User, Note, Image, Park } } = require('../')
+const { mongoose, models: { User, Note, Image, Park } } = require('./index')
 const expect = require('expect')
 
 const { env: { DB_URL } } = process
