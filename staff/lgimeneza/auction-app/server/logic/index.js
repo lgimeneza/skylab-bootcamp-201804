@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { Product, User, Bid }, mongoose: { Types: { ObjectId } }, mongoose } = require('data')
+const { models: { Product, User, Bid, Category }, mongoose: { Types: { ObjectId } } } = require('data')
 
 const logic = {
 
@@ -13,7 +13,7 @@ const logic = {
 
                 const stages = [
                     { $project : { _id: 1, title : 1 , description : 1, startDate: 1, endDate: 1, 
-                    startPrice: 1, closed: 1, image: 1,  maxBid: { $ifNull: [ { $max: '$bids.price' }, '$startPrice'] } } }
+                    startPrice: 1, closed: 1, images: 1,  maxBid: { $ifNull: [ { $max: '$bids.price' }, '$startPrice'] } } },
                 ]
 
                 const seachStages = [
@@ -21,7 +21,17 @@ const logic = {
                     { $sort: { score: { $meta: "textScore" } } },
                 ]
 
-                if (typeof query != 'undefined' && query.length > 0) stages.unshift(...seachStages)
+                if (typeof query != 'undefined' && query.length > 0) {
+                    stages.unshift(...seachStages)
+                } else {
+
+                }
+                
+                // {
+                   
+                // } else {
+                //     stages.push({ $sort: { endDate: 1 } },)
+                // }
 
                 return Product.aggregate(stages)
                 .then(products => {
@@ -41,7 +51,7 @@ const logic = {
                 return Product.aggregate([
                     { $match: { _id: ObjectId(productId), }},
                     { $project : { _id: 1, title : 1 , description : 1, startDate: 1, endDate: 1, 
-                                    startPrice: 1, closed: 1, image: 1,  maxBid: { $ifNull: [ { $max: '$bids.price' }, '$startPrice'] }} },
+                                    startPrice: 1, closed: 1, images: 1,  maxBid: { $ifNull: [ { $max: '$bids.price' }, '$startPrice'] }} },
                 ])
                 .then(product => {
                     if (!product[0]) throw Error(`no product found with id ${productId}`)
@@ -76,6 +86,18 @@ const logic = {
         
                                 return bid._id.toString()
                             })
+                    })
+            })
+    },
+
+    listCategories(){
+        return Promise.resolve()
+            .then(() => {
+                return Category.find()
+                    .then(categories => {
+                        if (!categories) throw Error('no categories found')
+
+                        return categories
                     })
             })
     },

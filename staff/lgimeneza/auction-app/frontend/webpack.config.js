@@ -1,4 +1,10 @@
 const path = require('path')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+    template: path.resolve(__dirname, './dist/index.html'),
+    filename: 'index.html',
+    inject: 'body'
+})
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
@@ -22,5 +28,6 @@ module.exports = {
             }
             //loaders for other file types can go here
         ]
-    }
+    },
+    plugins: [HtmlWebpackPluginConfig]
 }

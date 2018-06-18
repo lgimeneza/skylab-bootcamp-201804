@@ -14,12 +14,29 @@ mongoose.connect(DB_URL)
         const port = PORT || 5000
 
         const app = express()
+        const http = require('http').Server(app)
+        const io = require('socket.io')(http)
 
         app.use(cors())
-
+        
         app.use('/api', router)
 
-        app.listen(port, () => console.log(`server running on port ${port} with db${DB_URL}`))
+        app.io = io
+
+
+        io.on('connection', function(socket){
+            console.log('connection')
+            socket.on('chat message', function(msg){
+                console.log('hello')
+                io.emit('chat message', msg);
+            });
+
+            socket.on('disconnect', function(){
+              console.log('disconnected');
+            });
+        });
+
+        http.listen(port, () => console.log(`server running on port ${port} with db${DB_URL}`))
 
         process.on('SIGINT', () => {
             console.log('\nstopping server')

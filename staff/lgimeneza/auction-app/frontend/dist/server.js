@@ -101,7 +101,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = renderFullPage;
 function renderFullPage(html, preloadedState, helmet) {
-	return '\n    <!doctype html>\n    <html>\n      <head>\n\t\t<link rel="icon" href="/dist/favicon.ico" type="image/ico" />\n\t\t\n\t\t<!-- Google font -->\n\t\t<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">  \n\t  \n\t\t<!-- Bootstrap -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/bootstrap.min.css"/>\n\t\t\n\t\t<!-- Slick -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick.css"/>\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick-theme.css"/>\n\t  \n\t\t<!-- nouislider -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/nouislider.min.css"/>\n\t  \n\t\t<!-- Font Awesome Icon -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/font-awesome.min.css">\n\t\t\n\t\t<!-- Custom stlylesheet -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/style.css"/>\n\n        ' + (Object.keys(helmet).length ? helmet.title.toString() : '') + '\n        ' + (Object.keys(helmet).length ? helmet.meta.toString() : '') + '\n\t\t' + (Object.keys(helmet).length ? helmet.link.toString() : '') + '\n\t\t\n      </head>\n\t  <body>\n\t\t<div id="root">' + html + '</div>\n\t\t\n        <script>\n          // WARNING: See the following for security issues around embedding JSON in HTML:\n          // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations\n          window.__PRELOADED_STATE__ = ' + JSON.stringify(preloadedState).replace(/</g, '\\u003c') + '\n\t\t</script>\n\n\t\t<script src="/dist/assets/js/jquery.min.js"></script>\n\t\t<script src="/dist/assets/js/bootstrap.min.js"></script>\n\t\t<script src="/dist/assets/js/slick.min.js"></script>\n\t\t<script src="/dist/assets/js/nouislider.min.js"></script>\n\t\t<script src="/dist/assets/js/jquery.zoom.min.js"></script>\n\t\t<script src="/dist/assets/js/main.js"></script>\n\t\t<script src="/dist/assets/app.bundle.js"></script>\n\n      </body>\n    </html>\n    ';
+	return '\n    <!doctype html>\n    <html>\n      <head>\n\t\t<link rel="icon" href="/dist/favicon.ico" type="image/ico" />\n\t\t\n\t\t<!-- Google font -->\n\t\t<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">  \n\t  \n\t\t<!-- Bootstrap -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/bootstrap.min.css"/>\n\t\t\n\t\t<!-- Slick -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick.css"/>\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick-theme.css"/>\n\t  \n\t\t<!-- nouislider -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/nouislider.min.css"/>\n\t  \n\t\t<!-- Font Awesome Icon -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/font-awesome.min.css">\n\t\t\n\t\t<!-- Animate.css stlylesheet -->\n\t\t<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">\n\t  \n\t\t<!-- Custom stlylesheet -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/style.css"/>\n\n        ' + (Object.keys(helmet).length ? helmet.title.toString() : '') + '\n        ' + (Object.keys(helmet).length ? helmet.meta.toString() : '') + '\n\t\t' + (Object.keys(helmet).length ? helmet.link.toString() : '') + '\n\t\t\n      </head>\n\t  <body>\n\t\t<div id="root">' + html + '</div>\n\t\t\n        <script>\n\t\t\twindow.__PRELOADED_STATE__ = ' + JSON.stringify(preloadedState).replace(/</g, '\\u003c') + '\n\t\t</script>\n\t\t\n\t\t<script src="/dist/assets/app.bundle.js"></script>\n\t\t\n\t\t<script src="/dist/assets/js/jquery.min.js"></script>\n\t\t<script src="/dist/assets/js/bootstrap.min.js"></script>\n\t\t<script src="/dist/assets/js/nouislider.min.js"></script>\n\t\t<!-- <script src="/dist/assets/js/main.js"></script> -->\n\t\t\n      </body>\n    </html>\n    ';
 }
 
 /***/ }),
@@ -297,6 +297,10 @@ var _privateRoute = __webpack_require__(/*! ./private-route.jsx */ "./src/shared
 
 var _privateRoute2 = _interopRequireDefault(_privateRoute);
 
+var _api = __webpack_require__(/*! api */ "api");
+
+var _api2 = _interopRequireDefault(_api);
+
 var _logic = __webpack_require__(/*! ../logic */ "./src/shared/logic/index.js");
 
 var _logic2 = _interopRequireDefault(_logic);
@@ -322,7 +326,25 @@ var App = function (_Component) {
         key: 'render',
         value: function render() {
 
-            _logic2.default.init();
+            _api2.default.token = function (token) {
+                if (token) {
+                    localStorage.setItem('token', token);
+
+                    return;
+                }
+
+                return localStorage.getItem('token');
+            };
+
+            _logic2.default.user = function (user) {
+                if (user) {
+                    localStorage.setItem('user', JSON.stringify(user));
+
+                    return;
+                }
+
+                return JSON.parse(localStorage.getItem('user'));
+            };
 
             var routes = _routes2.default.routes.map(function (_ref, i) {
                 var path = _ref.path,
@@ -365,10 +387,152 @@ exports.default = (0, _reactRouterDom.withRouter)(App);
 
 /***/ }),
 
-/***/ "./src/shared/app/landing.jsx":
-/*!************************************!*\
-  !*** ./src/shared/app/landing.jsx ***!
-  \************************************/
+/***/ "./src/shared/app/categories.jsx":
+/*!***************************************!*\
+  !*** ./src/shared/app/categories.jsx ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "react-redux");
+
+var _redux = __webpack_require__(/*! redux */ "redux");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+var _categories = __webpack_require__(/*! ./redux/actions/categories */ "./src/shared/app/redux/actions/categories.js");
+
+var categoryActions = _interopRequireWildcard(_categories);
+
+var _products = __webpack_require__(/*! ./redux/actions/products */ "./src/shared/app/redux/actions/products.js");
+
+var productsActions = _interopRequireWildcard(_products);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Categories = function (_Component) {
+    _inherits(Categories, _Component);
+
+    function Categories() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Categories);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Categories.__proto__ || Object.getPrototypeOf(Categories)).call.apply(_ref, [this].concat(args))), _this), _this.handleCheck = function (e) {
+            localStorage.setItem(e.target.id, e.target.checked);
+            _this.props.getCategories();
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Categories, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.props.getCategories();
+        }
+
+        // componentDidUpdate() {
+
+        //     if (checked) {
+        //         const { query, categories } = this.props
+        //         const categoriesFilter = categories.filter(category => category.checked).map(category => category._id).join()
+        //         this.props.history.push(`/?q=${query}&c=${categoriesFilter}`)
+        //     }
+
+        // }
+
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var categories = this.props.categories;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'aside' },
+                _react2.default.createElement(
+                    'h3',
+                    { className: 'aside-title' },
+                    'Categories'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'checkbox-filter' },
+                    categories.length && categories.map(function (category) {
+                        return _react2.default.createElement(
+                            'div',
+                            { key: category._id, className: 'input-checkbox' },
+                            _react2.default.createElement('input', { type: 'checkbox', id: category._id, checked: category.checked, onChange: _this2.handleCheck }),
+                            _react2.default.createElement(
+                                'label',
+                                { htmlFor: category._id },
+                                _react2.default.createElement('span', null),
+                                category.name
+                            )
+                        );
+                    })
+                )
+            );
+        }
+    }], [{
+        key: 'fetchData',
+        value: function fetchData(_ref2) {
+            var store = _ref2.store;
+
+            return store.dispatch(categoriesActions.getCategory());
+        }
+    }]);
+
+    return Categories;
+}(_react.Component);
+
+function mapStateToProps(state) {
+    var categories = state.categories,
+        query = state.query;
+
+    return { categories: categories, query: query };
+}
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)(_extends({}, categoryActions, productsActions), dispatch);
+}
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Categories));
+
+/***/ }),
+
+/***/ "./src/shared/app/closed.jsx":
+/*!***********************************!*\
+  !*** ./src/shared/app/closed.jsx ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -403,21 +567,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Landing = function (_Component) {
-    _inherits(Landing, _Component);
+var Closed = function (_Component) {
+    _inherits(Closed, _Component);
 
-    function Landing() {
+    function Closed() {
         var _ref;
 
         var _temp, _this, _ret;
 
-        _classCallCheck(this, Landing);
+        _classCallCheck(this, Closed);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Landing.__proto__ || Object.getPrototypeOf(Landing)).call.apply(_ref, [this].concat(args))), _this), _this.onProductClickHandler = function (id) {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Closed.__proto__ || Object.getPrototypeOf(Closed)).call.apply(_ref, [this].concat(args))), _this), _this.onProductClickHandler = function (id) {
             return function (e) {
                 e.preventDefault();
                 _this.props.history.push('/product/' + id);
@@ -425,7 +589,7 @@ var Landing = function (_Component) {
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
-    _createClass(Landing, [{
+    _createClass(Closed, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.getProducts(this.props.query);
@@ -434,6 +598,8 @@ var Landing = function (_Component) {
         key: 'render',
         value: function render() {
             var _this2 = this;
+
+            var products = this.props.products;
 
             return _react2.default.createElement(
                 'div',
@@ -444,35 +610,21 @@ var Landing = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
-                        this.props.products.map(function (product) {
+                        products.map(function (product) {
                             return _react2.default.createElement(
                                 'div',
-                                { className: 'col-md-4 col-xs-6', key: product._id, onClick: _this2.onProductClickHandler(product._id) },
+                                { className: 'col-xs-12 col-sm-6 col-md-3 ', key: product._id, onClick: _this2.onProductClickHandler(product._id) },
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'product' },
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'product-img' },
-                                        _react2.default.createElement('img', { src: '/dist/assets/' + product.image, alt: '' }),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'product-label' },
-                                            _react2.default.createElement(
-                                                'span',
-                                                { className: 'new' },
-                                                'NEW'
-                                            )
-                                        )
+                                        _react2.default.createElement('img', { src: product.image, alt: '' })
                                     ),
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'product-body' },
-                                        _react2.default.createElement(
-                                            'p',
-                                            { className: 'product-category' },
-                                            'Category'
-                                        ),
                                         _react2.default.createElement(
                                             'h3',
                                             { className: 'product-name' },
@@ -491,13 +643,504 @@ var Landing = function (_Component) {
                                         _react2.default.createElement('div', { className: 'product-rating' }),
                                         _react2.default.createElement(
                                             'button',
-                                            { type: 'button', className: 'btn btn-primary' },
+                                            { type: 'button', className: 'primary-btn' },
                                             'Make offer'
                                         )
                                     )
                                 )
                             );
                         })
+                    )
+                )
+            );
+        }
+    }], [{
+        key: 'fetchData',
+        value: function fetchData(_ref2) {
+            var store = _ref2.store;
+
+            return store.dispatch(actions.getProducts());
+        }
+    }]);
+
+    return Closed;
+}(_react.Component);
+
+function mapStateToProps(state) {
+    var products = state.products,
+        query = state.query;
+
+    return { products: products, query: query };
+}
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)(actions, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Closed);
+
+/***/ }),
+
+/***/ "./src/shared/app/countdown.jsx":
+/*!**************************************!*\
+  !*** ./src/shared/app/countdown.jsx ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "prop-types");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Countdown = function (_Component) {
+  _inherits(Countdown, _Component);
+
+  function Countdown(props) {
+    _classCallCheck(this, Countdown);
+
+    var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
+
+    _this.state = {
+      days: 0,
+      hours: 0,
+      min: 0,
+      sec: 0
+    };
+    return _this;
+  }
+
+  _createClass(Countdown, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      // update every second
+      this.interval = setInterval(function () {
+        var date = _this2.calculateCountdown(_this2.props.date);
+        date ? _this2.setState(date) : _this2.stop();
+      }, 1000);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.stop();
+    }
+  }, {
+    key: 'calculateCountdown',
+    value: function calculateCountdown(endDate) {
+      var diff = (Date.parse(new Date(endDate)) - Date.parse(new Date())) / 1000;
+
+      // clear countdown when date is reached
+      if (diff <= 0) return false;
+
+      var timeLeft = {
+        years: 0,
+        days: 0,
+        hours: 0,
+        min: 0,
+        sec: 0
+      };
+
+      // calculate time difference between now and expected date
+      if (diff >= 365.25 * 86400) {
+        // 365.25 * 24 * 60 * 60
+        timeLeft.years = Math.floor(diff / (365.25 * 86400));
+        diff -= timeLeft.years * 365.25 * 86400;
+      }
+      if (diff >= 86400) {
+        // 24 * 60 * 60
+        timeLeft.days = Math.floor(diff / 86400);
+        diff -= timeLeft.days * 86400;
+      }
+      if (diff >= 3600) {
+        // 60 * 60
+        timeLeft.hours = Math.floor(diff / 3600);
+        diff -= timeLeft.hours * 3600;
+      }
+      if (diff >= 60) {
+        timeLeft.min = Math.floor(diff / 60);
+        diff -= timeLeft.min * 60;
+      }
+      timeLeft.sec = diff;
+
+      return timeLeft;
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      clearInterval(this.interval);
+    }
+  }, {
+    key: 'addLeadingZeros',
+    value: function addLeadingZeros(value) {
+      value = String(value);
+      while (value.length < 2) {
+        value = '0' + value;
+      }
+      return value;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var countDown = this.state;
+
+      return _react2.default.createElement(
+        'span',
+        { className: 'sale' },
+        _react2.default.createElement(
+          'span',
+          { className: 'countdown-col' },
+          _react2.default.createElement(
+            'span',
+            { className: 'countdown-col-element' },
+            _react2.default.createElement(
+              'strong',
+              null,
+              this.addLeadingZeros(countDown.days),
+              'd '
+            ),
+            _react2.default.createElement(
+              'span',
+              null,
+              ' '
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'span',
+          { className: 'countdown-col' },
+          _react2.default.createElement(
+            'span',
+            { className: 'countdown-col-element' },
+            _react2.default.createElement(
+              'strong',
+              null,
+              this.addLeadingZeros(countDown.hours)
+            ),
+            _react2.default.createElement(
+              'span',
+              null,
+              ':'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'span',
+          { className: 'countdown-col' },
+          _react2.default.createElement(
+            'span',
+            { className: 'countdown-col-element' },
+            _react2.default.createElement(
+              'strong',
+              null,
+              this.addLeadingZeros(countDown.min)
+            ),
+            _react2.default.createElement(
+              'span',
+              null,
+              ':'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'span',
+          { className: 'countdown-col' },
+          _react2.default.createElement(
+            'span',
+            { className: 'countdown-col-element' },
+            _react2.default.createElement(
+              'strong',
+              null,
+              this.addLeadingZeros(countDown.sec)
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Countdown;
+}(_react.Component);
+
+Countdown.propTypes = {
+  date: _propTypes2.default.string.isRequired
+};
+
+Countdown.defaultProps = {
+  date: new Date()
+};
+
+exports.default = Countdown;
+
+/***/ }),
+
+/***/ "./src/shared/app/landing.jsx":
+/*!************************************!*\
+  !*** ./src/shared/app/landing.jsx ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "react-redux");
+
+var _redux = __webpack_require__(/*! redux */ "redux");
+
+var _products = __webpack_require__(/*! ./redux/actions/products */ "./src/shared/app/redux/actions/products.js");
+
+var actions = _interopRequireWildcard(_products);
+
+var _countdown = __webpack_require__(/*! ./countdown.jsx */ "./src/shared/app/countdown.jsx");
+
+var _countdown2 = _interopRequireDefault(_countdown);
+
+var _reactNouislider = __webpack_require__(/*! react-nouislider */ "react-nouislider");
+
+var _reactNouislider2 = _interopRequireDefault(_reactNouislider);
+
+var _categories = __webpack_require__(/*! ./categories.jsx */ "./src/shared/app/categories.jsx");
+
+var _categories2 = _interopRequireDefault(_categories);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Landing = function (_Component) {
+    _inherits(Landing, _Component);
+
+    function Landing() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Landing);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Landing.__proto__ || Object.getPrototypeOf(Landing)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            range: [0, 3000],
+            priceMin: 0,
+            priceMax: 3000
+        }, _this.onProductClickHandler = function (id) {
+            return function (e) {
+                e.preventDefault();
+                _this.props.history.push('/product/' + id);
+            };
+        }, _this.handleChange = function (e) {
+            var _e$target = e.target,
+                name = _e$target.name,
+                value = _e$target.value;
+
+
+            name === 'priceMin' && value > _this.state.range[1] && (value = _this.state.range[1]);
+            name === 'priceMin' && value < _this.state.range[0] && (value = _this.state.range[0]);
+            name === 'priceMax' && value > _this.state.range[1] && (value = _this.state.range[1]);
+            name === 'priceMax' && value < _this.state.range[0] && (value = _this.state.range[0]);
+
+            _this.setState(_defineProperty({}, name, Math.round(value)));
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Landing, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var params = new URLSearchParams(this.props.location.search);
+            var q = params.get('q') || '';
+            //const categories = params.get('c') || ''
+            //this.props.getProducts(this.props.query)
+            this.props.getProducts(q);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var products = this.props.products;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'section',
+                    { className: 'section' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'container' },
+                        _react2.default.createElement(
+                            'aside',
+                            { id: 'aside', className: 'col-md-3' },
+                            _react2.default.createElement(_categories2.default, null),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'aside' },
+                                _react2.default.createElement(
+                                    'h3',
+                                    { className: 'aside-title' },
+                                    'Price'
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'price-filter' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { id: 'price-slider' },
+                                        _react2.default.createElement(_reactNouislider2.default, { range: { min: this.state.range[0], max: this.state.range[1] }, start: [this.state.priceMin, this.state.priceMax], connect: true,
+                                            onChange: function onChange(values) {
+
+                                                _this2.setState({ priceMin: Math.round(values[0]), priceMax: Math.round(values[1]) });
+                                            } })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'input-number price-min' },
+                                        _react2.default.createElement('input', { id: 'price-min', type: 'number', name: 'priceMin', value: this.state.priceMin, onChange: this.handleChange }),
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'qty-up', onClick: function onClick() {
+                                                    return _this2.state.priceMin < _this2.state.range[1] && _this2.setState({ priceMin: _this2.state.priceMin + 10 });
+                                                } },
+                                            '+'
+                                        ),
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'qty-down', onClick: function onClick() {
+                                                    return _this2.state.priceMin > _this2.state.range[0] && _this2.setState({ priceMin: _this2.state.priceMin - 10 });
+                                                } },
+                                            '-'
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        '-'
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'input-number price-max' },
+                                        _react2.default.createElement('input', { id: 'price-max', type: 'number', name: 'priceMax', value: this.state.priceMax, onChange: this.handleChange }),
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'qty-up', onClick: function onClick() {
+                                                    return _this2.state.priceMax < _this2.state.range[1] && _this2.setState({ priceMax: _this2.state.priceMax + 10 });
+                                                } },
+                                            '+'
+                                        ),
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'qty-down', onClick: function onClick() {
+                                                    return _this2.state.priceMax > _this2.state.range[0] && _this2.setState({ priceMax: _this2.state.priceMax - 10 });
+                                                } },
+                                            '-'
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'store', className: 'col-md-9' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'row' },
+                                products.length ? products.map(function (product) {
+                                    return _react2.default.createElement(
+                                        'div',
+                                        { className: 'col-xs-6 col-sm-4 col-md-4 ', key: product._id, onClick: _this2.onProductClickHandler(product._id) },
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'product' },
+                                            _react2.default.createElement(
+                                                'div',
+                                                { className: 'product-img' },
+                                                _react2.default.createElement('img', { src: product.images[0], alt: '' }),
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'product-label' },
+                                                    _react2.default.createElement(_countdown2.default, { date: product.endDate }),
+                                                    _react2.default.createElement(
+                                                        'span',
+                                                        { className: 'new' },
+                                                        'NEW'
+                                                    )
+                                                )
+                                            ),
+                                            _react2.default.createElement(
+                                                'div',
+                                                { className: 'product-body' },
+                                                _react2.default.createElement(
+                                                    'h3',
+                                                    { className: 'product-name' },
+                                                    _react2.default.createElement(
+                                                        'a',
+                                                        { href: '#' },
+                                                        product.title
+                                                    )
+                                                ),
+                                                _react2.default.createElement(
+                                                    'h4',
+                                                    { className: 'product-price' },
+                                                    product.maxBid,
+                                                    '\u20AC'
+                                                ),
+                                                _react2.default.createElement('div', { className: 'product-rating' }),
+                                                _react2.default.createElement(
+                                                    'button',
+                                                    { type: 'button', className: 'primary-btn' },
+                                                    'Make offer'
+                                                )
+                                            )
+                                        )
+                                    );
+                                }) : _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    'loading...'
+                                )
+                            )
+                        )
                     )
                 )
             );
@@ -556,6 +1199,8 @@ var _redux = __webpack_require__(/*! redux */ "redux");
 
 var _user = __webpack_require__(/*! ./redux/actions/user */ "./src/shared/app/redux/actions/user.js");
 
+var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -575,6 +1220,27 @@ var Login = function (_Component) {
         // reset login status
         var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
+        _this.handleChange = function (e) {
+            var _e$target = e.target,
+                name = _e$target.name,
+                value = _e$target.value;
+
+            _this.setState(_defineProperty({}, name, value));
+        };
+
+        _this.handleSubmit = function (e) {
+            e.preventDefault();
+
+            _this.setState({ submitted: true });
+            var _this$state = _this.state,
+                username = _this$state.username,
+                password = _this$state.password;
+
+            if (username && password) {
+                _this.props.login(username, password, _this.props.history);
+            }
+        };
+
         _this.props.logout();
 
         _this.state = {
@@ -583,97 +1249,92 @@ var Login = function (_Component) {
             submitted: false
         };
 
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.handleSubmit = _this.handleSubmit.bind(_this);
         return _this;
     }
 
     _createClass(Login, [{
-        key: 'handleChange',
-        value: function handleChange(e) {
-            var _e$target = e.target,
-                name = _e$target.name,
-                value = _e$target.value;
-
-            this.setState(_defineProperty({}, name, value));
-        }
-    }, {
-        key: 'handleSubmit',
-        value: function handleSubmit(e) {
-            e.preventDefault();
-
-            this.setState({ submitted: true });
-            var _state = this.state,
-                username = _state.username,
-                password = _state.password;
-
-            if (username && password) {
-                this.props.login(username, password, this.props.history);
-            }
-        }
-    }, {
         key: 'render',
         value: function render() {
             var loggingIn = this.props.loggingIn;
-            var _state2 = this.state,
-                username = _state2.username,
-                password = _state2.password,
-                submitted = _state2.submitted;
+            var _state = this.state,
+                username = _state.username,
+                password = _state.password,
+                submitted = _state.submitted;
 
             return _react2.default.createElement(
                 'div',
-                { className: 'col-md-6 col-md-offset-3' },
+                null,
                 _react2.default.createElement(
-                    'h2',
+                    _reactHelmet.Helmet,
                     null,
-                    'Login'
+                    _react2.default.createElement('meta', { charSet: 'utf-8' }),
+                    _react2.default.createElement(
+                        'title',
+                        null,
+                        'Register'
+                    )
                 ),
                 _react2.default.createElement(
-                    'form',
-                    { name: 'form', onSubmit: this.handleSubmit },
+                    'div',
+                    { className: 'section' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'form-group' + (submitted && !username ? ' has-error' : '') },
+                        { className: 'container' },
                         _react2.default.createElement(
-                            'label',
-                            { htmlFor: 'username' },
-                            'Username'
-                        ),
-                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'username', value: username, onChange: this.handleChange }),
-                        submitted && !username && _react2.default.createElement(
                             'div',
-                            { className: 'help-block' },
-                            'Username is required'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'form-group' + (submitted && !password ? ' has-error' : '') },
-                        _react2.default.createElement(
-                            'label',
-                            { htmlFor: 'password' },
-                            'Password'
-                        ),
-                        _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'password', value: password, onChange: this.handleChange }),
-                        submitted && !password && _react2.default.createElement(
-                            'div',
-                            { className: 'help-block' },
-                            'Password is required'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        _react2.default.createElement(
-                            'button',
-                            { className: 'btn btn-primary' },
-                            'Login'
-                        ),
-                        loggingIn && _react2.default.createElement('img', { src: 'data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==' }),
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/register', className: 'btn btn-link' },
-                            'Register'
+                            { className: 'row' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-md-6 col-md-offset-3' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'section-title' },
+                                    _react2.default.createElement(
+                                        'h3',
+                                        { className: 'title' },
+                                        'Login'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'form',
+                                    { name: 'form', onSubmit: this.handleSubmit },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' + (submitted && !username ? ' has-error' : '') },
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'username', placeholder: 'Email', value: username, onChange: this.handleChange }),
+                                        submitted && !username && _react2.default.createElement(
+                                            'div',
+                                            { className: 'help-block' },
+                                            'Username is required'
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' + (submitted && !password ? ' has-error' : '') },
+                                        _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'password', placeholder: 'Password', value: password, onChange: this.handleChange }),
+                                        submitted && !password && _react2.default.createElement(
+                                            'div',
+                                            { className: 'help-block' },
+                                            'Password is required'
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement(
+                                            'button',
+                                            { className: 'primary-btn' },
+                                            'Login'
+                                        ),
+                                        loggingIn && _react2.default.createElement('img', { src: 'data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==' }),
+                                        _react2.default.createElement(
+                                            _reactRouterDom.Link,
+                                            { to: '/register', className: 'btn btn-link' },
+                                            'Register'
+                                        )
+                                    )
+                                )
+                            )
                         )
                     )
                 )
@@ -777,8 +1438,12 @@ var NavBar = function (_Component) {
 			var query = _this.state.query;
 
 
-			_this.props.setQuery(query);
-			_this.props.history.push('/');
+			if (query.length) {
+				_this.props.setQuery(query);
+				_this.props.history.push('/?q=' + query);
+			} else {
+				_this.props.history.push('/');
+			}
 		}, _this.handleHomeLink = function (e) {
 			e.preventDefault();
 
@@ -955,7 +1620,16 @@ var NavBar = function (_Component) {
 									_react2.default.createElement(
 										_reactRouterDom.Link,
 										{ to: '/', onClick: this.handleHomeLink },
-										'Home'
+										'Hot Auctions'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										_reactRouterDom.Link,
+										{ to: '/product/closed', onClick: this.handleHomeLink },
+										'Recently Clossed'
 									)
 								)
 							)
@@ -1052,6 +1726,14 @@ var _product = __webpack_require__(/*! ./redux/actions/product */ "./src/shared/
 
 var actions = _interopRequireWildcard(_product);
 
+var _socket = __webpack_require__(/*! socket.io-client */ "socket.io-client");
+
+var _socket2 = _interopRequireDefault(_socket);
+
+var _reactSlick = __webpack_require__(/*! react-slick */ "react-slick");
+
+var _reactSlick2 = _interopRequireDefault(_reactSlick);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1063,6 +1745,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var socket;
 
 var Product = function (_Component) {
     _inherits(Product, _Component);
@@ -1079,14 +1763,46 @@ var Product = function (_Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Product.__proto__ || Object.getPrototypeOf(Product)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            bid: ''
+            bid: '',
+            priceClass: '',
+            slickImg: null,
+            slickImgs: null,
+            nav1: null,
+            nav2: null
+
         }, _this.componentDidMount = function () {
-            var id = _this.props.match.params.id;
+            var _this$props = _this.props,
+                id = _this$props.match.params.id,
+                maxBid = _this$props.product.maxBid;
+
+
+            socket = (0, _socket2.default)('http://localhost:5000');
+            socket.on('newBid', function (productId) {
+                if (id === productId) {
+
+                    _this.props.getProduct(id).then(function () {
+                        _this.setState({ bid: maxBid, priceClass: 'bounceInDown' }, function () {
+                            setTimeout(function () {
+                                return _this.setState({ priceClass: '' });
+                            }, 1000);
+                        });
+                    });
+                }
+            });
+
+            socket.on('error', function (error) {
+                console.log('socket error');
+            });
 
             _this.props.getProduct(id).then(function () {
-
-                _this.setState({ bid: _this.props.product.maxBid });
+                _this.setState({
+                    bid: _this.props.product.maxBid,
+                    nav1: _this.slider1,
+                    nav2: _this.slider2
+                });
             });
+        }, _this.componentWillUnmount = function () {
+            socket.close();
         }, _this.handleChange = function (e) {
             var _e$target = e.target,
                 name = _e$target.name,
@@ -1098,9 +1814,9 @@ var Product = function (_Component) {
 
             //TODO check bid
 
-            var _this$props = _this.props,
-                product = _this$props.product,
-                user = _this$props.user;
+            var _this$props2 = _this.props,
+                product = _this$props2.product,
+                user = _this$props2.user;
 
 
             if (Object.keys(user).length === 0) {
@@ -1122,8 +1838,35 @@ var Product = function (_Component) {
     _createClass(Product, [{
         key: 'render',
         value: function render() {
-            var product = this.props.product;
+            var _this2 = this;
 
+            var product = this.props.product;
+            var priceClass = this.state.priceClass;
+
+            var settingsImgs = {
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: true,
+                centerMode: true,
+                focusOnSelect: true,
+                centerPadding: 0,
+                vertical: true,
+                asNavFor: this.state.nav1,
+                ref: function ref(slider) {
+                    return _this2.slider2 = slider;
+                }
+            };
+            var settingsImg = {
+                infinite: true,
+                speed: 300,
+                dots: false,
+                arrows: true,
+                fade: true,
+                asNavFor: this.state.nav2,
+                ref: function ref(slider) {
+                    return _this2.slider1 = slider;
+                }
+            };
 
             return _react2.default.createElement(
                 'div',
@@ -1136,43 +1879,24 @@ var Product = function (_Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-md-5 col-md-push-2' },
+                            { id: 'product-main-img', className: 'product-preview col-md-5 col-md-push-2' },
                             _react2.default.createElement(
-                                'div',
-                                { id: 'product-main-img' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'product-preview' },
-                                    _react2.default.createElement('img', { src: '/dist/assets/' + product.image, alt: '' })
-                                )
+                                _reactSlick2.default,
+                                settingsImg,
+                                product.images && product.images.length && product.images.map(function (image, index) {
+                                    return _react2.default.createElement('img', { key: index, src: image, alt: '' });
+                                })
                             )
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-md-2  col-md-pull-5' },
+                            { id: 'product-imgs', className: 'col-md-2  col-md-pull-5' },
                             _react2.default.createElement(
-                                'div',
-                                { id: 'product-imgs' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'product-preview' },
-                                    _react2.default.createElement('img', { src: '/dist/assets/images/product01.png', alt: '' })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'product-preview' },
-                                    _react2.default.createElement('img', { src: '/dist/assets/images/product03.png', alt: '' })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'product-preview' },
-                                    _react2.default.createElement('img', { src: '/dist/assets/images/product08.png', alt: '' })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'product-preview' },
-                                    _react2.default.createElement('img', { src: '/dist/assets/images/product06.png', alt: '' })
-                                )
+                                _reactSlick2.default,
+                                settingsImgs,
+                                product.images && product.images.length && product.images.map(function (image, index) {
+                                    return _react2.default.createElement('img', { key: index, src: image, alt: '' });
+                                })
                             )
                         ),
                         _react2.default.createElement(
@@ -1191,7 +1915,7 @@ var Product = function (_Component) {
                                     null,
                                     _react2.default.createElement(
                                         'h3',
-                                        { className: 'product-price' },
+                                        { className: 'product-price animated ' + priceClass },
                                         product.maxBid,
                                         '\u20AC '
                                     ),
@@ -1398,67 +2122,63 @@ var Profile = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'col-md-6 col-md-offset-3 pt-2' },
+                    { className: 'section' },
                     _react2.default.createElement(
-                        'h2',
-                        null,
-                        'Profile'
-                    ),
-                    _react2.default.createElement(
-                        'form',
-                        { name: 'form', onSubmit: this.handleSubmit },
+                        'div',
+                        { className: 'container' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'form-group' },
+                            { className: 'row' },
                             _react2.default.createElement(
-                                'label',
-                                { htmlFor: 'Name' },
-                                'Name'
-                            ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', value: name, onChange: this.handleChange })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { htmlFor: 'password' },
-                                'Surname'
-                            ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'surname', value: surname, onChange: this.handleChange })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { htmlFor: 'password' },
-                                'Email'
-                            ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', value: email, onChange: this.handleChange })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { htmlFor: 'password' },
-                                'Password'
-                            ),
-                            _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'surname', value: password, onChange: this.handleChange })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'btn btn-primary' },
-                                'Save'
-                            ),
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/login', className: 'btn btn-link' },
-                                'Logout'
+                                'div',
+                                { className: 'col-md-6 col-md-offset-3 pt-2' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'section-title' },
+                                    _react2.default.createElement(
+                                        'h3',
+                                        { className: 'title' },
+                                        'Profile'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'form',
+                                    { name: 'form', onSubmit: this.handleSubmit },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'Name', value: name, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'surname', placeholder: 'Surname', value: surname, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', placeholder: 'Email', value: email, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'password', placeholder: 'Password', value: password, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement(
+                                            'button',
+                                            { className: 'primary-btn' },
+                                            'Save'
+                                        ),
+                                        _react2.default.createElement(
+                                            _reactRouterDom.Link,
+                                            { to: '/login', className: 'btn btn-link' },
+                                            'Logout'
+                                        )
+                                    )
+                                )
                             )
                         )
                     )
@@ -1563,6 +2283,44 @@ function clear() {
 
 /***/ }),
 
+/***/ "./src/shared/app/redux/actions/categories.js":
+/*!****************************************************!*\
+  !*** ./src/shared/app/redux/actions/categories.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getCategories = getCategories;
+
+var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux/constants/index.js");
+
+var _logic = __webpack_require__(/*! ../../../logic */ "./src/shared/logic/index.js");
+
+var _logic2 = _interopRequireDefault(_logic);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getCategories() {
+    return async function (dispatch, getState) {
+        var _categories = await _logic2.default.listCategories();
+
+        var categories = _categories.map(function (category) {
+            category.checked = localStorage.getItem(category._id) === 'true' ? true : false;
+            return category;
+        });
+
+        dispatch({ type: _constants.Types.UPDATE_CATEGORIES, categories: categories });
+    };
+}
+
+/***/ }),
+
 /***/ "./src/shared/app/redux/actions/product.js":
 /*!*************************************************!*\
   !*** ./src/shared/app/redux/actions/product.js ***!
@@ -1626,7 +2384,7 @@ var _logic2 = _interopRequireDefault(_logic);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function getProducts(query) {
+function getProducts(query, categories) {
     return async function (dispatch, getState) {
         var products = await _logic2.default.listProducts(query);
         dispatch({ type: _constants.Types.UPDATE_PRODUCTS, products: products });
@@ -1727,11 +2485,11 @@ function retrieveUser() {
     };
 }
 
-function register(user) {
+function register(name, surname, email, password, history) {
     return function (dispatch) {
 
-        _logic2.default.register(user).then(function () {
-            browserHistory.push('/login');
+        _logic2.default.register(name, surname, email, password).then(function () {
+            history.push('/login');
             dispatch(_alert.alertActions.success('Registration successful'));
         }).catch(function (error) {
             dispatch(_alert.alertActions.error(error));
@@ -1758,6 +2516,7 @@ var Types = exports.Types = {
     UPDATE_PRODUCT: 'UPDATE_PRODUCT',
     ADD_PRODUCT_BID: 'ADD_PRODUCT_BID',
     UPDATE_PRODUCTS: 'UPDATE_PRODUCTS',
+    UPDATE_CATEGORIES: 'UPDATE_CATEGORIES',
     UPDATE_NAME: 'UPDATE_NAME',
     UPDATE_USER: 'UPDATE_USER',
     UPDATE_QUERY: 'UPDATE_QUERY'
@@ -1839,6 +2598,40 @@ function alert() {
 
 /***/ }),
 
+/***/ "./src/shared/app/redux/reducers/categories.js":
+/*!*****************************************************!*\
+  !*** ./src/shared/app/redux/reducers/categories.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = products;
+
+var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux/constants/index.js");
+
+var initialState = {
+    categories: []
+};
+function products() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case _constants.Types.UPDATE_CATEGORIES:
+            return action.categories;
+        default:
+            return state;
+    }
+}
+
+/***/ }),
+
 /***/ "./src/shared/app/redux/reducers/combine.js":
 /*!**************************************************!*\
   !*** ./src/shared/app/redux/reducers/combine.js ***!
@@ -1858,6 +2651,10 @@ var _redux = __webpack_require__(/*! redux */ "redux");
 var _products = __webpack_require__(/*! ./products */ "./src/shared/app/redux/reducers/products.js");
 
 var _products2 = _interopRequireDefault(_products);
+
+var _categories = __webpack_require__(/*! ./categories */ "./src/shared/app/redux/reducers/categories.js");
+
+var _categories2 = _interopRequireDefault(_categories);
 
 var _product = __webpack_require__(/*! ./product */ "./src/shared/app/redux/reducers/product.js");
 
@@ -1879,6 +2676,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var reducers = (0, _redux.combineReducers)({
     products: _products2.default,
+    categories: _categories2.default,
     product: _product2.default,
     user: _user2.default,
     alert: _alert2.default,
@@ -2024,6 +2822,202 @@ function user() {
 
 /***/ }),
 
+/***/ "./src/shared/app/register.jsx":
+/*!*************************************!*\
+  !*** ./src/shared/app/register.jsx ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "react-redux");
+
+var _redux = __webpack_require__(/*! redux */ "redux");
+
+var _user = __webpack_require__(/*! ./redux/actions/user */ "./src/shared/app/redux/actions/user.js");
+
+var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Register = function (_Component) {
+    _inherits(Register, _Component);
+
+    function Register() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Register);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Register.__proto__ || Object.getPrototypeOf(Register)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            name: '',
+            surname: '',
+            email: '',
+            password: '',
+            repeatpassword: '',
+            submitted: false
+        }, _this.handleChange = function (e) {
+            var _e$target = e.target,
+                name = _e$target.name,
+                value = _e$target.value;
+
+            _this.setState(_defineProperty({}, name, value));
+        }, _this.handleSubmit = function (e) {
+            e.preventDefault();
+
+            _this.setState({ submitted: true });
+            var _this$state = _this.state,
+                name = _this$state.name,
+                surname = _this$state.surname,
+                email = _this$state.email,
+                password = _this$state.password;
+            // if (username && password) {
+            //     this.props.login(username, password, this.props.history)
+            // }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Register, [{
+        key: 'render',
+        value: function render() {
+            var _state = this.state,
+                name = _state.name,
+                surname = _state.surname,
+                email = _state.email,
+                password = _state.password,
+                passwordconf = _state.passwordconf,
+                submitted = _state.submitted;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    _reactHelmet.Helmet,
+                    null,
+                    _react2.default.createElement('meta', { charSet: 'utf-8' }),
+                    _react2.default.createElement(
+                        'title',
+                        null,
+                        'Register'
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'section' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'container' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'row' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-md-6 col-md-offset-3 pt-2' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'section-title' },
+                                    _react2.default.createElement(
+                                        'h3',
+                                        { className: 'title' },
+                                        'Register'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'form',
+                                    { name: 'form', onSubmit: this.handleSubmit },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'text', className: 'input', name: 'name', placeholder: 'First Name', value: name, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'text', className: 'input', name: 'surname', placeholder: 'Last Name', value: surname, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'text', className: 'input', name: 'email', placeholder: 'Email', value: email, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'password', className: 'input', name: 'password', placeholder: 'Password', value: password, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement('input', { type: 'password', className: 'input', name: 'repeatpassword', placeholder: 'Repeat Password', value: repeatpassword, onChange: this.handleChange })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement(
+                                            'button',
+                                            { className: 'primary-btn' },
+                                            'Register'
+                                        ),
+                                        _react2.default.createElement(
+                                            _reactRouterDom.Link,
+                                            { to: '/login', className: 'btn btn-link' },
+                                            'login'
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Register;
+}(_react.Component);
+
+function mapStateToProps(state) {
+    var loggingIn = state.user.loggingIn;
+
+    return {
+        loggingIn: loggingIn
+    };
+}
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)(_user.userActions, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Register);
+
+/***/ }),
+
 /***/ "./src/shared/logic/index.js":
 /*!***********************************!*\
   !*** ./src/shared/logic/index.js ***!
@@ -2039,20 +3033,14 @@ var auctionApi = __webpack_require__(/*! api */ "api");
 auctionApi.url = 'http://localhost:5000/api';
 
 var logic = {
+    user: function user(_user) {
+        if (_user) {
+            this._user = _user;
 
-    /**
-     * Initializes logic's storage
-     */
-    init: function init() {
-        auctionApi.token = function (token) {
-            if (token) {
-                localStorage.setItem('token', token);
+            return;
+        }
 
-                return;
-            }
-
-            return localStorage.getItem('token');
-        };
+        return this._user;
     },
     listProducts: function listProducts(query) {
         return auctionApi.listProducts(query);
@@ -2063,6 +3051,9 @@ var logic = {
     addProductBid: function addProductBid(productId, userId, price) {
         return auctionApi.addProductBid(productId, userId, price);
     },
+    listCategories: function listCategories() {
+        return auctionApi.listCategories();
+    },
     login: function login(username, password) {
         var _this = this;
 
@@ -2070,7 +3061,8 @@ var logic = {
             // login successful if there's a jwt token in the response
             if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+                _this.user(user);
+                //localStorage.setItem('user', JSON.stringify(user));
             }
 
             return user;
@@ -2085,7 +3077,8 @@ var logic = {
         });
     },
     retrieveUser: function retrieveUser() {
-        var user = JSON.parse(localStorage.getItem('user'));
+        //const user = JSON.parse(localStorage.getItem('user'))
+        var user = this.user();
 
         if (user === null) {
             return auctionApi.retrieveUser();
@@ -2093,11 +3086,16 @@ var logic = {
 
         return auctionApi.retrieveUser(user._id);
     },
-    register: function register(user) {},
+    register: function register(name, surname, email, password) {
+        return auctionApi.register(name, surname, email, password).then(function () {
+            return true;
+        }).catch(function (error) {
+            return Promise.reject(error);
+        });
+    },
     getAll: function getAll() {},
     delete: function _delete(id) {},
     handleResponse: function handleResponse(response) {
-        console.log('hereee', response);
         return response.json().then(function (data) {
             if (!response.ok) {
                 if (response.status === 401) {
@@ -2141,6 +3139,10 @@ var _landing = __webpack_require__(/*! ../app/landing.jsx */ "./src/shared/app/l
 
 var _landing2 = _interopRequireDefault(_landing);
 
+var _closed = __webpack_require__(/*! ../app/closed.jsx */ "./src/shared/app/closed.jsx");
+
+var _closed2 = _interopRequireDefault(_closed);
+
 var _product = __webpack_require__(/*! ../app/product.jsx */ "./src/shared/app/product.jsx");
 
 var _product2 = _interopRequireDefault(_product);
@@ -2148,6 +3150,10 @@ var _product2 = _interopRequireDefault(_product);
 var _login = __webpack_require__(/*! ../app/login.jsx */ "./src/shared/app/login.jsx");
 
 var _login2 = _interopRequireDefault(_login);
+
+var _register = __webpack_require__(/*! ../app/register.jsx */ "./src/shared/app/register.jsx");
+
+var _register2 = _interopRequireDefault(_register);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2157,12 +3163,20 @@ exports.default = {
         component: _landing2.default,
         exact: true
     }, {
+        path: '/product/closed',
+        component: _closed2.default,
+        exact: true
+    }, {
         path: '/product/:id',
         component: _product2.default,
         exact: true
     }, {
         path: '/login',
         component: _login2.default,
+        exact: true
+    }, {
+        path: '/register',
+        component: _register2.default,
         exact: true
     }],
     privateRoutes: [{
@@ -2201,6 +3215,17 @@ module.exports = require("express");
 
 /***/ }),
 
+/***/ "prop-types":
+/*!*****************************!*\
+  !*** external "prop-types" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("prop-types");
+
+/***/ }),
+
 /***/ "react":
 /*!************************!*\
   !*** external "react" ***!
@@ -2231,6 +3256,17 @@ module.exports = require("react-dom/server");
 /***/ (function(module, exports) {
 
 module.exports = require("react-helmet");
+
+/***/ }),
+
+/***/ "react-nouislider":
+/*!***********************************!*\
+  !*** external "react-nouislider" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-nouislider");
 
 /***/ }),
 
@@ -2267,6 +3303,17 @@ module.exports = require("react-router-dom");
 
 /***/ }),
 
+/***/ "react-slick":
+/*!******************************!*\
+  !*** external "react-slick" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-slick");
+
+/***/ }),
+
 /***/ "redux":
 /*!************************!*\
   !*** external "redux" ***!
@@ -2275,6 +3322,17 @@ module.exports = require("react-router-dom");
 /***/ (function(module, exports) {
 
 module.exports = require("redux");
+
+/***/ }),
+
+/***/ "socket.io-client":
+/*!***********************************!*\
+  !*** external "socket.io-client" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("socket.io-client");
 
 /***/ })
 

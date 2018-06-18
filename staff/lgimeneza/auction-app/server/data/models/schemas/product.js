@@ -29,8 +29,8 @@ module.exports = new Schema({
     closed: {
         type: Boolean,
     },
-    image: {
-        type: String,
+    images: {
+        type: [String],
     },
     category: {
         ref: 'Category',

@@ -29,31 +29,58 @@ class Profile extends Component {
                     <meta charSet="utf-8" />
                     <title>User</title>
                 </Helmet>
-                <div className="col-md-6 col-md-offset-3 pt-2">
-                    <h2>Profile</h2>
-                    <form name="form" onSubmit={this.handleSubmit}>
-                        <div className='form-group'>
-                            <label htmlFor="Name">Name</label>
-                            <input type="text" className="form-control" name="name" value={name} onChange={this.handleChange} />
+
+                <div className="section">
+
+                    <div className="container">
+
+                        <div className="row">
+
+                            <div className="col-md-6 col-md-offset-3 pt-2">
+
+                                <div className="section-title">
+                                    <h3 className="title">Profile</h3>
+                                </div>
+
+                                <form name="form" onSubmit={this.handleSubmit}>
+                                    <div className='form-group'>
+                                        <input type="text" className="form-control" name="name"  placeholder="Name" value={name} onChange={this.handleChange} />
+                                    </div>
+                                    <div className='form-group'>
+                                        <input type="text" className="form-control" name="surname"  placeholder="Surname" value={surname} onChange={this.handleChange} />
+                                    </div>
+                                    <div className='form-group'>
+                                        <input type="text" className="form-control" name="email"  placeholder="Email" value={email} onChange={this.handleChange} />
+                                    </div>
+                                    {/* <div className="form-group">
+                                    <input className="input" type="text" name="address" placeholder="Address" value={address} onChange={this.handleChange} />
+                                    </div>
+                                    <div className="form-group">
+                                        <input className="input" type="text" name="city" placeholder="City" value={city} onChange={this.handleChange} />
+                                    </div>
+                                    <div className="form-group">
+                                        <input className="input" type="text" name="country" placeholder="Country" value={country} onChange={this.handleChange} />
+                                    </div>
+                                    <div className="form-group">
+                                        <input className="input" type="text" name="postcode" placeholder="Post Code" value={postcode} onChange={this.handleChange}/>
+                                    </div> */}
+                                    <div className='form-group'>
+                                        <input type="password" className="form-control" name="password"  placeholder="Password" value={password} onChange={this.handleChange} />
+                                    </div>
+                                    <div className="form-group">
+                                        <button className="primary-btn">Save</button>
+                                        <Link to="/login" className="btn btn-link">Logout</Link>
+                                    </div>
+                                </form>
+
+                            </div>
+
                         </div>
-                        <div className='form-group'>
-                            <label htmlFor="password">Surname</label>
-                            <input type="text" className="form-control" name="surname" value={surname} onChange={this.handleChange} />
-                        </div>
-                        <div className='form-group'>
-                            <label htmlFor="password">Email</label>
-                            <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
-                        </div>
-                        <div className='form-group'>
-                            <label htmlFor="password">Password</label>
-                            <input type="password" className="form-control" name="surname" value={password} onChange={this.handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <button className="btn btn-primary">Save</button>
-                            <Link to="/login" className="btn btn-link">Logout</Link>
-                        </div>
-                    </form>
+
+                    </div>
+
                 </div>
+
             </div>
         );
     }

@@ -24,14 +24,18 @@ class NavBar extends Component {
 		const { name, value } = e.target
 		this.setState({ [name]: value })
 	}
-	
+
 	handleSubmit = e => {
 		e.preventDefault();
 
 		const { query } = this.state
 
-		this.props.setQuery(query)
-		this.props.history.push('/')
+		if(query.length){
+			this.props.setQuery(query)
+			this.props.history.push(`/?q=${query}`)
+		} else {
+			this.props.history.push('/')
+		}
 	}
 
 	handleHomeLink = e => {
@@ -47,6 +51,7 @@ class NavBar extends Component {
         return (
         <div>
         <header>
+
 			{/* <!-- TOP HEADER --> */}
 			<div id="top-header">
 				<div className="container">
@@ -111,13 +116,15 @@ class NavBar extends Component {
 				</div>
 			</div>
 		</header>
+
         {/* <!-- NAVIGATION --> */}
         <nav id="navigation">
             <div className="container">
                 <div id="responsive-nav">
                     {/* <!-- NAV --> */}
                     <ul className="main-nav nav navbar-nav">
-                        <li><Link to='/' onClick={this.handleHomeLink} >Home</Link></li>
+                        <li><Link to='/' onClick={this.handleHomeLink} >Hot Auctions</Link></li>
+						<li><Link to='/product/closed' onClick={this.handleHomeLink} >Recently Clossed</Link></li>
                     </ul>
                     {/* <!-- /NAV --> */}
                 </div>

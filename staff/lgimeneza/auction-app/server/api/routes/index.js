@@ -57,11 +57,24 @@ router.post('/product/:productId/bid/:userId', [jwtValidator, jsonBodyParser], (
 
     logic.addBid(productId, userId, price)
         .then(id => {
+            req.app.io.emit('newBid', productId)
             res.status(201).json({ status: 'OK', data: { id } })
         })
         .catch(({ message }) => {
             res.status(400).json({ status: 'KO', error: message })
         })
+})
+
+router.get('/category', (req, res) => {
+
+    return logic.listCategories()
+        .then(categories => {
+            res.status(200).json({ status: 'OK', data: categories })
+        })
+        .catch(({ message }) => {
+            res.status(400).json({ status: 'KO', error: message })
+        })
+
 })
 
 router.post('/auth', jsonBodyParser, (req, res) => {

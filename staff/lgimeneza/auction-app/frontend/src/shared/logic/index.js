@@ -6,19 +6,14 @@ auctionApi.url = 'http://localhost:5000/api'
 
 const logic = {
 
-    /**
-     * Initializes logic's storage
-     */
-    init() {
-        auctionApi.token = token => {
-            if (token) {
-                localStorage.setItem('token', token)
+    user(user) {
+        if (user) {
+            this._user = user
 
-                return
-            }
-
-            return localStorage.getItem('token')
+            return
         }
+
+        return this._user
     },
 
     listProducts(query){
@@ -33,13 +28,18 @@ const logic = {
         return auctionApi.addProductBid(productId, userId, price)
     },
 
+    listCategories(){
+        return auctionApi.listCategories()
+    },
+
     login(username, password) {
         return auctionApi.authenticateUser(username, password)
             .then(user => {
                 // login successful if there's a jwt token in the response
                 if (user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('user', JSON.stringify(user));
+                    this.user(user)
+                    //localStorage.setItem('user', JSON.stringify(user));
                 }
 
                 return user;
@@ -58,7 +58,8 @@ const logic = {
     },
 
     retrieveUser(){
-        const user = JSON.parse(localStorage.getItem('user'))
+        //const user = JSON.parse(localStorage.getItem('user'))
+        const user = this.user()
 
         if (user === null){
             return auctionApi.retrieveUser()
@@ -67,28 +68,35 @@ const logic = {
         return auctionApi.retrieveUser(user._id)
     },
 
-    register(user){},
+    register(name, surname, email,  password){
+        return auctionApi.register(name, surname, email,  password)
+            .then(() => {
+                return true;
+            })
+            .catch(error => {
+                return Promise.reject(error);
+            })
+    },
 
     getAll(){},
 
     delete(id){},
 
     handleResponse(response) {
-        console.log('hereee',response)
         return response.json().then(data => {
             if (!response.ok) {
                 if (response.status === 401) {
                     // auto logout if 401 response returned from api
-                    logout();
-                    location.reload(true);
+                    logout()
+                    location.reload(true)
                 }
     
                 const error = (data && data.error) || response.statusText;
-                return Promise.reject(error);
+                return Promise.reject(error)
             }
     
             return data;
-        });
+        })
     }
 
 }

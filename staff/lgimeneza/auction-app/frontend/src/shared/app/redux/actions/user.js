@@ -52,12 +52,12 @@ function retrieveUser() {
     }
 }
 
-function register(user) {
+function register(name, surname, email,  password, history) {
     return dispatch => {
 
-        logic.register(user)
+        logic.register(name, surname, email,  password)
             .then(() => { 
-                browserHistory.push('/login');
+                history.push('/login');
                 dispatch(alertActions.success('Registration successful'));
             })
             .catch(error => {

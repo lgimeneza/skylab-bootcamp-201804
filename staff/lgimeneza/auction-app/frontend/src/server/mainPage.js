@@ -21,6 +21,9 @@ export default function renderFullPage(html, preloadedState, helmet) {
 		<!-- Font Awesome Icon -->
 		<link rel="stylesheet" href="/dist/assets/styles/font-awesome.min.css">
 		
+		<!-- Animate.css stlylesheet -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+	  
 		<!-- Custom stlylesheet -->
 		<link rel="stylesheet" href="/dist/assets/styles/style.css"/>
 
@@ -33,19 +36,16 @@ export default function renderFullPage(html, preloadedState, helmet) {
 		<div id="root">${html}</div>
 		
         <script>
-          // WARNING: See the following for security issues around embedding JSON in HTML:
-          // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+			window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
 		</script>
-
+		
+		<script src="/dist/assets/app.bundle.js"></script>
+		
 		<script src="/dist/assets/js/jquery.min.js"></script>
 		<script src="/dist/assets/js/bootstrap.min.js"></script>
-		<script src="/dist/assets/js/slick.min.js"></script>
 		<script src="/dist/assets/js/nouislider.min.js"></script>
-		<script src="/dist/assets/js/jquery.zoom.min.js"></script>
-		<script src="/dist/assets/js/main.js"></script>
-		<script src="/dist/assets/app.bundle.js"></script>
-
+		<!-- <script src="/dist/assets/js/main.js"></script> -->
+		
       </body>
     </html>
     `

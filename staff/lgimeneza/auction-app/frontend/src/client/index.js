@@ -7,10 +7,10 @@ import { Provider } from 'react-redux'
 import store from '../shared/app/redux/store'
 import App from '../shared/app/app.jsx'
 
-hydrate((
+hydrate(
     <Provider store={store}>
         <Router>
             <App />
         </Router>
     </Provider>
-), document.getElementById('root'))
+, document.getElementById('root'))
