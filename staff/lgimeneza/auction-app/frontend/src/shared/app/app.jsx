@@ -4,7 +4,7 @@ import RedirectWithStatus from './redirect-w-status.jsx'
 import Navbar from './navbar.jsx'
 import routeOptions from '../routes/routes'
 import PrivateRoute from './private-route.jsx'
-import auctionApi  from 'api'
+import auctionApi from 'api'
 import logic from '../logic'
 
 class App extends Component {
@@ -21,12 +21,13 @@ class App extends Component {
         }
 
         logic.user = user => {
-            if (user) {
-                localStorage.setItem('user', JSON.stringify(user))
+            if (typeof user !== 'undefined') {
+                if (user === null) localStorage.removeItem('user')
+                else localStorage.setItem('user', JSON.stringify(user))
 
                 return
             }
-
+            
             return JSON.parse(localStorage.getItem('user'))
         }
 

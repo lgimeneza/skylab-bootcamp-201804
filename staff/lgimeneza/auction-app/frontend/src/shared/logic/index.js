@@ -53,7 +53,7 @@ const logic = {
     logout(){
         return Promise.resolve()
         .then(()=> {
-            localStorage.removeItem('user');
+            this.user(null)
         })
     },
 
