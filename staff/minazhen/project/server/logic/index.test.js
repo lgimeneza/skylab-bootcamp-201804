@@ -150,6 +150,44 @@ describe("logic (project-server)", () => {
                             })
                     })
             )
+
+            it('should also remove assigned countries', () =>
+                User.create(userData)
+                    .then((user) => {
+                        
+                        const p1 = Country.create({ name: "Japan", user: user.id })
+                        const p2 = Country.create({ name: "Mexico", user: user.id })
+                        const p3 = Country.create({ name: "Kenya", user: user.id })
+                        const p4 = Country.create({ name: "Turkey", user: user.id })
+                        const p5 = Country.create({ name: "Afghanistan", user: user.id })
+                        return Promise.all([p1, p2, p3, p4, p5])
+                        .then(countries => {
+                            countries.map(country => user.countries.push(country._id))
+
+                            return user.save()
+                        })
+                        .then(() => User.findById(user.id))
+                        .then((u) => {
+                            expect(u.countries.length).to.equal(5)
+                            return Country.find({ user: user.id}) 
+                        })
+                        .then(arr =>{
+                            const idx = user.id
+                            expect(arr.length).to.equal(5)
+                            return logic.unregisterUser(user.id, username, password)
+                                .then(res => {
+                                    expect(res).to.be.true
+                                    return User.findById(user.id)
+                                })
+                                .then(user => {
+                                    expect(user).to.be.null
+                                    return Country.find()
+                                })
+                                .then(res => {expect(res.length).to.equal(0)})
+                        
+                        })
+                    })
+            )
             describe("errors", () => {
                 it("should fail on invented user id", () =>
                     logic.unregisterUser(fakeId, username, password)
@@ -512,6 +550,45 @@ describe("logic (project-server)", () => {
                                     })
                             })
 
+                    })
+            )
+
+            it("should succeed removing 1 of 5 countries", () =>
+                User.create(userData)
+                    .then((user) => {
+                        const p1 = Country.create({ name: "Japan", user: user.id })
+                        const p2 = Country.create({ name: "Mexico", user: user.id })
+                        const p3 = Country.create({ name: "Kenya", user: user.id })
+                        const p4 = Country.create({ name: "Turkey", user: user.id })
+                        const p5 = Country.create({ name: "Afghanistan", user: user.id })
+                        return Promise.all([p1, p2, p3, p4, p5])
+                            .then(countries => {
+                                countries.map(country => user.countries.push(country._id))
+
+                                return user.save()
+                                .then(() => Photo.create({ url: dUrl }))
+                                        .then(photo => {
+                                            const country = countries[2]
+                                            country.photos.push(photo)
+                                            expect(country.photos.length).to.equal(1)
+                                            return country.save()
+                                                .then(() => logic.removePhoto(user.id, country.name, photo.id))
+                                                .then((res) => {
+                                                    expect(res).to.be.true
+                                                    return Country.findById(country.id)
+                                                        .then((res) => {
+                                                            expect(res).to.be.null
+                                                            return User.findById(user.id)
+                                                                .then((u) => {
+                                                                    expect(u.countries.length).to.equal(4)
+                                                                    u.countries.forEach((v) => {
+                                                                        expect(v.toString()).not.equal(country.id)
+                                                                    })
+                                                                })
+                                                        })
+                                                })
+                                        })
+                            })
                     })
             )
 

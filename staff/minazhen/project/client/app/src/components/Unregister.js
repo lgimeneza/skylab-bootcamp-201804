@@ -25,20 +25,12 @@ class Unregister extends Component {
         e.preventDefault()
             //ALERT are you sure?
         logic.unregister(this.state.user, this.state.password)
-            // .then(res => {
-            //     if (res.status === 'OK') {
-            //         Xtorage.local.remove('user')
-            //         //alert ok
-            //     } else {
-            //         // alert error
-            //     }
-            // })
             .then(this.bucle)
                 
     }
     bucle = () => {
         if (logic.userId === "NO-ID") {
-            this.props.history.push(`/register`)
+            this.props.history.push(`/`)
         }else{
             this.props.history.push(`/unregister`)
         }

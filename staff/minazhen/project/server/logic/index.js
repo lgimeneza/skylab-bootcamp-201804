@@ -60,9 +60,12 @@ const logic = {
                 if (!user) throw Error('wrong credentials')
 
                 if (user.id !== userId) throw Error(`no user found with id ${userId} for given credentials`)
-
-                return user.remove()
-                    .then(() => true)
+                
+                return Country.deleteMany({ user: userId })
+                .then(() => {
+                    return user.remove()
+                        .then(() => true)
+                })
             })
 
     },
@@ -199,7 +202,7 @@ const logic = {
                 if (!user.countries.length) throw Error(`no country named ${countryName}, in user ${userId}`)
 
                 const { countries: [country] } = user
-                const idxC = (user.countries.indexOf(country))
+                
                 if (!country.photos) throw Error(`no photos found in user ${userId}`)
 
                 const photo = country.photos.id(photoId)
@@ -212,6 +215,7 @@ const logic = {
                         if (res.photos.length === 0) {
                             return User.findById(userId)
                             .then(user => {
+                                const idxC = (user.countries.indexOf(country.id))
                                 user.countries.splice(idxC, 1)
                                 return user.save()
                                     .then(() => { 

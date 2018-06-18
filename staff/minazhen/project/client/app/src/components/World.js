@@ -29,7 +29,7 @@ const mapStyles = {
   maxHeight: "90vw",
 }
 
-let visited = []
+let visited = ["places"]
 
 class BasicMap extends Component {
   constructor() {
@@ -44,13 +44,13 @@ class BasicMap extends Component {
   componentDidMount() {
     return logic.world(logic.userId)
       .then(countries => {
-        console.log("LOADING... " + this.state.loading)
         if (countries.length) {
           visited = countries
           this.setState({ loading : false })
-          console.log("LOADING... " + this.state.loading)
-          console.log(visited)
-        } else this.setState({ loading : false })
+        } else {
+          visited.length = 0
+          this.setState({ loading : false })
+        }
       })
   }
 

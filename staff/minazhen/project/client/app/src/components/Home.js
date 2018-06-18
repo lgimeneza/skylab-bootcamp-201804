@@ -14,6 +14,7 @@ class Home extends Component {
         countries: [],
         state: ""
     }
+
     otherUsername = (e) => {
         const otherUsername = e.target.value
 
@@ -46,9 +47,20 @@ class Home extends Component {
             //     })
         } else {
             if (logic.userId !== "NO-ID") {
-                
+                logic.retrieveUser()
+                .then(res => {
+                    if (res.status === "KO") {
+                        logic.logout()
+                        console.error("Time expired and you should log in again")
+                        this.props.history.push(`/login`)
+                    }
+                    return res
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             } else {
-                this.props.history.push(`/login`)
+                this.props.history.push(`/`)
             }
         }
         

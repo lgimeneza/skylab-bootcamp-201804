@@ -13,17 +13,13 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        // if (Xtorage.local.get('user')) {
-        //     logic.token = Xtorage.local.get('user').token
-        //     logic.id = Xtorage.local.get('user').id
-        //     logic.retrieve()
         if (logic.userId !== "NO-ID") {
             logic.retrieveUser()
                 .then(res => {
                     if (res.status === "KO") {
-                        // Xtorage.local.remove('user')
                         logic.logout()
-                        throw Error("Time expired and you should log in again")
+                        console.error("Time expired and you should log in again")
+                        this.props.history.push(`/login`)
                     }
                     return res
                 })
@@ -36,9 +32,8 @@ class Profile extends Component {
                 })
                 .catch(err => {
                     console.log(err)
-                    // this.props.history.push(`/login`)
                 })
-        }  else this.props.history.push(`/login`)
+        }  else this.props.history.push(`/`)
     }
 
     render() {

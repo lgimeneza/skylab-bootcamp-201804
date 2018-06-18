@@ -21,7 +21,7 @@ describe("logic (top10travels-app)", () => {
             .catch(() => done())
     })
     describe("# Users", () => { //find other user
-        describe("register", () => {
+        false && describe("register", () => {
             it("should succeed on correct data", () =>
                 logic.registerUser(username, password, location)
                     .then(res => {
@@ -36,7 +36,7 @@ describe("logic (top10travels-app)", () => {
             )
         })
     
-        describe("login", () => {
+        false && describe("login", () => {
             it("should succeed on correct data", () =>
                 logic.registerUser(username, password, location)
                     .then((res) => {
@@ -50,7 +50,7 @@ describe("logic (top10travels-app)", () => {
             )
         })
     
-        describe("retrieve user", () => {
+        false && describe("retrieve user", () => {
             it("should succeed on correct data", () =>
                 logic.registerUser(username, password, location)
                     .then(() => logic.login(username, password))
@@ -74,9 +74,29 @@ describe("logic (top10travels-app)", () => {
                         expect(logic.userId).to.equal("NO-ID")
                     })
             )
+            it("should also remove assigned countries", () =>
+            logic.registerUser(username, password, location)
+                .then(() => logic.login(username, password))
+                .then(() => logic.addPhoto("Japan", dUrl))
+                .then(() => logic.addPhoto("Japan", dUrl2))
+                .then(() => logic.addPhoto("Russia", dUrl))
+                .then(() => logic.addPhoto("Mexico", dUrl))
+                .then(() => logic.world())
+                .then(res => {
+                    expect(res).to.exist
+                    expect(res.length).to.equal(3)
+                    const p1 = Promise.resolve(logic.unregister(username, password))  
+                    p1.then(x => {
+                        expect(x).to.be.true
+                        expect(logic.userId).to.equal("NO-ID")
+                    })
+                    
+                })
+                
+            )
         })
     })
-    describe("# World map", () => { //check other user
+    false && describe("# World map", () => { //check other user
         describe("list visited countries", () => {
             it("should succeed on correct data without countries", () =>
                 logic.registerUser(username, password, location)
@@ -106,7 +126,7 @@ describe("logic (top10travels-app)", () => {
             )
         })
     })
-    describe("# Country", () => { //check other user
+    false && describe("# Country", () => { //check other user
         describe("retrieve country", () => {
             it("should succeed without country created", () =>
                 logic.registerUser(username, password, location)
@@ -145,7 +165,7 @@ describe("logic (top10travels-app)", () => {
         })      
     })
 
-    describe("# Photos", () => {
+    false && describe("# Photos", () => {
         describe("add photo", () => {
             it("should succeed on correct data", () =>
                 logic.registerUser(username, password, location)
@@ -219,6 +239,38 @@ describe("logic (top10travels-app)", () => {
                                 return logic.retrievePhoto("Japan", id)
                             })
                             .catch(({ message }) => expect(message).to.equal(`no country named Japan, in user ${logic.userId}`))
+                    })
+            )
+            it("should succeed and delete 1 of 5 countries", () =>
+                logic.registerUser(username, password, location)
+                    .then(() => logic.login(username, password))
+                    .then(() => logic.addPhoto("Japan", dUrl))
+                    .then(() => logic.addPhoto("Corea", dUrl))
+                    .then(() => logic.addPhoto("Spain", dUrl))
+                    .then((id) => {
+                        expect(id).to.exist
+                        return logic.addPhoto("Russia", dUrl)
+                        .then(() => logic.addPhoto("Chile", dUrl))
+                    
+                        .then(() => logic.removePhoto("Spain", id))
+                            .then(res => {
+                                expect(res).to.be.true
+                                expect(logic.userId).not.to.equal("NO-ID")
+                                return logic.retrieveUser(logic.userId)                                
+                            })
+                            .then(({countries}) => {
+                                expect(countries.length).to.equal(4)
+                                countries.forEach(country => { expect(country.name).not.equal("Spain")})
+                                return logic.world(logic.userId)
+                            })
+                            .then((countries) => {
+                                expect(countries.length).to.equal(4)
+                                countries.forEach(country => { expect(country).not.equal("Spain")})
+                                return logic.retrievePhoto("Spain", id)
+                            })
+                            
+                            .catch(({ message }) => expect(message).to.equal(`no country named Spain, in user ${logic.userId}`))
+                            
                     })
             )
         })
