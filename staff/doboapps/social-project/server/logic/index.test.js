@@ -39,14 +39,12 @@ describe('logic social', () => {
 
                     return new Promise((resolve, reject) => {
         
-                        return fs.readFile('./src/files/img_base64.txt', (err, buffer) => {
-        
+                        return fs.readFile('./demos/img_base64.txt', 'utf8', (err, buffer) => {
                             if (err) return reject(err)
         
                             resolve(buffer.toString())                           
                         })
                     }).then(imgBase64 =>{ 
-                        debugger
                         return logic.saveImageProfile(id,imgBase64)                        
                                  .then(res => {     
                                     expect(res).to.be.exist})
@@ -1229,6 +1227,6 @@ describe('logic social', () => {
 
     // })
 
-
-    after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
+    // after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
+    after(() => mongoose.connection.db.dropDatabase(() => mongoose.disconnect()))
 })
