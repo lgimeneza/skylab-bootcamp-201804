@@ -4,7 +4,7 @@ import logic from '../../logic'
 import './index.css'
 import { Animated } from "react-animated-css"
 
-export default ({ items, btnShow = false, productDetail = false, cartProducts = false, removeFromCartButton= false }) => (
+export default ({ onAddToCart, items, btnShow = false, productDetail = false, cartProducts = false, removeFromCartButton= false }) => (
     <ul className="listitems-body">
         <div className="thumbnail listitems-subbody">
             {items.map(item => (
@@ -17,7 +17,7 @@ export default ({ items, btnShow = false, productDetail = false, cartProducts = 
                                 {btnShow && <p className="card-text">{item.description}</p>}
                                 {btnShow && (<p><Link to={`/categories/${item._id}`} className="btn btn-primary list-button" role="button">Show me more</Link></p>)}
                                 {productDetail && (<p><Link to={`/categories/products/${item._id}`} className="btn btn-primary list-button" role="button">product details</Link></p>)}
-                                {cartProducts && <a className="btn btn-outline-secondary" onClick={() => logic.addProductToCart(item._id)} role="button">Add to the cart</a>}
+                                {cartProducts && <a className="btn btn-outline-secondary" onClick={() => onAddToCart(item._id)} role="button">Add to the cart</a>}
                             </div>
                         </div>
                     </Animated>

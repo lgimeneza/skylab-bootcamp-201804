@@ -4,9 +4,9 @@ import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import logic from './logic'
 
 class App extends Component {
-  state = { 
+  state = {
     loggedIn: logic.loggedIn,
-    cartLength: logic._cart.length,
+    cartLength: logic.cart().length,
   }
 
   onLogin = () => {
@@ -19,11 +19,17 @@ class App extends Component {
     this.setState({ loggedIn: false })
   }
 
+  onAddToCart = id => {
+    logic.addProductToCart(id)
+      .then(() => this.setState({ cartLength: logic.cart().length }))
+      .catch(err => alert(err.message))
+  }
+
 
   render() {
     return (
       <div>
-        <Navbar loggedIn={this.state.loggedIn} onLogout={this.onLogout} cartLength={this.state.cartLength}/>
+        <Navbar loggedIn={this.state.loggedIn} onLogout={this.onLogout} cartLength={this.state.cartLength} />
         <Switch>
           <Route exact path="/" render={() => <Landing />} />
           <Route exact path="/categories" component={Categories} />
@@ -34,8 +40,8 @@ class App extends Component {
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/order" component={Order} />
           <Route exact path="/profile" component={Profile} />
-          <Route exact path="/categories/:id" component={Products} />
-          <Route exact path="/categories/products/:id" component={ProductData} />
+          <Route exact path="/categories/:id" render={props => <Products categoryId={props.match.params.id} onAddToCart={this.onAddToCart} />} />
+          <Route exact path="/categories/products/:id" render={props => <ProductData productId={props.match.params.id} onAddToCart={this.onAddToCart} />} />
           <Redirect to="/" />
         </Switch >
       </div>

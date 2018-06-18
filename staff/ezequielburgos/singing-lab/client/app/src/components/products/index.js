@@ -14,13 +14,13 @@ class Products extends Component {
     }
 
     componentDidMount() {
-        logic.listProducts(this.props.match.params.id)
+        logic.listProducts(this.props.categoryId)
             .then(products => this.setState({ products }))
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.match.params.id !== this.props.match.params.id){
-            logic.listProducts(this.props.match.params.id)
+        if(prevProps.categoryId !== this.props.categoryId){
+            logic.listProducts(this.props.categoryId)
                 .then(products => this.setState({ products }))   
         }
     }
@@ -34,6 +34,7 @@ class Products extends Component {
                     productDetail
                     cartProducts
                     items={this.state.products}
+                    onAddToCart={this.props.onAddToCart}
                 />
                 <Footer />
             </main>

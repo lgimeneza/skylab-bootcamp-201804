@@ -165,9 +165,15 @@ describe('logic (singingLab)', () => {
                     expect(res[0].price).to.equal(50)
 
                 })
-
-
         })
     })
 
+    describe('add to cart', () => {
+        it('should fail on already added product', () => 
+            logic.addProductToCart('123')
+                .then(res => expect(res).to.be.true)
+                .then(() => logic.addProductToCart('123'))
+                .catch(err => expect(err.message).to.equal('product already in cart'))
+        )
+    })
 })

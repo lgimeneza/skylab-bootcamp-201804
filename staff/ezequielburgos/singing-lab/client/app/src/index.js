@@ -29,15 +29,22 @@ logic.userId = function (userId) {
   return sessionStorage.getItem('userId')
 }
 
-const _cart = sessionStorage.getItem('cart')
+const cart = sessionStorage.getItem('cart')
 
-
-if (_cart && _cart !== 'undefined'){
-    logic._cart = JSON.parse(_cart)
+if (cart && cart !== 'undefined') {
+  logic._cart = JSON.parse(cart)
 }
 
 logic.cart = function (cart) {
-  sessionStorage.setItem('cart', JSON.stringify(cart))
+  if (cart) {
+    this._cart = cart
+
+    sessionStorage.setItem('cart', JSON.stringify(cart))
+
+    return
+  }
+
+  return this._cart
 }
 
 ReactDOM.render(

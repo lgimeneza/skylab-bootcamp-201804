@@ -22,25 +22,39 @@ const logic = {
     },
 
     cart(cart) {
-        this._cart = cart
+        if (cart) {
+            this._cart = cart
+
+            return
+        }
+
+        return this._cart
     },
 
     addProductToCart(productId) {
-        this._cart.push(productId)
+        return Promise.resolve()
+            .then(() => {
+                const any = this.cart().some(_productId => _productId === productId)
 
-        this.cart(this._cart)
+                if (any) throw Error('product already in cart')
+
+                this.cart().push(productId)
+
+                this.cart(this.cart())
+
+                return true
+            })
     },
 
     removeProductFromCart(productId) {
-        this._cart = this._cart.filter(id => {
+        this.cart(this.cart().filter(id => {
             return id !== productId
-        })
-        this.cart(this._cart)
+        }))
     },
 
     listProductsByIds() {
 
-        return singingLabApi.listProductsByIds(this._cart)
+        return singingLabApi.listProductsByIds(this.cart())
     },
 
     registerUser(name, surname, address, email, password) {
