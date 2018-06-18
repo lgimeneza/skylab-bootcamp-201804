@@ -25,7 +25,7 @@ export default ({products}) => (
                                                 <p className="card-text">Precio: {product.price} €/und</p>
                                                 <p className="card-bottom">
                                                     <Link to={`/product/${product.id}`}><button className="btn btn-md btn-outline-secondary my-2 my-sm-0 mb-2 mr-3" type="submit">Detalles</button> </Link>
-                                                    <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-1" type="submit" onClick={() => logic.addProductToCart(product.id)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir al carrito</button>                                                  
+                                                    <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-1" type="submit" onClick={() => logic.addProductToCart(product.id)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir</button>                                                  
 
                                                 </p>
                                             </div>

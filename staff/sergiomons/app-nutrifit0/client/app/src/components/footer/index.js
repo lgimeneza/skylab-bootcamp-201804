@@ -27,7 +27,7 @@ class Footer extends Component {
             <div className="footer">
                 <footer>
                 <div className="row">
-                            <div className="col-md-4">
+                            <div className="col-md-3">
                                 <ul>
                                     <li className="list-item">
                                         Lorem ipsum dolor sit amet
@@ -40,7 +40,7 @@ class Footer extends Component {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-3">
                                 <ul>
                                     <li className="list-item">
                                         Lorem ipsum dolor sit amet
@@ -53,10 +53,25 @@ class Footer extends Component {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-3">
                                 <ul>
                                     <li className="list-item">
                                         Lorem ipsum dolor sit amet
+                                    </li>
+                                    <li className="list-item">
+                                        Consectetur adipiscing elit
+                                    </li>
+                                    <li className="list-item">
+                                        Integer molestie lorem at massa
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="col-md-3">
+                                <ul>
+                                    <li className="list-item">
+                                    <a class="btn btn-social-icon btn-twitter">
+    <span class="fa fa-twitter"></span>
+  </a>
                                     </li>
                                     <li className="list-item">
                                         Consectetur adipiscing elit

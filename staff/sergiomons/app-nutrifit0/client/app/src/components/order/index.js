@@ -12,7 +12,7 @@ class Order extends Component {
 
     componentDidMount() {
 
-    logic.listCartById((products) => {this.setState({products})})
+    logic.listProductsFromCart((products) => {this.setState({products})})
     }
 
     getItems = () => {    
