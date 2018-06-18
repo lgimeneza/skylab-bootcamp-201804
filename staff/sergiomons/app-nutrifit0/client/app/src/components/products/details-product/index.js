@@ -29,18 +29,19 @@ class ProductDetails extends Component {
         <div className="container-fluid">
             <div className="row mt-4">
                 <Menu />
-                    <div className="col-10 col-lg-10 col-md-8 col-sm-8 col-xs-12">
-                    <div className="row ">
-                        <div className="col-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 mr-4 mb-5">
-                            <img alt="Bootstrap Image Preview" src={this.state.product.image} />
+                    <div className="col-10 col-lg-10 col-md-8 col-sm-12 col-xs-12">
+                    <div className="row h-100">
+                        <div className="col-lg-5 col-md-10 col-sm-12 col-xs-12 ml-1 mr-1 mb-3">
+                            <img className="w-100 h-80" style={{ height: "25rem" }}alt={this.state.product.name} src={this.state.product.image} />
                         </div>
-                        <div className="col-7 col-lg-7 col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 mt-3 ml-3">
                             <dl>
                                 <dt>
-                                    {this.state.product.name}
+                                    Este producto está compuesto: 
                                 </dt>
                                 <dd>
-                                    A description list is perfect for defining terms.
+                                    {this.state.product.name}
+                                    
                                 </dd>
                                 <dt>
                                     Euismod
@@ -65,13 +66,14 @@ class ProductDetails extends Component {
                                 </dd>
                             </dl>
                         </div>
-                        <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-4" type="submit" onClick={() => logic.addProductToCart(this.props.match.params.productId)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir al carrito</button>                                                  
 
                     </div>
                     </div>
                 
             </div>
-        </div>
+                        <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-4" type="submit" onClick={() => logic.addProductToCart(this.props.match.params.productId)}>Añadir al carrito</button>                                                  
+                        <Link to='/cart'><button className="btn btn-md btn-outline-secondary my-2 my-sm-0 ml-4">Ir al carrito</button> <i id="iconNav" className="fas fa-shopping-cart mr-4"><span id="numBadget" className="badge badge-pill badge-danger">{logic._cart.length}</span>Ir al carrito</i></Link>     
+       </div>
         )
    }       
 }
