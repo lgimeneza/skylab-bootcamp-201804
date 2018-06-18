@@ -12,16 +12,14 @@ class UpdateApartment extends Component {
         name:'',
         address:'',
         phone:'',
-        owner:'',
-        password:'',
-        newPassword:'',
+        owner:''
         
 
     }
     componentWillMount() {
        
                 const apartmentId=this.props.match.params.id
-                console.log('this.props: ', this.props);
+                
                 logic.listApartment(apartmentId)
                 .then(apartment => {
                     this.setState({
@@ -85,9 +83,14 @@ class UpdateApartment extends Component {
             ))
         })
         
-          
-    }
+        
     
+       
+}
+       backInfo = (_id) => {
+            (this.props.history.push(`/house/${_id}`))
+           
+       }
     deleteApartment = apartmentId =>{
         const apartId = localStorage.getItem('apartmentId')
 
@@ -147,9 +150,9 @@ render() {
                       
                         
                     </ul>
-                    <Link to="/house">
-                        <button className="backAp">Back</button>
-                    </Link>
+                   
+                        <button onClick={() => this.backInfo(this.state.apartmentId)} className="backAp">Back</button>
+                   
 
                 </section>
             </div>

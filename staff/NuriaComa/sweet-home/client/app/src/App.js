@@ -36,7 +36,7 @@ class App extends Component {
             <Route path="/users" component={Users} />
             <Route path="/updateuser/:id" component={UpdateUser} />
             <Route path="/house" component={ListApartment} />
-            <Route path="/updatepartment/:id" component={UpdateApartment} />
+            <Route path="/updateapartment/:id" component={UpdateApartment} />
             <Route path="/tasks" component={Tasks} />
             <Route path="/market" component={Market} />
             <Route path="/notes" component={Notes} />

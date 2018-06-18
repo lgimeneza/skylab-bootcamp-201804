@@ -25,7 +25,7 @@
         font-size: 3vw;
         margin: 3vw 10vw;
         padding: 1vw;
-        background-color: #105380;
+        background: linear-gradient(70deg, #105380, #829bac);
         border:0;
         font-family: 'Montserrat', sans-serif;
 
@@ -40,7 +40,7 @@
 }
 .textUA{
         height: 120vw ;
-    overflow: scroll;
-    font-family: 'Montserrat', sans-serif;
+        overflow: scroll;
+        font-family: 'Montserrat', sans-serif;
     
 }

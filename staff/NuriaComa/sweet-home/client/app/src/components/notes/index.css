@@ -5,9 +5,17 @@
     font-size: 5vw;
     margin: 10vw 12vw;
     padding: 2vw;
-    background-color: #5a4280;
+    background: linear-gradient(70deg, #5a4280, rgb(187, 182, 204));
     border:0;
     font-family: 'Montserrat', sans-serif;
+}
+.butAddN{
+    color: white;
+    font-size: 5vw;
+    background: linear-gradient(70deg, #5a4280, rgb(187, 182, 204));
+    border-top-right-radius: 2vw;
+    border-bottom-right-radius: 2vw;
+
 }
 .formularioN{
     margin-bottom: 7vw;

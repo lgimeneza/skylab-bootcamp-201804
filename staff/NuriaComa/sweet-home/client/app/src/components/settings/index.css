@@ -6,7 +6,7 @@
     font-size: 5vw;
     margin: 10vw 10vw;
     padding: 2vw;
-    background-color: #404040;
+    background: linear-gradient(70deg, #404040, #7a7a7a);
     border:0;
     font-family: 'Montserrat', sans-serif;
 }

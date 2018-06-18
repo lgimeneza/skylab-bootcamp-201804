@@ -16,7 +16,7 @@ class ListApartment extends Component {
         .then(()=>{
             const apartmentId = localStorage.getItem('apartmentId')
             logic.listApartment(apartmentId).then(res => { 
-                console.log(res)
+                
                 this.setState({
                     apartmentInfo: res
                 })
@@ -29,8 +29,8 @@ class ListApartment extends Component {
     
     update= (_id) => {
        
-        (this.props.history.push(`/updatepartment/${_id}`))
-        console.log('this.props: ', this.props);
+        (this.props.history.push(`/updateapartment/${_id}`))
+       
         
     }
   
@@ -43,7 +43,9 @@ class ListApartment extends Component {
                         <h2 className="ap">APARTMENT</h2>
 
                         <ul className="textA">
+                       
                             {this.state.apartmentInfo ? 
+                            
                                 <div className="listApartment2"><button  className="smallButA" type="submit" onClick={() => this.update(this.state.apartmentInfo._id)}>EDIT</button>
                                 <li><span className="info">Id apartment:</span> {this.state.apartmentInfo._id}</li><li><span className="info">Name:</span> {this.state.apartmentInfo.name}</li>
                                 <li><span className="info">Address:</span> {this.state.apartmentInfo.address}</li>

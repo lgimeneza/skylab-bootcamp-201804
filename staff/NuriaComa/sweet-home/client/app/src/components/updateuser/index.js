@@ -21,7 +21,7 @@ class UpdateUser extends Component {
     componentWillMount() {
        
                 const userId=this.props.match.params.id
-                console.log('this.props: ', this.props);
+                
                 logic.retrieveUser(userId)
                 .then(user => {
                     this.setState({
@@ -76,7 +76,7 @@ class UpdateUser extends Component {
         })
         .then(body => {
             
-            const id = localStorage.getItem('userId')
+            const id = this.props.match.params.id
             logic.updateUser(id, body.name, body.surname, body.phone, body.dni, body.password, body.newPassword)
            
             .then(()=> swal(

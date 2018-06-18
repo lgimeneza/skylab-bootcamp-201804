@@ -20,7 +20,7 @@
     font-size: 5vw;
     margin: 5vw 7vw 2vw 7vw;
     padding: 2vw;
-    background-color: #92ac19;
+    background: linear-gradient(70deg, #7b9214, #c7da86);
     border:0;
 }
 .backButton{
@@ -29,6 +29,6 @@
     font-size: 5vw;
     margin: 0 7vw 3vw 7vw;
     padding: 2vw;
-    background-color: #92ac19;
+    background: linear-gradient(70deg, #7b9214, #c7da86);
     border:0;
 }

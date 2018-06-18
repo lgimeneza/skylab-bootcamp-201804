@@ -191,7 +191,128 @@ const logic = {
            return user
         })
     },
+    deleteUserTask(taskId, userId, apartmentId){
+        return Promise.resolve()
+        .then(() => this.listUsers( apartmentId ))
+        
+        .then(users =>{
+            
+           const filteredUsersWithTask = users.filter(users =>{
+               return users.taskId
+           })
+           if( users.length=== filteredUsersWithTask.length){
+            let saveTaskId = []
+                for (let i=0; i<users.length; i++){
+                   saveTaskId.push(users[i].taskId)
+                }
+              User.update({_id: user.id}, { $unset: { taskId: null } }).then(result => console.info({result}))
+              return saveTaskId
+          }
 
+            
+        })
+    },
+    addUserTask(apartemntId, saveTaskId){
+        return Promise.resolve()
+        .then(() => this.listUsers( apartmentId ))
+        
+        .then(users =>{
+            User.assign
+
+            
+
+    })
+    },
+
+    // rotateUsersTasks(apartmentId){
+    //     return Promise.resolve()
+
+    //     .then(() => {this.listTasks( apartmentId )
+
+    //         .then(tasks =>{
+                
+    //         const tasks2= tasks.slice
+            
+    //         const firstTask = tasks2.map(task =>{
+               
+    //             return task[0].id
+    //         })
+    //         .then(() => {this.listUsers( apartmentId )
+    
+    //             .then(users =>{
+        
+    //                 const users2 = users.slice()
+    //                 const filteredUsersWithTask = users2.filter(user =>{
+    //                      user.taskId
+    //                      if(user.taskId !== firstTask){
+    //                          return user.tak
+    //                      }
+    //                 })  
+
+    //                if (filteredUsersWithTask.length>0) {
+    //                    return user.taskId=firstTask
+    //                }
+                    
+    //             })
+    //         })
+    //         })
+    //     })   
+    // },
+    rotateUsersTasks(apartmentId){
+
+        return Promise.resolve()
+            .then(() => {
+                return Task.find({ apartmentId })
+                    .then(tasks => {
+                        const tasks2= tasks.slice
+                        console.log('tasks2: ', tasks2)
+                        .then(() => {
+                                return Users.find({ apartmentId })
+                                .then(users => {
+                                    const users2= users.slice
+                                    
+                                    console.log('users2: ', users2)
+                                        return users2
+                                    .then (()=>{
+                                        const users = [
+                                            { id: '1', taskId: '1' },
+                                            { id: '2', taskId: '2' },
+                                            { id: '3', taskId: '3' }
+                                            ];
+                                            
+                                            const tasks = [
+                                            { id: '1', name: 'task1' },
+                                            { id: '2', name: 'task2' },
+                                            { id: '3', name: 'task3' }
+                                            ];
+                                            
+                                            let newAssociation = [];
+                                            
+                                            function doAssociations(tasks2, users2) {
+                                                tasks2.forEach(task => {
+                                                  const notAssociatedUsers = users2.filter(user => user.taskId !== task.id ? user.id : null );
+                                                console.info('task', task)
+                                                console.info('not associated users', notAssociatedUsers)
+                                                var randomItem = notAssociatedUsers[Math.floor(Math.random()*notAssociatedUsers.length)];
+                                                newAssociation.push({
+                                                taskId: task.id,
+                                                userId: randomItem.id
+                                                })
+                                              });
+                                              console.info(newAssociation);
+                                            }
+                                            
+                                            doAssociations(tasks, users);
+                                })
+                                })
+                        })
+            })
+
+
+            })
+        
+    },
+    
     listUsers(apartmentId) {
 
         return Promise.resolve()
@@ -250,11 +371,7 @@ const logic = {
 
                 if ((phone = phone.trim()).length === 0) throw Error('user phone is empty or blank')
 
-                // return Apartment.findOne({ apartmentId })
-                //     .then(apartment => {
-
-                //     if (apartment) throw Error(`apartment with apartmentId ${apartmentId} already exists`)
-
+              
                 return Apartment.create({ name, address, phone })
                     .then(({ id }) => {
                         return id
@@ -299,18 +416,31 @@ const logic = {
                 return apartment
             })
             .then(apartment => {
+                
                 apartment.name = name
                 apartment.address = address
                 apartment.phone=phone
                 apartment.owner=owner
                 apartment.realState = realState
+                console.log(apartment.owner)
+                
 
-                return apartment.save()
+                return Apartment.update({_id: apartment.id}, { name:apartment.name, address:apartment.address, phone:apartment.phone, owner: apartment.owner, realState: apartment.realState }, { multi: true } )
+                
             })
             .then(() => true)
     },
 
-
+    apartmentExists(apartmentId) {
+        return Promise.resolve()
+            .then(() => {
+                return Apartment.findById(apartmentId)
+                    .then(apartment => {
+                        if (!apartment) throw Error(`no apartment found`)
+                        return apartment
+                    })
+            })
+    },
     listApartment(apartmentId) {
 
         return Promise.resolve()
@@ -382,9 +512,8 @@ const logic = {
 
                             return User.findOne({"taskId": taskId})
                             .then( user =>{
-                                /* user = Object.assign({}, {name: user.name, surname: user.surname, phone: user.phone, dni: user.dni, password: user.password, apartmentId: user.apartmentId, _id: user._id}) */
 
-                                User.update({_id: user.id}, { $unset: { taskId: null } }).then(result => console.info({result}))
+                                User.update({_id: user.id}, { $unset: { taskId: null } })
                         })
                 })
                         
@@ -416,16 +545,7 @@ const logic = {
                     })
             })
     },
-    apartmentExists(apartmentId) {
-        return Promise.resolve()
-            .then(() => {
-                return Apartment.findById(apartmentId)
-                    .then(apartment => {
-                        if (!apartment) throw Error(`no apartment found`)
-                        return apartment
-                    })
-            })
-    },
+
     deleteMarket(marketId) {
 
         return Promise.resolve()

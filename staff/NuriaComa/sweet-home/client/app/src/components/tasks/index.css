@@ -6,7 +6,7 @@
     font-size: 5vw;
     margin: 10vw 12vw;
     padding: 2vw;
-    background-color: #bd8215;
+    background: linear-gradient(70deg, #bd8215, #fccd77);
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
@@ -22,7 +22,7 @@
   .butAddT{
       color: white;
       font-size: 5vw;
-      background-color: #bd8215;
+      background: linear-gradient(70deg, #bd8215, #fccd77);
       border-top-right-radius: 2vw;
       border-bottom-right-radius: 2vw;
 

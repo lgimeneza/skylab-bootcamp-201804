@@ -55,6 +55,10 @@ var shApi = {
 
             if ((password = password.trim()).length === 0) throw Error('password is empty or blank');
 
+            if (typeof apartmentId !== 'string') throw Error('apartmentId is not a string');
+
+            if ((apartmentId = apartmentId.trim()).length === 0) throw Error('apartmentId is empty or blank');
+
             return axios.post(_this.url + '/registeruser/' + apartmentId, { name: name, surname: surname, phone: phone, dni: dni, password: password }).then(function (_ref) {
                 var status = _ref.status,
                     data = _ref.data;
@@ -266,9 +270,9 @@ var shApi = {
 
         return Promise.resolve().then(function () {
 
-            if (typeof userId !== 'string') throw Error('user userId is not a string');
+            if (typeof userId !== 'string') throw Error('user id is not a string');
 
-            if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank');
+            if (!(userId = userId.trim()).length) throw Error('user id is empty or blank');
 
             return axios.delete(_this6.url + '/users/' + userId, { headers: { authorization: 'Bearer ' + _this6.token() } }).then(function (_ref6) {
                 var status = _ref6.status,
@@ -355,6 +359,7 @@ var shApi = {
         var _this9 = this;
 
         return Promise.resolve().then(function () {
+
             if (typeof id !== 'string') throw Error('user id is not a string');
 
             if (!(id = id.trim()).length) throw Error('user id is empty or blank');
@@ -410,6 +415,7 @@ var shApi = {
                     data = _ref10.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
                 return data.data;
             }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
@@ -479,6 +485,7 @@ var shApi = {
                     data = _ref13.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
+
                 return data.data;
             }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');

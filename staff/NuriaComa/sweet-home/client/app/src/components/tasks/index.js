@@ -39,7 +39,12 @@ class Tasks extends Component {
         {alert("task cannot be empty")}
        
     }
+    rotateTask =( )=>{
+       this.state.users.map((user, index) => {
+           user[index].taskId
+       })
 
+    }
     addTask = (e) =>{
 
         e.preventDefault()
@@ -54,7 +59,6 @@ class Tasks extends Component {
                 
                 const userWithoutTask = this.state.users.find(user => user.taskId === '' || !user.taskId)
                     if(userWithoutTask) {
-                        console.log('userWithoutTask: ', userWithoutTask);
                         this.state.name=''
 
                         logic.relateUserTask(userWithoutTask._id, task.id).then( () => {
@@ -68,7 +72,6 @@ class Tasks extends Component {
 
     }
     deleteTask = id =>{
-        const apartId = localStorage.getItem('apartmentId')
 
         Promise.resolve()
         .then(()=>{
@@ -99,14 +102,12 @@ class Tasks extends Component {
                         }
                          <ul className="textt">
                        
-                         {this.state.tasks ? this.state.tasks.map( (tasks, index) => {
-                             console.log('tasks: ', tasks);
+                         {this.state.tasks ? this.state.tasks.map( (tasks) => {
                             const user = this.state.users.filter(user => user.taskId === tasks._id)
-                            console.log('this.state.users: ', this.state.users);
-                            console.log('user: ', user);
                             if (user.length > 0) {
                                 return(
-                                    <div key={tasks.name} className="listTasks"><li className="datat">{user[0].name}: {tasks.name} <button className="deleteT" onClick={() => this.deleteTask(tasks._id)}>✘</button></li></div>
+                                    <div key={tasks.name} className="listTasks"><li className="datat">{user[0].name}: {tasks.name} <button className="deleteT" onClick={() => this.deleteTask(tasks._id)}>✘</button></li>
+                                    <button onClick={() => this.rotateTask(tasks._id)}>rotate</button></div>
                                 )
                             }
 

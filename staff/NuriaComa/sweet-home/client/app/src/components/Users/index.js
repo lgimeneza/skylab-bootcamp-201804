@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
-
+import swal from 'sweetalert2'
 
 
 class Users extends Component {
@@ -15,7 +15,6 @@ class Users extends Component {
             .then(() => {
                 const apartmentId = localStorage.getItem('apartmentId')
                 logic.listUsers(apartmentId).then(res => {
-                    console.log('res: ', res);
 
                    
                     this.setState({
@@ -33,6 +32,14 @@ class Users extends Component {
        
         (this.props.history.push(`/updateuser/${_id}`))
     }
+
+  logOut=() =>{
+    Promise.resolve()
+        this.props.history.push('/')     
+        localStorage.clear()    
+                       
+    }
+
   
     
 
@@ -46,6 +53,7 @@ render() {
                     <Link to="/registeruser">
                     <button className="smallButN">NEW USER</button>
                     </Link>
+                    <button className="smallButN"  onClick={() => this.logOut()}>LOG OUT</button>
                     <ul className="text">
                         {this.state.usersInfo ? this.state.usersInfo.map((users) => {
                             return (

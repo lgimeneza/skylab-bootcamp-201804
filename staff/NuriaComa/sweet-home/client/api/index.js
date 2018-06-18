@@ -55,6 +55,10 @@ const shApi = {
                 if (typeof password !== 'string') throw Error('password is not a string')
 
                 if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
+                
+                if (typeof apartmentId !== 'string') throw Error('apartmentId is not a string')
+
+                if ((apartmentId = apartmentId.trim()).length === 0) throw Error('apartmentId is empty or blank')
 
                 
                 return axios.post(`${this.url}/registeruser/${apartmentId}`,{ name, surname, phone, dni, password} )
@@ -250,9 +254,9 @@ const shApi = {
         return Promise.resolve()
             .then(() => {
                 
-                if (typeof userId !== 'string') throw Error('user userId is not a string')
+                if (typeof userId !== 'string') throw Error('user id is not a string')
 
-                if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
                 
                 return axios.delete(`${this.url}/users/${userId}`, { headers: { authorization: `Bearer ${this.token()}` } })
@@ -340,6 +344,7 @@ const shApi = {
        
         return Promise.resolve()
             .then(() => {
+
                 if (typeof id !== 'string') throw Error('user id is not a string')
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
@@ -392,6 +397,7 @@ const shApi = {
                 return axios.get(`${this.url}/apartment/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    
                     return data.data
                 })
                 .catch(err => {
@@ -455,6 +461,7 @@ const shApi = {
                 return axios.get(`${this.url}/task/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+                    
                     return data.data
                 })
                 .catch(err => {

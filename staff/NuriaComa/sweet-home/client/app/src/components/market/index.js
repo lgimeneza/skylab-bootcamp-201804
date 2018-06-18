@@ -74,7 +74,7 @@ class Market extends Component {
                          <form onSubmit={this.addMarket}>
                             <p className="wordsm"> Add MARKET: </p>
                             <input autocomplete="off" className="formulariom" type="text" value={this.state.name}onChange={this.nameMarket} name="name" ></input>
-                            <button>ADD</button>
+                            <button className="butAddM">ADD</button>
                          </form>
                          <ul className="textM">
                          {this.state.market ? this.state.market.map(market => {

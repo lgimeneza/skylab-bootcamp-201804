@@ -12,36 +12,15 @@ module.exports = new Schema({
     phone: {
         type: String
     },
-    owners: {
-        name: {
-            type: String,
+    owner: {
+        type: String,
             
-        },
-        surname: {
-            type: String,
-            
-        },
-        dni: {
-            type: String
-        },
-        phone: {
-            type: String
-        },
-
     },
-    realstate: {
-        name: {
-            type: String,
+       
+    realState: {
+        type: String,
             
-        },
-        address: {
-            type: String,
-            
-        },
-        phone: {
-            type: String,
-            
-        }
-    }
+    },
+    
   
 })

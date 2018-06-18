@@ -6,7 +6,7 @@
     font-size: 5vw;
     margin: 10vw 11vw;
     padding: 2vw;
-    background-color: #7b9214;
+    background: linear-gradient(70deg, #7b9214, #c7da86);
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
@@ -16,7 +16,7 @@
     font-size: 3vw;
     margin: 2vw 7vw;
     padding: 1vw;
-    background-color: #7b9214;
+    background: linear-gradient(70deg, #7b9214, #c7da86);
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
@@ -26,7 +26,7 @@
     font-size: 3vw;
     margin: 2vw 15vw;
     padding: 1vw;
-    background-color: #7b9214;
+    background: linear-gradient(70deg, #7b9214, #c7da86);
     border:0;
     font-family: 'Montserrat', sans-serif;
 }

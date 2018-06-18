@@ -74,7 +74,7 @@ class Notes extends Component {
                          <form onSubmit={this.addNotes}>
                             <p className="wordsN"> Add note: </p>
                             <input autocomplete="off" className="formularioN" type="text" value={this.state.name}onChange={this.nameNotes} name="name" ></input>
-                            <button>ADD</button>
+                            <button className="butAddN">ADD</button>
                          </form>
                          <ul className="textN">
                          {this.state.notes ? this.state.notes.map(notes => {
