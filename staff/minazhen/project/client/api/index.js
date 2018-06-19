@@ -43,7 +43,7 @@ const travelApi = {
 
                         const { data: { id, token } } = data
                         this.token = token
-                        //sessionStorage.setItem('token') = token
+                    
 
                         return id
                     })

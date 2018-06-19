@@ -51,7 +51,7 @@ var travelApi = {
                     token = _data$data.token;
 
                 _this2.token = token;
-                //sessionStorage.setItem('token') = token
+                
 
                 return id;
             }).catch(function (err) {
