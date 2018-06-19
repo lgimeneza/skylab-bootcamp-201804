@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
-import '../App.css';
-import { withRouter } from 'react-router-dom'
-// import App from '../App'
-import logic from '../logic/index'
-// import Xtorage from './Xtorage'
-
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom"
+import logic from "../logic/index"
 
 class Unregister extends Component {
     state = {
-        user: '',
-        password: '',
-        state: ''
+        user: "",
+        password: "",
+        state: ""
     }
+
+    componentDidMount() {
+        if (!logic.loggedIn()) this.props.history.push(`/`)
+    }
+
     userName = (e) => {
         const user = e.target.value
         this.setState({ user })
     }
     userPassword = (e) => {
-
         const password = e.target.value
         this.setState({ password })
     }
     submit = (e) => {
         e.preventDefault()
-            //ALERT are you sure?
+            //console.error(ALERT are you sure?)
         logic.unregister(this.state.user, this.state.password)
             .then(this.bucle)
-                
+            .catch(error => console.error(error.message))
     }
     bucle = () => {
         if (logic.userId === "NO-ID") {
@@ -37,7 +37,7 @@ class Unregister extends Component {
     }
     render() {
         const { user, password } = this.state
-        return <div className="unregister">
+        return <div className="containers unregister">
             <h1>Delete User</h1>
             <form onSubmit={this.submit}>
                 <input type="text" onChange={this.userName} value={user} placeholder="User" />

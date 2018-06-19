@@ -1,33 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
-import logic from '../logic'
-// import Xtorage from './Xtorage';
+import React from "react";
+import { Link } from "react-router-dom"
 
 function Header() {
 
-
-
     const landingNav = (
         <nav>
-            <Link to="/login"> Login </Link>
-            <Link to="/register"> Register </Link>
+            <Link className="link" to="/login"> Login </Link>
+            <Link className="link" to="/register"> Register </Link>
         </nav>
     )
 
 
     const regularNav = (
         <nav>
-            <Link to="/unregister"> Unregister </Link>
-            <Link to="/profile"> Profile </Link>
-            <Link to="/world"> Home </Link>
+            <Link className="link" to="/unregister"> Unregister </Link>
+            <Link className="link" to="/profile"> Profile </Link>
+            <Link className="link" to="/world"> Home </Link>
+            <Link className="link" to="/logout"> Log out </Link>
         </nav>
     )
 
-
     return (
         <header>
+            <Link to="/"><img className="title_wp link" src="/title_light.png" alt="WorldPic"/></Link>
             {sessionStorage.getItem('userId') ? regularNav : landingNav}
-            {/* {(logic.loggedIn()) ? regularNav : landingNav} */}
         </header>
     )
 }

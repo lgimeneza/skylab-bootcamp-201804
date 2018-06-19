@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Header from './components/Header';
 import Main from './components/Main'
 import Footer from './components/Footer';
+import { withRouter } from 'react-router-dom'
 
-import './App.css';
-// import './styles/common.css';
+import './styles/main.css';
+import './styles/specific.css';
 
 class App extends Component {
 
@@ -28,4 +29,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

@@ -1,26 +1,8 @@
-// import React from 'react';
-// import '../App.css';
-// import App from '../App'
-import { withRouter } from 'react-router-dom'
-import world from './maps/world-50m.json'
-import logic from '../logic/index'
-import Home from "./Home"
-// import logic from '../logic'
-
-
 import React, { Component } from "react"
-import {
-  ComposableMap,
-  ZoomableGlobe,
-  Geographies,
-  Geography,
-} from "react-simple-maps"
-
-const wrapperStyles = {
-  width: "100%",
-  maxWidth: 980,
-  margin: "0 auto",
-}
+import { withRouter } from "react-router-dom"
+import world from "./maps/world-50m.json"
+import logic from "../logic/index"
+import { ComposableMap, ZoomableGlobe, Geographies, Geography, } from "react-simple-maps"
 
 const mapStyles = {
   width: "90vw",
@@ -37,44 +19,33 @@ class BasicMap extends Component {
     this.clicking = this.clicking.bind(this)
     this.visited = visited
   }
-  state = {
-    loading: true
-  }
+  state = {  loading: true  }
 
   componentDidMount() {
-    return logic.world(logic.userId)
-      .then(countries => {
-        if (countries.length) {
-          visited = countries
-          this.setState({ loading : false })
-        } else {
-          visited.length = 0
-          this.setState({ loading : false })
-        }
-      })
+    if (logic.loggedIn()) {
+      return logic.world(logic.userId)
+        .then(countries => {
+          if (countries.length) {
+            visited = countries
+            this.setState({ loading : false })
+          } else {
+            visited.length = 0
+            this.setState({ loading : false })
+          }
+        }).catch(error => console.error(error.message))
+    } else this.props.history.push(`/`)
   }
 
-  clicking(value, e) {
-    const x = e.clientX
-    const y = e.clientY + window.pageYOffset
-    this.props.history.push(`/${value.properties.name}`) // segundo parametro username
-  }
+  clicking(value) { this.props.history.push(`/${value.properties.name}`) }
 
-  paint(num){
-    if (num === -1) return "#ECEFF1"; else return "#FF6611"
-  }
+  paint(num){ if (num === -1) return "#ECEFF1"; else return "#FF6611" }
 
   render() {
     if (this.state.loading) {
-      return (
-        <div>
-          <h1>LOADING...</h1>
-        </div>
-      )
-
+      return ( <div className="world"> <h1>LOADING...</h1> </div> )
     } else {  
       return (   
-        <div>
+        <div className="world">
           <ComposableMap
             width={500}
             height={500}
@@ -122,10 +93,9 @@ class BasicMap extends Component {
             </ZoomableGlobe>
           </ComposableMap>
         </div>
-      )
-      
+      ) 
     }
   }
 }
 
-export default BasicMap
+export default withRouter(BasicMap)

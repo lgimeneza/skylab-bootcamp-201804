@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Condensed|Montserrat');
+
+html, body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Encode Sans Semi Condensed', Helvetica, sans-serif;
+    color: #f15a24;
+}
+
+body * {  margin: 0; }
+
+header, footer, nav {
+    background-color: #f15a24;
+    min-height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    align-items: center;
+    color:white;
+    text-decoration: none;
+}
+
+header{
+    position: fixed;
+    top:0 ;
+    z-index:10;
+    height: 50px;
+    margin: 0;
+}
+
+nav { justify-content: flex-end }
+
+nav * { margin-right: 2em }
+
+.link, a { text-decoration: none; }
+
+.link:visited, a:visited { color: white; }
+
+.title_wp {
+    width: 130px;
+    height: 40px;
+    padding-left:5px;
+}
+
+a, h1, h2, h3, h4, h5, h6 {font-family: 'Montserrat', Helvetica, sans-serif; }
+
+containers h1 { 
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1em ;
+    text-align: center;
+}
+
+.containers {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-top: 50px;
+    min-height: calc(100vh - 100px);
+    overflow: auto;
+}
+
+::-webkit-scrollbar { display: none; }
+
+.world {
+    margin-top: 50px; 
+    min-height: calc(100vh - 100px);
+    text-align: center;
+}
+
+.landing { position: relative; }
+
+.three-d {
+    position: fixed;
+    top: 50px;
+    width:100vw;
+    height: 50vw;    
+}
+
+form, .info {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-bottom: 100px;
+    width: 300px;
+}
+
+form * {
+    outline: 0;
+    margin: 4px;
+    margin-bottom: 1em;
+    text-align: center;
+    font-family: 'Encode Sans Semi Condensed', Helvetica, sans-serif;
+    font-size: 1.05em;
+    color: #f15a24;
+    border: 0;
+    border-bottom: 0.2px solid #f15a24;
+}
+
+button, .file-upload-container {
+    outline: 0;
+    margin-top: 1em;
+    height: 3em;
+    border: 2px solid #f15a24;
+    border-radius: 5px;
+    color: #f15a24;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    background-color: white;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+.file-upload-container{
+    height: 1.5em;
+    width: 200px;
+    margin: 10px auto;
+}
+
+button:hover, .file-upload-container:hover {
+    background-color: #f15b2481;
+    color: white;
+}
+
+footer a{
+    font-family: 'Encode Sans Semi Condensed', Helvetica, sans-serif;
+}

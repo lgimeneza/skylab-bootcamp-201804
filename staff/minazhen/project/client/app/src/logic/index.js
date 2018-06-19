@@ -10,10 +10,6 @@ const logic = {
 
     registerUser(username, password, location) {
         return travelApi.registerUser(username, password, location)
-            .then((res) => {
-
-                return res
-            })
     },
 
     login(username, password, location) {
@@ -26,10 +22,12 @@ const logic = {
     },
 
     loggedIn() { 
-        const userId = this.userId
-        const token = travelApi.token
+        let userId = this.userId
+        let token = travelApi.token
+        if (sessionStorage.getItem("userId") !== userId) return false
+        if (sessionStorage.getItem("token") !== token) return false
 
-        return  userId !== "NO-ID" &&  token !== "NO-TOKEN"
+        return userId !== null && token !== null
     },
 
     logout() {
@@ -75,10 +73,6 @@ const logic = {
 
     world(userId = this.userId) {
         return travelApi.world(userId)
-            .then((res) => {
-                console.log(res)
-                return res
-            })
     },
 
     retrieveCountry(countryName, userId = this.userId) {

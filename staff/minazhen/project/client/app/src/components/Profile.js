@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-// import '../App.css';
-// import App from '../App'
-import logic from '../logic'
-// import Unregister from './Unregister'
-// import Xtorage from './Xtorage';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom"
+import logic from "../logic"
 
 class Profile extends Component {
     state = {
@@ -13,12 +10,12 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        if (logic.userId !== "NO-ID") {
+        if (logic.loggedIn()) {
             logic.retrieveUser()
                 .then(res => {
                     if (res.status === "KO") {
                         logic.logout()
-                        console.error("Time expired and you should log in again")
+                        console.error("Something wrong happened... Try to log in again")
                         this.props.history.push(`/login`)
                     }
                     return res
@@ -29,27 +26,28 @@ class Profile extends Component {
                         username: data.username,
                         location: data.location
                     })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+                }).catch(error => console.error(error.message))
         }  else this.props.history.push(`/`)
     }
 
     render() {
         return (
-            <div className="Profile">
-                <section className="pf-profile">
-                    <h1>Profile</h1>
+            <div className="containers profile">
+                <h1>Profile</h1>
+
                     <article className="info">
+                        <p> Username: </p>
                         <h1>{this.state.username}</h1>
-                        <h4>{this.state.location}</h4>
+                        <br/>
+                        <p> Location: </p>
+                        <h3>{this.state.location}</h3>
+                        <br/>
                     </article>
-                </section>
+
             </div >
         )
     }
 }
 
-export default Profile
+export default withRouter(Profile)
 
