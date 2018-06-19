@@ -6,6 +6,10 @@
   background-color: #EB8C74;
 }
 
+#navbarMenu {
+  display: block;
+}
+
 .logo {
   display: flex;
   justify-content: center;

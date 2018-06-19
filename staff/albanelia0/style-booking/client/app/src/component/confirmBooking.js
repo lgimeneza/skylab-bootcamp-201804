@@ -51,7 +51,7 @@ class ConfirmBooking extends Component {
 
   render() {
     return (
-      <div>
+      <div className="confirm-booking">
         <h1 className="subtitle is-1  title-booking">Check Booking</h1>
         <section className="booking-container">
           <div className="booking-times">
@@ -60,7 +60,6 @@ class ConfirmBooking extends Component {
             <hr />
           </div>
           <div className="selected-services">
-
             { this.state.selectedServices.map(service => {
               return (
                 <ul>

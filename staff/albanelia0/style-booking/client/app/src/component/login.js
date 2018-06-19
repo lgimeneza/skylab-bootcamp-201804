@@ -81,42 +81,38 @@ export class Login extends Component {
 
   render() {
     return (
-      <section className="hero is-fullheight">
-        <div className="hero-body">
-          <div className="container has-text-centered">
-            <div className="column is-4 is-offset-4">
-              <h3 className="title has-text-grey">Login</h3>
-              <p className="subtitle has-text-grey">Please login to proceed.</p>
-              <div className="box font-box">
-                {/* <figure className="avatar">
-                  <img src="https://placehold.it/128x128" alt="" />
-                </figure> */}
-                <form>
-                  <div className="field">
-                    <div className="control">
-                      <input onChange={this.handleChange} name='email' className="input is-large" type="email" placeholder="Your Email" autoFocus value={this.state.email} />
-                    </div>
-                  </div>
-                  <div className="field">
-                    <div className="control">
-                      <input onChange={this.handleChange} name='password' className="input is-large" type="password" placeholder="Your Password" value={this.state.password} />
-                    </div>
-                  </div>
-                  <div className="field">
-                  </div>
-                  <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Login</button>
-                </form>
+      <div className="container has-text-centered">
+        <div className="column is-4 is-offset-4">
+          <h3 className="title has-text-grey">Login</h3>
+          <p className="subtitle has-text-grey">Please login to proceed.</p>
+          <div className="box font-box">
+            {/* <figure className="avatar">
+              <img src="https://placehold.it/128x128" alt="" />
+            </figure> */}
+            <form>
+              <div className="field">
+                <div className="control">
+                  <input onChange={this.handleChange} name='email' className="input is-large" type="email" placeholder="Your Email" autoFocus value={this.state.email} />
+                </div>
               </div>
-              <p className="has-text-grey">
-                <p>New customer?</p>
-                <a onClick={this.goToRegister}>Start here</a> &nbsp;·&nbsp;
-                {/* <a href="../">Forgot Password</a> &nbsp;·&nbsp;
-                <a href="../">Need Help?</a> */}
-              </p>
-            </div>
+              <div className="field">
+                <div className="control">
+                  <input onChange={this.handleChange} name='password' className="input is-large" type="password" placeholder="Your Password" value={this.state.password} />
+                </div>
+              </div>
+              <div className="field">
+              </div>
+              <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Login</button>
+            </form>
           </div>
+          <p className="has-text-grey">
+            <p>New customer?</p>
+            <a onClick={this.goToRegister}>Start here</a> &nbsp;·&nbsp;
+            {/* <a href="../">Forgot Password</a> &nbsp;·&nbsp;
+            <a href="../">Need Help?</a> */}
+          </p>
         </div>
-      </section>
+      </div>
     )
   }
 

@@ -1,3 +1,7 @@
+.confirm-booking {
+  margin: 0 auto;
+}
+
 .booking-container {
   padding: 50px;
   font-size: 30px;
@@ -11,4 +15,3 @@
 .booking-button {
   margin-left: 50px;
 }
-

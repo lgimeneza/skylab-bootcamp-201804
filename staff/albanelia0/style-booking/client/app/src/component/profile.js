@@ -104,7 +104,7 @@ class Profile extends Component {
 
   render() {
     return (
-      <div>
+      <div className="profile">
         <h1 className="subtitle is-1 title-booking">Mys Bookings</h1>
         <div className="box bookingBox">
           {this.state.result.length ? this.listBookingBox() : <span>No bookings</span>}

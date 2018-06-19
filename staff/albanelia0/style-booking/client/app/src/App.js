@@ -14,18 +14,29 @@ import Navbar from './component/navbar';
 class App extends Component {
   render() {
     return (
-      <div>
+      <section className="hero is-fullheight is-default is-bold">
         <Navbar ref={navbar => navbar ? this.navbarLogin = navbar.login : null} />
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/calendar/:year/:month' component={Calendar} />
-          <Route exact path='/calendar/:year/:month/:day' component={BookingHours}/>
-          <Route path='/login' render={(routeProps) => <Login {...routeProps} navbarLogin={this.navbarLogin} />} />
-          <Route path='/register' component={Register} />
-          <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/confirmBooking" component={ConfirmBooking} />
-        </Switch>
-      </div>
+        <div className="hero-body">
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/calendar/:year/:month' component={Calendar} />
+            <Route exact path='/calendar/:year/:month/:day' component={BookingHours}/>
+            <Route path='/login' render={(routeProps) => <Login {...routeProps} navbarLogin={this.navbarLogin} />} />
+            <Route path='/register' component={Register} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/confirmBooking" component={ConfirmBooking} />
+          </Switch>
+        </div>
+        <div className="hero-foot">
+          <div className="container">
+            <div className="tabs is-centered">
+              <ul>
+                <li><a>And this is my project</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
     )
   }
 }

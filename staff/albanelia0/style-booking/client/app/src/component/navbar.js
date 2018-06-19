@@ -33,42 +33,40 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div>
-        <div className="hero-head  header">
-          <nav className="navbar">
-            <div className="container">
-              <div className="navbar-brand">
-                <div className="logo">
-                  <p className="subtitle 2 title-navbar">Victoria Style</p>
-                </div>
-                {/* <span className="navbar-burger burger" data-target="navbarMenu">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span> */}
+      <div className="hero-head header">
+        <nav className="navbar">
+          <div className="container">
+            <div className="navbar-brand">
+              <div className="logo">
+                <p className="subtitle 2 title-navbar">Victoria Style</p>
               </div>
-              <div id="navbarMenu" className="navbar-menu">
-                <div className="navbar-end">
-                  <div className="tabs is-right">
-                    {this.state.token ?
-                      <ul className="subtitle is-4">
-                        <li className="is-active"><Link to="/" >Home</Link></li>
-                        <li><a href="">Contacta</a></li>
-                        <li><Link to="/profile">Profile</Link></li>
-                        <li onClick={() => this.logout()}><Link to="/">Logout</Link></li> 
-                      </ul>
-                      :
-                      <ul className="subtitle is-4">
-                        <li><Link to="/" >Home</Link></li>
-                        <li ><Link to="/login">Login</Link></li>
-                      </ul>
-                    }
-                  </div>
+              {/* <span className="navbar-burger burger" data-target="navbarMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span> */}
+            </div>
+            <div id="navbarMenu" className="navbar-menu">
+              <div className="navbar-end">
+                <div className="tabs is-right">
+                  {this.state.token ?
+                    <ul className="subtitle is-4">
+                      <li className="is-active"><Link to="/" >Home</Link></li>
+                      <li><a href="">Contacta</a></li>
+                      <li><Link to="/profile">Profile</Link></li>
+                      <li onClick={() => this.logout()}><Link to="/">Logout</Link></li> 
+                    </ul>
+                    :
+                    <ul className="subtitle is-4">
+                      <li><Link to="/" >Home</Link></li>
+                      <li ><Link to="/login">Login</Link></li>
+                    </ul>
+                  }
                 </div>
               </div>
             </div>
-          </nav>
-        </div>
+          </div>
+        </nav>
       </div>
     )
   }

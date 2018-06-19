@@ -37,49 +37,35 @@ class Home extends Component {
 
   render() {
     return (
-      <section className="hero is-fullheight is-default is-bold">
-        <div className="hero-body">
-          <div className="container has-text-centered">
-            <section class="hero is-small">
-                <div className="images-header">
-                  <img className="image-screen" src={'/images/ScreenShot.png'} />
-                </div>
-              <div class="hero-body">
-                <div className="container summary">
-                  <p className="subtitle">
-                    <h3>From Monday to Saturday from 8 am to 5 pm</h3>
-                    ask for an appointment!
-                  We will do our best to satisfy your wishes!</p>
-                </div>
-              </div>
-            </section>
-            <div className="columns is-vcentered">
-              <div className="column is-5">
-                <figure className="image">
-                  <div
-                    className="the-image"
-                    style={{ backgroundImage: `url(${this.state.image})` }}
-                  />
-                </figure>
-              </div>
-              <div className="column is-6 is-offset-1">
-                <p className="subtitle is-1 is-spaced">Book days</p>
-                <Dropdown />
-              </div>
+      <div className="container has-text-centered">
+        <section class="hero is-small">
+            <div className="images-header">
+              <img className="image-screen" src={'/images/ScreenShot.png'} />
+            </div>
+          <div class="hero-body">
+            <div className="container summary">
+              <p className="subtitle">
+                <h3>From Monday to Saturday from 8 am to 5 pm</h3>
+                ask for an appointment!
+              We will do our best to satisfy your wishes!</p>
             </div>
           </div>
-        </div>
-        <div className="hero-foot">
-          <div className="container">
-            <div className="tabs is-centered">
-              <ul>
-                <li><a>And this is my project</a></li>
-              </ul>
-            </div>
+        </section>
+        <div className="columns is-vcentered">
+          <div className="column is-5">
+            <figure className="image">
+              <div
+                className="the-image"
+                style={{ backgroundImage: `url(${this.state.image})` }}
+              />
+            </figure>
+          </div>
+          <div className="column is-6 is-offset-1">
+            <p className="subtitle is-1 is-spaced">Book days</p>
+            <Dropdown />
           </div>
         </div>
-        {/* <script src="../js/bulma.js"></script> */}
-      </section>
+      </div>
     )
   }
 }
