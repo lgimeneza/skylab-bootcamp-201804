@@ -18,6 +18,7 @@ import Notifications from './Notifications'
 import ModalApp from './ModalApp'
 import NavBarDisconnection from './NavBarDisconnection'
 import Loading from './Loading'
+import Footer from './Footer'
 
 export {
     Landing,
@@ -38,5 +39,6 @@ export {
     User,
     Notifications,
     NavBarDisconnection,
-    Loading
+    Loading,
+    Footer
 }

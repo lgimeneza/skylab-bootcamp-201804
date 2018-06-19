@@ -1,22 +1,20 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom'
 import logic from "../../logic"
-import { CardUser } from '../'
+import { CardUser,Loading } from '../'
 import {  Container, Col, Row } from 'reactstrap'
-
-
 import './style.scss';
 
 
 class Home extends Component {
 
     state = {
-        loading: "Loading...",
         users: [],
         cityToSearch: undefined,
         genderToSearch: undefined,
         raceToSearch: undefined,
-        newNotifications:this.props.getNotifications()
+        newNotifications:this.props.getNotifications(),
+        loading:false
     }
 
     handleKeepGender = ({target:{value:genderToSearch}}) => {
@@ -48,29 +46,37 @@ class Home extends Component {
 
     getUsersByCity = () => {
 
-        logic.retrieveUser(this.props.dataUser.idUser).then(({ city,name, photoProfile }) => {
+        logic.retrieveUser(this.props.dataUser.idUser).then(({ city }) => {
+
+            this.setState({
+                loading:!this.state.loading
+              })
 
             logic.search(undefined, undefined, undefined, city)
-                .then(({ status, users }) => {
+                .then(({  users }) => {
 
                     this.setState({
-                        loading: "",
+                        loading:!this.state.loading,
                         users,
                         cityToSearch: city
-                    })
+                    })                    
                 })
         })
     }
 
     handleSearch = (raceToSearch, genderToSearch, cityToSearch) => {
+
+        this.setState({
+            loading:!this.state.loading,
+            users:[]
+          })
                 
-        this.setState({users:[]})
 
         logic.search(undefined, raceToSearch, genderToSearch, cityToSearch)
             .then(({  users }) => {
 
                 this.setState({
-                    loading: "",
+                    loading:!this.state.loading,
                     users,
                     cityToSearch,
                     genderToSearch,
@@ -120,13 +126,13 @@ class Home extends Component {
                 </form>
 
                 <h3>Near you...</h3>
-                <Row>
-                    {this.state.users.map((user, i) => {
+                {this.state.loading ?  <Loading text="Loading..." /> :<Row>
+                    { this.state.users.map((user, i) => {
                         if (user._id !== this.props.dataUser.idUser)
                             return <CardUser key={i + "-" + user.id} user={user} />
                         else return undefined
                     })}
-                </Row>
+                </Row>}
             </Container>
         )
     }

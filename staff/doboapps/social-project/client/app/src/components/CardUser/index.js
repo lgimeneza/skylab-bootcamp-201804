@@ -18,7 +18,7 @@ function CardUser({user:{_id,name,race,gender,city,friends,photoProfile} }) {
         default:  gender="undefined"; iconGender= "transgender";
     }
 
-    return <Col className="card-img" xs="12" sm="6" md="4" >
+    return <Col className="card-img" xs="6" sm="6" md="4" >
                 <Link to={`/user/${_id}`}>
         <Animated animationIn="pulse" animationOut="jello" isVisible={true}>
             <Card className="mb-4 bg-light">
@@ -28,10 +28,10 @@ function CardUser({user:{_id,name,race,gender,city,friends,photoProfile} }) {
                     <h3 className="text-center">{name}</h3>
                     <div className="card-data" > 
                                     
-                        <div><span><i className="fas fa-building"></i><br/>{city}</span><br/></div>
-                        <div><span><i className="fas fa-paw"></i><br/>{race}</span></div><br/>
-                        <div><span><i className={`fas fa-${iconGender}`}></i><br/>{gender}</span></div>
-                        <div><span><i className="fas fa-heart"></i><br/>{friends.length}</span></div><br/>
+                        <div className="card-element"><span><i className="fas fa-building"></i><br/><text>{city}</text></span><br/></div>
+                        <div className="card-element"><span><i className="fas fa-paw"></i><br/><text>{race}</text></span></div><br/>
+                        <div className="card-element"><span><i className={`fas fa-${iconGender}`}></i><br/><text>{gender}</text></span></div>
+                        <div className="card-element"><span><i className="fas fa-heart"></i><br/><text>{friends.length}</text></span></div><br/>
                     </div>
                 </CardBody>
             </Card>

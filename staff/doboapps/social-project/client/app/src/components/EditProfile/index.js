@@ -133,16 +133,16 @@ class EditProfile extends Component {
                 </Col>
                 <Row>
                     <Col xs={{ size: 10, offset: 1 }}  sm={{ size: 6, offset: 0 }} >
-                        <Text data={this.state.name}  handleKeep={this.handleKeepName}/>
+                        <Text data={this.state.name} default={"Edit name"}   handleKeep={this.handleKeepName}/>
                     </Col>
                     <Col xs={{ size: 10, offset: 1 }}  sm={{ size: 6, offset: 0 }} >
-                        <Text data={this.state.email}  handleKeep={this.handleKeepEmail}/>
+                        <Text data={this.state.email}  default={"Edit email"}  handleKeep={this.handleKeepEmail}/>
                     </Col>
                     <Col xs={{ size: 10, offset: 1 }}  sm={{ size: 6, offset: 0 }} >
-                        <Text data={(this.state.description)?this.state.description:"---"}  handleKeep={this.handleKeepDescription}/>
+                        <Text data={this.state.description} default={"Edit description"}   handleKeep={this.handleKeepDescription}/>
                     </Col>
                     <Col xs={{ size: 10, offset: 1 }}  sm={{ size: 6, offset: 0 }} >
-                        <Text data={this.state.zip?this.state.zip:"---"}   handleKeep={this.handleKeepZip}/>
+                        <Text data={this.state.zip} default={"Edit Zip"}  handleKeep={this.handleKeepZip}/>
                     </Col>
                     <Col xs={{ size: 10, offset: 1 }}  sm={{ size: 6, offset: 0 }} >
                         <select className="form-control" value={this.state.city}  onChange={this.handleKeepCity} type="text" placeholder="City">{this.getCities()}</select>

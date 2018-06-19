@@ -11,16 +11,14 @@ class Text extends Component {
         this.setState({edit })
     }
 
-    render() {
+    render() {        
 
-        
-
-       if (!this.state.edit) return (<legend onClick={()=>{this.handleEdit(true)}} >
-            {this.props.data}
+        return (!this.state.edit) ? (<legend onClick={()=>{this.handleEdit(true)}} >
+            {this.props.data?this.props.data:this.props.default}
             <i onClick={()=>{this.handleEdit(false)}} className="far fa-edit"></i>
             <hr className="my-2" />
        </legend>)
-       else  return (<div><Input onChange={this.props.handleKeep} type="text" value={this.props.data} autoFocus /><i onClick={()=>{this.handleEdit(false)}} className="far fa-check-square"></i></div>)
+       : (<div><Input onChange={this.props.handleKeep} type="text" value={this.props.data} autoFocus /><i onClick={()=>{this.handleEdit(false)}} className="far fa-check-square"></i></div>)
     }
 }
 

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import {Header,Main,Loading} from "./components/";
+import {Header,Main,Footer} from "./components/";
 import logic from "./logic";
 import profile_img from './images/others/profile-user.jpg'
-import background from './images/others/background.jpg'
 
 
 
@@ -67,6 +66,8 @@ class App extends Component {
     });
   }
 
+  
+
 
   retrieveUser = (idUser) => {
 
@@ -96,9 +97,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        <img className="background-app" alt="background" src={background}/>
+        <div className="background-app"></div>
+
+        {/* <img className="background-app" alt="background" src={background}/> */}
         <Header dataUser={this.state} logOut={this.logOut} clearNotifications={this.clearNotifications} renderUser={this.renderUser}  />
         <Main   dataUser={this.state} changePhotoProfile={this.changePhotoProfile}  retrieveUser={this.state.allDataUser} getNotifications={this.getNotifications}   logIn={this.logIn}  isLogged={this.state.isLogged} />
+        {logic.isLogged() && <Footer/>}
+      
       </div>
     )
   }
