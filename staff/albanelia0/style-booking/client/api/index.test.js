@@ -9,9 +9,11 @@ const logic = require('.')
 const moment = require('moment')
 
 
-const { env: { DB_URL } } = process
+const { env: { DB_URL, API_URL, TOKEN_SECRET } } = process
+logic.url = API_URL
 
 describe('logic (style-booking)', () => {
+
   const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
   const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
   const dummyUserId = '123456781234567812345678'
@@ -29,7 +31,8 @@ describe('logic (style-booking)', () => {
   beforeEach(() => Promise.all([User.remove(), Service.deleteMany(), Booking.deleteMany()]))
 
   describe('register user', () => {
-
+    
+  
     describe('should succeed on correct dada', () => {
 
       it('should register', () =>
@@ -117,6 +120,8 @@ describe('logic (style-booking)', () => {
     it('should succeed on correct data', () =>
       User.create(userData)
         .then(({ id }) => {
+          logic.authenticateUser('jd@mail.com', '123')
+
           return logic.unregisterUser(id, 'jd@mail.com', '123')
             .then(res => {
               expect(res).to.be.true

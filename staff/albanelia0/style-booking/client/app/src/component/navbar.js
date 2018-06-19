@@ -17,8 +17,9 @@ class Navbar extends Component {
         token: token
       })
     }
-
+    this.logout()
   }
+
   logout = (props) =>{
 
     localStorage.clear()
