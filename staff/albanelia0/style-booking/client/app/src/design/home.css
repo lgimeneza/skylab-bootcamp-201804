@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 body {
   font-family: 'Nunito', sans-serif;
-  
 }
 
 img {
@@ -18,4 +17,25 @@ img {
   padding-bottom: 25px;
   border-radius: 7px;
   margin-bottom: 20px;
+}
+
+.the-image {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-left: 20px
+}
+
+.images-header {
+  display: flex;
+  filter: opacity(.3);
+  margin: 0 auto;
+  max-width: 900px
+}
+
+.image-screen {
+  max-height: 150px;
+  /* width: 100%; */
+  border: 0px
 }
