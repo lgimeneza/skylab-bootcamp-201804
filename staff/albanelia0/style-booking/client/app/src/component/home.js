@@ -47,7 +47,7 @@ class Home extends Component {
               <div class="hero-body">
                 <div className="container summary">
                   <p className="subtitle">
-                    <h3>SCHEDULE: From Monday to Saturday from 8 am to 5 pm</h3>
+                    <h3>From Monday to Saturday from 8 am to 5 pm</h3>
                     ask for an appointment!
                   We will do our best to satisfy your wishes!</p>
                 </div>

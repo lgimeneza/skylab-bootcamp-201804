@@ -49,7 +49,7 @@ export class Login extends Component {
       logic.login(body).then(result => {
         if (result) {
           this.storageUserData(result)
-          console.log(result)
+          this.props.navbarLogin()
           logic.localStorageGetItem("checkedList") ? this.props.history.push('/confirmBooking') : this.props.history.push('/')
           // aqui se tiene que esperar para ver si te lleva al profile o al data
         }

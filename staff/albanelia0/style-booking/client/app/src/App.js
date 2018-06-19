@@ -13,15 +13,14 @@ import Navbar from './component/navbar';
 
 class App extends Component {
   render() {
-
     return (
       <div>
-        <Navbar/>
+        <Navbar ref={navbar => navbar ? this.navbarLogin = navbar.login : null} />
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/calendar/:year/:month' component={Calendar} />
           <Route exact path='/calendar/:year/:month/:day' component={BookingHours}/>
-          <Route path='/login' component={Login} />
+          <Route path='/login' render={(routeProps) => <Login {...routeProps} navbarLogin={this.navbarLogin} />} />
           <Route path='/register' component={Register} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/confirmBooking" component={ConfirmBooking} />

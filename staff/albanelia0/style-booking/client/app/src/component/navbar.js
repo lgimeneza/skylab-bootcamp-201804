@@ -10,20 +10,23 @@ class Navbar extends Component {
   }
 
   componentDidMount() {
+    this.login()
+  }
 
+  logout = () => {
+    localStorage.clear()
+    this.setState({
+      token: undefined
+    })
+  }
+
+  login = () => {
     let token = logic.localStorageGetItem("token")
     if (token) {
       this.setState({
         token: token
       })
     }
-    this.logout()
-  }
-
-  logout = (props) =>{
-
-    localStorage.clear()
-
   }
 
 
