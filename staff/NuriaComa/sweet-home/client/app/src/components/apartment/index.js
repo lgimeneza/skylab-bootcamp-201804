@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import { Link } from 'react-router-dom'
 import './index.css'
 import swal from 'sweetalert'
 
@@ -20,7 +19,6 @@ class Apartment extends Component {
                 this.setState({
                     apartmentId: localStorage.getItem('apartmentId') 
                 })
-                console.log('localStorage', localStorage)
             })
 
     }

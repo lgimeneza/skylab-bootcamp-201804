@@ -305,7 +305,6 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
                 
-                console.log('_id: id : ', id );
                 return User.findByIdAndRemove({ _id : id })
             })
            
@@ -379,7 +378,6 @@ const logic = {
                 apartment.phone=phone
                 apartment.owner=owner
                 apartment.realState = realState
-                console.log(apartment.owner)
                 
 
                 return Apartment.update({_id: apartment.id}, { name:apartment.name, address:apartment.address, phone:apartment.phone, owner: apartment.owner, realState: apartment.realState }, { multi: true } )

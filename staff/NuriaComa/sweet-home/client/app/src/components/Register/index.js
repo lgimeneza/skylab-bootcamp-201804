@@ -133,17 +133,17 @@ class Register extends Component {
                     <section>
                         <form onSubmit={this.acceptRegister}>
                             <p className="wordsR"> Name: </p>
-                            <input autocomplete="off" className="formularior" type="text" value={this.state.name}onChange={this.registerName} name="name" ></input>
+                            <input autoComplete="off" className="formularior" type="text" value={this.state.name}onChange={this.registerName} name="name" ></input>
                             <p className="words">Surname:</p>
-                            <input autocomplete="off" className="formularior" type="text" value={this.state.surname}onChange={this.registerSurname} name="apellido"></input>
+                            <input autoComplete="off" className="formularior" type="text" value={this.state.surname}onChange={this.registerSurname} name="apellido"></input>
                             <p className="words">Phone: </p>
-                            <input autocomplete="off" className="formularior" type="text" name="phone" value={this.state.phone}onChange={this.registerPhone} ></input>
+                            <input autoComplete="off" className="formularior" type="text" name="phone" value={this.state.phone}onChange={this.registerPhone} ></input>
                             <p className="words">DNI: </p>
-                            <input autocomplete="off" className="formularior" type="text" value={this.state.dni}onChange={this.registerDni} name="dni" ></input>
+                            <input autoComplete="off" className="formularior" type="text" value={this.state.dni}onChange={this.registerDni} name="dni" ></input>
                             <p className="words">Password: </p>
-                            <input autocomplete="off" className="formularior" type="password" value={this.state.password}onChange={this.registerPassword} name="password" ></input>
+                            <input autoComplete="off" className="formularior" type="password" value={this.state.password}onChange={this.registerPassword} name="password" ></input>
                             <p className="words">Repeat Password: </p>
-                            <input autocomplete="off" className="formularior" type="password" value={this.state.repeatpassword}onChange={this.registerRepeatPassword} name="password" ></input>
+                            <input autoComplete="off" className="formularior" type="password" value={this.state.repeatpassword}onChange={this.registerRepeatPassword} name="password" ></input>
                             <button className="registerButton" type="submit">Register</button>
 
                             <button className="backButton" type="button" onClick={this.redirect}>Back</button>

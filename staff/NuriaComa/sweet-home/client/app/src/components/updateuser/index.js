@@ -21,6 +21,7 @@ class UpdateUser extends Component {
     componentWillMount() {
        
                 const userId=this.props.match.params.id
+                console.log('this.props.match.params.id: ', this.props.match.params.id);
                 
                 logic.retrieveUser(userId)
                 .then(user => {
@@ -32,7 +33,6 @@ class UpdateUser extends Component {
                             dni: user.dni,
                             password:user.password
                     })
-                    console.log(user)
                 })
     }
     updateName = (e) => {
@@ -91,7 +91,7 @@ class UpdateUser extends Component {
     }
     
     deleteUser = () => {
-        const uId = localStorage.getItem('userId')
+        const id = this.props.match.params.id
         
         Promise.resolve()
         .then(()=>{
@@ -111,8 +111,7 @@ class UpdateUser extends Component {
                     'Your user has been deleted.',
                     'success'
                     )
-                    console.log( typeof uId)
-                    logic.unregisterUser(uId)
+                    logic.unregisterUser(id)
                     .then(() => this.props.history.push('/home'))
                     .then(()=> localStorage.removeItem('userId'))
                 }

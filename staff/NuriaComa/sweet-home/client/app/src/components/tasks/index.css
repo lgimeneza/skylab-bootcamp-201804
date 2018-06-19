@@ -27,6 +27,12 @@
       border-bottom-right-radius: 2vw;
 
   }
+  .butRot{
+      color: white;
+      font-size: 5vw;
+      background: linear-gradient(70deg, #bd8215, #fccd77);
+      margin: 4vw 0vw 4vw 60vw;
+  }
  
 .ust{
    
@@ -50,7 +56,7 @@
    
 }
 .textt{
-    height: 93vw ;
+    height: 83vw ;
     overflow: scroll;
     font-family: 'Montserrat', sans-serif;
 }

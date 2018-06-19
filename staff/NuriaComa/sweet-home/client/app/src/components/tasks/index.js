@@ -85,6 +85,7 @@ class Tasks extends Component {
     }
 
     rotateTask = ()=>{
+        
         const apartId = localStorage.getItem('apartmentId')
         logic.rotateUsersTasks(apartId)
         .then(() => {
@@ -100,17 +101,21 @@ class Tasks extends Component {
                         
                         <h2 className="ust">TASKS</h2>
                         {this.state.users.length > this.state.tasks.length ? 
-                         <form  onSubmit={this.addTask}>
+                        <form  onSubmit={this.addTask}>
+                         
                             <p className="wordst"> Add task: </p>
                             <input autoComplete="off" className="formulariot" type="text" value={this.state.name}onChange={this.nameTask} name="name" ></input>
                             <button className="butAddT" type='submit' >ADD</button>
                          </form>
+
                            : undefined
                         }
+                          <div><button className="butRot" onClick={() => this.rotateTask()}>rotate</button></div>
                          <ul className="textt">
-                       
+                        
                          {this.state.tasks ? this.state.tasks.map( (tasks) => {
                             const user = this.state.users.filter(user => user.taskId === tasks._id)
+
                             if (user.length > 0) {
                                 return(
                                     <div key={tasks.name} className="listTasks"><li className="datat">{user[0].name}: {tasks.name} <button className="deleteT" onClick={() => this.deleteTask(tasks._id)}>✘</button></li>
@@ -122,7 +127,7 @@ class Tasks extends Component {
                             }) : undefined
                         }
                         </ul>
-                        <button onClick={() => this.rotateTask()}>rotate</button>
+                        
                         <Link to="/home">
                              <button className="backt">Back</button>
                         </Link>

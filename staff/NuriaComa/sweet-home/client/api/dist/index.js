@@ -504,7 +504,7 @@ var shApi = {
 
         return Promise.resolve().then(function () {
 
-            return axios.patch(_this14.url + '/task/' + apartmentId, {}, { headers: { authorization: 'Bearer ' + _this14.token() } }).then(function (_ref14) {
+            return axios.patch(_this14.url + '/task/' + apartmentId, { headers: { authorization: 'Bearer ' + _this14.token() } }).then(function (_ref14) {
                 var status = _ref14.status,
                     data = _ref14.data;
 
