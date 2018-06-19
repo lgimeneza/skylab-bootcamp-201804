@@ -102,7 +102,7 @@ class UploadPicture extends Component {
 
           </div>
         </div>
-        <div id="three-columns" >
+        <div className="three-columns" >
         </div>
         <div id="footer">
           <p>&copy; CastMe. All rights reserved.</p>

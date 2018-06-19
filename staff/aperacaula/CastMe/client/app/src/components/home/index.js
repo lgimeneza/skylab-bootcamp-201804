@@ -10,6 +10,7 @@ class Home extends Component {
     surname: "",
     profilePicture: "",
     applications: "",
+    threeProjects: []
 
   };
 
@@ -25,7 +26,10 @@ class Home extends Component {
             applications,
 
           });
-        });
+        })
+        .then(()=>{
+          logic.getProjects().then(list => this.setState({ threeProjects: list.slice(list.length-3) }))
+        })
     }
   }
 
@@ -104,41 +108,23 @@ class Home extends Component {
             </div>
           </div>
           {/*end #menu*/}
-          <div id="three-columns">
+          <div className="three-columns">
             <h1 className="bottom-title">
-              We think these might me interesting for you:
+              We think these might be interesting for you:
             </h1>
-            <div id="column1">
-              <h3>New Talents</h3>
-              <p>
-                For film. We are looking for new talents in an open casting,
-                whatever your age, whatever your background, come and...
-              </p>
-              <p>
-                <a className="link-style">Read More</a>
-              </p>
-            </div>
-            <div id="column2">
-              <h3>Much Ado About Nothing</h3>
-              <p>
-                For theatre. We need an actress between 20-30 years old to
-                perform in "Much Ado About Nothing", of W. Shakespeare, next
-                season at TNC...
-              </p>
-              <p>
-                <a className="link-style">Read More</a>
-              </p>
-            </div>
-            <div id="column3">
-              <h3>Leading male</h3>
-              <p>
-                For film. Leading role for male actor with singing and dancing
-                notions. Movie to be shot next August between Barcelona and...
-              </p>
-              <p>
-                <a className="link-style">Read More</a>
-              </p>
-            </div>
+            {this.state.threeProjects.map((project,i)=>{
+              return(
+                <div className={`column${i+1}`} >
+                <h3>{project.title}</h3>
+                <p className="project-brief-description">
+                {project.description}
+                </p>
+                <p>
+                <button className="link-style" onClick={()=> this.goToProjectInfo(project._id.toString())}>Read More</button>
+                </p>
+                </div>
+              )
+            })}
           </div>
         </div>
         <div id="footer">

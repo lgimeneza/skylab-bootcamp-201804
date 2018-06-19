@@ -42,6 +42,10 @@ const logic = {
 
     getProjects(){
         return api.listProjects()
+    },
+
+    joinCasting(userId,projectId,castingId){
+        return api.joinCasting(userId,projectId,castingId)
     }
 
 

@@ -521,7 +521,7 @@ const logic = {
    *
    * @returns {Promise<boolean>} that confirms the user has joined the casting
    */
-  joinCasting(userId, projectId, castingId) {
+  joinCasting(userId,projectId, castingId) {
     return Promise.resolve()
       .then(() => {
 
@@ -546,26 +546,27 @@ const logic = {
 
             if (!casting) throw Error(`there is no casting with id ${castingId} in the project given`)
 
-            const userEligible = this.userIsEligible(userId, projectId, castingId)
+            // const userEligible = this.userIsEligible(userId, projectId, castingId)
 
-            if (!userEligible) return false
+            // if (!userEligible) return false
 
             casting.applicants.push(user._id) //ads the user to the casting user's list
 
             const index = null;
-            for (let i = 0; i < user.castings.length; i++) {
-              if (user.castings[i].project.toString() === projectId) {
+            for (let i = 0; i < user.applications.length; i++) {
+              if (user.applications[i].project.toString() === projectId) {
                 index = i
               }
             }
 
             if (index) {
-              user.castings[index].castings.push(casting_id)
+              user.applications[index].castings.push(casting._id)
             } else {
-              user.castings.push({ project: project_id, castings: casting_id })
+              user.applications.push({ project: project._id, castings: casting._id })
             }
 
-            return true
+            return Promise.all([user.save(),project.save()])
+              .then(()=> true)
 
           })
       })

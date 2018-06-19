@@ -503,6 +503,49 @@ describe('logic', () => {
         })
     })
 
+    describe('join casting', () => {
+        it('should succeed', () => {
+            const proj1= projects[0]
+            const proj2= projects[1]
+            const user= new User(userData)
+            return Promise.all([proj1.save(),proj2.save(),user.save()])
+            .then(([project1,project2,user])=>{
+                const userId= user._id.toString()
+                const project1Id= project1._id.toString()
+                const project2Id= project2._id.toString()
+                const casting1Id= project1.castings[0]._id.toString()
+                const casting2Id= project2.castings[0]._id.toString()
+                return logic.joinCasting(userId, project1Id, casting1Id)
+                    .then(res=>{
+                        expect(res).to.be.true
+
+                        return User.findById(userId)
+                            .then(user=>{
+                                
+                                expect(user.applications.length).to.equal(1)
+                                expect(user.applications[0].project.toString()).to.equal(project1Id)
+
+                                return logic.joinCasting(userId, project2Id, casting2Id)
+                                    .then(res=>{
+                                        expect(res).to.be.true
+
+                                        return User.findById(userId)
+                                            .then(user=>{
+                                                
+                                                expect(user.applications.length).to.equal(2)
+                                                expect(user.applications[1].project.toString()).to.equal(project2Id)
+                                                
+                                            })
+                                    
+                                })
+                            })
+
+                        
+                    })
+            })
+        })
+    })
+
     false && describe('user is eligible', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
@@ -573,11 +616,6 @@ describe('logic', () => {
         )
     })
 
-    describe('list products', () => {
-        it('should succeed on correct data', () => {
-            // TODO
-        })
-    })
 
 
     after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))

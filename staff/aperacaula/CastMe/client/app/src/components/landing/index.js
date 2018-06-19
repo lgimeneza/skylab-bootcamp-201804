@@ -90,18 +90,18 @@ class Landing extends Component{
 		</div>
 	</div>
 	{/*end #menu*/}
-	<div id="three-columns">
-		<div id="column1">
+	<div className="three-columns">
+		<div className="column1">
 			<h2>New Talents</h2>
 			<p>For film. We are looking for new talents in an open casting, whatever your age, whatever your background, come and...</p>
 			<p><a  className="link-style">Read More</a></p>
 		</div>
-		<div id="column2">
+		<div className="column2">
 			<h2>Much Ado About Nothing</h2>
 			<p>For theatre. We need an actress between 20-30 years old to perform in "Much Ado About Nothing", of W. Shakespeare, next season at TNC...</p>
 			<p><a  className="link-style">Read More</a></p>
 		</div>
-		<div id="column3">
+		<div className="column3">
 			<h2>Leading male</h2>
 			<p>For film. Leading role for male actor with singing and dancing notions. Movie to be shot next August between Barcelona and...</p>
 			<p><a  className="link-style">Read More</a></p>

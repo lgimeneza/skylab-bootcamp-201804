@@ -80,7 +80,7 @@ class App extends Component {
             <Route path="/home/:userId" render={()=> <Home onCorrection={this.correctingRoute} onLogOut={this.goLanding} userId={this.state.userId} onProjectInfo={this.goProjectInfo}/>} />
             
             <Route path="/profile" render={()=> <Profile logOut={this.logOut} unregister={this.unregister} onBackLanding={this.goLanding}/>}/>
-            <Route path="/castings/:projectId" render={(props)=> <ProjectPage projectId={props.match.params.projectId}/>} />
+            <Route path="/castings/:projectId" render={(props)=> <ProjectPage projectId={props.match.params.projectId} onHome={this.goHome}/>} />
 
           </div>
         </main>

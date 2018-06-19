@@ -365,6 +365,55 @@ var castmeApi = {
         } else throw err;
       });
     });
+  },
+
+
+  /**
+   *
+   *
+   * @param {string} email
+   * @param {string} password
+   * @param {object} personalData
+   * @param {object} physicalData
+   * @param {object} professionalData
+   * @param {string} videobookLink
+   * @param {string} profilePicture
+   *
+   * @returns {Promise<boolean>}
+   */
+  joinCasting: function joinCasting(userId, projectId, castingId) {
+    var _this9 = this;
+
+    return Promise.resolve().then(function () {
+      if (typeof userId !== "string") throw Error("user id is not a string");
+
+      if (!(userId = userId.trim()).length) throw Error("user id is empty or blank");
+
+      if (typeof castingId !== "string") throw Error("casting id is not a string");
+
+      if (!(castingId = castingId.trim()).length) throw Error("casting id is empty or blank");
+
+      return axios.post(_this9.url + "/projects/" + projectId, {
+        userId: userId,
+        castingId: castingId
+      }).then(function (_ref9) {
+        var status = _ref9.status,
+            data = _ref9.data;
+
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
+
+        return true;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
+
+        if (err.response) {
+          var message = err.response.data.error;
+
+
+          throw Error(message);
+        } else throw err;
+      });
+    });
   }
 };
 

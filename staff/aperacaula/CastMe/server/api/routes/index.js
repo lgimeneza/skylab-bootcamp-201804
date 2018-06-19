@@ -159,6 +159,8 @@ router.get('/projects', (req, res) => {
 
 })
 
+
+
 router.get('/projects/:projectId',(req,res)=>{
 
     const {params: {projectId}}= req
@@ -172,8 +174,26 @@ router.get('/projects/:projectId',(req,res)=>{
             res.status(400)
             res.json({status: 'KO', error:message})
         })
+
 })
 
+router.post('/projects/:projectId', jsonBodyParser, (req,res)=>{
+
+    const {body: {userId, castingId}, params: {projectId}}= req
+
+    logic.joinCasting(userId,projectId, castingId)
+        .then(() =>{
+            res.status(200)
+            res.json({status: 'OK'})
+        })
+        .catch(({message})=>{
+            res.status(400)
+            res.json({status: 'KO', error:message})
+        })
+
+
+
+})
 // router.delete('/users/:userId/notes/:id', jwtValidator, (req, res) => {
 //     const { params: { userId, id } } = req
 

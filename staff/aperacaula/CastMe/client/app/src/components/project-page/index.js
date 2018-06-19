@@ -96,13 +96,23 @@ class ProjectPage extends Component {
       return correctString
   }
 
-  joinCasting(castingId){
-      swal({
-        text: 'You joined the casting!',
-        buttons: 'Good!',
-        confirmButtonColor: '#59222A'
-      }   
-      )
+  joinCasting(userId, projectId, castingId){
+
+    logic.joinCasting(userId, projectId, castingId)
+      .then(()=>{
+        swal({
+          text: 'You joined the casting!',
+          buttons: 'Good!',
+          confirmButtonColor: '#59222A'
+        }   
+        )
+      })
+      .then(()=>{
+        this.props.onHome(logic.userId)
+      })
+      .catch(err => {
+        swal(err.message);
+      });
   }
 
   render() {
@@ -145,12 +155,12 @@ class ProjectPage extends Component {
                                 <b >{casting.title}</b>: {casting.sex}
                             </header>
                             <section className="casting-body">
-                                <p key={i+2}>Age rank: {casting.minAge}-{casting.maxAge}</p>
-                                <p key={i+3}>Description: {casting.description}</p>
+                                <p key={i+2}><b>Age rank:</b> {casting.minAge}-{casting.maxAge}</p>
+                                <p key={i+3}><b>Description:</b> {casting.description}</p>
                                 <div key={i+4}>{Object.keys(this.getPhysicalRequirements(casting)).map((requirement,i)=>{
-                                    return <p key={i}>{this.writeString(requirement)}:   {this.getPhysicalRequirements(casting)[requirement]}</p>
+                                    return <p key={i}><b>{this.writeString(requirement)}</b>:   {this.getPhysicalRequirements(casting)[requirement]}</p>
                                 })}</div>
-                                <button className="link-style join-casting" onClick={()=> this.joinCasting(casting._id)}>Join Casting</button>
+                                <button className="link-style join-casting" onClick={()=> this.joinCasting(logic.userId, this.props.projectId, casting._id)}>Join Casting</button>
                             </section>
                         
                         </div>
@@ -166,7 +176,7 @@ class ProjectPage extends Component {
             </div>
           </div>
 
-          <div id="three-columns" />
+          <div className="three-columns" />
         </div>
         <div id="footer">
           <p>&copy; CastMe. All rights reserved.</p>
