@@ -49,7 +49,7 @@ export class Dropdown extends Component {
                 <div class="drobdownList">
                   <label>
                     <input id="${service.serviceId}" type="checkbox">
-                    <span>${service.serviceName} Duration=${service.totalDuration}min price=${service.price}€</span>
+                    <span>${service.serviceName}/${service.duration}min/${service.price}€</span>
                   </label>
                 </div>`
             }).join(''),
