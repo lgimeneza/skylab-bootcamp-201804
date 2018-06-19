@@ -3,7 +3,8 @@
     padding: 3%;
     font-size: 45px;
     margin: 0;
-    background: linear-gradient(-40deg, #9824af49, #5c1b535e, transparent), url('/images/microphone.jpg');
+    /* background: linear-gradient(-40deg, rgb(85, 44, 92), rgb(92, 52, 85)); */
+    background:  rgb(92, 52, 85);
     color: white;
 }
 

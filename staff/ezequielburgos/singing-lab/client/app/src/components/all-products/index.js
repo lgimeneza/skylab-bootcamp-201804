@@ -22,7 +22,7 @@ class AllProducts extends Component {
 
         return (
             <main>
-                <h2 className="main-title">These are my products</h2>
+                <h2 className="main-title category-titles">All products</h2>
                 <hr />
 
                 <ListItems

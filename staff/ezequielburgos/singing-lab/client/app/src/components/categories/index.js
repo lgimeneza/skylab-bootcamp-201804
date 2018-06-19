@@ -21,7 +21,7 @@ class Categories extends Component {
     render() {
         return (
             <main>
-                <h2 className="main-title">These are my categories</h2>
+                <h2 className="main-title">Categories</h2>
                 <hr/>
 
                 <ListItems

@@ -3,6 +3,17 @@
     border: 2px solid black;
 }
 
+.our-team-app {
+    padding: 2% 5%;
+    background: linear-gradient(-40deg, #9824af49, #5c1b535e, transparent);
+}
+
+.our-team-title{
+    display: inline-block;
+    padding-right: 10px;
+    margin: 0; 
+}
+
 .our-team-image:hover {
     transform: rotate(360deg);
     border-color: rgb(121, 27, 105);
@@ -25,9 +36,13 @@
     animation-duration: 4s;
 }
 
-@keyframes subtitle{
-    from{ transform: translateX(800px) }
-    to{ transform: translateX(0px)}
+@keyframes subtitle {
+    from {
+        transform: translateX(800px)
+    }
+    to {
+        transform: translateX(0px)
+    }
 }
 
 .flying-title {
@@ -35,9 +50,13 @@
     animation-duration: 2s;
 }
 
-@keyframes title{
-    from{ transform: translateY(800px) }
-    to{ transform: translateY(0px)}
+@keyframes title {
+    from {
+        transform: translateY(800px)
+    }
+    to {
+        transform: translateY(0px)
+    }
 }
 
 .flying-rocket {
@@ -51,23 +70,11 @@
     animation: rocket 5s backwards 3s 1 ease-in;
 }
 
-@keyframes rocket{
-    from{ transform: translate(0px, 0px) }
-    to{ transform: translate(800px, -500px) scale(3)}
+@keyframes rocket {
+    from {
+        transform: translate(0px, 0px)
+    }
+    to {
+        transform: translate(800px, -500px) scale(3)
+    }
 }
-/* 
-.zoom{
-    position: absolute;
-    top: 300px;
-    right: 70%;
-    width: 40px;
-    opacity: 0;
-    animation: zoom 1s ease forwards;
-}
-
-@keyframes zoom{
-    0%{ opacity: 0 }
-    50%{ opacity: 1 }
-    100%{ opacity: 0; right: 100px }
-
-} */

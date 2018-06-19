@@ -22,24 +22,28 @@ class LandingProducts extends Component {
             })
     }
 
+    addToCart = () => {
+        this.props.onAddToCart(this.props.productId)
+    }
+
     render() {
 
         return (
             <main>
                 {this.state.products.length > 0 &&
                     <div className="landing-products-body">
-                    <h1>Our top products</h1>
+                    <h1 className="landing-main-subtitle">Our top products</h1>
                     <section className="landing-products">
                         <div className="card landing-card-container">
-                            <img className="card-img-top" src={`${this.state.products[0].image}`} alt="Card cap" />
+                            <img className="card-img-top landing-card-image" src={`${this.state.products[0].image}`} alt="Card cap" />
                             <div className="card-body">
                                 <h5 className="card-title">{this.state.products[0].name}</h5>
                                 {<p><Link to={`/categories/products/${this.state.products[0]._id}`} className="btn btn-primary list-button" role="button">product details</Link></p>}
-                                <a className="btn btn-outline-secondary" onClick={() => logic.addProductToCart(this.props.match.params.id)} role="button">Add to the cart</a>
+                                <a className="btn btn-outline-secondary"  onClick={this.addToCart} role="button">Add to the cart</a>
                             </div>
                         </div>
                         <div className="card landing-card-container">
-                            <img className="card-img-top" src={`${this.state.products[1].image}`} alt="Card cap" />
+                            <img className="card-img-top landing-card-image" src={`${this.state.products[1].image}`} alt="Card cap" />
                             <div className="card-body">
                                 <h5 className="card-title">{this.state.products[1].name}</h5>
                                 {<p><Link to={`/categories/products/${this.state.products[1]._id}`} className="btn btn-primary list-button" role="button">product details</Link></p>}
@@ -47,7 +51,7 @@ class LandingProducts extends Component {
                             </div>
                         </div>
                         <div className="card landing-card-container">
-                            <img className="card-img-top" src={`${this.state.products[2].image}`} alt="Card cap" />
+                            <img className="card-img-top landing-card-image" src={`${this.state.products[2].image}`} alt="Card cap" />
                             <div className="card-body">
                                 <h5 className="card-title">{this.state.products[2].name}</h5>
                                 {<p><Link to={`/categories/products/${this.state.products[2]._id}`} className="btn btn-primary list-button" role="button">product details</Link></p>}
