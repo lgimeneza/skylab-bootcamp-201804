@@ -8,7 +8,7 @@ const logic = {
      * @param {string} name 
      * @param {string} surname 
      * @param {string} email 
-     * @param {string} password 
+     * @param {string} password
      * 
      * @returns {Promise<boolean>}
      */

@@ -1,14 +1,14 @@
 'use strict'
 
-require('dotenv').config()
+    require('dotenv').config()
 
 const { mongoose } = require('notes-data')
 const express = require('express')
-const bodyParser = require('body-parser')
+//const bodyParser = require('body-parser')
 const router = require('./src/routes')
 const cors = require('cors')
 
-const { env: { PORT, DB_URL } } = process
+    const { env: { PORT, DB_URL } } = process
 
 mongoose.connect(DB_URL)
     .then(() => {
@@ -18,7 +18,7 @@ mongoose.connect(DB_URL)
 
         app.use(cors())
 
-        app.use(bodyParser.json()) // middleware
+        //app.use(bodyParser.json()) // middleware
 
         app.use('/api', router)
 
@@ -29,7 +29,7 @@ mongoose.connect(DB_URL)
 
             mongoose.connection.close(() => {
                 console.log('db connection closed')
-
+                
                 process.exit()
             })
         })

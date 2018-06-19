@@ -266,8 +266,7 @@ const notesApi = {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
                         return true
                     })
-                    .catch(({ response: { data: { error } } }) => error)
-
+                    .catch(({ response: { data: { error } } }) => error)    
             })
     },
     findNotes(userId, text) {

@@ -10,8 +10,6 @@ const _ = require('lodash')
 const { env: { DB_URL } } = process
 
 describe('logic (notes)', () => {
-    debugger
-
     const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123' }
     const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456' }
     const dummyUserId = '123456781234567812345678'
@@ -360,7 +358,6 @@ describe('logic (notes)', () => {
         )
     })
 
-
     describe('add note', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
@@ -435,9 +432,10 @@ describe('logic (notes)', () => {
                 .then(({ id: userId, notes: [{ id: noteId }] }) => {
                     return logic.retrieveNote(userId, noteId)
                 })
-                .then(({ id, text }) => {
+                .then(({ id, text, _id }) => {
                     expect(id).to.equal(note.id)
                     expect(text).to.equal(note.text)
+                    expect(_id).not.to.exist
                 })
         })
 

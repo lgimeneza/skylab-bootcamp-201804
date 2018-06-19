@@ -1,0 +1,30 @@
+.main-s {
+    background: rgb(237, 255, 250);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+.title {
+    text-align: center;
+}
+span.set-aval-text {
+    vertical-align: super;
+    font-size: 100%;
+}
+
+.rbc-header{
+    text-align:left !important;
+    background:rgb(42, 119, 129) !important;
+    height:1.4em !important;
+    padding:0px !important;
+    font-size:75% !important;
+    color:white !important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+.rbc-row{
+    color:gray !important;
+    font-weight: 300 !important;
+    font-size:80% !important;
+}
