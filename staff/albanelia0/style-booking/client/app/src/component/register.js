@@ -40,6 +40,9 @@ export class Register extends Component {
       }
     )
   }
+  goToLogin = () => {
+    this.props.history.push('/login')
+  }
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -109,9 +112,9 @@ export class Register extends Component {
               <h3 className="title has-text-grey">Register</h3>
               <p className="subtitle has-text-grey">Please login to proceed.</p>
               <div className="box">
-                <figure className="avatar">
+                {/* <figure className="avatar">
                   <img src="https://placehold.it/128x128" />
-                </figure>
+                </figure> */}
                 <form >
                   <div className="field">
                     <div className="control">
@@ -139,10 +142,6 @@ export class Register extends Component {
                     </div>
                   </div>
                   <div className="field">
-                    <label className="checkbox">
-                      <input type="checkbox" />
-                      Remember me
-                    </label>
                   </div>
                   {this.state.conditionForGoToLogin ? <button onClick={this.goToLogin} className="button is-block is-info is-large is-fullwidth">Register</button> :
                     <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Register</button>
@@ -150,9 +149,10 @@ export class Register extends Component {
                 </form>
               </div>
               <p className="has-text-grey">
-                <a href="../">Sign Up</a> &nbsp;·&nbsp;
-                <a href="../">Forgot Password</a> &nbsp;·&nbsp;
-                <a href="../">Need Help?</a>
+              <p>Registered already?</p>
+                <a onClick={this.goToLogin}>Sign in</a> &nbsp;·&nbsp;
+                {/* <a href="../">Forgot Password</a> &nbsp;·&nbsp;
+                <a href="../">Need Help?</a> */}
               </p>
             </div>
           </div>

@@ -82,9 +82,9 @@ export class Login extends Component {
               <h3 className="title has-text-grey">Login</h3>
               <p className="subtitle has-text-grey">Please login to proceed.</p>
               <div className="box">
-                <figure className="avatar">
+                {/* <figure className="avatar">
                   <img src="https://placehold.it/128x128" alt="" />
-                </figure>
+                </figure> */}
                 <form>
                   <div className="field">
                     <div className="control">
@@ -97,18 +97,15 @@ export class Login extends Component {
                     </div>
                   </div>
                   <div className="field">
-                    <label className="checkbox">
-                      <input type="checkbox" />
-                      Remember me
-                    </label>
                   </div>
                   <button type="submit" onClick={this.handleSubmit} className="button is-block is-info is-large is-fullwidth " title="Disabled button" disabled={!this.state.formIsFull}>Login</button>
                 </form>
               </div>
               <p className="has-text-grey">
-                <a onClick={this.goToRegister}>Register</a> &nbsp;·&nbsp;
-                <a href="../">Forgot Password</a> &nbsp;·&nbsp;
-                <a href="../">Need Help?</a>
+                <p>New customer?</p>
+                <a onClick={this.goToRegister}>Start here</a> &nbsp;·&nbsp;
+                {/* <a href="../">Forgot Password</a> &nbsp;·&nbsp;
+                <a href="../">Need Help?</a> */}
               </p>
             </div>
           </div>

@@ -63,7 +63,7 @@ class Home extends Component {
                 </figure>
               </div>
               <div className="column is-6 is-offset-1">
-                <p className="subtitle is-1 is-spaced">Available days</p>
+                <p className="subtitle is-1 is-spaced">Book days</p>
                 <Dropdown />
               </div>
             </div>
@@ -73,7 +73,7 @@ class Home extends Component {
           <div className="container">
             <div className="tabs is-centered">
               <ul>
-                <li><a>And this is the bottom</a></li>
+                <li><a>And this is my project</a></li>
               </ul>
             </div>
           </div>
