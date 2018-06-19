@@ -23,9 +23,9 @@ class Login extends Component {
             logic.login(email, password)
                 .then(res => {
                     this.props.onLogin()
-                    swal('Successful login')
+                    swal('Welcome to singing-lab!')
 
-                }).catch(err => swal(err.message))
+                }).catch(err => swal(`Woopsy! try entering a valid email and password`))
         }
     }
 

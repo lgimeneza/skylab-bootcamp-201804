@@ -28,7 +28,7 @@ body{
 #inputEmail, #inputPassword{
     background: rgba(255, 255, 255, 0);
     padding-bottom: 5px;
-    color: white;
+    color: rgb(75, 75, 75);
     border-radius: 3px;
 }
 

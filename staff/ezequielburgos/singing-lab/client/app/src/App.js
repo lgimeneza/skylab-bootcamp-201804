@@ -49,8 +49,8 @@ class App extends Component {
             .animate({
               'top': cart.offset().top - 10,
               'left': cart.offset().left - 10,
-              'width': 50,
-              'height': 50
+              'width': 30,
+              'height': 30
             }, 1000, "linear");
 
         setTimeout(function () {
