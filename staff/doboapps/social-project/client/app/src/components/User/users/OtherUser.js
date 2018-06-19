@@ -22,7 +22,8 @@ class OtherUser extends Component {
         notifications: [],
         newNotifications: [],
         requestAlreadySent: false,
-        renderUser:this.props.dataUser.renderUser
+        newNotification:this.props.getNotifications()
+
     }
 
     getUser = () => {
@@ -30,8 +31,8 @@ class OtherUser extends Component {
         logic.retrieveUser(this.props.getUserIdParams()).then((user) => {
             this.setState(user)
             
-            let newNotifications = logic.getNotifications(this.state.notifications)
-            this.setState({ newNotifications })
+            //let newNotifications = logic.getNotifications(this.state.notifications)
+            //this.setState({ newNotifications })
 
             if (this.requestAlreadySent())
                 this.setState({ requestAlreadySent: true })
@@ -83,7 +84,8 @@ class OtherUser extends Component {
 
 
     componentDidMount() {
-        (this.getUser())
+        this.getUser()
+
     }
 
 
@@ -101,6 +103,7 @@ class OtherUser extends Component {
     
       modalRedirect=(route)=>{
         this.props.history.push(route)
+
     }
 
     render() {

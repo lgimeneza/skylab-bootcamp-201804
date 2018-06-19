@@ -7,6 +7,7 @@ import './style.scss';
 class User extends Component {
 
     state = {
+        userIdParams:""
     }
 
     getUserIdParams = () => {
@@ -29,7 +30,7 @@ class User extends Component {
     render() {
         return (<div>
 
-            {this.profileRegister() ? <UserProfile />  :   <OtherUser dataUser={this.props.dataUser} getUserIdParams={this.getUserIdParams} />}
+            {this.profileRegister() ? <UserProfile getNotifications={this.props.getNotifications}  dataUser={this.props.dataUser}/>  :   <OtherUser     getNotifications= { this.props.getNotifications} dataUser={this.props.dataUser} getUserIdParams={this.getUserIdParams} />}
             
         </div>
 

@@ -109,7 +109,7 @@ clearNotifications = () => {
             {this.drawNotifications()}
             {(this.props.notifications.length>0) ?
             <PopoverHeader onClick={this.clearNotifications}  className="text-center">Clear Notifications</PopoverHeader>
-            : <PopoverHeader  className="text-center">Without  Notifications</PopoverHeader>}
+            : <PopoverHeader  className="text-center">No  Notifications</PopoverHeader>}
         </Popover>
         <ModalApp headerMsg={this.state.titleModal} bodyMsg={this.state.msgModal} redirectState={this.state.redirect} modalRedirect={this.modalRedirect} toggle={this.toggleModal} activate={this.state.activateModal}/>
       </div>

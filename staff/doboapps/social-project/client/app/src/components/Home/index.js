@@ -16,6 +16,7 @@ class Home extends Component {
         cityToSearch: undefined,
         genderToSearch: undefined,
         raceToSearch: undefined,
+        newNotifications:this.props.getNotifications()
     }
 
     handleKeepGender = ({target:{value:genderToSearch}}) => {

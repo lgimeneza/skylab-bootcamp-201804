@@ -21,8 +21,9 @@ class UserProfile extends Component {
         friends: [],
         loves: [],
         notifications: [],
-        newNotifications: [],
+        newNotifications:this.props.getNotifications(),
         requestAlreadySent: false,
+
     }
 
 
@@ -76,7 +77,8 @@ class UserProfile extends Component {
     }
 
     componentDidMount() {
-        (this.getUser())
+        this.getUser()
+
     }
 
     render() {
