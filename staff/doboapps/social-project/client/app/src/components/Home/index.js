@@ -19,15 +19,13 @@ class Home extends Component {
     }
 
     handleKeepGender = ({target:{value:genderToSearch}}) => {
-       
-        if (genderToSearch === "All") genderToSearch = undefined
+        
         this.handleSearch(this.state.raceToSearch, genderToSearch, this.state.cityToSearch)
     }
 
 
     handleKeepRace = ({target:{value:raceToSearch}}) => {
 
-        if (raceToSearch === "All") raceToSearch = undefined
         this.handleSearch(raceToSearch, this.state.genderToSearch, this.state.cityToSearch)
     }
 
@@ -37,8 +35,7 @@ class Home extends Component {
 
 
     handleKeepCity = ({target:{value:cityToSearch}})  => {
-
-        if (cityToSearch === "All") cityToSearch = undefined
+       
         this.handleSearch(this.state.raceToSearch, this.state.genderToSearch, cityToSearch)
 
     }
@@ -65,9 +62,11 @@ class Home extends Component {
     }
 
     handleSearch = (raceToSearch, genderToSearch, cityToSearch) => {
+                
+        this.setState({users:[]})
 
         logic.search(undefined, raceToSearch, genderToSearch, cityToSearch)
-            .then(({ status, users }) => {
+            .then(({  users }) => {
 
                 this.setState({
                     loading: "",
@@ -76,13 +75,15 @@ class Home extends Component {
                     genderToSearch,
                     raceToSearch,
                 })
+            }).then(()=>{
+
+                console.log(cityToSearch,this.state.cityToSearch,raceToSearch,this.state.raceToSearch,genderToSearch,this.state.genderToSearch)
             })
 
     }
 
 
     componentDidMount(){
-       console.log( this.props.getNotifications())
         this.getUsersByCity()
     }
   
@@ -97,18 +98,18 @@ class Home extends Component {
                 <Row>
                     <Col sm="4" >
                         <select className="form-control mb-3" value={this.state.cityToSearch} onChange={this.handleKeepCity} type="text" placeholder="City">
-                            <option key={"c-first"} value={undefined}>All</option>
+                            <option key={"c-first"} value="All">All</option>
                             {this.getCities()}</select>
                     </Col>
                     <Col sm="4" >
                         <select className="form-control mb-3" value={this.state.raceToSearch} onChange={this.handleKeepRace} type="text" placeholder="Race">
-                            <option key={"r-first"} value={undefined}>All</option>
+                            <option key={"r-first"} value="All">All</option>
                             {this.getRaces()}
                         </select>
                     </Col> 
                     <Col sm="4" >
                         <select className="form-control mb-3" value={this.state.genderToSearch} onChange={this.handleKeepGender} type="text" placeholder="Gender">
-                            <option key={"g-0"} value={undefined}>All</option>
+                            <option key={"g-0"} value="All">All</option>
                             <option key={"g-1"} value="male">Male</option>
                             <option key={"g-2"} value="female">Female</option>
                         </select>

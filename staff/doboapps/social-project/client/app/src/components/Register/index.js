@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import logic from "../../logic";
 import {ModalApp} from '../'
 import {Form, Input, Button, Container, Col} from 'reactstrap'
+import background from '../../images/others/register-family-golden.jpg'
 import './style.scss'
 
 class Register extends Component {
@@ -106,7 +107,7 @@ class Register extends Component {
     render() { 
 
         return (<div className="container-register" >
-                <img src="../../images/others/register-family-golden.jpg" alt="family-dog"/>
+                <img src={background} alt="family-dog"/>
                 <Container >
 
                     <Col sm={{ size: 10, offset: 1 }} md={{ size: 6, offset: 3 }}>
@@ -114,7 +115,7 @@ class Register extends Component {
                     <Form className=" text-center  form-register p-3 pl-5 pr-5 rounded " onSubmit={this.handleRegister}>
                         <h3>Register </h3>
                         <hr className="my-4"/>
-                        <Input className="m-3" value={this.state.userName}  onChange={this.handleKeepName} type="text" placeholder="Name" autoFocus />
+                        <Input className="m-3" value={this.state.userName}  onChange={this.handleKeepName} type="text" placeholder="Name" autoFocus={true} />
                         <Input className="m-3" value={this.state.UserEmail}  onChange={this.handleKeepEmail} type="text" placeholder="Email"  />            
                         <select className="form-control" value={this.state.UserCity} onChange={this.handleKeepCity} type="text" placeholder="City"><option key="c-first" value={null}>Select city</option>{this.getCities()}</select>
                         <Input  className="m-3" value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />

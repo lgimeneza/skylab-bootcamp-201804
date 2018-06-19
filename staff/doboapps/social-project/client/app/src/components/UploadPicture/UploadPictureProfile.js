@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import {Container, Col,Row,CardImg, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
-import DropNCrop from '@synapsestudios/react-drop-n-crop';
-import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
+import DropNCrop from '@synapsestudios/react-drop-n-crop'
+import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css'
 import logic from "../../logic"
-import {ModalApp} from '../'
+import profileDefault from '../../images/others/profile-user.jpg'
+import {ModalApp,Loading} from '../'
 
 class UploadPictureProfile extends Component {
 
-  urlImageDefault = "../../images/others/profile-dog.jpg"
+  urlImageDefault = profileDefault
 
   state = {
     result: this.urlImageDefault,
@@ -16,7 +17,8 @@ class UploadPictureProfile extends Component {
     filename: null,
     filetype: null,
     src: null,
-    error: null
+    error: null,
+    loading:false
   }
 
   onChange = value => {
@@ -28,16 +30,24 @@ class UploadPictureProfile extends Component {
   }
 
 
-  uploadHandler = (event) => {
-
+  uploadHandler = (s) => {
+      this.setState({
+        loading:!this.state.loading
+      })
       logic.uploadImageProfile(this.state.result,"descripción")
       .then((data) => {
         this.props.changePhotoProfile(data.urlImg)
         if(data.status ==="OK") this.toggleModal("Success","Congratulations! successfully loaded image","/edit-profile")
         else this.toggleModal("Error","Oopps! something went wrong, try again later")
+        this.setState({
+          loading:!this.state.loading
+        })
 
       }).catch(e=>{
         this.toggleModal("Error","Oopps! something went wrong, try again later")
+        this.setState({
+          loading:!this.state.loading
+        })
       })
   }
 
@@ -59,8 +69,9 @@ class UploadPictureProfile extends Component {
 
 
   render() {
-   
-    return (
+
+    return this.state.loading ?  <Loading text="Loading..." /> :     
+      
       <Container className="container-upload-img">
         <Row>
           <Col xs={{ size: 10, offset:1}} md={{ size: 4, offset:1}}>
@@ -75,7 +86,8 @@ class UploadPictureProfile extends Component {
         </Row>
         <ModalApp headerMsg={this.state.titleModal} bodyMsg={this.state.msgModal} redirectState={this.state.redirect} modalRedirect={this.modalRedirect} toggle={this.toggleModal} activate={this.state.activateModal}/>
       </Container>
-    )
+    
+    
   }
 } 
 

@@ -29,6 +29,7 @@ class Notifications extends Component {
             logic.sendNotifactionRelationship(idFriend, localStorage.getItem("id-app"), 'acceptFriendship:')
                 .then((res) => {
                     this.clearNotifications()
+                    this.props.renderUser()
                 })
         }).catch(e=>{
           this.toggleModal("Error",e)
@@ -45,7 +46,6 @@ handlerIgnoreFriendship = () => {
 clearNotifications = () => {
   logic.deleteNotifications()
       .then((res) => {
-        // this.toggleModal("Success","Congratulations! correctly sent request")
         this.props.clearNotifications()
       })
 }

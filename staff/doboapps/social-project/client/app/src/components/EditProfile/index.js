@@ -6,6 +6,7 @@ import {Container,CardImg,Col,NavLink,Button, Row, Input } from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import './style.scss'
+import profileDefault from '../../images/others/profile-user.jpg'
 import 'react-datepicker/dist/react-datepicker.css'
 import {ModalApp} from '../'
 
@@ -34,7 +35,7 @@ class EditProfile extends Component {
         const userId=localStorage.getItem("id-app")
         
         logic.retrieveUser(userId).then(({name,email,race,gender,city,photoProfile,zip,description,birthdate})=>{
-            if(!photoProfile)photoProfile="../../images/others/profile-dog.jpg"
+            if(!photoProfile)photoProfile=profileDefault
             if(typeof birthdate ==="object") birthdate =moment()
             birthdate= moment(birthdate)
             this.setState({firstEmail:email,name,email,race,gender,city,photoProfile,description,zip,birthdate})

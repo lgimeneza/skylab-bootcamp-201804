@@ -4,6 +4,9 @@ import { Register, Login, Error404, Start, EditProfile,UploadPictureProfile,Uplo
 import logic from "../../logic"
 class Main extends Component {
 
+    state = {
+        renderUser: false,
+    }
 
 
     render() {
@@ -15,7 +18,7 @@ class Main extends Component {
                     <Route exact path="/edit-profile" render={props => <EditProfile />} />               
                     <Route exact path="/upload-picture-profile" render={props => <UploadPictureProfile changePhotoProfile={this.props.changePhotoProfile}  />} />               
                     <Route exact path="/upload-picture-user" render={props => <UploadPictureUser />} />               
-                    <Route path="/user" render={props => <User getNotifications={this.props.getNotifications} />} />
+                    <Route path="/user" render={props => <User dataUser={this.props.dataUser}  getNotifications={this.props.getNotifications} />} />
                     <Route path='/' render={props => <Error404  />} />
                 </Switch>
             </div>

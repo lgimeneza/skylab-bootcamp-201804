@@ -29,7 +29,7 @@ class User extends Component {
     render() {
         return (<div>
 
-            {this.profileRegister() ? <UserProfile />  :   <OtherUser getUserIdParams={this.getUserIdParams} />}
+            {this.profileRegister() ? <UserProfile />  :   <OtherUser dataUser={this.props.dataUser} getUserIdParams={this.getUserIdParams} />}
             
         </div>
 

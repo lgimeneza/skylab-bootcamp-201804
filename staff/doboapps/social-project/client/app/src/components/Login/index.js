@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import {ModalApp} from '../'
 import logic from "../../logic"
 import {Form, Input, Button, Container, Col} from 'reactstrap'
-
+import background from '../../images/others/login-dogs-group.jpg'
 import './style.scss'
 
 
@@ -66,7 +66,7 @@ class Login extends Component {
         return (
 
             <div className="container-login" >
-                <img src="../../images/others/login-bulldog.jpg" alt="family-dog"/>
+                <img src={background} alt="family-dog"/>
                 <Container >
 
                     <Col sm={{ size: 10, offset: 1 }} md={{ size: 6, offset: 3 }}>
@@ -74,7 +74,7 @@ class Login extends Component {
                     <Form className=" text-center  form-login p-3 pl-5 pr-5 rounded " onSubmit={this.handleLogin}>
                         <h3 >Login </h3>
                         <hr className="my-4"/>
-                        <Input className="m-3" value={this.state.userEmail} onChange={this.handleKeepEmail} type="text" placeholder="Email" />
+                        <Input className="m-3" value={this.state.userEmail} onChange={this.handleKeepEmail} type="text" placeholder="Email" autoFocus={true} />
                         <Input  className="m-3" value={this.state.password} onChange={this.handleKeepPassword} type="password" placeholder="Password" />
                         <Button className="m-3" type="submit" > Log me in</Button>
                     </Form>

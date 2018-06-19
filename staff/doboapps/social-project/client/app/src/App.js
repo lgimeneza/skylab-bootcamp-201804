@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './App.scss';
-import Main from "./components/Main/";
-import Header from "./components/Header/";
+import {Header,Main,Loading} from "./components/";
 import logic from "./logic";
+import profile_img from './images/others/profile-user.jpg'
+import background from './images/others/background.jpg'
 
 
 
@@ -16,9 +16,10 @@ class App extends Component {
     city: undefined,
     newNotifications:[],
     notifications:[],
+    friends:[],
     idUser: localStorage.getItem("id-app"),
-    allDataUser:{}
-
+    allDataUser:{},
+    renderUser:false,
   }
 
   clearNotifications=()=>{
@@ -28,14 +29,16 @@ class App extends Component {
 
   changePhotoProfile=(photoProfile)=>{
     this.setState({ photoProfile})
-    console.log(this.state.photoProfile,photoProfile)
-
   }
+  
+  renderUser=()=>{
+    this.setState({
+        renderUser:!this.state.renderUser
+    })
+}
 
-
-
-  getNotifications=()=>{    
-
+  getNotifications=()=>{  
+    
     logic.retrieveUser(this.idUser()).then(({notifications})=>{
 
       let newNotifications = logic.getNotifications(notifications)
@@ -71,7 +74,7 @@ class App extends Component {
     .then(allDataUser => {
        
         let { photoProfile, name, city, notifications } =allDataUser
-        if(!photoProfile)photoProfile ="../../images/others/profile-dog.jpg"
+        if(!photoProfile)photoProfile =profile_img
         this.setState({
           photoProfile,
           name,
@@ -93,8 +96,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header dataUser={this.state} logOut={this.logOut} clearNotifications={this.clearNotifications}  />
-        <Main  dataUser={this.state} changePhotoProfile={this.changePhotoProfile}  retrieveUser={this.state.allDataUser} getNotifications={this.getNotifications}   logIn={this.logIn}  isLogged={this.state.isLogged} />
+        <img className="background-app" alt="background" src={background}/>
+        <Header dataUser={this.state} logOut={this.logOut} clearNotifications={this.clearNotifications} renderUser={this.renderUser}  />
+        <Main   dataUser={this.state} changePhotoProfile={this.changePhotoProfile}  retrieveUser={this.state.allDataUser} getNotifications={this.getNotifications}   logIn={this.logIn}  isLogged={this.state.isLogged} />
       </div>
     )
   }

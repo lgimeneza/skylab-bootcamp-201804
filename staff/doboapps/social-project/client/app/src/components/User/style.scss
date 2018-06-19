@@ -21,7 +21,9 @@
 
 .container-info-user , .container-info-profile{
 
-
+    h5 i{
+        padding: 5px 5px 5px 20px;
+    }
     
     .row h2{
         text-align: center;
@@ -47,7 +49,7 @@
     
         .btn-outline-secondary {
             i{
-                margin-right: 0
+                margin-right: 0;
             }
 
             padding: 2px 5px 2px 5px;

@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import { withRouter, Link } from 'react-router-dom'
 import logic from "../../../logic"
 import {Row, Col, Jumbotron,Container, Button, CardImg } from 'reactstrap'
 import Gallery  from '../gallery/'
+import profileDefault from '../../../images/others/profile-user.jpg'
+
 
 class UserProfile extends Component {
 
@@ -12,7 +14,7 @@ class UserProfile extends Component {
         race: undefined,
         gender: undefined,
         description: undefined,
-        photoProfile: "../../images/others/profile-dog.jpg",
+        photoProfile: profileDefault,
         city: undefined,
         zip: undefined,
         images:[],
@@ -73,9 +75,6 @@ class UserProfile extends Component {
         );
     }
 
-    
-
-
     componentDidMount() {
         (this.getUser())
     }
@@ -94,15 +93,15 @@ class UserProfile extends Component {
                             <Col xs={{ size: 7,  offset: 1 }} >
                                 <div>
                                     <h1 className="display-5 text-capitalize ">{this.state.name}</h1>
-                                    <Button tag={Link} to={`/edit-profile`}  outline color="secondary"><i className="far fa-sun"></i><span className="hidden-mov">Request friendship</span></Button>
+                                    <Button tag={Link} to={`/edit-profile`}  outline color="secondary"><i className="far fa-sun"></i><span className="hidden-mov">Edit Profile</span></Button>
                                 </div>
-                                <h5 className="text-capitalize">{this.state.race}</h5>
-                                <h5 className="text-capitalize">{this.state.gender}</h5>
-                                <h5 className="text-capitalize">{this.state.city}</h5>
-                                <h5 className="text-capitalize">{logic.getAge(this.state.birthdate)}</h5>
-                                <h5 className="text-capitalize">{this.state.friends.length} friends</h5>
+                                <h5 className="text-capitalize"><i className="fas fa-paw "></i> {this.state.race}</h5>
+                                <h5 className="text-capitalize"><i className="fas fa-transgender"></i> {this.state.gender}</h5>
+                                <h5 className="text-capitalize"><i className="fas fa-building"></i> {this.state.city}</h5>
+                                <h5 className="text-capitalize"><i className="fas fa-birthday-cake"></i> {logic.getAge(this.state.birthdate)}</h5>
+                                <h5 className="text-capitalize"><i className="fas fa-heart"></i> {this.state.friends.length} friends</h5>
                                 <hr className="my-2" />
-                                <p>{this.state.description}</p>
+                                <p><i className="fas fa-align-justify"></i> {this.state.description}</p>
                                 <p className="lead"></p>
                             </Col>
                     </Row>

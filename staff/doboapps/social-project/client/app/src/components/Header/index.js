@@ -3,6 +3,8 @@ import { Link ,withRouter,} from "react-router-dom"
 import logic from "../../logic"
 import { NavBarDisconnection, Notifications } from "../index"
 import { CardImg,  Navbar,  NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
+import logo from "../../images/others/logo.png"
+
 
 import './style.scss'
 
@@ -37,7 +39,9 @@ class Header extends React.Component {
             <div>
                 <Navbar className="navbar-logged" color="light" light expand="md">
                     <i  onClick={this.goBack} className={`${btnRetrun} fas  fa-long-arrow-alt-left fa-2x`}></i>
-                    <NavbarBrand className="logo zi-1" tag={Link}  to="/" >Dogger</NavbarBrand>
+                    <NavbarBrand className="logo zi-1" tag={Link}  to="/" >
+                    <img src={logo} alt="logo"/>
+                    </NavbarBrand>
                         {logic.isLogged() ? <Nav className="ml-auto"  navbar>
                             <ul className="zi-1">
                                 <li>
@@ -50,8 +54,7 @@ class Header extends React.Component {
                                 </NavLink>
                                 </li>
                                 <li>
-                                <Notifications notifications={this.props.dataUser.newNotifications} accept={this.handlerAcceptFriendship} ignore={this.handlerIgnoreFriendship} clearNotifications={this.props.clearNotifications} />
-
+                                <Notifications  notifications={this.props.dataUser.newNotifications} accept={this.handlerAcceptFriendship} ignore={this.handlerIgnoreFriendship} clearNotifications={this.props.clearNotifications} renderUser={this.props.renderUser}  />
                                 </li>
                             </ul>
                         </Nav>

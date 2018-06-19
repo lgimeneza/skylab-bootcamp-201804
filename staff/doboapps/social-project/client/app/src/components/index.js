@@ -1,5 +1,8 @@
 import Landing from './Landing/'
 import Home from './Home/'
+import Main from './Main/'
+import Header from './Header/'
+
 import Register from './Register/'
 import Login from './Login/'
 import Error404 from './Error404/'
@@ -14,9 +17,12 @@ import User from './User'
 import Notifications from './Notifications'
 import ModalApp from './ModalApp'
 import NavBarDisconnection from './NavBarDisconnection'
+import Loading from './Loading'
 
 export {
     Landing,
+    Main,
+    Header,
     ModalApp,
     Home,
     Register,
@@ -31,5 +37,6 @@ export {
     Select,
     User,
     Notifications,
-    NavBarDisconnection
+    NavBarDisconnection,
+    Loading
 }

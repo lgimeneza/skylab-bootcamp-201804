@@ -13,7 +13,7 @@ class OtherUser extends Component {
         race: undefined,
         gender: undefined,
         description: undefined,
-        photoProfile: "../../images/others/profile-dog.jpg",
+        photoProfile: "",
         city: undefined,
         zip: undefined,
         images:[],
@@ -22,7 +22,7 @@ class OtherUser extends Component {
         notifications: [],
         newNotifications: [],
         requestAlreadySent: false,
-        
+        renderUser:this.props.dataUser.renderUser
     }
 
     getUser = () => {
@@ -116,13 +116,16 @@ class OtherUser extends Component {
                         <Col xs={{ size: 7,  offset: 1 }} >
 
                             <h1 className="display-5 text-capitalize ">{this.state.name}</h1>
-                            <h5 className="text-capitalize">{this.state.race}</h5>
-                            <h5 className="text-capitalize">{this.state.gender}</h5>
-                            <h5 className="text-capitalize">{this.state.city}</h5>
-                            <h5 className="text-capitalize">{logic.getAge(this.state.birthdate)}</h5>
-                            <h5 className="text-capitalize">{this.state.friends.length} friends</h5>
+                            <h5 className="text-capitalize"><i className="fas fa-paw"></i> {this.state.race}</h5>
+                            <h5 className="text-capitalize"><i className="fas fa-transgender"></i> {this.state.gender}</h5>
+                            <h5 className="text-capitalize"><i className="fas fa-building"></i> {this.state.city}</h5>
+                            <h5 className="text-capitalize"><i className="fas fa-birthday-cake"></i> {logic.getAge(this.state.birthdate)}</h5>
+                            <h5 className="text-capitalize"><i className="fas fa-heart"></i> {this.state.friends.length} friends</h5>
+                            
+                            {this.showIfAreFriends() && <a target="_blank" href={`mailto:${this.state.email}`}><h5><i className="fas fa-at"></i> {this.state.email}</h5></a>}
+                            
                             <hr className="my-2" />
-                            <p>{this.state.description}</p>
+                            <p><i className="fas fa-align-justify"></i> {this.state.description}</p>
                             {(!this.showIfAreFriends() && !this.state.requestAlreadySent) && <Button onClick={this.handlerButtonFriendShip} outline color="secondary"><i className="far fa-heart"></i> Request friendship</Button>}
                         </Col>
                     </Row>
