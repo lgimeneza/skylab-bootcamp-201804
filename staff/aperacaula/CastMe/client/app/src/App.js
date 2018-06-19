@@ -5,8 +5,11 @@ import Login from './components/login'
 import Register from './components/register'
 import UploadPicture from './components/upload-picture'
 import Home from './components/home'
+import ProjectList from './components/projects-list'
+import Profile from './components/profile'
+import ProjectPage from './components/project-page'
+
 import logic from './logic'
-//import Profile from './components/Profile/Profile'
 
 import './index.css'
 
@@ -50,6 +53,16 @@ class App extends Component {
     this.props.history.push(`/home/${userId}`)
   }
 
+  goProjectInfo= (projectId) =>{
+    this.props.history.push(`/castings/${projectId}`)
+  }
+
+  logOut=()=>{
+    logic.userId= undefined
+    sessionStorage.clear()
+    this.props.history.push("/")
+  }
+
   render() {
     return (
       <Switch>
@@ -62,11 +75,13 @@ class App extends Component {
             <Route path="/login" render={()=> <Login onBackLanding={this.goLanding} onRegister={this.goRegister} onLogin={this.goHome}/>} />
             <Route path="/register" render={() => <Register picture={this.state.picture} onClickUploadPicture={this.goToUploadPicture} onBackLanding={this.goLanding}/>} />
             <Route path="/upload_picture" render={() => <UploadPicture onUploadPicture={this.uploadPicture} onRegister={this.goRegister}/>} />
-            {/* <Route path="/home/:userId" component={Home} /> */}
-            <Route path="/home/:userId" render={()=> <Home onCorrection={this.correctingRoute} onLogOut={this.goLanding} userId={this.state.userId}/>} />
-            {/* <Route path="/home" render={()=> ((Xtorage.session.get("user") === null)? (<Redirect to="/"/>):(<Home/>))}/> */}
+            
+            <Route exact path="/castings" render={()=> <ProjectList onBackLanding={this.goLanding} onRegister={this.goRegister} onLogin={this.goHome} onProjectInfo={this.goProjectInfo}/>} />
+            <Route path="/home/:userId" render={()=> <Home onCorrection={this.correctingRoute} onLogOut={this.goLanding} userId={this.state.userId} onProjectInfo={this.goProjectInfo}/>} />
+            
+            <Route path="/profile" render={()=> <Profile logOut={this.logOut} unregister={this.unregister} onBackLanding={this.goLanding}/>}/>
+            <Route path="/castings/:projectId" render={(props)=> <ProjectPage projectId={props.match.params.projectId}/>} />
 
-            {/* <Route path="/profile" render={()=> ((Xtorage.session.get("user") === null)? (<Redirect to="/"/>):(<Profile/>))}/> */}
           </div>
         </main>
       </Switch>

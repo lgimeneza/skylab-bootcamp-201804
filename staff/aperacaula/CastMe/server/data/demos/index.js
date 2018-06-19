@@ -196,77 +196,91 @@ mongoose.connect(DB_URL)
 
         //Project 4
         
-        const pr1_1 = {
+        const pr4_1 = {
             height: null,
             weight: null,
-            physicalCondition: 'fat/chubby',
+            physicalCondition: 'average',
             eyes: null,
             hair: null,
-            ethnicity: 'latino/hispanic',
-            beard: false,
+            ethnicity: 'arabic',
+            beard: true,
 
             tattoos: false,
 
             piercings: null
         };
-        const casting1_1 =
+        const casting4_1 =
 
         {
-            title: "Gordo(Lead)",
-            minAge: 20,
-            maxAge: 28,
+            title: "Burt Bakman",
+            minAge: 30,
+            maxAge: 45,
             sex: 'male',
-            description: 'Gordo is a chubby, pudgy, overweight kid who works in the sweatshop. Very funny and high energy.',
-            physicalReq: pr1_1,
+            description: 'A struggling dreamer; an Israeli chef living in America, but he works as a real estate agent in the hopes of one day opening his own restaurant; strong improvisational skills a must; cooking experience a plus.',
+            physicalReq: pr4_1,
             
 
         }
             ;
-        const pr1_2 = {
+        const pr4_2 = {
             height: 1.80,
             weight: null,
             physicalCondition: 'thin/slim',
             eyes: null,
             hair: null,
-            ethnicity: 'latino/hispanic',
+            ethnicity: 'caucasian',
             beard: false,
 
             tattoos: false,
 
-            piercings: null
+            piercings: false
         };
-        const casting1_2 = {
-            title: "Carlito(Supporting)",
-            minAge: 20,
-            maxAge: 28,
-            sex: 'male',
-            description: 'Carlito is tall and skinny, very mean. He is the leader of the kids in the sweatshop',
-            physicalReq: pr1_2,
-            
-
-        }
-
-        const casting1_3 = {
-            title: "Pedrito(Supporting)",
+        const casting4_2 = {
+            title: "Solomonov",
             minAge: 30,
-            maxAge: 38,
+            maxAge: 65,
             sex: 'male',
+            description: 'confidence and charisma are the name of the game; a celebrity chef with all the verve that comes with it; strong improvisational skills a must.',
+            physicalReq: pr4_2,
+            
+
+        }
+
+        const pr4_3 = {
+            height: 1.65,
+            weight: null,
+            physicalCondition: 'fit',
+            eyes: null,
+            hair: null,
+            ethnicity: 'caucasian',
+            beard: false,
+
+            tattoos: false,
+
+            piercings: false
+        };
+
+        const casting4_3 = {
+            title: "Valerie",
+            minAge: 35,
+            maxAge: 55,
+            sex: 'female',
             description: 'Pedrito is tall and skinny, very mean. He is the leader of the kids in the sweatshop',
-            physicalReq: pr1_2,
+            physicalReq: pr4_3,
             
         }
-        const project1 = {
-            title: 'Bonded',
+        const project4 = {
+            title: 'Digital Pilot, Rising Chef',
             publishedDate: (() => new Date())(),
             endDate: (() => {
                 let date = new Date()
-                date.setDate(date.getDate() + 20)
+                date.setDate(date.getDate() + 30)
                 return date
             })(),
             paid: true,
             professional: true,
-            province: 'Albacete',
-            description: 'Project "Bonded," a feature film based on true events about illegal sweat shops in Los Angeles.',
+            province: 'Cádiz',
+            description: 'Casting an Middle-Eastern/Middle-Eastern American actor and some more actors/actress to portray an Israeli chef for digital pilot and other staff members',
 
             castings: [],
 
@@ -274,29 +288,29 @@ mongoose.connect(DB_URL)
         }
 
         //Project 5
-        const pr2_1 = {
-            height: 1.70,
+        const pr5_1 = {
+            height: 1.80,
             weight: null,
-            physicalCondition: 'fit',
+            physicalCondition: 'thin/slim',
             eyes: null,
-            hair: "blond",
+            hair: "dark/black",
             ethnicity: null,
             beard: false,
             tattoos: false,
             piercings: null
         };
-        const casting2_1 = {
-            title: "Desiree",
-            minAge: 20,
-            maxAge: 30,
-            sex: 'female',
-            description: 'Desiree is the main character. She is a young mum who deals with anxiety and modern society problems, mainly induced by her responsibility as a mum.',
-            physicalReq: pr2_1,
+        const casting5_1 = {
+            title: "Sandwich Man",
+            minAge: 40,
+            maxAge: 60,
+            sex: 'male',
+            description: 'with 1940s-50s look. Seeking men 40-60 years old (tall and slim, pants waist size 30-31) and classic face women age 30s.',
+            physicalReq: pr5_1,
             
 
         };
 
-        const pr2_2 = {
+        const pr5_2 = {
             height: null,
             weight: null,
             physicalCondition: 'fat/chubby',
@@ -307,18 +321,18 @@ mongoose.connect(DB_URL)
             tattoos: true,
             piercings: null
         };
-        const casting2_2 = {
-            title: "Tracy(Supporting)",
-            minAge: 40,
-            maxAge: 50,
+        const casting5_2 = {
+            title: "Lead Actress",
+            minAge: 20,
+            maxAge: 30,
             sex: 'female',
-            description: 'Drug addict, widow of Ray’s former partner, Tracy despises Ray and feels he has no right to continue butting into her life. Her addiction has gotten to the point where she has lost all track of her young daughter, who has gone missing ',
-            physicalReq: pr2_2,
+            description: 'with 1940s-1950s look, seeking for an attraactive, charismatic woman to be the lead of the shoot',
+            physicalReq: pr5_2,
             
 
         }
-        const project2 = {
-            title: 'Crown Vic',
+        const project5 = {
+            title: '1950s- Style Fashion Shoot',
             publishedDate: (() => new Date())(),
             endDate: (() => {
                 let date = new Date()
@@ -328,7 +342,7 @@ mongoose.connect(DB_URL)
             paid: true,
             professional: true,
             province: 'Barcelona',
-            description: 'Project "Crown Vic," a SAG Low Budget feature produced by Alec Baldwin. Project personnel will hold a Buffalo, NY open call. No appointments necessary.',
+            description: 'Seeking models for a Walker Evans-inspired fashion shoot. This is an editorial fashion story for a U.S. magazine shot documentary-style',
 
             castings: [],
 
@@ -338,30 +352,30 @@ mongoose.connect(DB_URL)
 
         //Project 6
 
-        const pr3_1 = {
-            height: 1.70,
+        const pr6_1 = {
+            height: 1.80,
             weight: null,
-            physicalCondition: 'fit',
-            eyes: "green",
-            hair: "brown",
+            physicalCondition: 'muscular',
+            eyes: null,
+            hair: "buzzed",
             ethnicity: 'caucasian',
             beard: false,
             tattoos: false,
             piercings: false
         };
-        const casting3_1 = {
-            title: "Female",
+        const casting6_1 = {
+            title: "Military types",
             minAge: 20,
             maxAge: 50,
-            sex: 'female',
-            description: 'must have similar measurements/hair & skin tone',
-            physicalReq: pr3_1,
+            sex: 'male',
+            description: 'clean-cut and in-shape military types to portray Privates, Lance Corporals, and Sergeants in the Marine Corp. Men must be comfortable with a military haircut and being clean-shaven. (The haircuts are not buzz cuts or crew cuts, just a typical short haircut.)',
+            physicalReq: pr6_1,
             
 
         };
 
-        const project3 = {
-            title: 'Luxury Fragrance (Publicity)',
+        const project6 = {
+            title: 'The Code',
             publishedDate: (() => new Date())(),
             endDate: (() => {
                 let date = new Date()
@@ -371,7 +385,7 @@ mongoose.connect(DB_URL)
             paid: true,
             professional: true,
             province: 'Madrid',
-            description: 'Project stand-ins for male and female talent in a luxury fragrance TVC shoot. Applicants must have similar height/measurements and skin tone as described.',
+            description: 'Seeking background actors for season 1 of the CBS series "The Code."',
 
             castings: [],
 
@@ -383,9 +397,12 @@ mongoose.connect(DB_URL)
         return Promise.all([
             Project.create(project1),
             Project.create(project2),
-            Project.create(project3)
+            Project.create(project3),
+            Project.create(project4),
+            Project.create(project5),
+            Project.create(project6)
         ])
-            .then(([proj1, proj2, proj3]) => {
+            .then(([proj1, proj2, proj3, proj4, proj5, proj6]) => {
                 let cast13, cast22
 
                 proj1.castings.push(new Casting(casting1_1))
@@ -394,6 +411,13 @@ mongoose.connect(DB_URL)
                 proj2.castings.push(new Casting(casting2_1))
                 proj2.castings.push(cast22 = new Casting(casting2_2))
                 proj3.castings.push(new Casting(casting3_1))
+                proj4.castings.push(new Casting(casting4_1))
+                proj4.castings.push(new Casting(casting4_2))
+                proj4.castings.push(new Casting(casting4_3))
+                proj5.castings.push(new Casting(casting5_1))
+                proj5.castings.push(new Casting(casting5_2))
+                proj6.castings.push(new Casting(casting6_1))
+                
 
                 const userData = {
                     email: 'aperacaula@gmail.com',
@@ -487,13 +511,16 @@ mongoose.connect(DB_URL)
                     profilePicture: 'http://res.cloudinary.com/dt6qv2j4j/image/upload/v1528803579/uvcv0wzsqe9sjrabd9ca.jpg',
                     applications: []
                 }
-                return Promise.all([proj1.save(), proj2.save(), proj3.save()])
+                return Promise.all([proj1.save(), proj2.save(), proj3.save(),proj4.save(), proj5.save(), proj6.save()])
                     .then(() => Promise.all([User.create(userData), User.create(otherUserData)])
                         .then(([user1, user2]) => {
                             user1.applications.push({ project: proj1._id, castings: [cast13._id] })
                             user1.applications.push({ project: proj2._id, castings: [cast22._id] })
-                            return user1.save()
+                            proj1.castings[2].applicants.push(user1._id)
+                            proj2.castings[1].applicants.push(user1._id)
+                            return Promise.all([user1.save(), proj1.save(), proj2.save()])
                         }))
+                    
 
             })
 

@@ -23,7 +23,7 @@ module.exports= new Schema({
     hair: {
         type: String,
         //required: true,
-        enum: ['brown', 'blond', 'dark/black', 'ginger', 'bald', 'buzzed', null]
+        enum: ['brown', 'blond', 'dark/black', 'ginger', 'bald', 'buzzed', 'white', null]
     },
     ethnicity: {
         type: String,

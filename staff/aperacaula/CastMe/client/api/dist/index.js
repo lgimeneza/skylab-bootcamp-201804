@@ -40,7 +40,9 @@ var castmeApi = {
 
       if (typeof videobookLink !== "string") throw Error("user videobookLink is not a string");
 
-      //if ((videobookLink = videobookLink.trim()).length === 0) throw Error("user videobookLink is empty or blank");
+      // if ((videobookLink = videobookLink.trim()).length === 0)
+      //   throw Error("user videobookLink is empty or blank");
+
 
       return axios.post(_this.url + "/users", {
         email: email,
@@ -183,6 +185,41 @@ var castmeApi = {
 
   /**
    *
+   * @param {string} id
+   *
+   * @returns {Promise<Project>}
+   */
+  retrieveProject: function retrieveProject(id) {
+    var _this5 = this;
+
+    return Promise.resolve().then(function () {
+      if (typeof id !== "string") throw Error("project id is not a string");
+
+      if (!(id = id.trim()).length) throw Error("project id is empty or blank");
+
+      return axios.get(_this5.url + "/projects/" + id).then(function (_ref5) {
+        var status = _ref5.status,
+            data = _ref5.data;
+
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
+
+        return data.data;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
+
+        if (err.response) {
+          var message = err.response.data.error;
+
+
+          throw Error(message);
+        } else throw err;
+      });
+    });
+  },
+
+
+  /**
+   *
    * @param {string} email
    * @param {string} password
    * @param {string} newEmail
@@ -196,7 +233,7 @@ var castmeApi = {
    * @returns {Promise<boolean>}
    */
   updateUser: function updateUser(email, password, newEmail, newPassword, personalData, physicalData, professionalData, videobookLink, profilePicture) {
-    var _this5 = this;
+    var _this6 = this;
 
     return Promise.resolve().then(function () {
       if (typeof email !== "string") throw Error("user email is not a string");
@@ -225,7 +262,7 @@ var castmeApi = {
 
       if ((typeof physicalData === "undefined" ? "undefined" : _typeof(physicalData)) !== "object") throw Error("physical data is not what it should be");
 
-      return axios.patch(_this5.url + "/users/" + id, {
+      return axios.patch(_this6.url + "/users/" + id, {
         email: email,
         password: password,
         personalData: personalData,
@@ -234,9 +271,9 @@ var castmeApi = {
         videobookLink: videobookLink,
         profilePicture: profilePicture
 
-      }).then(function (_ref5) {
-        var status = _ref5.status,
-            data = _ref5.data;
+      }).then(function (_ref6) {
+        var status = _ref6.status,
+            data = _ref6.data;
 
         if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
@@ -264,7 +301,7 @@ var castmeApi = {
    * @returns {Promise<boolean>}
    */
   unregisterUser: function unregisterUser(id, email, password) {
-    var _this6 = this;
+    var _this7 = this;
 
     return Promise.resolve().then(function () {
       if (typeof id !== "string") throw Error("user id is not a string");
@@ -279,9 +316,9 @@ var castmeApi = {
 
       if ((password = password.trim()).length === 0) throw Error("user password is empty or blank");
 
-      return axios.delete(_this6.url + "/users/" + id, { data: { email: email, password: password } }).then(function (_ref6) {
-        var status = _ref6.status,
-            data = _ref6.data;
+      return axios.delete(_this7.url + "/users/" + id, { data: { email: email, password: password } }).then(function (_ref7) {
+        var status = _ref7.status,
+            data = _ref7.data;
 
         if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 
@@ -307,12 +344,12 @@ var castmeApi = {
    * @returns {Promise<array>}
    */
   listProjects: function listProjects() {
-    var _this7 = this;
+    var _this8 = this;
 
     return Promise.resolve().then(function () {
-      return axios.get(_this7.url + "/projects").then(function (_ref7) {
-        var status = _ref7.status,
-            data = _ref7.data;
+      return axios.get(_this8.url + "/projects").then(function (_ref8) {
+        var status = _ref8.status,
+            data = _ref8.data;
 
         if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 

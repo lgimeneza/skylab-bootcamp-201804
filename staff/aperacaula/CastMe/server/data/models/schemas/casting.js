@@ -27,6 +27,6 @@ module.exports= new Schema({
     physicalReq: PhysicalData,
 
 
-    applicants: [{type: ObjectId, ref: 'User', required: true}]
+    applicants: [{type: ObjectId, ref: 'User'}]
     
 })

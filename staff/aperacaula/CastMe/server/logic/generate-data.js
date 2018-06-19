@@ -25,7 +25,7 @@ function generateData() {
             sex: 'male',
             description: 'Gordo is a chubby, pudgy, overweight kid who works in the sweatshop. Very funny and high energy.',
             physicalReq: pr1_1,
-            status: true
+            
 
         })
         ;
@@ -49,7 +49,7 @@ function generateData() {
         sex: 'male',
         description: 'Carlito is tall and skinny, very mean. He is the leader of the kids in the sweatshop',
         physicalReq: pr1_2,
-        status: true
+        
 
     })
 
@@ -60,7 +60,7 @@ function generateData() {
         sex: 'male',
         description: 'Pedrito is tall and skinny, very mean. He is the leader of the kids in the sweatshop',
         physicalReq: pr1_2,
-        status: true
+        
     })
     const project1 = new Project({
         title: 'Bonded',
@@ -71,6 +71,7 @@ function generateData() {
             return date
         })(),
         paid: true,
+        situation: 'Open',
         professional: true,
         province: 'Albacete',
         description: 'Project "Bonded," a feature film based on true events about illegal sweat shops in Los Angeles.',
@@ -99,7 +100,7 @@ function generateData() {
         sex: 'female',
         description: 'Desiree is the main character. She is a young mum who deals with anxiety and modern society problems, mainly induced by her responsibility as a mum.',
         physicalReq: pr2_1,
-        status: true
+        
 
     })
         ;
@@ -121,7 +122,7 @@ function generateData() {
         sex: 'female',
         description: 'Drug addict, widow of Ray’s former partner, Tracy despises Ray and feels he has no right to continue butting into her life. Her addiction has gotten to the point where she has lost all track of her young daughter, who has gone missing ',
         physicalReq: pr2_2,
-        status: true
+        
 
     })
     const project2 = new Project({
@@ -133,6 +134,7 @@ function generateData() {
             return date
         })(),
         paid: true,
+        situation: 'Open',
         professional: true,
         province: 'Barcelona',
         description: 'Project "Crown Vic," a SAG Low Budget feature produced by Alec Baldwin. Project personnel will hold a Buffalo, NY open call. No appointments necessary.',
@@ -161,7 +163,7 @@ function generateData() {
         sex: 'female',
         description: 'must have similar measurements/hair & skin tone',
         physicalReq: pr3_1,
-        status: true
+        
 
     })
         ;
@@ -175,6 +177,7 @@ function generateData() {
             return date
         })(),
         paid: true,
+        situation: 'Open',
         professional: true,
         province: 'Madrid',
         description: 'Project stand-ins for male and female talent in a luxury fragrance TVC shoot. Applicants must have similar height/measurements and skin tone as described.',

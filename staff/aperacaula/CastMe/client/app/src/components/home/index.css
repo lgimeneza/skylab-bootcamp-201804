@@ -56,6 +56,7 @@
 .applications {
     border-collapse: collapse;
     width: 100%;
+    text-align: center
 }
 
 .applications td, .applications th {
@@ -65,7 +66,7 @@
 
 .applications tr:nth-child(even){background-color:rgb(0, 0, 0, 0.1);}
 
-.applications tbody tr:hover {background-color: rgba(143, 31, 31);}
+
 
 .applications th {
     padding-top: 12px;
@@ -73,6 +74,7 @@
     text-align: left;
     background-color: rgb(0,0,0,0.4);
     color: white;
+    text-align: center;
 }
 
 

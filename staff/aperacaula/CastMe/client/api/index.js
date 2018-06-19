@@ -221,6 +221,45 @@ const castmeApi = {
 
   /**
    *
+   * @param {string} id
+   *
+   * @returns {Promise<Project>}
+   */
+  retrieveProject(id) {
+    return Promise.resolve().then(() => {
+      if (typeof id !== "string") throw Error("project id is not a string");
+
+      if (!(id = id.trim()).length) throw Error("project id is empty or blank");
+
+      return axios
+        .get(`${this.url}/projects/${id}`)
+        .then(({ status, data }) => {
+          if (status !== 200 || data.status !== "OK")
+            throw Error(
+              `unexpected response status ${status} (${data.status})`
+            );
+
+          return data.data;
+        })
+        .catch(err => {
+          if (err.code === "ECONNREFUSED")
+            throw Error("could not reach server");
+
+          if (err.response) {
+            const {
+              response: {
+                data: { error: message }
+              }
+            } = err;
+
+            throw Error(message);
+          } else throw err;
+        });
+    });
+  },
+
+  /**
+   *
    * @param {string} email
    * @param {string} password
    * @param {string} newEmail

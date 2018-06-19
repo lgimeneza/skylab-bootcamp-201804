@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logic from "../../logic";
 import swal from "sweetalert";
 import "./index.css";
+import Header from '../header'
 //import ScrollableAnchor from 'react-scrollable-anchor'
 
 class RegisterUser extends Component {
@@ -174,6 +175,8 @@ class RegisterUser extends Component {
 
   componentDidMount() {
     this.setState({ profilePicture: this.props.picture ? this.props.picture : "http://via.placeholder.com/150x150" })
+    logic.userId= ''
+    sessionStorage.clear()
   }
 
   componentWillReceiveProps(props) {
@@ -341,35 +344,7 @@ class RegisterUser extends Component {
       <div className="General">
 
         <div id="wrapper-login">
-          <header id="header-wrapper-login">
-            <div id="header-login">
-              <div id="menu1-login">
-                <ul>
-                  <li className="menu_link">
-                    <a onClick={this.props.onBackLanding}>Homepage</a>
-                  </li>
-                  <li className="menu_link">
-                    <a >Castings</a>
-                  </li>
-                </ul>
-              </div>
-              <div id="logo-login">
-                <h1>
-                  <a onClick={this.props.onBackLanding}>CastMe </a>
-                </h1>
-              </div>
-              <div id="menu2-login">
-                <ul>
-                  <li className="menu_link">
-                    <a >About</a>
-                  </li>
-                  <li className="menu_link">
-                    <a >Contact Us</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </header>
+          <Header/>
 
           <div id="page">
             <div id="page-bgtop">
@@ -562,6 +537,7 @@ class RegisterUser extends Component {
                               <option value="ginger">Ginger</option>
                               <option value="bald">Bald</option>
                               <option value="buzzed">Buzzed</option>
+                              <option value="white">White</option>
                               <option value="null">None</option>
                             </select>
                             <h3>Ethnicity:</h3>

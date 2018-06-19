@@ -486,6 +486,23 @@ describe('logic', () => {
         })
     })
 
+    describe('list projects', () => {
+        it('should succeed', () => {
+            const proj1= projects[0]
+            const proj2= projects[1]
+            const proj3= projects[2]
+            return Promise.all([proj1.save(),proj2.save(),proj3.save()])
+            .then(()=>{
+                return logic.listProjects()
+                    .then(list=>{
+                        expect(list).to.exist
+                        expect(list.length).to.equal(3)
+                        expect(list[0].title).to.equal('Bonded')
+                    })
+            })
+        })
+    })
+
     false && describe('user is eligible', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)

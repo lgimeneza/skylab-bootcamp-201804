@@ -150,8 +150,8 @@ const logic = {
                   
                   for (let j=0; j<projects[i].castings.length; j++){
                       
-                      let {title, publishedDate, endDate, situation}= projects[i]
-                      applications.push({title,publishedDate,endDate,situation, casting: projects[i].castings[j]})
+                      let {_id, title, publishedDate, endDate, situation}= projects[i]
+                      applications.push({_id, title,publishedDate,endDate,situation, casting: projects[i].castings[j]})
                   }
                   
                 }
@@ -209,6 +209,54 @@ const logic = {
         };
       });
   },
+
+  /**
+   *
+   * @param {string} id
+   *
+   * @returns {Promise<Project>}
+   */
+  retrieveProject(projectId) {
+    return Promise.resolve()
+      .then(() => {
+        if (typeof projectId !== "string") throw Error("project projectId is not a string");
+
+        if (!(projectId = projectId.trim()).length) throw Error("project projectId is empty or blank");
+
+        return Project.findById(projectId);
+      })
+      .then(project => {
+        if (!project) throw Error(`no project found with projectId ${projectId}`);
+        
+
+        const {
+          title,
+          publishedDate,
+          endDate,
+          province,
+          description,
+          castings,
+          paid,
+          professional,
+          situation
+        } = project;
+        return {
+          title,
+          publishedDate,
+          endDate,
+          province,
+          description,
+          castings,
+          paid,
+          professional,
+          situation
+        };
+      });
+  },
+
+
+
+
 
   /**
    *

@@ -149,6 +149,7 @@ router.get('/projects', (req, res) => {
     
     logic.listProjects()
         .then(projects => {
+            res.status(200)
             res.json({ status: 'OK', data: projects })
         })
         .catch(({ message }) => {
@@ -156,6 +157,21 @@ router.get('/projects', (req, res) => {
             res.json({ status: 'KO', error: message })
         })
 
+})
+
+router.get('/projects/:projectId',(req,res)=>{
+
+    const {params: {projectId}}= req
+
+    logic.retrieveProject(projectId)
+        .then(projectInfo=>{
+            res.status(200)
+            res.json({status: 'OK', data: projectInfo})
+        })
+        .catch(({message})=>{
+            res.status(400)
+            res.json({status: 'KO', error:message})
+        })
 })
 
 // router.delete('/users/:userId/notes/:id', jwtValidator, (req, res) => {

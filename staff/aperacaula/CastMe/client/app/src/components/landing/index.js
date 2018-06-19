@@ -13,8 +13,8 @@ function Landing(props) {
 		<div id="header">
 			<div id="menu1">
 				<ul>
-					<li className="menu_link"><a >Homepage</a></li>
-					<li className="menu_link"><a >Castings</a></li>
+					<li className="menu_link"><Link to="/">Homepage</Link></li>
+					<li className="menu_link"><Link to="/castings">Castings</Link></li>
 				</ul>
 			</div>
 			<div id="logo">

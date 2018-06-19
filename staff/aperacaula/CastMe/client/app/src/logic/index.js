@@ -4,7 +4,7 @@ import api from 'api'
 api.url='http://localhost:5000/api'
 
 const logic = {
-    userId: 'NO-ID',
+    userId: undefined,
 
     registerUser(email, password, personalData, physicalData, professionalData, videobookLink, profilePicture) {
         return api.registerUser(email, password, personalData, physicalData, professionalData, videobookLink, profilePicture)
@@ -27,12 +27,21 @@ const logic = {
         return api.retrieveUser(userId)
     },
 
+    retrieveProject(projectId){
+        return api.retrieveProject(projectId)
+    },
+
     deleteUser(id,email,password){
         return api.unregisterUser(id,email,password)
             .then(res=>{
                 sessionStorage.clear()
+                logic.userId=undefined
                 return res
             })
+    },
+
+    getProjects(){
+        return api.listProjects()
     }
 
 
