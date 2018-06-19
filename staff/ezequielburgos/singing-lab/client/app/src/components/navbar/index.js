@@ -72,7 +72,7 @@ class Navbar extends Component {
                                 <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.user.name}</button>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <Link to="/profile" className="dropdown-item">Profile</Link>
-                                    <a className="dropdown-item">My cart</a>
+                                    <a className="dropdown-item navbar-cart">My cart</a>
                                     <Link to="/" className="dropdown-item" style={{ cursor: 'pointer' }} onClick={() => { this.logout() }}>logout</Link>
                                 </div>
                             </div>

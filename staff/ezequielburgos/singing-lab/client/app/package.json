@@ -4,12 +4,11 @@
   "private": true,
   "dependencies": {
     "api": "file:../api",
+    "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
     "react": "^16.4.0",
-    "react-animated-css": "^1.0.4",
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.3.1",
-    "react-s-alert": "^1.4.1",
     "react-scripts": "1.1.4",
     "sweetalert2": "^7.22.2"
   },

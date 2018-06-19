@@ -55,3 +55,19 @@
     from{ transform: translate(0px, 0px) }
     to{ transform: translate(800px, -500px) scale(3)}
 }
+/* 
+.zoom{
+    position: absolute;
+    top: 300px;
+    right: 70%;
+    width: 40px;
+    opacity: 0;
+    animation: zoom 1s ease forwards;
+}
+
+@keyframes zoom{
+    0%{ opacity: 0 }
+    50%{ opacity: 1 }
+    100%{ opacity: 0; right: 100px }
+
+} */

@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
-import { Animated } from "react-animated-css"
+// import { Animated } from "react-animated-css"
 
 export default ({ onAddToCart, items, btnShow = false, productDetail = false, cartProducts = false, removeFromCartButton= false }) => (
     <ul className="listitems-body">
         <div className="thumbnail listitems-subbody">
             {items.map(item => (
                 <li key={item._id} className="items">
-                    <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
+                    {/* <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}> */}
                         <div className="card" style={{ width: '18rem' }}>
                             <img className="card-img-top" src={item.image} alt="course or category" />
                             <div className="card-body">
@@ -19,7 +19,7 @@ export default ({ onAddToCart, items, btnShow = false, productDetail = false, ca
                                 {cartProducts && <a className="btn btn-outline-secondary" onClick={() => onAddToCart(item._id)} role="button">Add to the cart</a>}
                             </div>
                         </div>
-                    </Animated>
+                    {/* </Animated> */}
                 </li>
             ))}
         </div>

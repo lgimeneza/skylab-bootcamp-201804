@@ -15,7 +15,7 @@ class Products extends Component {
 
     componentDidMount() {
         logic.listProducts(this.props.categoryId)
-            .then(products => this.setState({ products }))
+            .then(products => this.setState({ products }))    
     }
 
     componentDidUpdate(prevProps) {
