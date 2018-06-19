@@ -1,11 +1,12 @@
 
 .backm {
-    width:76vw;
-    color:white;
-    font-size: 5vw;
-    margin: 10vw 12vw;
-    padding: 2vw;
+
     background: linear-gradient(70deg, #9c1212, #fa7f7f);
+    width: 100vw;
+    color: white;
+    font-size: 5vw;
+    margin: 4vw 0vw 3vw 0vw;
+    padding: 4vw 38vw;
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
@@ -13,25 +14,26 @@
     margin-bottom: 7vw;
     border: 1px solid #9c1212;
     font-size: 5vw;
-    border-radius: 1vw;
+    width: 60vw;
+    height: 8vw;
   }
-  .wordsm{
-      font-size: 3vw
-  }
+ 
   .butAddM{
     color: white;
     font-size: 5vw;
     background: linear-gradient(70deg, #9c1212, #fa7f7f);
-    border-top-right-radius: 2vw;
-    border-bottom-right-radius: 2vw;
+    height: 10vw;
+    width: 20vw;
 
 }
 .usm{
-   
-    padding: 2vw;
-    color:#9c1212;
-    text-align: center;
-    margin: 5vw 12vw;
+    width: 100vw;
+    color: white;
+    font-size: 5vw;
+    margin: 0vw 16vw 8vw 0vw;
+    padding: 4vw 0vw;
+    background: linear-gradient(70deg, #9c1212, #fa7f7f);
+    border: 0;
     font-family: 'Montserrat', sans-serif;
 }
 .listmarket{
@@ -41,14 +43,14 @@
     
 }
 .textM{
-    height: 96vw ;
+    height: 113vw;
     overflow: scroll;
     font-family: 'Montserrat', sans-serif;
 }
 .deleteM{
     float: right;
-    margin-right: 2vw;
-    font-size: 5vw
+    margin-right: -4vw;
+    font-size: 5vw;
 }
  .dataM{
     margin-left: 5vw;

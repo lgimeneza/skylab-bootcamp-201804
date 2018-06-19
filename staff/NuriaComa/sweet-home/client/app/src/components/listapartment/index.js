@@ -57,7 +57,7 @@ class ListApartment extends Component {
                             }
                         </ul>
                         <Link to="/home">
-                             <button className="backAp">Back</button>
+                             <button className="backAp">BACK</button>
                         </Link>
                        
                     </section>

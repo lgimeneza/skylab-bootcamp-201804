@@ -1,51 +1,69 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 .backU {
-    width:78vw;
-    color:white;
+    width: 100vw;
+    color: white;
     font-size: 5vw;
-    margin: 10vw 11vw;
-    padding: 2vw;
+    margin: -7vw 0vw 3vw 0vw;
+    padding: 4vw 38vw;
     background: linear-gradient(70deg, #7b9214, #c7da86);
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
-.smallBut{
-    display:inline;
+.butGroupU{
+
+    display: flex
+}
+.smallButE{
+ 
+    background: linear-gradient(70deg, #7b9214, #c7da86);
+    display:block;
     color:white;
     font-size: 3vw;
-    margin: 2vw 7vw;
-    padding: 1vw;
-    background: linear-gradient(70deg, #7b9214, #c7da86);
+    width: 81vw;
+    margin: 3vw 0vw;
+    padding: 2vw 14vw;
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
-.smallButN{
-    display:inline;
+.smallButN1{
+    background: linear-gradient(70deg, #7b9214, #c7da86);
+    display:block;
     color:white;
     font-size: 3vw;
-    margin: 2vw 15vw;
-    padding: 1vw;
-    background: linear-gradient(70deg, #7b9214, #c7da86);
+    margin: 7vw 10vw;
+    padding: 2vw 12vw;
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
-.usU{
-   
-    padding: 2vw;
-    color:#7b9214;
-    text-align: center;
-    margin: 7vw 12vw;
+.smallButN2{
+    background: linear-gradient(70deg, #7b9214, #c7da86);
+    display:block;
+        color:white;
+        font-size: 3vw;
+        margin: 7vw -6vw;
+        padding: 2vw 11vw;
+    border:0;
+    font-family: 'Montserrat', sans-serif;
+}
+.usUI{
+    width: 100vw;
+    color: white;
+    font-size: 5vw;
+    margin: 0vw 16vw 3vw 0vw;
+    padding: 4vw 42vw;
+    background: linear-gradient(70deg, #7b9214, #c7da86);
+    border: 0;
     font-family: 'Montserrat', sans-serif;
 }
 .listUsers{
     border-bottom: 1px solid #7b9214;
-    margin-right: 7vw;
+    margin-right: 8vw;
     font-family: 'Montserrat', sans-serif;
     
 }
 .text{
-    height: 105vw ;
+    height: 120vw ;
     overflow: scroll;
     font-family: 'Montserrat', sans-serif;
 }

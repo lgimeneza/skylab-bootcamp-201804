@@ -26,7 +26,7 @@ class Settings extends Component {
                         </select>
                         </form>
                         <Link to="/home">
-                             <button className="backS">Back</button>
+                             <button className="backS">BACK</button>
                         </Link>
                        
                     </section>

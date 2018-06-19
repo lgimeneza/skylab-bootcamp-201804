@@ -39,7 +39,10 @@ class Users extends Component {
         localStorage.clear()    
                        
     }
-
+    newUser= () => {
+       
+        (this.props.history.push('/registeruser'))
+    }
   
     
 
@@ -49,11 +52,11 @@ render() {
             <div>
                 <section>
 
-                    <h2 className="usU">USERS</h2>
-                    <Link to="/registeruser">
-                    <button className="smallButN">NEW USER</button>
-                    </Link>
-                    <button className="smallButN"  onClick={() => this.logOut()}>LOG OUT</button>
+                    <h2 className="usUI">USERS</h2>
+                    <div className="butGroupU">
+                    <button className="smallButN1"  onClick={() => this.newUser()}>NEW USER</button>
+                    <button className="smallButN2"  onClick={() => this.logOut()}>LOG OUT</button>
+                    </div>
                     <ul className="text">
                         {this.state.usersInfo ? this.state.usersInfo.map((users) => {
                             return (
@@ -61,12 +64,12 @@ render() {
                                     <li><span className="data">Surname:</span> {users.surname}</li>
                                     <li><span className="data">Phone:</span> {users.phone}</li>
                                     <li><span className="data">Dni:</span> {users.dni}</li>
-                                    <button  className="smallBut" type="submit" onClick={() => this.update(users._id)}>EDIT</button></div>)
+                                    <button  className="smallButE" type="submit" onClick={() => this.update(users._id)}>EDIT</button></div>)
                         }) : undefined
                         }
                     </ul>
                     <Link to="/home">
-                        <button className="backU">Back</button>
+                        <button className="backU">BACK</button>
                     </Link>
 
                 </section>

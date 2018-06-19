@@ -72,7 +72,7 @@ class Market extends Component {
                     <section>
                         <h2 className="usm">MARKET</h2>
                          <form onSubmit={this.addMarket}>
-                            <p className="wordsm"> Add MARKET: </p>
+                          
                             <input autocomplete="off" className="formulariom" type="text" value={this.state.name}onChange={this.nameMarket} name="name" ></input>
                             <button className="butAddM">ADD</button>
                          </form>
@@ -84,7 +84,7 @@ class Market extends Component {
                         }
                         </ul>
                         <Link to="/home">
-                             <button className="backm">Back</button>
+                             <button className="backm">BACK</button>
                         </Link>
                     </section>
                 </div>

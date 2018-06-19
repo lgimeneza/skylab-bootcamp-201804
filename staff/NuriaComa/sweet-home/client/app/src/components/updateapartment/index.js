@@ -56,8 +56,8 @@ class UpdateApartment extends Component {
   
     
 
-    updateInfo = (e) => {
-        e.preventDefault()
+    updateInfo = () => {
+       
         Promise.resolve()
         .then(()=> {
             let body= {
@@ -87,7 +87,7 @@ class UpdateApartment extends Component {
     
        
 }
-       backInfo = (_id) => {
+    backInfo = (_id) => {
             (this.props.history.push(`/house/${_id}`))
            
        }
@@ -99,10 +99,9 @@ class UpdateApartment extends Component {
             swal({
                 title: 'Are you sure?',
                 text: "All users will be removed",
-                type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#105380',
+                cancelButtonColor: '#829bac',
                 confirmButtonText: 'Yes, delete it!'
               })
               .then((result) => {
@@ -131,7 +130,7 @@ render() {
                     <h2 className="usUA">APARTMENT</h2>
                     <ul className="textUA">
                        
-                                <form className="listApartment" onSubmit={this.updateInfo}>
+                                <form className="listApartment">
                                     <p className="t">NAME: </p>
                                     <input className='fUpdA' type="text" name="name" value={this.statename} onChange={this.updateName} />
                                     <p className="t">ADDRESS: </p>
@@ -143,15 +142,16 @@ render() {
                                     <p className="t">REAL STATE: </p>
                                     <input className='fUpdA' type="realState" name="realState" value={this.staterealState} onChange={this.updaterealState} />
                                     <div className="butUA">
-                                        <button className="smallButUA" type="submit">SAVE</button>
                                     </div>
                                  </form>
-                                        <button className="smallButUA" onClick={() => this.deleteApartment(this.state.apartmentId)}>DELETE</button>
-                      
+                                 <div className="butGroup">
+                                        <button className="smallButUA1" onClick={() => this.updateInfo()}>SAVE</button>
+                                        <button className="smallButUA2" onClick={() => this.deleteApartment(this.state.apartmentId)}>DELETE</button>
+                                </div>
                         
                     </ul>
                    
-                        <button onClick={() => this.backInfo(this.state.apartmentId)} className="backAp">Back</button>
+                        <button onClick={() => this.backInfo(this.state.apartmentId)} className="backAp">BACK</button>
                    
 
                 </section>

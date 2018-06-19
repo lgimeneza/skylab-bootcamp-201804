@@ -1,11 +1,11 @@
 
 .backn {
-    width:76vw;
-    color:white;
-    font-size: 5vw;
-    margin: 10vw 12vw;
-    padding: 2vw;
     background: linear-gradient(70deg, #5a4280, rgb(187, 182, 204));
+    width: 100vw;
+    color: white;
+    font-size: 5vw;
+    margin: 4vw 0vw 3vw 0vw;
+    padding: 4vw 38vw;
     border:0;
     font-family: 'Montserrat', sans-serif;
 }
@@ -13,25 +13,26 @@
     color: white;
     font-size: 5vw;
     background: linear-gradient(70deg, #5a4280, rgb(187, 182, 204));
-    border-top-right-radius: 2vw;
-    border-bottom-right-radius: 2vw;
+    height: 10vw;
+    width: 20vw;
 
 }
 .formularioN{
     margin-bottom: 7vw;
     border: 1px solid #5a4280;
     font-size: 5vw;
-    border-radius: 1vw;
+    width: 60vw;
+    height: 8vw;
   }
-  .wordsN{
-    font-size: 4vw
-}
+ 
 .usN{
-   
-    padding: 2vw;
-    color:#5a4280;
-    text-align: center;
-    margin: 5vw 12vw;
+    width: 100vw;
+    color: white;
+    font-size: 5vw;
+    margin: 0vw 16vw 8vw 0vw;
+    padding: 4vw 0vw;
+    background: linear-gradient(70deg, #5a4280, rgb(187, 182, 204));
+    border: 0;
     font-family: 'Montserrat', sans-serif;
 }
 .listNotes{
@@ -48,13 +49,13 @@
 }
 .deleteN{
     float: right;
-    margin-right: 2vw;
-    font-size: 5vw
+    margin-right: -4vw;
+    font-size: 5vw;
    
    
 }
 .textN{
-    height: 93vw ;
+    height: 113vw ;
     overflow: scroll;
     font-family: 'Montserrat', sans-serif;
 }

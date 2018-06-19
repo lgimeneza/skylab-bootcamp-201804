@@ -60,8 +60,7 @@ class UpdateUser extends Component {
         this.setState({ newPassword })
     }
 
-    updateInfo = (e) => {
-        e.preventDefault()
+    updateInfo = () => {
         Promise.resolve()
         .then(()=> {
             let body= {
@@ -98,10 +97,9 @@ class UpdateUser extends Component {
             swal({
                 title: 'Are you sure?',
                 text: "your user will be removed",
-                type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#7b9214',
+                cancelButtonColor: '#c7da86',
                 confirmButtonText: 'Yes, delete it!'
             })
             .then((result) => {
@@ -129,7 +127,7 @@ render() {
                     <h2 className="usU">USERS</h2>
                     <ul className="textU">
                        
-                                <form className="App" onSubmit={this.updateInfo}>
+                                <form className="App">
                                     <p className="t">NAME: </p>
                                     <input className='fUpd' type="text" name="name" value={this.statename} onChange={this.updateName} />
                                     <p className="t">SURNAME: </p>
@@ -142,14 +140,15 @@ render() {
                                     <input className='fUpd' type="password" name="password" value={this.statePassword} onChange={this.updatePassword} />
                                     <p className="t">NEW PASSWORD: </p>
                                     <input className='fUpd' type="password" name="password" value={this.stateNewPassword} onChange={this.updateNewPassword} />
-                                        <button className="smallBut" type="submit">SAVE</button>
+                                       
                                  </form>
                                     <div className="butU">
-                                        <button className="smallBut" onClick={() => this.deleteUser(this.state.userId)}>DELETE</button>
+                                        <button className="smallBut1" onClick={() => this.updateInfo()}>SAVE</button>
+                                        <button className="smallBut2" onClick={() => this.deleteUser(this.state.userId)}>DELETE</button>
                                     </div>
                     </ul>
                     <Link to="/users">
-                        <button className="backU">Back</button>
+                        <button className="backU">BACK</button>
                     </Link>
 
                 </section>

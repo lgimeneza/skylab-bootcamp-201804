@@ -479,7 +479,7 @@ const shApi = {
         return Promise.resolve()
             .then(() => {
                
-                return axios.patch(`${this.url}/task/${apartmentId}`,  { headers: { authorization: `Bearer ${this.token()}` } } )
+                return axios.patch(`${this.url}/task/${apartmentId}`, {},  { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
                     

@@ -1,11 +1,11 @@
 
 
 .backt {
-    width:76vw;
+    width:100vw;
     color:white;
     font-size: 5vw;
-    margin: 10vw 12vw;
-    padding: 2vw;
+    margin: 4vw 0vw 3vw 0vw;
+    padding: 4vw 38vw;
     background: linear-gradient(70deg, #bd8215, #fccd77);
     border:0;
     font-family: 'Montserrat', sans-serif;
@@ -14,49 +14,60 @@
     margin-bottom: 7vw;
     border: 1px solid #bd8215;
     font-size: 5vw;
-    border-radius: 1vw;
+    width: 60vw;
+    height: 8vw;
   }
-  .wordst{
-      font-size: 4vw
-  }
+  
   .butAddT{
-      color: white;
-      font-size: 5vw;
-      background: linear-gradient(70deg, #bd8215, #fccd77);
-      border-top-right-radius: 2vw;
-      border-bottom-right-radius: 2vw;
-
+    color: white;
+    font-size: 5vw;
+    background: linear-gradient(70deg, #bd8215, #fccd77);
+    height: 10vw;
+    width: 20vw;
   }
   .butRot{
-      color: white;
-      font-size: 5vw;
-      background: linear-gradient(70deg, #bd8215, #fccd77);
-      margin: 4vw 0vw 4vw 60vw;
+    background: linear-gradient(70deg, #bd8215, #fccd77);
+    display: block;
+    color: white;
+    font-size: 5vw;
+    width: 81vw;
+    margin: 3vw 10vw;
+    padding: 1vw 14vw;
+    border: 0;
+    font-family: 'Montserrat', sans-serif;
+      
   }
- 
+ .formTask{
+    min-height: 26vw;
+ }
 .ust{
    
-    padding: 2vw;
-    color:#bd8215;
-    text-align: center;
-    margin: 5vw 12vw;
+    width: 100vw;
+    color: white;
+    font-size: 5vw;
+    margin: 0vw 16vw 8vw 0vw;
+    padding: 4vw 0vw;
+  
+    background: linear-gradient(70deg, #bd8215, #fccd77);
+    border: 0;
     font-family: 'Montserrat', sans-serif;
 }
 .listTasks{
     border-bottom: 1px solid #bd8215;
-    margin-right: 10vw;
+    margin-right: 9vw;
     font-family: 'Montserrat', sans-serif;
+    text-align: left;
     
 }
 .deleteT{
     float: right;
-    margin-right: 2vw;
-    font-size: 5vw
+    margin-right: -4vw;
+    font-size: 5vw;
    
    
 }
 .textt{
-    height: 83vw ;
+    height: 92vw;
     overflow: scroll;
     font-family: 'Montserrat', sans-serif;
 }
@@ -66,7 +77,7 @@
      font-size: 5vw;
  }
 li{
-    margin: 2vw 5vw;
+    margin: 2vw 6vw;
     list-style:none;
     
 }

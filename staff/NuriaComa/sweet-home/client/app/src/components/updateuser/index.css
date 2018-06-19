@@ -3,9 +3,12 @@
 .fUpd{
     
         margin-bottom: 1vw;
-        border: 1px solid #7b9214;
+        border:none;
+        border-bottom: 1px solid #7b9214;
         font-size: 5vw;
-        border-radius: 1vw;
+        width: 77vw;
+        outline: none;
+      
       
 }
 .t{
@@ -13,30 +16,46 @@
 }
 .usU{
    
-        padding: 2vw;
-        color:#7b9214;
-        text-align: center;
-        margin: 5vw 12vw;
-        font-family: 'Montserrat', sans-serif;
+    width: 100vw;
+    color: white;
+    font-size: 5vw;
+    margin: 0vw 16vw 3vw 0vw;
+    padding: 4vw 42vw;
+    background: linear-gradient(70deg, #7b9214, #c7da86);
+    border: 0;
+    font-family: 'Montserrat', sans-serif;
     }
-.smallBut{
+.smallBut1{
+      
         display:block;
         color:white;
         font-size: 3vw;
-        margin: 3vw 4vw;
-        padding: 1vw;
+        margin: 7vw 0vw;
+        padding: 2vw 14.5vw;
         background: linear-gradient(70deg, #7b9214, #c7da86);
         border:0;
         font-family: 'Montserrat', sans-serif;
 
+
+}
+.smallBut2{
+      
+        display:block;
+        color:white;
+        font-size: 3vw;
+        margin: 7vw 5vw;
+        padding: 2vw 12vw;
+        background: linear-gradient(70deg, #7b9214, #c7da86);
+        border:0;
+        font-family: 'Montserrat', sans-serif;
 }
 .butU{
         display: flex;
        
 }
 .textU{
-        height: 120vw ;
-    overflow: scroll;
+ height: 145vw;
+ overflow: scroll;
     font-family: 'Montserrat', sans-serif;
     
 }

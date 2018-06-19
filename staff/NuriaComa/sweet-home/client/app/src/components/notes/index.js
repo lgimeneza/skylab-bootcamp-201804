@@ -72,7 +72,6 @@ class Notes extends Component {
                     <section>
                         <h2 className="usN">NOTES</h2>
                          <form onSubmit={this.addNotes}>
-                            <p className="wordsN"> Add note: </p>
                             <input autocomplete="off" className="formularioN" type="text" value={this.state.name}onChange={this.nameNotes} name="name" ></input>
                             <button className="butAddN">ADD</button>
                          </form>
@@ -84,7 +83,7 @@ class Notes extends Component {
                         }
                         </ul>
                         <Link to="/home">
-                             <button className="backn">Back</button>
+                             <button className="backn">BACK</button>
                         </Link>
                     </section>
                 </div>

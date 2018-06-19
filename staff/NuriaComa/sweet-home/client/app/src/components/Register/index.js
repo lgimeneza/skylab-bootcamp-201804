@@ -146,7 +146,7 @@ class Register extends Component {
                             <input autoComplete="off" className="formularior" type="password" value={this.state.repeatpassword}onChange={this.registerRepeatPassword} name="password" ></input>
                             <button className="registerButton" type="submit">Register</button>
 
-                            <button className="backButton" type="button" onClick={this.redirect}>Back</button>
+                            <button className="backButton" type="button" onClick={this.redirect}>BACK</button>
                         </form>
                         
                     </section>

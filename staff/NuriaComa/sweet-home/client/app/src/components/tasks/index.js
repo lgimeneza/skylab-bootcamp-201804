@@ -100,16 +100,18 @@ class Tasks extends Component {
                     <section>
                         
                         <h2 className="ust">TASKS</h2>
+                        <div className="formTask">
                         {this.state.users.length > this.state.tasks.length ? 
-                        <form  onSubmit={this.addTask}>
+                        <form   onSubmit={this.addTask}>
                          
-                            <p className="wordst"> Add task: </p>
-                            <input autoComplete="off" className="formulariot" type="text" value={this.state.name}onChange={this.nameTask} name="name" ></input>
+                           
+                            <input maxlength="23"  autoComplete="off" className="formulariot" type="text" value={this.state.name}onChange={this.nameTask} name="name" ></input>
                             <button className="butAddT" type='submit' >ADD</button>
                          </form>
 
                            : undefined
                         }
+                        </div>
                           <div><button className="butRot" onClick={() => this.rotateTask()}>rotate</button></div>
                          <ul className="textt">
                         
@@ -129,7 +131,7 @@ class Tasks extends Component {
                         </ul>
                         
                         <Link to="/home">
-                             <button className="backt">Back</button>
+                             <button className="backt">BACK</button>
                         </Link>
                         
                     </section>
