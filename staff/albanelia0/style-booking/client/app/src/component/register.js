@@ -111,7 +111,7 @@ export class Register extends Component {
             <div className="column is-4 is-offset-4">
               <h3 className="title has-text-grey">Register</h3>
               <p className="subtitle has-text-grey">Please login to proceed.</p>
-              <div className="box">
+              <div className="box font-box">
                 {/* <figure className="avatar">
                   <img src="https://placehold.it/128x128" />
                 </figure> */}

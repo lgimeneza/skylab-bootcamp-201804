@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import logic from '../logic'
 import '../design/App.css'
+import '../design/navbar.css'
 
 class Navbar extends Component {
 
@@ -38,7 +39,7 @@ class Navbar extends Component {
             <div className="container">
               <div className="navbar-brand">
                 <div className="logo">
-                  <p className="subtitle">Victoria Style</p>
+                  <p className="subtitle 2 title-navbar">Victoria Style</p>
                 </div>
                 {/* <span className="navbar-burger burger" data-target="navbarMenu">
                   <span></span>
@@ -59,7 +60,7 @@ class Navbar extends Component {
                       :
                       <ul className="subtitle is-4">
                         <li><Link to="/" >Home</Link></li>
-                        <li><Link to="/login">Login</Link></li>
+                        <li ><Link to="/login">Login</Link></li>
                       </ul>
                     }
                   </div>

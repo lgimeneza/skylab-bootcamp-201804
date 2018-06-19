@@ -4,6 +4,7 @@ import swal from 'sweetalert2'
 import logic from '../logic'
 import createBooking from '../helpers/createBooking'
 import { create } from 'domain';
+import '../design/login.css'
 
 
 export class Login extends Component {
@@ -50,7 +51,12 @@ export class Login extends Component {
         if (result) {
           this.storageUserData(result)
           this.props.navbarLogin()
-          logic.localStorageGetItem("checkedList") ? this.props.history.push('/confirmBooking') : this.props.history.push('/')
+          if (logic.localStorageGetItem("checkedList") && logic.localStorageGetItem("date") && logic.localStorageGetItem("date") ) {
+            this.props.history.push('/confirmBooking')
+          }else {
+            this.props.history.push('/')
+          }
+    
           // aqui se tiene que esperar para ver si te lleva al profile o al data
         }
       }).catch(data => {
@@ -68,7 +74,7 @@ export class Login extends Component {
     }
   }
   storageUserData(result) {
-    
+
     logic.localStorageSetItem('token', result.token)
     logic.localStorageSetItem('id', result.id)
   }
@@ -81,7 +87,7 @@ export class Login extends Component {
             <div className="column is-4 is-offset-4">
               <h3 className="title has-text-grey">Login</h3>
               <p className="subtitle has-text-grey">Please login to proceed.</p>
-              <div className="box">
+              <div className="box font-box">
                 {/* <figure className="avatar">
                   <img src="https://placehold.it/128x128" alt="" />
                 </figure> */}
