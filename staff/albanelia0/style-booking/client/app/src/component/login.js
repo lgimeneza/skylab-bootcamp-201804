@@ -49,10 +49,9 @@ export class Login extends Component {
       logic.login(body).then(result => {
         if (result) {
           this.storageUserData(result)
-
+          console.log(result)
+          logic.localStorageGetItem("checkedList") ? this.props.history.push('/confirmBooking') : this.props.history.push('/')
           // aqui se tiene que esperar para ver si te lleva al profile o al data
-          this.props.history.push('/confirmBooking')
-
         }
       }).catch(data => {
         swal({

@@ -12,14 +12,15 @@ class ConfirmBooking extends Component {
     bookingHour: '',
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    
+    //this.state.selectedServices === null ? this.props.history.push('/') : undefined
 
     let checkedList = logic.localStorageGetItem("checkedList")
     checkedList = JSON.parse(checkedList)
-    
+
     let date = logic.localStorageGetItem("date")
     let hour = logic.localStorageGetItem("hour")
-
     this.setState({
       selectedServices: checkedList,
       bookingDate: date,
@@ -59,13 +60,14 @@ class ConfirmBooking extends Component {
             <hr />
           </div>
           <div className="selected-services">
-            {this.state.selectedServices.map(service => {
+
+            { this.state.selectedServices.map(service => {
               return (
                 <ul>
                   <li>Service name: {service.serviceName}</li>
                   <li>Duration: {service.duration}min</li>
                   <li>Price: {service.price}€</li>
-                  <hr/>
+                  <hr />
                 </ul>
               )
             })}

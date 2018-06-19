@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import 'react-router-dom'
-import { ButtonBackToHome } from './buttonBackToHome'
+import { ButtonBack} from './buttonBack'
 import { Login } from './login'
 import moment from 'moment'
 import logic from '../logic'
@@ -108,7 +108,7 @@ render() {
         {this.renderBookingData()}
       </section>
       <div className="footerCalendar">
-        <ButtonBackToHome />
+        <ButtonBack name="home" direction="/" />
       </div>
     </div>
   )

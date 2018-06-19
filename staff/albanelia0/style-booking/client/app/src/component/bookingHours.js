@@ -3,6 +3,7 @@ import logic from '../logic'
 import Calendar from './calendar'
 import swal from 'sweetalert2'
 import createBooking from '../helpers/createBooking'
+import {ButtonBack} from './buttonBack'
 import '../design/bookingHours.css'
 
 const START_DAY = 8
@@ -111,6 +112,7 @@ class BookingHours extends Component {
         <div className="content-hours">
           {this.displayHours()}
         </div>
+        <ButtonBack name="Calendar" direction={`/calendar/${this.state.date[0]}/${this.state.date[1]}`} />
       </div>
     )
   }
