@@ -56,6 +56,7 @@ class ConfirmBooking extends Component {
           <div className="booking-times">
             <h2>Date: {this.state.bookingDate}</h2>
             <h3>Hour: {this.state.bookingHour}</h3>
+            <hr />
           </div>
           <div className="selected-services">
             {this.state.selectedServices.map(service => {
@@ -64,6 +65,7 @@ class ConfirmBooking extends Component {
                   <li>Service name: {service.serviceName}</li>
                   <li>Duration: {service.duration}min</li>
                   <li>Price: {service.price}€</li>
+                  <hr/>
                 </ul>
               )
             })}

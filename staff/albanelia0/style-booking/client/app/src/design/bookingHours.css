@@ -22,3 +22,8 @@
   flex-basis: 230px;
   cursor: pointer;
 }
+
+.card-hours-inavailable {
+  flex-basis: 230px;
+  cursor: default;
+}

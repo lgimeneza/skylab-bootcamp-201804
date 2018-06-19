@@ -45,8 +45,26 @@ class Profile extends Component {
     })
   }
 
+  showServicePrice = (result) => {
+    let price = 0
+    result.services.map((service) => {
+      price += service.price
+    })
+    return price
+  }
+  showServiceDuration = (result) => {
+    let _duration = 0;
+    result.services.map((service) => {
+      _duration += service.duration
+    })
+    return _duration
+  }
+
+
   listBookingBox = () => {
+
     return this.state.result.map(result => {
+      
       return (
         < div key={result.bookingId} className="booking">
           <article className="media">
@@ -60,8 +78,8 @@ class Profile extends Component {
                   <ul>
                     {<li>Date:{result.date}</li>}
                     {<li>EndDate:{result.endDate}</li>}
-                    {<li>Duration:{result.services.map(service => service.duration)}min</li>}
-                    {<li>Price:{result.services.map(service => service.price)}€</li>}
+                    {<li>Duration:{this.showServiceDuration(result)}min</li>}
+                    {<li>Price:{this.showServicePrice(result)}€</li>}
                   </ul>
                 </div>
               </div>
@@ -74,9 +92,6 @@ class Profile extends Component {
                     <span className="icon is-small">
                       <i onClick={() => this.cancelBooking(result.bookingId, result.userId)} className=" delete  delete-booking is-danger" aria-hidden="true"></i>
                     </span>
-                    {/* <span className="icon is-small">
-                      <i className="fa fa-pencil-alt" aria-hidden="true"></i>
-                    </span> */}
                   </a>
                 </div>
               </nav>

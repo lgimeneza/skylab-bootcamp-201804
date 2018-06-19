@@ -18,15 +18,16 @@ export class Dropdown extends Component {
 
   state = {
     _month: '',
-    checkedList: []
+    checkedList: [],
+    _year: 2018, 
+    title: 'Choose your service'
   }
 
 
   componentDidMount() {
     this.setState({
       _month: month,
-      _monthNumber: 6,
-      _year: 2018, 
+      _monthNumber: 6
     })
   }
 
@@ -41,14 +42,14 @@ export class Dropdown extends Component {
     return logic.listServices()
       .then(async services => {
         const { value: formValues } = await swal({
-          title: 'Elige tu servicio',
+          title: 'choose your service',
           html:
             services.map(service => {
               return `
                 <div class="drobdownList">
                   <label>
                     <input id="${service.serviceId}" type="checkbox">
-                    <span>${service.serviceName} Duration=${service.duration}min price=${service.price}€</span>
+                    <span>${service.serviceName} Duration=${service.totalDuration}min price=${service.price}€</span>
                   </label>
                 </div>`
             }).join(''),
@@ -69,10 +70,10 @@ export class Dropdown extends Component {
         if (formValues) {
 
           let checkedList = formValues
-
+          
           logic.localStorageSetItem('checkedList', JSON.stringify(checkedList))
 
-          this.setState({ checkedList }, () => {
+          this.setState({ checkedList, title:checkedList[0].serviceName }, () => {
             swal('Perfect! chosen service, choose the date / time and go!')
           })
 
@@ -82,20 +83,40 @@ export class Dropdown extends Component {
 
   changeMonth = (e) => {
     const name = e.target.getAttribute('name')
-    if (name === 1) {
+    if (name == 1) {
       this.setState({
         _month: monthNames[day.getMonth() + 1],
         _monthNumber: day.getMonth() + 2
       })
-    } else if (name === 2) {
+    } else if (name == 2) {
       this.setState({
         _month: monthNames[day.getMonth() + 2],
         _monthNumber: day.getMonth() + 3
       })
-    } else if (name === 3) {
+    } else if (name == 3) {
       this.setState({
         _month: monthNames[day.getMonth() + 3],
-        _monthNumber: day.getMonth() + 3
+        _monthNumber: day.getMonth() + 4
+      })
+    } else if (name == 4) {
+      this.setState({
+        _month: monthNames[day.getMonth() + 4],
+        _monthNumber: day.getMonth() + 5
+      })
+    } else if (name == 5) {
+      this.setState({
+        _month: monthNames[day.getMonth() + 5],
+        _monthNumber: day.getMonth() + 6
+      })
+    } else if (name == 6) {
+      this.setState({
+        _month: monthNames[day.getMonth() + 6],
+        _monthNumber: day.getMonth() + 7
+      })
+    } else if (name == 7) {
+      this.setState({
+        _month: monthNames[day.getMonth() - 5],
+        _monthNumber: day.getMonth() + 8
       })
     } else {
       this.setState({
@@ -107,17 +128,15 @@ export class Dropdown extends Component {
 
   changeYear = (e) => {
     const name = e.target.getAttribute('name')
-    if (name === 1) {
+    if (name == 1) {
       this.setState({
         _year: year
       })
-    } else if (name === 2) {
+    } else if (name == 2) {
       this.setState({
         _year: year + 1
       })
     }
-
-
   }
 
 
@@ -125,7 +144,7 @@ export class Dropdown extends Component {
     return (
       <div>
         <button onClick={this.listServices} class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu3">
-          <span>Elige tu servicio</span>
+          <span>{this.state.title}</span>
           <span class="icon is-small">
           </span>
         </button>
@@ -168,6 +187,18 @@ export class Dropdown extends Component {
               </a>
               <a onClick={this.changeMonth} name="3" class="dropdown-item">
                 {"September"}
+              </a>
+              <a onClick={this.changeMonth} name="4" class="dropdown-item">
+                {"October"}
+              </a>
+              <a onClick={this.changeMonth} name="5" class="dropdown-item">
+                {"November"}
+              </a>
+              <a onClick={this.changeMonth} name="6" class="dropdown-item">
+                {"December"}
+              </a>
+              <a onClick={this.changeMonth} name="7" class="dropdown-item">
+                {"January"}
               </a>
             </div>
           </div>

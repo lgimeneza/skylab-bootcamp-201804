@@ -92,7 +92,7 @@ class BookingHours extends Component {
       }
 
       return (
-        <div key={hour} className='card  card-hours'>
+        <div key={hour} className={bookingClass == 'has-text-danger' ? 'card  card-hours-inavailable' : 'card card-hours'} >
           <div className="card-content">
             <h1 onClick={() => this.finishBooking(hour.hour)} className={`title ${bookingClass}`}>{hour.hour}</h1>
           </div>
