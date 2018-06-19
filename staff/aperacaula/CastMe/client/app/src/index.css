@@ -505,6 +505,10 @@ a {
 	justify-content: center;
 }
 
+.swal-button{
+    background-color: #582229;
+}
+
 .link-style2 {
 	display: inline-block;
 	margin-top: 10px;

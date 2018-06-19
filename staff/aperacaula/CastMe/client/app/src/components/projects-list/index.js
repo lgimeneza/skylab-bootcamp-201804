@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import Header from "../header";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import "./index.css";
 
 class ProjectList extends Component {

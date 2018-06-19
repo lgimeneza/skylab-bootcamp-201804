@@ -1,9 +1,18 @@
-import React from "react";
+import React, {Component} from "react";
 //import './index.css'
 import { Link } from "react-router-dom";
 import claqueta from "./images/claqueta.jpg"
+import logic from '../../logic'
 
-function Landing(props) {
+class Landing extends Component{
+
+	componentDidMount(){
+		if(logic.userId){
+			this.props.onHome(logic.userId)
+		}
+	}
+
+	render(){
   	return (
 
 
@@ -103,7 +112,7 @@ function Landing(props) {
 	<p>&copy; CastMe. All rights reserved.</p>
 </div>
 </div>
-      );
+      );}
 }
 
 export default Landing;

@@ -71,7 +71,7 @@ class App extends Component {
             {
 
             }
-            <Route exact path="/" component={Landing} />
+            <Route exact path="/" render={()=> <Landing onHome={this.goHome}/>} />
             <Route path="/login" render={()=> <Login onBackLanding={this.goLanding} onRegister={this.goRegister} onLogin={this.goHome}/>} />
             <Route path="/register" render={() => <Register picture={this.state.picture} onClickUploadPicture={this.goToUploadPicture} onBackLanding={this.goLanding}/>} />
             <Route path="/upload_picture" render={() => <UploadPicture onUploadPicture={this.uploadPicture} onRegister={this.goRegister}/>} />

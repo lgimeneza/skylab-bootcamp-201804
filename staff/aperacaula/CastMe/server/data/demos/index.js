@@ -392,6 +392,154 @@ mongoose.connect(DB_URL)
             situation: 'Open'
         }
 
+        //Project7
+        const pr7_2= {
+            height: null,
+            weight: null,
+            physicalCondition: null,
+            eyes: null,
+            hair: null,
+            ethnicity: 'any',
+            beard: false,
+            tattoos: false,
+            piercings: false
+        };
+        const casting7_2= {
+            title: "Any type",
+            minAge: 0,
+            maxAge: 100,
+            sex: 'female',
+            description: 'Any kind of enthusiastic, motivated and smiling person is welcome!',
+            physicalReq: pr7_2,
+            
+
+        };
+
+
+        const pr7_1 = {
+            height: null,
+            weight: null,
+            physicalCondition: null,
+            eyes: null,
+            hair: null,
+            ethnicity: 'any',
+            beard: false,
+            tattoos: false,
+            piercings: false
+        };
+        const casting7_1 = {
+            title: "Any type",
+            minAge: 0,
+            maxAge: 100,
+            sex: 'male',
+            description: 'Any kind of enthusiastic, motivated and smiling person is welcome!',
+            physicalReq: pr7_1,
+            
+
+        };
+
+        const project7 = {
+            title: 'New Talents',
+            publishedDate: (() => new Date())(),
+            endDate: (() => {
+                let date = new Date()
+                date.setDate(date.getDate() + 10)
+                return date
+            })(),
+            paid: true,
+            professional: true,
+            province: 'Cuenca',
+            description: 'For film. We are looking for new talents in an open casting, whatever your age, whatever your background, come and try. Our team will assess you and you will enjoy the process',
+
+            castings: [],
+
+            situation: 'Open'
+        }
+
+        //Project 8
+
+        const pr8_1 = {
+            height: 1.65,
+            weight: null,
+            physicalCondition: 'fit',
+            eyes: null,
+            hair: "blond",
+            ethnicity: 'caucasian',
+            beard: false,
+            tattoos: false,
+            piercings: false
+        };
+        const casting8_1 = {
+            title: "Beactrice",
+            minAge: 20,
+            maxAge: 40,
+            sex: 'female',
+            description: 'The iconic shakespearean character needs someone to impersonate it. We are looking for attractive, smart women willing to open their arms to the witty tongue of Beactrice',
+            physicalReq: pr8_1,
+            
+
+        };
+
+        const project8 = {
+            title: 'Much Ado About Nothing',
+            publishedDate: (() => new Date())(),
+            endDate: (() => {
+                let date = new Date()
+                date.setDate(date.getDate() + 30)
+                return date
+            })(),
+            paid: true,
+            professional: true,
+            province: 'Barcelona',
+            description: 'For theatre. We need an actress between 20-30 years old to perform in "Much Ado About Nothing", of W. Shakespeare, next season at TNC. This new initiative of theatre in English comes from la Generalitat and it shows a promising will to improve linguistic knowledge in the city',
+
+            castings: [],
+
+            situation: 'Open'
+        }
+
+        //Project 9
+
+        const pr9_1 = {
+            height: 1.85,
+            weight: null,
+            physicalCondition: 'muscular',
+            eyes: null,
+            hair: "blond",
+            ethnicity: 'caucasian',
+            beard: true,
+            tattoos: true,
+            piercings: false
+        };
+        const casting9_1 = {
+            title: "John",
+            minAge: 20,
+            maxAge: 40,
+            sex: 'male',
+            description: "John is the lead (tall, blond, muscular guy) of this new film produced by Spielberg's grandson himself. If the project gathers enough funding, it will receive an incredible amount of promotion and will open the Toronto Film Festival next year. ",
+            physicalReq: pr9_1,
+            
+
+        };
+
+        const project9 = {
+            title: 'Film in needs of Lead',
+            publishedDate: (() => new Date())(),
+            endDate: (() => {
+                let date = new Date()
+                date.setDate(date.getDate() + 30)
+                return date
+            })(),
+            paid: true,
+            professional: true,
+            province: 'Barcelona',
+            description: 'For film. New project with tag Spielberg on it. This movie will receive a lot of importance once it reaches a minimum amount of donnors, as it is now a result of a bet between Steven and his grandson. If the boy gets 1.000.000 $ on his own, his grandad promised to boost the movie!',
+
+            castings: [],
+
+            situation: 'Open'
+        }
+
 
 
         return Promise.all([
@@ -400,9 +548,12 @@ mongoose.connect(DB_URL)
             Project.create(project3),
             Project.create(project4),
             Project.create(project5),
-            Project.create(project6)
+            Project.create(project6),
+            Project.create(project7),
+            Project.create(project8),
+            Project.create(project9)
         ])
-            .then(([proj1, proj2, proj3, proj4, proj5, proj6]) => {
+            .then(([proj1, proj2, proj3, proj4, proj5, proj6, proj7, proj8, proj9]) => {
                 let cast13, cast22
 
                 proj1.castings.push(new Casting(casting1_1))
@@ -417,6 +568,12 @@ mongoose.connect(DB_URL)
                 proj5.castings.push(new Casting(casting5_1))
                 proj5.castings.push(new Casting(casting5_2))
                 proj6.castings.push(new Casting(casting6_1))
+                proj7.castings.push(new Casting(casting7_1))
+                proj7.castings.push(new Casting(casting7_2))
+                proj8.castings.push(new Casting(casting8_1))
+                proj9.castings.push(new Casting(casting9_1))
+                
+
                 
 
                 const userData = {
@@ -511,7 +668,7 @@ mongoose.connect(DB_URL)
                     profilePicture: 'http://res.cloudinary.com/dt6qv2j4j/image/upload/v1528803579/uvcv0wzsqe9sjrabd9ca.jpg',
                     applications: []
                 }
-                return Promise.all([proj1.save(), proj2.save(), proj3.save(),proj4.save(), proj5.save(), proj6.save()])
+                return Promise.all([proj1.save(), proj2.save(), proj3.save(),proj4.save(), proj5.save(), proj6.save(), proj7.save(),proj8.save(),proj9.save()])
                     .then(() => Promise.all([User.create(userData), User.create(otherUserData)])
                         .then(([user1, user2]) => {
                             user1.applications.push({ project: proj1._id, castings: [cast13._id] })

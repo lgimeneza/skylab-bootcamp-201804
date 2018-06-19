@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Header from "../header";
 import logic from "../../logic";
+import "./index.css"
+import swal from 'sweetalert'
 
 class ProjectPage extends Component {
   state = {
@@ -12,7 +14,7 @@ class ProjectPage extends Component {
     endDate: "",
     province: "",
     description: "",
-    castings: "",
+    castings: [],
     paid: "",
     professional: "",
     situation: ""
@@ -63,13 +65,53 @@ class ProjectPage extends Component {
   }
 
   printDate(date) {
+    
     const day = Number(date.substring(8, 10));
     const month = Number(date.substring(5, 7));
     const year = Number(date.substring(0, 4));
     return `${day}/${month}/${year}`;
   }
 
+  getPhysicalRequirements(casting){
+    let requirements={};
+    const keys= Object.keys(casting.physicalReq)
+    for (let i=1; i<keys.length; i++){
+        if (casting.physicalReq[keys[i]]){
+            requirements[keys[i]] = casting.physicalReq[keys[i]]
+        }
+    }
+    return requirements
+  }
+
+  writeString(string){
+      let correctString=''
+      if (string==='height')return "Minimum Height (m)"
+    
+      if (string==='weight')return "Approximate weight (kg)"
+
+      if(string.toLowerCase !== string){
+        correctString= string.replace(/([A-Z])/g, " $1" )
+      }
+      correctString= correctString[0].toUpperCase()+correctString.slice(1)
+      return correctString
+  }
+
+  joinCasting(castingId){
+      swal({
+        text: 'You joined the casting!',
+        buttons: 'Good!',
+        confirmButtonColor: '#59222A'
+      }   
+      )
+  }
+
   render() {
+    let professional
+    if (this.state.professional){
+        professional= 'Yes'
+    }else{
+        professional= 'No'
+    }
     return (
       <div>
         <div id="wrapper-login">
@@ -84,20 +126,38 @@ class ProjectPage extends Component {
               <div id="page-bgbtm">
                 <div className="post-home">
                   <div className="entry">
-                    <h3>Title</h3>
-                    <p>{this.state.title}</p>
-                    <h3>Description</h3>
-                    <p>{this.state.description}</p>
-                    <h3>Opened from:</h3>
-                    <p>{this.printDate(this.state.publishedDate)}</p>
-                    <h3>Closes on:</h3>
-                    <p>{this.printDate(this.state.endDate)}</p>
-                    <h3>Professional</h3>
-                    <p>{this.state.professional && 'Yes' || 'No'}</p>
-                    <h3>Castings:</h3>
-                    {/* <p>{this.state.castings.map(casting=>{
-                        return (<span>casting.title</span>)
-                    })}</p> */}
+                    <h1 className="project-data">Title</h1>
+                    <p className="project-info">{this.state.title}</p>
+                    <h1 className="project-data">Description</h1>
+                    <p className="project-info">{this.state.description}</p>
+                    <h1 className="project-data">Opened from:</h1>
+                    <p className="project-info">{this.printDate(this.state.publishedDate)}</p>
+                    <h1 className="project-data">Closes on:</h1>
+                    <p className="project-info">{this.printDate(this.state.endDate)}</p>
+                    <h1 className="project-data">Professional</h1>
+                    <p className="project-info">{professional}</p>
+                    <h1 className="project-data">Castings:</h1>
+                    <div className="project-info castings">{this.state.castings.map((casting, i)=>{
+                        
+                        return (
+                        <div className="casting-box" key={i}>
+                            <header className="casting-title">
+                                <b >{casting.title}</b>: {casting.sex}
+                            </header>
+                            <section className="casting-body">
+                                <p key={i+2}>Age rank: {casting.minAge}-{casting.maxAge}</p>
+                                <p key={i+3}>Description: {casting.description}</p>
+                                <div key={i+4}>{Object.keys(this.getPhysicalRequirements(casting)).map((requirement,i)=>{
+                                    return <p key={i}>{this.writeString(requirement)}:   {this.getPhysicalRequirements(casting)[requirement]}</p>
+                                })}</div>
+                                <button className="link-style join-casting" onClick={()=> this.joinCasting(casting._id)}>Join Casting</button>
+                            </section>
+                        
+                        </div>
+                    
+                    
+                    )
+                    })}</div>
                   </div>
                 </div>
 
