@@ -10,13 +10,13 @@ export default ({ onAddToCart, items, btnShow = false, productDetail = false, ca
                 <li key={item._id} className="items">
                     {/* <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}> */}
                         <div className="card" style={{ width: '18rem' }}>
-                            <img className="card-img-top" src={item.image} alt="course or category" />
+                            <img className="card-img-top" id={`img-${item._id}`} src={item.image} alt="course or category" />
                             <div className="card-body">
                                 <h5 className="card-title">{item.name}</h5>
                                 {btnShow && <p className="card-text">{item.description}</p>}
                                 {btnShow && (<p><Link to={`/categories/${item._id}`} className="btn btn-primary list-button" role="button">Show me more</Link></p>)}
                                 {productDetail && (<p><Link to={`/categories/products/${item._id}`} className="btn btn-primary list-button" role="button">product details</Link></p>)}
-                                {cartProducts && <a className="btn btn-outline-secondary" onClick={() => onAddToCart(item._id)} role="button">Add to the cart</a>}
+                                {cartProducts && <button className="btn btn-outline-secondary drag-to-cart" onClick={() => onAddToCart(item._id)}>Add to the cart</button>}
                             </div>
                         </div>
                     {/* </Animated> */}

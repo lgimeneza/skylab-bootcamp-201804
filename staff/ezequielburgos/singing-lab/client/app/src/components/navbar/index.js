@@ -45,7 +45,7 @@ class Navbar extends Component {
 
     render() {
         return (
-            <main>
+            <main className="navbar-container">
                 <nav className="site-header sticky-top py-1">
                     <div className="container d-flex flex-column flex-md-row justify-content-between">
                         <div className="py-2 d-none d-md-inline-block">

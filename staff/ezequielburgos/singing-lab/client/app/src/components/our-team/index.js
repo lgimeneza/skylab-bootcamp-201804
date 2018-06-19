@@ -1,55 +1,8 @@
 import React, { Component } from 'react'
 import './index.css'
 import Footer from '../footer'
-import $ from 'jquery'
 
 class OurTeam extends Component {
-
-
-    handleImage = () => {
-        // const el = findDOMNode(this.refs.button);
-        $("button").on("click", function () {
-            // var cart = $(".quod")
-            var cart = $(".fa-shopping-cart")
-            var imgtodrag = $(this).closest("div").find("img")
-
-            var imgclone = imgtodrag.clone()
-                .offset({
-                    top: imgtodrag.offset().top,
-                    left: imgtodrag.offset().left
-                })
-                .css({
-                    'opacity': '0.5',
-                        'position': 'absolute',
-                        'height': '150px',
-                        'width': '150px',
-                        'z-index': '100'
-                })
-                .appendTo("body")
-                .animate({
-                    'top': cart.offset().top + 10,
-                        'left': cart.offset().left + 10,
-                        'width': 75,
-                        'height': 75
-                }, 1000, "linear");
-            
-                setTimeout(function(){
-                    $(imgclone).remove()
-                }, 3000)
-                // setTimeout(function () {
-                //     cart.effect("shake", {
-                //         times: 2
-                //     }, 200);
-                // }, 1500);
-    
-                // imgclone.animate({
-                //     'width': 0,
-                //         'height': 0
-                // }, function () {
-                //     $(this).detach()
-                // });
-        })
-    };
 
     render() {
         return (
@@ -66,7 +19,7 @@ class OurTeam extends Component {
                         </div>
                         <div className="col-lg-4 col-sm-6 text-center mb-4 our-team-image-div our-team-first-image">
                             <img className="our-team-image rounded-circle img-fluid d-block mx-auto" width="200px" height="200px" src="https://res.cloudinary.com/duuegw4uf/image/upload/v1529264804/our-team/Screen_Shot_2018-06-17_at_21.44.53.png" alt="" />
-                            <button ref="button" onClick={this.handleImage}>click here</button>
+                            <button ref="button">click here</button>
                             <h3 className="our-team-image-title">David Monreal</h3>
                             <span>Counter-Tenor</span>
                             <p>A classical trained singer known for his colorful high voice. Expert in interpreting XVII century operetas.</p>

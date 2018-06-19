@@ -40,8 +40,8 @@ class Cart extends Component {
         return (
             <main>
                 <section className="main-title my-cart-title">
-                    <i className="fas fa-shopping-cart"></i>
-                    <span> My Cart</span>
+                    <div className="flying-cart-title"> My Cart</div>
+                    <i className="fas fa-shopping-cart title-shopping-cart"></i>
                 </section>
                 <section className="main-section-cart">
         

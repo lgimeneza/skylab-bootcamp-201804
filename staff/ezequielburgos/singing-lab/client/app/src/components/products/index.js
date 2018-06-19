@@ -15,13 +15,13 @@ class Products extends Component {
 
     componentDidMount() {
         logic.listProducts(this.props.categoryId)
-            .then(products => this.setState({ products }))    
+            .then(products => this.setState({ products }))
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.categoryId !== this.props.categoryId){
+        if (prevProps.categoryId !== this.props.categoryId) {
             logic.listProducts(this.props.categoryId)
-                .then(products => this.setState({ products }))   
+                .then(products => this.setState({ products }))
         }
     }
 

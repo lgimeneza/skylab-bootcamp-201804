@@ -3,6 +3,7 @@ import { Landing, Register, Login, Categories, Products, ProductData, OurTeam, P
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import logic from './logic'
 import swal from 'sweetalert2'
+import $ from 'jquery'
 
 class App extends Component {
   state = {
@@ -22,7 +23,38 @@ class App extends Component {
 
   onAddToCart = id => {
     logic.addProductToCart(id)
-      .then(() => this.setState({ cartLength: logic.cart().length }))
+    .then(() => {
+        
+        this.setState({ cartLength: logic.cart().length })
+
+        var cart = $(".fa-shopping-cart")
+        var imgtodrag = $('#img-'+id);
+
+        var imgclone = imgtodrag.clone()
+          .offset({
+            top: imgtodrag.offset().top,
+            left: imgtodrag.offset().left
+          })
+          .css({
+            'opacity': '0.5',
+            'position': 'absolute',
+            'height': '200px',
+            'width': '200px',
+            'z-index': '100000'
+          })
+          .appendTo("body")
+          .animate({
+            'top': cart.offset().top - 10,
+            'left': cart.offset().left - 10,
+            'width': 50,
+            'height': 50
+          }, 1000, "linear");
+
+        setTimeout(function () {
+          $(imgclone).remove()
+        }, 1000)
+
+      })
       .catch(err => swal(err.message))
   }
 
