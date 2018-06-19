@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "react-router-dom"
-//import homeicon from "../../images/home-icon.png"
 import {
     Collapse,
     Navbar,
@@ -8,13 +7,9 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
+    NavLink
 } from 'reactstrap';
-
+import './styles.css'
 
 
 class Header extends React.Component {
@@ -37,8 +32,8 @@ class Header extends React.Component {
 
     render() {
         return (
-            <div>
-                <Navbar color="light" light expand="md">
+            <div className='shadow-sm'>
+                <Navbar color="dark" dark expand="md">
                     <NavbarBrand href="/">arduino controller</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>

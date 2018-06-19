@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter, Link } from 'react-router-dom'
-import './Profile.css'
+import './style.css'
 import swal from 'sweetalert2'
+import { Row, Col, Media, Button } from 'reactstrap'
+
+let imgStyle = {
+    height: '256px',
+    width: '256px'
+}
 
 class Profile extends Component {
-
-    defaultPictureUrl = 'https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_8.png'
 
     state = {
         name: '',
         surname: '',
-        picture_url: this.defaultPictureUrl,
+        picture_url: '',
         serverErrorMessage: '',
         viewModal: false,
         password: ''
@@ -23,74 +27,80 @@ class Profile extends Component {
 
         if (userId && token) {
 
-            logic.retrieveUser(userId,token).then(resp => {
+            logic.retrieveUser(userId, token).then(resp => {
                 Promise.resolve().then(() => {
                     this.setState({
                         name: resp.name,
                         surname: resp.surname,
-                        email: resp.email
+                        email: resp.email,
+                        picture_url: resp.picture_url
                     })
                 })
             })
         }
     }
 
-    _handleName = (e) => {
+    _handleName = ({ target: { value: name } }) => {
         this.setState({
-            name: e.target.value,
+            name
         })
     }
 
-    _handleSurname = (e) => {
+    _handleSurname = ({ target: { value: surname } }) => {
         this.setState({
-            Surname: e.target.value,
+            surname
         })
     }
 
-    _handlePicture_url = (e) => {
-        if (/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/.test(e.target.value)) {
-            this.setState({
-                picture_url: e.target.value
-            })
-        }
-    }
-    _handlePassword = (e) => {
+    _handlePicture_url = ({ target: { value: picture_url } }) => {
         this.setState({
-            password: e.target.value,
+            picture_url
+        })
+    }
+    _handlePassword = ({ target: { value: password } }) => {
+        this.setState({
+            password
         })
     }
 
     _handleUpdate = (e) => {
         e.preventDefault()
-        let picture_url = document.getElementById('picture_url').value
+        let picture_url = this.state.picture_url
+
         let token = localStorage.getItem('token-app')
         let userId = localStorage.getItem('id-app')
         let name = this.state.name
         let pass = this.state.password
-
         let surname = this.state.surname
         let email = this.state.email
+        if (/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/.test(picture_url)) {
+            logic.updateUser(userId, token, name, surname, pass, email, picture_url).then(resp => {
+                if (resp.status === 'OK') {
+                    swal({
+                        type: 'success',
+                        title: 'Success!',
+                        text: 'Profile updated correctly',
+                    })
 
-        logic.updateUser(userId, token, name, surname, pass, email ).then(resp => {
-            if (resp.status === 'OK') {
-                swal({
-                    type: 'success',
-                    title: 'Success!',
-                    text: 'Profile updated correctly',
-                })
-
-                this.setState({
-                    viewModal: true
-                })
-            } else {
-                swal({
-                    type: 'error',
-                    title: 'Oopsies!',
-                    text: resp.error,
-                })
-                this.setState({ serverErrorMessage: resp.error })
-            }
-        })
+                    this.setState({
+                        viewModal: true
+                    })
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Oopsies!',
+                        text: resp.error
+                    })
+                    this.setState({ serverErrorMessage: resp.error })
+                }
+            })
+        } else {
+            swal({
+                type: 'error',
+                title: 'Oopsies!',
+                text: 'Wrong image!'
+            })
+        }
     }
 
     _closeModal = () => {
@@ -109,53 +119,60 @@ class Profile extends Component {
 
                 <div className="container profile-form text-center">
 
-                    <div className="box-img rounded-circle  m-4 justify-content-center ">
-                        <img className='w-100' src={this.state.picture_url}
-                            alt=" " />
+                    <div className="box-img rounded-circle m-4 justify-content-center ">
+                        <Media id='picture_url' className="box-img rounded m-4 justify-content-center" object style={imgStyle} src={/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/.test(this.state.picture_url) ? this.state.picture_url : 'https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_8.png'}
+                            alt="Profile picture" />
                     </div>
 
-                    <div className="">
-                        <form onSubmit={this._handleUpdate}>
-                            <div className="row justify-content-center ">
-                                <input className="form-group w-50 mt-4 border pl-3" value={this.state.name} onChange={this._handleName} id="name" type="text" placeholder="Your name" />
-                            </div>
-                            <div className="row justify-content-center ">
 
-                                <input className="form-group w-50 mt-4 border pl-3" value={this.state.surname} onChange={this._handleSurname} id="Surname" type="text" placeholder="Your last name"
-                                />
-                            </div>
-                            <div className="row justify-content-center ">
-                                <input className="form-group w-50 mt-4 border pl-3" value={this.state.profile_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?"
-                                />
-                            </div>
-                            <div className="row justify-content-center ">
-                                <input className="form-group w-50 mt-4 border pl-3" value={this.state.password} onChange={this._handlePassword} id="password" type="password" placeholder="Confirm password"
-                                />
-                            </div>
-                            <div className="row justify-content-center ">
+                    <div className="forms">
+                        <Row>
+                            <Col xs='12' md={{ size: '6', offset: '3' }}>
+                                <form onSubmit={this._handleUpdate}>
+                                    <div className="field mb-4">
+                                        <input value={this.state.name} autoFocus onChange={this._handleName} id="name" type="text" placeholder="Your name" />
+                                        <label htmlFor="Name">Name</label>
+                                    </div>
+                                    <div className="field mb-4">
 
-                                <p className="text-danger">{this.state.serverErrorMessage}</p>
-                            </div>
+                                        <input value={this.state.surname} onChange={this._handleSurname} id="Surname" type="text" placeholder="Your last name"
+                                        />
+                                        <label htmlFor="Surname">Surname</label>
+                                    </div>
+                                    <div className="field mb-4">
+                                        <input value={this.state.picture_url} onChange={this._handlePicture_url} id="picture_url" type="text" placeholder="URL for profile picture?"
+                                        />
+                                        <label htmlFor="pictureurl">Picture Url</label>
+                                    </div>
+                                    <div className="field mb-4">
+                                        <input value={this.state.password} onChange={this._handlePassword} id="password" type="password" placeholder="Confirm password"
+                                        />
+                                        <label htmlFor="Password">Password</label>
+                                    </div>
+                                    <div className="field mb-4">
 
-                            <div className="row justify-content-center ">
+                                        <p className="text-danger">{this.state.serverErrorMessage}</p>
+                                    </div>
+                                    <Row>
+                                        <Col xs='12' md={{ size: '3', offset: '3' }}>
+                                            <Button className="mb-3 btn bg-darkcyan btn-lg">Update</Button>
+                                        </Col>
+                                        <Col xs='12' md='3'>
+                                            <Link to="/unregister">
+                                                <div className="row justify-content-center ">
+                                                    <Button className="mb-5 btn btn-danger btn-lg" type="submit">Unregister</Button>
+                                                </div>
+                                            </Link>
+                                        </Col>
+                                    </Row>
+                                    <div className="field mb-4">
+                                    </div>
+                                </form>
 
-                                <input /*id="button"*/ className="row justify-content-center mb-3 btn bg-darkcyan" type="submit" value='Update' />
-                            </div>
-                            <div className="row justify-content-center ">
-                            </div>
-                        </form>
-                        <Link to="/unregister">
-                            <div className="row justify-content-center ">
-
-                                <button className="mb-5 btn btn-danger">Unregister</button>
-                            </div>
-                        </Link>
+                            </Col>
+                        </Row>
                     </div>
-
                 </div>
-
-
-
             )
         }
     }

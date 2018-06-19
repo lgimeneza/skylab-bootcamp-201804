@@ -43,8 +43,8 @@ const logic = {
                 return User.findOne({ email })
                     .then(user => {
                         if (user) throw Error(`user with email ${email} already exists`)
-
-                        return User.create({ name, surname, email, password })
+                        const picture_url = 'https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_8.png'
+                        return User.create({ name, surname, email, picture_url, password })
                             .then(() => true)
                     })
             })
@@ -90,7 +90,7 @@ const logic = {
 
                 if (!(id = id.trim()).length) throw Error('user id is empty or blank')
 
-                return User.findById(id).select({ _id: 0, name: 1, surname: 1, email: 1 })
+                return User.findById(id).select({ _id: 0, name: 1, surname: 1, email: 1, picture_url: 1 })
             })
             .then(user => {
                 if (!user) throw Error(`no user found with id ${id}`)
@@ -111,7 +111,7 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
-    updateUser(id, name, surname, email, password, newEmail, newPassword) {
+    updateUser(id, name, surname, email, password, picture_url, newEmail, newPassword) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -160,6 +160,7 @@ const logic = {
                 user.surname = surname
                 user.email = newEmail ? newEmail : email
                 user.password = newPassword ? newPassword : password
+                user.picture_url = picture_url ? picture_url : 'https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_8.png'
 
                 return user.save()
             })
@@ -435,7 +436,7 @@ const logic = {
 
                         if (!ardu) throw Error(`no arduino found with id ${arduId}`)
 
-                        ardu.data=[];
+                        ardu.data = [];
 
                         return user.save()
                     })

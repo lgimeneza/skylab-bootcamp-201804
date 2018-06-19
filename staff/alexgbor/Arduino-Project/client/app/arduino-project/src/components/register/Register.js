@@ -84,7 +84,7 @@ class Register extends Component {
                         swal({
                             type: 'error',
                             title: 'Oops...',
-                            text: res,
+                            text: res
                         })
                     }
                 })

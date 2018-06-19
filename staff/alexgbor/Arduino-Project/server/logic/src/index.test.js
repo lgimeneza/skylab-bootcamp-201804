@@ -10,8 +10,8 @@ const _ = require('lodash')
 const { env: { DB_URL } } = process
 
 describe('logic (user)', () => {
-    const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', password: '123123ab' }
-    const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', password: '456456cd' }
+    const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', picture_url: 'https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_8.png', password: '123123ab' }
+    const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com',picture_url:'https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_7.png', password: '456456cd' }
     const dummyUserId = '123456781234567812345678'
     const dummyArduId = '234523452345234523452345'
 
@@ -202,7 +202,7 @@ describe('logic (user)', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
                 .then(({ id }) => {
-                    return logic.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123123ab', 'jw@mail.com', '456456cd')
+                    return logic.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123123ab', 'https://fch.lisboa.ucp.pt/sites/default/files/assets/images/avatar-fch_8.png', 'jw@mail.com', '456456cd')
                         .then(res => {
                             expect(res).to.be.true
 
@@ -228,9 +228,9 @@ describe('logic (user)', () => {
                 User.create(otherUserData)
             ])
                 .then(([{ id: id1 }, { id: id2 }]) => {
-                    const { name, surname, email, password } = userData
+                    const { name, surname, email, picture_url, password } = userData
 
-                    return logic.updateUser(id1, name, surname, email, password, otherUserData.email)
+                    return logic.updateUser(id1, name, surname, email, password, picture_url, otherUserData.email)
                 })
                 .catch(({ message }) => expect(message).to.equal(`user with email ${otherUserData.email} already exists`))
         )
@@ -296,7 +296,7 @@ describe('logic (user)', () => {
         )
 
         it('should fail on wrong new password regex', () =>
-            logic.updateUser(dummyUserId, userData.name, userData.surname, userData.email, userData.password, userData.email, '123')
+            logic.updateUser(dummyUserId, userData.name, userData.surname, userData.email, userData.picture_url, userData.password, userData.email, '123')
                 .catch(({ message }) => expect(message).to.equal('Wrong new password'))
         )
 
@@ -806,17 +806,17 @@ describe('logic (user)', () => {
                 .then(({ id, arduinos: [{ id: arduId }] }) => {
                     return logic.addArduinoData(id, arduId, 123123)
                         .then(dataId => {
-                            
+
                             expect(dataId).to.be.a('string')
                             expect(dataId).to.exist
-                            
+
                             return User.findById(id)
                                 .then(user => {
-                                    
+
                                     expect(user.arduinos).to.exist
                                     expect(user.arduinos.length).to.equal(1)
                                     expect(user.arduinos[0].data.length).to.equal(1)
-                                    const {_id:id, timestamp, value } = user.arduinos[0].data[0]
+                                    const { _id: id, timestamp, value } = user.arduinos[0].data[0]
 
                                     expect(id.toString()).to.equal(dataId)
                                     expect(timestamp).to.be.a('number')
@@ -827,12 +827,12 @@ describe('logic (user)', () => {
         })
 
         it('should fail on no arduino id', () =>
-            logic.addArduinoData(dummyUserId,undefined, 312123)
+            logic.addArduinoData(dummyUserId, undefined, 312123)
                 .catch(({ message }) => expect(message).to.equal('arduId is not a string'))
         )
 
         it('should fail on empty arduino id', () =>
-            logic.addArduinoData(dummyUserId,'', 123321)
+            logic.addArduinoData(dummyUserId, '', 123321)
                 .catch(({ message }) => expect(message).to.equal('arduId is empty or blank'))
         )
 
@@ -859,7 +859,7 @@ describe('logic (user)', () => {
 
             return user.save()
                 .then(({ id, arduinos: [{ id: arduId }] }) => {
-                    return logic.retrieveArduinoData(id,arduId)
+                    return logic.retrieveArduinoData(id, arduId)
                         .then(data => {
                             expect(data).to.exist
                             expect(data.length).to.equal(1)
@@ -870,12 +870,12 @@ describe('logic (user)', () => {
         })
 
         it('should fail on no arduino id', () =>
-            logic.retrieveArduinoData(dummyUserId,undefined)
+            logic.retrieveArduinoData(dummyUserId, undefined)
                 .catch(({ message }) => expect(message).to.equal('arduId is not a string'))
         )
 
         it('should fail on empty arduino id', () =>
-            logic.retrieveArduinoData(dummyUserId,'')
+            logic.retrieveArduinoData(dummyUserId, '')
                 .catch(({ message }) => expect(message).to.equal('arduId is empty or blank'))
         )
 
@@ -887,7 +887,7 @@ describe('logic (user)', () => {
 
             return user.save()
                 .then(({ id, arduinos: [{ id: arduId }] }) => {
-                    return logic.retrieveArduinoData(id,dummyArduId)
+                    return logic.retrieveArduinoData(id, dummyArduId)
                         .catch(({ message }) => expect(message).to.equal(`No user with arduino ${dummyArduId}`))
                 })
 

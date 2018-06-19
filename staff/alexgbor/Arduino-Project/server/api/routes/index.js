@@ -58,9 +58,9 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
 })
 
 router.patch('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
-    const { params: { userId }, body: { name, surname, email, password, newEmail, newPassword } } = req
+    const { params: { userId }, body: { name, surname, email, password, picture_url, newEmail, newPassword } } = req
 
-    logic.updateUser(userId, name, surname, email, password, newEmail, newPassword)
+    logic.updateUser(userId, name, surname, email, password, picture_url, email, password)
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })

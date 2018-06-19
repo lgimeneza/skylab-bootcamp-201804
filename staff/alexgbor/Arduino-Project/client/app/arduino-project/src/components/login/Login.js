@@ -13,14 +13,12 @@ class Login extends Component {
         loginFailedMessage: ""
     }
 
-    _handleKeepEmail = (e) => {
-        let email = e.target.value;
+    _handleKeepEmail = ({ target: { value: email } }) => {
         this.setState({ email })
     }
 
 
-    _handleKeepPassword = (e) => {
-        let password = e.target.value;
+    _handleKeepPassword = ({ target: { value: password } }) => {
         this.setState({ password })
     }
 
@@ -39,10 +37,10 @@ class Login extends Component {
                     swal({
                         type: 'error',
                         title: 'Oopsies!',
-                        text: res.error,
+                        text: res
                     })
                     this.setState({
-                        loginFailedMessage: res.error
+                        loginFailedMessage: res
                     })
                 }
             })
