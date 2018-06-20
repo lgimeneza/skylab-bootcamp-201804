@@ -28,7 +28,7 @@ function createBooking() {
         // alerta de prueba
         swal({
           type: 'error',
-          title: 'los servicios superan el limite de horas disponibles!lo siento! pero deberias elegir otra hora dispobible',
+          title: 'the services exceed the limit of available hours! I am sorry! but you should choose another available hour',
           // text: data.error
         })
         // alert("los servicios superan el limite de horas disponibles!lo siento! pero deberias elegir otra hora dispobible")

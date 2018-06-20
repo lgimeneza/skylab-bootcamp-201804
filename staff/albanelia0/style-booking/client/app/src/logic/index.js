@@ -1,7 +1,7 @@
 
 import logicApi from 'api'
 
-logicApi.url = 'http://192.168.1.143:4000/api'
+logicApi.url = 'http://192.168.0.16:4000/api'
 
 const logic = {
   userId: 'No-id',

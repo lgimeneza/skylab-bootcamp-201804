@@ -31,7 +31,7 @@ class BookingHours extends Component {
     if (!token) {
       swal({
         type: 'success',
-        title: 'perfect! logueate para guardar tu reserva y listo!',
+        title: 'perfect! log in to save your booking and ready!',
       })
 
       this.props.history.push('/login')

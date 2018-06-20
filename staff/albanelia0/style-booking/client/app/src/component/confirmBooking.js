@@ -36,7 +36,7 @@ class ConfirmBooking extends Component {
       if (res) {
         swal({
           type: 'success',
-          title: 'Reserva completada! ves a tu perfil!',
+          title: 'Booking completed! see your profile!',
         })
         this.props.history.push('/profile')
       } else {

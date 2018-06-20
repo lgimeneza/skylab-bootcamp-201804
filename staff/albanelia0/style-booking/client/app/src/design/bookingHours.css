@@ -27,3 +27,8 @@
   flex-basis: 230px;
   cursor: default;
 }
+
+.subtitble-hours{
+  font-size: 20px;
+  text-align: center;
+}

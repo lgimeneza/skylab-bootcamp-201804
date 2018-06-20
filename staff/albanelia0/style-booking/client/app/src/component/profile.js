@@ -73,7 +73,7 @@ class Profile extends Component {
             <div className="media-content">
               <div className="content">
                 <div>
-                  <strong className="tag is-primary">{result.services.map(service => service.serviceName)}</strong>
+                  <strong className="tag is-primary ">{result.services.map(service => `${service.serviceName}  \n,`)}</strong>
                   <br />
                   <ul>
                     {<li>Date:{result.date}</li>}
@@ -106,7 +106,7 @@ class Profile extends Component {
     return (
       <div className="profile">
         <h1 className="subtitle is-1 title-booking">Mys Bookings</h1>
-        <div className="box bookingBox">
+        <div className="box bookingBox text-booking">
           {this.state.result.length ? this.listBookingBox() : <span>No bookings</span>}
         </div>
       </div>

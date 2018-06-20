@@ -20,6 +20,14 @@
   padding: 15px;
 }
 
-.profile{
+.profile {
   margin: 0 auto;
+}
+
+.text-booking{
+display: flex;
+padding: 10px;
+/* justify-content: center;
+justify-content: space-between */
+
 }

@@ -52,7 +52,6 @@ class Navbar extends Component {
                   {this.state.token ?
                     <ul className="subtitle is-4">
                       <li className="is-active"><Link to="/" >Home</Link></li>
-                      <li><a href="">Contacta</a></li>
                       <li><Link to="/profile">Profile</Link></li>
                       <li onClick={() => this.logout()}><Link to="/">Logout</Link></li> 
                     </ul>

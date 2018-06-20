@@ -105,12 +105,10 @@ export class Register extends Component {
 
   render() {
     return (
-      <section className="hero is-fullheight">
-        <div className="hero-body">
           <div className="container has-text-centered">
             <div className="column is-4 is-offset-4">
               <h3 className="title has-text-grey">Register</h3>
-              <p className="subtitle has-text-grey">Please login to proceed.</p>
+              <p className="subtitle has-text-grey">Please register to proceed.</p>
               <div className="box font-box">
                 {/* <figure className="avatar">
                   <img src="https://placehold.it/128x128" />
@@ -156,8 +154,6 @@ export class Register extends Component {
               </p>
             </div>
           </div>
-        </div>
-      </section>
     )
   }
 
