@@ -393,7 +393,7 @@ const logic = {
             })
     },
 
-    controlArduino(userId, arduId, q) {
+    controlArduino(userId, arduId, q, ip) {
         return Promise.resolve()
             .then(() => {
                 if (typeof arduId !== 'string') throw Error('arduId is not a string')
@@ -404,13 +404,16 @@ const logic = {
 
                 if (q !== 'on' && q !== 'off') throw Error('Query can only be ON or OFF.')
 
+                if (typeof ip !== 'string') throw Error('ip is not a string')
+
+
                 let dataPackage = {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json'
                     })
                 }
-                return fetch(`http://192.168.1.47/${userId}/${arduId}/${q}`, dataPackage)
+                return fetch(`http://${ip}/${userId}/${arduId}/${q}`, dataPackage)
                     .then((res) => res.json())
                     .catch(err => err.message)
 

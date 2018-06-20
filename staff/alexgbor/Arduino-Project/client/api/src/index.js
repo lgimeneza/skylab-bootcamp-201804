@@ -505,7 +505,7 @@ const arduApi = {
             })
     },
 
-    controlArduino(userId, arduId, q) {
+    controlArduino(userId, arduId, q, ip) {
         return Promise.resolve()
             .then(() => {
                 if (typeof userId !== 'string') throw Error('user id is not a string')
@@ -518,9 +518,12 @@ const arduApi = {
 
                 if (typeof q !== 'string') throw Error('query is not a string')
 
+                if (typeof ip !== 'string') throw Error('ip is not a string')
+
+
                 if (q !== 'on' && q !== 'off') throw Error('query must be "on" or "off"')
 
-                return axios.get(`${this.url}/users/${userId}/arduinos/${arduId}/control?q=${q}`)
+                return axios.get(`${this.url}/users/${userId}/arduinos/${arduId}/control?q=${q}&ip=${ip}`)
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

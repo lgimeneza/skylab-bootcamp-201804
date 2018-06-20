@@ -69,8 +69,8 @@ const logic = {
             .then(data => data).catch(err => err.message)
     },
 
-    controlArduino(userId, arduId, q) {
-        return arduApi.controlArduino(userId, arduId, q)
+    controlArduino(userId, arduId, q, ip) {
+        return arduApi.controlArduino(userId, arduId, q, ip)
     },
 
     removeArduinoData(userId, arduId) {

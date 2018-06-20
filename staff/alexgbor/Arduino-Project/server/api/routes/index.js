@@ -180,9 +180,9 @@ router.get('/users/:userId/arduinos/:arduId/data/', jwtValidator, (req, res) => 
 })
 
 router.get('/users/:userId/arduinos/:arduId/control', (req, res) => {
-    const { params: { userId, arduId }, query: { q } } = req
+    const { params: { userId, arduId }, query: { q, ip } } = req
     if (q === 'on' || q === 'off') {
-        logic.controlArduino(userId, arduId, q)
+        logic.controlArduino(userId, arduId, q, ip)
             .then(({ stat }) => res.json({ status: 'OK', data: stat }))
             .catch(({ message }) => {
                 res.status(400)

@@ -29,8 +29,7 @@ class Home extends Component {
         clearInterval(this.state.timer)
     }
 
-    arduHandler = e => {
-        let selectedArduino = e.target.value
+    arduHandler = ({ target: { value: selectedArduino } }) => {
         this.setState({ selectedArduino })
     }
 
@@ -49,11 +48,11 @@ class Home extends Component {
         })
     }
 
-    _handleKeepIp = ({target:{value:ip}}) => {
+    _handleKeepIp = ({ target: { value: ip } }) => {
         this.setState({ ip })
     }
 
-    _handleKeepPort = ({target:{value:port}}) => {
+    _handleKeepPort = ({ target: { value: port } }) => {
         this.setState({ port })
     }
 
@@ -115,7 +114,7 @@ class Home extends Component {
         const arduId = this.state.data.find(function (ele) {
             return ele.ip === targetArduino
         })
-        logic.controlArduino(userId, arduId.id, state)
+        logic.controlArduino(userId, arduId.id, state, this.state.selectedArduino)
     }
 
     removeArduinoData = () => {
