@@ -6,8 +6,7 @@ import './index.css'
 class Nav extends Component {
     
     state = {
-        categories: [],
-        cartLength: 0
+        categories: []
     }
 
     componentDidMount() {
@@ -66,7 +65,7 @@ class Nav extends Component {
                                 <input className="form-control-sm mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                                 <button className="btn btn-sm btn-outline-warning my-2 my-sm-0 mr-2" type="submit">Search</button>
                             </form>
-                                    <Link to='/cart'><i id="iconNav" className="fas fa-shopping-cart mr-4">{logic.cart().length ? <span id="numBadget" className="badge badge-pill badge-danger">{logic.cart().length}</span> : ''}</i></Link>
+                                    <Link to='/cart'><i id="iconNav" className="fas fa-shopping-cart mr-4">{this.props.cartLength ? <span id="numBadget" className="badge badge-pill badge-danger">{this.props.cartLength}</span> : ''}</i></Link>
                             {!logic.loggedIn ? (
                                 <ul className="nav navbar-nav navbar-right">
                                     <li><Link to="/register"><button className="btn btn-sm btn-secondary my-2 my-sm-0" type="submit">Sing Up</button></Link></li>

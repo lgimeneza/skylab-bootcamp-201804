@@ -44,7 +44,7 @@ class ProductDetails extends Component {
                                 </ul>
                             </dl>
                             <div className="mt-5">
-                                <button className="btn btn-md btn-dark my-2 my-sm-0 ml-4 mt-3" type="submit" onClick={() => logic.addProductToCart(this.props.productId)}>Añadir al carrito</button>                                                  
+                                <button className="btn btn-md btn-dark my-2 my-sm-0 ml-4 mt-3" type="submit" onClick={() => this.props.onAddToCart(this.props.productId)}>Añadir al carrito</button>                                                  
                                 <Link to='/cart'><button className="btn btn-md btn-secondary my-2 my-sm-0 ml-4 mb-3"><i id="iconNav" className="fas fa-shopping-cart mr-2"></i>Ir al carrito</button> </Link>     
                             </div>
                         </div>

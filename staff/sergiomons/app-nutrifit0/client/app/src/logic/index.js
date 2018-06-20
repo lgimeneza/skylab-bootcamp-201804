@@ -38,15 +38,13 @@ const logic = {
         this.cart().push(productId)
         
         this.cart(this.cart())
-        window.location.reload()
-
     },
 
     removeProductFromCart(productId) {
         const updateCart = this.cart().filter(id => {
             return id !== productId
         })
-        window.location.reload()
+
         return this.cart(updateCart)
     },
 

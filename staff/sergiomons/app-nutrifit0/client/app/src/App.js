@@ -5,7 +5,7 @@ import './App.css';
 import api from 'client-api';
 import logic from './logic'
 import ProductDetails from './components/products/details-product';
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
 
 
 api.token = function (token) {
@@ -56,55 +56,52 @@ class App extends Component {
 
   state = {
     userData: {},
+    cartLength: logic.cart().length
   }
 
   componentDidMount() {
 
     if (logic.loggedIn) {
-    logic.retrieveUser()
-    .then(userData => {
+      logic.retrieveUser()
+        .then(userData => {
           this.setState({
-          userData
-      })
-    })
-  }
+            userData
+          })
+        })
+    }
   }
 
   onLogin = () => {
 
-        logic.retrieveUser()
-        .then(userData => {
-              this.setState({
-              userData
-          })
+    logic.retrieveUser()
+      .then(userData => {
+        this.setState({
+          userData
         })
+      })
   }
 
-  // onAddToCart = id => {
-  //   logic.addProductToCart(id)
-  //   .then(() => {
-        
-  //       this.setState({ cartLength: logic.cart().length })
-
-  //     })
-  //     .catch(err => err)
-  // }
+  onAddToCart = id => {
+    logic.addProductToCart(id)
+    
+    this.setState({ cartLength: logic.cart().length })
+  }
 
   render() {
     return (
       <div className="App">
-        <Nav userData={this.state.userData} />
+        <Nav userData={this.state.userData} cartLength={this.state.cartLength} />
         <Switch>
-            <Route exact path='/' component={Home}/>
-            <Route path='/category/:categoryId/subcategories' render={props=> <Categories categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} *//>}/>
-            <Route path='/category/:categoryId/products/' render={props=> <ProductsByCategory categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} *//>}/>
-            <Route path='/product/:productId'  render={props=> <ProductDetails productId={props.match.params.productId}/* refreshCart={this.onAddToCart} *//>}/>
-            <Route path='/cart' render={()=> <Cart/>} /> 
-            <Route path='/order' render={()=> <Order/>} />
-            <Route path='/register' render={()=> (!logic.loggedIn) ? <Register/> : <Redirect to='/' />}/>
-            <Route path='/auth' render={()=> (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Redirect to='/' />} />
+          <Route exact path='/' component={Home} />
+          <Route path='/category/:categoryId/subcategories' render={props => <Categories categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} */ />} />
+          <Route path='/category/:categoryId/products/' render={props => <ProductsByCategory categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} */ />} />
+          <Route path='/product/:productId' render={props => <ProductDetails productId={props.match.params.productId} onAddToCart={this.onAddToCart} />} />
+          <Route path='/cart' render={() => <Cart />} />
+          <Route path='/order' render={() => <Order />} />
+          <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Redirect to='/' />} />
+          <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin} /> : <Redirect to='/' />} />
         </Switch>
-        <Footer/>
+        <Footer />
       </div>
     );
   }
