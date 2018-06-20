@@ -1,46 +1,51 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import { Link } from 'react-router-dom'
-import Order from '../order'
 
 class Cart extends Component {
 
+    changes = {}
+
     state = {
         cart: [],
-        productTotal: "",
-        totalCart: [],
+        total: 0,
     }
 
     componentDidMount() {
-        this.getItems()
+        this.getCartSummary()
     }
 
-    getItems = () => {
+    componentWillReceiveProps() {
+        this.getCartSummary()
+    }
 
-            if (logic._cart.length && logic._cart !== 'undefined') {
-                logic.listProductsFromCart()
-                    .then(products => this.setState({ cart: products, totalCart: [] }))
-            } else {
-                this.setState({ cart: [],  totalCart: []})
-            }
+    getCartSummary = () => {
+        if (logic._cart.length && logic._cart !== 'undefined') {
+            logic.getCartSummary()
+                .then(({products, total}) => this.setState({ cart: products, total }))
+        }
     }
 
     onRemoveFromCart = (product) => {
         logic.removeProductFromCart(product)
-        return this.getItems()
+        return this.getCartSummary()
     }
 
-    getTotalCart = () => {
+    changeQuantity = (id, value, defaultValue) => {
+        const preValue = this.changes[id] || defaultValue
 
-        return this.state.cart.length ? this.state.totalCart.reduce((accum, current) => { return accum + current }) : "0"
-    }
-
-    changeQuantity = () => {
+        if (value && value > 0) {
+            if (value > preValue)
+                this.props.onAddToCart(id, value - preValue)
+            else if (preValue > value)
+                this.props.onSubstractFromCart(id, preValue - value)
+    
+            this.changes[id] = value
+        }
 
     }
 
     render() {
-        this.state.cart.map(product => { this.state.totalCart.push(product.price * product.quantity) })
         return (
             <main>
                 <div className="container-fluid">
@@ -65,12 +70,12 @@ class Cart extends Component {
                                                 <td><img style={{ width: '3.5rem', height: '2rem' }} src={product.image} /></td>
                                                 <td><span style={{ width: '12rem', height: '2rem' }}>{product.name}</span></td>
                                                 <td><span>{product.price} €/ud</span></td>
-                                                <td><input id="quantity" type="number" min="1" step="1" value={product.quantity} onChange={this.changeQuantity}style={{ width: '2.5rem', height: '1.4rem', }} /></td>
+                                                <td><input id="quantity" type="number" min="1" step="1" defaultValue={product.quantity} onChange={e => this.changeQuantity(product.id, parseInt(e.target.value), parseInt(e.target.defaultValue))} style={{ width: '2.5rem', height: '1.4rem', }} /></td>
                                                 <td> <span>{product.price * product.quantity} €</span></td>
                                                 <td><button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem' }}>X</button></td>
                                             </tr>)
                                     }) :
-                                    <h3 className="mt-4 mb-4 mx-auto">No hay productos en el carrito</h3>}
+                                        <h3 className="mt-4 mb-4 mx-auto">No hay productos en el carrito</h3>}
                                 </tbody>
                                 <tfoot>
                                     <tr className="table-active">
@@ -78,7 +83,7 @@ class Cart extends Component {
                                         <th></th>
                                         <th></th>
                                         <th>Total carrito</th>
-                                        <th>{this.getTotalCart()} €</th>
+                                        <th>{this.state.total} €</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -89,7 +94,7 @@ class Cart extends Component {
                             <div className="card">
                                 <h5 className="card-header" style={{ borderTopLeftRadius: "calc(1rem - 1px)", borderTopRightRadius: "calc(1rem - 1px)" }}>Total Carrito</h5>
                                 <div className="card-body">
-                                    <p className="card-text" style={{ fontSize: "2rem" }}>{this.getTotalCart()} €</p>
+                                    <p className="card-text" style={{ fontSize: "2rem" }}>{this.state.total} €</p>
                                 </div>
                                 <div className="card-footer">
                                     <Link to='/order'><button className="btn btn-lg btn-dark my-2 my-sm-0 btn-block mb-3" style={{ border: "1px solid #c6c6c6" }} type="submit">Pagar</button></Link>

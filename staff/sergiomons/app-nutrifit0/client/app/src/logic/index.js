@@ -30,13 +30,14 @@ const logic = {
     },
 
     getDateOrder() {
-        this._dateOrder = Date.now() 
+        this._dateOrder = Date.now()
         return this._dateOrder
     },
 
-    addProductToCart(productId) {
-        this.cart().push(productId)
-        
+    addProductToCart(productId, quantity = 1) {
+        for (let i = 0; i < quantity; i++)
+            this.cart().push(productId)
+
         this.cart(this.cart())
     },
 
@@ -45,7 +46,19 @@ const logic = {
             return id !== productId
         })
 
-        return this.cart(updateCart)
+        this.cart(updateCart)
+    },
+
+    substractProductFromCart(productId, quantity) {
+        for (let i = 0; i < quantity; i++) {
+            const index = this.cart().findIndex(_productId => _productId === productId)
+    
+            if (index > -1) {
+                this.cart().splice(index, 1)
+    
+                this.cart(this.cart())
+            }
+        }
     },
 
     listProductsFromCart() {
@@ -61,6 +74,15 @@ const logic = {
                 products.forEach(product => product.quantity = quantities[product.id])
 
                 return products
+            })
+    },
+
+    getCartSummary() {
+        return this.listProductsFromCart()
+            .then(products => {
+                const total = products.reduce((accum, product) => accum + product.price * product.quantity, 0)
+
+                return { products, total }
             })
     },
 

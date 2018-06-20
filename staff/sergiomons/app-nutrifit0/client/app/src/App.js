@@ -81,8 +81,14 @@ class App extends Component {
       })
   }
 
-  onAddToCart = id => {
-    logic.addProductToCart(id)
+  onAddToCart = (id, quantity) => {
+    logic.addProductToCart(id, quantity)
+    
+    this.setState({ cartLength: logic.cart().length })
+  }
+
+  onSubstractFromCart = (id, quantity) => {
+    logic.substractProductFromCart(id, quantity)
     
     this.setState({ cartLength: logic.cart().length })
   }
@@ -96,7 +102,7 @@ class App extends Component {
           <Route path='/category/:categoryId/subcategories' render={props => <Categories categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} */ />} />
           <Route path='/category/:categoryId/products/' render={props => <ProductsByCategory categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} */ />} />
           <Route path='/product/:productId' render={props => <ProductDetails productId={props.match.params.productId} onAddToCart={this.onAddToCart} />} />
-          <Route path='/cart' render={() => <Cart />} />
+          <Route path='/cart' render={() => <Cart onAddToCart={this.onAddToCart} onSubstractFromCart={this.onSubstractFromCart} />} />
           <Route path='/order' render={() => <Order />} />
           <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Redirect to='/' />} />
           <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin} /> : <Redirect to='/' />} />
