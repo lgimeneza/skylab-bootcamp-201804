@@ -350,6 +350,7 @@ const logic = {
                         //         user.save()
                         //     })
                         return User.findByIdAndUpdate(userId, {$push: { orders: order } })
+                            .then(() => order.id)
                     })
 
             })
