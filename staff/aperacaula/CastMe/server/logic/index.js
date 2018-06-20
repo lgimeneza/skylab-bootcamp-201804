@@ -542,7 +542,7 @@ const logic = {
       .then(user => {
         return Project.findById(projectId)
           .then(project => {
-            const casting = project.castings.find(casting => casting._id.toString() === castingId)
+            let casting = project.castings.find(casting => casting._id.toString() === castingId)
 
             if (!casting) throw Error(`there is no casting with id ${castingId} in the project given`)
 
@@ -552,14 +552,16 @@ const logic = {
 
             casting.applicants.push(user._id) //ads the user to the casting user's list
 
-            const index = null;
+            let index = null;
             for (let i = 0; i < user.applications.length; i++) {
               if (user.applications[i].project.toString() === projectId) {
                 index = i
               }
             }
-
-            if (index) {
+            
+            if (index !== null) {
+              const alreadyJoined= user.applications[index].castings.find(castingIdJoined=> castingIdJoined.toString()===castingId)
+              if (alreadyJoined) throw Error("You already joined this casting, we're taking you into consideration ;)")
               user.applications[index].castings.push(casting._id)
             } else {
               user.applications.push({ project: project._id, castings: casting._id })
@@ -572,69 +574,76 @@ const logic = {
       })
   },
 
-  // /**
-  //  *
-  //  * @param {string} userId
-  //  * @param {string} projectId
-  //  * @param {string} castingId
-  //  *
-  //  * @returns {Promise<boolean>} that confirms the user has joined the casting
-  //  */
-  // quitCasting(userId, projectId, castingId){
-  //     return Promise.resolve()
-  //         .then(()=>{
+  /**
+   *
+   * @param {string} userId
+   * @param {string} projectId
+   * @param {string} castingId
+   *
+   * @returns {Promise<boolean>} that confirms the user has joined the casting
+   */
+  quitCasting(userId, projectId, castingId){
+      return Promise.resolve()
+          .then(()=>{
 
-  //             if (typeof userId !== 'string') throw Error('user id is not a string')
+              if (typeof userId !== 'string') throw Error('user id is not a string')
 
-  //             if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
+              if (!(userId = userId.trim()).length) throw Error('user id is empty or blank')
 
-  //             if (typeof projectId !== 'string') throw Error('user id is not a string')
+              if (typeof projectId !== 'string') throw Error('user id is not a string')
 
-  //             if (!(projectId = projectId.trim()).length) throw Error('user id is empty or blank')
+              if (!(projectId = projectId.trim()).length) throw Error('user id is empty or blank')
 
-  //             if (typeof castingId !== 'string') throw Error('user id is not a string')
+              if (typeof castingId !== 'string') throw Error('user id is not a string')
 
-  //             if (!(castingId = castingId.trim()).length) throw Error('user id is empty or blank')
+              if (!(castingId = castingId.trim()).length) throw Error('user id is empty or blank')
 
-  //             return User.findById(userId)
-  //         })
-  //         .then(user =>{
-  //             return Project.findById(projectId)
-  //                 .then(project =>{
-  //                     const casting= project.castings.find(casting=> casting._id.toString()===castingId)
+              return User.findById(userId)
+          })
+          .then(user =>{
+              return Project.findById(projectId)
+                  .then(project =>{
+                      let casting= project.castings.find(casting=> casting._id.toString()===castingId)
 
-  //                     if (!casting) throw Error(`there is no casting with id ${castingId} in the project given`)
+                      if (!casting) throw Error(`there is no casting with id ${castingId} in the project given`)
+                      
+                      let indexUser= null;//let 's take the user off the casting applicants list
+                      for (let i=0; i<casting.applicants.length; i++){
+                          if (casting.applicants[i].toString()===userId) {
+                            indexUser=i
+                          }
+                      }
+                      
+                      
+                      if(indexUser=== null) throw Error('user is not registered in the given casting')
+                      casting.applicants.splice(indexUser,1)
 
-  //                     const indexUser= null;//let 's take the user off the casting applicants list
-  //                     for (let i=0; i<casting.applicants.length; i++){
-  //                         if (casting.applicants[i].toString()===userId) indexUser=i
-  //                     }
+                      let indexCasting= null;//let's take the casting off the user's list
+                      for (let i=0; i<user.applications.length; i++){
+                          if (user.applications[i].project.toString()===projectId){
+                              indexCasting= i
+                          }
+                      }
+                      
+                      if (indexCasting=== null) throw Error('casting is not found in the given user')
+                      
+                      
+                      for (let i=0; i<user.applications[indexCasting].castings.length; i++){
+                          if (user.applications[indexCasting].castings[i].toString()===castingId){
+                            
+                            user.applications[indexCasting].castings.splice(i,1)
+                            
+                          }
+                      }
+                      
+                      if(user.applications[indexCasting].castings.length===0) user.applications.splice(indexCasting,1)
 
-  //                     if(!indexUser) throw Error('user is not registered in the given casting')
+                      return Promise.all([user.save(),project.save()])
+                            .then(()=> true)
 
-  //                     casting.applicants.splice(indexUser,1)
-
-  //                     const indexCasting= null;//let's take the casting off the user's list
-  //                     for (let i=0; i<user.castings.length; i++){
-  //                         if (user.castings[i].project.toString()===projectId){
-  //                             indexCasting= i
-  //                         }
-  //                     }
-
-  //                     if (!indexCasting) throw Error('user is not registered in the given casting')
-
-  //                     for (let i=0; i<user.castings.length; i++){
-  //                         if (user.castings[indexCasting].castings[i].toString()===castingId){
-  //                             user.castings[indexCasting].castings.splice(i,1)
-  //                         }
-  //                     }
-  //                     if(user.castings[indexCasting].castings.length===0) user.castings.splice(indexCasting,1)
-
-  //                     return true
-
-  //                 })
-  //         })
-  //     }
+                  })
+          })
+      }
 };
 
 module.exports = logic;

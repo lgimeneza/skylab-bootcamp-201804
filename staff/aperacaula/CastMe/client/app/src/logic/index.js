@@ -46,9 +46,11 @@ const logic = {
 
     joinCasting(userId,projectId,castingId){
         return api.joinCasting(userId,projectId,castingId)
+    },
+
+    quitCasting(userId, projectId,castingId){
+        return api.quitCasting(userId, projectId,castingId)
     }
-
-
 
     //profile(userId){
 

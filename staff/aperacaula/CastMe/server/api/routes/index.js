@@ -185,11 +185,32 @@ router.post('/projects/:projectId', jsonBodyParser, (req,res)=>{
         .then(() =>{
             res.status(200)
             res.json({status: 'OK'})
+              
+                        
         })
         .catch(({message})=>{
             res.status(400)
             res.json({status: 'KO', error:message})
         })
+
+
+
+})
+
+router.delete('/users/:userId/projects/:projectId/castings', jsonBodyParser, (req,res)=>{
+    const {body:{castingId}, params:{userId, projectId}}= req
+
+    logic.quitCasting(userId, projectId, castingId)
+    .then(() =>{
+        res.status(200)
+        res.json({status: 'OK'})
+          
+                    
+    })
+    .catch(({message})=>{
+        res.status(400)
+        res.json({status: 'KO', error:message})
+    })
 
 
 

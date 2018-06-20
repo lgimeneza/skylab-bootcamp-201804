@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Header from "../header";
 import logic from "../../logic";
-import "./index.css"
-import swal from 'sweetalert'
+import "./index.css";
+import swal from 'sweetalert';
+import {Link} from "react-router-dom"
 
 class ProjectPage extends Component {
   state = {
@@ -20,50 +21,50 @@ class ProjectPage extends Component {
     situation: ""
   };
 
+
   componentDidMount() {
-    if (logic.userId) {
-      logic.retrieveUserLite(logic.userId)
-        .then(({ name, surname, profilePicture }) => {
-          this.setState({
-            name,
-            surname,
-            profilePicture
-          });
-          return true
-        })
-        .then(()=>{
-            logic.retrieveProject(this.props.projectId)
-              .then(
-                ({
-                  title,
-                  publishedDate,
-                  endDate,
-                  province,
-                  description,
-                  castings,
-                  paid,
-                  professional,
-                  situation
-                }) => {
-                  this.setState({
-                    title,
-                    publishedDate,
-                    endDate,
-                    province,
-                    description,
-                    castings,
-                    paid,
-                    professional,
-                    situation
-                  });
-                }
-              );
-
-        })
-        
+    logic.retrieveProject(this.props.projectId)
+    .then(
+      ({
+        title,
+        publishedDate,
+        endDate,
+        province,
+        description,
+        castings,
+        paid,
+        professional,
+        situation
+      }) => {
+        this.setState({
+          title,
+          publishedDate,
+          endDate,
+          province,
+          description,
+          castings,
+          paid,
+          professional,
+          situation
+        });
+      })
+    .then(()=>{
+      if (logic.userId) {
+        logic.retrieveUserLite(logic.userId)
+          .then(({ name, surname, profilePicture }) => {
+            this.setState({
+              name,
+              surname,
+              profilePicture
+            });
+            return true
+          })
+            
+      }
+    });
+ 
     }
-  }
-
+  
   printDate(date) {
     
     const day = Number(date.substring(8, 10));
@@ -78,12 +79,14 @@ class ProjectPage extends Component {
     for (let i=1; i<keys.length; i++){
         if (casting.physicalReq[keys[i]]){
             requirements[keys[i]] = casting.physicalReq[keys[i]]
+        } else if (casting.physicalReq[keys[i]]===false){
+            requirements[keys[i]] = "Strictly not visible"
         }
     }
     return requirements
   }
 
-  writeString(string){
+  writeRequirementTitle(string){
       let correctString=''
       if (string==='height')return "Minimum Height (m)"
     
@@ -95,6 +98,15 @@ class ProjectPage extends Component {
       correctString= correctString[0].toUpperCase()+correctString.slice(1)
       return correctString
   }
+
+  writeRequirementValue(value){
+    
+    if (value=== true)return "Yes, preferably"
+  
+    if (value=== false)return "Not required"
+
+    return value
+}
 
   joinCasting(userId, projectId, castingId){
 
@@ -113,6 +125,14 @@ class ProjectPage extends Component {
       .catch(err => {
         swal(err.message);
       });
+  }
+
+  loggedInCheck(casting){
+    if(logic.userId){
+      return <button className="link-style join-casting" onClick={()=> this.joinCasting(logic.userId, this.props.projectId, casting._id)}>Join Casting</button>
+    }else{
+      return <div className="register-message">You must be logged in to join castings. Not registered yet? <Link to="/register">Register</Link> first!<button className="link-style" onClick={this.props.onLogin}>Log In</button></div>
+    }
   }
 
   render() {
@@ -158,9 +178,10 @@ class ProjectPage extends Component {
                                 <p key={i+2}><b>Age rank:</b> {casting.minAge}-{casting.maxAge}</p>
                                 <p key={i+3}><b>Description:</b> {casting.description}</p>
                                 <div key={i+4}>{Object.keys(this.getPhysicalRequirements(casting)).map((requirement,i)=>{
-                                    return <p key={i}><b>{this.writeString(requirement)}</b>:   {this.getPhysicalRequirements(casting)[requirement]}</p>
+                                    return <p key={i}><b>{this.writeRequirementTitle(requirement)}</b>:   {this.writeRequirementValue(this.getPhysicalRequirements(casting)[requirement])}</p>
                                 })}</div>
-                                <button className="link-style join-casting" onClick={()=> this.joinCasting(logic.userId, this.props.projectId, casting._id)}>Join Casting</button>
+                                <p key={i+5}><b>Number of Applicants:</b> {casting.applicants.length}</p>
+                                {this.loggedInCheck(casting)}
                             </section>
                         
                         </div>

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Header from "../header";
 import logic from "../../logic";
 import "./index.css";
+import swal from 'sweetalert'
 
 class Home extends Component {
   state = {
@@ -44,6 +45,13 @@ class Home extends Component {
     return `${day}/${month}/${year}`;
   }
 
+  quitCasting(projectId, castingId){
+    
+    logic.quitCasting(logic.userId, projectId, castingId)
+    
+
+  }
+
   render() {
     return (
       <div>
@@ -77,7 +85,7 @@ class Home extends Component {
                       <tbody>
                         {this.state.applications
                           ? this.state.applications.map(application => {
-                           
+                              
                               return (
                                 <tr>
                                   <td>{application.title}</td>
@@ -91,7 +99,8 @@ class Home extends Component {
                                     <button onClick={()=> this.goToProjectInfo(application._id.toString())} className="link-style">More Info</button>
                                   </td>
                                   <td>
-                                    <button className="link-style">Cancel</button>
+                                    
+                                    <button className="link-style" onClick={()=> this.quitCasting(application._id.toString(), application.casting._id.toString())}>Cancel</button>
                                   </td>
                                 </tr>
                               );

@@ -371,13 +371,9 @@ var castmeApi = {
   /**
    *
    *
-   * @param {string} email
-   * @param {string} password
-   * @param {object} personalData
-   * @param {object} physicalData
-   * @param {object} professionalData
-   * @param {string} videobookLink
-   * @param {string} profilePicture
+   * @param {string} userId
+   * @param {string} projectId
+   * @param {string} castingId
    *
    * @returns {Promise<boolean>}
    */
@@ -399,6 +395,52 @@ var castmeApi = {
       }).then(function (_ref9) {
         var status = _ref9.status,
             data = _ref9.data;
+
+        if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
+
+        return true;
+      }).catch(function (err) {
+        if (err.code === "ECONNREFUSED") throw Error("could not reach server");
+
+        if (err.response) {
+          var message = err.response.data.error;
+
+
+          throw Error(message);
+        } else throw err;
+      });
+    });
+  },
+
+
+  /**
+   *
+   * @param {string} userId
+   * @param {string} projectId
+   * @param {string} castingId
+   *
+   * @returns {Promise<boolean>} that confirms the user has joined the casting
+   */
+  quitCasting: function quitCasting(userId, projectId, castingId) {
+    var _this10 = this;
+
+    return Promise.resolve().then(function () {
+
+      if (typeof userId !== 'string') throw Error('user id is not a string');
+
+      if (!(userId = userId.trim()).length) throw Error('user id is empty or blank');
+
+      if (typeof projectId !== 'string') throw Error('user id is not a string');
+
+      if (!(projectId = projectId.trim()).length) throw Error('user id is empty or blank');
+
+      if (typeof castingId !== 'string') throw Error('user id is not a string');
+
+      if (!(castingId = castingId.trim()).length) throw Error('user id is empty or blank');
+
+      return axios.delete(_this10.url + "/users/" + userId + "/projects/" + projectId + "/castings", { data: { castingId: castingId } }).then(function (_ref10) {
+        var status = _ref10.status,
+            data = _ref10.data;
 
         if (status !== 200 || data.status !== "OK") throw Error("unexpected response status " + status + " (" + data.status + ")");
 

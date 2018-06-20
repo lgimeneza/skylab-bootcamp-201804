@@ -18,7 +18,7 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: null,
             ethnicity: 'latino/hispanic',
-            beard: false,
+            beard: null,
 
             tattoos: false,
 
@@ -44,9 +44,9 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: null,
             ethnicity: 'latino/hispanic',
-            beard: false,
+            beard: null,
 
-            tattoos: false,
+            tattoos: true,
 
             piercings: null
         };
@@ -96,7 +96,7 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: "blond",
             ethnicity: null,
-            beard: false,
+            beard: null,
             tattoos: false,
             piercings: null
         };
@@ -118,7 +118,7 @@ mongoose.connect(DB_URL)
             eyes: "brown",
             hair: "brown",
             ethnicity: null,
-            beard: false,
+            beard: null,
             tattoos: true,
             piercings: null
         };
@@ -160,9 +160,9 @@ mongoose.connect(DB_URL)
             eyes: "green",
             hair: "brown",
             ethnicity: 'caucasian',
-            beard: false,
+            beard: null,
             tattoos: false,
-            piercings: false
+            piercings: null
         };
         const casting3_1 = {
             title: "Female",
@@ -229,11 +229,11 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: null,
             ethnicity: 'caucasian',
-            beard: false,
+            beard: null,
 
             tattoos: false,
 
-            piercings: false
+            piercings: null
         };
         const casting4_2 = {
             title: "Solomonov",
@@ -253,11 +253,11 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: null,
             ethnicity: 'caucasian',
-            beard: false,
+            beard: null,
 
             tattoos: false,
 
-            piercings: false
+            piercings: null
         };
 
         const casting4_3 = {
@@ -295,7 +295,7 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: "dark/black",
             ethnicity: null,
-            beard: false,
+            beard: null,
             tattoos: false,
             piercings: null
         };
@@ -317,7 +317,7 @@ mongoose.connect(DB_URL)
             eyes: "brown",
             hair: "brown",
             ethnicity: null,
-            beard: false,
+            beard: null,
             tattoos: true,
             piercings: null
         };
@@ -359,9 +359,9 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: "buzzed",
             ethnicity: 'caucasian',
-            beard: false,
+            beard: null,
             tattoos: false,
-            piercings: false
+            piercings: null
         };
         const casting6_1 = {
             title: "Military types",
@@ -400,9 +400,9 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: null,
             ethnicity: 'any',
-            beard: false,
+            beard: null,
             tattoos: false,
-            piercings: false
+            piercings: null
         };
         const casting7_2= {
             title: "Any type",
@@ -423,9 +423,9 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: null,
             ethnicity: 'any',
-            beard: false,
-            tattoos: false,
-            piercings: false
+            beard: null,
+            tattoos: null,
+            piercings: null
         };
         const casting7_1 = {
             title: "Any type",
@@ -465,9 +465,9 @@ mongoose.connect(DB_URL)
             eyes: null,
             hair: "blond",
             ethnicity: 'caucasian',
-            beard: false,
+            beard: null,
             tattoos: false,
-            piercings: false
+            piercings: null
         };
         const casting8_1 = {
             title: "Beactrice",
@@ -509,7 +509,7 @@ mongoose.connect(DB_URL)
             ethnicity: 'caucasian',
             beard: true,
             tattoos: true,
-            piercings: false
+            piercings: null
         };
         const casting9_1 = {
             title: "John",
@@ -601,7 +601,7 @@ mongoose.connect(DB_URL)
                         ethnicity: 'caucasian',
                         beard: true,
                         tattoos: true,
-                        piercings: false
+                        piercings: null
 
                     },
 
@@ -646,9 +646,9 @@ mongoose.connect(DB_URL)
                         eyes: 'green',
                         hair: 'brown',
                         ethnicity: 'caucasian',
-                        beard: false,
+                        beard: null,
                         tattoos: false,
-                        piercings: false
+                        piercings: null
 
                     },
 
@@ -669,14 +669,14 @@ mongoose.connect(DB_URL)
                     applications: []
                 }
                 return Promise.all([proj1.save(), proj2.save(), proj3.save(),proj4.save(), proj5.save(), proj6.save(), proj7.save(),proj8.save(),proj9.save()])
-                    .then(() => Promise.all([User.create(userData), User.create(otherUserData)])
-                        .then(([user1, user2]) => {
-                            user1.applications.push({ project: proj1._id, castings: [cast13._id] })
-                            user1.applications.push({ project: proj2._id, castings: [cast22._id] })
-                            proj1.castings[2].applicants.push(user1._id)
-                            proj2.castings[1].applicants.push(user1._id)
-                            return Promise.all([user1.save(), proj1.save(), proj2.save()])
-                        }))
+                    .then(() => Promise.all([User.create(userData), User.create(otherUserData)]))
+                    //     .then(([user1, user2]) => {
+                    //         user1.applications.push({ project: proj1._id, castings: [cast13._id] })
+                    //         user1.applications.push({ project: proj2._id, castings: [cast22._id] })
+                    //         proj1.castings[2].applicants.push(user1._id)
+                    //         proj2.castings[1].applicants.push(user1._id)
+                    //         return Promise.all([user1.save(), proj1.save(), proj2.save()])
+                    //     }))
                     
 
             })

@@ -11,7 +11,7 @@ function Header (props){
                 <div id="menu1-login">
                 <ul>
                     <li className="menu_link">
-                    <Link to="/" >Homepage</Link>
+                    <Link to="/" >My Home</Link>
                     </li>
                     <li className="menu_link">
                     <Link to="/castings">Castings</Link>
