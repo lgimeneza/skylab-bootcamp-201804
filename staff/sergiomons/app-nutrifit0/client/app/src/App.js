@@ -111,22 +111,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-{/* <div className="App">
-<Menu />
-<Header />
-<Route exact path="/" render={() => <Landing />} />
-{
-  <Route exact path="/register" render={() => {
-    return this.state.registered ?
-      <Link to="/login"><Login /></Link>
-      :
-      <Register onRegister={this.onRegister} onRegisterError={this.onRegisterError} />
-  }} />
-}
-<Route exact path="/login" render={() => !logic.loggedIn && <Login onLogin={this.onLogin} onLoginError={this.onLoginError} />} />
-{logic.loggedIn && <Route exact path="/home" render={() => <Home onLogout={this.onLogout} />} />}
-<Footer />
-</div> */}

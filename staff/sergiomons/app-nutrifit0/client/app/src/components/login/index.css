@@ -25,3 +25,8 @@
 input[placeholder] {
     text-align: center;
 }
+.body-register {
+    height: 800px;
+    background: url('http://www.lg.com/es/images/CA/features/YDRAY-1600x800-cocina-sana.png') no-repeat fixed center;
+    background-size: cover;
+}

@@ -31,7 +31,6 @@ const logic = {
 
     getDateOrder() {
         this._dateOrder = Date.now() 
-        console.log('dateOrder: ', this._dateOrder);
         return this._dateOrder
     },
 

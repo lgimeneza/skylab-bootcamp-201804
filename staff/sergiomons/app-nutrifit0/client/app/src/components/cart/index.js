@@ -36,7 +36,7 @@ class Cart extends Component {
     }
 
     changeQuantity = () => {
-        
+
     }
 
     render() {
@@ -59,7 +59,7 @@ class Cart extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {this.state.cart.map(product => {
+                                    {this.state.cart.length ? this.state.cart.map(product => {
                                         return (
                                             <tr key={product.id}>
                                                 <td><img style={{ width: '3.5rem', height: '2rem' }} src={product.image} /></td>
@@ -69,7 +69,8 @@ class Cart extends Component {
                                                 <td> <span>{product.price * product.quantity} €</span></td>
                                                 <td><button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem' }}>X</button></td>
                                             </tr>)
-                                    })}
+                                    }) :
+                                    <h3 className="mt-4 mb-4 mx-auto">No hay productos en el carrito</h3>}
                                 </tbody>
                                 <tfoot>
                                     <tr className="table-active">

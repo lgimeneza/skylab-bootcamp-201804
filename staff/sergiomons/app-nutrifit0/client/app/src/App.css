@@ -5,6 +5,7 @@
 main{
   min-height: 620px
 }
+
 .card-header{
   background-color: #6c757d;
   color: white;
@@ -16,6 +17,7 @@ main{
   font-size: 1.2rem;
   
 }
+
 .card {
   width: 90%;
   border: 2px solid rgba(170, 167, 167, 0.856);

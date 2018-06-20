@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import logic from '../../../logic'
+import logic from '../../logic'
 import './index.css'
-import ItemsCategories from '../../items-list/items-categories'
-
-
+import ItemsCategories from '../../components/items-list/items-categories'
 
 class Categories extends Component {
 

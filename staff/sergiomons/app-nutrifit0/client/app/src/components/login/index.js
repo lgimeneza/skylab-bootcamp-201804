@@ -31,9 +31,7 @@ class Login extends Component {
             return this.setState({
                 error: err.message
             })
-        })
-
-        
+        })     
     }
 
     handlerCapturingEmail = e => {
@@ -54,7 +52,7 @@ class Login extends Component {
     const { email, password } = this.state
     return (
         <div>     
-            <div className="container-fluid">
+            <div className="body-login">
                 <div className="row">
                     <div className="col-md-4">
                     </div>
