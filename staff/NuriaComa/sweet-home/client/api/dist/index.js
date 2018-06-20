@@ -110,6 +110,7 @@ var shApi = {
 
 
                 _this2.token(token);
+
                 _this2.userId == data.id;
 
                 return user;

@@ -114,6 +114,7 @@ class Apartment extends Component {
             <div>
                 <div className="general">
                     <section>
+                        <h3 className="usAR">APARTMENT</h3>
                         <form onSubmit={this.acceptRegister}>
                             <p className="wordsRA"> Name: </p>
                             <input autocomplete="off" className="formularior" type="text" value={this.state.name} onChange={this.registerName} name="name" ></input>
@@ -121,11 +122,12 @@ class Apartment extends Component {
                             <input autocomplete="off" className="formularior" type="text" value={this.state.address} onChange={this.registerAddress} name="address"></input>
                             <p className="words">Phone: </p>
                             <input autocomplete="off" className="formularior" type="text" name="phone" value={this.state.phone} onChange={this.registerPhone} ></input>
-                            <p className="words">Id apartment? </p>
+                            <button className="registerButton" type="submit">Continue</button>
+                            <p className="wordsId">Id apartment? </p>
                             <input autocomplete="off" className="formularior" type="text" name="apartId" value={this.state.apartId} onChange={this.checkapartId} ></input>
                             <button className="registerButton" type="submit">Continue</button>
-                            <button className="backButton" type="button" onClick={this.redirect}>Back</button>
                         </form>
+                            <button className="backButton" type="button" onClick={this.redirect}>Back</button>
 
                     </section>
                 </div>

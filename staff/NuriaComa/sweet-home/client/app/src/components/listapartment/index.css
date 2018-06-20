@@ -12,12 +12,12 @@
     font-family: 'Montserrat', sans-serif;
 }
 .ap{
-   
+   text-align: center;
     width: 100vw;
     color: white;
     font-size: 5vw;
     margin: 0vw 16vw 8vw 0vw;
-    padding: 4vw 33vw;
+    padding: 4vw 0vw;
     background: linear-gradient(70deg, #105380, #829bac);
     border: 0;
     font-family: 'Montserrat', sans-serif;

@@ -2,7 +2,7 @@
 
 const shApi = require('api')
 
-shApi.url = 'http://192.168.0.108:4000/api'
+shApi.url = 'http://localhost:4000/api'
 
 const logic = {
     userId: 'NO-ID',

@@ -12,11 +12,12 @@
     font-family: 'Montserrat', sans-serif;
 }
 .usS{
+    text-align: center;
     width: 100vw;
     color: white;
     font-size: 5vw;
     margin: 0vw 16vw 3vw 0vw;
-    padding: 4vw 37vw;
+    padding: 4vw 0vw;
     background: linear-gradient(70deg, #404040, #7a7a7a);
     border: 0;
     font-family: 'Montserrat', sans-serif;

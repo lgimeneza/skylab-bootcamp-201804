@@ -21,7 +21,6 @@ class UpdateUser extends Component {
     componentWillMount() {
        
                 const userId=this.props.match.params.id
-                console.log('this.props.match.params.id: ', this.props.match.params.id);
                 
                 logic.retrieveUser(userId)
                 .then(user => {

@@ -103,6 +103,7 @@ const shApi = {
                     const { data: { user, token } } = data
 
                     this.token(token)
+
                     this.userId==data.id
 
                     return user
@@ -414,9 +415,9 @@ const shApi = {
     },
     deleteApartment(apartmentId) {
         return Promise.resolve()
-            .then(() => {
-               
-                return axios.delete(`${this.url}/listapartment/${apartmentId}`, { headers: { authorization: `Bearer ${this.token()}` } } )
+        .then(() => {
+            
+                return axios.delete(`${this.url}/listapartment/${apartmentId}`,  { headers: { authorization: `Bearer ${this.token()}` } } )
                 .then(({ status, data }) => {
                     if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
                     return true

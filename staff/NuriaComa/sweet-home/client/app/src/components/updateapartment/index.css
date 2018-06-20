@@ -14,12 +14,12 @@
         font-size:4vw;
 }
 .usUA{
-   
+        text-align: center;
         width: 100vw;
         color: white;
         font-size: 5vw;
         margin: 0vw 16vw 3vw 0vw;
-        padding: 4vw 34vw;
+        padding: 4vw 0vw;
         background: linear-gradient(70deg, #105380, #829bac);
         border: 0;
         font-family: 'Montserrat', sans-serif;

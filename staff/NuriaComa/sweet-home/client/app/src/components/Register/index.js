@@ -131,6 +131,7 @@ class Register extends Component {
             <div>
                 <div className="general">
                     <section>
+                    <h3 className="usUR">USER</h3>
                         <form onSubmit={this.acceptRegister}>
                             <p className="wordsR"> Name: </p>
                             <input autoComplete="off" className="formularior" type="text" value={this.state.name}onChange={this.registerName} name="name" ></input>
@@ -145,9 +146,8 @@ class Register extends Component {
                             <p className="words">Repeat Password: </p>
                             <input autoComplete="off" className="formularior" type="password" value={this.state.repeatpassword}onChange={this.registerRepeatPassword} name="password" ></input>
                             <button className="registerButton" type="submit">Register</button>
-
-                            <button className="backButton" type="button" onClick={this.redirect}>BACK</button>
                         </form>
+                            <button className="backButtonUR" type="button" onClick={this.redirect}>BACK</button>
                         
                     </section>
                 </div>

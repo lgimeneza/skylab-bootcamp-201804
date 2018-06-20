@@ -32,7 +32,6 @@ describe('logic (sweet-home)', () => {
             return logic.registerUser('Nur', 'C', '689456739', '45629856L', '1234', '5b213682489be107808607bc')
                 .then(res => {
                     expect(res).to.be.true
-                    console.log('res: ', res);
 
                 })
             

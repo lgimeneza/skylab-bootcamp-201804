@@ -2,7 +2,7 @@
     text-align: center;
   }
 .wordsR{
-    margin-top:15vw;
+   
     font-size: 5vw;
 }
 .words{
@@ -13,6 +13,7 @@
     border: 1px solid #92ac19;
     font-size: 5vw;
     border-radius: 1vw;
+    
 }
 .registerButton{
     width:80vw;
@@ -23,12 +24,24 @@
     background: linear-gradient(70deg, #7b9214, #c7da86);
     border:0;
 }
-.backButton{
-    width:80vw;
-    color:white;
+.backButtonUR{
+    width: 100vw;
+    color: white;
     font-size: 5vw;
-    margin: 0 7vw 3vw 7vw;
-    padding: 2vw;
+    margin-top: 2vw;
+    padding: 4vw 0vw;
+    border: 0;
+    font-family: 'Montserrat', sans-serif;
     background: linear-gradient(70deg, #7b9214, #c7da86);
-    border:0;
+   
+}
+.usUR{
+    width: 100vw;
+    color: white;
+    font-size: 5vw;
+    margin: 0vw 16vw 8vw 0vw;
+    padding: 4vw 0vw;
+    background: linear-gradient(70deg, #7b9214, #c7da86);
+    border: 0;
+    font-family: 'Montserrat', sans-serif;
 }

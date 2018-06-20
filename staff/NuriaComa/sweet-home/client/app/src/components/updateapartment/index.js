@@ -112,11 +112,12 @@ class UpdateApartment extends Component {
                     'success'
                     )
                     logic.deleteApartment(apartId)
-                    .then(this.props.history.push('/'))     
-                    .then(localStorage.clear())     
+                   
                     
                 }
             })
+            .then(() => this.props.history.push('/'))     
+            .then(() => localStorage.clear())     
                        
         })
     }

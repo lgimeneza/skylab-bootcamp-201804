@@ -194,41 +194,6 @@ const logic = {
    
    
 
-    // rotateUsersTasks(apartmentId){
-    //     return Promise.resolve()
-
-    //     .then(() => {this.listTasks( apartmentId )
-
-    //         .then(tasks =>{
-                
-    //         const tasks2= tasks.slice
-            
-    //         const firstTask = tasks2.map(task =>{
-               
-    //             return task[0].id
-    //         })
-    //         .then(() => {this.listUsers( apartmentId )
-    
-    //             .then(users =>{
-        
-    //                 const users2 = users.slice()
-    //                 const filteredUsersWithTask = users2.filter(user =>{
-    //                      user.taskId
-    //                      if(user.taskId !== firstTask){
-    //                          return user.tak
-    //                      }
-    //                 })  
-
-    //                if (filteredUsersWithTask.length>0) {
-    //                    return user.taskId=firstTask
-    //                }
-                    
-    //             })
-    //         })
-    //         })
-    //     })   
-    // },
-
     doAssociations(tasks, users) {
         let newAssociation = [];
         let usersInUse = users.slice();
