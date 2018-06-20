@@ -47,7 +47,7 @@ const logic = {
     },
 
     removeProductFromCart(productId) {
-        this.cart(this.cart().filter(id => {
+       return this.cart(this.cart().filter(id => {
             return id !== productId
         }))
     },

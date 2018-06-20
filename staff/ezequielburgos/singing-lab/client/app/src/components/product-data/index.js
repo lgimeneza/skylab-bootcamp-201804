@@ -30,7 +30,7 @@ class ProductData extends Component {
                 <section className="productData">
                     <div className="productDataSub">
                         <div className="col-sm-6 col-md-4 products">
-                            <img src={this.state.product.image} className="product-data-image" alt="bruno mars" />
+                            <img src={this.state.product.image} id={`img-${this.state.product._id}`} className="product-data-image" alt="bruno mars" />
                         </div>
                         <div className="caption product-desc">
                             <h3>{this.state.product.name}</h3>

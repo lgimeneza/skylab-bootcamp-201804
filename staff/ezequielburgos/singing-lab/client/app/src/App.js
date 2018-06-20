@@ -7,8 +7,14 @@ import $ from 'jquery'
 
 class App extends Component {
   state = {
+    cart: [],
+    total: [],
     loggedIn: logic.loggedIn,
-    cartLength: logic.cart().length
+    cartLength: logic.cart().length,
+  }
+
+  componentDidMount() {
+    this.getItems()
   }
 
   onLogin = () => {
@@ -21,18 +27,28 @@ class App extends Component {
     this.setState({ loggedIn: false })
   }
 
+  getItems = () => {
+    if (logic._cart.length && logic._cart !== 'undefined') {
+        logic.listProductsByIds()
+            .then(cart => this.setState({ cart, total: [], cartLength: logic.cart().length }))
+    } else {
+        this.setState({ cart: [], total: [], cartLength: logic.cart().length })
+    }
+}
+
   onAddToCart = id => {
     logic.addProductToCart(id)
       .then(() => {
 
         this.setState({ cartLength: logic.cart().length })
 
+        this.getItems()
+
         var cart = $(".fa-shopping-cart")
         var imgtodrag = $('#img-' + id);
 
-        if (imgtodrag !== 'undefined'){
-          console.log('imgtodrag: ', imgtodrag);
-
+        if (imgtodrag !== 'undefined') {
+          
           var imgclone = imgtodrag.clone()
             .offset({
               top: imgtodrag.offset().top,
@@ -53,29 +69,34 @@ class App extends Component {
               'height': 30
             }, 1000, "linear");
 
-        setTimeout(function () {
-          $(imgclone).remove()
-        }, 1000)
+          setTimeout(function () {
+            $(imgclone).remove()
+          }, 1000)
 
         }
       })
       .catch(err => swal(err.message))
   }
 
+  onRemoveFromCart = id => {
+    logic.removeProductFromCart(id);
+
+    this.getItems();
+  }
 
   render() {
     return (
       <div>
         <Navbar loggedIn={this.state.loggedIn} onLogout={this.onLogout} cartLength={this.state.cartLength} />
         <Switch>
-          <Route exact path="/" render={props => <Landing productId={props.match.params.id} onAddToCart={this.onAddToCart} />} />
+          <Route exact path="/" render={() => <Landing onAddToCart={this.onAddToCart} />} />
           <Route exact path="/our-team" component={OurTeam} />
           <Route exact path="/auth" render={() => <Login onLogin={this.onLogin} />} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/cart" render={() => <Cart onRemoveFromCart={this.onRemoveFromCart} cart={this.state.cart} total={this.state.total} />}/>
           <Route exact path="/order" component={Order} />
-          {/* {this.state.loggedIn ? <Route exact path="/profile" component={Profile} /> : <Redirect to="/" />} */}
           <Route exact path="/profile" component={Profile} />
+          {/* {this.state.loggedIn ? <Route exact path="/profile" component={Profile} /> : <Redirect to="/" />} */}
           <Route exact path="/categories" component={Categories} />
           <Route exact path="/products" render={props => <AllProducts categoryId={props.match.params.id} onAddToCart={this.onAddToCart} />} />
           <Route exact path="/categories/:id" render={props => <Products categoryId={props.match.params.id} onAddToCart={this.onAddToCart} />} />

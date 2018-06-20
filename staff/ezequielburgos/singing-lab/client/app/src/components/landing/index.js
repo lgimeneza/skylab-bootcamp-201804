@@ -6,7 +6,7 @@ import LandingProducts from './landing-products'
 import LandingChat from '../landing-chat'
 import Footer from '../footer'
 
-function Landing() {
+function Landing(props) {
         return (
             <main>
                 <section>
@@ -18,7 +18,7 @@ function Landing() {
                         </div>
                     </div>
                 </section>
-                <LandingProducts />
+                <LandingProducts onAddToCart={props.onAddToCart}/>
                 <LandingMain />
                 <LandingChat />
                 <Footer/>
