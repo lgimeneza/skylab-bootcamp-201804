@@ -553,7 +553,6 @@ describe('logic (singing-lab)', () => {
     //                     .then(res => {
     //                         return logic.listProductsByIds([res[0]._id, res[2]._id])
     //                             .then(products => {
-    //                                 console.log(products)
     //                                 expect(products[0].name).to.equal('Beginner Course I')
     //                                 expect(products[0].price).to.equal(50)
     //                                 expect(products[0].discount).to.equal(15)

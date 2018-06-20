@@ -727,7 +727,7 @@ describe('api client (singingLab)', () => {
                         .then(products => {
                             singingLabApi.listProductsByIds([products[0]._doc._id, products[1]._doc._id])
                                 .then(product => {
-                                    console.log(product[0].name)
+                                    true
                                 })
                         })
                 })

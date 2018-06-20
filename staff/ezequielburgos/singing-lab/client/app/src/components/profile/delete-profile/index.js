@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../../../logic'
 import Forms from '../forms'
+import swal from 'sweetalert2'
 
 class DeleteProfile extends Component {
 
@@ -20,14 +21,10 @@ class DeleteProfile extends Component {
             if (passwordToDelete === passwordToDeleteConfirm) {
                 logic.unregisterUser(email, passwordToDelete)
                     .then(res => {
-                        if (res) {
                             sessionStorage.clear()
                             this.props.history.push('/')
-                        } else {
-                            console.log('Error, username and/or password wrong')
-                        }
-
-                    }).catch(err => err.message)
+                            swal('It was nice seeing you!')
+                    }).catch(err => swal(err.message))
             }
         }
     }

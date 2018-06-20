@@ -3,6 +3,7 @@ import './index.css'
 import logic from '../../logic'
 import Forms from './forms'
 import DeleteProfile from './delete-profile';
+import swal from 'sweetalert2'
 
 class Update extends Component {
 
@@ -23,7 +24,7 @@ class Update extends Component {
     componentDidMount() {
         logic.retrieveUser()
             .then(user => {
-                console.log(user)
+
                 this.setState({
                     name: user.name,
                     surname: user.surname,
@@ -39,14 +40,10 @@ class Update extends Component {
 
         logic.updateUser(name, surname, phone, address, email, password, newEmail, newPassword)
             .then(res => {
-                if (res) {
                     this.props.history.push('/')
-                } else {
-                    console.log('Error, username and/or password wrong')
-                }
-
+                    swal('Profile updated successfully!')
             }).catch(err => {
-                return err.message
+                swal(err.message)
             })
 
     }

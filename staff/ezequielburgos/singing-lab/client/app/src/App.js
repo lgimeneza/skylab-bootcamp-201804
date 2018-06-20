@@ -5,6 +5,7 @@ import logic from './logic'
 import swal from 'sweetalert2'
 import $ from 'jquery'
 
+
 class App extends Component {
   state = {
     cart: [],
@@ -95,8 +96,7 @@ class App extends Component {
           <Route exact path="/register" component={Register} />
           <Route exact path="/cart" render={() => <Cart onRemoveFromCart={this.onRemoveFromCart} cart={this.state.cart} total={this.state.total} />}/>
           <Route exact path="/order" component={Order} />
-          <Route exact path="/profile" component={Profile} />
-          {/* {this.state.loggedIn ? <Route exact path="/profile" component={Profile} /> : <Redirect to="/" />} */}
+          <Route exact path="/profile" render={() => this.state.loggedIn ? <Route exact path="/profile" component={Profile} /> : <Redirect to="/" /> } />
           <Route exact path="/categories" component={Categories} />
           <Route exact path="/products" render={props => <AllProducts categoryId={props.match.params.id} onAddToCart={this.onAddToCart} />} />
           <Route exact path="/categories/:id" render={props => <Products categoryId={props.match.params.id} onAddToCart={this.onAddToCart} />} />
