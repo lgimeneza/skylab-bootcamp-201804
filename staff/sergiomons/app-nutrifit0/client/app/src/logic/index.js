@@ -8,6 +8,7 @@ const logic = {
     // userId: 'NO-ID',
     _cart: [],
     _statusOrder: 'unpaid',
+    _dateOrder: '',
 
     userId(userId) {
         if (userId) {
@@ -28,16 +29,26 @@ const logic = {
         return this._cart
     },
 
+    getDateOrder() {
+        this._dateOrder = Date.now() 
+        console.log('dateOrder: ', this._dateOrder);
+        return this._dateOrder
+    },
+
     addProductToCart(productId) {
         this.cart().push(productId)
-
+        
         this.cart(this.cart())
+        window.location.reload()
+
     },
 
     removeProductFromCart(productId) {
-        this.cart(this.cart().filter(id => {
+        const updateCart = this.cart().filter(id => {
             return id !== productId
-        }))
+        })
+        window.location.reload()
+        return this.cart(updateCart)
     },
 
     listProductsFromCart() {
@@ -89,7 +100,6 @@ const logic = {
                 } else throw err
             })
     },
-
 
     login(email, password) {
         return Promise.resolve()
@@ -169,8 +179,8 @@ const logic = {
             .then(products => products)
     },
 
-    createOrder(deliveryAddress, date, products, paymentMethod) {
-        return clientApi.createOrder(this.userId(), deliveryAddress, date, products, paymentMethod, this._statusOrder)
+    createOrder(deliveryAddress, products, paymentMethod) {
+        return clientApi.createOrder(this.userId(), deliveryAddress, this.dateOrder, products, paymentMethod, this._statusOrder)
     },
 
     get loggedIn() {

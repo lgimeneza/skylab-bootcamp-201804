@@ -13,7 +13,7 @@ class ProductsByCategory extends Component {
 
     componentDidMount() {
 
-        const categoryId = this.props.match.params.categoryId
+        const categoryId = this.props.categoryId
 
         logic.listProductsByCategory(categoryId)
           .then(products => {
@@ -25,9 +25,9 @@ class ProductsByCategory extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const categoryId = this.props.match.params.categoryId
+        const categoryId = this.props.categoryId
 
-        if(prevProps.match.params.categoryId!== categoryId){
+        if(prevProps.categoryId !== categoryId){
 
         logic.listProductsByCategory(categoryId)
           .then(products => {
@@ -42,7 +42,8 @@ class ProductsByCategory extends Component {
 
     return (
         <div>
-            <ItemsProducts products={this.state.products}/>                                   
+            <ItemsProducts products={this.state.products} /* onAddToCart={this.props.onAddToCart} *//>                                   
+            
         </div>  
     )
    }       

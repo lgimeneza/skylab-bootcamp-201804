@@ -3,12 +3,8 @@ import logic from '../../../logic'
 import {Link} from 'react-router-dom'
 import Menu from '../../menu'
 import Carousel from '../../carousel'
-import {Animated} from "react-animated-css";
  
-
-
 export default ({products}) => (
-    <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
     <main>    
         <Carousel/>           
             <div className="row">
@@ -25,8 +21,7 @@ export default ({products}) => (
                                                 <p className="card-text">Precio: {product.price} €/und</p>
                                                 <p className="card-bottom">
                                                     <Link to={`/product/${product.id}`}><button className="btn btn-md btn-outline-secondary my-2 my-sm-0 mb-2 mr-3" type="submit">Detalles</button> </Link>
-                                                    <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-1" type="submit" onClick={() => logic.addProductToCart(product.id)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir</button>                                                  
-
+                                                    <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-1" type="submit" onClick={() => logic.addProductToCart(product.id)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir</button> 
                                                 </p>
                                             </div>
                                         </div>
@@ -35,7 +30,6 @@ export default ({products}) => (
                         </ul>  
                     </div>
             </div>
-    </main>  
-    </Animated>               
-        )
+    </main>       
+    )
 

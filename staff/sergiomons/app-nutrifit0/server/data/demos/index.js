@@ -25,47 +25,47 @@ mongoose.connect(DB_URL)
         let veganCategoryData = { image: 'https://voilaelisa.files.wordpress.com/2015/11/buddha_bowl_verduras_horneadas_salteadas_plato_vegetariano_veggie_vegano.jpg', name: "Vegan" }
 
         // products packCategories
-        let packMuscleData = { image: 'https://deportesaludable.com/wp-content/uploads/2018/05/six-pack_1000x600.jpg', name: 'Pack Muscle', description: 'Pack Muscle desc', price: 100 }
-        let packBodyTonicData = { image: 'https://www.perfectnutrition.es/76/dieta-2200-descarga-o-bajada-de-peso.jpg', name: 'Pack Body Tonic', description: 'Pack Body Tonic desc', price: 90 }
-        let packBurningData = { image: 'https://bodycultures.com/wp-content/uploads/2016/12/shutterstock_527734021.jpg', name: 'Pack Burning', description: 'Pack Burning desc', price: 85 }
-        let packHealthyData = { image: 'https://hips.hearstapps.com/del.h-cdn.co/assets/17/06/1486402920-delish-rainbow-chicken-veggies-2.jpg', name: 'Pack Healthy', description: 'Pack Healthy desc', price: 105 }
-        let packVeganData = { image: 'http://www.smartermeats.com/9-thickbox_default/match-meat-premium-vegan-meat-variety-pack.jpg', name: 'Pack Vegan', description: 'Pack Vegan desc', price: 95 }
-        let packNoGlutenData = { image: 'https://static.ulabox.com/media/94390_banner-tablet.jpg', name: 'Pack No Gluten', description: 'Pack No Gluten desc', price: 100 }
+        let packMuscleData = { image: 'https://deportesaludable.com/wp-content/uploads/2018/05/six-pack_1000x600.jpg', name: 'Pack Muscle', description: ['Plan nutritivo orientado a POTENCIAR LA MUSCULATURA', '1 plan semanal', '4 raciones diarias' ], price: 100 }
+        let packBodyTonicData = { image: 'https://www.perfectnutrition.es/76/dieta-2200-descarga-o-bajada-de-peso.jpg', name: 'Pack Body Tonic', description: ['Plan nutritivo orientado a TONIFICAR SU CUERPO', '1 plan semanal', '4 raciones diarias' ], price: 90 }
+        let packBurningData = { image: 'https://bodycultures.com/wp-content/uploads/2016/12/shutterstock_527734021.jpg', name: 'Pack Burning', description: ['Plan nutritivo orientado a QUEMAR LA GRASA', '1 plan semanal', '4 raciones diarias' ], price: 85 }
+        let packHealthyData = { image: 'https://hips.hearstapps.com/del.h-cdn.co/assets/17/06/1486402920-delish-rainbow-chicken-veggies-2.jpg', name: 'Pack Healthy', description: ['Plan nutritivo de COMIDA SALUDABLE', '1 plan semanal', '4 raciones diarias' ], price: 105 }
+        let packVeganData = { image: 'https://www.eatthis.com/content/uploads//media/images/ext/561750295/avocado-recipes.jpg', name: 'Pack Vegan', description: ['Plan nutritivo orientado a PERSONAS VEGANAS', '1 plan semanal', '4 raciones diarias' ], price: 95 }
+        let packNoGlutenData = { image: 'https://static.ulabox.com/media/94390_banner-tablet.jpg', name: 'Pack No Gluten', description: ['Plan nutritivo de COMIDA SIN GLUTEN', '1 plan semanal', '4 raciones diarias' ], price: 100 }
 
         // products individualsCategory
         // products meatCategory
-        let polloVerdurasData = { image: 'https://www.deliciosi.com/images/1000/1070/pollo-con-verduras.jpg', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
-        let terneraData = { image: 'http://sevilla.abc.es/gurme//wp-content/uploads/2010/12/solomillo-relleno-de-foie-gras.jpg', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
-        let polloArrozData = { image: 'https://www.cocinavital.mx/wp-content/uploads/2017/08/muslos-de-pollo-con-arroz.jpg', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }
+        let polloVerdurasData = { image: 'https://www.deliciosi.com/images/1000/1070/pollo-con-verduras.jpg', name: 'Pollo con verduras', description: ['100 grs de filete de pollo', '50 grs de verdura mixta', '30 grs de patatas'], price: 4.25}
+        let terneraData = { image: 'http://sevilla.abc.es/gurme//wp-content/uploads/2010/12/solomillo-relleno-de-foie-gras.jpg', name: 'Ternera asada', description:  ['75 grs de filete de ternera', '40 grs de tomate natural', '20 grs de patatas'], price: 4}
+        let polloArrozData = { image: 'https://www.cocinavital.mx/wp-content/uploads/2017/08/muslos-de-pollo-con-arroz.jpg', name: 'Pollo con arroz', description: ['80 grs de filete de pollo', '50 grs de arroz', '25 grs de verduras'], price: 4.50 }
 
         // products soupCategory
-        let sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }
-        let sopaMariscoData = { image: 'http://images.com/1234', name: 'Sopa de marisco', description: 'Sopa de marisco desc', price: 3.25 }
+        let sopaVerdurasData = { image: 'https://www.gallinablanca.es/files/thumbs/f51760b4f01866747bd746fce85c8130113e5ac2_r900_480_2.jpg', name: 'Sopa de verduras', description: ['150 ml de caldo gallina blanca', '45 grs de verduras'], price: 3 }
+        let sopaMariscoData = { image: 'https://www.lacocinadeelisa.es/wp-content/uploads/2017/07/sopa-de-marisco.jpg', name: 'Sopa de marisco', description: ['140 ml de sopa', '60 grs de marisco variado', '20 grs de tomate triturado'], price: 3.25 }
 
         // products fishCategory
-        let pescadoPlanchaData = { image: 'http://images.com/1234', name: 'Pescado a la plancha', description: 'Pescado a la plancha desc', price: 4 }
-        let salmonData = { image: 'http://images.com/1234', name: 'Salmón ahumado', description: 'Salmón ahumado desc', price: 3.75 }
-        let pescadoVerdurasData = { image: 'http://images.com/1234', name: 'Pescado con verduras', description: 'Pescado con verduras desc', price: 4 }
+        let pescadoPlanchaData = { image: 'http://www.dietistapamplona.es/wp-content/uploads/2016/02/trucos-de-cocina-para-reducir-las-calorias-segundos-platos-dietista-pamplona-1030x480.jpg', name: 'Pescado a la plancha', description: ['80 grs de pescado blanco', '40 grs de patatas', 'Aceite de oliva virgen extra'], price: 4 }
+        let salmonData = { image: 'https://previews.123rf.com/images/mashe/mashe1008/mashe100800834/7709772-plato-de-pescado-salm%C3%B3n-a-la-parrilla-con-verduras-.jpg', name: 'Salmón ahumado', description: 'Salmón ahumado desc', price: 3.75, elements: ['90 grs de Salmón', '40 grs de patatas', 'Finas hierbas'] }
+        let pescadoVerdurasData = { image: 'https://st.depositphotos.com/1003814/3365/i/950/depositphotos_33650631-stock-photo-fish-dish-fried-fish-fillet.jpg', name: 'Pescado con verduras', description: ['75 grs de pescado', '60 grs de verduras', 'Aceite de oliva virgen extra'], price: 4 }
 
         // products pastaCategory
-        let tallarinesData = { image: 'http://images.com/1234', name: 'Tallarines con verdura', description: 'Tallarines con verdura', price: 4.25 }
-        let espaguetiData = { image: 'http://images.com/1234', name: 'Espagueti mediterráneo', description: 'Espagueti mediterráneo', price: 4.50 }
-        let macarronesIntegralesData = { image: 'http://images.com/1234', name: 'Macarrones integrales', description: 'Macarrones integrales desc', price: 4.50 }
+        let tallarinesData = { image: 'http://blovver.com/wp-content/uploads/2014/07/salsas-con-mas-calorias.jpg', name: 'Tallarines con verdura', description: ['75 grs de pasta tallarines', '50 grs de verduras', '40 grs de tomate natural triturado'], price: 4.25 } 
+        let espaguetiData = { image: 'https://tendencybook.com/wp-content/uploads/2017/01/espagueti-1-e1483548697583.jpg', name: 'Espagueti mediterráneo', description: ['85 grs de espaguetti largo', '40 grs de variedad mediterránea', 'Aceite de oliva virgen extra'], price: 4.50 }
+        let macarronesIntegralesData = { image: 'https://img-global.cpcdn.com/002_recipes/6b58caa3d397d663/751x532cq70/photo.jpg', name: 'Macarrones integrales', description: ['80 grs de macarrones tipo integral', '35 grs de salsa ', '40 grs de tomate natural triturado'], price: 4.50 }
 
         // products riceCategory
-        let arrozIntegralData = { image: 'http://images.com/1234', name: 'Arroz integral', description: 'Arroz integral desc', price: 4.25 }
-        let arrozRemolachaData = { image: 'http://images.com/1234', name: 'Arroz con remolacha', description: 'Arroz con remolacha desc', price: 4.40 }
-        let risottoData = { image: 'http://images.com/1234', name: 'Risotto', description: 'Risotto desc', price: 4.50 }
+        let arrozIntegralData = { image: 'https://www.hogarmania.com/archivos/201105/042-arroz-integral-con-verduras-xl-668x400x80xX.jpg', name: 'Arroz integral', description: ['80 grs de arroz tipo integral', '50 grs de salsa ', '45 grs de tomate natural triturado'], price: 4.25 }
+        let arrozRemolachaData = { image: 'https://c1.staticflickr.com/1/505/19028011976_051b716435_b.jpg', name: 'Arroz con remolacha', description: ['75 grs de arroz normal', '40 grs de remolacha en tiras', '20 grs de zanahoria triturada'], price: 4.40 }
+        let risottoData = { image: 'http://sevilla.abc.es/gurme//wp-content/uploads/2015/01/risotto-de-hongos-y-foie.jpg', name: 'Risotto', description: ['80 grs de arroz', '40 grs de setas', '50 grs de filete de pollo'], price: 4.50 }
 
         // products vegetarianCategory
-        let ensaladaColData = { image: 'http://images.com/1234', name: 'Ensalada de col', description: 'Ensalada de Col desc', price: 3.75 }
-        let tacosFrijolesData = { image: 'http://images.com/1234', name: 'tacos de frijoles', description: 'tacos de frijoles desc', price: 4.25 }
-        let pastelesCamoteData = { image: 'http://images.com/1234', name: 'Pasteles de camotes', description: 'Pasteles de camotes desc', price: 4 }
+        let ensaladaColData = { image: 'http://blogs.menshealth.es/truco-o-plato/wp-content/uploads/sites/18/2016/08/IMG_2403-1024x683.jpg', name: 'Ensalada de col', description: ['75 grs de col en tiras', '35 grs de zanahorias en tiras', '30 grs de maiz', '20 grs de tacos de jamon york'], price: 3.75 }
+        let tacosFrijolesData = { image: 'http://www.recetasveganas.es/wp-content/uploads/2016/05/Tacos-de-frijoles-y-aguacate.jpg', name: 'tacos de frijoles', description: ['1 tortilla de maiz', '80 grs de frijoles', '40 grs de aguacate trozeado', '40 grs de salsa de tomate', 'verduras mixtas'], price: 4.25 }
+        let pastelesCamoteData = { image: 'http://milrecetas.net/wp-content/uploads/2017/07/torta-de-camote.jpg', name: 'Pasteles de camotes', description: ['90 grs de nuez moscada', '35 grs de queso semiduro', '40 grs de uvas pasadas'], price: 4 }
 
         // products veganCategory
-        let berenjenasData = { image: 'http://images.com/1234', name: 'Berenjenas al miso', description: 'Berenjenas al miso desc', price: 4.25 }
-        let salteadoBrocoliData = { image: 'http://images.com/1234', name: 'Salteado de Brocóli', description: 'Salteado de Brócoli desc', price: 4 }
-        let tortillaSinData = { image: 'http://images.com/1234', name: 'Tortilla sin huevos', description: 'Tortilla sin huevos desc', price: 4.50 }
+        let berenjenasData = { image: 'https://www.ecestaticos.com/imagestatic/clipping/817/668/81766840a8e307f58e11bd6650130d25/berenjenas-con-salsa-miso-la-huerta-y-el-aroma-de-japon-en-tu-mesa.jpg?mtime=1477912755', name: 'Berenjenas al miso', description: ['85 grs de berenjena asada', '35 grs de salsa sake', '30 grs de miso rojo', 'Aceite sésamo'], price: 4.25 }
+        let salteadoBrocoliData = { image: 'http://www.eltomaterojo.com/wp-content/uploads/2015/10/pollo-salteado-con-brocoli-y-champi%C3%B1ones.jpg', name: 'Salteado de Brocóli', description: ['90 grs de brócoli', '35 grs de champiñones', '20 grs de salsa de soja'], price: 4 }
+        let tortillaSinData = { image: 'https://lacucharaveggie.com/wp-content/uploads/2016/03/Tortilla-vegana.jpg', name: 'Tortilla sin huevos', description: ['90 grs de patatas', '35 grs de cebolla', 'Cúrcuma'], price: 4.50 }
 
         return Promise.all([
             // Parents Category

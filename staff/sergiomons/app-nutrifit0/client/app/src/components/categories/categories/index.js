@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import logic from '../../../logic'
 import './index.css'
 import ItemsCategories from '../../items-list/items-categories'
-import {Animated} from 'react-animated-css'
 
 
 
@@ -14,7 +13,7 @@ class Categories extends Component {
 
     componentDidMount() {
 
-        const categoryId = this.props.match.params.categoryId
+        const categoryId = this.props.categoryId
         
         logic.listSubcategories(categoryId)
         .then(categories => {
@@ -28,10 +27,7 @@ class Categories extends Component {
 
     return (       
         <div>
-        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
-
-            <ItemsCategories categories={this.state.categories}/>                       
-        </Animated>   
+            <ItemsCategories categories={this.state.categories}/>                          
         </div>  
         )
    }       

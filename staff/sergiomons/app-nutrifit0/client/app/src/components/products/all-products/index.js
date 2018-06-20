@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../../logic'
 import Menu from '../../menu'
 import Carousel from '../../carousel'
-import ItemsList from '../../items-list'
+import ItemsProducts from '../../items-list/items-products'
 
 class AllProducts extends Component {
 
@@ -24,7 +24,7 @@ class AllProducts extends Component {
 
     return (          
         <div>
-            <ItemsList products={this.state.products} />
+            <ItemsProducts products={this.state.products} />
         </div>             
 
         )

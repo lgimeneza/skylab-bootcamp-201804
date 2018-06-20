@@ -433,8 +433,6 @@ var clientApi = {
     listProductsByIds: function listProductsByIds(cart) {
         var _this10 = this;
 
-        // TODO GET url?ids=id1,id2,id2,id4
-
         return Promise.resolve().then(function () {
             var ids = cart.join(',');
 

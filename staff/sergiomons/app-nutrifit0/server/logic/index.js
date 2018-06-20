@@ -332,9 +332,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
 
-                return Product.find({
-                    _id: { $in: arrayIds}
-                })
+                return Product.find({_id: { $in: arrayIds}})
                     .then(res => {
                         if(!res) throw Error ('No products')
                         const products = res.map(({ _id: id, name, description, image, price, discount, category }) => ({ id, name, description, image, price, discount, categoryId: category ? category.toString() : undefined }))
@@ -374,7 +372,7 @@ const logic = {
                     return Order.create({userId, deliveryAddress, date, products, paymentMethod, status })
                         .then(order => {
                             
-                            return User.findByIdAndUpdate(userId, {$push: { orders: order}})
+                            return User.findByIdAndUpdate(userId, {$push: { orders: order }})
                         })
                 })
 

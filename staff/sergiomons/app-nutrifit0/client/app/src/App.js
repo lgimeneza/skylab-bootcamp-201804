@@ -9,7 +9,7 @@ import {Animated} from "react-animated-css";
 
 
 api.token = function (token) {
-  if (typeof token === 'undefined') {
+  if (typeof token !== 'undefined') {
     if (token === null)
       sessionStorage.removeItem('token')
     else
@@ -80,22 +80,30 @@ class App extends Component {
         })
   }
 
+  // onAddToCart = id => {
+  //   logic.addProductToCart(id)
+  //   .then(() => {
+        
+  //       this.setState({ cartLength: logic.cart().length })
+
+  //     })
+  //     .catch(err => err)
+  // }
+
   render() {
     return (
       <div className="App">
-        <Nav userData={this.state.userData}/>
-        <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
+        <Nav userData={this.state.userData} />
         <Switch>
             <Route exact path='/' component={Home}/>
-            <Route path='/category/:categoryId/subcategories' component={Categories}/>
-            <Route path='/category/:categoryId/products/' component={ProductsByCategory}/>
-            <Route path='/product/:productId' component={ProductDetails}/>
-            <Route path='/cart' render={() => <Cart onRemoveItems={this.onRemoveFromCart}/>} /> 
-            <Route path='/order' render={() => <Order onRemoveItems={this.onRemoveFromCart}/>} />
-            <Route path='/register' render={() => (!logic.loggedIn) ? <Register/> : <Redirect to='/' />}/>
-            <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Redirect to='/' />} />
+            <Route path='/category/:categoryId/subcategories' render={props=> <Categories categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} *//>}/>
+            <Route path='/category/:categoryId/products/' render={props=> <ProductsByCategory categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} *//>}/>
+            <Route path='/product/:productId'  render={props=> <ProductDetails productId={props.match.params.productId}/* refreshCart={this.onAddToCart} *//>}/>
+            <Route path='/cart' render={()=> <Cart/>} /> 
+            <Route path='/order' render={()=> <Order/>} />
+            <Route path='/register' render={()=> (!logic.loggedIn) ? <Register/> : <Redirect to='/' />}/>
+            <Route path='/auth' render={()=> (!logic.loggedIn) ? <Login onLogin={this.onLogin}/> : <Redirect to='/' />} />
         </Switch>
-        </Animated>
         <Footer/>
       </div>
     );
