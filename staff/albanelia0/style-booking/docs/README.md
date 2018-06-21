@@ -7,7 +7,7 @@ Style Booking is a hairdresser managing tool where you can choose the service wi
 # Functional description
 
 
-![landing](/docs/images/functionalDescription.png)
+![landing](images/functionalDescription.png)
 
 ## Technical description
 
