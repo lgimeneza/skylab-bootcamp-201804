@@ -232,7 +232,7 @@ var castmeApi = {
    * 
    * @returns {Promise<boolean>}
    */
-  updateUser: function updateUser(email, password, newEmail, newPassword, personalData, physicalData, professionalData, videobookLink, profilePicture) {
+  updateUser: function updateUser(email, newEmail, password, newPassword, personalData, physicalData, professionalData, videobookLink, pics, profilePicture) {
     var _this6 = this;
 
     return Promise.resolve().then(function () {
@@ -269,6 +269,7 @@ var castmeApi = {
         physicalData: physicalData,
         professionalData: professionalData,
         videobookLink: videobookLink,
+        pics: pics,
         profilePicture: profilePicture
 
       }).then(function (_ref6) {
@@ -296,11 +297,11 @@ var castmeApi = {
    *
    * @param {string} id
    * @param {string} email
-   * @param {string} password
+   *
    *
    * @returns {Promise<boolean>}
    */
-  unregisterUser: function unregisterUser(id, email, password) {
+  unregisterUser: function unregisterUser(id, email) {
     var _this7 = this;
 
     return Promise.resolve().then(function () {
@@ -312,11 +313,7 @@ var castmeApi = {
 
       if (!(email = email.trim()).length) throw Error("user email is empty or blank");
 
-      if (typeof password !== "string") throw Error("user password is not a string");
-
-      if ((password = password.trim()).length === 0) throw Error("user password is empty or blank");
-
-      return axios.delete(_this7.url + "/users/" + id, { data: { email: email, password: password } }).then(function (_ref7) {
+      return axios.delete(_this7.url + "/users/" + id, { data: { email: email } }).then(function (_ref7) {
         var status = _ref7.status,
             data = _ref7.data;
 

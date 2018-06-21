@@ -103,7 +103,7 @@ class ProjectList extends Component {
         
           <div className="three-columns" />
         </div>
-        <div id="footer">
+        <div id="footer-project-list">
           <p>&copy; CastMe. All rights reserved.</p>
         </div>
       </div>

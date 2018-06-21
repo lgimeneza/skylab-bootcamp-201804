@@ -1,6 +1,7 @@
 
 body {
 	margin: 0;
+	margin-bottom: 50px;
 	padding: 0;
 	background: #73252F url(./components/landing/images/main-background-bg.jpg) repeat;
 	font-family: 'Abel', sans-serif;
@@ -437,8 +438,11 @@ a {
 /* Footer */
 
 #footer {
-	height: 100px;
 	background: rgba(0,0,0,.3);
+    position: absolute;
+    height: 50px;
+    left: 0px;
+    right: 0px;
 }
 
 #footer p {

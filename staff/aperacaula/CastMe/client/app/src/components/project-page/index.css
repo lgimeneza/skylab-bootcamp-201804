@@ -54,3 +54,20 @@
 .register-message button{
     font-size: 80%;
 }
+
+#footer-project-page{
+    height: 50px;
+    background: rgba(0,0,0,.3);
+    position: absolute;
+    left: 0;
+    /* bottom: 0; */
+    width: 100%;
+}
+
+#footer-project-page p {
+	margin: 0;
+	padding-top: 20px;
+	line-height: normal;
+	text-align: center;
+	color: #FFFFFF;
+}

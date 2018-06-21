@@ -113,8 +113,7 @@ class ProjectPage extends Component {
     logic.joinCasting(userId, projectId, castingId)
       .then(()=>{
         swal({
-          text: 'You joined the casting!',
-          buttons: 'Good!',
+          title: 'You joined the casting!',
           confirmButtonColor: '#59222A'
         }   
         )
@@ -199,7 +198,7 @@ class ProjectPage extends Component {
 
           <div className="three-columns" />
         </div>
-        <div id="footer">
+        <div id="footer-project-list">
           <p>&copy; CastMe. All rights reserved.</p>
         </div>
       </div>

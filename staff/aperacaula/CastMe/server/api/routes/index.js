@@ -95,6 +95,7 @@ router.patch('/users/:userId', jsonBodyParser, (req, res) => {
         physicalData,
         professionalData,
         videobookLink,
+        pics,
         profilePicture
      } } = req
 
@@ -106,6 +107,7 @@ router.patch('/users/:userId', jsonBodyParser, (req, res) => {
         physicalData,
         professionalData,
         videobookLink,
+        pics,
         profilePicture
     )
         .then(() => {
@@ -119,9 +121,9 @@ router.patch('/users/:userId', jsonBodyParser, (req, res) => {
 })
 
 router.delete('/users/:userId', jsonBodyParser, (req, res) => {
-    const { params: { userId }, body: { email, password } } = req
+    const { params: { userId }, body: { email} } = req
 
-    logic.unregisterUser(userId, email, password)
+    logic.unregisterUser(userId, email )
         .then(() => {
             res.status(200)
             res.json({ status: 'OK' })

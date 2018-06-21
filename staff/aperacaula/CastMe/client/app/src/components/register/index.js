@@ -319,7 +319,7 @@ class RegisterUser extends Component {
                 "Welcome to CastMe",
 
               )
-                .then(this.props.history.push("/auth"))
+                .then(this.props.onRegister)
                 .then(() => sessionStorage.removeItem('profilePicture'))
                 .then(this.setState({
                   profilePicture: "",
@@ -356,7 +356,7 @@ class RegisterUser extends Component {
 
                       <form className="registration-register" onSubmit={this.acceptRegister}>
                         <section>
-                          <h3 class="image-header">Profile Picture</h3>
+                          <h3 className="image-header">Profile Picture</h3>
                           <img
                             src={this.state.profilePicture}
                             className="profile-pic"
@@ -468,7 +468,7 @@ class RegisterUser extends Component {
                               type="password"
                               className="text_input-register"
                               name="repeat-password"
-                              id="Password"
+                              id="repeatPassword"
                               placeholder="Insert password"
                               onChange={this.registerRepeatPassword}
                               value={this.state.repeatpassword}

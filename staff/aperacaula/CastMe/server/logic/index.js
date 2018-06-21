@@ -361,13 +361,15 @@ const logic = {
 
   /**
    *
+   * This method will unregister a user
+   * 
    * @param {string} id
    * @param {string} email
    * @param {string} password
    *
    * @returns {Promise<boolean>}
    */
-  unregisterUser(id, email, password) {
+  unregisterUser(id, email) {
     return Promise.resolve()
       .then(() => {
         if (typeof id !== "string") throw Error("user id is not a string");
@@ -380,13 +382,8 @@ const logic = {
         if (!(email = email.trim()).length)
           throw Error("user email is empty or blank");
 
-        if (typeof password !== "string")
-          throw Error("user password is not a string");
-
-        if ((password = password.trim()).length === 0)
-          throw Error("user password is empty or blank");
-
-        return User.findOne({ email, password });
+        
+        return User.findOne({ email });
       })
       .then(user => {
         if (!user) throw Error("wrong credentials");
@@ -485,7 +482,7 @@ const logic = {
                 const casting = project.castings.find(casting => casting._id.toString() === castingId)
                 const age = this.getAge(user.personalData.birthDate)
 
-                if (!casting.status) return false
+                
 
                 if (!(age >= casting.minAge && age <= casting.maxAge)) return false
 
@@ -548,7 +545,7 @@ const logic = {
 
             // const userEligible = this.userIsEligible(userId, projectId, castingId)
 
-            // if (!userEligible) return false
+            // if (!userEligible) throw Error("Sorry, you're not eligible for this casting")
 
             casting.applicants.push(user._id) //ads the user to the casting user's list
 

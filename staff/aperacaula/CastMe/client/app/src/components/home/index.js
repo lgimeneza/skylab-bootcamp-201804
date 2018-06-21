@@ -47,7 +47,39 @@ class Home extends Component {
 
   quitCasting(projectId, castingId){
     
+    
+    swal({
+      title: "Are you sure you want to cancel your candidacy?",
+      //buttons: true,
+      buttons:{
+        back: {
+          text: "Back",
+          value: false,
+          color: "white"
+        },
+        confirm: true
+      }
+    }).then((value)=>{
+    if (value){
     logic.quitCasting(logic.userId, projectId, castingId)
+    .then(()=>{
+      
+      logic
+        .retrieveUserLite(logic.userId)
+        .then(({ name, surname, profilePicture, applications }) => {
+          this.setState({
+            name,
+            surname,
+            profilePicture,
+            applications,
+
+          });
+        })
+
+    })
+  }
+
+  })
     
 
   }
@@ -136,7 +168,7 @@ class Home extends Component {
             })}
           </div>
         </div>
-        <div id="footer">
+        <div id="footer-login">
           <p>&copy; CastMe. All rights reserved.</p>
         </div>
       </div>

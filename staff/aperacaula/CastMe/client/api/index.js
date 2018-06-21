@@ -274,13 +274,14 @@ const castmeApi = {
    */
   updateUser(
     email,
-    password,
     newEmail,
+    password,
     newPassword,
     personalData,
     physicalData,
     professionalData,
     videobookLink,
+    pics,
     profilePicture
   ) {
     return Promise.resolve().then(() => {
@@ -332,6 +333,7 @@ const castmeApi = {
           physicalData,
           professionalData,
           videobookLink,
+          pics,
           profilePicture
 
         })
@@ -364,11 +366,11 @@ const castmeApi = {
    *
    * @param {string} id
    * @param {string} email
-   * @param {string} password
+   *
    *
    * @returns {Promise<boolean>}
    */
-  unregisterUser(id, email, password) {
+  unregisterUser(id, email) {
     return Promise.resolve().then(() => {
       if (typeof id !== "string") throw Error("user id is not a string");
 
@@ -379,14 +381,10 @@ const castmeApi = {
       if (!(email = email.trim()).length)
         throw Error("user email is empty or blank");
 
-      if (typeof password !== "string")
-        throw Error("user password is not a string");
-
-      if ((password = password.trim()).length === 0)
-        throw Error("user password is empty or blank");
+    
 
       return axios
-        .delete(`${this.url}/users/${id}`, { data: { email, password } })
+        .delete(`${this.url}/users/${id}`, { data: { email } })
         .then(({ status, data }) => {
           if (status !== 200 || data.status !== "OK")
             throw Error(

@@ -50,6 +50,34 @@ const logic = {
 
     quitCasting(userId, projectId,castingId){
         return api.quitCasting(userId, projectId,castingId)
+    },
+
+    updateUser(email,
+        newEmail,
+        password,
+        newPassword,
+        PersonalData,
+        PhysicalData,
+        ProfessionalData,
+        videobook,
+        pics,
+        profilePicture){
+        return api.updateUser(email,
+            newEmail,
+            password,
+            newPassword,
+            PersonalData,
+            PhysicalData,
+            ProfessionalData,
+            videobook,
+            pics,
+            profilePicture)
+    },
+
+    unregisterUser(userId, email){
+        sessionStorage.clear()
+        this.userId= undefined
+        return api.unregisterUser(userId, email)
     }
 
     //profile(userId){

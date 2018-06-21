@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-//import logic from "../../logic";
+import logic from "../../logic";
+import Header from '../header'
 import "./index.css";
 import DropNCrop from "@synapsestudios/react-drop-n-crop";
 import "@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css";
@@ -13,15 +14,27 @@ class UploadPicture extends Component {
         filename: null,
         filetype: null,
         src: null,
-        error: null
+        error: null,
+        name: '',
+        surname: '',
+        profilePicture: ''
       }
 
-  capture = e => {
-    const xxx = e.target.value;
-    this.setState({ xxx });
-  };
-
   
+
+  componentDidMount(){
+    if (logic.userId){
+        logic.retrieveUserLite(logic.userId)
+            .then(({name, surname, profilePicture})=>{
+                this.setState({
+                    name,
+                    surname,
+                    profilePicture
+                })
+            })
+    }
+
+}
  
 
   clearImage = () => {
@@ -33,7 +46,7 @@ class UploadPicture extends Component {
   }
 
   onChange = value => {
-    console.log(value)
+    
     this.setState(value);
   }
 
@@ -41,35 +54,10 @@ class UploadPicture extends Component {
     return (
       <div>
         <div id="wrapper">
-          <header id="header-wrapper-login">
-            <div id="header-login">
-              <div id="menu1-login">
-                <ul>
-                  <li className="menu_link">
-                    <a>Homepage</a>
-                  </li>
-                  <li className="menu_link">
-                    <a>Castings</a>
-                  </li>
-                </ul>
-              </div>
-              <div id="logo-login">
-                <h1>
-                  <a onClick={this.redirectLanding}>CastMe </a>
-                </h1>
-              </div>
-              <div id="menu2-login">
-                <ul>
-                  <li className="menu_link">
-                    <a>About</a>
-                  </li>
-                  <li className="menu_link">
-                    <a>Contact Us</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </header>
+          <Header 
+            profilePicture={this.state.profilePicture}
+            name={this.state.name}
+            surname={this.state.surname}/>
 
           <div id="page-login">
             
