@@ -18,12 +18,12 @@ class App extends Component {
         <Navbar ref={navbar => navbar ? this.navbarLogin = navbar.login : null} />
         <div className="hero-body">
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' isActive='is-active' component={Home} />
             <Route exact path='/calendar/:year/:month' component={Calendar} />
             <Route exact path='/calendar/:year/:month/:day' component={BookingHours}/>
-            <Route path='/login' render={(routeProps) => <Login {...routeProps} navbarLogin={this.navbarLogin} />} />
-            <Route path='/register' component={Register} />
-            <PrivateRoute path="/profile" component={Profile} />
+            <Route path='/login' isActive='is-active' render={(routeProps) => <Login {...routeProps} navbarLogin={this.navbarLogin} />} />
+            <Route path='/register'  component={Register} />
+            <PrivateRoute path="/profile" isActive='is-active' component={Profile} />
             <PrivateRoute path="/confirmBooking" component={ConfirmBooking} />
           </Switch>
         </div>

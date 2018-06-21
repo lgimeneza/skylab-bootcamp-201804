@@ -13,6 +13,8 @@ const images = [
   '/images/5.jpg',
   '/images/6.jpg',
   '/images/7.jpg',
+  '/images/carlos.jpeg',
+  '/images/indra.jpeg'
 ]
 
 class Home extends Component {

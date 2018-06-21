@@ -7,11 +7,15 @@ import '../design/navbar.css'
 class Navbar extends Component {
 
   state = {
-    token: ''
+    token: '',
+    isActive: 'is-active'
   }
 
   componentDidMount() {
     this.login()
+    this.setState({
+      isActive: this.props.isActive
+    })
   }
 
   logout = () => {
@@ -51,7 +55,7 @@ class Navbar extends Component {
                 <div className="tabs is-right">
                   {this.state.token ?
                     <ul className="subtitle is-4">
-                      <li className="is-active"><Link to="/" >Home</Link></li>
+                      <li className={this.state.isActive}><Link to="/" >Home</Link></li>
                       <li><Link to="/profile">Profile</Link></li>
                       <li onClick={() => this.logout()}><Link to="/">Logout</Link></li> 
                     </ul>
