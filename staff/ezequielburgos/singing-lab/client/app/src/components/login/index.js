@@ -56,7 +56,7 @@ class Login extends Component {
                             <input type="checkbox" defaultValue="remember-me" /> Remember me
                         </label>
                     </div>
-                    <p className="mt-2">You don't have an account? <Link to="/register" style={{color: "lightblue", fontWeight: "bold"}}>Sign up</Link></p>
+                    <p className="mt-2">You don't have an account? <Link to="/register" style={{color: "lightgrey", fontWeight: "bold"}}>Sign up</Link></p>
                     <button className="btn btn-lg btn-primary btn-block login-submit" type="submit">Sign in</button>
                     
                 </form>

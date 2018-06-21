@@ -16,7 +16,7 @@ class Cart extends Component {
             cart: [],
             address: '',
             email: '',
-            phone: '',
+            phone: ''
         }
     }
 
@@ -25,8 +25,7 @@ class Cart extends Component {
             .then(user => {
                 this.setState({
                     address: user.address,
-                    email: user.email,
-                    phone: user.phone
+                    email: user.email
                 })
             })
 
@@ -62,7 +61,6 @@ class Cart extends Component {
                         type: 'success',
                         width: 500,
                         padding: '3em',
-                        backdropWidth: 200,
                         backdrop: `
                           rgb(121, 27, 105, 0.3)
                           url("https://media.giphy.com/media/idKFx1AUCg1Yk/giphy.gif")
@@ -99,9 +97,9 @@ class Cart extends Component {
         return (
             <main>
                 <section className="main-title my-order-title">
-                    <i class="far fa-credit-card my-card-title"></i>
+                    <i className="far fa-credit-card my-card-title"></i>
                     <h2 className="my-order-title"> My order</h2>
-                    <i class="fas fa-truck title-shopping-truck"></i>
+                    <i className="fas fa-truck title-shopping-truck"></i>
                 </section>
                 <ul className="listitems-body">
                     <div className="thumbnail listitems-subbody">

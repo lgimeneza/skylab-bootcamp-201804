@@ -83,17 +83,17 @@ class Register extends Component {
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="username">address</label>
+                <label htmlFor="username">Address</label>
                 <div className="input-group">
                   <input type="text" className="form-control" name="address" placeholder="address" onChange={this.handlerCapturingAddress} value={this.state.address} />
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="email">email</label>
+                <label htmlFor="email">Email</label>
                 <input type="email" className="form-control" name="email" placeholder="email" onChange={this.handlerCapturingEmail} value={this.state.email} />
               </div>
               <div className="mb-3">
-                <label htmlFor="address">password</label>
+                <label htmlFor="address">Password</label>
                 <input type="password" className="form-control" name="password" placeholder="password" onChange={this.handlerCapturingPassword} value={this.state.password} />
               </div>
               <div className="mb-3">

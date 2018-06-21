@@ -46,9 +46,9 @@ class DeleteProfile extends Component {
         return (
             <section>
                 <form className="form-register" onSubmit={this.handleSubmitUnregister} noValidate>
-                    <Forms type="text" label='email' placeholder="insert email" captureInput={this.handlerCapturingEmail} inputField={this.state.email} />
-                    <Forms type="password" label='password' placeholder="password" captureInput={this.handlerCapturingPassword} inputField={this.state.passwordToDelete} />
-                    <Forms type="password" label='confirm password' placeholder="insert new password" captureInput={this.handlerCapturingPasswordConfirm} inputField={this.state.passwordToDeleteConfirm} />
+                    <Forms type="text" label='Email' placeholder="insert email" captureInput={this.handlerCapturingEmail} inputField={this.state.email} />
+                    <Forms type="password" label='Password' placeholder="password" captureInput={this.handlerCapturingPassword} inputField={this.state.passwordToDelete} />
+                    <Forms type="password" label='Confirm password' placeholder="insert new password" captureInput={this.handlerCapturingPasswordConfirm} inputField={this.state.passwordToDeleteConfirm} />
 
                     <hr className="mb-4" />
                     <button className="btn btn-primary btn-lg btn-block register-submit" type="submit">Delete profile</button>

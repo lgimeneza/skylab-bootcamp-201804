@@ -6,6 +6,10 @@
    * Custom translucent site header
    */
 
+.first-main-buttons{
+    color: lightgrey;
+}
+
 .site-header {
     /* background-color: rgba(129, 61, 61, 0.85); */
     background: linear-gradient(to left, rgb(121, 27, 105), rgb(34, 8, 44));
@@ -28,7 +32,14 @@
 .landing-main-title{
     font-family: Apple Chancery;
     /* font-family: Chalkduster; */
-}
+    animation: blinker 5s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0.7;
+    }
+  }
 
 /*
 Home page CSS

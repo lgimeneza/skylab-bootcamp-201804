@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import swal from 'sweetalert2'
 
 class Cart extends Component {
-    
+
     render() {
 
         this.props.cart.map(item => this.props.total.push(item.price))
@@ -24,7 +24,7 @@ class Cart extends Component {
                             <th scope="col">#</th>
                             <th scope="col">Course</th>
                             <th scope="col">Units available</th>
-                            <th scope="col">discount</th>
+                            <th scope="col">Discount</th>
                             <th scope="col">Price</th>
                             <th scope="col"></th>
                         </tr>
@@ -46,7 +46,7 @@ class Cart extends Component {
                 {<div className="card text-right total-price-card">
                     <div className="card-body">
                     <h2>Total price</h2>
-                        <h2 className="card-title">{this.props.total.length && this.props.total.reduce((accumulator, currentValue) => accumulator + currentValue)}€</h2>
+                        <h2 className="card-title">{this.props.total.length && this.props.total.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}€</h2>
                         {this.props.loggedIn ? <Link to="/order" className="btn btn-outline-secondary" role="button">Buy the products</Link> : <a onClick={() => swal('You must be logged to purchase our products')} className="btn btn-outline-secondary" role="button">Buy the products</a> }
                     </div>
                 </div>}

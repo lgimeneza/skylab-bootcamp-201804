@@ -30,7 +30,7 @@ class App extends Component {
 
   onOrder = () => {
     logic.clearCart()
-    
+
     logic._cart.length = 0;
 
     this.getItems()
@@ -40,12 +40,12 @@ class App extends Component {
 
   getItems = () => {
     if (logic._cart.length && logic._cart !== 'undefined') {
-        logic.listProductsByIds()
-            .then(cart => this.setState({ cart, total: [], cartLength: logic.cart().length }))
+      logic.listProductsByIds()
+        .then(cart => this.setState({ cart, total: [], cartLength: logic.cart().length }))
     } else {
-        this.setState({ cart: [], total: [], cartLength: logic.cart().length })
+      this.setState({ cart: [], total: [], cartLength: logic.cart().length })
     }
-}
+  }
 
   onAddToCart = id => {
     logic.addProductToCart(id)
@@ -59,7 +59,7 @@ class App extends Component {
         var imgtodrag = $('#img-' + id);
 
         if (imgtodrag !== 'undefined') {
-          
+
           var imgclone = imgtodrag.clone()
             .offset({
               top: imgtodrag.offset().top,
@@ -104,9 +104,9 @@ class App extends Component {
           <Route exact path="/our-team" component={OurTeam} />
           <Route exact path="/auth" render={() => <Login onLogin={this.onLogin} />} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/cart" render={() => <Cart loggedIn={this.state.loggedIn} onRemoveFromCart={this.onRemoveFromCart} cart={this.state.cart} total={this.state.total}/> }/>
+          <Route exact path="/cart" render={() => <Cart loggedIn={this.state.loggedIn} onRemoveFromCart={this.onRemoveFromCart} cart={this.state.cart} total={this.state.total} />} />
           <Route exact path="/order" render={() => this.state.loggedIn ? <Order onOrder={this.onOrder} /> : <Redirect to="/" />} />
-          <Route exact path="/profile" render={() => this.state.loggedIn ? <Route exact path="/profile" component={Profile} /> : <Redirect to="/" /> } />
+          <Route exact path="/profile" render={() => this.state.loggedIn ? <Route exact path="/profile" component={Profile} /> : <Redirect to="/" />} />
           <Route exact path="/categories" component={Categories} />
           <Route exact path="/products" render={props => <AllProducts categoryId={props.match.params.id} onAddToCart={this.onAddToCart} />} />
           <Route exact path="/categories/:id" render={props => <Products categoryId={props.match.params.id} onAddToCart={this.onAddToCart} />} />

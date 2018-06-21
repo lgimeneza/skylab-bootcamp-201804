@@ -101,12 +101,12 @@ class Update extends Component {
                                     <input type="text" className="form-control" name="surname" placeholder="surname" onChange={this.handlerCapturingSurname} value={this.state.surname} />
                                 </div>
                             </div>
-                            <Forms type="text" label='phone' placeholder="phone" captureInput={this.handlerCapturingPhone} inputField={this.state.phone} />
-                            <Forms type="text" label='address' placeholder="address" captureInput={this.handlerCapturingAddress} inputField={this.state.address} />
-                            <Forms type="text" label='email' placeholder="email" captureInput={this.handlerCapturingEmail} inputField={this.state.email} />
-                            <Forms type="text" label='new email' placeholder="insert new email" captureInput={this.handlerCapturingNewEmail} inputField={this.state.newEmail} />
-                            <Forms type="password" label='password' placeholder="password" captureInput={this.handlerCapturingPassword} inputField={this.state.password} />
-                            <Forms type="password" label='new password' placeholder="insert new password" captureInput={this.handlerCapturingNewPassword} inputField={this.state.newPassword} />
+                            <Forms type="text" label='Phone' placeholder="phone" captureInput={this.handlerCapturingPhone} inputField={this.state.phone} />
+                            <Forms type="text" label='Address' placeholder="address" captureInput={this.handlerCapturingAddress} inputField={this.state.address} />
+                            <Forms type="text" label='Email' placeholder="email" captureInput={this.handlerCapturingEmail} inputField={this.state.email} />
+                            <Forms type="text" label='New email' placeholder="insert new email" captureInput={this.handlerCapturingNewEmail} inputField={this.state.newEmail} />
+                            <Forms type="password" label='Password' placeholder="password" captureInput={this.handlerCapturingPassword} inputField={this.state.password} />
+                            <Forms type="password" label='New password' placeholder="insert new password" captureInput={this.handlerCapturingNewPassword} inputField={this.state.newPassword} />
                             <hr className="mb-4" />
                             <button className="btn btn-primary btn-lg btn-block register-submit" type="submit">Update profile</button>
 

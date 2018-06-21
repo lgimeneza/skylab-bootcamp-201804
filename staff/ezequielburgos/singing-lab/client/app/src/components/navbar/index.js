@@ -49,11 +49,12 @@ class Navbar extends Component {
                 <nav className="site-header sticky-top py-1">
                     <div className="container d-flex flex-column flex-md-row justify-content-between">
                         <div className="py-2 d-none d-md-inline-block">
-                            <i className="fas fa-music" />
+                        <Link to="/"><i className="fas fa-music" />
+                            <i className="fas fa-music" /></Link>
                         </div>
-                        <span className="py-2 d-none d-md-inline-block">
+                        {/* <span className="py-2 d-none d-md-inline-block">
                             <Link to="/">Home</Link>
-                        </span>
+                        </span> */}
                         <CategoriesDropdown items={this.state.categories}/>
                         <span className="py-2 d-none d-md-inline-block">
                             <Link to="/our-team">Our Team</Link>
@@ -79,7 +80,7 @@ class Navbar extends Component {
                         }
                         <span className="py-2 d-none d-md-inline-block">
                             {/* <Link to="/cart"><span role="img" aria-label="cart">🛒</span></Link> */}
-                            <Link to="/cart"><span role="img" aria-label="cart"><i className="fas fa-shopping-cart"><span className="badge badge-pill badge-info">{this.props.cartLength}</span></i> </span></Link>
+                    <Link to="/cart"><span role="img" aria-label="cart"><i className="fas fa-shopping-cart">{this.props.cartLength ? <span className="badge badge-pill badge-info">{this.props.cartLength}</span> : ''}</i> </span></Link>
                         </span>
                     </div>
                 </nav>

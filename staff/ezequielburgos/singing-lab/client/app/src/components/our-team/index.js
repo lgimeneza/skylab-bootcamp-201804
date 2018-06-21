@@ -4,6 +4,10 @@ import Footer from '../footer'
 
 class OurTeam extends Component {
 
+    componentDidMount(){
+        window.scrollTo(0, 0)
+    }
+
     render() {
         return (
             <main>

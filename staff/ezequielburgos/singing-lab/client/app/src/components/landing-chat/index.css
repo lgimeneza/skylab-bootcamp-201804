@@ -11,3 +11,7 @@
 .jumbotron .btn{
     border: 1px solid white;
 }
+
+.chat-now-button{
+    color: lightgray;
+}
