@@ -1,7 +1,7 @@
 const travelApi = require("api")
 const cloudApi = require("cloud-api")
 
-travelApi.url = "http://rocky-stream-59609.herokuapp.com/api"
+travelApi.url = "http://localhost:4000/api"
 
 const logic = {
     userId: "NO-ID",
