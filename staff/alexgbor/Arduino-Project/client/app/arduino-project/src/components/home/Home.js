@@ -83,7 +83,7 @@ class Home extends Component {
         const arduId = this.state.data.find(function (ele) {
             return ele.ip === targetArduino
         })
-        logic.removeArduino(userId, arduId.id, token)
+        logic.removeArduino(userId, arduId.id, token).then(this.setState({ selectedArduino: '' }))
     }
 
     _handleAddArduino = (e) => {

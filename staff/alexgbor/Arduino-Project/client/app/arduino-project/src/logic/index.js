@@ -2,7 +2,7 @@
 
 const arduApi = require('api')
 
-arduApi.url = 'http://192.168.1.35:5000/api'
+arduApi.url = 'http://192.168.0.46:5000/api'
 
 const logic = {
     userId: 'NO-ID',
