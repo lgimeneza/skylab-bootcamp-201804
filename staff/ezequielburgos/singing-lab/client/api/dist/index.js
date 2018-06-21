@@ -452,7 +452,6 @@ var singingLabApi = {
             }
 
             if (submitDate !== undefined) {
-                console.log('Client api: ' + submitDate);
                 if (typeof submitDate !== 'string') throw Error('submitDate is not a string');
 
                 if (!(submitDate = submitDate.trim()).length) throw Error('submitDate is empty or blank');
