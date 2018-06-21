@@ -60,7 +60,6 @@ class BookingHours extends Component {
 // ]
 
     const { match: { params: { year, month, day } } } = this.props
-    console.log(year, month, day)
 
     this.setState({
       date: [year, month, day],
@@ -78,7 +77,6 @@ class BookingHours extends Component {
         })
       })
       .then((daysHoursApplied) => {
-        console.log(daysHoursApplied)
         this.setState({ daysHours: daysHoursApplied })
       })
   }

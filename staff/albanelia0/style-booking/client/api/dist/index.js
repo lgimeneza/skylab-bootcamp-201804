@@ -282,7 +282,6 @@ var logic = {
       // if (typeof day !== 'number') throw Error('day is not a number')
 
 
-      console.log(_this7.url + '/booking/hours/' + year + '/' + month + '/' + day);
       return axios.get(_this7.url + '/booking/hours/' + year + '/' + month + '/' + day, { headers: { authorization: 'Bearer ' + _this7.token } }).then(function (_ref6) {
         var status = _ref6.status,
             data = _ref6.data;
@@ -377,7 +376,6 @@ var logic = {
     var _this10 = this;
 
     return Promise.resolve().then(function () {
-      console.log(_this10.token);
       return axios.get(_this10.url + '/booking/user/' + userId, { headers: { authorization: 'Bearer ' + _this10.token } }).then(function (_ref9) {
         var status = _ref9.status,
             data = _ref9.data;

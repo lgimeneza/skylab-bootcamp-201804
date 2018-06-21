@@ -301,7 +301,7 @@ const logic = {
             })
         }))
           .then(() => {
-            // .tz("Europe/London")
+            // .tz("Europe/Madrid")
             const endDate = moment(date).add(totalDuration, 'minutes').toDate()
             return Booking.find({
               $or: [
@@ -327,9 +327,7 @@ const logic = {
               
             })
               .then(res => {
-                debugger
                 if (res.length !== 0) {
-                  debugger
                   const hourFull = "unavailable"
                   return hourFull
                 } else {
@@ -339,9 +337,7 @@ const logic = {
                     date,
                     endDate
                   }).then(res => {
-                    debugger
                     const { _doc: { services, _id, userId, date, endDate } } = res
-                    debugger
                     const data = {
                       bookingId: _id,
                       services: services.map(s => s._id),
@@ -349,7 +345,6 @@ const logic = {
                       date: date,
                       endDate: endDate
                     }
-                    debugger
                     return data
                   })
                 }

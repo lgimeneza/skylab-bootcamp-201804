@@ -13,7 +13,6 @@ class Navbar extends Component {
 
   componentDidMount() {
     this.login()
-    console.log(this.props)
     this.setState({
       isActive: this.props.isActive
     })

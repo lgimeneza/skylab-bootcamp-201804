@@ -11,13 +11,11 @@ function createBooking() {
   let hour = localStorage.getItem("hour")
   
   const _date = moment(date + " " + hour).format()
-  console.log(_date)
 
   const serviceIds = []
   if (checkedList) {
 
     checkedList.map(service => {
-      console.log(service)
       serviceIds.push(service.serviceId)
     })
   }

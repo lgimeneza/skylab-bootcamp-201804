@@ -32,7 +32,6 @@ class ConfirmBooking extends Component {
     let token = logic.localStorageGetItem("token")
     logic.setToken(token)
     createBooking().then(res => {
-      console.log(res)
       if (res) {
         swal({
           type: 'success',
@@ -41,9 +40,7 @@ class ConfirmBooking extends Component {
         this.props.history.push('/profile')
       } else {
         let date = logic.localStorageGetItem("date")
-        console.log(date)
         let _date = date.replace(/\,/g, "/")
-        console.log(_date)
         this.props.history.push(`/calendar/${_date}`)
       }
     })
