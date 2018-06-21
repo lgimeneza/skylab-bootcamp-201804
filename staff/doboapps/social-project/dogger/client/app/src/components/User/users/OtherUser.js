@@ -4,6 +4,8 @@ import logic from "../../../logic"
 import {Row, Col, Jumbotron,Container, Button, CardImg } from 'reactstrap'
 import Gallery  from '../gallery/'
 import {ModalApp} from '../../'
+// import img  from '../gallery/'
+import imgProfile from '../../../images/others/profile-user.jpg'
 
 class OtherUser extends Component {
 
@@ -13,7 +15,7 @@ class OtherUser extends Component {
         race: undefined,
         gender: undefined,
         description: undefined,
-        photoProfile: "",
+        photoProfile: imgProfile,
         city: undefined,
         zip: undefined,
         images:[],
@@ -108,6 +110,7 @@ class OtherUser extends Component {
                 <Jumbotron>
                     <Row>
                         <Col xs="4">
+                        {console.log("photo",this.state.photoProfile)}
                             <CardImg className="rounded-circle" top src={this.state.photoProfile} alt="Card image cap" />
                         </Col>
                         <Col xs={{ size: 7,  offset: 1 }} >

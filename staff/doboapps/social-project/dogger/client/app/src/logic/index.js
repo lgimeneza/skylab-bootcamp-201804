@@ -1,6 +1,7 @@
 const socialApi = require('social-api')
 
 socialApi.url = 'http://localhost:5000/api'
+//socialApi.url = "https://evening-island-37056.herokuapp.com/api"
 
 const logic = {
     userId: 'NO-ID',
