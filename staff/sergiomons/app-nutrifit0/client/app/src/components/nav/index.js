@@ -33,7 +33,7 @@ class Nav extends Component {
             <div>
                 <header>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
-                        <a className="navbar-brand mr-4" href="">Nutrifit</a>
+                        <a className="navbar-brand mr-4 ml-2" href="">Nutri<span id="spanBrand">fit</span></a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>

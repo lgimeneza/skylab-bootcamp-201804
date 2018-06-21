@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import {withRouter, Link} from 'react-router-dom'
 import './index.css'
-import Nav from '../nav'
 
 class Register extends Component {
 

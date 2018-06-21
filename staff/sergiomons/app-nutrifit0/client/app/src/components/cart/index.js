@@ -50,11 +50,12 @@ class Cart extends Component {
                 <div className="container-fluid">
                     <div className="row mt-4">
                         <div className="col-xl-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                            <table className="table">
+                              <h2 className="mb-2 ml-3" style={{fontWeight: "bold", fontStyle: "italic",textAlign:"left", color: "#4ca562"}}>Tu carrito<i id='icon' className="fas fa-shopping-cart ml-2"></i></h2>
+                            <table className="table mt-4" >
                                 <thead>
                                     <tr className="table-active">
                                         <th>#</th>
-                                        <th>Artículo</th>
+                                        <th >Artículo</th>
                                         <th>Precio</th>
                                         <th>Cantidad</th>
                                         <th>Total</th>
@@ -66,14 +67,14 @@ class Cart extends Component {
                                         return (
                                             <tr key={product.id}>
                                                 <td><img style={{ width: '3.5rem', height: '2rem' }} src={product.image} /></td>
-                                                <td><span style={{ width: '12rem', height: '2rem' }}>{product.name}</span></td>
+                                                <td style={{ textAlign: "left" }}><span style={{ width: '12rem', height: '2rem', marginLeft: "10px" }}>{product.name}</span></td>
                                                 <td><span>{product.price} €/ud</span></td>
                                                 <td><input id="quantity" type="number" min="1" step="1" defaultValue={product.quantity} onChange={e => this.changeQuantity(product.id, parseInt(e.target.value), parseInt(e.target.defaultValue))} style={{ width: '2.5rem', height: '1.4rem', }} /></td>
                                                 <td> <span>{product.price * product.quantity} €</span></td>
                                                 <td><button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem' }}>X</button></td>
                                             </tr>)
                                     }) :
-                                        <p className="mt-4 mb-4 mx-auto">No hay productos en el carrito</p>}
+                                        <p className="mt-4 mb-4 mx-auto" style={{fontSize: "1.8rem"}}>No hay productos en el carrito</p>}
                                 </tbody>
                                 <tfoot>
                                     <tr className="table-active">
@@ -97,10 +98,10 @@ class Cart extends Component {
                                 <div className="card-footer">
                                     <Link to='/order'><button className="btn btn-lg btn-dark my-2 my-sm-0 btn-block mb-3" style={{ border: "1px solid #c6c6c6" }} type="submit">Pagar</button></Link>
                                 </div>
+                                 <Link to='/'><button className="btn btn-md btn-secondary mt-1 mb-3 mx-auto" style={{ border: "1px solid #c6c6c6" }} type="submit">Seguir comprando</button></Link>
                             </div>
                         </div>
                     </div>
-                    <Link to='/'><button className="btn btn-md btn-secondary mt-1 mb-3 mx-auto" style={{ border: "1px solid #c6c6c6" }} type="submit">Seguir comprando</button></Link>
                 </div>
             </main>
         )

@@ -4,6 +4,9 @@ nav.navbar ul.nav li {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin-right: 20px;
 }
+.navbar-brand{
+  font-size: 1.7rem
+}
 
 /* .navbar-text {
     display: inline-block;
@@ -50,6 +53,12 @@ nav.navbar ul.nav li {
   bottom: 15px;
   right:9px;
   font-size: 0.7rem
+}
+
+#spanBrand{
+  color: rgb(132, 187, 119);
+  font-size: 2rem;
+font-weight: bold
 }
 
  

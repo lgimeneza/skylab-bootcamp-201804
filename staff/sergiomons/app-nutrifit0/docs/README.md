@@ -4,9 +4,7 @@
 
 E-comerce web platform focused on the sale of nutritional food products. The sale of these products is aimed at people looking for a specific diet. For this, both individual dishes and specialized packages are available for a type of nutritional plan.
 
-## TECHNOLOGIES
-
-- Other: [Trello](https://trello.com/b/eriWR8jg/final-project), Git & Github, surge, cloudinary, Draw.io. 
+## TECHNOLOGIES 
 
 #### - CLIENT SIDE
 * Javascript
@@ -26,8 +24,6 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 * Chai
 * NYC
 
-## Technical description
-
 
 ## UML MODEL
 
@@ -37,33 +33,32 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 
 ![block model](./models-diagram/block-diagram-nitrifit.jpg)
 
-## DESIGN (screenshots)
-
-//TODO...
+## SCREENSHOTS
 
 ### Register
 
-![](./images/sketch/register.png)
+![](./layouts/register.jpg)
 
 ### Login
 
-![](./images/sketch/login.png)
+![](./layouts/login.jpg)
 
-### Home Page
+### Home 
 
-![](./images/sketch/home-page.png)
+![](./layouts/home.jpg)
 
-### Individual Category
+### Individuals Category
 
-![](./images/sketch/product-page.png)
+![](./layouts/categories.jpg)
 
 ### Cart
 
-![](./images/sketch/cart-page.png)
+![](./layouts/cart.jpg)
 
 ### Order
 
-![](./images/sketch/cart-page.png)
+![](./layouts/order.jpg)
+
 
 ## SHOW DEMO
 
