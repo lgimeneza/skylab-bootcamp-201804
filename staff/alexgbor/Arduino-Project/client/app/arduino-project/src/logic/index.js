@@ -76,6 +76,10 @@ const logic = {
     removeArduinoData(userId, arduId) {
         return arduApi.removeArduinoData(userId, arduId)
             .then(data => data).catch(err => err.message)
+    },
+
+    sendOutput(userId, arduId, q, ip, pin) {
+        return arduApi.sendOutput(userId, arduId, q, ip, pin)
     }
 }
 

@@ -13,15 +13,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      
-      {
 
-        this.isLogged() ?
-          <Header isLogged={true} />
-          :
-          <Header isLogged={false} />
+        {
 
-      }
+          this.isLogged() ?
+            <Header isLogged={true} />
+            :
+            <Header isLogged={false} />
+
+        }
+
         <Main />
 
       </div>

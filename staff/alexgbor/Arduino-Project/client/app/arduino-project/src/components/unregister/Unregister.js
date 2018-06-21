@@ -1,24 +1,29 @@
 import React, { Component } from "react";
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
-import swal from 'sweetalert2'
-import './style.css'
-import { Button, Col, Row } from 'reactstrap'
+import { Button, Col, Row, Jumbotron, Container, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
 
 class Unregister extends Component {
 
     state = {
-        password: ''
+        password: '',
+        failedUnregisterMessage: '',
+        modal: false
     }
 
     _handleKeepPassword = ({ target: { value: password } }) => {
         this.setState({ password })
     }
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal
+        })
+    }
 
-    _handleUnregister(e) {
+    _handleUnregister = e => {
 
-        e.preventDefault();
+        e.preventDefault()
 
         let id = localStorage.getItem('id-app')
         let token = localStorage.getItem('token-app')
@@ -28,19 +33,14 @@ class Unregister extends Component {
             .then(email => logic.unregisterUser(email, pass, token, id))
             .then((r) => {
                 if (r === true) {
-                    swal({
-                        type: 'success',
-                        title: 'Sad tou see you leave...'
-                    })
                     localStorage.removeItem("id-app")
                     localStorage.removeItem("token-app")
                     this.history.push('/')
                 }
                 else {
-                    swal({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: r
+                    this.toggle()
+                    this.setState({
+                        failedUnregisterMessage: r
                     })
                 }
             }
@@ -51,11 +51,11 @@ class Unregister extends Component {
         return <div>
             {
                 this.props.isLogged() ?
-                    <div className="forms">
+                    <div className="forms mb-3 mt-3">
 
-                        <h1 className="text-center mt-5">Unregister</h1>
                         <Row>
                             <Col xs='12' md={{ size: '6', offset: '3' }}>
+                                <h1 className="text-center mt-5">Unregister</h1>
                                 <form onSubmit={this._handleUnregister}  >
                                     <div className="field mb-4">
                                         <input type="password" name="password" id="password" placeholder="123123ab" value={this.state.password} onChange={this._handleKeepPassword} />
@@ -68,9 +68,24 @@ class Unregister extends Component {
                                 </form>
                             </Col>
                         </Row>
+                        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                            <ModalHeader toggle={this.toggle}>Oops! Something went wrong...</ModalHeader>
+                            <ModalBody>
+                                Error: {this.state.failedUnregisterMessage}
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" onClick={this.toggle}>Close</Button>{' '}
+                            </ModalFooter>
+                        </Modal>
                     </div>
                     :
-                    <h2> You are not allowed </h2>
+                    <div className="mt-5 shadow-sm">
+                        <Jumbotron fluid>
+                            <Container fluid>
+                                <h1 className="display-3">YOU'RE NOT ALLOWED</h1>
+                            </Container>
+                        </Jumbotron>
+                    </div>
             }
         </div>
     }

@@ -9,7 +9,6 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import './styles.css'
 
 
 class Header extends React.Component {

@@ -1,22 +1,25 @@
 import React, { Component } from "react";
 import logic from "../../logic";
 import { withRouter } from 'react-router-dom'
-import swal from 'sweetalert2'
-import { Button, Row, Col } from 'reactstrap';
-import './style.css'
+import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Login extends Component {
 
     state = {
         email: "",
         password: "",
-        loginFailedMessage: ""
+        loginFailedMessage: "",
+        modal: false
     }
 
     _handleKeepEmail = ({ target: { value: email } }) => {
         this.setState({ email })
     }
-
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal
+        })
+    }
 
     _handleKeepPassword = ({ target: { value: password } }) => {
         this.setState({ password })
@@ -34,11 +37,7 @@ class Login extends Component {
                     this.props.history.push('/home')
 
                 } else {
-                    swal({
-                        type: 'error',
-                        title: 'Oopsies!',
-                        text: res
-                    })
+                    this.toggle()
                     this.setState({
                         loginFailedMessage: res
                     })
@@ -50,10 +49,10 @@ class Login extends Component {
 
         return (
 
-            <div className="forms">
-                <h2 className="text-center mt-5">LOGIN</h2>
+            <div className="forms mb-3 mt-3">
                 <Row>
                     <Col xs='12' md={{ size: '6', offset: '3' }}>
+                        <h2 className="text-center mt-5">LOGIN</h2>
                         <form onSubmit={this._handleLogin}>
                             <div className="field mb-4">
                                 <input type="text" name="email" id="email" placeholder="johndoe@gmail.com" value={this.state.email} autoFocus onChange={this._handleKeepEmail} />
@@ -67,6 +66,15 @@ class Login extends Component {
                         </form>
                     </Col>
                 </Row>
+                <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>Oops! Something went wrong...</ModalHeader>
+                    <ModalBody>
+                        Error: {this.state.loginFailedMessage}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}>Close</Button>{' '}
+                    </ModalFooter>
+                </Modal>
             </div>
         )
     }

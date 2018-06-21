@@ -1,9 +1,8 @@
 import React, { Component } from "react"
 import logic from '../../logic'
-import swal from 'sweetalert2'
 import { withRouter } from 'react-router-dom'
 import { Line } from 'react-chartjs-2'
-import { Col, Row, Container } from 'reactstrap';
+import { Col, ButtonGroup, Row, Container, Jumbotron, Button, Collapse, Card, CardTitle, CardText, CardHeader, CardBody, FormGroup, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Home extends Component {
 
@@ -13,9 +12,16 @@ class Home extends Component {
         ip: '',
         port: '',
         selectedArduino: '',
+        selectedPin: '',
         chartData: {},
         timer: null,
-        counter: 0
+        counter: 0,
+        collapseAdd: true,
+        collapseList: false,
+        collapseData: false,
+        collapseOutput: false,
+        collapseRemove: false,
+        errorMessage: ''
     }
 
     componentDidMount() {
@@ -33,6 +39,10 @@ class Home extends Component {
         this.setState({ selectedArduino })
     }
 
+    outputHandler = ({ target: { value: selectedPin } }) => {
+        this.setState({ selectedPin })
+    }
+
     listArduinos = () => {
         let userId = localStorage.getItem('id-app')
         let token = localStorage.getItem('token-app')
@@ -46,6 +56,16 @@ class Home extends Component {
                 options
             })
         })
+    }
+
+    sendOutput = (state) => {
+        const userId = localStorage.getItem('id-app')
+        const targetArduino = this.state.selectedArduino
+        const arduId = this.state.data.find(function (ele) {
+            return ele.ip === targetArduino
+        })
+        const pin = this.state.selectedPin
+        logic.sendOutput(userId, arduId.id, state, targetArduino, pin)
     }
 
     _handleKeepIp = ({ target: { value: ip } }) => {
@@ -79,7 +99,7 @@ class Home extends Component {
         const userId = localStorage.getItem('id-app')
         const token = localStorage.getItem('token-app')
         const targetArduino = this.state.selectedArduino
-        if (this.state.data && this.state.selectedArduino) {
+        if (this.state.data && this.state.selectedArduino && this.state.selectedArduino !== "Select an arduino:") {
             const arduId = this.state.data.find(function (ele) {
                 return ele.ip === targetArduino
             })
@@ -95,7 +115,9 @@ class Home extends Component {
                         labels: Yaxis,
                         datasets: [{
                             label: `Data from arduino ${this.state.selectedArduino}`,
-                            data: Xaxis
+                            data: Xaxis,
+                            borderColor: "#8e5ea2",
+                            fill: false
                         }]
                     }
                     this.setState({ chartData, counter: this.state.counter + 1 })
@@ -107,6 +129,51 @@ class Home extends Component {
             dropdownOpen: !prevState.dropdownOpen
         }));
     }
+    toggleAdd = () => {
+        this.setState({
+            collapseAdd: !this.state.collapseAdd,
+            collapseList: false,
+            collapseData: false,
+            collapseOutput: false,
+            collapseRemove: false
+        });
+    }
+    toggleList = () => {
+        this.setState({
+            collapseAdd: false,
+            collapseList: !this.state.collapseList,
+            collapseData: false,
+            collapseOutput: false,
+            collapseRemove: false
+        });
+    }
+    toggleData = () => {
+        this.setState({
+            collapseAdd: false,
+            collapseList: false,
+            collapseData: !this.state.collapseData,
+            collapseOutput: false,
+            collapseRemove: false
+        });
+    }
+    toggleOutput = () => {
+        this.setState({
+            collapseAdd: false,
+            collapseList: false,
+            collapseData: false,
+            collapseOutput: !this.state.collapseOutput,
+            collapseRemove: false
+        });
+    }
+    toggleRemove = () => {
+        this.setState({
+            collapseAdd: false,
+            collapseList: false,
+            collapseData: false,
+            collapseOutput: false,
+            collapseRemove: !this.state.collapseRemove
+        });
+    }
 
     controlArduino = (state) => {
         const userId = localStorage.getItem('id-app')
@@ -114,7 +181,7 @@ class Home extends Component {
         const arduId = this.state.data.find(function (ele) {
             return ele.ip === targetArduino
         })
-        logic.controlArduino(userId, arduId.id, state, this.state.selectedArduino)
+        logic.controlArduino(userId, arduId.id, state, targetArduino)
     }
 
     removeArduinoData = () => {
@@ -129,47 +196,151 @@ class Home extends Component {
     render() {
 
         if (this.props.isLogged()) {
-            return <Container>
+            return <Container className='mt-5'>
                 <Row>
                     <Col xs="12" md="6">
-                        <h3>Add arduino:</h3>
-                        <form onSubmit={this._handleAddArduino}>
-                            <div className="row justify-content-center ">
-                                <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.ip} onChange={this._handleKeepIp} type="text" placeholder="Ip" />
-                            </div>
-                            <div className="row justify-content-center ">
-                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.port} onChange={this._handleKeepPort} type="text" placeholder="Port" />
-                            </div>
+                        <ButtonGroup>
+                            <Button color="primary" onClick={this.toggleAdd} style={{ marginBottom: '1rem' }}>Add New Arduino</Button>
+                            <Button color="primary" onClick={this.toggleList} style={{ marginBottom: '1rem' }}>Arduino List</Button>
+                            <Button color="primary" onClick={this.toggleData} style={{ marginBottom: '1rem' }}>Data</Button>
+                            <Button color="primary" onClick={this.toggleOutput} style={{ marginBottom: '1rem' }}>Output</Button>
+                            <Button color="primary" onClick={this.toggleRemove} style={{ marginBottom: '1rem' }}>Remove</Button>
+                        </ButtonGroup>
+                        <div>
+                            <Collapse isOpen={this.state.collapseAdd}>
+                                <Card>
+                                    <CardHeader>Add An Arduino</CardHeader>
+                                    <CardBody>
+                                        <CardTitle>Fill the form and hit the button</CardTitle>
+                                        <form onSubmit={this._handleAddArduino}>
+                                            <div className="row justify-content-center ">
+                                                <input className="form-group col-xs-4 mt-4 border pl-3" autoFocus value={this.state.ip} onChange={this._handleKeepIp} type="text" placeholder="Ip" />
+                                            </div>
+                                            <div className="row justify-content-center ">
+                                                <input className="form-group col-xs-4 mt-4 border pl-3" value={this.state.port} onChange={this._handleKeepPort} type="text" placeholder="Port" />
+                                            </div>
 
-                            <div className="row justify-content-center ">
+                                            <div className="row justify-content-center ">
 
-                                <div className="form-group justify-content-center ">
-                                    <input className="btn bg-darkcyan mt-4" type="submit" value="Add Arduino" />
-                                </div>
-                            </div>
+                                                <div className="form-group justify-content-center ">
+                                                    <Button type="submit" className="btn bg-info mt-4">Add Arduino</Button>
+                                                </div>
+                                            </div>
 
-                        </form>
+                                        </form>
+                                    </CardBody>
+                                </Card>
 
-                        <h3>Lista de Arduinos:</h3>
+                            </Collapse>
+                        </div>
+                        <div>
+                            <Collapse isOpen={this.state.collapseList}>
+                                <Card>
+                                    <CardHeader>List Management</CardHeader>
+                                    <CardBody>
+                                        <CardTitle>Choose an arduino</CardTitle>
+                                        <FormGroup onChange={this.arduHandler}>
+                                            <Input type="select" name="select" id="exampleSelect">
+                                                <option>Select an arduino:</option>
+                                                {this.state.options}
+                                            </Input>
+                                        </FormGroup>
+                                        <Button className="btn bg-info mt-4" onClick={this.listArduinos}>Retrieve Arduinos</Button>
+                                    </CardBody>
+                                </Card>
+                            </Collapse>
+                        </div>
+                        <div>
+                            <Collapse isOpen={this.state.collapseData}>
+                                {this.state.selectedArduino !== "Select an arduino:" && this.state.selectedArduino ? <Card>
+                                    <CardHeader>Data Management</CardHeader>
+                                    <CardBody>
+                                        <CardTitle>Control how your arduino sends data to our database</CardTitle>
+                                        <ButtonGroup>
+                                            <Button onClick={() => this.controlArduino('on')}>Send data</Button>
+                                            <Button onClick={() => this.controlArduino('off')}>Stop sending data</Button>
+                                        </ButtonGroup>
+                                    </CardBody>
+                                </Card> : <Card>
+                                        <CardHeader>Data Management</CardHeader>
+                                        <CardBody>
+                                            <CardTitle>You haven't selected an arduino yet!</CardTitle>
+                                        </CardBody>
+                                    </Card>}
 
-                        <select value={this.state.selectedArduino} onChange={this.arduHandler}>
-                            <option>Select an arduino:</option>
-                            {this.state.options}
-                        </select>
-
-                        <button onClick={this.listArduinos}>Retrieve arduinos</button>
-                        <h3>Arduino Controls:</h3>
-                        {/* <button onClick={this._handleData}>Retrieve data from arduino</button> */}
-                        <button onClick={() => this.controlArduino('on')}>ON</button>
-                        <button onClick={() => this.controlArduino('off')}>OFF</button>
-                        <button onClick={this.removeArduinoData}>Remove Arduino Data</button>
-                        <button onClick={this._handleRemoveArdu}>Remove Arduino</button>
+                            </Collapse>
+                        </div>
+                        <div>
+                            <Collapse isOpen={this.state.collapseOutput}>
+                                {this.state.selectedArduino !== "Select an arduino:" && this.state.selectedArduino ? <Card>
+                                    <CardHeader>Output Management</CardHeader>
+                                    <CardBody>
+                                        <CardTitle>Control the outputs of your arduino</CardTitle>
+                                        <FormGroup onChange={this.outputHandler}>
+                                            <Input type="select" name="select" id="exampleSelect2">
+                                                <option>Select a pin:</option>
+                                                {[0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16].map(i => <option key={i} value={i}>Pin {i}</option>)}
+                                            </Input>
+                                        </FormGroup>
+                                        <ButtonGroup>
+                                            <Button onClick={() => this.sendOutput('on')}>ON</Button>
+                                            <Button onClick={() => this.sendOutput('off')}>OFF</Button>
+                                        </ButtonGroup>
+                                    </CardBody>
+                                </Card> : <Card>
+                                        <CardHeader>Output Management</CardHeader>
+                                        <CardBody>
+                                            <CardTitle>You haven't selected an arduino yet!</CardTitle>
+                                        </CardBody>
+                                    </Card>}
+                            </Collapse>
+                        </div>
+                        <div>
+                            <Collapse isOpen={this.state.collapseRemove}>
+                                {this.state.selectedArduino !== "Select an arduino:" && this.state.selectedArduino ? <Card>
+                                    <CardHeader>Remove Management</CardHeader>
+                                    <CardBody>
+                                        <CardTitle>Remove your arduino or just clean the data</CardTitle>
+                                        <ButtonGroup className="mt-3">
+                                            <Button color="danger" onClick={this._handleRemoveArdu}>Remove Arduino</Button>
+                                            <Button color="danger" onClick={this.removeArduinoData}>Remove Arduino Data</Button>
+                                        </ButtonGroup>
+                                    </CardBody>
+                                </Card> : <Card>
+                                        <CardHeader>Remove Management</CardHeader>
+                                        <CardBody>
+                                            <CardTitle>You haven't selected an arduino yet!</CardTitle>
+                                        </CardBody>
+                                    </Card>}
+                            </Collapse>
+                        </div>
                     </Col>
 
                     <Col xs="12" md="6">
                         <Line
                             data={this.state.chartData}
-                            options={{ maintainAspectRatio: false }}
+                            height={400}
+                            options={{
+                                maintainAspectRatio: false,
+                                legend: {
+                                    labels: {
+                                        fontColor: 'black'
+                                    }
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                            fontColor: 'black'
+                                        },
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            fontColor: 'black'
+                                        },
+                                    }]
+                                }
+                            }}
                         />
                     </Col>
                 </Row>
@@ -177,7 +348,13 @@ class Home extends Component {
 
 
         } else {
-            return <h2>You are not allowed</h2>
+            return <div className="mt-5 shadow-sm">
+                <Jumbotron fluid>
+                    <Container fluid>
+                        <h1 className="display-3">YOU'RE NOT ALLOWED</h1>
+                    </Container>
+                </Jumbotron>
+            </div>
         }
     }
 }

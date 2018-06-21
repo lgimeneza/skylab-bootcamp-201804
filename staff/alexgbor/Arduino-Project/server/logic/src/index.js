@@ -420,6 +420,35 @@ const logic = {
             })
     },
 
+    sendOutput(userId, arduId, q, ip, pin) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof arduId !== 'string') throw Error('arduId is not a string')
+
+                if (typeof userId !== 'string') throw Error('userId is not a string')
+
+                if (typeof q !== 'string') throw Error('query is not a string')
+
+                if (q !== 'on' && q !== 'off') throw Error('Query can only be ON or OFF.')
+
+                if (typeof ip !== 'string') throw Error('ip is not a string')
+
+                if (typeof pin !== 'string') throw Error('pin is not a string')
+
+
+                let dataPackage = {
+                    method: 'GET',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                }
+                return fetch(`http://${ip}/${userId}/${arduId}/pin/${pin}/${q}`, dataPackage)
+                    .then((res) => res.json())
+                    .catch(err => err.message)
+
+            })
+    },
+
     removeArduinoData(userId, arduId) {
         return Promise.resolve()
             .then(() => {

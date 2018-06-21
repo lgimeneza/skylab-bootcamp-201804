@@ -204,4 +204,16 @@ router.delete('/users/:userId/arduinos/:arduId/delete', (req, res) => {
         })
 })
 
+router.get('/users/:userId/arduinos/:arduId/control/pin', (req, res) => {
+    const { params: { userId, arduId }, query: { q, ip, pin } } = req
+    if (q === 'on' || q === 'off') {
+        logic.sendOutput(userId, arduId, q, ip, pin)
+            .then(({ stat }) => res.json({ status: 'OK', data: stat }))
+            .catch(({ message }) => {
+                res.status(400)
+                res.json({ status: 'KO', error: message })
+            })
+    }
+})
+
 module.exports = router

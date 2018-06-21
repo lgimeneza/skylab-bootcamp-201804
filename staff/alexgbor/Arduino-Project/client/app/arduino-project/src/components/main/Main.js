@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch } from 'react-router-dom';
 import { Landing, Home, Profile, Register, Login, Error404, Unregister } from "../index";
+import './style.css'
 
 class Main extends Component {
 
