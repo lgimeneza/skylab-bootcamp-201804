@@ -1,7 +1,7 @@
 
 import logicApi from 'api'
 
-logicApi.url = 'http://192.168.0.16:4000/api'
+logicApi.url = 'https://protected-wave-16201.herokuapp.com/api'
 
 const logic = {
   userId: 'No-id',
