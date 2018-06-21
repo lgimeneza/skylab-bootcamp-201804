@@ -42,7 +42,6 @@ class Cart extends Component {
     
             this.changes[id] = value
         }
-
     }
 
     render() {
@@ -50,7 +49,6 @@ class Cart extends Component {
             <main>
                 <div className="container-fluid">
                     <div className="row mt-4">
-
                         <div className="col-xl-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
                             <table className="table">
                                 <thead>
@@ -75,7 +73,7 @@ class Cart extends Component {
                                                 <td><button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem' }}>X</button></td>
                                             </tr>)
                                     }) :
-                                        <h3 className="mt-4 mb-4 mx-auto">No hay productos en el carrito</h3>}
+                                        <p className="mt-4 mb-4 mx-auto">No hay productos en el carrito</p>}
                                 </tbody>
                                 <tfoot>
                                     <tr className="table-active">

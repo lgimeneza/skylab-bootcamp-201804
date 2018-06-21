@@ -29,9 +29,5 @@ module.exports = new Schema({
     phone: {
         type: String,
     },
-    points: {
-        type: Number,
-        default: 0
-    },
     orders: [Order]
 })

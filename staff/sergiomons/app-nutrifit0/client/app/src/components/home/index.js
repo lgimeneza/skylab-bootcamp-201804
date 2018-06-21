@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import './index.css'
 import Menu from '../menu'
 import Carousel from '../carousel'
-import AllProducts from '../products/all-products';
+import ItemsProducts from '../items-list/items-products';
 
 class Home extends Component {
 
@@ -14,21 +14,25 @@ class Home extends Component {
 
     }
 
-    // componentDidMount() {
-    //     logic.listProducts()
-    //       .then(products => {
-    //             this.setState({
-    //                 products
-    //             })
-    //       })      
-    // }
+    componentDidMount() {
+        logic.listProducts()
+          .then(products => {
+                this.setState({
+                    products
+                })
+          })      
+    }
 
    render() {
 
         return (
-            <div>
-                <AllProducts/>
-            </div>    
+            <main>           
+                     <div className="row">       
+                        <div>
+                            <ItemsProducts products={this.state.products} onAddToCart={this.props.onAddToCart} carousel/>
+                        </div> 
+                     </div> 
+            </main>
         )   
     }
 }

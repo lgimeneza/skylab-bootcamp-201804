@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import './index.css'
 import Nav from '../nav'
 
@@ -53,9 +53,9 @@ class Login extends Component {
     return (
         <div>     
             <div className="body-login">
-                <div className="row">
-                    <div className="col-md-4">
-                    </div>
+            <div className="container-fluid">
+                <div className="row ml-4">
+        
                     <div className="col-md-4">
                         <form role="form" className="form" onSubmit={this.handlerSubmitLogin}>
                             <div className="form-group">
@@ -70,19 +70,24 @@ class Login extends Component {
                                 <label>
                                     <input type="checkbox" /> Mantener sesión
                                 </label>
+                            
                             </div> 
-                            <button type="submit" className="btn btn-dark btn-block mt-3" >Login</button>
+        
+                            <button type="submit" className="btn btn-dark btn-block mt-3 mb-3">Login</button>
                             {this.state.error && this.state.error}
                         </form>
+                        <div className="p-regist">
+                            <p>¿No registrado? <Link to='/register'><span id="span">Crea una cuenta</span></Link></p>
+                        </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-8">
                     </div>
                 </div>
+            </div>
             </div>
         </div>
         )
    }      
-   
 }
 
 export default withRouter(Login)

@@ -7,7 +7,7 @@ function Carousel () {
     return (
         <div className="row">  
         <div className="col-12 mb-4">
-            <div className="carousel slide" id="carousel-235923">
+            <div className="carousel slide" id="carousel-235923" data-ride="carousel" data-interval="4000">
                 <ol className="carousel-indicators">
                     <li data-slide-to="0" data-target="#carousel-235923" className="active"></li>
                     <li data-slide-to="1" data-target="#carousel-235923"> </li>

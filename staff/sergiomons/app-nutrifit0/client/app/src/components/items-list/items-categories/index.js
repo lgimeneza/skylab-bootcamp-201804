@@ -5,7 +5,7 @@ import Carousel from '../../carousel'
 
 export default ({categories}) => (
     <main>    
-        <Carousel/>          
+        
         <div className="row">
             <Menu />
                 <div className="col-10 col-lg-10 col-md-8 col-sm-8 col-xs-12">   

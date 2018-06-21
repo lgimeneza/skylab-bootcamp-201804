@@ -41,7 +41,7 @@ class Nav extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item">
-                                    <a className="nav-link" href="">Home <span className="sr-only">(current)</span></a>
+                                    <Link to='/' className="nav-link" href="">Home <span className="sr-only">(current)</span></Link>
                                 </li>
 
                                 <li className="nav-item dropdown">
@@ -58,7 +58,7 @@ class Nav extends Component {
                                     </div>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="">Productos</a>
+                                    <Link to='/allproducts' className="nav-link" href="">Productos</Link>
                                 </li>
                             </ul>
                             <form className="form-inline form-sm my-2 my-lg-0 mr-4">

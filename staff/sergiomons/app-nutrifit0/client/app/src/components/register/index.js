@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import './index.css'
 import Nav from '../nav'
 
@@ -69,10 +69,10 @@ class Register extends Component {
             <div className="body-register">       
                 <div className="container-fluid">
                     <div className="row ">
-                        <div className="col-md-7">
+                        <div className="col-md-6">
                         </div>
-                        <div className="col-md-4">
-                            <form role="form" className="mt-5" id="form-register" onSubmit={this.handlerSubmitRegister}>
+                        <div className="col-md-4 ml-5">
+                            <form role="form" className="mt-5 " id="form-register" onSubmit={this.handlerSubmitRegister}>
                                 <div className="form-group">
                                     <label>Username</label>
                                     <input type="text" className="form-control" id="exampleInputusername1" name="username" placeholder="Enter your username" autoFocus value={username} onChange={this.handlerCapturingUsername} />
@@ -86,14 +86,15 @@ class Register extends Component {
                                     <input type="password" className="form-control" id="exampleInputPassword1" name="password" placeholder="Enter your password" value={password} onChange={this.handlerCapturingPassword}/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Repeat Password</label>
+                                    <label>Repetir Password</label>
                                     <input type="password" className="form-control" id="exampleInputRepeatPassword1" name="rep-password" placeholder="Enter repeat password" value={repeatPassword} onChange={this.handlerCapturingRepeatPassword}/>
                                 </div>
-                                <button type="submit" className="btn btn-secondary btn-block mt-5">Registrar</button>
+                                <button type="submit" className="btn btn-secondary btn-block mt-5 mb-3">Registrar</button>
                             </form>
+                            <div className="p-login">
+                            <p>¿Ya registrado? <Link to='/auth'><span id="spanRegist">Logeate</span></Link></p>
                         </div>
-                        {/* <div className="col-md-4">
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>

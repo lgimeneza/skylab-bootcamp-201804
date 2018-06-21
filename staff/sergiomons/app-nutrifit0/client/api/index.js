@@ -417,23 +417,23 @@ const clientApi = {
             })
     },
 
-    createOrder(userId, deliveryAddress, date, products, paymentMethod, status) {
-
+    createOrder(userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status) {
         return Promise.resolve()
             .then(() => {
+                console.log('orderProducts client: ', orderProducts);
                 if(deliveryAddress !== undefined) {
 
                     if (typeof deliveryAddress !== 'string') throw Error('deliveryAddress is not a string')
                     if (!(deliveryAddress = deliveryAddress.trim()).length) throw Error('deliveryAddress is empty or blank')
                 }
 
-                if(date !== undefined) {
-                if (typeof date !== 'string') throw Error('ate is not a string')
-                if (!(date = date.trim()).length) throw Error('date is empty or blank')
+                if(orderDate !== undefined) {
+                if (typeof orderDate !== 'string') throw Error('ate is not a string')
+                if (!(orderDate = orderDate.trim()).length) throw Error('orderDate is empty or blank')
                 }
                 
-                if (!Array.isArray(products)) throw Error('products is not an array')
-                if (!products.length) throw Error('products is empty or blank')
+                if (!Array.isArray(orderProducts)) throw Error('orderProducts is not an array')
+                if (!orderProducts.length) throw Error('orderProducts is empty or blank')
 
                 if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
                 if ((paymentMethod = paymentMethod.trim()).length === 0) throw Error('paymentMethod is empty or blank')
@@ -441,10 +441,12 @@ const clientApi = {
                 if (typeof status !== 'string') throw Error('status is not a string')
                 if ((status = status.trim()).length === 0) throw Error('status is empty or blank')
 
-                return axios.post(`${this.url}/order`, {userId, deliveryAddress, date, products, paymentMethod, status})
+                return axios.post(`${this.url}/order`, {userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status})
                     .then(({ status, data }) => {
+                        console.log('orderProducts datadata: ', data.data);
+
                         if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-                        return true
+                        return data.data
                     })
                     .catch(err => {
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')

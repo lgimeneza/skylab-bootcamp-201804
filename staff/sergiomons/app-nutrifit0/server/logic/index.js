@@ -341,9 +341,12 @@ const logic = {
             })
     },
 
-    createOrder(userId, deliveryAddress, date, products, paymentMethod, status) {
+    createOrder(userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status) {
+        
         return Promise.resolve()
-                .then(()=> {
+        .then(()=> {
+            console.log('orderProducts server: ', orderProducts);
+
 
                     if (typeof userId !== 'string') throw Error('user userId is not a string')
 
@@ -355,13 +358,13 @@ const logic = {
                         if (!(deliveryAddress = deliveryAddress.trim()).length) throw Error('deliveryAddress is empty or blank')
                     }
 
-                    if(date !== undefined) {
-                    if (typeof date !== 'string') throw Error('ate is not a string')
-                    if (!(date = date.trim()).length) throw Error('date is empty or blank')
+                    if(orderDate !== undefined) {
+                    if (typeof orderDate !== 'string') throw Error('orderDate is not a string')
+                    if (!(orderDate = orderDate.trim()).length) throw Error('orderDate is empty or blank')
                     }
 
-                    if (!Array.isArray(products)) throw Error('products is not an array')
-                    if (!products.length) throw Error('products is empty or blank')
+                    if (!Array.isArray(orderProducts)) throw Error('orderProducts is not an array')
+                    if (!orderProducts.length) throw Error('orderProducts is empty or blank')
 
                     if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
                     if ((paymentMethod = paymentMethod.trim()).length === 0) throw Error('paymentMethod is empty or blank')
@@ -369,10 +372,11 @@ const logic = {
                     if (typeof status !== 'string') throw Error('status is not a string')
                     if ((status = status.trim()).length === 0) throw Error('status is empty or blank')
 
-                    return Order.create({userId, deliveryAddress, date, products, paymentMethod, status })
+                    return Order.create({userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status })
                         .then(order => {
                             
                             return User.findByIdAndUpdate(userId, {$push: { orders: order }})
+                                .then(() => order.id)
                         })
                 })
 

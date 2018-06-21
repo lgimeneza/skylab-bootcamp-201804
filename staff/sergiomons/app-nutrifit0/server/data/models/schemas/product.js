@@ -18,9 +18,6 @@ module.exports = new Schema({
         type: Number,
         required: true
     },
-    discount: {
-        type: Number
-    },
     category: {
         type: ObjectId,
         ref: 'Category',

@@ -454,23 +454,24 @@ var clientApi = {
             });
         });
     },
-    createOrder: function createOrder(userId, deliveryAddress, date, products, paymentMethod, status) {
+    createOrder: function createOrder(userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status) {
         var _this11 = this;
 
         return Promise.resolve().then(function () {
+            console.log('orderProducts client: ', orderProducts);
             if (deliveryAddress !== undefined) {
 
                 if (typeof deliveryAddress !== 'string') throw Error('deliveryAddress is not a string');
                 if (!(deliveryAddress = deliveryAddress.trim()).length) throw Error('deliveryAddress is empty or blank');
             }
 
-            if (date !== undefined) {
-                if (typeof date !== 'string') throw Error('ate is not a string');
-                if (!(date = date.trim()).length) throw Error('date is empty or blank');
+            if (orderDate !== undefined) {
+                if (typeof orderDate !== 'string') throw Error('ate is not a string');
+                if (!(orderDate = orderDate.trim()).length) throw Error('orderDate is empty or blank');
             }
 
-            if (!Array.isArray(products)) throw Error('products is not an array');
-            if (!products.length) throw Error('products is empty or blank');
+            if (!Array.isArray(orderProducts)) throw Error('orderProducts is not an array');
+            if (!orderProducts.length) throw Error('orderProducts is empty or blank');
 
             if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string');
             if ((paymentMethod = paymentMethod.trim()).length === 0) throw Error('paymentMethod is empty or blank');
@@ -478,12 +479,14 @@ var clientApi = {
             if (typeof status !== 'string') throw Error('status is not a string');
             if ((status = status.trim()).length === 0) throw Error('status is empty or blank');
 
-            return axios.post(_this11.url + '/order', { userId: userId, deliveryAddress: deliveryAddress, date: date, products: products, paymentMethod: paymentMethod, status: status }).then(function (_ref11) {
+            return axios.post(_this11.url + '/order', { userId: userId, deliveryAddress: deliveryAddress, orderDate: orderDate, orderProducts: orderProducts, paymentMethod: paymentMethod, status: status }).then(function (_ref11) {
                 var status = _ref11.status,
                     data = _ref11.data;
 
+                console.log('orderProducts datadata: ', data.data);
+
                 if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
-                return true;
+                return data.data;
             }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
 

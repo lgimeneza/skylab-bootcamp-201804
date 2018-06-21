@@ -8,7 +8,8 @@ import {Animated} from "react-animated-css";
 class ProductsByCategory extends Component {
 
     state = {
-        products: []
+        products: [],
+        categoryName:''
      }
 
     componentDidMount() {
@@ -20,7 +21,15 @@ class ProductsByCategory extends Component {
                 this.setState({
                     products
                 })
-          })      
+          }) 
+          logic.listAllCategories() 
+                .then(categories => {
+                    const currentCategory = categories.filter( _category => _category.id === categoryId)
+
+                    this.setState({
+                        categoryName: currentCategory[0].name
+                    })
+                })     
     }
 
     componentDidUpdate(prevProps) {
@@ -35,15 +44,21 @@ class ProductsByCategory extends Component {
                     products
                 })
           })      
-        }    
+          logic.listAllCategories() 
+                  .then(categories => {
+                      const currentCategory = categories.filter( _category => _category.id === categoryId)
+  
+                      this.setState({
+                          categoryName: currentCategory[0].name
+                      })
+                  }) 
+        }        
     }
 
    render() {
-
     return (
         <div>
-            <ItemsProducts products={this.state.products} /* onAddToCart={this.props.onAddToCart} *//>                                   
-            
+            <ItemsProducts products={this.state.products} onAddToCart={this.props.onAddToCart} categoryName={this.state.categoryName}/>                                   
         </div>  
     )
    }       

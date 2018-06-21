@@ -25,8 +25,20 @@
 input[placeholder] {
     text-align: center;
 }
-.body-register {
-    height: 800px;
+.body-login {
+    height: 700px;
     background: url('http://www.lg.com/es/images/CA/features/YDRAY-1600x800-cocina-sana.png') no-repeat fixed center;
     background-size: cover;
+}
+.p-regist{
+    color: white;
+    font-size: 1.1rem;
+}
+#span {
+    font-size: 1.3rem;
+    color: #7c9cb9;
+    margin-left: 5px;
+}
+.checkbox{
+    color: white;
 }

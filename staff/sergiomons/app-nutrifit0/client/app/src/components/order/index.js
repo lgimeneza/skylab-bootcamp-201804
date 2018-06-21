@@ -19,13 +19,8 @@ class Order extends Component {
 
     componentDidMount() {
 
-        if (logic._cart.length && logic._cart !== 'undefined') {
-            logic.listProductsFromCart()
-                .then(products => this.setState({ cart: products, totalCart: [] }))
-        } else {
-            this.setState({ cart: [],  totalCart: []})
-        }
-
+        logic.listProductsFromCart()
+            .then(products => this.setState({ cart: products, totalOrder: [] }))
     }
 
     getItems = () => {    
@@ -105,8 +100,7 @@ class Order extends Component {
    render() {
     const { name, deliveryAddress, cardName, cardNumber, expirityDate, ccv } = this.state
     return (
-        <main>   
-            
+        <main>             
             <div className="row ml-1 mt-4">
                 <div className="col-xl-10 col-lg-9 col-md-9 col-sm-12 col-xs-12 mb-4 mt-3">
                     <form className="mb-3 mx-auto" onSubmit={this.handlerCreateOrder}>
@@ -136,6 +130,7 @@ class Order extends Component {
                                     <label className="input-group-text" htmlFor="inputGroupSelect01">Método de pago<i className="far fa-credit-card ml-2"></i><i className="fab fa-cc-paypal ml-1"></i></label>
                                 </div>
                                 <select className="custom-select" id="inputGroupSelect01" onChange={this.handlerSelectPaymentMethod}>
+                                    <option selected>Seleccionar...</option>
                                     <option value="Tarjeta débito/crédito">Tarjeta débito/crédito</option>
                                     <option value="Paypal">Paypal</option>
                                 </select>
@@ -181,7 +176,7 @@ class Order extends Component {
                     <div className="card-body">
                         <p className="card-text" style={{fontSize: "2rem"}}>{this.getTotalOrder()} €</p>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </main>  

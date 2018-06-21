@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Register, Login, Home, Categories, ProductsByCategory, Nav, Footer, Cart, Order } from './components'
+import { Register, Login, Home, Categories, ProductsByCategory, ProductDetails, Nav, Footer, Cart, Order } from './components'
 import './App.css';
 import api from 'client-api';
 import logic from './logic'
-import ProductDetails from './components/products/details-product';
-import { Animated } from "react-animated-css";
-
+import AllProducts from './components/products/all-products'
 
 api.token = function (token) {
   if (typeof token !== 'undefined') {
@@ -98,9 +96,10 @@ class App extends Component {
       <div className="App">
         <Nav userData={this.state.userData} cartLength={this.state.cartLength} />
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/category/:categoryId/subcategories' render={props => <Categories categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} */ />} />
-          <Route path='/category/:categoryId/products/' render={props => <ProductsByCategory categoryId={props.match.params.categoryId}/* refreshCart={this.onAddToCart} */ />} />
+          <Route exact path='/' render={() => <Home onAddToCart={this.onAddToCart} />} />
+          <Route path='/allproducts' render={() => <AllProducts onAddToCart={this.onAddToCart} />} />
+          <Route path='/category/:categoryId/subcategories' render={props => <Categories categoryId={props.match.params.categoryId} onAddToCart={this.onAddToCart} />} />
+          <Route path='/category/:categoryId/products/' render={props => <ProductsByCategory categoryId={props.match.params.categoryId} onAddToCart={this.onAddToCart}/>} />
           <Route path='/product/:productId' render={props => <ProductDetails productId={props.match.params.productId} onAddToCart={this.onAddToCart} />} />
           <Route path='/cart' render={() => <Cart onAddToCart={this.onAddToCart} onSubstractFromCart={this.onSubstractFromCart} />} />
           <Route path='/order' render={() => <Order />} />

@@ -3,6 +3,7 @@
 const clientApi = require('client-api')
 
 clientApi.url = 'http://localhost:5000/api'
+// clientApi.url = 'http://192.168.0.27:5000/api'
 
 const logic = {
     // userId: 'NO-ID',
@@ -31,7 +32,7 @@ const logic = {
 
     getDateOrder() {
         this._dateOrder = Date.now()
-        return this._dateOrder
+        return this._dateOrder.toString()
     },
 
     addProductToCart(productId, quantity = 1) {
@@ -39,14 +40,6 @@ const logic = {
             this.cart().push(productId)
 
         this.cart(this.cart())
-    },
-
-    removeProductFromCart(productId) {
-        const updateCart = this.cart().filter(id => {
-            return id !== productId
-        })
-
-        this.cart(updateCart)
     },
 
     substractProductFromCart(productId, quantity) {
@@ -61,16 +54,23 @@ const logic = {
         }
     },
 
+    removeProductFromCart(productId) {
+        const updateCart = this.cart().filter(id => {
+            return id !== productId
+        })
+
+        this.cart(updateCart)
+    },
+
+
     listProductsFromCart() {
         return clientApi.listProductsByIds(this.cart())
             .then(products => {
                 const quantities = this.cart().reduce((accum, productId) => {
                     if (accum[productId]) accum[productId]++
                     else accum[productId] = 1
-
                     return accum
                 }, {})
-
                 products.forEach(product => product.quantity = quantities[product.id])
 
                 return products
@@ -198,8 +198,9 @@ const logic = {
             .then(products => products)
     },
 
-    createOrder(deliveryAddress, products, paymentMethod) {
-        return clientApi.createOrder(this.userId(), deliveryAddress, this.dateOrder, products, paymentMethod, this._statusOrder)
+    createOrder(deliveryAddress, orderProducts, paymentMethod) {
+        console.log('orderProducts client logic product: ', orderProducts);
+        return clientApi.createOrder(this.userId(), deliveryAddress, this.getDateOrder(), orderProducts, paymentMethod, this._statusOrder)
     },
 
     get loggedIn() {

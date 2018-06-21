@@ -3,10 +3,10 @@ const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 module.exports = new Schema({
     deliveryAddress: {
         type: String,
-        // required: true
+        required: true
     },
-    date: {
-        type: Date,
+    orderDate: {
+        type: String,
         // required: true
     },
     userId: [{
@@ -14,10 +14,7 @@ module.exports = new Schema({
         ref: 'User',
         required: true
     }],
-    // discount: {
-    //     type: Number,
-    // },
-    products: [{
+    orderProducts: [{
         type: ObjectId,
         ref: 'Product',
         required: true
