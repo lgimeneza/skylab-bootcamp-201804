@@ -48,25 +48,6 @@ class Cart extends Component {
         }
     }
 
-    noLogged = (props) => {
-        if (!logic.loggedIn) {
-            swal({
-                title: 'Tienes que estar logeado para seguir con el pedido ',
-                type: 'warning',
-                animation: false,
-                customClass: 'animated fadeInDown'
-            })
-                .then(res => {
-                    if (res)
-                        this.props.location.push('/auth')
-                })
-
-        } else {
-            this.props.location.push('/order')
-        }
-
-    }
-
     render() {
         return (
             <main>

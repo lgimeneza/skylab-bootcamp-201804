@@ -79,7 +79,6 @@ class Nav extends Component {
                                                 {this.props.userData.name || this.props.userData.username}
                                             </a>
                                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <a className="dropdown-item" href="">Mi Cuenta</a>
                                                 <div className="dropdown-divider"></div>
                                                 <a className="dropdown-item" href="" onClick={this.logout}>Cerrar sesión</a>
                                                 <div className="dropdown-divider"></div>

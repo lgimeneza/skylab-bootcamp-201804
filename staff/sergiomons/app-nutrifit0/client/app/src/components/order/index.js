@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import './index.css'
+import {withRouter, Link} from 'react-router-dom'
 import swal from 'sweetalert2';
 
 class Order extends Component {
@@ -28,10 +29,10 @@ class Order extends Component {
         if (logic._cart.length && logic._cart !== 'undefined') {
             logic.getCartSummary()
                 .then(({products, total}) => this.setState({ cart: products, total }))
-        }
+        }else this.setState({ cart: [], total: 0 })
     }
 
-    handlerCreateOrder = e => {
+    handlerCreateOrder = (e,props) => {
         e.preventDefault()
         
         const {deliveryAddress, paymentMethod } = this.state
@@ -41,14 +42,24 @@ class Order extends Component {
                 this.setState({
                     orderId
                 })
-
+                
                 swal({
                     title: 'Su pedido con nº' + this.state.orderId + 'ha sido creado ',
                     text: 'Los detalles del pedido se ha enviado a tu correo',
                     type: 'success',
                     animation: false,
                     customClass: 'animated pulse'
-                });
+                }).then(res => {
+                    if (res) {
+
+                        logic.cart(null)
+                        this.props.onRemoveFromCart()
+                        window.location.reload()
+                        
+                    }
+                })
+
+
             }).catch(err => {
                     return this.setState({
                         error: err.message
@@ -201,4 +212,4 @@ class Order extends Component {
    }       
 }
 
-export default Order
+export default withRouter(Order)

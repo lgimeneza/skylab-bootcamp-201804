@@ -81,21 +81,13 @@ class App extends Component {
         this.setState({
           userData
         })
-          if (!logic.cart())
+          if(!logic.cart())
           swal({
             title: 'Bienvenido ' + this.state.userData.name || this.state.userData.username,
             type: 'success',
             showConfirmButton: false,
             timer: 1500
           });
-          else
-            swal({
-              title: this.state.userData.name || this.state.userData.username + ' tienes productos en el carrito',
-              type: 'info',
-              showConfirmButton: false,
-              timer: 1500
-          });
-
       })
   }
 
@@ -134,7 +126,7 @@ class App extends Component {
           <Route path='/category/:categoryId/products/' render={props => <ProductsByCategory categoryId={props.match.params.categoryId} onAddToCart={this.onAddToCart} />} />
           <Route path='/product/:productId' render={props => <ProductDetails productId={props.match.params.productId} onAddToCart={this.onAddToCart} />} />
           <Route path='/cart' render={() => <Cart onAddToCart={this.onAddToCart} onSubstractFromCart={this.onSubstractFromCart} onRemoveFromCart={this.onRemoveFromCart} />} />
-          <Route path='/order' render={() => (logic.loggedIn) ? <Order /> : <Redirect to='/auth'/>} />
+          <Route path='/order' render={() => ((logic.loggedIn) && this.state.cartLength !== 0) ? <Order onRemoveFromCart={this.onRemoveFromCart}/> : <Redirect to='/auth'/>} />
           <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Redirect to='/' />} />
           <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin} /> : <Redirect to='/' />} />
           <Route render={() => <Redirect to='/' />} />
