@@ -22,31 +22,34 @@ Style Booking is a hairdresser managing tool where you can choose the service wi
 # General structure
 
 ### Schema
-![landing](/docs/images/schemas.png)
+![landing](docs/images/schemas.png)
 
 ### Data model
-![landing](/docs/images/dataModel.png)
+![landing](docs/images/dataModel.png)
 
 # Screenshots 
 
 ## Landing
-![landing](/docs/images/landing.png)
+![landing](docs/images/landing.png)
 
 ------------------
 ## Login
-![Login](/docs/images/login.png)
+![Login](docs/images/login.png)
+
 ------------------
 ## Register
-![register](/docs/images/register.png)
+![register](docs/images/register.png)
+
 ------------------
 ## Calendar
-![calendar](/docs/images/calendar.png)
+![calendar](docs/images/calendar.png)
+
 ------------------
 ## Profile
-![bookings](/docs/images/bookings.png)
+![bookings](docs/images/bookings.png)
+
 ------------------
 
 
 
 
-![]('./images/Untitled Diagram (1).png')
