@@ -264,8 +264,6 @@ const logic = {
         // if (typeof month !== 'number') throw Error('month is not a number')
         // if (typeof day !== 'number') throw Error('day is not a number')
         
-
-        console.log(`${this.url}/booking/hours/${year}/${month}/${day}`)
         return axios.get(`${this.url}/booking/hours/${year}/${month}/${day}`, { headers: { authorization: `Bearer ${this.token}` }})
           .then(({ status, data }) => {
             if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
@@ -302,34 +300,6 @@ const logic = {
         return axios.post(`${this.url}/booking`, { userId, serviceIds, date }, { headers: { authorization: `Bearer ${this.token}` } })
           .then(({ status, data }) => {
             if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
-
-            return data.data
-
-          })
-          .catch(err => {
-            if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
-
-            if (err.response) {
-              const { response: { data: { error: message } } } = err
-
-              throw Error(message)
-            } else throw err
-
-          })
-      })
-  },
-
-  /**
-   * This function should list all bookings
-   * 
-   * @returns {Promise<Data>}
-   */
-  listBookings(ownerId) {
-    return Promise.resolve()
-      .then(() => {
-        return axios.get(`${this.url}/user/${ownerId}/booking`, { headers: { authorization: `Bearer ${this.token}` }})
-          .then(({ status, data }) => {
-            if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
             return data.data
 

@@ -317,42 +317,6 @@ describe('logic (style-booking)', () => {
     })
   })
 
-  describe('should list all Bookings', () => {
-    it('should succeed on correct data', () => {
-      return Promise.all([
-        User.create({ name: 'John', surname: 'Doe', email: 'johndoe@mail.com', password: '123' }),
-        Service.create(serviceData),
-        Service.create(serviceData2)
-      ])
-        .then(res => {
-          const [{ _doc: { _id: userId } }, { _doc: service1 }, { _doc: service2 }] = res
-          // first booking data
-          const date = new Date()
-          const totalDuration = service1.duration + service2.duration
-          const endDate = moment(date).add(totalDuration, 'minutes').toDate()
-          return Promise.all([
-            Booking.create({
-              userId,
-              services: [service1._id, service2._id],
-              date,
-              endDate
-            })
-              .then(() => {
-                return logic.listBookings()
-                  .then(res => {
-
-                    expect(res[0].services.length).to.equal(2)
-                    expect(res[0].userId).to.exist
-                    expect(res[0].date).to.exist
-                    expect(res[0].endDate).to.exist
-
-                  })
-              })
-          ])
-        })
-    })
-  })
-
   describe('should list the Bookings of user', () => {
     it('should succeed on correct data', () => {
       return Promise.all([
