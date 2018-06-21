@@ -29,7 +29,8 @@ class Cart extends Component {
 
     onRemoveFromCart = (product) => {
         logic.removeProductFromCart(product)
-        this.getCartSummary()
+  
+                this.getCartSummary()
     }
 
     changeQuantity = (id, value, defaultValue) => {
@@ -69,7 +70,7 @@ class Cart extends Component {
             <main>
                 <div className="container-fluid">
                     <div className="row mt-4">
-                        <div className="col-xl-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-xl-9 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                               <h2 className=" ml-3 mt-2" style={{fontWeight: "bold", fontStyle: "italic",textAlign:"left", color: "#4ca562"}}>Tu carrito<i id='icon' className="fas fa-shopping-cart ml-2"></i></h2>
                             <table className="table mt-2" >
                                 <thead>
@@ -109,7 +110,7 @@ class Cart extends Component {
 
                         </div>
 
-                        <div className="col-xl-2 col-lg-3 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4 mt-5">
+                        <div className="col-xl-3 col-lg-3 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4 mt-5">
                             <div className="card">
                                 <h5 className="card-header" style={{ borderTopLeftRadius: "calc(1rem - 1px)", borderTopRightRadius: "calc(1rem - 1px)" }}>Total Carrito</h5>
                                 <div className="card-body">

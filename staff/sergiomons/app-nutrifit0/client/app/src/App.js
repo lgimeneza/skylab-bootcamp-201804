@@ -99,6 +99,14 @@ class App extends Component {
   onAddToCart = (id, quantity) => {
     logic.addProductToCart(id, quantity)
 
+    swal({
+      title: 'Producto añadido al carrito',
+      type: 'success',
+      showConfirmButton: false,
+      position:'top',
+      timer: 700
+    });
+
     this.setState({ cartLength: logic.cart().length })
   }
 

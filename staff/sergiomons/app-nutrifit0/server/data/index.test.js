@@ -17,14 +17,14 @@ describe('models nutrifit', function () {
         sergioData = { name: 'Sergio', surname: 'M', username: 'sergi', email: 'ser@email.com', password: '123', address: 'Calle V', phone: '123456789' }
         johnData = { name: 'John', surname: 'W', username: 'jwaine', email: 'jw@email.com', password: '123', address: 'Calle J', phone: '987654321' }
 
-        pack_CategoryData = { name: 'Pack' }
-        proteinCategoryData = { name: 'Protein' }
-        veganCategoryData = { name: 'Vegan' }
-        pack_S_CategoryData = { name: 'Pack S (category)' }
-        pack_M_CategoryData = { name: 'Pack M (category)' }
-        pack_L_CategoryData = { name: 'Pack L (category)' }
-        pack_L_C_CategoryData = { name: 'Pack L-C (category)' }
-        pack_XL_CategoryData = { name: 'Pack XL (category)' }
+        pack_CategoryData = { image: 'http://images.com/1234', name: 'Pack' }
+        proteinCategoryData = { image: 'http://images.com/1234', name: 'Protein' }
+        veganCategoryData = { image: 'http://images.com/1234', name: 'Vegan' }
+        pack_S_CategoryData = { image: 'http://images.com/1234', name: 'Pack S (category)' }
+        pack_M_CategoryData = { image: 'http://images.com/1234', name: 'Pack M (category)' }
+        pack_L_CategoryData = { image: 'http://images.com/1234', name: 'Pack L (category)' }
+        pack_L_C_CategoryData = { image: 'http://images.com/1234', name: 'Pack L-C (category)' }
+        pack_XL_CategoryData = { image: 'http://images.com/1234', name: 'Pack XL (category)' }
 
         packMuscle_Data = { image: 'http://images.com/1234', name: 'Pack Muscle (product)', description: 'Pack Muscle desc', price: 100 }
         packMuscle_S_Data = { image: 'http://images.com/4566', name: 'Pack Muscle S (product)', description: 'Pack Muscle S desc', price: 50 }

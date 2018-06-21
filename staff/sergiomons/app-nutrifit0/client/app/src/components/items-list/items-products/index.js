@@ -3,29 +3,22 @@ import {Link} from 'react-router-dom'
 import Menu from '../../menu'
 import Carousel from '../../carousel'
  
-const ItemsProducts = ({products, onAddToCart, carousel = false, categoryName}) => {
+const ItemsProducts = ({products, onAddToCart, carousel = false, categoryName = false}) => {
     return (
     <main>      
         {carousel && <Carousel/>}
-            {categoryName && <div className="row mt-4 mb-2">
-                <div className="col-2 col-lg-2 col-md-10 col-sm-8 col-xs-12">   
-                </div>
-                <div className="col-10 col-lg-10 col-md-12 col-sm-12 col-xs-12">   
-                    <h1 className="card-title" style={{backgroundColor: "#babcbe", color:"#555c63", fontSize: "1.5rem", fontWeight: "bold"}}>{categoryName}</h1>
-                </div>     
-            </div>}  
             <div className="row">
                 <Menu />
                     <div className="col-10 col-lg-10 col-md-8 col-sm-8 col-xs-12">   
                         <ul>                                  
-                            <div className="row mr-1">
+                            <div className="row mr-4 ">
                                 {products.map(product => (
-                                    <div className="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12" key={product.id}>
-                                        <div className="card mb-5 ml-1" style={{minWidth: "300px"}}>
+                                    <div className="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12" key={product.id}  >
+                                        <div className="card mb-5 ">
                                             <img className="card-img-top" alt={product.name} src={product.image} />
                                             <div className="card-block">
                                                 <h5 className="card-title">{product.name}</h5>
-                                                <p className="card-text" style={{fontSize: '1.5rem', color:"#555c63"}}>{product.price} € /ud</p>
+                                                <p className="card-text" style={{fontSize: '1.5rem'}}>{product.price} € /ud</p>
                                                 <p className="card-bottom">
                                                     <Link to={`/product/${product.id}`}><button className="btn btn-md btn-outline-secondary my-2 my-sm-0 mb-2 mr-3" type="submit">Detalles</button> </Link>
                                                     <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-1" type="submit" onClick={() => onAddToCart(product.id)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir</button> 

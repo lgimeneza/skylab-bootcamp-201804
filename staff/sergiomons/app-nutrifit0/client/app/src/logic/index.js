@@ -60,6 +60,7 @@ const logic = {
         })
 
         this.cart(updateCart)
+
     },
 
 

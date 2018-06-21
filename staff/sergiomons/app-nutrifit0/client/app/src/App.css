@@ -18,13 +18,14 @@ main{
 }
 
 .card {
-  max-width: 360px;
+  min-width: 300px;
   border: 2px solid rgba(170, 167, 167, 0.856);
   border-radius: calc(1.2rem - 1px);
 }
 
 .card-img-top {
-  height: 210px;
+  opacity: 0.92;
+  height: 300px;
   border-top-left-radius: calc(1rem - 1px);
   border-top-right-radius: calc(1rem - 1px);
 }

@@ -9,7 +9,7 @@ const { expect } = require('chai')
 const { env: { DB_URL } } = process
 
 describe('logic nutrifit', () => {
-    let userDataRegister, userData, otherUserData, dummyUserId, indexes, polloVerdurasData, terneraData, polloArrozData, sopaVerdurasData, sopaMariscoData, pescadoPlanchaData, pack_CategoryData, individual_CategoryData, individual_S_CategoryData
+    let userDataRegister, userData, otherUserData, dummyUserId, indexes, polloVerdurasData, terneraData, polloArrozData, sopaVerdurasData, sopaMariscoData, pescadoPlanchaData, pack_CategoryData, individuals_CategoryData, individual_S_CategoryData
 
     before(() => mongoose.connect(DB_URL))
 
@@ -20,7 +20,7 @@ describe('logic nutrifit', () => {
         dummyUserId = '123456781234567812345678'
 
         // products data
-        polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: 'Pollo con verduras desc', price: 4.25 }
+        polloVerdurasData = { image: 'http://images.com/1234', name: 'Pollo con verduras', description: ['100 grs de filete de pollo', '50 grs de verdura mixta', '30 grs de patatas'], price: 4.25 }
         terneraData = { image: 'http://images.com/1234', name: 'Ternera asada', description: 'Ternera asada desc', price: 4 }
         polloArrozData = { image: 'http://images.com/1234', name: 'Pollo con arroz', description: 'Pollo con arroz desc', price: 4.50 }
         sopaVerdurasData = { image: 'http://images.com/1234', name: 'Sopa de verduras', description: 'Sopa de verduras desc', price: 3 }
@@ -29,7 +29,7 @@ describe('logic nutrifit', () => {
 
         // categories
         pack_CategoryData = { image: 'http://images.com/1234', name: 'Pack' }
-        individual_CategoryData = { image: 'http://images.com/1234', name: 'Individual' }
+        individuals_CategoryData = { image: 'http://images.com/1234', name: 'Individual' }
         individual_S_CategoryData = { image: 'http://images.com/1234', name: 'Inviditual S' }
 
         indexes = []
@@ -184,7 +184,6 @@ describe('logic nutrifit', () => {
 
     describe('retrieve user', () => {
 
-        // const { name, surname, username, email, password, address, telephone, points, orders } = userData
 
         it('should succeed on correct data', () =>
             User.create(userData)
@@ -226,119 +225,6 @@ describe('logic nutrifit', () => {
         )
     })
 
-    // describe('udpate user', () => {
-    //     it('should succeed on correct data', () =>
-    //         User.create(userData)
-    //             .then(({ id }) => {
-    //                 return logic.updateUser(id, 'Jack', 'Wayne', 'jd@mail.com', '123', 'jw@mail.com', '456')
-    //                     .then(res => {
-    //                         expect(res).to.be.true
-
-    //                         return User.findById(id)
-    //                     })
-    //                     .then(user => {
-    //                         expect(user).to.exist
-
-    //                         const { name, surname, email, password } = user
-
-    //                         expect(user.id).to.equal(id)
-    //                         expect(name).to.equal('Jack')
-    //                         expect(surname).to.equal('Wayne')
-    //                         expect(email).to.equal('jw@mail.com')
-    //                         expect(password).to.equal('456')
-    //                     })
-    //             })
-    //     )
-
-    //     it('should fail on changing email to an already existing user\'s email', () =>
-    //         Promise.all([
-    //             User.create(userData),
-    //             User.create(otherUserData)
-    //         ])
-    //             .then(([{ id: id1 }, { id: id2 }]) => {
-    //                 const { name, surname, email, password } = userData
-
-    //                 return logic.updateUser(id1, name, surname, email, password, otherUserData.email)
-    //             })
-    //             .catch(({ message }) => expect(message).to.equal(`user with email ${otherUserData.email} already exists`))
-    //     )
-
-    //     it('should fail on no user id', () =>
-    //         logic.updateUser()
-    //             .catch(({ message }) => expect(message).to.equal('user id is not a string'))
-    //     )
-
-    //     it('should fail on empty user id', () =>
-    //         logic.updateUser('')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user id', () =>
-    //         logic.updateUser('     ')
-    //             .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
-    //     )
-
-    //     it('should fail on no user name', () =>
-    //         logic.updateUser(dummyUserId)
-    //             .catch(({ message }) => expect(message).to.equal('user name is not a string'))
-    //     )
-
-    //     it('should fail on empty user name', () =>
-    //         logic.updateUser(dummyUserId, '')
-    //             .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user name', () =>
-    //         logic.updateUser(dummyUserId, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user name is empty or blank'))
-    //     )
-
-    //     it('should fail on no user surname', () =>
-    //         logic.updateUser(dummyUserId, userData.name)
-    //             .catch(({ message }) => expect(message).to.equal('user surname is not a string'))
-    //     )
-
-    //     it('should fail on empty user surname', () =>
-    //         logic.updateUser(dummyUserId, userData.name, '')
-    //             .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user surname', () =>
-    //         logic.updateUser(dummyUserId, userData.name, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user surname is empty or blank'))
-    //     )
-
-    //     it('should fail on no user email', () =>
-    //         logic.updateUser(dummyUserId, userData.name, userData.surname)
-    //             .catch(({ message }) => expect(message).to.equal('user email is not a string'))
-    //     )
-
-    //     it('should fail on empty user email', () =>
-    //         logic.updateUser(dummyUserId, userData.name, userData.surname, '')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user email', () =>
-    //         logic.updateUser(dummyUserId, userData.name, userData.surname, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user email is empty or blank'))
-    //     )
-
-    //     it('should fail on no user password', () =>
-    //         logic.updateUser(dummyUserId, userData.name, userData.surname, userData.email)
-    //             .catch(({ message }) => expect(message).to.equal('user password is not a string'))
-    //     )
-
-    //     it('should fail on empty user password', () =>
-    //         logic.updateUser(dummyUserId, userData.name, userData.surname, userData.email, '')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-
-    //     it('should fail on blank user password', () =>
-    //         logic.updateUser(dummyUserId, userData.name, userData.surname, userData.email, '     ')
-    //             .catch(({ message }) => expect(message).to.equal('user password is empty or blank'))
-    //     )
-    // })
-
     describe('list all products', () => {
         it('should succeed on correct data', () => {
             return new Category(pack_CategoryData).save()
@@ -371,10 +257,50 @@ describe('logic nutrifit', () => {
                                             expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
                                             expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
                                             expect(product.name).to.equal(polloVerduras.name)
-                                            expect(product.description).to.equal(polloVerduras.description)
+                                            expect(product.description).to.be.an('array')
+                                            expect(product.description.length).to.equal(3)
                                             expect(product.price).to.equal(polloVerduras.price)
                                             expect(product.categoryId).to.equal(category._id.toString())
                                         })
+                                })
+                        })
+                })
+        })
+    })
+
+    describe('list products by category', () => {
+        it('should succeed on correct data', () => {
+            return new Category(individuals_CategoryData).save()
+                .then(category => {
+                    polloVerdurasData.category = category._id
+                    terneraData.category = category._id
+                    polloArrozData.category = category._id
+                    sopaVerdurasData.category = category._id
+                    sopaMariscoData.category = category._id
+                    pescadoPlanchaData.category = category._id
+
+                    return Promise.all([
+                        new Product(polloVerdurasData).save(),
+                        new Product(terneraData).save(),
+                        new Product(polloArrozData).save(),
+                        new Product(sopaVerdurasData).save(),
+                        new Product(sopaMariscoData).save(),
+                        new Product(pescadoPlanchaData).save()
+                    ])
+                        .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco, pescadoPlancha, individuals_Category]) => {
+
+                            return logic.listProductsByCategory(category._id.toString())
+                                .then(products => {
+                                    expect(products.length).to.equal(6)
+                                    const product = products.find(product => product.id == polloVerduras._id.toString())
+
+                                    expect(product.id.toString()).to.equal(polloVerduras._doc._id.toString())
+                                    expect(product.id.toString()).not.to.equal(ternera._doc._id.toString())
+                                    expect(product.name).to.equal(polloVerduras.name)
+                                    expect(product.description).to.be.an('array')
+                                    expect(product.description.length).to.equal(3)
+                                    expect(product.price).to.equal(polloVerduras.price)
+                                    expect(product.categoryId).to.equal(category._id.toString())
                                 })
                         })
                 })
@@ -385,7 +311,7 @@ describe('logic nutrifit', () => {
         it('should succeed on correct data', () => {
             return Promise.all([
                 Category.create(pack_CategoryData),
-                Category.create(individual_CategoryData)
+                Category.create(individuals_CategoryData)
             ])
                 .then(([pack_Category, individual_Category])=> {
                     polloVerdurasData.category = individual_Category._id
@@ -418,7 +344,7 @@ describe('logic nutrifit', () => {
         it('should succeed on correct data', () => {
             return Promise.all([
                 new Category(pack_CategoryData).save(),
-                new Category(individual_CategoryData).save(),
+                new Category(individuals_CategoryData).save(),
 
                 new Category(individual_S_CategoryData).save()
             ])
@@ -479,7 +405,7 @@ describe('logic nutrifit', () => {
         it('should succeed on correct data', () => {
             return Promise.all([
                 new Category(pack_CategoryData).save(),
-                new Category(individual_CategoryData).save(),
+                new Category(individuals_CategoryData).save(),
 
                 new Category(individual_S_CategoryData).save()
             ])
@@ -508,7 +434,7 @@ describe('logic nutrifit', () => {
                         .then(([polloVerduras, ternera, polloArroz, sopaVerduras, sopaMarisco]) => {
                             return logic.listAllCategories()
                                 .then(categories => {
-                                    console.log(categories)
+                                    
                                     expect(categories).to.exist
                                     expect(categories.length).to.equal(3)
 
@@ -541,7 +467,7 @@ describe('logic nutrifit', () => {
         it('should succeed on correct data', () => {
             return Promise.all([
                 new Category(pack_CategoryData).save(),
-                new Category(individual_CategoryData).save(),
+                new Category(individuals_CategoryData).save(),
 
                 new Category(individual_S_CategoryData).save()
             ])

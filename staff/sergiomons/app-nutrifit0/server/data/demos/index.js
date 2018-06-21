@@ -16,7 +16,7 @@ mongoose.connect(DB_URL)
         let individualsCategoryData = { image: 'http://images.com/1234', name: "Individual" }
 
         // Children individualsCategoryData
-        let meatCategoryData = { image: 'https://www.carnes.cl/wp-content/uploads/2015/12/1449681159534_ES_1.jpg', name: "Carne" }
+        let meatCategoryData = { image: 'http://blogs.lanacion.com.ar/cocina-amateur/files/2013/01/DSC_0006-copia.jpg', name: "Carne" }
         let soupCategoryData = { image: 'https://comidasperuanas.net/wp-content/uploads/2017/01/Sopa-de-Pollo-Peruana.jpg', name: "Sopa" }
         let fishCategoryData = { image: 'http://www.grecotour.com/blog-grecia/wp-content/uploads/2015/03/plato-tipico-griego-pescado.jpg', name: "Pescado" }
         let pastaCategoryData = { image: 'http://sevilla.abc.es/gurme//wp-content/uploads/2013/03/bucatinis-carbonara-1440x810.jpg', name: "Pasta" }

@@ -113,93 +113,7 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
-    // updateUser(id, name, surname, email, newEmail, newPassword) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             if (typeof id !== 'string') throw Error('user id is not a string')
-
-    //             if (!(id = id.trim()).length) throw Error('user id is empty or blank')
-
-    //             if (typeof name !== 'string') throw Error('user name is not a string')
-
-    //             if (!(name = name.trim()).length) throw Error('user name is empty or blank')
-
-    //             if (typeof surname !== 'string') throw Error('user surname is not a string')
-
-    //             if ((surname = surname.trim()).length === 0) throw Error('user surname is empty or blank')
-
-    //             if (typeof email !== 'string') throw Error('user email is not a string')
-
-    //             if (!(email = email.trim()).length) throw Error('user email is empty or blank')
-
-    //             if (typeof password !== 'string') throw Error('user password is not a string')
-
-    //             if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-
-    //             return User.findOne({ email, password })
-    //         })
-    //         .then(user => {
-    //             if (!user) throw Error('wrong credentials')
-
-    //             if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
-
-    //             if (newEmail) {
-    //                 return User.findOne({ email: newEmail })
-    //                     .then(_user => {
-    //                         if (_user && _user.id !== id) throw Error(`user with email ${newEmail} already exists`)
-
-    //                         return user
-    //                     })
-    //             }
-
-    //             return user
-    //         })
-    //         .then(user => {
-    //             user.name = name
-    //             user.surname = surname
-    //             user.email = newEmail ? newEmail : email
-    //             user.password = newPassword ? newPassword : password
-
-    //             return user.save()
-    //         })
-    //         .then(() => true)
-    // },
-
-    // /**
-    //  * 
-    //  * @param {string} id 
-    //  * @param {string} email 
-    //  * @param {string} password 
-    //  * 
-    //  * @returns {Promise<boolean>}
-    //  */
-    // unregisterUser(id, email, password) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             if (typeof id !== 'string') throw Error('user id is not a string')
-
-    //             if (!(id = id.trim()).length) throw Error('user id is empty or blank')
-
-    //             if (typeof email !== 'string') throw Error('user email is not a string')
-
-    //             if (!(email = email.trim()).length) throw Error('user email is empty or blank')
-
-    //             if (typeof password !== 'string') throw Error('user password is not a string')
-
-    //             if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
-
-    //             return User.findOne({ email, password })
-    //         })
-    //         .then(user => {
-    //             if (!user) throw Error('wrong credentials')
-
-    //             if (user.id !== id) throw Error(`no user found with id ${id} for given credentials`)
-
-    //             return user.remove()
-    //         })
-    //         .then(() => true)
-    // },
-
+ 
     listAllCategories() {
         return Promise.resolve()
             .then(() => {
@@ -345,8 +259,6 @@ const logic = {
         
         return Promise.resolve()
         .then(()=> {
-            console.log('orderProducts server: ', orderProducts);
-
 
                     if (typeof userId !== 'string') throw Error('user userId is not a string')
 
@@ -383,51 +295,6 @@ const logic = {
     },
 
 
-    /**
-     * Lists products by a given category
-     * 
-     * @param {String} categoryId The category id
-     * 
-     * @returns {Promise<[Product]>}
-     */
-    // listProductsByCategory(categoryId) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
-
-    //             if (!(categoryId = categoryId.trim()).length) throw Error('user categoryId is empty or blank')
-
-    //             return Category.find({ parent: categoryId.toString() })
-    //                 .then(res => {
-    //                     const ids = [categoryId]
-
-    //                     return Promise.all(
-    //                         res.map(({ _doc: category }) => {
-    //                             ids.push(category._id.toString())
-
-    //                             return Category.find({ parent: category._id })
-
-    //                         })
-    //                     )
-    //                         .then(res => {
-
-    //                             const withResults = res.filter(res => res.length)
-
-    //                             withResults.forEach(res => {
-    //                                 res.forEach(({ _doc: category }) => ids.push(category._id.toString()))
-    //                             })
-
-    //                             return Product.find({ category: { $in: ids } })
-    //                                 .then(res => {
-
-    //                                     const results = res.map(({_doc: product}) => product )
-
-    //                                     return results                                      
-    //                                 })
-    //                         })
-    //                     })
-    //                 })              
-    // },
 
 }
 
