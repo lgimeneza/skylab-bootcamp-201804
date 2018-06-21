@@ -6,7 +6,9 @@ class Profile extends Component {
     state = {
         data: {},
         username: "",
-        location: ""
+        location: "",
+        error: "",
+        modal: ""
     }
 
     componentDidMount() {
@@ -14,9 +16,7 @@ class Profile extends Component {
             logic.retrieveUser()
                 .then(res => {
                     if (res.status === "KO") {
-                        logic.logout()
-                        console.error("Something wrong happened... Try to log in again")
-                        this.props.history.push(`/login`)
+                        this.setState({error: "Something wrong happened... Try to log in again"}, () => this.modalManager())
                     }
                     return res
                 })
@@ -26,15 +26,37 @@ class Profile extends Component {
                         username: data.username,
                         location: data.location
                     })
-                }).catch(error => console.error(error.message))
+                }).catch(() => {
+                    this.setState({error: "Something wrong happened..."}, () => this.modalManager())
+                })
         }  else this.props.history.push(`/`)
+    }
+
+    modalManager() {
+        let modal = ""
+        if (this.state.error !== "") modal = (
+            <div className="modal" onClick={this.close}>
+                <div className="error-modal">
+                <div className="modal-header"><i className="fas fa-exclamation-triangle"/></div>
+                <div className="modal-body"> <h2>{this.state.error}</h2><br/></div>
+                <div className="modal-footer"> <small><sub>Click on window to close</sub></small> </div>
+                </div>
+            </div>
+        )
+        this.setState({error: "", modal })
+    } 
+
+    close = (e) => {
+        e.preventDefault()
+        logic.logout()
+        this.setState({ modal: "" },() => this.props.history.push(`/login`))
     }
 
     render() {
         return (
             <div className="containers profile">
                 <h1>Profile</h1>
-
+                    {this.state.modal}
                     <article className="info">
                         <p> Username: </p>
                         <h1>{this.state.username}</h1>

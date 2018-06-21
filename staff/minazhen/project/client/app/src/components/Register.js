@@ -8,7 +8,10 @@ class Register extends Component {
         password: "",
         location: "",
         state: "",
-        token: ""
+        token: "",
+        error: "",
+        message: "", 
+        modal: ""
     }
 
     userName = (e) => {
@@ -30,23 +33,53 @@ class Register extends Component {
         e.preventDefault()
         logic.logout()
         return logic.registerUser(this.state.user, this.state.password, this.state.location)
-            .then(this.props.history.push(`/login`))
+            .then(() => this.bucle())
             .catch(error => {
-                console.error(error.message)
-                this.props.history.push(`/register`)
+                this.setState({error: error.message}, () => this.modalManager())
+                
             })
     }
 
     bucle = () => {
-        if (this.token) {
-            console.error("Wii you are register")
-            this.props.history.push(`/home`)
-        }
+        this.setState({message: "You are registered!"}, () => this.modalManager())
+        setTimeout(() => {
+            this.redirect()
+        }, 1000)
+    }
+
+    modalManager() {
+        let modal = ""
+        if (this.state.error !== "") modal = (
+            <div className="modal" onClick={this.close}>
+                <div className="error-modal">
+                <div className="modal-header"><i className="fas fa-exclamation-triangle"/></div>
+                <div className="modal-body"> <h2>{this.state.error}</h2><br/></div>
+                <div className="modal-footer"> <small><sub>Click on window to close</sub></small> </div>
+                </div>
+            </div>
+        )
+        if (this.state.message !== "") modal = (
+            <div className="modal">
+                <div className="message-modal"> <h2>{this.state.message}</h2></div>
+            </div>
+        ) 
+        this.setState({error: "", modal })
+    }
+
+    close = (e) => {
+        e.preventDefault()
+        this.setState({ modal: "" }, () => this.modalManager())
+    }
+
+    redirect = () => {
+        this.setState({ modal: "" }, () => this.props.history.push(`/login`))
+        
     }
 
     render() {
-        const { user, password, location } = this.state
+        const { modal, user, password, location } = this.state
         return <div className="containers register">
+            {modal}
             <h1>Register</h1>
             <form onSubmit={this.submit}>
                 <input type="text" onChange={this.userName} value={user} placeholder="User" autoComplete="off" />

@@ -7,12 +7,14 @@ class Country extends Component {
         photos: [], 
         countryName: this.props.match.params.countryName,
         username: this.props.match.params.username,
-        selected: "NONE"
+        selected: "NONE",
+        error: "",
+        message: "",
+        modal: ""
     }
 
-    componentDidMount() {
+    componentWillMount() {
         if (logic.loggedIn()) {
-            console.log(logic.loggedIn())
             this.setState({ selected : "NONE"})
             this.reload()
         } else this.props.history.push(`/`)  
@@ -31,7 +33,9 @@ class Country extends Component {
                     const picSel = {id: pic._id, url: logic.retrieveCloudPhoto(pic.url, 1)}
                     this.setState({ photos, selected: picSel})
                 } 
-            }).catch(error => console.error(error.message))
+            }).catch(error => {
+                this.setState({error: error.message}, () => this.modalManager())
+            })
     }
 
     upload = (e) => {
@@ -43,8 +47,8 @@ class Country extends Component {
                     logic.addPhoto(this.state.countryName, add)
                     .then(()=> { this.reload() })
                 }).catch(error => console.error(error.message))           
-            } else console.error("You should upload an image")
-        } else console.error("You only can upload 20 photos per country")
+            } else this.setState({message: "You should upload an image"}, () => this.modalManager())
+        } else this.setState({message: "You can upload until 30 photos per country"}, () => this.modalManager())
     }
 
     retrievePhoto = (e) => {
@@ -53,7 +57,9 @@ class Country extends Component {
         .then((res) => { 
             const picSel = {id: res.id, url: logic.retrieveCloudPhoto(res.url, 1)}
             this.setState({ selected: picSel}) 
-        }).catch(error => console.error(error.message))
+        }).catch(error => {
+            this.setState({error: error.message}, () => this.modalManager())
+        })
     }
 
     deletePicture = (e) => {
@@ -72,7 +78,9 @@ class Country extends Component {
                     }
                 })
             })
-        }).catch(error => console.error(error.message)) 
+        }).catch(error => {
+            this.setState({error: error.message}, () => this.modalManager())
+        })
     }
 
     order = (e) => {
@@ -91,33 +99,61 @@ class Country extends Component {
         this.setState({ photos, selected: picSel })
     }
 
+    modalManager() {
+        let modal = ""
+        if (this.state.error !== "") modal = (
+            <div className="modal" onClick={this.close}>
+                <div className="error-modal">
+                    <div className="modal-header"><i className="fas fa-exclamation-triangle"/></div>
+                    <div className="modal-body"> <h2>{this.state.error}</h2><br/></div>
+                    <div className="modal-footer"> <small><sub>Click on window to close</sub></small> </div>
+                </div>
+            </div>
+        )
+        if (this.state.message !== "") modal = (
+            <div className="modal" onClick={this.close}>
+                <div className="message-modal"> <h2>{this.state.message}</h2></div>
+            </div>
+        ) 
+        this.setState({ modal })
+    }
+
+    close = (e) => {
+        e.preventDefault()
+        this.setState({ error: "", message: "", modal: "" }, () => this.modalManager())
+    }
+
+
     render() {
-        const { username, countryName, photos, selected } = this.state
+        const { modal, username, countryName, photos, selected } = this.state
         return (
         <div className="containers country">
+            {modal}
             <h1>{countryName}</h1>
             {(username === undefined) ? <h5> My photos </h5> : <h5>from {username}</h5> }
 
-            
-            {((photos.length === 0) || (selected === "NONE")) ? <div></div> : 
-                <div className="preview-pic" style={{backgroundImage: `url(${selected.url})`}}>
-                    <div className="delete-pic">
-                        <button name={selected._id} className="btn-delete" onClick={this.deletePicture}>✖</button>
-                    </div>
-                </div> 
-            }
-            <div className="album">
-                <div className="arrows arrow-left"><button name="left" onClick={this.order}> ◀ </button></div>
-                {photos.map((photo, i) =>
-                    <div key={photo._id} className="photo">
-                        <img src={photo.url} alt={countryName} name={photo._id} onClick={this.retrievePhoto}/>
-                    </div>)}
-                <div className="arrows arrow-right"><button name="right" onClick={this.order}> ▶ </button></div>
+            <div className="album-container">
+                {((photos.length === 0) || (selected === "NONE")) ? <div></div> : 
+                    <div className="preview-pic" style={{backgroundImage: `url(${selected.url})`}}>
+                        <div className="delete-pic">
+                            <button name={selected._id} className="btn-carlos-velocirraptor-girafa" onClick={this.deletePicture}><i className="fas fa-trash fa-xs"></i></button>
+                        </div>
+                    </div> 
+                }
+                <div className="album">
+                    <div className="arrows arrow-left"><button name="left" onClick={this.order}> ◀ </button></div>
+                    {photos.map((photo, i) =>
+                        <div key={photo._id} className="photo">
+                            <img src={photo.url} alt={countryName} name={photo._id} onClick={this.retrievePhoto}/>
+                        </div>)}
+                    <div className="arrows arrow-right"><button name="right" onClick={this.order}> ▶ </button></div>
+                </div>
             </div>
                 <label className="file-upload-container" htmlFor="file-upload">
                     <input id="file-upload" onChange={this.upload} type="file" style={{display: "none"}}/>
                     Select picture 
                 </label>
+
         </div>)
     }
 }

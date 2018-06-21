@@ -108,7 +108,15 @@ const travelApi = {
                         
                         return true
                     })
-                    .catch(({ response: { data: { error } } }) => error)
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
             })
     },
 

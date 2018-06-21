@@ -8,11 +8,17 @@ class Logout extends Component {
     logout = () => {
         logic.logout()
         const history = this.props.history
-        setTimeout(function(){ history.push(`/`) }, 700);
+        setTimeout(() => { history.push(`/`) }, 1000);
     }
 
     render() {
-        return <div className="containers"> {this.logout()} <h3>You logged out</h3> </div>
+        return (
+        <div className="containers"> 
+            {this.logout()} 
+            <div className="modal">
+                <div className="message-modal"> <h2>You logged out</h2></div>
+            </div>
+        </div>)
     }
 }
 

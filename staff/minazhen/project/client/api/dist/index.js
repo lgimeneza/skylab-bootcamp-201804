@@ -121,9 +121,15 @@ var travelApi = {
                 if (status !== 200 || data.status !== 'OK') throw Error("unexpected response status " + status + " (" + data.status + ")");
 
                 return true;
-            }).catch(function (_ref5) {
-                var error = _ref5.response.data.error;
-                return error;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
             });
         });
     },

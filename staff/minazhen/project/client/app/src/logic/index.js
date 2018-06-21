@@ -1,7 +1,7 @@
 const travelApi = require("api")
 const cloudApi = require("cloud-api")
 
-travelApi.url = "http://localhost:4000/api"
+travelApi.url = "http://rocky-stream-59609.herokuapp.com/api"
 
 const logic = {
     userId: "NO-ID",
@@ -60,13 +60,17 @@ const logic = {
                 return Promise.all(promises)
                 .then(() => {
                     return travelApi.unregisterUser(userId, username, password)
-                    .then(() => this.logout())
-                    .then(() => true )  
+                    .then((res) => {
+                        this.logout()
+                        return res
+                    })  
                 }) 
             } else {
                 return travelApi.unregisterUser(userId, username, password)
-                .then(() => this.logout())
-                .then(() => true )
+                .then((res) => {
+                    this.logout()
+                    return res
+                }) 
             }
         })       
     },

@@ -9,7 +9,9 @@ class Login extends Component {
         user: "",
         password: "",
         state: "",
-        token: ""
+        token: "",
+        error: "",
+        modal: ""
     }
 
     userName = (e) => {
@@ -28,22 +30,37 @@ class Login extends Component {
             .then(() => {
                 sessionStorage.setItem("userId", logic.userId)
                 sessionStorage.setItem("token", api.token)
-                this.bucle()
+                this.props.history.push(`/profile`)
             })
             .catch(error => {
-                console.error(error.message)
-                this.props.history.push(`/login`)
+                this.setState({error: error.message}, () => this.modalManager())
             })
     }
 
-    bucle = () => {
-        // console.error("alert you are logged in")
-        this.props.history.push(`/profile`)
+    modalManager() {
+        let modal = ""
+        if (this.state.error !== "") modal = (
+            <div className="modal" onClick={this.close}>
+                <div className="error-modal">
+                <div className="modal-header"><i className="fas fa-exclamation-triangle"/></div>
+                <div className="modal-body"> <h2>{this.state.error}</h2><br/></div>
+                <div className="modal-footer"> <small><sub>Click on window to close</sub></small> </div>
+                </div>
+            </div>
+        )
+        this.setState({error: "", modal })
+    } 
+
+    close = (e) => {
+        e.preventDefault()
+        this.setState({ modal: "" },() => this.modalManager())
     }
 
     render() {
-        const { user, password } = this.state
-        return <div className="containers login">
+        const { modal, user, password } = this.state
+        return (
+        <div className="containers login">
+            {modal}
             <h1>Login</h1>
             <form onSubmit={this.submit} className="form login-form">
                 <input type="text" onChange={this.userName} value={user} placeholder="User" autoComplete="off" />
@@ -52,7 +69,7 @@ class Login extends Component {
                 <button type="submit">Login</button>
             </form>
         </div>
-    }
+        )}
 }
 
 export default withRouter(Login)

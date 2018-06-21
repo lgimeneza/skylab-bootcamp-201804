@@ -19,33 +19,70 @@ class BasicMap extends Component {
     this.clicking = this.clicking.bind(this)
     this.visited = visited
   }
-  state = {  loading: true  }
+  state = {
+    loading: true,
+    error: "",
+    modal: ""
+  }
 
   componentDidMount() {
     if (logic.loggedIn()) {
-      return logic.world(logic.userId)
-        .then(countries => {
-          if (countries.length) {
-            visited = countries
-            this.setState({ loading : false })
-          } else {
-            visited.length = 0
-            this.setState({ loading : false })
-          }
-        }).catch(error => console.error(error.message))
+      this.modalManager()
+      setTimeout(() =>{
+        return logic.world(logic.userId)
+          .then(countries => {
+            if (countries.length) {
+              visited = countries
+              this.setState({ loading: false, modal: "" })
+            } else {
+              visited.length = 0
+              this.setState({ loading: false, modal: "" })
+            }
+          })
+          .catch(error => {
+            console.log("E>> "+ error.message)
+            this.setState({error: error.message}, () => this.modalManager())
+            
+          })
+      }, 700)
     } else this.props.history.push(`/`)
+  }
+
+  modalManager() {
+    let modal = ""
+    if (this.state.error !== "") {modal = (
+      <div className="modal" onClick={this.close}>
+        <div className="error-modal">
+          <div className="modal-header"><i className="fas fa-exclamation-triangle" /></div>
+          <div className="modal-body"> <h2>{this.state.error}</h2><br /></div>
+          <div className="modal-footer"> <small><sub>Click on window to close</sub></small> </div>
+        </div>
+      </div>
+    )} else if (this.state.loading) modal = (
+      <div className="modal">
+        <div className="message-modal"> <h2>LOADING <i className="fas fa-spinner fa-spin" /></h2></div>
+      </div>
+    )
+    this.setState({ error: "", modal })
+  }
+
+  close = (e) => {
+    e.preventDefault()
+    this.setState({ modal: "" }, () => this.props.history.push(`/profile`))
   }
 
   clicking(value) { this.props.history.push(`/${value.properties.name}`) }
 
-  paint(num){ if (num === -1) return "#ECEFF1"; else return "#FF6611" }
+  paint(num) { if (num === -1) return "#F1ECEC"; else return "#FF6611" }
 
   render() {
-    if (this.state.loading) {
-      return ( <div className="world"> <h1>LOADING...</h1> </div> )
-    } else {  
-      return (   
+    const {loading, modal} = this.state
+    if (loading) {
+      return (<div className="world"> {modal} </div>)
+    } else {
+      return (
         <div className="world">
+          {modal}
           <ComposableMap
             width={500}
             height={500}
@@ -54,11 +91,11 @@ class BasicMap extends Component {
             style={mapStyles}
           >
             <ZoomableGlobe>
-              <circle cx={250} cy={250} r={220} fill="transparent" stroke="#CFD8DC" />  
+              <circle cx={250} cy={250} r={220} fill="#ffffff99" stroke="#CFD8DC" />
               <Geographies disableOptimization geography={world}>
                 {(geographies, projection) => geographies.map((geography, i) => {
                   this.visited.push({ index: i, name: geography.properties.name })
-  
+
                   return geography.id !== "ATA" && (
                     <Geography
                       key={i}
@@ -68,19 +105,19 @@ class BasicMap extends Component {
                       style={{
                         default: {
                           fill: this.paint(visited.indexOf(geography.properties.name)),
-                          stroke: "#607D8B",
+                          stroke: "#8B7060",
                           strokeWidth: 0.15,
                           outline: "none",
                         },
                         hover: {
-                          fill: "#FF9900",
-                          stroke: "#607D8B",
+                          fill: "#f15a2455",
+                          stroke: "#8B7060",
                           strokeWidth: 0.15,
                           outline: "none",
                         },
                         pressed: {
                           fill: "#FF5722",
-                          stroke: "#607D8B",
+                          stroke: "#8B7060",
                           strokeWidth: 0.15,
                           outline: "none",
                         },
@@ -93,7 +130,7 @@ class BasicMap extends Component {
             </ZoomableGlobe>
           </ComposableMap>
         </div>
-      ) 
+      )
     }
   }
 }
