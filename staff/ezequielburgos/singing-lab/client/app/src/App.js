@@ -28,6 +28,16 @@ class App extends Component {
     this.setState({ loggedIn: false })
   }
 
+  onOrder = () => {
+    logic.clearCart()
+    
+    logic._cart.length = 0;
+
+    this.getItems()
+
+    this.props.history.push('/')
+  }
+
   getItems = () => {
     if (logic._cart.length && logic._cart !== 'undefined') {
         logic.listProductsByIds()
@@ -94,8 +104,8 @@ class App extends Component {
           <Route exact path="/our-team" component={OurTeam} />
           <Route exact path="/auth" render={() => <Login onLogin={this.onLogin} />} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/cart" render={() => <Cart onRemoveFromCart={this.onRemoveFromCart} cart={this.state.cart} total={this.state.total} />}/>
-          <Route exact path="/order" component={Order} />
+          <Route exact path="/cart" render={() => <Cart loggedIn={this.state.loggedIn} onRemoveFromCart={this.onRemoveFromCart} cart={this.state.cart} total={this.state.total}/> }/>
+          <Route exact path="/order" render={() => this.state.loggedIn ? <Order onOrder={this.onOrder} /> : <Redirect to="/" />} />
           <Route exact path="/profile" render={() => this.state.loggedIn ? <Route exact path="/profile" component={Profile} /> : <Redirect to="/" /> } />
           <Route exact path="/categories" component={Categories} />
           <Route exact path="/products" render={props => <AllProducts categoryId={props.match.params.id} onAddToCart={this.onAddToCart} />} />

@@ -393,7 +393,7 @@ const singingLabApi = {
      * 
      * @returns {Promise<boolean>}
      */
-    createOrder(paymentMethod, status, products, userId, orderAdress, date) {
+    createOrder(paymentMethod, status, products, userId, orderAdress, submitDate) {
         return Promise.resolve()
             .then(() => {
                 if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
@@ -414,17 +414,18 @@ const singingLabApi = {
                     if ((orderAdress = orderAdress.trim()).length === 0) throw Error('orderAdress is empty or blank')
                 }
 
-                if (date !== undefined) {
-                    if (typeof date !== 'date') throw Error('date is not a date')
+                if (submitDate !== undefined) {
+                    console.log('Client api: ' + submitDate);
+                    if (typeof submitDate !== 'string') throw Error('submitDate is not a string')
 
-                    if (!(date = date.trim()).length) throw Error('date is empty or blank')
+                    if (!(submitDate = submitDate.trim()).length) throw Error('submitDate is empty or blank')
                 }
 
-                return axios.post(`${this.url}/order`, { paymentMethod, status, products, userId, orderAdress, date })
+                return axios.post(`${this.url}/order`, { paymentMethod, status, products, userId, orderAdress, submitDate })
                     .then(({ status, data }) => {
                         if (status !== 201 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 
-                        return true
+                        return data.data
                     })
                     .catch(err => {
                         if (err.code === 'ECONNREFUSED') throw Error('could not reach server')

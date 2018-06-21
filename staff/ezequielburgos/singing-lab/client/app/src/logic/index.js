@@ -22,13 +22,21 @@ const logic = {
     },
 
     cart(cart) {
-        if (cart) {
+        if (cart !== undefined) {
             this._cart = cart
 
             return
         }
 
         return this._cart
+    },
+
+    getDateOrder() {
+
+        // let hours = new Date().getHours()
+        this._date = Date.now()
+        return this._date.toString()
+
     },
 
     addProductToCart(productId) {
@@ -50,6 +58,10 @@ const logic = {
        return this.cart(this.cart().filter(id => {
             return id !== productId
         }))
+    },
+
+    clearCart() {
+       this.cart(null)
     },
 
     listProductsByIds() {
@@ -148,11 +160,8 @@ const logic = {
     },
 
     createOrder(paymentMethod, products, orderAdress) {
-        if (this._orderStatus !== 'unpaid') {
-            // this._ date = date().getHours()
-        }
-
-        return singingLabApi.createOrder(paymentMethod, this._orderStatus, products, this.userId(), orderAdress, this._date)
+            
+        return singingLabApi.createOrder(paymentMethod, this._orderStatus, products, this.userId(), orderAdress, this.getDateOrder())
     }
 }
 

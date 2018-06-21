@@ -315,7 +315,7 @@ const logic = {
     * 
     * @returns {Promise<boolean>}
     */
-    createOrder(paymentMethod, status, products, userId, orderAdress, date) {
+    createOrder(paymentMethod, status, products, userId, orderAdress, submitDate) {
         return Promise.resolve()
             .then(() => {
                 if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
@@ -336,13 +336,13 @@ const logic = {
                     if ((orderAdress = orderAdress.trim()).length === 0) throw Error('orderAdress is empty or blank')
                 }
 
-                if (date !== undefined) {
-                    if (typeof date !== 'date') throw Error('date is not a date')
+                if (submitDate !== undefined) {
+                    if (typeof submitDate !== 'string') throw Error('submitDate is not a string')
 
-                    if (!(date = date.trim()).length) throw Error('date is empty or blank')
+                    if (!(submitDate = submitDate.trim()).length) throw Error('submitDate is empty or blank')
                 }
 
-                return Order.create({ paymentMethod, status, products, userId, orderAdress, date })
+                return Order.create({ paymentMethod, status, products, userId, orderAdress, submitDate })
                     .then(order => {
                         // return User.findById(userId)
                         //     .then(user => {

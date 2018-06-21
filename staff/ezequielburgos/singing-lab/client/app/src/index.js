@@ -36,7 +36,9 @@ if (cart && cart !== 'undefined') {
 }
 
 logic.cart = function (cart) {
-  if (cart) {
+  if (cart === null)
+    sessionStorage.removeItem('cart')
+  else if (cart) {
     this._cart = cart
 
     sessionStorage.setItem('cart', JSON.stringify(cart))

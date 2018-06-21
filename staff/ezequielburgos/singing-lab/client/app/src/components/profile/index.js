@@ -29,7 +29,8 @@ class Update extends Component {
                     name: user.name,
                     surname: user.surname,
                     address: user.address,
-                    email: user.email
+                    email: user.email,
+                    phone: user.phone
                 })
             })
     }

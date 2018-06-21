@@ -429,7 +429,7 @@ var singingLabApi = {
      * 
      * @returns {Promise<boolean>}
      */
-    createOrder: function createOrder(paymentMethod, status, products, userId, orderAdress, date) {
+    createOrder: function createOrder(paymentMethod, status, products, userId, orderAdress, submitDate) {
         var _this11 = this;
 
         return Promise.resolve().then(function () {
@@ -451,19 +451,20 @@ var singingLabApi = {
                 if ((orderAdress = orderAdress.trim()).length === 0) throw Error('orderAdress is empty or blank');
             }
 
-            if (date !== undefined) {
-                if (typeof date !== 'date') throw Error('date is not a date');
+            if (submitDate !== undefined) {
+                console.log('Client api: ' + submitDate);
+                if (typeof submitDate !== 'string') throw Error('submitDate is not a string');
 
-                if (!(date = date.trim()).length) throw Error('date is empty or blank');
+                if (!(submitDate = submitDate.trim()).length) throw Error('submitDate is empty or blank');
             }
 
-            return axios.post(_this11.url + '/order', { paymentMethod: paymentMethod, status: status, products: products, userId: userId, orderAdress: orderAdress, date: date }).then(function (_ref11) {
+            return axios.post(_this11.url + '/order', { paymentMethod: paymentMethod, status: status, products: products, userId: userId, orderAdress: orderAdress, submitDate: submitDate }).then(function (_ref11) {
                 var status = _ref11.status,
                     data = _ref11.data;
 
                 if (status !== 201 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
 
-                return true;
+                return data.data;
             }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
 

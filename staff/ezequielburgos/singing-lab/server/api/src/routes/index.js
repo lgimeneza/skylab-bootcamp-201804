@@ -153,12 +153,12 @@ router.get('/products', (req, res) => {
 })
 
 router.post('/order', jsonBodyParser, (req, res) => {
-    const { body: { paymentMethod, status, products, userId, orderAdress, date  } } = req
+    const { body: { paymentMethod, status, products, userId, orderAdress, submitDate  } } = req
 
-    return logic.createOrder(paymentMethod, status, products, userId, orderAdress, date )
-        .then(() => {
+    return logic.createOrder(paymentMethod, status, products, userId, orderAdress, submitDate )
+        .then(orderId => {
             res.status(201)
-            res.json({ status: 'OK' })
+            res.json({ status: 'OK', data: orderId })
         })
         .catch(({ message }) => {
             res.status(400)
