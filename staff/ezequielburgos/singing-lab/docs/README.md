@@ -21,15 +21,21 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 ### UML Diagram (User Cases)
 
+The following picture describes the different ways in which the user can interact with our project:
+
 ![](./images/uml-user-cases.png)
 
 ## Technical description:
 
 ### DATA MODEL
 
+In the diagram below we can see the schemas used, its properties and how are they interlinked in between each other. This structures were constructed prior to the server-side functional logic.      
+
 ![](./images/data-model.png)
 
 ### BLOCK MODEL
+
+The project was built following this layer separation architechture:
 
 ![block model](./images/block-model.png)
 
