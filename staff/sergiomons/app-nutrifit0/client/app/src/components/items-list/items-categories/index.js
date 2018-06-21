@@ -14,8 +14,8 @@ export default ({categories}) => (
                             <div className="col-xl-4 col-lg-6 col-md-11 col-sm-12 col-xs-12" >
                                 <div className="card mb-5">
                                     <Link to={`/category/${category.id}${category.hasChildren ? '/subcategories' : '/products'}`}  ><img className="card-img-top" alt={category.name} src={category.image}/>
-                                    <div className="card-block">
-                                        <h5 className="card-title mt-3">{category.name}</h5>                            
+                                    <div className="card-block" >
+                                        <h5 className="card-title mt-3" style={{backgroundColor: "#babcbe",  color:"#555c63", fontSize:"1.4rem"}}>{category.name}</h5>                            
                                     </div>
                                     </Link>
                                 </div>

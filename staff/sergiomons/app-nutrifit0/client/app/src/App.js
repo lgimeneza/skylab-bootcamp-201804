@@ -4,6 +4,7 @@ import { Register, Login, Home, Categories, ProductsByCategory, ProductDetails, 
 import './App.css';
 import api from 'client-api';
 import logic from './logic'
+import swal from 'sweetalert2';
 import AllProducts from './components/products/all-products'
 
 api.token = function (token) {
@@ -71,17 +72,33 @@ class App extends Component {
 
   onLogin = () => {
 
+   
     logic.retrieveUser()
       .then(userData => {
         this.setState({
           userData
         })
+          if (!logic.cart())
+          swal({
+            title: 'Bienvenido ' + this.state.userData.name || this.state.userData.username,
+            type: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          else
+            swal({
+              title: this.state.userData.name || this.state.userData.username + ' tienes productos en el carrito',
+              type: 'info',
+              showConfirmButton: false,
+              timer: 1500
+          });
+
       })
   }
 
   onAddToCart = (id, quantity) => {
     logic.addProductToCart(id, quantity)
-    
+
     this.setState({ cartLength: logic.cart().length })
   }
 
@@ -99,12 +116,13 @@ class App extends Component {
           <Route exact path='/' render={() => <Home onAddToCart={this.onAddToCart} />} />
           <Route path='/allproducts' render={() => <AllProducts onAddToCart={this.onAddToCart} />} />
           <Route path='/category/:categoryId/subcategories' render={props => <Categories categoryId={props.match.params.categoryId} onAddToCart={this.onAddToCart} />} />
-          <Route path='/category/:categoryId/products/' render={props => <ProductsByCategory categoryId={props.match.params.categoryId} onAddToCart={this.onAddToCart}/>} />
+          <Route path='/category/:categoryId/products/' render={props => <ProductsByCategory categoryId={props.match.params.categoryId} onAddToCart={this.onAddToCart} />} />
           <Route path='/product/:productId' render={props => <ProductDetails productId={props.match.params.productId} onAddToCart={this.onAddToCart} />} />
           <Route path='/cart' render={() => <Cart onAddToCart={this.onAddToCart} onSubstractFromCart={this.onSubstractFromCart} />} />
-          <Route path='/order' render={() => <Order />} />
+          <Route path='/order' render={() => (logic.loggedIn) ? <Order /> : <Redirect to='/auth'/>} />
           <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Redirect to='/' />} />
           <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin} /> : <Redirect to='/' />} />
+          <Route render={() => <Redirect to='/' />} />
         </Switch>
         <Footer />
       </div>

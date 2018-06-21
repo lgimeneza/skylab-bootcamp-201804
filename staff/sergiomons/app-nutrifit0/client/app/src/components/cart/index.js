@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import swal from 'sweetalert2';
 
 class Cart extends Component {
 
@@ -28,7 +29,7 @@ class Cart extends Component {
 
     onRemoveFromCart = (product) => {
         logic.removeProductFromCart(product)
-        return this.getCartSummary()
+        this.getCartSummary()
     }
 
     changeQuantity = (id, value, defaultValue) => {
@@ -44,16 +45,35 @@ class Cart extends Component {
         }
     }
 
+    noLogged = (props) => {
+        if (!logic.loggedIn) {
+        swal({
+            title: 'Tienes que estar logeado para seguir con el pedido ',
+            type: 'warning',
+            animation: false,
+            customClass: 'animated fadeInDown'
+        })
+        .then(res => {
+            if (res)
+            this.props.location.push('/auth')
+        })
+
+    } else {
+        this.props.location.push('/order')
+    }
+
+    }
+
     render() {
         return (
             <main>
                 <div className="container-fluid">
                     <div className="row mt-4">
                         <div className="col-xl-10 col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                              <h2 className="mb-2 ml-3" style={{fontWeight: "bold", fontStyle: "italic",textAlign:"left", color: "#4ca562"}}>Tu carrito<i id='icon' className="fas fa-shopping-cart ml-2"></i></h2>
-                            <table className="table mt-4" >
+                              <h2 className=" ml-3 mt-2" style={{fontWeight: "bold", fontStyle: "italic",textAlign:"left", color: "#4ca562"}}>Tu carrito<i id='icon' className="fas fa-shopping-cart ml-2"></i></h2>
+                            <table className="table mt-2" >
                                 <thead>
-                                    <tr className="table-active">
+                                    <tr className="table-active" style={{color: "#6c757d"}}>
                                         <th>#</th>
                                         <th >Artículo</th>
                                         <th>Precio</th>
@@ -74,14 +94,14 @@ class Cart extends Component {
                                                 <td><button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem' }}>X</button></td>
                                             </tr>)
                                     }) :
-                                        <p className="mt-4 mb-4 mx-auto" style={{fontSize: "1.8rem"}}>No hay productos en el carrito</p>}
+                                        <p className="mt-4 mb-4 mx-auto" style={{fontSize: "1.8rem", color: "#6c757d"}}>No hay productos en el carrito</p>}
                                 </tbody>
                                 <tfoot>
-                                    <tr className="table-active">
+                                    <tr className="table-active" style={{fontSize: "1.4rem", color: "#6c757d"}}>
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th>Total carrito</th>
+                                        <th>Total:</th>
                                         <th>{this.state.total} €</th>
                                     </tr>
                                 </tfoot>
@@ -89,16 +109,16 @@ class Cart extends Component {
 
                         </div>
 
-                        <div className="col-xl-2 col-lg-3 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
+                        <div className="col-xl-2 col-lg-3 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4 mt-5">
                             <div className="card">
                                 <h5 className="card-header" style={{ borderTopLeftRadius: "calc(1rem - 1px)", borderTopRightRadius: "calc(1rem - 1px)" }}>Total Carrito</h5>
                                 <div className="card-body">
-                                    <p className="card-text" style={{ fontSize: "2rem" }}>{this.state.total} €</p>
+                                    <p className="card-text" style={{ fontSize: "2rem", color:"#555c63" }}>{this.state.total} €</p>
                                 </div>
                                 <div className="card-footer">
-                                    <Link to='/order'><button className="btn btn-lg btn-dark my-2 my-sm-0 btn-block mb-3" style={{ border: "1px solid #c6c6c6" }} type="submit">Pagar</button></Link>
+                                <Link to={`/${logic.loggedIn ? 'order' : 'auth'}`}><button className="btn btn-lg btn-dark my-2 my-sm-0 btn-block mb-3" style={{ border: "1px solid #c6c6c6" }} >Pagar</button></Link>
                                 </div>
-                                 <Link to='/'><button className="btn btn-md btn-secondary mt-1 mb-3 mx-auto" style={{ border: "1px solid #c6c6c6" }} type="submit">Seguir comprando</button></Link>
+                                    <Link to='/'><button className="btn btn-md btn-secondary mt-1 mb-3 mx-auto" style={{ border: "1px solid #c6c6c6" }} >Seguir comprando</button></Link>
                             </div>
                         </div>
                     </div>

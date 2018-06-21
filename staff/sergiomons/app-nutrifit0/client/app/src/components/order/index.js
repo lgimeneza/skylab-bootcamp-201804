@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
+import './index.css'
+import swal from 'sweetalert2';
 
 class Order extends Component {
 
     state = {
         cart: [],
-        totalOrder: [],
+        total: 0,
         name: '',
         deliveryAddress: '',
         paymentMethod: '',
@@ -13,24 +15,45 @@ class Order extends Component {
         cardNumber: '',
         expirityDate: '',
         ccv: '',
+        orderId: '',
+        error: ''
      }
 
     componentDidMount() {
 
-        logic.listProductsFromCart()
-            .then(products => this.setState({ cart: products, totalOrder: [] }))
+        this.getCartSummary()
     }
 
-    getItems = () => {    
-        
+    getCartSummary = () => {
+        if (logic._cart.length && logic._cart !== 'undefined') {
+            logic.getCartSummary()
+                .then(({products, total}) => this.setState({ cart: products, total }))
+        }
     }
 
     handlerCreateOrder = e => {
         e.preventDefault()
-        alert('asdfdf')
+        
         const {deliveryAddress, cart, paymentMethod } = this.state
 
         logic.createOrder(deliveryAddress, cart, paymentMethod)
+            .then(orderId => {
+                this.setState({
+                    orderId
+                })
+
+                swal({
+                    title: 'Su pedido con nº' + this.state.orderId + 'ha sido creado ',
+                    text: 'Los detalles del pedido se ha enviado a tu correo',
+                    type: 'success',
+                    animation: false,
+                    customClass: 'animated pulse'
+                });
+            }).catch(err => {
+                    return this.setState({
+                        error: err.message
+                    })
+            })
     }
 
     handlerInputName = e => {
@@ -87,12 +110,6 @@ class Order extends Component {
         this.setState({
             ccv: value 
         })
-    }
-
-    getTotalOrder() {
-
-        this.state.cart.map(product => { this.state.totalOrder.push(product.price * product.quantity) })
-        return this.state.cart.length ? this.state.totalOrder.reduce((accum, current) => { return accum + current }) : "0"
     }
 
    render() {
@@ -166,13 +183,14 @@ class Order extends Component {
 
                             <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-1 mb-3 mt-4 mx-auto" type="submit">Finalizar Pedido</button>                        
                     </form>
+                    {this.state.error && (<h3 className="errorOrder">* {this.state.error}</h3>)}
             </div>
                
             <div className="col-xl-2 col-lg-3 col-md-3 col-sm-12 col-xs-8 mb-4 ">
                 <div className="card">
-                    <h5 className="card-header" style={{borderTopLeftRadius: "calc(1rem - 1px)", borderTopRightRadius: "calc(1rem - 1px)"}}>Total Pedido</h5>
+                    <h5 className="card-header" style={{borderTopLeftRadius: "calc(1rem - 1px)", borderTopRightRadius: "calc(1rem - 1px)", backgroundColor: "#76a86a"}}>Total Pedido</h5>
                     <div className="card-body">
-                        <p className="card-text" style={{fontSize: "2rem"}}>{this.getTotalOrder()} €</p>
+                        <p className="card-text" style={{fontSize: "2.5rem", color: "#6c757d"}}>{this.state.total} €</p>
                     </div>
                 </div>
             </div>

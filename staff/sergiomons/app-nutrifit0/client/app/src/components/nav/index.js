@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import { Link } from 'react-router-dom'
 import './index.css'
+import swal from 'sweetalert2';
 
 class Nav extends Component {
     
@@ -20,12 +21,17 @@ class Nav extends Component {
             })
     }
 
-
-
     logout() {
+        swal({
+            title: 'Cerraste sesión',
+            timer: 1000,
+            showConfirmButton: false,
+            type: 'success'
+        })
         logic.logout()
-        this.props.location.push('/')
-    }
+        
+            this.props.location.push('/')
+}
 
     render() {
 
@@ -74,7 +80,7 @@ class Nav extends Component {
                                     <ul className="nav navbar-nav navbar-right">
                                         <li className="nav-item dropdown">
                                             <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {this.props.userData.username}
+                                                {this.props.userData.name || this.props.userData.username}
                                             </a>
                                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <a className="dropdown-item" href="">Mi Cuenta</a>

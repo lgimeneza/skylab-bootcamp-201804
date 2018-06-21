@@ -20,7 +20,6 @@
 .checkbox {
     margin: 45px 0 20px;
     text-align: left;
-
 }
 input[placeholder] {
     text-align: center;
@@ -41,4 +40,9 @@ input[placeholder] {
 }
 .checkbox{
     color: white;
+}
+.errorLogin{
+    color: red;
+    font-size:"0.9rem";
+    margin-top: "5px";
 }

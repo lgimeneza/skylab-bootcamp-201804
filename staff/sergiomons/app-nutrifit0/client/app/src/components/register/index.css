@@ -9,7 +9,7 @@
 .form-group {
     font-size: 1.3rem;
     color: white;
-    margin-top: 25px;
+    margin-top: 18px;
 }
 .btn:nth-child(5) {
     color: #fff;
@@ -36,4 +36,8 @@ input[placeholder] {
     color: #3d8f51;
     font-weight: bold;
     margin-left: 5px;
+}
+.errorRegist{
+    color: red;
+    font-size:"0.9rem";
 }

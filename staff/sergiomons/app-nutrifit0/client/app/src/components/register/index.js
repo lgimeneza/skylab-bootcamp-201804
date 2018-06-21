@@ -68,9 +68,9 @@ class Register extends Component {
             <div className="body-register">       
                 <div className="container-fluid">
                     <div className="row ">
-                        <div className="col-md-6">
+                        <div className="col-xl-7 col-lg-6 col-md-4 ">
                         </div>
-                        <div className="col-md-4 ml-5">
+                        <div className="col-xl-3 col-lg-4 col-md-5 col-sm-9 ml-5">
                             <form role="form" className="mt-5 " id="form-register" onSubmit={this.handlerSubmitRegister}>
                                 <div className="form-group">
                                     <label>Username</label>
@@ -88,11 +88,12 @@ class Register extends Component {
                                     <label>Repetir Password</label>
                                     <input type="password" className="form-control" id="exampleInputRepeatPassword1" name="rep-password" placeholder="Enter repeat password" value={repeatPassword} onChange={this.handlerCapturingRepeatPassword}/>
                                 </div>
-                                <button type="submit" className="btn btn-secondary btn-block mt-5 mb-3">Registrar</button>
+                                <button type="submit" className="btn btn-secondary btn-block mt-5 mb-1">Registrar</button>
                             </form>
                             <div className="p-login">
                             <p>¿Ya registrado? <Link to='/auth'><span id="spanRegist">Logeate</span></Link></p>
                         </div>
+                        {this.state.error && (<h3 className="errorRegist">* {this.state.error}</h3>)}
                         </div>
                     </div>
                 </div>

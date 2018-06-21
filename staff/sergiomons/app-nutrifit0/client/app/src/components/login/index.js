@@ -20,7 +20,10 @@ class Login extends Component {
         .then(res => {
             if (res) {
                 this.props.onLogin()
-                this.props.history.push('/')
+                if (!logic.cart())
+                    this.props.history.push('/')
+                else
+                    this.props.history.push('/cart')
 
             } else {
               console.log('Error, username and/or password wrong')
@@ -73,11 +76,11 @@ class Login extends Component {
                             </div> 
         
                             <button type="submit" className="btn btn-dark btn-block mt-3 mb-3">Login</button>
-                            {this.state.error && this.state.error}
                         </form>
                         <div className="p-regist">
                             <p>¿No registrado? <Link to='/register'><span id="span">Crea una cuenta</span></Link></p>
                         </div>
+                            {this.state.error && (<h3 className="errorLogin">* {this.state.error}</h3>)}
                     </div>
                     <div className="col-md-8">
                     </div>

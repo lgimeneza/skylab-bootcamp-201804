@@ -25,7 +25,7 @@ const ItemsProducts = ({products, onAddToCart, carousel = false, categoryName}) 
                                             <img className="card-img-top" alt={product.name} src={product.image} />
                                             <div className="card-block">
                                                 <h5 className="card-title">{product.name}</h5>
-                                                <p className="card-text" style={{fontSize: '1.5rem'}}>{product.price} € /ud</p>
+                                                <p className="card-text" style={{fontSize: '1.5rem', color:"#555c63"}}>{product.price} € /ud</p>
                                                 <p className="card-bottom">
                                                     <Link to={`/product/${product.id}`}><button className="btn btn-md btn-outline-secondary my-2 my-sm-0 mb-2 mr-3" type="submit">Detalles</button> </Link>
                                                     <button className="btn btn-md btn-outline-dark my-2 my-sm-0 ml-1" type="submit" onClick={() => onAddToCart(product.id)}><i id='icon' className="fas fa-shopping-cart mr-2"></i>Añadir</button> 

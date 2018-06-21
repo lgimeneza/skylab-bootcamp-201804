@@ -35,27 +35,27 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 
 ## SCREENSHOTS
 
-### Register
+###  * Register
 
 ![](./layouts/register.jpg)
 
-### Login
+### * Login
 
 ![](./layouts/login.jpg)
 
-### Home 
+### * Home 
 
 ![](./layouts/home.jpg)
 
-### Individuals Category
+### * Individuals Category
 
 ![](./layouts/categories.jpg)
 
-### Cart
+### * Cart
 
 ![](./layouts/cart.jpg)
 
-### Order
+### * Order
 
 ![](./layouts/order.jpg)
 
