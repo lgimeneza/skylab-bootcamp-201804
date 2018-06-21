@@ -1,7 +1,3 @@
-[Victor](https://github.com/VGamezz19/MDitor/blob/master/doc/README.MD) |
-[Jaime](https://github.com/JaimeRC/inforcosta.com) | 
-[Asix](https://github.com/Asix94/Recipes-Book)
-[Carlos](https://github.com/csd0/Grow.it/blob/master/README.MD)
 
 # SINGING-LAB
 
