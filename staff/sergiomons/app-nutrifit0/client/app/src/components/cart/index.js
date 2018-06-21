@@ -23,14 +23,16 @@ class Cart extends Component {
     getCartSummary = () => {
         if (logic._cart.length && logic._cart !== 'undefined') {
             logic.getCartSummary()
-                .then(({products, total}) => this.setState({ cart: products, total }))
-        }
+                .then(({ products, total }) => this.setState({ cart: products, total }))
+        } else this.setState({ cart: [], total: 0 })
     }
 
     onRemoveFromCart = (product) => {
         logic.removeProductFromCart(product)
-  
-                this.getCartSummary()
+
+        this.getCartSummary()
+
+        this.props.onRemoveFromCart()
     }
 
     changeQuantity = (id, value, defaultValue) => {
@@ -41,27 +43,27 @@ class Cart extends Component {
                 this.props.onAddToCart(id, value - preValue)
             else if (preValue > value)
                 this.props.onSubstractFromCart(id, preValue - value)
-    
+
             this.changes[id] = value
         }
     }
 
     noLogged = (props) => {
         if (!logic.loggedIn) {
-        swal({
-            title: 'Tienes que estar logeado para seguir con el pedido ',
-            type: 'warning',
-            animation: false,
-            customClass: 'animated fadeInDown'
-        })
-        .then(res => {
-            if (res)
-            this.props.location.push('/auth')
-        })
+            swal({
+                title: 'Tienes que estar logeado para seguir con el pedido ',
+                type: 'warning',
+                animation: false,
+                customClass: 'animated fadeInDown'
+            })
+                .then(res => {
+                    if (res)
+                        this.props.location.push('/auth')
+                })
 
-    } else {
-        this.props.location.push('/order')
-    }
+        } else {
+            this.props.location.push('/order')
+        }
 
     }
 
@@ -71,10 +73,10 @@ class Cart extends Component {
                 <div className="container-fluid">
                     <div className="row mt-4">
                         <div className="col-xl-9 col-lg-8 col-md-12 col-sm-12 col-xs-12">
-                              <h2 className=" ml-3 mt-2" style={{fontWeight: "bold", fontStyle: "italic",textAlign:"left", color: "#4ca562"}}>Tu carrito<i id='icon' className="fas fa-shopping-cart ml-2"></i></h2>
+                            <h2 className=" ml-3 mt-2" style={{ fontWeight: "bold", fontStyle: "italic", textAlign: "left", color: "#4ca562" }}>Tu carrito<i id='icon' className="fas fa-shopping-cart ml-2"></i></h2>
                             <table className="table mt-2" >
                                 <thead>
-                                    <tr className="table-active" style={{color: "#6c757d"}}>
+                                    <tr className="table-active" style={{ color: "#6c757d" }}>
                                         <th>#</th>
                                         <th >Artículo</th>
                                         <th>Precio</th>
@@ -95,10 +97,10 @@ class Cart extends Component {
                                                 <td><button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem' }}>X</button></td>
                                             </tr>)
                                     }) :
-                                        <p className="mt-4 mb-4 mx-auto" style={{fontSize: "1.8rem", color: "#6c757d"}}>No hay productos en el carrito</p>}
+                                        <p className="mt-4 mb-4 mx-auto" style={{ fontSize: "1.8rem", color: "#6c757d" }}>No hay productos en el carrito</p>}
                                 </tbody>
                                 <tfoot>
-                                    <tr className="table-active" style={{fontSize: "1.4rem", color: "#6c757d"}}>
+                                    <tr className="table-active" style={{ fontSize: "1.4rem", color: "#6c757d" }}>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -114,12 +116,12 @@ class Cart extends Component {
                             <div className="card">
                                 <h5 className="card-header" style={{ borderTopLeftRadius: "calc(1rem - 1px)", borderTopRightRadius: "calc(1rem - 1px)" }}>Total Carrito</h5>
                                 <div className="card-body">
-                                    <p className="card-text" style={{ fontSize: "2rem", color:"#555c63" }}>{this.state.total} €</p>
+                                    <p className="card-text" style={{ fontSize: "2rem", color: "#555c63" }}>{this.state.total} €</p>
                                 </div>
                                 <div className="card-footer">
-                                <Link to={`/${logic.loggedIn ? 'order' : 'auth'}`}><button className="btn btn-lg btn-dark my-2 my-sm-0 btn-block mb-3" style={{ border: "1px solid #c6c6c6" }} >Pagar</button></Link>
+                                    <Link to={`/${logic.loggedIn ? 'order' : 'auth'}`}><button className="btn btn-lg btn-dark my-2 my-sm-0 btn-block mb-3" style={{ border: "1px solid #c6c6c6" }} >Pagar</button></Link>
                                 </div>
-                                    <Link to='/'><button className="btn btn-md btn-secondary mt-1 mb-3 mx-auto" style={{ border: "1px solid #c6c6c6" }} >Seguir comprando</button></Link>
+                                <Link to='/'><button className="btn btn-md btn-secondary mt-1 mb-3 mx-auto" style={{ border: "1px solid #c6c6c6" }} >Seguir comprando</button></Link>
                             </div>
                         </div>
                     </div>

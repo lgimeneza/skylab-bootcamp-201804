@@ -41,8 +41,11 @@ logic.cart = function (cart) {
   if (typeof cart !== 'undefined') {
     if (cart === null)
       sessionStorage.removeItem('cart')
-    else
+    else {
+      this._cart = cart
+
       sessionStorage.setItem('cart', JSON.stringify(cart))
+    }
 
     return
   }
@@ -116,6 +119,10 @@ class App extends Component {
     this.setState({ cartLength: logic.cart().length })
   }
 
+  onRemoveFromCart = () => {
+    this.setState({ cartLength: logic.cart().length })
+  }
+
   render() {
     return (
       <div className="App">
@@ -126,7 +133,7 @@ class App extends Component {
           <Route path='/category/:categoryId/subcategories' render={props => <Categories categoryId={props.match.params.categoryId} onAddToCart={this.onAddToCart} />} />
           <Route path='/category/:categoryId/products/' render={props => <ProductsByCategory categoryId={props.match.params.categoryId} onAddToCart={this.onAddToCart} />} />
           <Route path='/product/:productId' render={props => <ProductDetails productId={props.match.params.productId} onAddToCart={this.onAddToCart} />} />
-          <Route path='/cart' render={() => <Cart onAddToCart={this.onAddToCart} onSubstractFromCart={this.onSubstractFromCart} />} />
+          <Route path='/cart' render={() => <Cart onAddToCart={this.onAddToCart} onSubstractFromCart={this.onSubstractFromCart} onRemoveFromCart={this.onRemoveFromCart} />} />
           <Route path='/order' render={() => (logic.loggedIn) ? <Order /> : <Redirect to='/auth'/>} />
           <Route path='/register' render={() => (!logic.loggedIn) ? <Register /> : <Redirect to='/' />} />
           <Route path='/auth' render={() => (!logic.loggedIn) ? <Login onLogin={this.onLogin} /> : <Redirect to='/' />} />

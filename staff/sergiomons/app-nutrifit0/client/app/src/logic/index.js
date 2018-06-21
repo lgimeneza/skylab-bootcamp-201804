@@ -2,8 +2,8 @@
 
 const clientApi = require('client-api')
 
-clientApi.url = 'https://gentle-forest-77809.herokuapp.com/api'
-// clientApi.url = 'http://localhost:5000/api'
+//clientApi.url = 'https://gentle-forest-77809.herokuapp.com/api'
+clientApi.url = 'http://localhost:5000/api'
 // clientApi.url = 'http://192.168.0.27:5000/api'
 
 const logic = {
@@ -61,7 +61,6 @@ const logic = {
         })
 
         this.cart(updateCart)
-
     },
 
     listProductsFromCart() {
@@ -199,9 +198,8 @@ const logic = {
             .then(products => products)
     },
 
-    createOrder(deliveryAddress, orderProducts, paymentMethod) {
-        console.log('orderProducts client logic product: ', orderProducts);
-        return clientApi.createOrder(this.userId(), deliveryAddress, this.getDateOrder(), orderProducts, paymentMethod, this._statusOrder)
+    createOrder(deliveryAddress, paymentMethod) {
+        return clientApi.createOrder(this.userId(), deliveryAddress, this.getDateOrder(), this.cart(), paymentMethod, this._statusOrder)
     },
 
     get loggedIn() {

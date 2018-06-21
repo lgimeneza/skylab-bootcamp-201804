@@ -113,24 +113,24 @@ const logic = {
      * 
      * @returns {Promise<boolean>}
      */
- 
+
     listAllCategories() {
         return Promise.resolve()
             .then(() => {
 
-                return Category.find({ })
-                        .then(categories => {
-                            const normalizedCategories = categories.map(({ _id, image, name, parent }) => ({ id: _id.toString(), image, name, parentId: parent ? parent.toString() : undefined }))
-    
-                            return Promise.all(categories.map(category => Category.find({ parent: category._id })))
-                                 .then(res => {
-                                   res.forEach((categories, index) => normalizedCategories[index].hasChildren = !!categories.length)
-    
-                            return normalizedCategories
-                        })
-                  })
+                return Category.find({})
+                    .then(categories => {
+                        const normalizedCategories = categories.map(({ _id, image, name, parent }) => ({ id: _id.toString(), image, name, parentId: parent ? parent.toString() : undefined }))
+
+                        return Promise.all(categories.map(category => Category.find({ parent: category._id })))
+                            .then(res => {
+                                res.forEach((categories, index) => normalizedCategories[index].hasChildren = !!categories.length)
+
+                                return normalizedCategories
+                            })
+                    })
             })
-},
+    },
 
     /**
     * Lists root categories
@@ -172,18 +172,18 @@ const logic = {
 
                 return Category.find({ parent: categoryId.toString() })
             })
-                    .then(subcategories => {
-                        
-                        const normalizedSubcategories = subcategories.map(({ _id: id, image,  name, parent }) => ({ id, image, name, parentId: parent ? parent.toString() : undefined }))
+            .then(subcategories => {
 
-                        return Promise.all(subcategories.map(subcategory => Category.find({ parent: subcategory._id })))
-                            .then(res => {
-                                res.forEach((subcategory, index) => normalizedSubcategories[index].hasChildren = !!subcategory.length)
+                const normalizedSubcategories = subcategories.map(({ _id: id, image, name, parent }) => ({ id, image, name, parentId: parent ? parent.toString() : undefined }))
 
-                                return normalizedSubcategories
-                            })
+                return Promise.all(subcategories.map(subcategory => Category.find({ parent: subcategory._id })))
+                    .then(res => {
+                        res.forEach((subcategory, index) => normalizedSubcategories[index].hasChildren = !!subcategory.length)
+
+                        return normalizedSubcategories
                     })
-        },
+            })
+    },
 
     /**
      * Lists products
@@ -246,9 +246,9 @@ const logic = {
         return Promise.resolve()
             .then(() => {
 
-                return Product.find({_id: { $in: arrayIds}})
+                return Product.find({ _id: { $in: arrayIds } })
                     .then(res => {
-                        if(!res) throw Error ('No products')
+                        if (!res) throw Error('No products')
                         const products = res.map(({ _id: id, name, description, image, price, discount, category }) => ({ id, name, description, image, price, discount, categoryId: category ? category.toString() : undefined }))
                         return products
                     })
@@ -256,41 +256,39 @@ const logic = {
     },
 
     createOrder(userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status) {
-        
+
         return Promise.resolve()
-        .then(()=> {
+            .then(() => {
 
-                    if (typeof userId !== 'string') throw Error('user userId is not a string')
+                if (typeof userId !== 'string') throw Error('user userId is not a string')
 
-                    if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+                if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
 
-                    if(deliveryAddress !== undefined) {
+                if (deliveryAddress !== undefined) {
 
-                        if (typeof deliveryAddress !== 'string') throw Error('deliveryAddress is not a string')
-                        if (!(deliveryAddress = deliveryAddress.trim()).length) throw Error('deliveryAddress is empty or blank')
-                    }
+                    if (typeof deliveryAddress !== 'string') throw Error('deliveryAddress is not a string')
+                    if (!(deliveryAddress = deliveryAddress.trim()).length) throw Error('deliveryAddress is empty or blank')
+                }
 
-                    if(orderDate !== undefined) {
+                if (orderDate !== undefined) {
                     if (typeof orderDate !== 'string') throw Error('orderDate is not a string')
                     if (!(orderDate = orderDate.trim()).length) throw Error('orderDate is empty or blank')
-                    }
+                }
 
-                    if (!Array.isArray(orderProducts)) throw Error('orderProducts is not an array')
-                    if (!orderProducts.length) throw Error('orderProducts is empty or blank')
+                if (!Array.isArray(orderProducts)) throw Error('orderProducts is not an array')
+                if (!orderProducts.length) throw Error('orderProducts is empty or blank')
 
-                    if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
-                    if ((paymentMethod = paymentMethod.trim()).length === 0) throw Error('paymentMethod is empty or blank')
+                if (typeof paymentMethod !== 'string') throw Error('paymentMethod is not a string')
+                if ((paymentMethod = paymentMethod.trim()).length === 0) throw Error('paymentMethod is empty or blank')
 
-                    if (typeof status !== 'string') throw Error('status is not a string')
-                    if ((status = status.trim()).length === 0) throw Error('status is empty or blank')
+                if (typeof status !== 'string') throw Error('status is not a string')
+                if ((status = status.trim()).length === 0) throw Error('status is empty or blank')
 
-                    return Order.create({userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status })
-                        .then(order => {
-                            
-                            return User.findByIdAndUpdate(userId, {$push: { orders: order }})
-                                .then(() => order.id)
-                        })
-                })
+                const order = new Order({userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status })
+
+                return User.findByIdAndUpdate(userId, { $push: { orders: order } })
+                    .then(() => order.id)
+            })
 
     },
 

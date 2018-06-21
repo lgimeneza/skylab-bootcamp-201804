@@ -34,9 +34,9 @@ class Order extends Component {
     handlerCreateOrder = e => {
         e.preventDefault()
         
-        const {deliveryAddress, cart, paymentMethod } = this.state
+        const {deliveryAddress, paymentMethod } = this.state
 
-        logic.createOrder(deliveryAddress, cart, paymentMethod)
+        logic.createOrder(deliveryAddress, paymentMethod)
             .then(orderId => {
                 this.setState({
                     orderId
