@@ -19,7 +19,7 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 ## Functional description:
 
-In this application the users can see an inventory of singing products classified in different categories/subcategories. Also, users can add the desired products into a cart and purchase them. Finally, in order to be able to execute the payment, users will have to be registered and logged first. 
+In this application users can see an inventory of singing products classified in different categories/subcategories. Also, they can add the desired products into a cart and purchase them. Finally, in order to be able to execute the payment, users will have to be registered and logged first. 
 
 ### UML Diagram (User Cases)
 
@@ -47,7 +47,6 @@ The project was built following this layer separation architechture:
 #### Client api
 
 #### Api server
-
 
 
 
