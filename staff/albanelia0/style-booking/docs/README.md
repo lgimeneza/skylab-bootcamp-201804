@@ -31,6 +31,9 @@ To deploy you need to go to the client and make a npm install, then go to the ap
 ### Schema
 ![landing](images/schemas.png)
 
+### Components
+![landing](images/components.png)
+
 ### Data model
 ![landing](images/dataModel.png)
 
