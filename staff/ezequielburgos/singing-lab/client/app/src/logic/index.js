@@ -1,6 +1,7 @@
 const singingLabApi = require('api')
 
-singingLabApi.url = 'http://localhost:4000/api'
+singingLabApi.url = 'https://shrouded-peak-12234.herokuapp.com/api'
+// singingLabApi.url = 'https://localhost:4000/api'
 
 const logic = {
     _userId: null,

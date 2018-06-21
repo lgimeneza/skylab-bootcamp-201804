@@ -17,11 +17,19 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 - Other: [Trello](https://trello.com/b/eriWR8jg/final-project), Git & Github, surge, cloudinary, Draw.io. 
 
-## DATA MODEL
+## Functional description:
+
+### UML Diagram (User Cases)
+
+![](./images/uml-user-cases.png)
+
+## Technical description:
+
+### DATA MODEL
 
 ![](./images/data-model.png)
 
-## BLOCK MODEL
+### BLOCK MODEL
 
 ![block model](./images/block-model.png)
 
@@ -51,9 +59,9 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 ![](./images/sketch/cart-page.png)
 
-## DEMO
+## PROJECT DEMO
 
-You can see a demo of the project here: surge
+You can see a demo of the project here: [surge](http://singing-lab.surge.sh/#/)
 
 ## Sprint Plan (Gantt Chart)
 
