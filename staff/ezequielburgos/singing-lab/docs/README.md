@@ -11,9 +11,9 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 | Transversal | Server-side | Client-side | Testing |
 | :---------: |:-------: |:----------: |:---------: |
-| Agile Methodology | Node.js, express.js  | React | Mocha |
-| javascript (ES5, ES6) | MongoDB, Mongoose | CSS3 | Chai |
-| HTML |Pug | Bootstrap | NYC (Istambul) |
+| Agile Methodology | Node.js | React | Mocha |
+| javascript (ES5, ES6) | express.js | CSS3 | Chai |
+| HTML | MongoDB, Mongoose  | Bootstrap | NYC (Istambul) |
 
 - Other: [Trello](https://trello.com/b/eriWR8jg/final-project), Git & Github, surge, cloudinary, Draw.io. 
 
