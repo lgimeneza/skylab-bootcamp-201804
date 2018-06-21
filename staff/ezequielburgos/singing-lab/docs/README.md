@@ -31,9 +31,6 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 ## DESIGN (screenshots)
 
-//TODO...
-
-
 ### Home Page
 
 ![](./images/sketch/home-page.png)
@@ -46,13 +43,13 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 ![](./images/sketch/register.png)
 
-### Products (Categories)
-
-![](./images/sketch/categories-page.png)
-
-### Product page
+### Products
 
 ![](./images/sketch/product-page.png)
+
+### Product details
+
+![](./images/sketch/product-details.png)
 
 ### Cart
 
@@ -60,13 +57,9 @@ This project is an [e-commerce](https://en.wikipedia.org/wiki/E-commerce) design
 
 ## DEMO
 
-//TODO
-
 You can see a demo of the project here: surge
 
 ## Sprint Plan
-
-//TODO...
 
 ![](./images/gant-chart.png)
 

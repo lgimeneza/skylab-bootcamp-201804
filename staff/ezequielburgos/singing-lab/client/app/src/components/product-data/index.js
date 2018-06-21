@@ -26,7 +26,7 @@ class ProductData extends Component {
     render() {
         return (
             <main>
-                <h2 className="main-title">this is the product</h2>
+                <h2 className="main-title">Product details</h2>
                 <section className="productData">
                     <div className="productDataSub">
                         <div className="col-sm-6 col-md-4 products">
