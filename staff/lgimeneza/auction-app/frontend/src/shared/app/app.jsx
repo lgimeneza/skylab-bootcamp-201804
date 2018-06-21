@@ -6,14 +6,23 @@ import routeOptions from '../routes/routes'
 import PrivateRoute from './private-route.jsx'
 import auctionApi from 'api'
 import logic from '../logic'
+import { alertActions } from './redux/actions/alert'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 class App extends Component {
+
+    componentDidUpdate(prevProps){
+        if(this.props.location !== prevProps.location){
+            this.props.clear() //For clear alerts
+        }
+    }
+
     render() {
 
         auctionApi.token = token => {
             if (token) {
                 localStorage.setItem('token', token)
-
                 return
             }
 
@@ -27,7 +36,6 @@ class App extends Component {
 
                 return
             }
-            
             return JSON.parse(localStorage.getItem('user'))
         }
 
@@ -53,4 +61,16 @@ class App extends Component {
         );
     }
 }
-export default withRouter(App)
+
+function mapStateToProps(state) {
+    const { alert } = state;
+    return {
+        alert
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(alertActions, dispatch)
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(App))

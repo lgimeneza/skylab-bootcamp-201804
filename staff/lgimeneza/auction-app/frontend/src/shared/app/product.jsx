@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import * as actions from './redux/actions/product'
-import openSocket from 'socket.io-client';
+import openSocket from 'socket.io-client'
 
-import ReactSlick from "react-slick";
+import ReactSlick from "react-slick"
+import Countdown from './countdown.jsx'
 
 var socket
 
@@ -14,25 +15,26 @@ class Product extends Component {
     }
 
     state = {
-        bid: '',
+        bid:0,
         priceClass:'',
         slickImg: null,
         slickImgs: null,
         nav1: null,
         nav2: null
-
     }
 
     componentDidMount = () => {
-        const { match: { params: { id } }, product: { maxBid } } = this.props;
+        const { match: { params: { id } }, product: { currentPrice } } = this.props
 
-        socket = openSocket('http://localhost:5000')
+        //socket = openSocket('http://localhost:5000')
+        socket = openSocket('https://mysterious-basin-61944.herokuapp.com/')
+
         socket.on('newBid', (productId) => {
             if (id === productId){
 
                 this.props.getProduct(id)
                 .then(()=>{
-                    this.setState( { bid: maxBid, priceClass: 'bounceInDown' }, () =>{
+                    this.setState( { bid: Number(this.props.product.currentPrice), priceClass: 'flash' }, () =>{
                         setTimeout(() => this.setState({priceClass: ''}),1000)
                     } )
                 })
@@ -45,21 +47,38 @@ class Product extends Component {
 
         this.props.getProduct(id)
         .then(()=>{
-            this.setState({ 
-                bid: this.props.product.maxBid,
-                nav1: this.slider1,
-                nav2: this.slider2
-             })
+            if (currentPrice){
+                this.setState({ 
+                    bid: currentPrice, //when comes from server
+                    nav1: this.slider1,
+                    nav2: this.slider2
+                 })
+            } else {
+                this.setState({ 
+                    nav1: this.slider1,
+                    nav2: this.slider2
+                 })
+            }
         })
     }
+
+    componentDidUpdate = (prevProps) => {
+        const { product: { currentPrice } } = this.props
+
+        if (prevProps.product.currentPrice !== currentPrice && currentPrice) {
+            this.setState({ bid: Number(currentPrice) })
+        } 
+
+    } 
 
     componentWillUnmount = () => {
         socket.close()
     }
 
     handleChange = e => {
-        const { name, value } = e.target
-        this.setState({ [name]: value })
+        let { name, value } = e.target
+
+        this.setState({ [name]: Math.round(Number(value)) });
     }
 
     handleSubmit = e => {
@@ -77,11 +96,15 @@ class Product extends Component {
 
             const { bid } = this.state
 
-            if (product._id && user._id && bid) {
+            if (product._id && user._id && bid && bid > product.currentPrice) {
                 this.props.addProductBid(product._id, user._id, bid)
                 .then(() => {
                     this.props.getProduct(product._id);
                 })
+            }
+            else {
+                //bid > product.currentPrice && this.setState({ bid: product.currentPrice })
+                //TODO: Throw Error Something went wrong
             }
 
         }
@@ -89,6 +112,7 @@ class Product extends Component {
     }
 
     render() {
+
         const { product } = this.props
         const { priceClass } = this.state
         const settingsImgs = {
@@ -118,55 +142,60 @@ class Product extends Component {
             <div className="container">
             <div className="row">
 
-                <div id='product-main-img' className="product-preview col-md-5 col-md-push-2">
+                {product.images && product.images.length && (
+                    <div>
+                        <div id='product-main-img' className="product-preview col-md-5 col-md-push-2">
 
-                    <ReactSlick {...settingsImg} >
-                        {product.images && product.images.length && product.images.map((image, index) => {
-                            return (
-                                <img key={index} src={image} alt=''/>
-                            )
-                        })}
-                    </ReactSlick>
+                            <ReactSlick {...settingsImg} >
+                                {product.images.map((image, index) => {
+                                    return (
+                                        <img key={index} src={image} alt=''/>
+                                    )
+                                })}
+                            </ReactSlick>
+                        </div>
 
-                </div>
-
-                <div id='product-imgs' className="col-md-2  col-md-pull-5">
-
-                    <ReactSlick  {...settingsImgs} >
-                        {product.images && product.images.length && product.images.map((image, index) => {
-                            return (
-                                <img key={index} src={image} alt=''/>
-                            )
-                        })}
-                    </ReactSlick>
-
-                </div>
-
+                        <div id='product-imgs' className="col-md-2  col-md-pull-5 hidden-xs">
+                            <ReactSlick  {...settingsImgs} >
+                                {product.images.map((image, index) => {
+                                    return (
+                                        <img key={index} src={image} alt=''/>
+                                    )
+                                })}
+                            </ReactSlick>
+                        </div>
+                    </div>
+                )}
                 <div className="col-md-5">
                 <div className="product-details">
                     <h2 className="product-name">{product.title}</h2>
                     <div>
-                    <h3 className={`product-price animated ${priceClass}`}>{product.maxBid}€ </h3>
-                    <span className="product-available">Active</span>
+                    <h3 className={`product-price animated ${priceClass}`}>{product.currentPrice}€ </h3>
+                    <span className="product-available">{product.closed ? 'Closed' : product.endDate && <Countdown date={product.endDate}/>}</span>
                     </div>
                     <p>{product.description}</p>
-                    <div className="add-to-cart">
-                    <div className="qty-label">
-                        Enter your bid 
-                        <div className="input-number">
-                            <input type="number" name='bid' value={this.bid} onChange={this.handleChange} />
-                        <span className="qty-up">+</span>
-                        <span className="qty-down">-</span>
+
+                    {!product.closed &&
+                        <div className="add-to-cart" >
+                        <div className="qty-label">
+                            Enter your bid 
+                            <div className="input-number">
+                                <input type="number" name='bid' value={this.state.bid} onChange={this.handleChange} />
+                            <span className="qty-up" onClick={() => this.setState({ bid:this.state.bid +10 })} >+</span>
+                            <span className="qty-down" onClick={() => this.state.bid > product.currentPrice && this.setState({ bid:this.state.bid -10 })} >-</span>
+                            </div>
                         </div>
-                    </div>
-                    <button onClick={this.handleSubmit} className="add-to-cart-btn"><i className="fa fa-shopping-cart" /> Submit bid</button>
-                    </div>
+                        <button  onClick={this.handleSubmit} className="add-to-cart-btn"><i className="fa fa-shopping-cart" /> Submit bid</button>
+                        </div>
+                    }
+
+
                     <ul className="product-links">
                     <li>Share:</li>
-                    <li><a href="#"><i className="fa fa-facebook" /></a></li>
-                    <li><a href="#"><i className="fa fa-twitter" /></a></li>
-                    <li><a href="#"><i className="fa fa-google-plus" /></a></li>
-                    <li><a href="#"><i className="fa fa-envelope" /></a></li>
+                    <li><a href="#"><i className="fab fa-facebook-square" /></a></li>
+                    <li><a href="#"><i className="fab fa-twitter-square" /></a></li>
+                    <li><a href="#"><i className="fab fa-google-plus-square" /></a></li>
+                    <li><a href="#"><i className="far fa-envelope" /></a></li>
                     </ul>
                 </div>
                 </div>

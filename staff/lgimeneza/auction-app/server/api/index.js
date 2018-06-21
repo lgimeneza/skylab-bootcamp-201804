@@ -26,10 +26,6 @@ mongoose.connect(DB_URL)
 
         io.on('connection', function(socket){
             console.log('connection')
-            socket.on('chat message', function(msg){
-                console.log('hello')
-                io.emit('chat message', msg);
-            });
 
             socket.on('disconnect', function(){
               console.log('disconnected');

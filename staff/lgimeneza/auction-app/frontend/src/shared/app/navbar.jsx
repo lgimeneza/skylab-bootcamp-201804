@@ -8,6 +8,8 @@ import { userActions } from './redux/actions/user'
 import * as productsActions from './redux/actions/products'
 import * as queryActions from './redux/actions/query'
 
+import { search } from '../helpers/search'
+
 class NavBar extends Component {
     static fetchData() {
 	}
@@ -17,7 +19,11 @@ class NavBar extends Component {
     }
 	
 	componentDidMount() {
-        this.props.retrieveUser()
+		const params = new URLSearchParams(this.props.location.search)
+		const query = params.get('q') || ''
+
+		this.query !== query && this.setState({ query })
+		this.props.retrieveUser()
 	}
 	
 	handleChange = e => {
@@ -29,13 +35,10 @@ class NavBar extends Component {
 		e.preventDefault();
 
 		const { query } = this.state
-
-		if(query.length){
-			this.props.setQuery(query)
-			this.props.history.push(`/?q=${query}`)
-		} else {
-			this.props.history.push('/')
-		}
+		this.props.setQuery(query)
+		
+		const url = search(query, this.props.categories)
+		this.props.history.push(url)	
 	}
 
 	handleHomeLink = e => {
@@ -56,12 +59,12 @@ class NavBar extends Component {
 			<div id="top-header">
 				<div className="container">
 					<ul className="header-links pull-left">
-						<li><a href="#"><i className="fa fa-phone"></i> +021-95-51-84</a></li>
-						<li><a href="#"><i className="fa fa-envelope-o"></i> email@email.com</a></li>
+						<li><a href="#"><i className="fas fa-phone"></i> +021-95-51-84</a></li>
+						<li><a href="#"><i className="far fa-envelope"></i> email@email.com</a></li>
 					</ul>
 					<ul className="header-links pull-right">
 						<li> 
-							<Link to='/profile'><i className="fa fa-user-o"></i> { Object.keys(user).length ? user.name : 'My Account' } </Link> 
+							<Link to='/profile'><i className="far fa-user"></i> { Object.keys(user).length ? 'My Account' : 'Sign in  ' } </Link> 
 						</li>
 					</ul>
 				</div>
@@ -74,13 +77,11 @@ class NavBar extends Component {
 						{/* <!-- LOGO --> */}
 						<div className="col-md-3">
 							<div className="header-logo">
-								<a href="#" className="logo">
-									<img src="./img/logo.png" alt=""/>
-								</a>
+								<Link to='/' onClick={this.handleHomeLink} >HotAuctions</Link>
 							</div>
 						</div>
 
-						{/* <!-- SEARCH BAR --> */}
+						{/* -- SEARCH BAR -- */}
 						<div className="col-md-6">
 							<div className="header-search">
 								<form onSubmit={this.handleSubmit}>
@@ -90,54 +91,32 @@ class NavBar extends Component {
 							</div>
 						</div>
 
-						{/* <!-- ACCOUNT --> */}
+						{/* -- ACCOUNT -- */}
 						<div className="col-md-3 clearfix">
 							<div className="header-ctn">
-								{/* <!-- Wishlist --> */}
+								{/* -- Wishlist -- */}
 								<div>
-									<a href="#">
-										<i className="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
-										<div className="qty">2</div>
-									</a>
+									<Link to='/user/products'>
+										<i className="fas fa-gavel"></i>
+										<span>Your Auctions</span>
+									</Link>
 								</div>
 
-								{/* <!-- Menu Toogle --> */}
-								<div className="menu-toggle">
-									<a href="#">
-										<i className="fa fa-bars"></i>
-										<span>Menu</span>
-									</a>
-								</div>
 							</div>
 						</div>
-						{/* <!-- /ACCOUNT --> */}
+
 					</div>
 				</div>
 			</div>
 		</header>
-
-        {/* <!-- NAVIGATION --> */}
-        <nav id="navigation">
-            <div className="container">
-                <div id="responsive-nav">
-                    {/* <!-- NAV --> */}
-                    <ul className="main-nav nav navbar-nav">
-                        <li><Link to='/' onClick={this.handleHomeLink} >Hot Auctions</Link></li>
-						<li><Link to='/product/closed' onClick={this.handleHomeLink} >Recently Clossed</Link></li>
-                    </ul>
-                    {/* <!-- /NAV --> */}
-                </div>
-            </div>
-        </nav>
-        {/* <!-- /NAVIGATION --> */}
+        <nav id="navigation"></nav>
         </div>
         );
     }
 }
 function mapStateToProps(state) {
-	const { user } = state
-    return { user }
+	const { user, categories, query } = state
+    return { user, categories, query }
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ ...userActions, ...productsActions, ...queryActions }, dispatch)

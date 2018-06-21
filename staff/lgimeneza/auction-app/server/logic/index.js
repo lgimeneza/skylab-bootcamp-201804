@@ -4,9 +4,6 @@ const { models: { Product, User, Bid, Category }, mongoose: { Types: { ObjectId 
 
 const logic = {
 
-    //TODO: Add error handling
-    //TODO: Add documentation
-
     /**
      * 
      * @param {string} query 
@@ -21,11 +18,12 @@ const logic = {
 
                 if (typeof query != 'undefined' && query.length > 0) {
                     criteria.$match.$text = { $search: query }
-                    sort.score = { $meta: "textScore" }
+                    sort.$sort.score = { $meta: "textScore" }
                 }
 
                 if (categories instanceof Array && categories.length) {
-                    criteria.$match.category = { $in: categories }
+                    const _categories = categories.map(category => ObjectId(category))
+                    criteria.$match.category = { $in: _categories }
                 }
 
                 if (prices instanceof Array && prices.length) {
@@ -47,16 +45,65 @@ const logic = {
                     }
                 })
 
-                return Product.aggregate(stages)
-                    .then(products => {
-                        if (!products) throw Error(`no products found`)
+                return Product.find({endDate: { $lt: Date.now() }})
+                    .then(res => {
+                        res.forEach(product => {
 
-                        return products
+                            return Product.findByIdAndUpdate(product._id.toString(), { closed: true, winningBid: product.currentBid, winningUser: product.currentUser }, { new: true })
+                                .then( result => result )
+
+                        })
+                    }).then(() => {
+
+                        return Product.aggregate(stages)
+                            .then(products => {
+                                if (!products) throw Error(`no products found`)
+
+                                return products
+                            })
+
                     })
+
 
             })
     },
 
+    /**
+     * @param {string} userId 
+     */
+    listUserProducts(userId){
+        return Promise.resolve()
+            .then(() => {
+
+                return Product.find({endDate: { $lt: Date.now() }})
+                .then(res => {
+                    res.forEach(product => {
+
+                        return Product.findByIdAndUpdate(product._id.toString(), { closed: true, winningBid: product.currentBid, winningUser: product.currentUser }, { new: true })
+                            .then( result => result )
+
+                    })
+                }).then(() => {
+
+                    return User.findById(userId)
+                        .then(user => {
+                            if (!user) throw Error(`no user found with id ${userId}`)
+
+                            //{ winningUser: user }
+                            return Product.find({ 'bids.user': user })
+                            .then(products => {
+                                if (!products) throw Error('products not fount')
+        
+                                return products
+                            })
+                        })
+                    })
+            })
+    },
+
+    /**
+     * @param {string} productId
+     */
     retrieveProduct(productId) {
         return Promise.resolve()
 
@@ -67,7 +114,8 @@ const logic = {
                     {
                         $project: {
                             _id: 1, title: 1, description: 1, startDate: 1, endDate: 1,
-                            startPrice: 1, closed: 1, images: 1, maxBid: { $ifNull: [{ $max: '$bids.price' }, '$startPrice'] }
+                            //startPrice: 1, closed: 1, images: 1, maxBid: { $ifNull: [{ $max: '$bids.price' }, '$startPrice'] }
+                            startPrice: 1, closed: 1, images: 1, currentPrice: 1
                         }
                     },
                 ])
@@ -81,33 +129,90 @@ const logic = {
 
     },
 
-    addProduct(title, description, startDate, endDate, startPrice, closed, image) {
+    /**
+     * 
+     * @param {string} title 
+     * @param {string} description 
+     * @param {Date} startDate 
+     * @param {Date} endDate 
+     * @param {number} startPrice 
+     * @param {boolean} closed 
+     * @param {string} image 
+     */
+    addProduct(
+        title,
+        description,
+        startDate,
+        endDate,
+        startPrice,
+        currentPrice,
+        currentUser,
+        currentBid,
+        closed,
+        images,
+        category,
+        winningBid,
+        winningUser,
+        bids
+    ) {
         return Promise.resolve()
             .then(() => {
-                return Product.create({ title, description, startDate, endDate, startPrice, closed, image })
+                return Product.create({
+                    title,
+                    description,
+                    startDate,
+                    endDate,
+                    startPrice,
+                    currentPrice,
+                    currentUser,
+                    currentBid,
+                    closed,
+                    images,
+                    category,
+                    winningBid,
+                    winningUser,
+                    bids,
+                })
             })
             .then(() => true)
     },
 
+    /**
+     * 
+     * @param {string} productId 
+     * @param {string} userId 
+     * @param {number} price 
+     */
     addBid(productId, userId, price) {
-        //TODO: not alow lower bid
+        //TODO: not alow lower or closed bid
         return Promise.resolve()
             .then(() => {
                 return User.findById(userId)
                     .then(user => {
                         if (!user) throw Error(`no user found with id ${userId}`)
 
-                        const bid = new Bid({ price, date: Date.now(), user: user._id })
-                        return Product.findByIdAndUpdate(productId, { $push: { bids: bid } }, { new: true })
-                            .then(product => {
-                                if (!product) throw Error(`no product found with id ${productId}`)
-
-                                return bid._id.toString()
+                        return Product.findById(productId)
+                            .then(productmatch => {
+                                if(!productmatch) throw Error(`no product found with id ${productId}`)
+                                if(productmatch.closed) throw Error('the product is closed')
+                                if(productmatch.currentPrice > price) throw Error('the bid price is lower')
+                                
+                                const bid = new Bid({ price, date: Date.now(), user: user._id })
+                                return Product.findByIdAndUpdate(productId, { $push: { bids: bid }, currentPrice: price, currentUser: user, currentBid: bid }, { new: true })
+                                    .then(product => {
+                                        if (!product) throw Error(`no product found with id ${productId}`)
+        
+                                        return bid._id.toString()
+                                    })
                             })
+
                     })
             })
     },
 
+    /**
+     * @returns {Promise<[Categories]>}
+     */
     listCategories() {
         return Promise.resolve()
             .then(() => {
@@ -120,6 +225,11 @@ const logic = {
             })
     },
 
+    /**
+     * 
+     * @param {string} email 
+     * @param {string} password 
+     */
     authenticateUser(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -157,6 +267,44 @@ const logic = {
                 if (!user) throw Error(`no user found with id ${id}`)
 
                 return user
+            })
+    },
+
+    /**
+     * 
+     * @param {string} name 
+     * @param {string} surname 
+     * @param {string} email 
+     * @param {string} password 
+     * 
+     * @returns {Promise<boolean>}
+     */
+    registerUser(name, surname, email, password) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof name !== 'string') throw Error('user name is not a string')
+
+                if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+                if (typeof surname !== 'string') throw Error('user surname is not a string')
+
+                if ((surname = surname.trim()).length === 0) throw Error('user surname is empty or blank')
+
+                if (typeof email !== 'string') throw Error('user email is not a string')
+
+                if (!(email = email.trim()).length) throw Error('user email is empty or blank')
+
+                if (typeof password !== 'string') throw Error('user password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
+
+                return User.findOne({ email })
+                    .then(user => {
+                        if (user) throw Error(`user with email ${email} already exists`)
+
+                        return User.create({ name, surname, email, password, registerDate: Date.now(), role: 'customer' })
+                            .then(() => true)
+                    })
             })
     },
 

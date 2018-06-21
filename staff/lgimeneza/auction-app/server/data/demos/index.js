@@ -41,12 +41,12 @@ mongoose.connect(DB_URL)
         const user05 = new User({ email: 'email05@email.com', password: '123', name: 'Lucie', surname: 'Hannis', role: 'customer', registerDate: Date.now(), products: [], address: address05, wishes:[] })
 
         const bid01 = new Bid({ price: 120, date: Date.now(), user: user04 })
-        const bid02 = new Bid({ price: 150, date: Date.now(), user: user05 })
+        const bid02 = new Bid({ price: 150, date: Date.now(), user: user02 })
 
         const bid03 = new Bid({ price: 110, date: Date.now(), user: user03 })
         const bid04 = new Bid({ price: 120, date: Date.now(), user: user02 })
 
-        const bid05 = new Bid({ price: 110, date: Date.now(), user: user02 })
+        const bid05 = new Bid({ price: 110, date: Date.now(), user: user04 })
         const bid06 = new Bid({ price: 120, date: Date.now(), user: user02 })
 
         const bid07 = new Bid({ price: 100, date: Date.now(), user: user02 })
@@ -61,7 +61,9 @@ mongoose.connect(DB_URL)
             startDate: '2018-05-23T18:25:43.511Z',
             endDate: '2018-06-23T16:20:16.511Z',
             startPrice: 100,
-            currentPrice: 100,
+            currentPrice: 150,
+            currentUser: user05,
+            currentBid: bid02,
             closed: false,
             images: [image01, image03, image06, image08],
             category: category01,
@@ -73,10 +75,12 @@ mongoose.connect(DB_URL)
         const product02 = new Product({ 
             title: 'Beats Solo3 Wireless On-Ear Auriculares',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
-            startDate: '2018-05-20T19:10:10.511Z',
+            startDate: '2018-06-18T19:10:10.511Z',
             endDate: '2018-06-24T12:15:05.511Z',
             startPrice: 100,
-            currentPrice: 100,
+            currentPrice: 120,
+            currentUser: user02,
+            currentBid: bid04,
             closed: false,
             images: [image02, image05, image02, image05],
             category: category04,
@@ -88,28 +92,32 @@ mongoose.connect(DB_URL)
         const product03 = new Product({ 
             title: 'MacBook Pro de 15 pulgadas 256GB',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
-            startDate: '2018-04-10T11:18:12.511Z',
+            startDate: '2018-06-17T11:18:12.511Z',
             endDate: '2018-06-24T13:15:12.511Z',
             startPrice: 100,
-            currentPrice: 100,
+            currentPrice: 120,
+            currentUser: user02,
+            currentBid: bid06,
             closed: false,
             images: [image01, image03, image06, image08],
-            category: category04,
+            category: category01,
             winningBid: null,
             winningUser: null,
             bids: [bid05, bid06]
         })
 
         const product04 = new Product({ 
-            title: 'MacBook Pro de 15 pulgadas 256GB',
+            title: 'Laptop de 15 pulgadas 256GB',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
             startDate: '2018-04-10T11:18:12.511Z',
-            endDate: '2018-06-18T11:05:12.511Z',
+            endDate: '2018-06-20T18:31:12.511Z',
             startPrice: 100,
-            currentPrice: 100,
+            currentPrice: 120,
+            currentUser: user02,
+            currentBid: bid06,
             closed: false,
-            images: [image01, image03, image06, image08],
-            category: category04,
+            images: [image08, image03, image06, image01],
+            category: category01,
             winningBid: null,
             winningUser: null,
             bids: [bid05, bid06]

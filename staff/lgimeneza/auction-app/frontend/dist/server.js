@@ -101,7 +101,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = renderFullPage;
 function renderFullPage(html, preloadedState, helmet) {
-	return '\n    <!doctype html>\n    <html>\n      <head>\n\t\t<link rel="icon" href="/dist/favicon.ico" type="image/ico" />\n\t\t\n\t\t<!-- Google font -->\n\t\t<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">  \n\t  \n\t\t<!-- Bootstrap -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/bootstrap.min.css"/>\n\t\t\n\t\t<!-- Slick -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick.css"/>\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick-theme.css"/>\n\t  \n\t\t<!-- nouislider -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/nouislider.min.css"/>\n\t  \n\t\t<!-- Font Awesome Icon -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/font-awesome.min.css">\n\t\t\n\t\t<!-- Animate.css stlylesheet -->\n\t\t<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">\n\t  \n\t\t<!-- Custom stlylesheet -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/style.css"/>\n\n        ' + (Object.keys(helmet).length ? helmet.title.toString() : '') + '\n        ' + (Object.keys(helmet).length ? helmet.meta.toString() : '') + '\n\t\t' + (Object.keys(helmet).length ? helmet.link.toString() : '') + '\n\t\t\n      </head>\n\t  <body>\n\t\t<div id="root">' + html + '</div>\n\t\t\n        <script>\n\t\t\twindow.__PRELOADED_STATE__ = ' + JSON.stringify(preloadedState).replace(/</g, '\\u003c') + '\n\t\t</script>\n\t\t\n\t\t<script src="/dist/assets/app.bundle.js"></script>\n\t\t\n\t\t<script src="/dist/assets/js/jquery.min.js"></script>\n\t\t<script src="/dist/assets/js/bootstrap.min.js"></script>\n\t\t<script src="/dist/assets/js/nouislider.min.js"></script>\n\t\t<!-- <script src="/dist/assets/js/main.js"></script> -->\n\t\t\n      </body>\n    </html>\n    ';
+	return '\n    <!doctype html>\n    <html>\n      <head>\n\t\t<link rel="icon" href="/dist/favicon.ico" type="image/ico" />\n\t\t\n\t\t<!-- Google font -->\n\t\t<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">  \n\t  \n\t\t<!-- Bootstrap -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/bootstrap.min.css"/>\n\t\t\n\t\t<!-- Slick -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick.css"/>\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick-theme.css"/>\n\t  \n\t\t<!-- nouislider -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/nouislider.min.css"/>\n\t  \n\t\t<!-- Font Awesome Icon -->\n\t\t<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">\n\t\t\n\t\t<!-- Animate.css stlylesheet -->\n\t\t<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">\n\t  \n\t\t<!-- Custom stlylesheet -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/style.css"/>\n\n        ' + (Object.keys(helmet).length ? helmet.title.toString() : '') + '\n        ' + (Object.keys(helmet).length ? helmet.meta.toString() : '') + '\n\t\t' + (Object.keys(helmet).length ? helmet.link.toString() : '') + '\n\t\t\n      </head>\n\t  <body>\n\t\t<div id="root">' + html + '</div>\n\t\t\n        <script>\n\t\t\twindow.__PRELOADED_STATE__ = ' + JSON.stringify(preloadedState).replace(/</g, '\\u003c') + '\n\t\t</script>\n\t\t\n\t\t<script src="/dist/assets/app.bundle.js"></script>\n\t\t\n\t\t<script src="/dist/assets/js/jquery.min.js"></script>\n\t\t<script src="/dist/assets/js/bootstrap.min.js"></script>\n\t\t<script src="/dist/assets/js/nouislider.min.js"></script>\n\t\t<!-- <script src="/dist/assets/js/main.js"></script> -->\n\t\t\n      </body>\n    </html>\n    ';
 }
 
 /***/ }),
@@ -305,6 +305,12 @@ var _logic = __webpack_require__(/*! ../logic */ "./src/shared/logic/index.js");
 
 var _logic2 = _interopRequireDefault(_logic);
 
+var _alert = __webpack_require__(/*! ./redux/actions/alert */ "./src/shared/app/redux/actions/alert.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "react-redux");
+
+var _redux = __webpack_require__(/*! redux */ "redux");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -323,13 +329,19 @@ var App = function (_Component) {
     }
 
     _createClass(App, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (this.props.location !== prevProps.location) {
+                this.props.clear(); //For clear alerts
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
 
             _api2.default.token = function (token) {
                 if (token) {
                     localStorage.setItem('token', token);
-
                     return;
                 }
 
@@ -337,12 +349,11 @@ var App = function (_Component) {
             };
 
             _logic2.default.user = function (user) {
-                if (user) {
-                    localStorage.setItem('user', JSON.stringify(user));
+                if (typeof user !== 'undefined') {
+                    if (user === null) localStorage.removeItem('user');else localStorage.setItem('user', JSON.stringify(user));
 
                     return;
                 }
-
                 return JSON.parse(localStorage.getItem('user'));
             };
 
@@ -383,7 +394,19 @@ var App = function (_Component) {
     return App;
 }(_react.Component);
 
-exports.default = (0, _reactRouterDom.withRouter)(App);
+function mapStateToProps(state) {
+    var alert = state.alert;
+
+    return {
+        alert: alert
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)(_alert.alertActions, dispatch);
+}
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(App));
 
 /***/ }),
 
@@ -456,19 +479,15 @@ var Categories = function (_Component) {
     _createClass(Categories, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var params = new URLSearchParams(this.props.location.search);
+            var categories = params.get('c') ? params.get('c').split(',') : [];
+
+            categories.length && categories.forEach(function (category) {
+                return localStorage.setItem(category, true);
+            });
+
             this.props.getCategories();
         }
-
-        // componentDidUpdate() {
-
-        //     if (checked) {
-        //         const { query, categories } = this.props
-        //         const categoriesFilter = categories.filter(category => category.checked).map(category => category._id).join()
-        //         this.props.history.push(`/?q=${query}&c=${categoriesFilter}`)
-        //     }
-
-        // }
-
     }, {
         key: 'render',
         value: function render() {
@@ -529,157 +548,6 @@ exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapSt
 
 /***/ }),
 
-/***/ "./src/shared/app/closed.jsx":
-/*!***********************************!*\
-  !*** ./src/shared/app/closed.jsx ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "react");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "react-redux");
-
-var _redux = __webpack_require__(/*! redux */ "redux");
-
-var _products = __webpack_require__(/*! ./redux/actions/products */ "./src/shared/app/redux/actions/products.js");
-
-var actions = _interopRequireWildcard(_products);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Closed = function (_Component) {
-    _inherits(Closed, _Component);
-
-    function Closed() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
-        _classCallCheck(this, Closed);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Closed.__proto__ || Object.getPrototypeOf(Closed)).call.apply(_ref, [this].concat(args))), _this), _this.onProductClickHandler = function (id) {
-            return function (e) {
-                e.preventDefault();
-                _this.props.history.push('/product/' + id);
-            };
-        }, _temp), _possibleConstructorReturn(_this, _ret);
-    }
-
-    _createClass(Closed, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.props.getProducts(this.props.query);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var products = this.props.products;
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'div',
-                    { id: 'store', className: 'col-md-12' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'row' },
-                        products.map(function (product) {
-                            return _react2.default.createElement(
-                                'div',
-                                { className: 'col-xs-12 col-sm-6 col-md-3 ', key: product._id, onClick: _this2.onProductClickHandler(product._id) },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'product' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'product-img' },
-                                        _react2.default.createElement('img', { src: product.image, alt: '' })
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'product-body' },
-                                        _react2.default.createElement(
-                                            'h3',
-                                            { className: 'product-name' },
-                                            _react2.default.createElement(
-                                                'a',
-                                                { href: '#' },
-                                                product.title
-                                            )
-                                        ),
-                                        _react2.default.createElement(
-                                            'h4',
-                                            { className: 'product-price' },
-                                            product.maxBid,
-                                            '\u20AC'
-                                        ),
-                                        _react2.default.createElement('div', { className: 'product-rating' }),
-                                        _react2.default.createElement(
-                                            'button',
-                                            { type: 'button', className: 'primary-btn' },
-                                            'Make offer'
-                                        )
-                                    )
-                                )
-                            );
-                        })
-                    )
-                )
-            );
-        }
-    }], [{
-        key: 'fetchData',
-        value: function fetchData(_ref2) {
-            var store = _ref2.store;
-
-            return store.dispatch(actions.getProducts());
-        }
-    }]);
-
-    return Closed;
-}(_react.Component);
-
-function mapStateToProps(state) {
-    var products = state.products,
-        query = state.query;
-
-    return { products: products, query: query };
-}
-function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(actions, dispatch);
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Closed);
-
-/***/ }),
-
 /***/ "./src/shared/app/countdown.jsx":
 /*!**************************************!*\
   !*** ./src/shared/app/countdown.jsx ***!
@@ -691,7 +559,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, 
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -713,181 +581,185 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Countdown = function (_Component) {
-  _inherits(Countdown, _Component);
+	_inherits(Countdown, _Component);
 
-  function Countdown(props) {
-    _classCallCheck(this, Countdown);
+	function Countdown() {
+		var _ref;
 
-    var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
+		var _temp, _this, _ret;
 
-    _this.state = {
-      days: 0,
-      hours: 0,
-      min: 0,
-      sec: 0
-    };
-    return _this;
-  }
+		_classCallCheck(this, Countdown);
 
-  _createClass(Countdown, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
 
-      // update every second
-      this.interval = setInterval(function () {
-        var date = _this2.calculateCountdown(_this2.props.date);
-        date ? _this2.setState(date) : _this2.stop();
-      }, 1000);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.stop();
-    }
-  }, {
-    key: 'calculateCountdown',
-    value: function calculateCountdown(endDate) {
-      var diff = (Date.parse(new Date(endDate)) - Date.parse(new Date())) / 1000;
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+			days: 0,
+			hours: 0,
+			min: 0,
+			sec: 0
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
 
-      // clear countdown when date is reached
-      if (diff <= 0) return false;
+	_createClass(Countdown, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
 
-      var timeLeft = {
-        years: 0,
-        days: 0,
-        hours: 0,
-        min: 0,
-        sec: 0
-      };
+			// update every second
+			this.interval = setInterval(function () {
+				var date = _this2.calculateCountdown(_this2.props.date);
+				date ? _this2.setState(date) : _this2.stop();
+			}, 1000);
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			this.stop();
+		}
+	}, {
+		key: 'calculateCountdown',
+		value: function calculateCountdown(endDate) {
+			var diff = (Date.parse(new Date(endDate)) - Date.parse(new Date())) / 1000;
 
-      // calculate time difference between now and expected date
-      if (diff >= 365.25 * 86400) {
-        // 365.25 * 24 * 60 * 60
-        timeLeft.years = Math.floor(diff / (365.25 * 86400));
-        diff -= timeLeft.years * 365.25 * 86400;
-      }
-      if (diff >= 86400) {
-        // 24 * 60 * 60
-        timeLeft.days = Math.floor(diff / 86400);
-        diff -= timeLeft.days * 86400;
-      }
-      if (diff >= 3600) {
-        // 60 * 60
-        timeLeft.hours = Math.floor(diff / 3600);
-        diff -= timeLeft.hours * 3600;
-      }
-      if (diff >= 60) {
-        timeLeft.min = Math.floor(diff / 60);
-        diff -= timeLeft.min * 60;
-      }
-      timeLeft.sec = diff;
+			// clear countdown when date is reached
+			if (diff <= 0) return false;
 
-      return timeLeft;
-    }
-  }, {
-    key: 'stop',
-    value: function stop() {
-      clearInterval(this.interval);
-    }
-  }, {
-    key: 'addLeadingZeros',
-    value: function addLeadingZeros(value) {
-      value = String(value);
-      while (value.length < 2) {
-        value = '0' + value;
-      }
-      return value;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var countDown = this.state;
+			var timeLeft = {
+				years: 0,
+				days: 0,
+				hours: 0,
+				min: 0,
+				sec: 0
+			};
 
-      return _react2.default.createElement(
-        'span',
-        { className: 'sale' },
-        _react2.default.createElement(
-          'span',
-          { className: 'countdown-col' },
-          _react2.default.createElement(
-            'span',
-            { className: 'countdown-col-element' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              this.addLeadingZeros(countDown.days),
-              'd '
-            ),
-            _react2.default.createElement(
-              'span',
-              null,
-              ' '
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'span',
-          { className: 'countdown-col' },
-          _react2.default.createElement(
-            'span',
-            { className: 'countdown-col-element' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              this.addLeadingZeros(countDown.hours)
-            ),
-            _react2.default.createElement(
-              'span',
-              null,
-              ':'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'span',
-          { className: 'countdown-col' },
-          _react2.default.createElement(
-            'span',
-            { className: 'countdown-col-element' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              this.addLeadingZeros(countDown.min)
-            ),
-            _react2.default.createElement(
-              'span',
-              null,
-              ':'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'span',
-          { className: 'countdown-col' },
-          _react2.default.createElement(
-            'span',
-            { className: 'countdown-col-element' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              this.addLeadingZeros(countDown.sec)
-            )
-          )
-        )
-      );
-    }
-  }]);
+			// calculate time difference between now and expected date
+			if (diff >= 365.25 * 86400) {
+				// 365.25 * 24 * 60 * 60
+				timeLeft.years = Math.floor(diff / (365.25 * 86400));
+				diff -= timeLeft.years * 365.25 * 86400;
+			}
+			if (diff >= 86400) {
+				// 24 * 60 * 60
+				timeLeft.days = Math.floor(diff / 86400);
+				diff -= timeLeft.days * 86400;
+			}
+			if (diff >= 3600) {
+				// 60 * 60
+				timeLeft.hours = Math.floor(diff / 3600);
+				diff -= timeLeft.hours * 3600;
+			}
+			if (diff >= 60) {
+				timeLeft.min = Math.floor(diff / 60);
+				diff -= timeLeft.min * 60;
+			}
+			timeLeft.sec = diff;
 
-  return Countdown;
+			return timeLeft;
+		}
+	}, {
+		key: 'stop',
+		value: function stop() {
+			clearInterval(this.interval);
+		}
+	}, {
+		key: 'addLeadingZeros',
+		value: function addLeadingZeros(value) {
+			value = String(value);
+			while (value.length < 2) {
+				value = '0' + value;
+			}
+			return value;
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var countDown = this.state;
+			return countDown.days + countDown.hours + countDown.min + countDown.sec ? _react2.default.createElement(
+				'span',
+				{ className: 'sale' },
+				_react2.default.createElement(
+					'span',
+					{ className: 'countdown-col' },
+					_react2.default.createElement(
+						'span',
+						{ className: 'countdown-col-element' },
+						_react2.default.createElement(
+							'strong',
+							null,
+							this.addLeadingZeros(countDown.days),
+							'd '
+						),
+						_react2.default.createElement(
+							'span',
+							null,
+							' '
+						)
+					)
+				),
+				_react2.default.createElement(
+					'span',
+					{ className: 'countdown-col' },
+					_react2.default.createElement(
+						'span',
+						{ className: 'countdown-col-element' },
+						_react2.default.createElement(
+							'strong',
+							null,
+							this.addLeadingZeros(countDown.hours)
+						),
+						_react2.default.createElement(
+							'span',
+							null,
+							':'
+						)
+					)
+				),
+				_react2.default.createElement(
+					'span',
+					{ className: 'countdown-col' },
+					_react2.default.createElement(
+						'span',
+						{ className: 'countdown-col-element' },
+						_react2.default.createElement(
+							'strong',
+							null,
+							this.addLeadingZeros(countDown.min)
+						),
+						_react2.default.createElement(
+							'span',
+							null,
+							':'
+						)
+					)
+				),
+				_react2.default.createElement(
+					'span',
+					{ className: 'countdown-col' },
+					_react2.default.createElement(
+						'span',
+						{ className: 'countdown-col-element' },
+						_react2.default.createElement(
+							'strong',
+							null,
+							this.addLeadingZeros(countDown.sec)
+						)
+					)
+				)
+			) : _react2.default.createElement('span', { className: 'sale-hidden' });
+		}
+	}]);
+
+	return Countdown;
 }(_react.Component);
 
 Countdown.propTypes = {
-  date: _propTypes2.default.string.isRequired
+	date: _propTypes2.default.string.isRequired
 };
 
 Countdown.defaultProps = {
-  date: new Date()
+	date: new Date()
 };
 
 exports.default = Countdown;
@@ -922,29 +794,37 @@ var _products = __webpack_require__(/*! ./redux/actions/products */ "./src/share
 
 var actions = _interopRequireWildcard(_products);
 
-var _countdown = __webpack_require__(/*! ./countdown.jsx */ "./src/shared/app/countdown.jsx");
+var _socket = __webpack_require__(/*! socket.io-client */ "socket.io-client");
 
-var _countdown2 = _interopRequireDefault(_countdown);
+var _socket2 = _interopRequireDefault(_socket);
 
-var _reactNouislider = __webpack_require__(/*! react-nouislider */ "react-nouislider");
+var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
 
-var _reactNouislider2 = _interopRequireDefault(_reactNouislider);
+var _productCard = __webpack_require__(/*! ./product-card.jsx */ "./src/shared/app/product-card.jsx");
+
+var _productCard2 = _interopRequireDefault(_productCard);
 
 var _categories = __webpack_require__(/*! ./categories.jsx */ "./src/shared/app/categories.jsx");
 
 var _categories2 = _interopRequireDefault(_categories);
 
+var _slider = __webpack_require__(/*! ./slider.jsx */ "./src/shared/app/slider.jsx");
+
+var _slider2 = _interopRequireDefault(_slider);
+
+var _search = __webpack_require__(/*! ../helpers/search */ "./src/shared/helpers/search.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var socket;
 
 var Landing = function (_Component) {
     _inherits(Landing, _Component);
@@ -960,49 +840,69 @@ var Landing = function (_Component) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Landing.__proto__ || Object.getPrototypeOf(Landing)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            range: [0, 3000],
-            priceMin: 0,
-            priceMax: 3000
-        }, _this.onProductClickHandler = function (id) {
-            return function (e) {
-                e.preventDefault();
-                _this.props.history.push('/product/' + id);
-            };
-        }, _this.handleChange = function (e) {
-            var _e$target = e.target,
-                name = _e$target.name,
-                value = _e$target.value;
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Landing.__proto__ || Object.getPrototypeOf(Landing)).call.apply(_ref, [this].concat(args))), _this), _this.componentWillUnmount = function () {
+            socket.close();
+        }, _this.handleSubmit = function () {
+            var _this$props = _this.props,
+                query = _this$props.query,
+                categories = _this$props.categories;
 
 
-            name === 'priceMin' && value > _this.state.range[1] && (value = _this.state.range[1]);
-            name === 'priceMin' && value < _this.state.range[0] && (value = _this.state.range[0]);
-            name === 'priceMax' && value > _this.state.range[1] && (value = _this.state.range[1]);
-            name === 'priceMax' && value < _this.state.range[0] && (value = _this.state.range[0]);
+            var url = (0, _search.search)(query, categories);
+            _this.props.history.push(url);
+        }, _this.handleClear = function () {
+            var categories = _this.props.categories;
 
-            _this.setState(_defineProperty({}, name, Math.round(value)));
+            categories.forEach(function (category) {
+                localStorage.removeItem(category._id);
+            });
+            localStorage.removeItem('priceMin');
+            localStorage.removeItem('priceMax');
+
+            _this.props.history.push('/');
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(Landing, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var _this2 = this;
+
             var params = new URLSearchParams(this.props.location.search);
-            var q = params.get('q') || '';
-            //const categories = params.get('c') || ''
-            //this.props.getProducts(this.props.query)
-            this.props.getProducts(q);
+            var query = params.get('q') || '';
+            var categories = params.get('c') ? params.get('c').split(',') : [];
+            var prices = params.get('p') ? params.get('p').split(',').map(function (price) {
+                return Number(price);
+            }) : [];
+
+            this.props.getProducts(query, categories, prices);
+
+            //socket = openSocket('http://localhost:5000')
+            socket = (0, _socket2.default)('https://mysterious-basin-61944.herokuapp.com/');
+
+            socket.on('newBid', function (productId) {
+                //TODO: Check if product is in the list
+                _this2.props.getProducts(query, categories, prices);
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
             var products = this.props.products;
 
             return _react2.default.createElement(
                 'div',
                 null,
+                _react2.default.createElement(
+                    _reactHelmet.Helmet,
+                    null,
+                    _react2.default.createElement('meta', { charSet: 'utf-8' }),
+                    _react2.default.createElement(
+                        'title',
+                        null,
+                        'HotAuctions - Landing'
+                    )
+                ),
                 _react2.default.createElement(
                     'section',
                     { className: 'section' },
@@ -1010,134 +910,41 @@ var Landing = function (_Component) {
                         'div',
                         { className: 'container' },
                         _react2.default.createElement(
-                            'aside',
-                            { id: 'aside', className: 'col-md-3' },
-                            _react2.default.createElement(_categories2.default, null),
+                            'div',
+                            { className: 'row' },
                             _react2.default.createElement(
-                                'div',
-                                { className: 'aside' },
-                                _react2.default.createElement(
-                                    'h3',
-                                    { className: 'aside-title' },
-                                    'Price'
-                                ),
+                                'aside',
+                                { id: 'aside', className: 'col-md-3' },
+                                _react2.default.createElement(_categories2.default, null),
+                                _react2.default.createElement(_slider2.default, null),
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'price-filter' },
+                                    { className: 'filter-buttons' },
                                     _react2.default.createElement(
-                                        'div',
-                                        { id: 'price-slider' },
-                                        _react2.default.createElement(_reactNouislider2.default, { range: { min: this.state.range[0], max: this.state.range[1] }, start: [this.state.priceMin, this.state.priceMax], connect: true,
-                                            onChange: function onChange(values) {
-
-                                                _this2.setState({ priceMin: Math.round(values[0]), priceMax: Math.round(values[1]) });
-                                            } })
+                                        'button',
+                                        { className: 'filter-btn apply', onClick: this.handleSubmit },
+                                        'Apply'
                                     ),
                                     _react2.default.createElement(
-                                        'div',
-                                        { className: 'input-number price-min' },
-                                        _react2.default.createElement('input', { id: 'price-min', type: 'number', name: 'priceMin', value: this.state.priceMin, onChange: this.handleChange }),
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'qty-up', onClick: function onClick() {
-                                                    return _this2.state.priceMin < _this2.state.range[1] && _this2.setState({ priceMin: _this2.state.priceMin + 10 });
-                                                } },
-                                            '+'
-                                        ),
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'qty-down', onClick: function onClick() {
-                                                    return _this2.state.priceMin > _this2.state.range[0] && _this2.setState({ priceMin: _this2.state.priceMin - 10 });
-                                                } },
-                                            '-'
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'span',
-                                        null,
-                                        '-'
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'input-number price-max' },
-                                        _react2.default.createElement('input', { id: 'price-max', type: 'number', name: 'priceMax', value: this.state.priceMax, onChange: this.handleChange }),
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'qty-up', onClick: function onClick() {
-                                                    return _this2.state.priceMax < _this2.state.range[1] && _this2.setState({ priceMax: _this2.state.priceMax + 10 });
-                                                } },
-                                            '+'
-                                        ),
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'qty-down', onClick: function onClick() {
-                                                    return _this2.state.priceMax > _this2.state.range[0] && _this2.setState({ priceMax: _this2.state.priceMax - 10 });
-                                                } },
-                                            '-'
-                                        )
+                                        'button',
+                                        { className: 'filter-btn clear', onClick: this.handleClear },
+                                        'Clear'
                                     )
                                 )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'store', className: 'col-md-9' },
+                            ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'row' },
-                                products.length ? products.map(function (product) {
-                                    return _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-xs-6 col-sm-4 col-md-4 ', key: product._id, onClick: _this2.onProductClickHandler(product._id) },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'product' },
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'product-img' },
-                                                _react2.default.createElement('img', { src: product.images[0], alt: '' }),
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'product-label' },
-                                                    _react2.default.createElement(_countdown2.default, { date: product.endDate }),
-                                                    _react2.default.createElement(
-                                                        'span',
-                                                        { className: 'new' },
-                                                        'NEW'
-                                                    )
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'product-body' },
-                                                _react2.default.createElement(
-                                                    'h3',
-                                                    { className: 'product-name' },
-                                                    _react2.default.createElement(
-                                                        'a',
-                                                        { href: '#' },
-                                                        product.title
-                                                    )
-                                                ),
-                                                _react2.default.createElement(
-                                                    'h4',
-                                                    { className: 'product-price' },
-                                                    product.maxBid,
-                                                    '\u20AC'
-                                                ),
-                                                _react2.default.createElement('div', { className: 'product-rating' }),
-                                                _react2.default.createElement(
-                                                    'button',
-                                                    { type: 'button', className: 'primary-btn' },
-                                                    'Make offer'
-                                                )
-                                            )
-                                        )
-                                    );
-                                }) : _react2.default.createElement(
-                                    'span',
-                                    null,
-                                    'loading...'
+                                { id: 'store', className: 'col-md-9' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    products.length ? products.map(function (product) {
+                                        return _react2.default.createElement(_productCard2.default, { key: product._id, product: product });
+                                    }) : _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        'We couldn\'t find any products'
+                                    )
                                 )
                             )
                         )
@@ -1159,9 +966,10 @@ var Landing = function (_Component) {
 
 function mapStateToProps(state) {
     var products = state.products,
-        query = state.query;
+        query = state.query,
+        categories = state.categories;
 
-    return { products: products, query: query };
+    return { products: products, query: query, categories: categories };
 }
 function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)(actions, dispatch);
@@ -1255,7 +1063,9 @@ var Login = function (_Component) {
     _createClass(Login, [{
         key: 'render',
         value: function render() {
-            var loggingIn = this.props.loggingIn;
+            var _props = this.props,
+                loggingIn = _props.loggingIn,
+                alert = _props.alert;
             var _state = this.state,
                 username = _state.username,
                 password = _state.password,
@@ -1271,7 +1081,7 @@ var Login = function (_Component) {
                     _react2.default.createElement(
                         'title',
                         null,
-                        'Register'
+                        'login'
                     )
                 ),
                 _react2.default.createElement(
@@ -1283,6 +1093,11 @@ var Login = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'row' },
+                            alert && alert.message && _react2.default.createElement(
+                                'div',
+                                { className: 'alert ' + alert.type },
+                                alert.message
+                            ),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'col-md-6 col-md-offset-3' },
@@ -1346,11 +1161,10 @@ var Login = function (_Component) {
 }(_react.Component);
 
 function mapStateToProps(state) {
-    var loggingIn = state.user.loggingIn;
+    var loggingIn = state.user.loggingIn,
+        alert = state.alert;
 
-    return {
-        loggingIn: loggingIn
-    };
+    return { loggingIn: loggingIn, alert: alert };
 }
 function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)(_user.userActions, dispatch);
@@ -1398,6 +1212,8 @@ var _query = __webpack_require__(/*! ./redux/actions/query */ "./src/shared/app/
 
 var queryActions = _interopRequireWildcard(_query);
 
+var _search = __webpack_require__(/*! ../helpers/search */ "./src/shared/helpers/search.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1437,13 +1253,10 @@ var NavBar = function (_Component) {
 
 			var query = _this.state.query;
 
+			_this.props.setQuery(query);
 
-			if (query.length) {
-				_this.props.setQuery(query);
-				_this.props.history.push('/?q=' + query);
-			} else {
-				_this.props.history.push('/');
-			}
+			var url = (0, _search.search)(query, _this.props.categories);
+			_this.props.history.push(url);
 		}, _this.handleHomeLink = function (e) {
 			e.preventDefault();
 
@@ -1456,6 +1269,10 @@ var NavBar = function (_Component) {
 	_createClass(NavBar, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			var params = new URLSearchParams(this.props.location.search);
+			var query = params.get('q') || '';
+
+			this.query !== query && this.setState({ query: query });
 			this.props.retrieveUser();
 		}
 	}, {
@@ -1484,7 +1301,7 @@ var NavBar = function (_Component) {
 									_react2.default.createElement(
 										'a',
 										{ href: '#' },
-										_react2.default.createElement('i', { className: 'fa fa-phone' }),
+										_react2.default.createElement('i', { className: 'fas fa-phone' }),
 										' +021-95-51-84'
 									)
 								),
@@ -1494,7 +1311,7 @@ var NavBar = function (_Component) {
 									_react2.default.createElement(
 										'a',
 										{ href: '#' },
-										_react2.default.createElement('i', { className: 'fa fa-envelope-o' }),
+										_react2.default.createElement('i', { className: 'far fa-envelope' }),
 										' email@email.com'
 									)
 								)
@@ -1508,9 +1325,9 @@ var NavBar = function (_Component) {
 									_react2.default.createElement(
 										_reactRouterDom.Link,
 										{ to: '/profile' },
-										_react2.default.createElement('i', { className: 'fa fa-user-o' }),
+										_react2.default.createElement('i', { className: 'far fa-user' }),
 										' ',
-										Object.keys(user).length ? user.name : 'My Account',
+										Object.keys(user).length ? 'My Account' : 'Sign in  ',
 										' '
 									)
 								)
@@ -1533,9 +1350,9 @@ var NavBar = function (_Component) {
 										'div',
 										{ className: 'header-logo' },
 										_react2.default.createElement(
-											'a',
-											{ href: '#', className: 'logo' },
-											_react2.default.createElement('img', { src: './img/logo.png', alt: '' })
+											_reactRouterDom.Link,
+											{ to: '/', onClick: this.handleHomeLink },
+											'HotAuctions'
 										)
 									)
 								),
@@ -1567,32 +1384,13 @@ var NavBar = function (_Component) {
 											'div',
 											null,
 											_react2.default.createElement(
-												'a',
-												{ href: '#' },
-												_react2.default.createElement('i', { className: 'fa fa-heart-o' }),
+												_reactRouterDom.Link,
+												{ to: '/user/products' },
+												_react2.default.createElement('i', { className: 'fas fa-gavel' }),
 												_react2.default.createElement(
 													'span',
 													null,
-													'Your Wishlist'
-												),
-												_react2.default.createElement(
-													'div',
-													{ className: 'qty' },
-													'2'
-												)
-											)
-										),
-										_react2.default.createElement(
-											'div',
-											{ className: 'menu-toggle' },
-											_react2.default.createElement(
-												'a',
-												{ href: '#' },
-												_react2.default.createElement('i', { className: 'fa fa-bars' }),
-												_react2.default.createElement(
-													'span',
-													null,
-													'Menu'
+													'Your Auctions'
 												)
 											)
 										)
@@ -1602,40 +1400,7 @@ var NavBar = function (_Component) {
 						)
 					)
 				),
-				_react2.default.createElement(
-					'nav',
-					{ id: 'navigation' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'container' },
-						_react2.default.createElement(
-							'div',
-							{ id: 'responsive-nav' },
-							_react2.default.createElement(
-								'ul',
-								{ className: 'main-nav nav navbar-nav' },
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										_reactRouterDom.Link,
-										{ to: '/', onClick: this.handleHomeLink },
-										'Hot Auctions'
-									)
-								),
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										_reactRouterDom.Link,
-										{ to: '/product/closed', onClick: this.handleHomeLink },
-										'Recently Clossed'
-									)
-								)
-							)
-						)
-					)
-				)
+				_react2.default.createElement('nav', { id: 'navigation' })
 			);
 		}
 	}], [{
@@ -1647,9 +1412,11 @@ var NavBar = function (_Component) {
 }(_react.Component);
 
 function mapStateToProps(state) {
-	var user = state.user;
+	var user = state.user,
+	    categories = state.categories,
+	    query = state.query;
 
-	return { user: user };
+	return { user: user, categories: categories, query: query };
 }
 function mapDispatchToProps(dispatch) {
 	return (0, _redux.bindActionCreators)(_extends({}, _user.userActions, productsActions, queryActions), dispatch);
@@ -1698,6 +1465,170 @@ exports.default = PrivateRoute;
 
 /***/ }),
 
+/***/ "./src/shared/app/product-card.jsx":
+/*!*****************************************!*\
+  !*** ./src/shared/app/product-card.jsx ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _countdown = __webpack_require__(/*! ./countdown.jsx */ "./src/shared/app/countdown.jsx");
+
+var _countdown2 = _interopRequireDefault(_countdown);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ProductCard = function (_Component) {
+    _inherits(ProductCard, _Component);
+
+    function ProductCard() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, ProductCard);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ProductCard.__proto__ || Object.getPrototypeOf(ProductCard)).call.apply(_ref, [this].concat(args))), _this), _this.onProductClickHandler = function (id) {
+            return function (e) {
+                e.preventDefault();
+                _this.props.history.push('/product/' + id);
+            };
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(ProductCard, [{
+        key: 'renderProductInfo',
+        value: function renderProductInfo() {
+            var _props = this.props,
+                product = _props.product,
+                user = _props.user;
+
+            var sd = new Date(product.startDate);
+            sd.setDate(sd.getDate() + 7);
+
+            if (product.closed) {
+                //Products closed or Products closed and you've won
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'product-label' },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'sale' },
+                        'CLOSED'
+                    ),
+                    user && user._id === product.winningUser ? _react2.default.createElement(
+                        'span',
+                        { className: 'new' },
+                        'YOU WON'
+                    ) : _react2.default.createElement('span', { className: 'new-hidden' })
+                );
+            } else {
+
+                if (user && user._id === product.currentUser) {
+                    return _react2.default.createElement(
+                        'div',
+                        { className: 'product-label' },
+                        _react2.default.createElement(_countdown2.default, { date: product.endDate }),
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'new' },
+                            'WINING'
+                        )
+                    );
+                }
+
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'product-label' },
+                    _react2.default.createElement(_countdown2.default, { date: product.endDate }),
+                    sd > Date.now() ? _react2.default.createElement(
+                        'span',
+                        { className: 'new' },
+                        'NEW'
+                    ) : _react2.default.createElement('span', { className: 'new-hidden' })
+                );
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var product = this.props.product;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'col-xs-6 col-sm-4 col-md-4 ', key: product._id, onClick: this.onProductClickHandler(product._id) },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'product animated fadeIn' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'product-img' },
+                        _react2.default.createElement('img', { src: product.images[0], alt: '' }),
+                        this.renderProductInfo()
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'product-body' },
+                        _react2.default.createElement(
+                            'h3',
+                            { className: 'product-name' },
+                            _react2.default.createElement(
+                                'a',
+                                { href: '#' },
+                                product.title
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'h4',
+                            { className: 'product-price' },
+                            product.currentPrice,
+                            '\u20AC'
+                        ),
+                        _react2.default.createElement('div', { className: 'product-rating' }),
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'button', className: 'primary-btn ' + (product.closed && 'closed') },
+                            'Make offer'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return ProductCard;
+}(_react.Component);
+
+exports.default = (0, _reactRouterDom.withRouter)(ProductCard);
+
+/***/ }),
+
 /***/ "./src/shared/app/product.jsx":
 /*!************************************!*\
   !*** ./src/shared/app/product.jsx ***!
@@ -1734,6 +1665,10 @@ var _reactSlick = __webpack_require__(/*! react-slick */ "react-slick");
 
 var _reactSlick2 = _interopRequireDefault(_reactSlick);
 
+var _countdown = __webpack_require__(/*! ./countdown.jsx */ "./src/shared/app/countdown.jsx");
+
+var _countdown2 = _interopRequireDefault(_countdown);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1763,25 +1698,26 @@ var Product = function (_Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Product.__proto__ || Object.getPrototypeOf(Product)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            bid: '',
+            bid: 0,
             priceClass: '',
             slickImg: null,
             slickImgs: null,
             nav1: null,
             nav2: null
-
         }, _this.componentDidMount = function () {
             var _this$props = _this.props,
                 id = _this$props.match.params.id,
-                maxBid = _this$props.product.maxBid;
+                currentPrice = _this$props.product.currentPrice;
 
+            //socket = openSocket('http://localhost:5000')
 
-            socket = (0, _socket2.default)('http://localhost:5000');
+            socket = (0, _socket2.default)('https://mysterious-basin-61944.herokuapp.com/');
+
             socket.on('newBid', function (productId) {
                 if (id === productId) {
 
                     _this.props.getProduct(id).then(function () {
-                        _this.setState({ bid: maxBid, priceClass: 'bounceInDown' }, function () {
+                        _this.setState({ bid: Number(_this.props.product.currentPrice), priceClass: 'flash' }, function () {
                             setTimeout(function () {
                                 return _this.setState({ priceClass: '' });
                             }, 1000);
@@ -1795,12 +1731,26 @@ var Product = function (_Component) {
             });
 
             _this.props.getProduct(id).then(function () {
-                _this.setState({
-                    bid: _this.props.product.maxBid,
-                    nav1: _this.slider1,
-                    nav2: _this.slider2
-                });
+                if (currentPrice) {
+                    _this.setState({
+                        bid: currentPrice, //when comes from server
+                        nav1: _this.slider1,
+                        nav2: _this.slider2
+                    });
+                } else {
+                    _this.setState({
+                        nav1: _this.slider1,
+                        nav2: _this.slider2
+                    });
+                }
             });
+        }, _this.componentDidUpdate = function (prevProps) {
+            var currentPrice = _this.props.product.currentPrice;
+
+
+            if (prevProps.product.currentPrice !== currentPrice && currentPrice) {
+                _this.setState({ bid: Number(currentPrice) });
+            }
         }, _this.componentWillUnmount = function () {
             socket.close();
         }, _this.handleChange = function (e) {
@@ -1808,7 +1758,8 @@ var Product = function (_Component) {
                 name = _e$target.name,
                 value = _e$target.value;
 
-            _this.setState(_defineProperty({}, name, value));
+
+            _this.setState(_defineProperty({}, name, Math.round(Number(value))));
         }, _this.handleSubmit = function (e) {
             e.preventDefault();
 
@@ -1826,10 +1777,13 @@ var Product = function (_Component) {
                 var bid = _this.state.bid;
 
 
-                if (product._id && user._id && bid) {
+                if (product._id && user._id && bid && bid > product.currentPrice) {
                     _this.props.addProductBid(product._id, user._id, bid).then(function () {
                         _this.props.getProduct(product._id);
                     });
+                } else {
+                    //bid > product.currentPrice && this.setState({ bid: product.currentPrice })
+                    //TODO: Throw Error Something went wrong
                 }
             }
         }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -1877,26 +1831,30 @@ var Product = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
-                        _react2.default.createElement(
+                        product.images && product.images.length && _react2.default.createElement(
                             'div',
-                            { id: 'product-main-img', className: 'product-preview col-md-5 col-md-push-2' },
+                            null,
                             _react2.default.createElement(
-                                _reactSlick2.default,
-                                settingsImg,
-                                product.images && product.images.length && product.images.map(function (image, index) {
-                                    return _react2.default.createElement('img', { key: index, src: image, alt: '' });
-                                })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'product-imgs', className: 'col-md-2  col-md-pull-5' },
+                                'div',
+                                { id: 'product-main-img', className: 'product-preview col-md-5 col-md-push-2' },
+                                _react2.default.createElement(
+                                    _reactSlick2.default,
+                                    settingsImg,
+                                    product.images.map(function (image, index) {
+                                        return _react2.default.createElement('img', { key: index, src: image, alt: '' });
+                                    })
+                                )
+                            ),
                             _react2.default.createElement(
-                                _reactSlick2.default,
-                                settingsImgs,
-                                product.images && product.images.length && product.images.map(function (image, index) {
-                                    return _react2.default.createElement('img', { key: index, src: image, alt: '' });
-                                })
+                                'div',
+                                { id: 'product-imgs', className: 'col-md-2  col-md-pull-5 hidden-xs' },
+                                _react2.default.createElement(
+                                    _reactSlick2.default,
+                                    settingsImgs,
+                                    product.images.map(function (image, index) {
+                                        return _react2.default.createElement('img', { key: index, src: image, alt: '' });
+                                    })
+                                )
                             )
                         ),
                         _react2.default.createElement(
@@ -1916,13 +1874,13 @@ var Product = function (_Component) {
                                     _react2.default.createElement(
                                         'h3',
                                         { className: 'product-price animated ' + priceClass },
-                                        product.maxBid,
+                                        product.currentPrice,
                                         '\u20AC '
                                     ),
                                     _react2.default.createElement(
                                         'span',
                                         { className: 'product-available' },
-                                        'Active'
+                                        product.closed ? 'Closed' : product.endDate && _react2.default.createElement(_countdown2.default, { date: product.endDate })
                                     )
                                 ),
                                 _react2.default.createElement(
@@ -1930,7 +1888,7 @@ var Product = function (_Component) {
                                     null,
                                     product.description
                                 ),
-                                _react2.default.createElement(
+                                !product.closed && _react2.default.createElement(
                                     'div',
                                     { className: 'add-to-cart' },
                                     _react2.default.createElement(
@@ -1940,15 +1898,19 @@ var Product = function (_Component) {
                                         _react2.default.createElement(
                                             'div',
                                             { className: 'input-number' },
-                                            _react2.default.createElement('input', { type: 'number', name: 'bid', value: this.bid, onChange: this.handleChange }),
+                                            _react2.default.createElement('input', { type: 'number', name: 'bid', value: this.state.bid, onChange: this.handleChange }),
                                             _react2.default.createElement(
                                                 'span',
-                                                { className: 'qty-up' },
+                                                { className: 'qty-up', onClick: function onClick() {
+                                                        return _this2.setState({ bid: _this2.state.bid + 10 });
+                                                    } },
                                                 '+'
                                             ),
                                             _react2.default.createElement(
                                                 'span',
-                                                { className: 'qty-down' },
+                                                { className: 'qty-down', onClick: function onClick() {
+                                                        return _this2.state.bid > product.currentPrice && _this2.setState({ bid: _this2.state.bid - 10 });
+                                                    } },
                                                 '-'
                                             )
                                         )
@@ -1974,7 +1936,7 @@ var Product = function (_Component) {
                                         _react2.default.createElement(
                                             'a',
                                             { href: '#' },
-                                            _react2.default.createElement('i', { className: 'fa fa-facebook' })
+                                            _react2.default.createElement('i', { className: 'fab fa-facebook-square' })
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -1983,7 +1945,7 @@ var Product = function (_Component) {
                                         _react2.default.createElement(
                                             'a',
                                             { href: '#' },
-                                            _react2.default.createElement('i', { className: 'fa fa-twitter' })
+                                            _react2.default.createElement('i', { className: 'fab fa-twitter-square' })
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -1992,7 +1954,7 @@ var Product = function (_Component) {
                                         _react2.default.createElement(
                                             'a',
                                             { href: '#' },
-                                            _react2.default.createElement('i', { className: 'fa fa-google-plus' })
+                                            _react2.default.createElement('i', { className: 'fab fa-google-plus-square' })
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -2001,7 +1963,7 @@ var Product = function (_Component) {
                                         _react2.default.createElement(
                                             'a',
                                             { href: '#' },
-                                            _react2.default.createElement('i', { className: 'fa fa-envelope' })
+                                            _react2.default.createElement('i', { className: 'far fa-envelope' })
                                         )
                                     )
                                 )
@@ -2117,7 +2079,7 @@ var Profile = function (_Component) {
                     _react2.default.createElement(
                         'title',
                         null,
-                        'User'
+                        'HotAuctions - User Profile'
                     )
                 ),
                 _react2.default.createElement(
@@ -2384,9 +2346,9 @@ var _logic2 = _interopRequireDefault(_logic);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function getProducts(query, categories) {
+function getProducts(query, categories, prices) {
     return async function (dispatch, getState) {
-        var products = await _logic2.default.listProducts(query);
+        var products = await _logic2.default.listProducts(query, categories, prices);
         dispatch({ type: _constants.Types.UPDATE_PRODUCTS, products: products });
     };
 }
@@ -2457,7 +2419,7 @@ function login(username, password, history) {
             dispatch({ type: _constants.Types.UPDATE_USER, payload: user });
             history.push('/');
         }).catch(function (error) {
-            dispatch(_alert.alertActions.error(error));
+            dispatch(_alert.alertActions.error(error.message));
         });
     };
 }
@@ -2492,8 +2454,40 @@ function register(name, surname, email, password, history) {
             history.push('/login');
             dispatch(_alert.alertActions.success('Registration successful'));
         }).catch(function (error) {
-            dispatch(_alert.alertActions.error(error));
+            dispatch(_alert.alertActions.error(error.message));
         });
+    };
+}
+
+/***/ }),
+
+/***/ "./src/shared/app/redux/actions/userProducts.js":
+/*!******************************************************!*\
+  !*** ./src/shared/app/redux/actions/userProducts.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getUserProducts = getUserProducts;
+
+var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux/constants/index.js");
+
+var _logic = __webpack_require__(/*! ../../../logic */ "./src/shared/logic/index.js");
+
+var _logic2 = _interopRequireDefault(_logic);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getUserProducts() {
+    return async function (dispatch, getState) {
+        var products = await _logic2.default.listUserProducts();
+        dispatch({ type: _constants.Types.UPDATE_USER_PRODUCTS, products: products });
     };
 }
 
@@ -2516,6 +2510,7 @@ var Types = exports.Types = {
     UPDATE_PRODUCT: 'UPDATE_PRODUCT',
     ADD_PRODUCT_BID: 'ADD_PRODUCT_BID',
     UPDATE_PRODUCTS: 'UPDATE_PRODUCTS',
+    UPDATE_USER_PRODUCTS: 'UPDATE_USER_PRODUCTS',
     UPDATE_CATEGORIES: 'UPDATE_CATEGORIES',
     UPDATE_NAME: 'UPDATE_NAME',
     UPDATE_USER: 'UPDATE_USER',
@@ -2615,9 +2610,8 @@ exports.default = products;
 
 var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux/constants/index.js");
 
-var initialState = {
-    categories: []
-};
+var initialState = [];
+
 function products() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
     var action = arguments[1];
@@ -2660,6 +2654,10 @@ var _product = __webpack_require__(/*! ./product */ "./src/shared/app/redux/redu
 
 var _product2 = _interopRequireDefault(_product);
 
+var _userProducts = __webpack_require__(/*! ./userProducts */ "./src/shared/app/redux/reducers/userProducts.js");
+
+var _userProducts2 = _interopRequireDefault(_userProducts);
+
 var _user = __webpack_require__(/*! ./user */ "./src/shared/app/redux/reducers/user.js");
 
 var _user2 = _interopRequireDefault(_user);
@@ -2676,6 +2674,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var reducers = (0, _redux.combineReducers)({
     products: _products2.default,
+    userProducts: _userProducts2.default,
     categories: _categories2.default,
     product: _product2.default,
     user: _user2.default,
@@ -2742,6 +2741,7 @@ var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux
 var initialState = {
     products: []
 };
+
 function products() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
     var action = arguments[1];
@@ -2815,6 +2815,41 @@ function user() {
     switch (action.type) {
         case _constants.Types.UPDATE_USER:
             return action.payload;
+        default:
+            return state;
+    }
+}
+
+/***/ }),
+
+/***/ "./src/shared/app/redux/reducers/userProducts.js":
+/*!*******************************************************!*\
+  !*** ./src/shared/app/redux/reducers/userProducts.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = userProducts;
+
+var _constants = __webpack_require__(/*! ../constants */ "./src/shared/app/redux/constants/index.js");
+
+var initialState = {
+    products: []
+};
+
+function userProducts() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case _constants.Types.UPDATE_USER_PRODUCTS:
+            return action.products;
         default:
             return state;
     }
@@ -2897,10 +2932,12 @@ var Register = function (_Component) {
                 name = _this$state.name,
                 surname = _this$state.surname,
                 email = _this$state.email,
-                password = _this$state.password;
-            // if (username && password) {
-            //     this.props.login(username, password, this.props.history)
-            // }
+                password = _this$state.password,
+                repeatpassword = _this$state.repeatpassword;
+
+            if (name && surname && email && password && password === repeatpassword) {
+                _this.props.register(name, surname, email, password, _this.props.history);
+            }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -2912,9 +2949,11 @@ var Register = function (_Component) {
                 surname = _state.surname,
                 email = _state.email,
                 password = _state.password,
-                passwordconf = _state.passwordconf,
-                submitted = _state.submitted;
+                repeatpassword = _state.repeatpassword,
+                submitted = _state.submitted,
+                alert = _state.alert;
 
+            console.log('alert', alert);
             return _react2.default.createElement(
                 'div',
                 null,
@@ -2925,7 +2964,7 @@ var Register = function (_Component) {
                     _react2.default.createElement(
                         'title',
                         null,
-                        'Register'
+                        'HotAuctions - Register'
                     )
                 ),
                 _react2.default.createElement(
@@ -2937,6 +2976,11 @@ var Register = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'row' },
+                            alert && alert.message && _react2.default.createElement(
+                                'div',
+                                { className: 'alert ' + alert.type },
+                                alert.message
+                            ),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'col-md-6 col-md-offset-3 pt-2' },
@@ -2954,28 +2998,53 @@ var Register = function (_Component) {
                                     { name: 'form', onSubmit: this.handleSubmit },
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'form-group' },
-                                        _react2.default.createElement('input', { type: 'text', className: 'input', name: 'name', placeholder: 'First Name', value: name, onChange: this.handleChange })
+                                        { className: 'form-group' + (submitted && !name ? ' has-error' : '') },
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'First Name', value: name, onChange: this.handleChange }),
+                                        submitted && !name && _react2.default.createElement(
+                                            'div',
+                                            { className: 'help-block' },
+                                            'Name is required'
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'form-group' },
-                                        _react2.default.createElement('input', { type: 'text', className: 'input', name: 'surname', placeholder: 'Last Name', value: surname, onChange: this.handleChange })
+                                        { className: 'form-group' + (submitted && !surname ? ' has-error' : '') },
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'surname', placeholder: 'Last Name', value: surname, onChange: this.handleChange }),
+                                        submitted && !surname && _react2.default.createElement(
+                                            'div',
+                                            { className: 'help-block' },
+                                            'Surname is required'
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'form-group' },
-                                        _react2.default.createElement('input', { type: 'text', className: 'input', name: 'email', placeholder: 'Email', value: email, onChange: this.handleChange })
+                                        { className: 'form-group' + (submitted && !email ? ' has-error' : '') },
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', placeholder: 'Email', value: email, onChange: this.handleChange }),
+                                        submitted && !email && _react2.default.createElement(
+                                            'div',
+                                            { className: 'help-block' },
+                                            'Email is required'
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'form-group' },
-                                        _react2.default.createElement('input', { type: 'password', className: 'input', name: 'password', placeholder: 'Password', value: password, onChange: this.handleChange })
+                                        { className: 'form-group' + (submitted && !password ? ' has-error' : '') },
+                                        _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'password', placeholder: 'Password', value: password, onChange: this.handleChange }),
+                                        submitted && !password && _react2.default.createElement(
+                                            'div',
+                                            { className: 'help-block' },
+                                            'Password is required'
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'form-group' },
-                                        _react2.default.createElement('input', { type: 'password', className: 'input', name: 'repeatpassword', placeholder: 'Repeat Password', value: repeatpassword, onChange: this.handleChange })
+                                        { className: 'form-group' + (submitted && !repeatpassword || password !== repeatpassword ? ' has-error' : '') },
+                                        _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'repeatpassword', placeholder: 'Repeat Password', value: repeatpassword, onChange: this.handleChange }),
+                                        submitted && (!repeatpassword || password !== repeatpassword) && _react2.default.createElement(
+                                            'div',
+                                            { className: 'help-block' },
+                                            'Repeat password is required or does not match'
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'div',
@@ -3004,17 +3073,421 @@ var Register = function (_Component) {
 }(_react.Component);
 
 function mapStateToProps(state) {
-    var loggingIn = state.user.loggingIn;
+    var alert = state.alert;
 
-    return {
-        loggingIn: loggingIn
-    };
+    return { alert: alert };
 }
 function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)(_user.userActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Register);
+
+/***/ }),
+
+/***/ "./src/shared/app/slider.jsx":
+/*!***********************************!*\
+  !*** ./src/shared/app/slider.jsx ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+var _reactNouislider = __webpack_require__(/*! react-nouislider */ "react-nouislider");
+
+var _reactNouislider2 = _interopRequireDefault(_reactNouislider);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Slider = function (_Component) {
+    _inherits(Slider, _Component);
+
+    function Slider() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Slider);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Slider.__proto__ || Object.getPrototypeOf(Slider)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            range: [0, 3000],
+            priceMin: 0,
+            priceMax: 3000
+        }, _this.handleChange = function (e) {
+            var _e$target = e.target,
+                name = _e$target.name,
+                value = _e$target.value;
+            var range = _this.state.range;
+
+
+            name === 'priceMin' && value > range[1] && (value = range[1]);
+            name === 'priceMin' && value < range[0] && (value = range[0]);
+            name === 'priceMax' && value > range[1] && (value = range[1]);
+            name === 'priceMax' && value < range[0] && (value = range[0]);
+
+            _this.setState(_defineProperty({}, name, Math.round(value)));
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Slider, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var range = this.state.range;
+
+
+            var params = new URLSearchParams(this.props.location.search);
+            var prices = params.get('p') ? params.get('p').split(',').map(function (price) {
+                return Number(price);
+            }) : [];
+
+            prices[0] > range[0] ? localStorage.setItem('priceMin', prices[0]) : localStorage.removeItem('priceMin');
+            prices[1] < range[1] ? localStorage.setItem('priceMax', prices[1]) : localStorage.removeItem('priceMax');
+
+            var priceMin = Number(localStorage.getItem('priceMin'));
+            var priceMax = Number(localStorage.getItem('priceMax'));
+
+            priceMin && this.setState({ priceMin: priceMin });
+            priceMax && this.setState({ priceMax: priceMax });
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var _state = this.state,
+                range = _state.range,
+                priceMin = _state.priceMin,
+                priceMax = _state.priceMax;
+
+
+            priceMin > range[0] ? localStorage.setItem('priceMin', priceMin) : localStorage.removeItem('priceMin');
+            priceMax < range[1] ? localStorage.setItem('priceMax', priceMax) : localStorage.removeItem('priceMax');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'aside' },
+                _react2.default.createElement(
+                    'h3',
+                    { className: 'aside-title' },
+                    'Price'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'price-filter' },
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'price-slider' },
+                        _react2.default.createElement(_reactNouislider2.default, { range: { min: this.state.range[0], max: this.state.range[1] }, start: [this.state.priceMin, this.state.priceMax], connect: true,
+                            onChange: function onChange(values) {
+                                _this2.setState({ priceMin: Math.round(values[0]), priceMax: Math.round(values[1]) });
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'input-number price-min' },
+                        _react2.default.createElement('input', { id: 'price-min', type: 'number', name: 'priceMin', value: this.state.priceMin, onChange: this.handleChange }),
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'qty-up', onClick: function onClick() {
+                                    return _this2.state.priceMin < _this2.state.range[1] && _this2.setState({ priceMin: _this2.state.priceMin + 10 });
+                                } },
+                            '+'
+                        ),
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'qty-down', onClick: function onClick() {
+                                    return _this2.state.priceMin > _this2.state.range[0] && _this2.setState({ priceMin: _this2.state.priceMin - 10 });
+                                } },
+                            '-'
+                        )
+                    ),
+                    _react2.default.createElement('span', null),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'input-number price-max' },
+                        _react2.default.createElement('input', { id: 'price-max', type: 'number', name: 'priceMax', value: this.state.priceMax, onChange: this.handleChange }),
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'qty-up', onClick: function onClick() {
+                                    return _this2.state.priceMax < _this2.state.range[1] && _this2.setState({ priceMax: _this2.state.priceMax + 10 });
+                                } },
+                            '+'
+                        ),
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'qty-down', onClick: function onClick() {
+                                    return _this2.state.priceMax > _this2.state.range[0] && _this2.setState({ priceMax: _this2.state.priceMax - 10 });
+                                } },
+                            '-'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Slider;
+}(_react.Component);
+
+exports.default = (0, _reactRouterDom.withRouter)(Slider);
+
+/***/ }),
+
+/***/ "./src/shared/app/user-products.jsx":
+/*!******************************************!*\
+  !*** ./src/shared/app/user-products.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "react-redux");
+
+var _redux = __webpack_require__(/*! redux */ "redux");
+
+var _userProducts = __webpack_require__(/*! ./redux/actions/userProducts */ "./src/shared/app/redux/actions/userProducts.js");
+
+var actions = _interopRequireWildcard(_userProducts);
+
+var _socket = __webpack_require__(/*! socket.io-client */ "socket.io-client");
+
+var _socket2 = _interopRequireDefault(_socket);
+
+var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
+
+var _productCard = __webpack_require__(/*! ./product-card.jsx */ "./src/shared/app/product-card.jsx");
+
+var _productCard2 = _interopRequireDefault(_productCard);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var socket;
+
+var UserProducts = function (_Component) {
+    _inherits(UserProducts, _Component);
+
+    function UserProducts() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, UserProducts);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = UserProducts.__proto__ || Object.getPrototypeOf(UserProducts)).call.apply(_ref, [this].concat(args))), _this), _this.componentWillUnmount = function () {
+            socket.close();
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(UserProducts, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            this.props.getUserProducts();
+
+            //socket = openSocket('http://localhost:5000')
+            socket = (0, _socket2.default)('https://mysterious-basin-61944.herokuapp.com/');
+
+            socket.on('newBid', function (productId) {
+                //TODO: Check if product is in the list
+                _this2.props.getUserProducts();
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                userProducts = _props.userProducts,
+                user = _props.user;
+
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    _reactHelmet.Helmet,
+                    null,
+                    _react2.default.createElement('meta', { charSet: 'utf-8' }),
+                    _react2.default.createElement(
+                        'title',
+                        null,
+                        'HotAuctions - Your Auctions'
+                    )
+                ),
+                _react2.default.createElement(
+                    'section',
+                    { className: 'section' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'container' },
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'store', className: 'col-md-12' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'row' },
+                                userProducts.length ? userProducts.map(function (product) {
+                                    return _react2.default.createElement(_productCard2.default, { key: product._id, product: product, user: user });
+                                }) : _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    'no results'
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return UserProducts;
+}(_react.Component);
+
+function mapStateToProps(state) {
+    var userProducts = state.userProducts,
+        user = state.user;
+
+    return { userProducts: userProducts, user: user };
+}
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)(actions, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { withRef: true })(UserProducts);
+
+/***/ }),
+
+/***/ "./src/shared/helpers/buildUrl.js":
+/*!****************************************!*\
+  !*** ./src/shared/helpers/buildUrl.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (url, parameters) {
+  var qs = "";
+  for (var key in parameters) {
+    var value = parameters[key];
+    qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+  }
+  if (qs.length > 0) {
+    qs = qs.substring(0, qs.length - 1); //chop off last "&"
+    url = url + "?" + qs;
+  }
+  return url;
+};
+
+/***/ }),
+
+/***/ "./src/shared/helpers/search.js":
+/*!**************************************!*\
+  !*** ./src/shared/helpers/search.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.search = search;
+
+var _buildUrl = __webpack_require__(/*! ./buildUrl */ "./src/shared/helpers/buildUrl.js");
+
+var _buildUrl2 = _interopRequireDefault(_buildUrl);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function search(query, categories) {
+
+	var cat = categories.filter(function (category) {
+		return category.checked;
+	}).map(function (category) {
+		return category._id;
+	});
+	var priceMin = Number(localStorage.getItem('priceMin'));
+	var priceMax = Number(localStorage.getItem('priceMax'));
+
+	var range = [];
+
+	if (priceMin || priceMax) {
+		range[0] = priceMin || 0;
+		range[1] = priceMax || 0;
+	}
+
+	var parameters = {};
+
+	if (query.length) parameters.q = query;
+	if (cat.length) parameters.c = cat.join();
+	if (range.length) parameters.p = range.join();
+
+	var url = (0, _buildUrl2.default)('/', parameters);
+
+	return url;
+}
 
 /***/ }),
 
@@ -3030,7 +3503,8 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, 
 
 var auctionApi = __webpack_require__(/*! api */ "api");
 
-auctionApi.url = 'http://localhost:5000/api';
+//auctionApi.url = 'http://localhost:5000/api'
+auctionApi.url = 'https://mysterious-basin-61944.herokuapp.com/api';
 
 var logic = {
     user: function user(_user) {
@@ -3042,8 +3516,17 @@ var logic = {
 
         return this._user;
     },
-    listProducts: function listProducts(query) {
-        return auctionApi.listProducts(query);
+    listProducts: function listProducts(query, categories, prices) {
+        return auctionApi.listProducts(query, categories, prices);
+    },
+    listUserProducts: function listUserProducts() {
+        var user = this.user();
+
+        if (user === null) {
+            return auctionApi.retrieveUser();
+        }
+
+        return auctionApi.listUserProducts(user._id);
     },
     retrieveProduct: function retrieveProduct(productId) {
         return auctionApi.retrieveProduct(productId);
@@ -3072,8 +3555,10 @@ var logic = {
         });
     },
     logout: function logout() {
+        var _this2 = this;
+
         return Promise.resolve().then(function () {
-            localStorage.removeItem('user');
+            _this2.user(null);
         });
     },
     retrieveUser: function retrieveUser() {
@@ -3087,14 +3572,12 @@ var logic = {
         return auctionApi.retrieveUser(user._id);
     },
     register: function register(name, surname, email, password) {
-        return auctionApi.register(name, surname, email, password).then(function () {
+        return auctionApi.registerUser(name, surname, email, password).then(function () {
             return true;
         }).catch(function (error) {
             return Promise.reject(error);
         });
     },
-    getAll: function getAll() {},
-    delete: function _delete(id) {},
     handleResponse: function handleResponse(response) {
         return response.json().then(function (data) {
             if (!response.ok) {
@@ -3139,9 +3622,9 @@ var _landing = __webpack_require__(/*! ../app/landing.jsx */ "./src/shared/app/l
 
 var _landing2 = _interopRequireDefault(_landing);
 
-var _closed = __webpack_require__(/*! ../app/closed.jsx */ "./src/shared/app/closed.jsx");
+var _userProducts = __webpack_require__(/*! ../app/user-products.jsx */ "./src/shared/app/user-products.jsx");
 
-var _closed2 = _interopRequireDefault(_closed);
+var _userProducts2 = _interopRequireDefault(_userProducts);
 
 var _product = __webpack_require__(/*! ../app/product.jsx */ "./src/shared/app/product.jsx");
 
@@ -3163,10 +3646,6 @@ exports.default = {
         component: _landing2.default,
         exact: true
     }, {
-        path: '/product/closed',
-        component: _closed2.default,
-        exact: true
-    }, {
         path: '/product/:id',
         component: _product2.default,
         exact: true
@@ -3182,6 +3661,10 @@ exports.default = {
     privateRoutes: [{
         path: '/profile',
         component: _profile2.default,
+        exact: true
+    }, {
+        path: '/user/products',
+        component: _userProducts2.default,
         exact: true
     }],
     redirects: [{

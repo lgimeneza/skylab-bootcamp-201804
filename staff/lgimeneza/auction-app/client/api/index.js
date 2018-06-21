@@ -1,6 +1,7 @@
 'use strict'
 
 const axios = require('axios')
+const buildUrls = require('./utils/buildUrl')
 
 const auctionApi = {
     url: 'NO-URL',
@@ -20,11 +21,43 @@ const auctionApi = {
     /**
      * @returns {Promise<[Product]>}
      */
-    listProducts(query) {
+    listProducts(query, categories, prices) {
         return Promise.resolve()
             .then(() => {
 
-                return axios.get(`${this.url}/product${ typeof query != 'undefined' ? `?q=${query}`: '' }`)
+                const parameters = {}
+
+                if (query.length) parameters.q = query
+                
+                if (categories.length) parameters.c = categories.join()
+        
+                if (prices.length) parameters.p = prices.join()
+        
+                const queryString =  buildUrls('', parameters)
+
+                return axios.get(`${this.url}/product${ queryString }`)
+                    .then(({ status, data }) => {
+                        if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
+
+                        return data.data
+                    })
+                    .catch(err => {
+                        if (err.code === 'ECONNREFUSED') throw Error('could not reach server')
+
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
+
+                            throw Error(message)
+                        } else throw err
+                    })
+            })
+    },
+
+    listUserProducts(userId) {
+        return Promise.resolve()
+            .then(() => {
+
+                return axios.get(`${this.url}/product/user/${ userId }`, )
                     .then(({ status, data }) => {
                         if (status !== 200 || data.status !== 'OK') throw Error(`unexpected response status ${status} (${data.status})`)
 

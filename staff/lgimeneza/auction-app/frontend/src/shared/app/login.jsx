@@ -38,14 +38,14 @@ class Login extends Component {
     }
 
     render() {
-        const { loggingIn } = this.props;
+        const { loggingIn, alert } = this.props;
         const { username, password, submitted } = this.state;
         return (
 
             <div>
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>Register</title>
+                    <title>login</title>
                 </Helmet>
 
 		        <div className="section">
@@ -53,6 +53,10 @@ class Login extends Component {
                     <div className="container">
 
                         <div className="row">
+
+                            {alert && alert.message &&
+                                <div className={`alert ${alert.type}`}>{alert.message}</div>
+                            }
 
                             <div className="col-md-6 col-md-offset-3">
 
@@ -96,10 +100,8 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.user
-    return {
-        loggingIn
-    }
+    const { user: { loggingIn } , alert } = state
+    return { loggingIn, alert }
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(userActions, dispatch)

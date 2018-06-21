@@ -2,7 +2,8 @@
 
 const auctionApi = require('api')
 
-auctionApi.url = 'http://localhost:5000/api'
+//auctionApi.url = 'http://localhost:5000/api'
+auctionApi.url = 'https://mysterious-basin-61944.herokuapp.com/api'
 
 const logic = {
 
@@ -16,8 +17,18 @@ const logic = {
         return this._user
     },
 
-    listProducts(query){
-        return auctionApi.listProducts(query)
+    listProducts(query, categories, prices){
+        return auctionApi.listProducts(query, categories, prices)
+    },
+
+    listUserProducts(){
+        const user = this.user()
+
+        if (user === null){
+            return auctionApi.retrieveUser()
+        }
+
+        return auctionApi.listUserProducts(user._id)
     },
 
     retrieveProduct(productId){
@@ -69,7 +80,7 @@ const logic = {
     },
 
     register(name, surname, email,  password){
-        return auctionApi.register(name, surname, email,  password)
+        return auctionApi.registerUser(name, surname, email,  password)
             .then(() => {
                 return true;
             })
@@ -77,10 +88,6 @@ const logic = {
                 return Promise.reject(error);
             })
     },
-
-    getAll(){},
-
-    delete(id){},
 
     handleResponse(response) {
         return response.json().then(data => {

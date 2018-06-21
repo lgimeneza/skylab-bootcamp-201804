@@ -15,9 +15,12 @@ const jwtValidator = jwtValidation(TOKEN_SECRET)
 const jsonBodyParser = bodyParser.json()
 
 router.get('/product', (req, res) => {
-    const { query: { q } } = req
+    const { query: { q, c, p } } = req
 
-    return logic.listProducts(q)
+    const categories = c && c.split(',')
+    const prices = p && p.split(',').map(price => Number(price))
+
+    return logic.listProducts(q, categories, prices)
         .then(products => {
             res.status(200).json({ status: 'OK', data: products })
         })
@@ -38,6 +41,18 @@ router.get('/product/:productId', (req, res) => {
             res.status(400).json({ status: 'KO', error: message })
         })
 
+})
+
+router.get('/product/user/:userId', (req, res) => {
+    const { params: { userId } } = req
+
+    return logic.listUserProducts(userId)
+        .then(products => {
+            res.status(200).json({ status: 'OK', data: products })
+        })
+        .catch(({ message }) => {
+            res.status(400).json({ status: 'KO', error: message })
+        })
 })
 
 router.post('/product', jsonBodyParser, (req, res) => {
@@ -104,6 +119,20 @@ router.get('/users/:userId', jwtValidator, (req, res) => {
             res.json({ status: 'KO', error: message })
         })
 
+})
+
+router.post('/users', jsonBodyParser, (req, res) => {
+    const { body: { name, surname, email, password } } = req
+
+    logic.registerUser(name, surname, email, password)
+        .then(() => {
+            res.status(201)
+            res.json({ status: 'OK' })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
 })
 
 module.exports = router

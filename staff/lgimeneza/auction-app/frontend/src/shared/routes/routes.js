@@ -1,6 +1,6 @@
 import Profile from '../app/profile.jsx'
 import Landing from '../app/landing.jsx'
-import Closed from '../app/closed.jsx'
+import UserProducts from '../app/user-products.jsx'
 import Product from '../app/product.jsx'
 import Login from '../app/login.jsx'
 import Register from '../app/register.jsx'
@@ -10,11 +10,6 @@ export default {
         {
             path: '/',
             component: Landing,
-            exact: true
-        },
-        {
-            path: '/product/closed',
-            component: Closed,
             exact: true
         },
         {
@@ -37,6 +32,11 @@ export default {
         {
             path: '/profile',
             component: Profile,
+            exact: true
+        },
+        {
+            path: '/user/products',
+            component: UserProducts,
             exact: true
         },
     ],

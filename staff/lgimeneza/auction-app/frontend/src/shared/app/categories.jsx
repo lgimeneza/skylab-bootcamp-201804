@@ -11,18 +11,13 @@ class Categories extends Component {
     }
 
     componentDidMount() {
+        const params = new URLSearchParams(this.props.location.search)
+        const categories = params.get('c') ? params.get('c').split(',') : []
+
+        categories.length && categories.forEach(category => localStorage.setItem(category, true))
+
         this.props.getCategories()
     }
-
-    // componentDidUpdate() {
-
-    //     if (checked) {
-    //         const { query, categories } = this.props
-    //         const categoriesFilter = categories.filter(category => category.checked).map(category => category._id).join()
-    //         this.props.history.push(`/?q=${query}&c=${categoriesFilter}`)
-    //     }
-
-    // }
 
     handleCheck = e => {
         localStorage.setItem(e.target.id, e.target.checked)
@@ -45,7 +40,6 @@ class Categories extends Component {
                             <label htmlFor={category._id}>
                                 <span></span>
                                 {category.name}
-                                {/* TODO: <small>(120)</small> */}
                             </label>
                         </div>
                         

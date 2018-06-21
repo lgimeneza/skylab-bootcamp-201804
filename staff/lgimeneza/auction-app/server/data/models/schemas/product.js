@@ -27,6 +27,14 @@ module.exports = new Schema({
         type: Number,
         required: true
     },
+    currentUser: {
+        ref: 'User',
+        type: ObjectId,
+    },
+    currentBid: {
+        ref: 'Bid',
+        type: ObjectId,
+    },
     closed: {
         type: Boolean,
     },

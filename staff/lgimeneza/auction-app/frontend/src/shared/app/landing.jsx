@@ -2,121 +2,100 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from './redux/actions/products'
-import Countdown from './countdown.jsx'
+import openSocket from 'socket.io-client'
+import { Helmet } from 'react-helmet';
 
-import Nouislider from 'react-nouislider'
+import ProductCard from './product-card.jsx'
 import Categories from './categories.jsx'
+import Slider from './slider.jsx';
+
+import { search } from '../helpers/search'
+
+var socket
 
 class Landing extends Component {
 
     static fetchData({ store }) {
         return store.dispatch(actions.getProducts())
     }
-
-    state = {
-        range: [0, 3000],
-        priceMin: 0,
-        priceMax: 3000,
-    }
     
     componentDidMount() {
         const params = new URLSearchParams(this.props.location.search)
-        const q = params.get('q') || ''
-        //const categories = params.get('c') || ''
-        //this.props.getProducts(this.props.query)
-        this.props.getProducts(q)
+        const query = params.get('q') || ''
+        const categories = params.get('c') ? params.get('c').split(',') : []
+        const prices = params.get('p') ? params.get('p').split(',').map(price => Number(price)) : [] 
+
+        this.props.getProducts(query, categories , prices)
+
+
+        //socket = openSocket('http://localhost:5000')
+        socket = openSocket('https://mysterious-basin-61944.herokuapp.com/')
+
+        socket.on('newBid', (productId) => {
+            //TODO: Check if product is in the list
+            this.props.getProducts(query, categories , prices)
+        })
+
     }
-    
-    onProductClickHandler = id => e => {
-        e.preventDefault()
-        this.props.history.push(`/product/${id}`)
+
+    componentWillUnmount = () => {
+        socket.close()
     }
 
-    handleChange = e => {
-        let { name, value } = e.target;
+    handleSubmit = () => {
 
-        name === 'priceMin' && value > this.state.range[1] && (value = this.state.range[1])
-        name === 'priceMin' && value < this.state.range[0] && (value = this.state.range[0])
-        name === 'priceMax' && value > this.state.range[1] && (value = this.state.range[1])
-        name === 'priceMax' && value < this.state.range[0] && (value = this.state.range[0])
+        const { query, categories } = this.props
 
-        this.setState({ [name]: Math.round(value) });
+        const url = search(query, categories)
+		this.props.history.push(url)
+    }
+
+    handleClear = () => {
+
+        const { categories } = this.props
+        categories.forEach(category => {
+            localStorage.removeItem(category._id)
+        })
+        localStorage.removeItem('priceMin')
+        localStorage.removeItem('priceMax')
+
+        this.props.history.push('/')
+
     }
 
     render() {
     const { products } = this.props
     return (
         <div>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>HotAuctions - Landing</title>
+            </Helmet>
             {/* --- SECTION --- */}
             <section className="section">
                 <div className="container">
+                    <div className="row"> 
+                    
+                        {/* --- ASIDE --- */}
+                        <aside id="aside" className="col-md-3">
+                            <Categories />
+                            <Slider />
+                            <div className="filter-buttons">
+                                <button className="filter-btn apply" onClick={this.handleSubmit}>Apply</button>
+                                <button className="filter-btn clear" onClick={this.handleClear}>Clear</button>
+                            </div>
+                        </aside>
 
-					{/* --- ASIDE --- */}
-					<aside id="aside" className="col-md-3">
-
-
-                        <Categories />
-
-						<div className="aside">
-							<h3 className="aside-title">Price</h3>
-							<div className="price-filter">
-
-								<div id="price-slider">
-                                    <Nouislider range={{ min: this.state.range[0], max: this.state.range[1] }} start={[this.state.priceMin, this.state.priceMax]} connect={true} 
-                                        onChange={(values) =>  {
-
-                                            this.setState({ priceMin: Math.round(values[0]), priceMax: Math.round(values[1]) })
-
-                                        } } />
-                                </div>
-
-								<div className="input-number price-min">
-									<input id="price-min" type="number" name='priceMin' value={this.state.priceMin} onChange={this.handleChange}/>
-									<span className="qty-up" onClick={() => this.state.priceMin < this.state.range[1] && this.setState({ priceMin:this.state.priceMin +10 })}>+</span>
-									<span className="qty-down" onClick={() => this.state.priceMin > this.state.range[0] && this.setState({ priceMin:this.state.priceMin -10 })}>-</span>
-								</div>
-
-								<span>-</span>
-
-								<div className="input-number price-max">
-									<input id="price-max" type="number" name='priceMax' value={this.state.priceMax} onChange={this.handleChange}/>
-									<span className="qty-up" onClick={() => this.state.priceMax < this.state.range[1] && this.setState({ priceMax:this.state.priceMax +10 })}>+</span>
-									<span className="qty-down" onClick={() => this.state.priceMax > this.state.range[0] && this.setState({ priceMax:this.state.priceMax -10 })}>-</span>
-								</div>
-
-							</div>
-						</div>
-
-
-					</aside>
-
-                    {/* --- STORE --- */}
-                    <div id="store" className="col-md-9">
-                        <div className="row">
-                            { products.length ? products.map((product) => {
-                                return (
-                                <div className="col-xs-6 col-sm-4 col-md-4 " key={product._id} onClick={this.onProductClickHandler(product._id)}> 
-                                    <div className="product">
-                                        <div className="product-img">
-                                            <img src={product.images[0]} alt=""/>
-                                            <div className="product-label">
-                                                <Countdown date={product.endDate} />
-                                                <span className="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div className="product-body">
-                                            <h3 className="product-name"><a href="#">{product.title}</a></h3>
-                                            <h4 className="product-price">{product.maxBid}€</h4>
-                                            <div className="product-rating"/>
-                                            <button type="button" className="primary-btn">Make offer</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                )
-                            }): <span>loading...</span>}
+                        {/* --- STORE --- */}
+                        <div id="store" className="col-md-9">
+                            <div className="row">
+                                { products.length ? products.map((product) => {
+                                    return <ProductCard key={product._id} product={product} />
+                                }): <span>We couldn't find any products</span>}
+                            </div>
                         </div>
+                    
                     </div>
-
                 </div>
             </section>
         </div>
@@ -124,8 +103,8 @@ class Landing extends Component {
 }
 
 function mapStateToProps(state) {
-    const { products, query } = state
-    return { products, query }
+    const { products, query, categories } = state
+    return { products, query, categories }
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);

@@ -27,19 +27,20 @@ class Register extends Component {
         e.preventDefault();
 
         this.setState({ submitted: true });
-        const { name, surname, email, password } = this.state;
-        // if (username && password) {
-        //     this.props.login(username, password, this.props.history)
-        // }
+        const { name, surname, email, password, repeatpassword } = this.state;
+        if (name && surname && email && password && (password === repeatpassword)) {
+            this.props.register(name, surname, email, password, this.props.history)
+        }
     }
 
     render() {
-        const { name, surname, email, password, passwordconf, submitted } = this.state;
+        const { name, surname, email, password, repeatpassword, submitted, alert } = this.state;
+        console.log('alert', alert)
         return (
         <div>
             <Helmet>
                 <meta charSet="utf-8" />
-                <title>Register</title>
+                <title>HotAuctions - Register</title>
             </Helmet>
 
 		    <div className="section">
@@ -48,6 +49,10 @@ class Register extends Component {
 
                 	<div className="row">
 
+                        {alert && alert.message &&
+                            <div className={`alert ${alert.type}`}>{alert.message}</div>
+                        }
+
                         <div className="col-md-6 col-md-offset-3 pt-2">
 
                             <div className="section-title">
@@ -55,20 +60,36 @@ class Register extends Component {
                             </div>
 
                             <form name="form" onSubmit={this.handleSubmit}>
-                                <div className='form-group'>
-                                    <input type="text" className="input" name="name" placeholder="First Name" value={name} onChange={this.handleChange} />
+                            
+                                <div className={'form-group' + (submitted && !name ? ' has-error' : '')}>
+                                    <input type="text" className="form-control" name="name" placeholder="First Name" value={name} onChange={this.handleChange} />
+                                    {submitted && !name &&
+                                        <div className="help-block">Name is required</div>
+                                    }
                                 </div>
-                                <div className='form-group'>
-                                    <input type="text" className="input" name="surname" placeholder="Last Name" value={surname} onChange={this.handleChange} />
+                                <div className={'form-group' + (submitted && !surname ? ' has-error' : '')}>
+                                    <input type="text" className="form-control" name="surname" placeholder="Last Name" value={surname} onChange={this.handleChange} />
+                                    {submitted && !surname &&
+                                        <div className="help-block">Surname is required</div>
+                                    }
                                 </div>
-                                <div className='form-group'>
-                                    <input type="text" className="input" name="email" placeholder="Email" value={email} onChange={this.handleChange} />
+                                <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                                    <input type="text" className="form-control" name="email" placeholder="Email" value={email} onChange={this.handleChange} />
+                                    {submitted && !email &&
+                                        <div className="help-block">Email is required</div>
+                                    }
                                 </div>
-                                <div className='form-group'>
-                                    <input type="password" className="input" name="password" placeholder="Password" value={password} onChange={this.handleChange} />
+                                <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+                                    <input type="password" className="form-control" name="password" placeholder="Password" value={password} onChange={this.handleChange} />
+                                    {submitted && !password &&
+                                        <div className="help-block">Password is required</div>
+                                    }
                                 </div>
-                                <div className='form-group'>
-                                    <input type="password" className="input" name="repeatpassword" placeholder="Repeat Password" value={repeatpassword} onChange={this.handleChange} />
+                                <div className={'form-group' + (submitted && !repeatpassword || password !== repeatpassword ? ' has-error' : '')}>
+                                    <input type="password" className="form-control" name="repeatpassword" placeholder="Repeat Password" value={repeatpassword} onChange={this.handleChange} />
+                                    {submitted && (!repeatpassword || password !== repeatpassword) &&
+                                        <div className="help-block">Repeat password is required or does not match</div>
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <button className="primary-btn">Register</button>
@@ -89,10 +110,8 @@ class Register extends Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.user
-    return {
-        loggingIn
-    }
+    const { alert } = state
+    return { alert } 
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(userActions, dispatch)

@@ -27,7 +27,7 @@ class Profile extends Component {
             <div>
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>User</title>
+                    <title>HotAuctions - User Profile</title>
                 </Helmet>
 
                 <div className="section">

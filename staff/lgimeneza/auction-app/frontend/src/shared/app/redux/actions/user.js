@@ -20,7 +20,7 @@ function login(username, password, history) {
                 history.push('/')
             }
             ).catch(error => {
-                dispatch(alertActions.error(error))
+                dispatch(alertActions.error(error.message))
             })
     }
 }
@@ -52,7 +52,7 @@ function retrieveUser() {
     }
 }
 
-function register(name, surname, email,  password, history) {
+function register(name, surname, email, password, history) {
     return dispatch => {
 
         logic.register(name, surname, email,  password)
@@ -61,7 +61,7 @@ function register(name, surname, email,  password, history) {
                 dispatch(alertActions.success('Registration successful'));
             })
             .catch(error => {
-                dispatch(alertActions.error(error));
+                dispatch(alertActions.error(error.message));
             })
     };
 }

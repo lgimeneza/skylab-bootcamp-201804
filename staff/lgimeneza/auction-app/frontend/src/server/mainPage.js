@@ -19,7 +19,7 @@ export default function renderFullPage(html, preloadedState, helmet) {
 		<link type="text/css" rel="stylesheet" href="/dist/assets/styles/nouislider.min.css"/>
 	  
 		<!-- Font Awesome Icon -->
-		<link rel="stylesheet" href="/dist/assets/styles/font-awesome.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		
 		<!-- Animate.css stlylesheet -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">

@@ -6,12 +6,11 @@ const initialState = {
     products:[]
 }
 
-export default function products(state = initialState, action) {
+export default function userProducts(state = initialState, action) {
     switch (action.type) {
-        case Types.UPDATE_PRODUCTS:
+        case Types.UPDATE_USER_PRODUCTS:
             return action.products
         default:
             return state
     }
 }
-
