@@ -4,7 +4,16 @@ const axios = require('axios')
 
 const singingLabApi = {
     url: 'NO-URL',
-
+    
+    /**
+     * Setter/getter function: 
+     * 
+     * Sets the token when the function is called with a parameter and get's it when no parameter is introduced  
+     * 
+     * @param {string} token
+     * 
+     * @returns {<string>}
+    */
     token(token) {
         if (token) {
             this._token = token
