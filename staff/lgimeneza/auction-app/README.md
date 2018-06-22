@@ -1,15 +1,15 @@
 # Isomorphic SSR + React + Redux Auction App Demo
 
-### Functional description
+## Functional description
 
-##### This project explores how to do a Server Side Rendering App with REACT + REDUX combine it with events on client side with shocket.io
+### This project explores how to do an Isomorphic Server Side Rendering App with React + Redux combine it with events on client side with socket.io
 
 ![](docs/images/use-case.png)
 
-### Architecture
+## Architecture
 
 ![](docs/images/architecture.png)
 
-### Data model
+## Data model
 
 ![](docs/images/auction-model.png)
