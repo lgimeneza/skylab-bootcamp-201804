@@ -1,6 +1,6 @@
 # NUTRI-FIT 💪
 
-E-comerce web platform focused on the sale of nutritional food products. The sale of these products is aimed at people looking for a specific diet. For this, both individual dishes and specialized packages are available for a type of nutritional plan.
+To make the application work, you must create an .env file and configure the variables for the correct use of the API. Remember that you must also install the dependencies. The Front-End uses the API to communicate with the Back-Endr. Server is responsible for managing communication with the database.
 
 [Documentation](./docs/README.md)
 
