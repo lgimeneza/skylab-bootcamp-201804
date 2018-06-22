@@ -5,6 +5,17 @@ const no = "N•_©h€©K!"
 
 const logic = {
 
+    /**
+     * Creates a new user in the database
+     * 
+     * @param {String} username 
+     * @param {String} password 
+     * @param {String} location 
+     * 
+     * @throws if not valid params or user already exists
+     * 
+     * @returns {Promise<Boolean>}
+     */
     registerUser(username, password, location) {
         return Promise.resolve()
             .then(() => {
@@ -21,6 +32,16 @@ const logic = {
 
     },
 
+    /**
+     * Authenticate if user exists and returns the id
+     * 
+     * @param {String} username 
+     * @param {String} password 
+     * 
+     * @throws if not valid params or wrong username or password
+     * 
+     * @returns {Promise<String>}
+     */
     authenticateUser(username, password) {
         return Promise.resolve()
             .then(() => {
@@ -34,7 +55,16 @@ const logic = {
                 return user.id
             })
     },
-
+    
+    /**
+     * Get user selected info
+     * 
+     * @param {String} userId
+     * 
+     * @throws if not valid params or user doesn't exists
+     * 
+     * @returns {Promise<User>} 
+     */
     retrieveUser(userId) {
         return Promise.resolve()
             .then(() => {
@@ -49,6 +79,17 @@ const logic = {
             })
     },
 
+    /**
+     * Delete a user from database
+     * 
+     * @param {String} userId 
+     * @param {String} username 
+     * @param {String} password 
+     * 
+     * @throws if not valid params or wrong parameters
+     * 
+     * @returns {Promise<Boolean>}
+     */
     unregisterUser(userId, username, password) {
         return Promise.resolve()
             .then(() => {
@@ -70,6 +111,15 @@ const logic = {
 
     },
 
+    /**
+     * Get user countries names
+     * 
+     * @param {String} userId 
+     * 
+     * @throws if not valid params or not user founded
+     * 
+     * @returns {Promise<Array.<String>>}
+     */
     listVisitedCountries(userId) {
         return Promise.resolve()
             .then(() => {
@@ -85,6 +135,16 @@ const logic = {
             })
     },
 
+    /**
+     * Get specific country info
+     * 
+     * @param {String} userId 
+     * @param {String} countryName 
+     * 
+     * @throws if not valid params or not user founded
+     * 
+     * @returns {Promise<Country>}
+     */
     retrieveCountry(userId, countryName) {
         return Promise.resolve()
             .then(() => {
@@ -101,6 +161,17 @@ const logic = {
             })
     },
 
+    /**
+     * Adds new photo to a country, if country doesn't exists creates a new one
+     * 
+     * @param {String} userId 
+     * @param {String} name 
+     * @param {String} url 
+     * 
+     * @throws if not valid params or no user founded
+     * 
+     * @returns {Promise<String>}
+     */
     addPhoto(userId, name, url) {
         return Promise.resolve()
             .then(() => {
@@ -138,10 +209,19 @@ const logic = {
                             })
                     })
             })
-
-
     },
 
+    /**
+     * Get photo info
+     * 
+     * @param {String} userId 
+     * @param {String} countryName 
+     * @param {String} photoId 
+     * 
+     * @throws if not valid params or no models founded
+     * 
+     * @returns {Promise<Photo>}
+     */
     retrievePhoto(userId, countryName, photoId) {
         return Promise.resolve()
             .then(() => {
@@ -166,6 +246,18 @@ const logic = {
             })
     },
 
+    /**
+     * Changes photo url
+     * 
+     * @param {String} userId 
+     * @param {String} countryName 
+     * @param {String} photoId 
+     * @param {String} url 
+     * 
+     * @throws if not valid params or no models founded
+     * 
+     * @returns {Promise<Photo>}
+     */
     updatePhoto(userId, countryName, photoId, url) {
         return Promise.resolve()
             .then(() => {
@@ -191,6 +283,17 @@ const logic = {
             })
     },
 
+    /**
+     * Deletes a photo from database and if is the last one from a country, removes that Country and its reference on User
+     * 
+     * @param {String} userId 
+     * @param {String} countryName 
+     * @param {String} photoId 
+     * 
+     * @throws if not valid params or no models founded
+     * 
+     * @returns {Promise<Boolean>}
+     */
     removePhoto(userId, countryName, photoId) {
         return Promise.resolve()
             .then(() => {
