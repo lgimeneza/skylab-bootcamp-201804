@@ -6,7 +6,7 @@
 Dogger is a fun application for your dog, in which you can share the life of your best friend. You can upload photos and meet other dogs, for, who knows ... maybe find some love.
  ![Heart](doc/images/heart-icon.png)
 
-console.log();
+<br/><br/>
  ## Functional description
 This application allows you to change your profile photo, upload images to our own gallery. Send friend requests, show notifications, and if the users are friends they can see each other's photo gallery and contact email.
 
