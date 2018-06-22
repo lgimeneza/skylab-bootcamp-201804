@@ -85,7 +85,6 @@ const logic = {
             })
     },
 
-
     /**
      * Removes a product from the cart and updates it
      * 
