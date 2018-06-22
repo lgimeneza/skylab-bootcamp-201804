@@ -4,6 +4,13 @@ const axios = require('axios')
 const clientApi = {
     url: 'NO-URL',
 
+    /**
+     * Manage user token
+     * 
+     * @param {String} token The user token.
+     * 
+     * @returns {<token>}
+     */
     token(token) {
         if (token) {
             this._token = token
@@ -101,7 +108,6 @@ const clientApi = {
     },
 
     /**
-     * 
      * @param {string} id
      * 
      * @returns {Promise<User>} 
@@ -132,7 +138,11 @@ const clientApi = {
             })
     },
 
-
+   /**
+     * List all categories 
+     * 
+     * @returns {Promise<[Categories]>}
+     */
     listAllCategories() {
         return Promise.resolve()
             .then(() => {
@@ -154,11 +164,11 @@ const clientApi = {
             })
     },
 
-     /**
-     * 
-     * @returns {Promise<[Object]>}
-     */
-
+    /**
+    * Lists root categories
+    * 
+    * @returns {Promise<[Category]>}
+    */
     listRootCategories() {
         return Promise.resolve()
             .then(() => {
@@ -180,14 +190,13 @@ const clientApi = {
             })
     },
 
-      /**
-     * 
-     * @param {string} userId
-     * @param {string} text 
-     * 
-     * @returns {Promise<string>}
-     */
-
+     /**
+    * Lists Subcategories
+    * 
+    * @param {String} categoryId The category id of the product.
+    * 
+    * @returns {Promise<[Categorises]>}
+    */
     listSubcategories(categoryId) {
         return Promise.resolve()
             .then(() => {
@@ -213,14 +222,13 @@ const clientApi = {
             })
     },
 
-      /**
+    /**
+     * Lists products by category
      * 
-     * @param {string} userId
-     * @param {string} text 
+     * @param {String} categoryId The category id of the product.
      * 
-     * @returns {Promise<string>}
+     * @returns {Promise<[Product]>}
      */
-
     listProductsByCategory(categoryId) {
         return Promise.resolve()
             .then(() => {
@@ -246,12 +254,10 @@ const clientApi = {
             })
     },
 
-    /**
+     /**
+     * Lists all products
      * 
-     * @param {string} userId
-     * @param {string} text 
-     * 
-     * @returns {Promise<string>}
+     * @returns {Promise<[Product]>}
      */
     listProducts() {
         return Promise.resolve()
@@ -275,6 +281,13 @@ const clientApi = {
             })
     },
 
+    /**
+     * Retrieve a product and show details
+     * 
+     * @param {String} productId The category id of the product.
+     * 
+     * @returns {Promise<Product>}
+     */
     productDetails(productId) {
         return Promise.resolve()
             .then(() => {
@@ -299,6 +312,13 @@ const clientApi = {
             })
     },
 
+    /**
+     * Lists products by theirs ids
+     * 
+     * @param {String} ids Array contains selected ids.
+     * 
+     * @returns {Promise<[Product]>}
+     */
     listProductsByIds(cart) {
 
         return Promise.resolve()
@@ -322,6 +342,16 @@ const clientApi = {
             })
     },
 
+    /**
+     * @param {string} userId User id
+     * @param {string} deliveryAddress Deliery address of the order
+     * @param {string} orderDate    Date of the order
+     * @param {Array} orderProducts Products in the order
+     * @param {string} paymentMethod Payment method selected
+     * @param {string} status Order Status(paid, proccessing, unpaid) 
+     * 
+     * @returns {Promise<"orderId">}
+     */
     createOrder(userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status) {
         return Promise.resolve()
             .then(() => {
@@ -364,8 +394,6 @@ const clientApi = {
                     })
             })
     }
-   
-   
 }
 
 module.exports = clientApi

@@ -5,6 +5,13 @@ var axios = require('axios');
 var clientApi = {
     url: 'NO-URL',
 
+    /**
+     * Manage user token
+     * 
+     * @param {String} token The user token.
+     * 
+     * @returns {<token>}
+     */
     token: function token(_token) {
         if (_token) {
             this._token = _token;
@@ -113,7 +120,6 @@ var clientApi = {
 
 
     /**
-     * 
      * @param {string} id
      * 
      * @returns {Promise<User>} 
@@ -146,6 +152,13 @@ var clientApi = {
             });
         });
     },
+
+
+    /**
+      * List all categories 
+      * 
+      * @returns {Promise<[Categories]>}
+      */
     listAllCategories: function listAllCategories() {
         var _this4 = this;
 
@@ -172,10 +185,10 @@ var clientApi = {
 
 
     /**
+    * Lists root categories
     * 
-    * @returns {Promise<[Object]>}
+    * @returns {Promise<[Category]>}
     */
-
     listRootCategories: function listRootCategories() {
         var _this5 = this;
 
@@ -202,13 +215,12 @@ var clientApi = {
 
 
     /**
+    * Lists Subcategories
     * 
-    * @param {string} userId
-    * @param {string} text 
+    * @param {String} categoryId The category id of the product.
     * 
-    * @returns {Promise<string>}
+    * @returns {Promise<[Categorises]>}
     */
-
     listSubcategories: function listSubcategories(categoryId) {
         var _this6 = this;
 
@@ -239,13 +251,12 @@ var clientApi = {
 
 
     /**
-    * 
-    * @param {string} userId
-    * @param {string} text 
-    * 
-    * @returns {Promise<string>}
-    */
-
+     * Lists products by category
+     * 
+     * @param {String} categoryId The category id of the product.
+     * 
+     * @returns {Promise<[Product]>}
+     */
     listProductsByCategory: function listProductsByCategory(categoryId) {
         var _this7 = this;
 
@@ -276,12 +287,10 @@ var clientApi = {
 
 
     /**
-     * 
-     * @param {string} userId
-     * @param {string} text 
-     * 
-     * @returns {Promise<string>}
-     */
+    * Lists all products
+    * 
+    * @returns {Promise<[Product]>}
+    */
     listProducts: function listProducts() {
         var _this8 = this;
 
@@ -306,6 +315,15 @@ var clientApi = {
             });
         });
     },
+
+
+    /**
+     * Retrieve a product and show details
+     * 
+     * @param {String} productId The category id of the product.
+     * 
+     * @returns {Promise<Product>}
+     */
     productDetails: function productDetails(productId) {
         var _this9 = this;
 
@@ -332,6 +350,15 @@ var clientApi = {
             });
         });
     },
+
+
+    /**
+     * Lists products by theirs ids
+     * 
+     * @param {String} ids Array contains selected ids.
+     * 
+     * @returns {Promise<[Product]>}
+     */
     listProductsByIds: function listProductsByIds(cart) {
         var _this10 = this;
 
@@ -356,6 +383,18 @@ var clientApi = {
             });
         });
     },
+
+
+    /**
+     * @param {string} userId User id
+     * @param {string} deliveryAddress Deliery address of the order
+     * @param {string} orderDate    Date of the order
+     * @param {Array} orderProducts Products in the order
+     * @param {string} paymentMethod Payment method selected
+     * @param {string} status Order Status(paid, proccessing, unpaid) 
+     * 
+     * @returns {Promise<"orderId">}
+     */
     createOrder: function createOrder(userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status) {
         var _this11 = this;
 
