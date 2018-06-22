@@ -10,15 +10,15 @@ console.log();
  ## Functional description
 This application allows you to change your profile photo, upload images to our own gallery. Send friend requests, show notifications, and if the users are friends they can see each other's photo gallery and contact email.
 
-Use case diagram
+## Use case diagram
 
  ![use-case](doc/images/uml-use-case-diagram.png)
 
- Data Models
+## Data Models
 
  ![db-diagram](doc/images/db-diagram.png)
 
- Screenshots
+ ## Screenshots
 
  ![db-diagram](doc/images/screenshots/screenshot1.png)
 
@@ -30,16 +30,16 @@ Use case diagram
 
 
 
- React Components
+ ## React Components
 
  ![components-react](doc/images/components-react.png)
 
 
- Block Model
+ ## Block Model
 
  ![block-diagram](doc/images/block-diagram.png)
 
-Coverage report with Nyc-Mocha (logic Server):
+## Coverage report with Nyc-Mocha (logic Server):
 
 ![nyc-mocha](doc/images/nyc-mocha.png)
 
