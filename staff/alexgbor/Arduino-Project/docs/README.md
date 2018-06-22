@@ -61,7 +61,192 @@ Now you're ready to connect your device to your local router through wi-fi conne
 
 Here comes the hard part, try to follow the main steps and from there just be creative.
 
-## TO DO TO DO TO DO TO DO TO DO TO DO TO DO 
+First of all, we'll use the Arduino IDE. You can download it for free from the official website.
+After that, in order to setup the IDE you can follow the steps in the tutorial attached in the "Utils" section.
+
+Now let's get started with the code.
+
+First of all we'll import some libraries, we do it with the word  ```#include```.
+
+```
+#include <ESP8266HTTPClient.h>
+#include <ESP8266WebServer.h>
+#include <ESP8266WiFi.h>
+#include <ArduinoJson.h>
+#include <elapsedMillis.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+```
+
+In this example the first three libraries are used to create a webserver in the arduino and manage the WiFi connection with your router.
+
+The forth one is used to create/parse JSON files, ElapsedMillis handles cycle delays and the last two are used for the sensors.
+
+Now, in case you'll use a sensor I recommend to set up the pin where your arduino will start reading the data. DallasTemperature is only recommended for temperature sensors, otherwise you can use a different library or do it manually.
+
+```
+#define ONE_WIRE_BUS D4
+
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature DS18B20(&oneWire);
+```
+
+Now, in order to create the webserver just write this line of code:
+
+```
+ESP8266WebServer server;
+```
+
+Lastly you'll need to set up a variable for every output pin that you'll use, in my case I've named them pin_led:
+
+```
+uint8_t pin_led1 = 12;
+uint8_t pin_led2 = 15;
+uint8_t pin_led3 = 4;
+```
+
+You can read the number of the pin directly on the board, but you need to write the number associated with it. You can use this table:
+
+![Table of pins](https://i.imgur.com/6e4a0Rz.png)
+
+I've got a few more lines to handle cycles and a boolean for the sensor, but you don't need to use them.
+
+```
+elapsedMillis timeElapsed;
+unsigned int interval = 10000;
+
+bool manage = false;
+```
+
+Now it's time for the setup function. That one must be in every Arduino code, along with the loop function.
+
+In the setup function we'll declare our selected pins as OUTPUT pins, create the connection with the router and create endpoints so your Arduino can be reached from other devices.
+
+```
+void setup() {
+  pinMode(pin_led1,OUTPUT);
+  pinMode(pin_led2,OUTPUT);
+  pinMode(pin_led3,OUTPUT);
+
+  //webserver
+  Serial.begin(115200); 
+ 
+  WiFi.begin("ssid", "password");
+
+  while (WiFi.status() != WL_CONNECTED) {  
+ 
+    delay(500);
+    Serial.println("Waiting for connection");
+ 
+  }
+
+  Serial.println("");
+  Serial.print("IP Address: ");
+  Serial.print(WiFi.localIP());
+
+  server.on("/",[](){server.send(200,"text/plain","Hello from the webserver");});
+
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/pin/12/on",function);
+  
+  server.begin();
+ 
+}
+```
+
+We've set an endpoint at ```localhost/<userId>/<ArduinoId>/on``` that, when called with any method will trigger a function. We may use another one that ends in /off .
+
+Now it's time for the loop function.
+
+```
+void loop()
+{
+   server.handleClient();
+
+   if (manage) {
+    if (timeElapsed > interval) 
+     {
+   float temperature = getTemperature();
+   StaticJsonBuffer<300> JSONbuffer;   
+
+   JsonObject& JSONencoder = JSONbuffer.createObject(); 
+ 
+   JSONencoder["value"] = temperature;
+   char json[300];
+   JSONencoder.prettyPrintTo(json, sizeof(json));
+   Serial.println(json);
+  
+   HTTPClient http;
+
+   http.begin("apiurl");
+
+   http.addHeader("Content-Type", "application/json");
+   int httpCode = http.POST(json);
+   
+   String payload = http.getString(); 
+   Serial.print("POST payload: "); 
+   Serial.println(payload);
+ 
+   Serial.println(httpCode); 
+   Serial.println(payload);   
+   http.end();
+   timeElapsed = 0;
+     }
+   
+   }
+}
+```
+The method handleClient just reads the calls/requests to the webserver, it must be there no matter what.
+
+After that, in case my boolean manage is true (which we'll see in a moment) and the cycle time condition is fulfilled, we'll enter a loop. That conditional is completely optional.
+
+The next two lines just call an external function to retrieve the temperature value from the sensor and store it in a variable.
+
+After that we'll build a JSON object, that will be sent later.
+
+The only line that you need to edit from the JSON block is ```JSONencoder["value"] = temperature;``` where value and temperature can be any "key" and "value" pair. You can add as many as you want.
+
+Then I created the Http request to an external api, where I'll send the previous JSON and add some Headers. After that we need to call http.end();.
+
+The api url must be: ```http://<arduinocontrollerwebsite>/api/users/<userId>/arduinos/<arduinoId>/data```
+
+The Serial methods are used for monitoring and can be skipped.
+
+Lastly, the functions that will be called inside other functions or when the endpoints are reached.
+
+For the sensor:
+```
+void manageOn() 
+{
+  manage = true;
+   server.sendHeader("Access-Control-Allow-Origin","*");
+    server.sendHeader("Access-Control-Allow-Credentials", "true");
+    server.sendHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    server.sendHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  server.send(200,"application/json","{\"stat\": \"on\"}");
+}
+```
+
+It simply changes the manage variable to true and replies with CORS headers and a JSON object.
+
+For the off function it's the same changing the variable to false.
+
+An example of output function, for example the LED:
+
+```
+void toggle1on()
+{
+  digitalWrite(pin_led1,HIGH);
+  server.sendHeader("Access-Control-Allow-Origin","*");
+  server.sendHeader("Access-Control-Allow-Credentials", "true");
+    server.sendHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    server.sendHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  server.send(200,"application/json","{\"stat\": \"1-on\"}");
+}
+```
+
+The only difference with the sensor is that we set the output as HIGH to give voltage to that pin, or LOW to stop it.
+
+And that's all you need to get started, it's hard the first time but you'll feel how simple it is after a few tries.
 
 ### Control Panel
 

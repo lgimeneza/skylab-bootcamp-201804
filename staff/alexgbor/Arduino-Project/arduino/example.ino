@@ -25,10 +25,15 @@ bool manage = false;
 //Output pins
 uint8_t pin_led1 = 12;
 uint8_t pin_led2 = 15;
+uint8_t pin_led3 = 4;
  
 void setup() {
+  //Set output pins
   pinMode(pin_led1,OUTPUT);
   pinMode(pin_led2,OUTPUT);
+  pinMode(pin_led3,OUTPUT);
+
+  //webserver
   Serial.begin(115200); 
   //casa
   //WiFi.begin("MOVISTAR_2F78", "iACrNKmJ9Wptg44tmtmm");
@@ -48,13 +53,15 @@ void setup() {
   //base endpoint
   server.on("/",[](){server.send(200,"text/plain","Arduino Controller by Alex GB");});
   //output endpoints
-  server.on("/5b2a3bae65651b3bb801af79/5b2b74eb789d6e0eb0da3fb3/pin/12/on",toggle1on);
-  server.on("/5b2a3bae65651b3bb801af79/5b2b74eb789d6e0eb0da3fb3/pin/12/off",toggle1off);
-  server.on("/5b2a3bae65651b3bb801af79/5b2b74eb789d6e0eb0da3fb3/pin/15/on",toggle2on);
-  server.on("/5b2a3bae65651b3bb801af79/5b2b74eb789d6e0eb0da3fb3/pin/15/off",toggle2off);
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/pin/12/on",toggle1on);
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/pin/12/off",toggle1off);
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/pin/15/on",toggle2on);
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/pin/15/off",toggle2off);
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/pin/4/on",toggle3on);
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/pin/4/off",toggle3off);
   //data endpoints
-  server.on("/5b2a3bae65651b3bb801af79/5b2b74eb789d6e0eb0da3fb3/on",manageOn);
-  server.on("/5b2a3bae65651b3bb801af79/5b2b74eb789d6e0eb0da3fb3/off",manageOff);
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/on",manageOn);
+  server.on("/5b2bd1ca48392a3968e37bbc/5b2bd28648392a3968e37bbd/off",manageOff);
   server.begin();
  
 }
@@ -79,7 +86,7 @@ void loop()
    //casa
    //http.begin("http://192.168.1.35:5000/api/users/5b2a3bae65651b3bb801af79/arduinos/5b2a3bc765651b3bb801af7a/data");
    //skylab
-   http.begin("http://192.168.0.46:5000/api/users/5b2a3bae65651b3bb801af79/arduinos/5b2b74eb789d6e0eb0da3fb3/data");
+   http.begin("http://192.168.0.46:5000/api/users/5b2bd1ca48392a3968e37bbc/arduinos/5b2bd28648392a3968e37bbd/data");
 
    http.addHeader("Content-Type", "application/json");
    int httpCode = http.POST(json);
@@ -161,4 +168,22 @@ void toggle2off()
     server.sendHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     server.sendHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   server.send(200,"application/json","{\"stat\": \"2-off\"}");
+}
+void toggle3on()
+{
+  digitalWrite(pin_led3,HIGH);
+  server.sendHeader("Access-Control-Allow-Origin","*");
+  server.sendHeader("Access-Control-Allow-Credentials", "true");
+    server.sendHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    server.sendHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  server.send(200,"application/json","{\"stat\": \"3-on\"}");
+}
+void toggle3off()
+{
+  digitalWrite(pin_led3,LOW);
+  server.sendHeader("Access-Control-Allow-Origin","*");
+  server.sendHeader("Access-Control-Allow-Credentials", "true");
+    server.sendHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    server.sendHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  server.send(200,"application/json","{\"stat\": \"3-off\"}");
 }
