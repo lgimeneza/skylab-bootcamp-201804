@@ -49,10 +49,6 @@ Style Booking is a hairdresser managing tool where you can choose the service wi
 * CSS3
 * Bulma
 
-## Run the app
-
-To deploy you need to go to the client and make a npm install, then go to the app folder and make a npm start
-
 ## General structure
 
 ### Data model
