@@ -69,7 +69,7 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 
 ## SHOW DEMO
 
-Try a demo of the project here: surge
+Try a demo of the project here: [Link](http://nutri-fit.surge.sh)
 
 ## Information about this repository
 
