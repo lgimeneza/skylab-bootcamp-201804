@@ -1,2 +1,3 @@
-# Arduino-Project
-Web controlled arduino
+# Arduino Controller
+
+[Documentation](docs)
