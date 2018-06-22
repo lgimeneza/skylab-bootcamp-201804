@@ -26,8 +26,7 @@ class EditProfile extends Component {
         zip:"",
     }
 
-    handleKeepName = (e) => {
-        let name = e.target.value;
+    handleKeepName = ({target:{value:name}}) => {
         this.setState({ name })
     }
 
@@ -54,7 +53,7 @@ class EditProfile extends Component {
         this.setState({ race })
     }   
     
-    getRaces = races => {
+    getRaces = () => {
         return logic.races.map((race,index) => <option key={"select_race"+index} value={race}>{race}</option>)
     }
 
@@ -88,7 +87,7 @@ class EditProfile extends Component {
 
     handleSaveDB = () =>{
         logic.updateUser(this.state.name, this.state.firstEmail,this.state.email, this.state.password, this.state.race, this.state.gender, this.state.description, this.state.photoProfile, this.state.birthdate,this.state.city,this.state.zip)
-        .then((res)=>{
+        .then(()=>{
             this.toggleModal("Success","Congratulations! correctly updated data")
         })
         .catch((res)=>{
@@ -117,10 +116,7 @@ class EditProfile extends Component {
         this.props.history.push(route)
     }
 
-    render() {
-        
-
-       
+    render() {     
 
         return (
 

@@ -393,7 +393,7 @@ const logic = {
                         user.friends.push(userId)
 
                         return user.save()
-                            .then((user) => {
+                            .then(() => {
                                 return true
                             })
                             .then((saveFirstUser) => {
@@ -502,7 +502,6 @@ const logic = {
 
                         else throw Error(`no friend found with id ${friendId}`)
 
-
                         return user.save()
                     })
                     .then(({ friends }) => friends)
@@ -601,10 +600,7 @@ const logic = {
 
                                         return true
                                     })
-
                             })
-
-
                     })
             })
 
@@ -667,10 +663,10 @@ const logic = {
     * @param {string} idUser
     * @param {string} base64Image
     * 
-    * @returns {Promise<boolean>}
+    * @returns {Promise<string>}
     */
     saveImageProfile(idUser, base64Image) {
-        //let url =""
+
         return Promise.resolve()
             .then(() => {
                 if (typeof idUser !== 'string') throw Error('idUser is not a string')
@@ -689,29 +685,20 @@ const logic = {
                         return User.findByIdAndUpdate(idUser, { photoProfile: urlCloudinary }, {new: true})
                             .then(user => {
                                 return user.photoProfile
-                            })
-                    })
-
-                //SAVE ON SERVER
-                // var data = base64Image.replace(/^data:image\/\w+;base64,/, "");
-                // var buf = new Buffer(data, 'base64');
-                // return fs.writeFile(`img/profile_${idUser}.jpg`, buf, function (err) {
-
-                //     if (err) return("error: "+err)
-                //     else return"upload Ok"
-                // })
+                        })
+                })
             })
     },
 
 
 
-    /**
+/**
 * 
 * @param {string} idUser
 * @param {string} base64Image
 * @param {string} descriptionImg
 * 
-* @returns {Promise<boolean>}
+* @returns {Promise<string>}
 */
     saveImagesUser(idUser, base64Image, descriptionImg) {
         let url = ""
@@ -740,7 +727,7 @@ const logic = {
                     })
 
                     return User.findByIdAndUpdate(idUser, { $push: { images: image } }, { new: true })
-                            .then(user => {
+                            .then(() => {
                                 return url
                             })
                     })

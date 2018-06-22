@@ -29,7 +29,7 @@ describe('logic social', () => {
         indexes.length = 0
         while (count--) indexes.push(count)
 
-        return Promise.all([User.remove()/*, Note.deleteMany()*/])
+        return Promise.all([User.remove()])
     })
 
     describe('save image user profile', () => {
@@ -49,7 +49,7 @@ describe('logic social', () => {
                         return logic.saveImageProfile(id,imgBase64)                        
                                  .then(res => { 
                                     expect(typeof res).to.equal("string")})
-                                })
+                    })
                 })
 
         })  

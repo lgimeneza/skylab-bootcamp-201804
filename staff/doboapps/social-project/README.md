@@ -42,7 +42,7 @@ This application allows you to change your profile photo, upload images to our o
  ![block-diagram](doc/images/block-diagram.png)
 
 <br/><br/>
-## Coverage report with Nyc-Mocha (logic Server):
+## Coverage test with Nyc-Mocha (logic Server):
 
 ![nyc-mocha](doc/images/nyc-mocha.png)
 

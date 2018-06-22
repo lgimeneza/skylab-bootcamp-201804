@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import { withRouter } from 'react-router-dom'
 import logic from "../../logic"
 import { CardUser, Loading } from '../'
 import { Container, Col, Row } from 'reactstrap'
-import './style.scss';
-
+import './style.scss'
 
 class Home extends Component {
 
@@ -33,7 +32,6 @@ class Home extends Component {
 
     handleKeepCity = ({ target: { value: cityToSearch } }) => {
         this.handleSearch(this.state.raceToSearch, this.state.genderToSearch, cityToSearch)
-
     }
 
     getCities = () => {
@@ -88,12 +86,9 @@ class Home extends Component {
     }
 
 
-
     render() {
 
-
-        return (
-            <Container className="container-home">
+        return <Container className="container-home">
                 <form >
                     <Row>
                         <Col sm="4" >
@@ -115,23 +110,19 @@ class Home extends Component {
                             </select>
                         </Col>
                     </Row>
-
                 </form>
 
                 <h3>Near you...</h3><br/>
                 {this.state.loading ? <Loading text="Loading..." /> 
                 :                 
                 <Row>
-                    {    
-                    this.state.users.map((user, i) => {
+                    {this.state.users.map((user, i) => {
                         if (user._id !== this.props.dataUser.idUser)
                             return <CardUser key={i + "-" + user.id} user={user} />
                         else return undefined
-                    })
-                    }
+                    })}
                 </Row>}
             </Container>
-        )
     }
 }
-export default withRouter(Home);
+export default withRouter(Home)
