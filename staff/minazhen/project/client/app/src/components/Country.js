@@ -140,14 +140,16 @@ class Country extends Component {
                         </div>
                     </div> 
                 }
-                <div className="album">
-                    <div className="arrows arrow-left"><button name="left" onClick={this.order}> ◀ </button></div>
-                    {photos.map((photo, i) =>
-                        <div key={photo._id} className="photo">
-                            <img src={photo.url} alt={countryName} name={photo._id} onClick={this.retrievePhoto}/>
-                        </div>)}
-                    <div className="arrows arrow-right"><button name="right" onClick={this.order}> ▶ </button></div>
-                </div>
+                {((photos.length === 0) || (selected === "NONE")) ? <div></div> : 
+                    <div className="album">
+                        <div className="arrows arrow-left"><button name="left" onClick={this.order}> ◀ </button></div>
+                        {photos.map((photo, i) =>
+                            <div key={photo._id} className="photo">
+                                <img src={photo.url} alt={countryName} name={photo._id} onClick={this.retrievePhoto}/>
+                            </div>)}
+                        <div className="arrows arrow-right"><button name="right" onClick={this.order}> ▶ </button></div>
+                    </div>
+                }
             </div>
                 <label className="file-upload-container" htmlFor="file-upload">
                     <input id="file-upload" onChange={this.upload} type="file" style={{display: "none"}}/>

@@ -1,7 +1,8 @@
 const travelApi = require("api")
 const cloudApi = require("cloud-api")
 
-travelApi.url = "http://localhost:4000/api"
+// travelApi.url = "http://localhost:4000/api"
+travelApi.url = "https://radiant-woodland-60903.herokuapp.com/api"
 
 const logic = {
     userId: "NO-ID",
