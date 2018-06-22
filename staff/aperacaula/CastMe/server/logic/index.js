@@ -22,7 +22,7 @@ cloudinary.config({
 const logic = {
   /**
    *
-   *
+   * @description Registers the user once he puts all the necessary info
    * @param {string} email
    * @param {string} password
    * @param {object} personalData
@@ -32,7 +32,7 @@ const logic = {
    * @param {string} profilePicture
    *
    *
-   *
+   *@throws Errors if the input values are wrong
    *
    * @returns {Promise<boolean>}
    */
@@ -100,11 +100,11 @@ const logic = {
   },
 
   /**
-   *
+   *@description Logs in the user if the credentials are valid
    * @param {string} email
    * @param {string} password
    *
-   * @returns {Promise<string>}
+   * @returns {Promise<string>} id
    */
   authenticateUser(email, password) {
     return Promise.resolve()
@@ -130,7 +130,14 @@ const logic = {
       });
   },
 
-
+  /**
+  *
+  * @description Provides reduced info about the user: name, surname, profile picture and applications
+  * 
+  * @param {string} id
+  *
+  * @returns {Promise<User>}
+  */
   retrieveUserLite(userId){
     return Promise.resolve()
       .then(() => {
@@ -168,7 +175,7 @@ const logic = {
 
 
   /**
-   *
+   *@description Provides all the info about a user given the id
    * @param {string} id
    *
    * @returns {Promise<User>}
@@ -212,6 +219,7 @@ const logic = {
 
   /**
    *
+   * @description It will bring all the info of a project
    * @param {string} id
    *
    * @returns {Promise<Project>}
@@ -260,6 +268,8 @@ const logic = {
 
   /**
    *
+   * @description This function updates the info of a user
+   * 
    * @param {string} email
    * @param {string} password
   * @param {string} newEmail
@@ -361,7 +371,7 @@ const logic = {
 
   /**
    *
-   * This method will unregister a user
+   * @description This method will unregister a user
    * 
    * @param {string} id
    * @param {string} email
@@ -398,7 +408,7 @@ const logic = {
 
   /**
    *
-   * 
+   * @description This function will list the projects
    *
    * @returns {Promise<array>} 
    */
@@ -413,10 +423,10 @@ const logic = {
 
 
   /**
-   *
+   * @description This function will give all the castings in which the user is registered  with all the applications the user has, which are objects with project info on project method and castings array with casting info in castings method
    * @param {string} userId
    *
-   * @returns {Promise<array>} with all the applications the user has, which are objects with project info on project method and castings array with casting info in castings method
+   * @returns {Promise<array>} 
    */
   getUserAppliedProjectCastings(userId) {
     return Promise.resolve()
@@ -447,7 +457,13 @@ const logic = {
       });
   },
 
-
+/**
+ * @description This is an auxiliary function that given a date calculates the age
+ * @param {Date} date1 
+ * 
+ * @returns {Number}
+ * 
+ */
   getAge(date1) {
     var birthday = date1;
     var today = new Date();
@@ -458,7 +474,7 @@ const logic = {
   },
 
   /**
-   *
+   * @description This function checks if a user is eligible for a casting or not
    * @param {string} userId
    * @param {string} castingId
    * @returns {Promise<boolean>} returns true if the user can subscribe to the casting.
@@ -512,6 +528,7 @@ const logic = {
 
   /**
    *
+   * @description This function allows a user to join a casting of a specific project
    * @param {string} userId
    * @param {string} projectId
    * @param {string} castingId
@@ -572,6 +589,7 @@ const logic = {
   },
 
   /**
+   *@description This function allows a user to remove his application from a casting of a specific project
    *
    * @param {string} userId
    * @param {string} projectId
