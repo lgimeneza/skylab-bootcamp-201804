@@ -118,6 +118,8 @@ const logic = {
      * @param {string} id 
      * @param {string} name 
      * @param {string} surname 
+     * @param {string} phone 
+     * @param {string} address 
      * @param {string} email 
      * @param {string} password 
      * @param {string} newEmail 

@@ -17,11 +17,15 @@ const singingLabApi = {
 
     /**
      * 
-     * @param {string} name 
-     * @param {string} surname 
-     * @param {string} address
-     * @param {string} email 
-     * @param {string} password 
+     * Register user
+     * 
+     * @param {string} name - user's name
+     * @param {string} surname - user's password
+     * @param {string} address - an address
+     * @param {string} email - a email to log in 
+     * @param {string} password - a password to log in
+     * 
+     * @throws {Error} - If invalid type of input or if user already exists
      * 
      * @returns {Promise<boolean>}
      */
@@ -68,12 +72,16 @@ const singingLabApi = {
 
 
     /**
-    * 
-    * @param {string} email 
-    * @param {string} password 
-    * 
-    * @returns {Promise<string>}
-    */
+     * 
+     * Authenticates an user
+     * 
+     * @param {string} email - user's email
+     * @param {string} password - user's password
+     * 
+     * @throws {Error} - Throws error on invalid type of input, unexpected response status or unable to reach server
+     * 
+     * @returns {Promise<string>}
+     */
     authenticateUser(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -109,8 +117,12 @@ const singingLabApi = {
 
 
     /**
+     *
+     * Retrieves an user
      * 
-     * @param {string} id
+     * @param {string} id - The id of the user
+     * 
+     * @throws {Error} - If no valid id is found, error on response status or unable to reach the server
      * 
      * @returns {Promise<User>} 
      */
@@ -139,7 +151,10 @@ const singingLabApi = {
             })
     },
 
+
     /**
+     * 
+     * Update user info
      * 
      * @param {string} id 
      * @param {string} name 
@@ -151,7 +166,9 @@ const singingLabApi = {
      * @param {string} newEmail 
      * @param {string} newPassword 
      * 
-     * @returns {Promise<boolean>}
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<User>}
      */
     updateUser(id, name, surname, phone, address, email, password, newEmail, newPassword) {
         return Promise.resolve()
@@ -204,9 +221,13 @@ const singingLabApi = {
 
     /**
      * 
+     * Unregisters a user
+     * 
      * @param {string} id 
      * @param {string} email 
      * @param {string} password 
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
      * 
      * @returns {Promise<boolean>}
      */
@@ -244,7 +265,12 @@ const singingLabApi = {
     },
 
     /**
-    * @returns {Promise<User>} 
+     * 
+     * Lists categories
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<[Category]>} 
     */
     listCategories() {
         return Promise.resolve()
@@ -269,7 +295,14 @@ const singingLabApi = {
     },
 
     /**
-    * @returns {Promise<User>} 
+     * 
+     * Lists products
+     *  
+     * @param {string} categoryId
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<[Product]>} 
     */
     listProducts(categoryId) {
         return Promise.resolve()
@@ -295,10 +328,13 @@ const singingLabApi = {
 
 
     /**
+      * Retrieves product
       * 
-      * @param {string} id
+      * @param {string} productId
       * 
-      * @returns {Promise<User>} 
+      * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+      * 
+      * @returns {Promise<Product>} 
       */
     retrieveProduct(productId) {
         return Promise.resolve()
@@ -327,7 +363,12 @@ const singingLabApi = {
 
 
     /**
-    * @returns {Promise<User>} 
+     *  
+     * Lists all products
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<[Product]>} 
     */
     listAllProducts() {
         return Promise.resolve()
@@ -354,7 +395,14 @@ const singingLabApi = {
 
 
     /**
-    * @returns {Promise<User>} 
+     * 
+     * Lists products by id
+     * 
+     * @param {Array} cart
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<[Product]>} 
     */
     listProductsByIds(cart) {
         // TODO GET url?ids=id1,id2,id2,id4
@@ -385,13 +433,18 @@ const singingLabApi = {
 
     /**
      * 
+     * Creates an order
+     * 
      * @param {string} paymentMethod 
      * @param {string} status 
-     * @param {string} products
+     * @param {Array} products
+     * @param {string} userId
      * @param {string} orderAdress 
-     * @param {string} date 
+     * @param {string} submitDate 
      * 
-     * @returns {Promise<boolean>}
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<Order>}
      */
     createOrder(paymentMethod, status, products, userId, orderAdress, submitDate) {
         return Promise.resolve()
