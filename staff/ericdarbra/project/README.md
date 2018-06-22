@@ -1,4 +1,5 @@
 # Nursefy-app
 
 [Documentation](nursefy-docs)
-[Demo](htpps://nursefy-app.surge.sh)
+
+[Demo](https://nursefy-app.surge.sh)
