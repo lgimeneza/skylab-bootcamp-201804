@@ -2,10 +2,10 @@ import React, { Component } from "react"
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
 import { Line } from 'react-chartjs-2'
+import swal from 'sweetalert2'
 import { Col, ButtonGroup, Row, Container, Jumbotron, Button, Collapse, Card, CardTitle, CardText, CardHeader, CardBody, FormGroup, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Home extends Component {
-
 
     state = {
         dropdownOpen: false,
@@ -41,6 +41,22 @@ class Home extends Component {
 
     outputHandler = ({ target: { value: selectedPin } }) => {
         this.setState({ selectedPin })
+    }
+
+    handleIds = () => {
+        const userId = localStorage.getItem('id-app')
+        const targetArduino = this.state.selectedArduino
+        if (this.state.data && this.state.selectedArduino && this.state.selectedArduino !== "Select an arduino:") {
+            const arduId = this.state.data.find(ele => ele.ip === targetArduino)
+            Promise.resolve()
+                .then(
+                    swal({
+                        type: 'success',
+                        title: 'Your data, write it down!',
+                        text: `UserId: ${userId} . ArduinoId: ${arduId.id} .`
+                    })
+                )
+        }
     }
 
     listArduinos = () => {
@@ -93,6 +109,40 @@ class Home extends Component {
             .then(() => {
                 this.setState({ ip: '', port: '' })
             })
+    }
+
+    exportData = () => {
+        let dataToExport = [];
+        let Yaxis
+        let Xaxis
+        const userId = localStorage.getItem('id-app')
+        const token = localStorage.getItem('token-app')
+        const targetArduino = this.state.selectedArduino
+        if (this.state.data && this.state.selectedArduino && this.state.selectedArduino !== "Select an arduino:") {
+            const arduId = this.state.data.find(function (ele) {
+                return ele.ip === targetArduino
+            })
+
+            logic.retrieveArduinoData(userId, arduId.id, token)
+                .then(data => {
+                    Yaxis = data.map(({ timestamp }) => {
+                        let parsedTime = new Date(timestamp).toLocaleTimeString()
+                        return parsedTime
+                    })
+                    Xaxis = data.map(ele => ele.value)
+                    return
+                })
+                .then(() => {
+                    for (let i = 0; i < Yaxis.length; i++) {
+                        dataToExport.push({ Yvalue: Yaxis[i], Xvalue: Xaxis[i] })
+                    }
+                    return
+                })
+                .then(() => {
+                    logic.downloadCSV({ filename: `data-${targetArduino}.csv` }, dataToExport)
+                })
+
+        }
     }
 
     _handleData = () => {
@@ -259,6 +309,8 @@ class Home extends Component {
                                         <ButtonGroup>
                                             <Button onClick={() => this.controlArduino('on')}>Send data</Button>
                                             <Button onClick={() => this.controlArduino('off')}>Stop sending data</Button>
+                                            <Button onClick={this.exportData}>Export data</Button>
+                                            <Button onClick={this.handleIds}>Show Ids</Button>
                                         </ButtonGroup>
                                     </CardBody>
                                 </Card> : <Card>

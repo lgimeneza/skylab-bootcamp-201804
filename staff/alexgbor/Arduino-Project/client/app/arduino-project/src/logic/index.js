@@ -2,7 +2,8 @@
 
 const arduApi = require('api')
 
-arduApi.url = 'http://192.168.0.46:5000/api'
+arduApi.url = 'http://192.168.1.36:5000/api'
+//arduApi.url = 'https://immense-atoll-60872.herokuapp.com/api'
 
 const logic = {
     userId: 'NO-ID',
@@ -80,6 +81,57 @@ const logic = {
 
     sendOutput(userId, arduId, q, ip, pin) {
         return arduApi.sendOutput(userId, arduId, q, ip, pin)
+    },
+
+    convertArrayOfObjectsToCSV(args) {  
+        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+        data = args.data || null;
+        if (data == null || !data.length) {
+            return null;
+        }
+
+        columnDelimiter = args.columnDelimiter || ',';
+        lineDelimiter = args.lineDelimiter || '\n';
+
+        keys = Object.keys(data[0]);
+
+        result = '';
+        result += keys.join(columnDelimiter);
+        result += lineDelimiter;
+
+        data.forEach(function(item) {
+            ctr = 0;
+            keys.forEach(function(key) {
+                if (ctr > 0) result += columnDelimiter;
+
+                result += item[key];
+                ctr++;
+            });
+            result += lineDelimiter;
+        });
+
+        return result;
+    },
+
+    downloadCSV(args,arr) {
+        var data, filename, link;
+        var csv = this.convertArrayOfObjectsToCSV({
+            data: arr
+        });
+        if (csv == null) return;
+
+        filename = args.filename || 'export.csv';
+
+        if (!csv.match(/^data:text\/csv/i)) {
+            csv = 'data:text/csv;charset=utf-8,' + csv;
+        }
+        data = encodeURI(csv);
+
+        link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
     }
 }
 
