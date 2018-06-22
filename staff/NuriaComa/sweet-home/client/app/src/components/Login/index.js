@@ -51,9 +51,9 @@ class Login extends Component {
                     <section>
                     
                     <form  onSubmit={this.acceptLogin}>
-                        <p className="text1"> Dni:</p>
+                        <p className="text1"> Dni</p>
                         <input autocomplete="off" className="formulariol" type="text" value={this.state.dni} onChange={this.loginDni}  name="DNI" ></input>
-                        <p className="text2"> Password:</p>
+                        <p className="text3"> Password</p>
                         <input autocomplete="off" className="formulariol" type="password" value={this.state.password} onChange={this.loginPassword} name="password"></input>
                     <button type="submit" className="login-buttonL">Login</button>
                     </form>

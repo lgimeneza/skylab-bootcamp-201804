@@ -133,17 +133,17 @@ class Register extends Component {
                     <section>
                     <h3 className="usUR">USER</h3>
                         <form onSubmit={this.acceptRegister}>
-                            <p className="wordsR"> Name: </p>
+                            <p className="wordsR"> Name </p>
                             <input autoComplete="off" className="formularior" type="text" value={this.state.name}onChange={this.registerName} name="name" ></input>
-                            <p className="words">Surname:</p>
+                            <p className="words">Surname</p>
                             <input autoComplete="off" className="formularior" type="text" value={this.state.surname}onChange={this.registerSurname} name="apellido"></input>
-                            <p className="words">Phone: </p>
+                            <p className="words">Phone </p>
                             <input autoComplete="off" className="formularior" type="text" name="phone" value={this.state.phone}onChange={this.registerPhone} ></input>
-                            <p className="words">DNI: </p>
+                            <p className="words">DNI </p>
                             <input autoComplete="off" className="formularior" type="text" value={this.state.dni}onChange={this.registerDni} name="dni" ></input>
-                            <p className="words">Password: </p>
+                            <p className="words">Password </p>
                             <input autoComplete="off" className="formularior" type="password" value={this.state.password}onChange={this.registerPassword} name="password" ></input>
-                            <p className="words">Repeat Password: </p>
+                            <p className="words">Repeat Password </p>
                             <input autoComplete="off" className="formularior" type="password" value={this.state.repeatpassword}onChange={this.registerRepeatPassword} name="password" ></input>
                             <button className="registerButton" type="submit">Register</button>
                         </form>

@@ -105,7 +105,7 @@ class Tasks extends Component {
                         <form   onSubmit={this.addTask}>
                          
                            
-                            <input maxlength="23"  autoComplete="off" className="formulariot" type="text" value={this.state.name}onChange={this.nameTask} name="name" ></input>
+                            <input maxLength="23"  autoComplete="off" className="formulariot" type="text" value={this.state.name}onChange={this.nameTask} name="name" ></input>
                             <button className="butAddT" type='submit' >ADD</button>
                          </form>
 

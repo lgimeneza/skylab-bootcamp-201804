@@ -4,7 +4,7 @@
     width:100vw;
     color:white;
     font-size: 5vw;
-    margin: 4vw 0vw 3vw 0vw;
+    margin: -2vw 0vw 3vw 0vw;
     padding: 4vw 38vw;
     background: linear-gradient(70deg, #bd8215, #fccd77);
     border:0;
@@ -62,9 +62,12 @@
     float: right;
     margin-right: -4vw;
     font-size: 5vw;
-   
-   
+    background:white 0;
+    border:0
 }
+   
+   
+
 .textt{
     height: 92vw;
     overflow: scroll;

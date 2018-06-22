@@ -75,6 +75,7 @@ class UpdateUser extends Component {
         .then(body => {
             
             const id = this.props.match.params.id
+            
             logic.updateUser(id, body.name, body.surname, body.phone, body.dni, body.password, body.newPassword)
            
             .then(()=> swal(

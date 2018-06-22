@@ -4,14 +4,17 @@
 .wordsR{
    
     font-size: 5vw;
+    margin-bottom: 1vw;
 }
 .words{
-    margin-top:3vw;
+    margin-top: 6vw;
+    margin-bottom: 1vw;
     font-size: 5vw;
 }
 .formularior{
     border: 1px solid #92ac19;
-    font-size: 5vw;
+    font-size: 6vw;
+    width: 79vw;
     border-radius: 1vw;
     
 }

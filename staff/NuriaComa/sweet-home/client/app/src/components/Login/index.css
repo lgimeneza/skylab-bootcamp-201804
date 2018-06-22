@@ -3,11 +3,16 @@
   }
 .text1{
   margin-top:30vw;
+  margin-bottom: 1vw;
+}
+.text3{
+  margin-top: 12vw;
+  margin-bottom: 1vw;
 }
 .formulariol{
-  margin-bottom: 7vw;
   border: 1px solid #92ac19;
-  font-size: 5vw;
+  font-size: 6vw;
+  width: 79vw;
   border-radius: 1vw;
 }
 p{
@@ -23,7 +28,7 @@ p{
   width:80vw;
   color:white;
   font-size: 5vw;
-  margin: 5vw 7vw 11vw;
+  margin: 14vw 7vw 11vw;
   padding: 2vw;
   background: linear-gradient(70deg, #7b9214, #c7da86);
   border:0;

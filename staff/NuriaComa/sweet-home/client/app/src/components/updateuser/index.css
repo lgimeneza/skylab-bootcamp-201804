@@ -54,8 +54,8 @@
        
 }
 .textU{
- height: 145vw;
- overflow: scroll;
-    font-family: 'Montserrat', sans-serif;
-    
+        height: 143vw;
+        margin-top: -3vw;
+        overflow: scroll;
+        font-family: 'Montserrat', sans-serif;
 }

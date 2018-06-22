@@ -2,7 +2,9 @@
 
 const shApi = require('api')
 
-shApi.url = 'http://localhost:4000/api'
+//shApi.url = 'http://localhost:4000/api'
+
+shApi.url = 'https://sleepy-citadel-80519.herokuapp.com/api'
 
 const logic = {
     userId: 'NO-ID',
