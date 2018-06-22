@@ -8,6 +8,7 @@ const arduApi = {
     token: 'NO-TOKEN',
 
     /**
+     * Registers a new user in the database.
      * 
      * @param {string} name 
      * @param {string} surname 
@@ -54,6 +55,7 @@ const arduApi = {
     },
 
     /**
+     * Allows you to retrieve a userId of a user.
      * 
      * @param {string} email 
      * @param {string} password 
@@ -94,6 +96,7 @@ const arduApi = {
     },
 
     /**
+     * Retrieves the non sensitive information of a user.
      * 
      * @param {string} id
      * 
@@ -125,11 +128,14 @@ const arduApi = {
 
     /**
      * 
+     * Updates the picture_url, email and password.
+     * 
      * @param {string} id 
      * @param {string} name 
      * @param {string} surname 
      * @param {string} email 
      * @param {string} password 
+     * @param {string} picture_url
      * @param {string} newEmail 
      * @param {string} newPassword 
      * 
@@ -178,6 +184,8 @@ const arduApi = {
 
     /**
      * 
+     * Removes a user from the database.
+     * 
      * @param {string} id 
      * @param {string} email 
      * @param {string} password 
@@ -218,6 +226,7 @@ const arduApi = {
     },
 
     /**
+     * Adds an arduino attached to a user.
      * 
      * @param {string} userId
      * @param {string} text 
@@ -254,11 +263,12 @@ const arduApi = {
     },
 
     /**
+     * Retrieves id, ip and port of a specific arduino.
      * 
      * @param {string} userId
      * @param {string} noteId 
      * 
-     * @returns {Promise<Note>}
+     * @returns {Promise<Arduino>}
      */
     retrieveArduino(userId, arduId) {
         return Promise.resolve()
@@ -290,9 +300,11 @@ const arduApi = {
     },
 
     /**
+     * Lists the data of all the arduinos of a user.
+     * 
      * @param {string} userId
      * 
-     * @returns {Promise<[Note]>}
+     * @returns {Promise<[Arduino]>}
      */
     listArduinos(userId) {
         return Promise.resolve()
@@ -320,6 +332,7 @@ const arduApi = {
     },
 
     /**
+     * Updates ip and port from an arduino.
      * 
      * @param {string} userId
      * @param {string} noteId 
@@ -361,6 +374,7 @@ const arduApi = {
     },
 
     /**
+     * Removes an arduino from a user.
      * 
      * @param {string} userId
      * @param {string} noteId 
@@ -398,6 +412,7 @@ const arduApi = {
     },
 
     /**
+     * Filters arduinos by substring of an ip.
      * 
      * @param {string} userId
      * @param {string} text 
@@ -434,6 +449,7 @@ const arduApi = {
     },
 
     /**
+     * Adds data of a specific arduino to the database. Timestamp and value.
      * 
      * @param {string} userId
      * @param {string} text 
@@ -470,11 +486,12 @@ const arduApi = {
     },
 
     /**
+     * Retrieves all the data of a specific arduino.
      * 
      * @param {string} userId
      * @param {string} noteId 
      * 
-     * @returns {Promise<Note>}
+     * @returns {Promise<ArduinoData>}
      */
     retrieveArduinoData(userId, arduId, token) {
         return Promise.resolve()
@@ -504,6 +521,18 @@ const arduApi = {
                     })
             })
     },
+
+    /**
+     * 
+     * Calls the arduino API to control the stream of data to the database.
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * @param {string} q
+     * @param {string} ip
+     * 
+     * @returns {Promise<object>}
+     */
 
     controlArduino(userId, arduId, q, ip) {
         return Promise.resolve()
@@ -540,6 +569,16 @@ const arduApi = {
                     })
             })
     },
+
+    /**
+     * 
+     * Removes all of an arduino data stored in the database.
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * 
+     * @returns {Promise<boolean>}
+     */
     removeArduinoData(userId, arduId) {
         return Promise.resolve()
             .then(() => {
@@ -569,6 +608,18 @@ const arduApi = {
                     })
             })
     },
+    /**
+     * 
+     * Calls the arduino API to open or close specific pins.
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * @param {string} q
+     * @param {string} ip
+     * @param {string} pin
+     * 
+     * @returns {Promise<object>}
+     */
     sendOutput(userId, arduId, q, ip, pin) {
         return Promise.resolve()
             .then(() => {

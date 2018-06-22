@@ -7,6 +7,7 @@ global.Headers = fetch.Headers;
 
 const logic = {
     /**
+     * Registers a new user in the database.
      * 
      * @param {string} name 
      * @param {string} surname 
@@ -52,6 +53,8 @@ const logic = {
 
     /**
      * 
+     * Allows you to retrieve a userId of a user.
+     * 
      * @param {string} email 
      * @param {string} password 
      * 
@@ -79,10 +82,13 @@ const logic = {
 
     /**
      * 
+     * Retrieves the non sensitive information of a user.
+     * 
      * @param {string} id
      * 
      * @returns {Promise<User>} 
      */
+
     retrieveUser(id) {
         return Promise.resolve()
             .then(() => {
@@ -101,16 +107,20 @@ const logic = {
 
     /**
      * 
+     * Updates the picture_url, email and password.
+     * 
      * @param {string} id 
      * @param {string} name 
      * @param {string} surname 
      * @param {string} email 
      * @param {string} password 
+     * @param {string} picture_url
      * @param {string} newEmail 
      * @param {string} newPassword 
      * 
      * @returns {Promise<boolean>}
      */
+
     updateUser(id, name, surname, email, password, picture_url, newEmail, newPassword) {
         return Promise.resolve()
             .then(() => {
@@ -168,6 +178,7 @@ const logic = {
     },
 
     /**
+     * Removes a user from the database.
      * 
      * @param {string} id 
      * @param {string} email 
@@ -202,6 +213,17 @@ const logic = {
             .then(() => true)
     },
 
+    /**
+     * 
+     * Adds an arduino attached to a user.
+     * 
+     * @param {string} userId 
+     * @param {string} ip 
+     * @param {string} port 
+     * 
+     * @returns {Promise<string>}
+     */
+
     addArduino(userId, ip, port) {
 
         return Promise.resolve()
@@ -224,6 +246,16 @@ const logic = {
                     })
             })
     },
+
+    /**
+     * Retrieves id, ip and port of a specific arduino.
+     * 
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * 
+     * @returns {Promise<object>}
+     */
 
     retrieveArduino(userId, arduId) {
         return Promise.resolve()
@@ -251,6 +283,14 @@ const logic = {
             })
     },
 
+    /**
+     * Lists the data of all the arduinos of a user.
+     * 
+     * @param {string} userId 
+     * 
+     * @returns {Promise<object>}
+     */
+
     listArduinos(userId) {
         return Promise.resolve()
             .then(() => {
@@ -266,6 +306,15 @@ const logic = {
                     })
             })
     },
+
+    /**
+     * Removes an arduino from a user.
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * 
+     * @returns {Promise<boolean>}
+     */
 
     removeArduino(userId, arduId) {
         return Promise.resolve()
@@ -293,6 +342,17 @@ const logic = {
                     .then(() => true)
             })
     },
+
+    /**
+     * Updates ip and port from an arduino.
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * @param {string} ip
+     * @param {string} port
+     * 
+     * @returns {Promise<boolean>}
+     */
 
     updateArduino(userId, arduId, ip, port) {
         return Promise.resolve()
@@ -331,6 +391,16 @@ const logic = {
             })
     },
 
+    /**
+     * 
+     * Filters arduinos by substring of an ip.
+     * 
+     * @param {string} userId 
+     * @param {string} chunk 
+     * 
+     * @returns {Promise<object>}
+     */
+
     findArduinos(userId, chunk) {
         return Promise.resolve()
             .then(() => {
@@ -351,6 +421,16 @@ const logic = {
             })
     },
 
+    /**
+     * 
+     * Adds data of a specific arduino to the database. Timestamp and value.
+     * 
+     * @param {string} id 
+     * @param {string} arduId 
+     * @param {string} value
+     * 
+     * @returns {Promise<string>}
+     */
     addArduinoData(id, arduId, value) {
 
         return Promise.resolve()
@@ -375,6 +455,16 @@ const logic = {
             })
     },
 
+    /**
+     * 
+     * Retrieves all the data of a specific arduino.
+     * 
+     * @param {string} id 
+     * @param {string} arduId 
+     * 
+     * @returns {Promise<array>}
+     */
+
     retrieveArduinoData(id, arduId) {
         return Promise.resolve()
             .then(() => {
@@ -392,6 +482,17 @@ const logic = {
                     })
             })
     },
+    /**
+     * 
+     * Calls the arduino API to control the stream of data to the database.
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * @param {string} q
+     * @param {string} ip
+     * 
+     * @returns {Promise<object>}
+     */
 
     controlArduino(userId, arduId, q, ip) {
         return Promise.resolve()
@@ -419,6 +520,19 @@ const logic = {
 
             })
     },
+
+    /**
+     * 
+     * Calls the arduino API to open or close specific pins.
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * @param {string} q
+     * @param {string} ip
+     * @param {string} pin
+     * 
+     * @returns {Promise<object>}
+     */
 
     sendOutput(userId, arduId, q, ip, pin) {
         return Promise.resolve()
@@ -448,6 +562,15 @@ const logic = {
 
             })
     },
+    /**
+     * 
+     * Removes all of an arduino data stored in the database.
+     * 
+     * @param {string} userId 
+     * @param {string} arduId 
+     * 
+     * @returns {Promise<boolean>}
+     */
 
     removeArduinoData(userId, arduId) {
         return Promise.resolve()
