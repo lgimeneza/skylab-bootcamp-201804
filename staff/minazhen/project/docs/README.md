@@ -9,7 +9,7 @@ ________
 
 <br/>
 
-![usercase.png](images/usercase.png)
+![usercase.png](images/_usercase.png)
 
 <br/>
 
@@ -25,7 +25,7 @@ In this header it's possible also going to home where is shown a **world** map, 
 
 ## Technical description
 
-![tecnologies.png](images/tecnologies.png)
+![tecnologies.png](images/_tecnologies.png)
 
 
 This app has more heavier private components as 3D or pictures than public, therefore it is rendered in client side, also has calls to a couple server-side APIs and their own servers and databases.
@@ -34,7 +34,7 @@ Uses html, css3, Javascript, React, Express, Node, Mongoose and Mongo, also uses
 
 <br/>
 
-![block.png](images/block.png)
+![block.png](images/_block.png)
 
 <br/>
 
@@ -46,7 +46,7 @@ Another component, World, uses react-simple-maps to show the interactable world 
 
 <br/>
 
-![react.png](images/react.png)
+![react.png](images/_react.png)
 
 <br/>
 
@@ -58,7 +58,7 @@ On this logic there are the methods that calls the APIs in client side, one of t
 
 <br/>
 
-![sequence.png](images/sequence.png)
+![sequence.png](images/_sequence.png)
 
 <br/>
 
@@ -74,7 +74,7 @@ Bussiness logic in server side has the role of sending information and manage th
 
 <br/>
 
-![database.png](images/database.png)
+![database.png](images/_database.png)
 
 <br/>
 
@@ -146,4 +146,4 @@ WorldPic1.0.0
 - Marina Clarés - *web and videogames developer* - [GitHub](https://github.com/MinaZhen)
 
 Project for: 
-![skylab.png](images/skylab.png)
+![skylab.png](images/_skylab.png)

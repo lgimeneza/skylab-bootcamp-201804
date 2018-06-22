@@ -2,4 +2,4 @@
 
 [Documentation](docs)
 
-[Demo](worldpic.surge.sh)
+[Demo](https://worldpic.surge.sh)
