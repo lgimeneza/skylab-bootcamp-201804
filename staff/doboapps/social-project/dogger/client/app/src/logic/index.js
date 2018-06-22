@@ -1,8 +1,7 @@
 const socialApi = require('social-api')
 
-socialApi.url = 'http://localhost:5000/api'
-//socialApi.url = "https://evening-island-37056.herokuapp.com/api"
-
+// socialApi.url = 'http://localhost:5000/api'
+socialApi.url = "https://murmuring-hollows-20764.herokuapp.com/api"
 const logic = {
     userId: 'NO-ID',
     cities: ['Alava', 'Albacete', 'Alicante', 'Almería', 'Asturias', 'Avila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres',

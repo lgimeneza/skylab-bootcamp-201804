@@ -110,7 +110,6 @@ class OtherUser extends Component {
                 <Jumbotron>
                     <Row>
                         <Col xs="4">
-                        {console.log("photo",this.state.photoProfile)}
                             <CardImg className="rounded-circle" top src={this.state.photoProfile} alt="Card image cap" />
                         </Col>
                         <Col xs={{ size: 7,  offset: 1 }} >
