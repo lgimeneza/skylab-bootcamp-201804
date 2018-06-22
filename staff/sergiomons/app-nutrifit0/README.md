@@ -4,5 +4,5 @@ To make the application work, you must create an .env file and configure the var
 
 [Documentation](./docs/README.md)
 
-[Demo](http://nutri-fit.surge.sh)
+[Demo](https://nutri-fit.surge.sh)
 
