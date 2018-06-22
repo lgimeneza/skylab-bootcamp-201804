@@ -1,7 +1,7 @@
 
 import api from 'api'
 
-api.url='http://localhost:5000/api'
+api.url='https://obscure-oasis-72862.herokuapp.com/api'
 
 const logic = {
     userId: undefined,
