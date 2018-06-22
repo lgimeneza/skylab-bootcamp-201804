@@ -75,7 +75,7 @@ class Cart extends Component {
                                                 <td><span>{product.price} €/ud</span></td>
                                                 <td><input id="quantity" type="number" min="1" step="1" defaultValue={product.quantity} onChange={e => this.changeQuantity(product.id, parseInt(e.target.value), parseInt(e.target.defaultValue))} style={{ width: '2.5rem', height: '1.4rem', }} /></td>
                                                 <td> <span>{product.price * product.quantity} €</span></td>
-                                                <td><button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", cursor: "pointer", height: '1.6rem' }}>X</button></td>
+                                                <td><button onClick={() => this.onRemoveFromCart(product.id)} style={{ backgroundColor: "#bb3232", color: "white", border: "none",borderRadius: "6px" , cursor: "pointer", height: '1.2rem', lineHeight: "1rem" }}>X</button></td>
                                             </tr>)
                                     }) :
                                         <p className="mt-4 mb-4 mx-auto" style={{ fontSize: "1.8rem", color: "#6c757d" }}>No hay productos en el carrito</p>}

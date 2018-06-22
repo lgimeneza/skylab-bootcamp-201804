@@ -2,8 +2,8 @@
 
 const clientApi = require('client-api')
 
-clientApi.url = 'https://tranquil-lake-27956.herokuapp.com/api'
-// clientApi.url = 'http://localhost:5000/api'
+// clientApi.url = 'https://tranquil-lake-27956.herokuapp.com/api'
+clientApi.url = 'http://localhost:5000/api'
 // clientApi.url = 'http://192.168.0.27:5000/api'
 
 const logic = {

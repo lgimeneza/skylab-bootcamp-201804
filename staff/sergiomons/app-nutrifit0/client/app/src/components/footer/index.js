@@ -36,7 +36,7 @@ function Footer() {
                     </div>
                     <div className="col-lg-3 col-md-5 col-sm-5 mb-4">
                         <ul>
-                            <li className="list-item mb-2" style={{fontWeight: "bold", fontStyle: "italic"}}>Siguénos en:</li>
+                            <li className="list-item mb-2" style={{fontWeight: "bold", fontStyle: "italic"}}>Síguenos en:</li>
                             <li className="list-item">Facebook</li>
                             <li className="list-item">Instagram</li>
                             <li className="list-item">Twitter</li>
