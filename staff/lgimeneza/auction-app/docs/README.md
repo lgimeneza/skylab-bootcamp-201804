@@ -10,10 +10,6 @@ Demo: [HotAuctions Demo App](https://intense-plains-98825.herokuapp.com/)
 
 ![](images/use-case.png)
 
-<br>
-
-![](images/use-case.png)
-
 ## Architecture
 
 ![](images/architecture.png)
