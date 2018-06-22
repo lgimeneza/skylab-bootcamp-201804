@@ -13,6 +13,8 @@ const logic = {
      * @param {string} password 
      * 
      * @returns {Promise<boolean>}
+     * 
+     * @throws {Error} - If not valid name, surname, phone, dni, password
      */
 
     registerUser(name, surname, phone, dni, password, apartmentId) {
@@ -61,6 +63,8 @@ const logic = {
      * @param {string} password 
      * 
      * @returns {Promise<string>}
+     * 
+     * @throws {Error} - If not valid dni, password
      */
     authenticateUser(dni, password) {
         return Promise.resolve()
@@ -90,6 +94,8 @@ const logic = {
     * @param {string} id
     * 
     * @returns {Promise<User>} 
+    * 
+    * @throws {Error} - If not valid id
     */
     retrieveUser(id) {
         return Promise.resolve()
@@ -118,8 +124,10 @@ const logic = {
     * @param {string} newPassword 
     * 
     * @returns {Promise<boolean>}
+    * 
+    * @throws {Error} - If not valid id, name, surname, phone, dni, password, newPassword
     */
-    updateUser(id, name, surname, phone, dni, password, newPassword,  ) {
+    updateUser(id, name, surname, phone, dni, password, newPassword ) {
         return Promise.resolve()
             .then(() => {
                 if (typeof id !== 'string') throw Error('user id is not a string')
@@ -166,9 +174,26 @@ const logic = {
             })
             .then(() => true)
     },
-
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} taskId
+     *
+     * @returns {Promise<User>} 
+     * 
+     * @throws {Error} - If not valid userId, taskId
+     */
     relateUserTask(userId, taskId){
         return Promise.resolve()
+        .then(()=>{
+            if (typeof userId !== 'string') throw Error('user userId is not a string')
+
+            if (!(userId = userId.trim()).length) throw Error('user userId is empty or blank')
+            
+            if (typeof taskId !== 'string') throw Error('user taskId is not a string')
+
+            if (!(taskId = taskId.trim()).length) throw Error('user taskId is empty or blank')
+        })
         .then(() => User.findById( userId )
         )
         .then(user =>{
@@ -193,7 +218,14 @@ const logic = {
     },
    
    
-
+    /**
+     * 
+     * @param {string} tasks 
+     * @param {string} users
+     *
+     * @returns newAssociation
+     * 
+     */
     doAssociations(tasks, users) {
         let newAssociation = [];
         let usersInUse = users.slice();
@@ -214,7 +246,12 @@ const logic = {
     },
     
 
-
+     /**
+     * 
+     * @param {string} apartmentId 
+     *
+     * @returns {Promise<boolean>}
+     */
     rotateUsersTasks(apartmentId){
         return Promise.resolve()
             .then(() => 
@@ -225,14 +262,15 @@ const logic = {
                             
                                 const newAssociation = this.doAssociations(tasks, users);
 
-                                
                                 users.forEach(user => 
-                                    User.update({_id: user.id}, { $unset: { taskId: null } }).then(() => {
+                                    User.update({_id: user.id}, { $unset: { taskId: null } })
+                                    .then(() => {
                                         const selectedAssociation = newAssociation.find(association =>
                                             JSON.stringify(association.userId) === JSON.stringify(user.id)
                                         );
                                         if (selectedAssociation) {
-                                            User.update({_id: selectedAssociation.userId},{ taskId: selectedAssociation.taskId} ).then(() => true)
+                                            User.update({_id: selectedAssociation.userId},{ taskId: selectedAssociation.taskId} )
+                                            .then(() => true)
                                         }
                                     })
                                 )
@@ -240,10 +278,23 @@ const logic = {
                     )
             )
     },
-    
+
+     /**
+     * 
+     * @param {string} apartmentId
+     * 
+     * 
+     * @returns {promise<users>}
+     * 
+     * @throws {Error} - If not valid apartmentId
+     */
     listUsers(apartmentId) {
 
         return Promise.resolve()
+        .then(()=>{
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
             .then(() => {
                 return User.find({ apartmentId })
                     .then(users => {
@@ -253,15 +304,16 @@ const logic = {
                     })
 
             })
-    },
+    })
+},
 
     /**
      * 
      * @param {string} id 
-     * @param {string} email 
-     * @param {string} password 
      * 
      * @returns {Promise<boolean>}
+     * 
+     * @throws {Error} - If not valid id
      */
     unregisterUser(id) {
         return Promise.resolve()
@@ -275,7 +327,16 @@ const logic = {
            
             .then(() => true)
     },
-
+     /**
+     * 
+     * @param {string} name 
+     * @param {string} address
+     * @param {string} phone 
+     * 
+     * @returns {Promise<id>}
+     * 
+     * @throws {Error} - If not valid name, address, phone
+     */
     registerApartment(name, address, phone) {
         return Promise.resolve()
             .then(() => {
@@ -300,6 +361,18 @@ const logic = {
                     })
             })
     },
+    /**
+     * 
+     * @param {string} name 
+     * @param {string} address
+     * @param {string} phone 
+     * @param {string} owner
+     * @param {string} realState
+     * 
+     * @returns {Promise<bolean>}
+     * 
+     * @throws {Error} - If not valid id, name, address, phone, owner, realState 
+     */
     updateApartment(id, name, address, phone, owner, realState  ) {
         return Promise.resolve()
             .then(() => {
@@ -350,9 +423,20 @@ const logic = {
             })
             .then(() => true)
     },
-
+     /**
+     * 
+     * @param {string} apartmentId
+     * 
+     * @returns {Promise<apartment>}
+     * 
+     * @throws {Error} - If not valid apartmentId 
+     */
     apartmentExists(apartmentId) {
         return Promise.resolve()
+        .then(()=>{
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
             .then(() => {
                 return Apartment.findById(apartmentId)
                     .then(apartment => {
@@ -360,10 +444,24 @@ const logic = {
                         return apartment
                     })
             })
-    },
+    })
+},
+
+  /**
+     * 
+     * @param {string} apartmentId
+     * 
+     * @returns {Promise<apartments>}
+     * 
+     * @throws {Error} - If not valid apartmentId 
+     */
     listApartment(apartmentId) {
 
         return Promise.resolve()
+        .then(()=>{
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
             .then(() => {
                 return Apartment.findById(apartmentId)
                     .then(apartments => {
@@ -373,26 +471,61 @@ const logic = {
                     })
             })
 
-    },
+    })
+},
+
+    /**
+     * 
+     * @param {string} apartmentId
+     * 
+     * @returns {Promise<bolean>}
+     * 
+     * @throws {Error} - If not valid apartmentId 
+     */
     deleteApartment(apartmentId) {
-        return Apartment.findById({ _id: apartmentId })
-            .then((apartment) => {
-                const id = apartment._id
-                return User.deleteMany( {"apartmentId":id })
-                    .then(() => {
-                        
-                        if (!apartment) throw Error(`no apartment found`)
+        return Promise.resolve()
+        .then(()=>{
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
 
-                        return apartment.remove()
-                    })
-                    .then(() => true)
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
+
+            .then(() => {        
+            return Apartment.findById({ _id: apartmentId })
+                .then((apartment) => {
+                    const id = apartment._id
+                    return User.deleteMany( {"apartmentId":id })
+                        .then(() => {
+                            
+                            if (!apartment) throw Error(`no apartment found`)
+
+                            return apartment.remove()
+                        })
+                        .then(() => true)
+                })
             })
-
-
+        })
     },
-
+    /**
+     * 
+     * @param {string} name
+     * @param {string} apartmentId
+     * 
+     * 
+     * @returns {Promise<id>}
+     * 
+     * @throws {Error} - If not valid name, apartmentId 
+     */
     addTasks(name, apartmentId) {
         return Promise.resolve()
+        .then(()=>{
+            if (typeof name !== 'string') throw Error('user name is not a string')
+
+            if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
+
             .then(() => {
 
                 return Task.create({ name, apartmentId })
@@ -405,9 +538,25 @@ const logic = {
                     })
             })
 
-    },
+    })
+},
+    /**
+     * 
+     * @param {string} apartmentId
+     * 
+     * @returns {Promise<tasks>}
+     * 
+     * @throws {Error} - If not valid apartmentId 
+     */
     listTasks(apartmentId) {
         return Promise.resolve()
+        .then(()=>{
+             
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
+
+        })
             .then(() => {
                 return Task.find({ apartmentId })
                     .then(tasks => {
@@ -417,9 +566,22 @@ const logic = {
                     })
             })
     },
+      /**
+     * 
+     * @param {string} taskId
+     * 
+     * @throws {Error} - If not valid apartmentId 
+     */
     deleteTask(taskId) {
  
         return Promise.resolve()
+        .then(()=>{
+             
+            if (typeof taskId !== 'string') throw Error('user taskId is not a string')
+
+            if (!(taskId = taskId.trim()).length) throw Error('user taskId is empty or blank')
+
+        })
             .then(() => {
                 return Task.findById(taskId)
             })
@@ -439,10 +601,30 @@ const logic = {
                 })
                         
                     
-                })
+         })
     },
+
+     /**
+     * 
+     * @param {string} name
+     * @param {string} apartmentId
+     * 
+     * 
+     * @returns {Promise<id>}
+     * 
+     * @throws {Error} - If not valid name, apartmentId 
+     */
     addMarket(name, apartmentId) {
         return Promise.resolve()
+        .then(()=>{
+            if (typeof name !== 'string') throw Error('user name is not a string')
+
+            if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
+        })
             .then(() => {
 
                 return Market.create({ name, apartmentId })
@@ -456,8 +638,22 @@ const logic = {
             })
 
     },
+      /**
+     * 
+     * @param {string} apartmentId
+     * 
+     *  @returns {Promise<market>}
+     * 
+     * @throws {Error} - If not valid apartmentId 
+     */
     listMarket(apartmentId) {
         return Promise.resolve()
+        .then(()=>{
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+    
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
+
+        })
             .then(() => {
                 return Market.find({ apartmentId })
                     .then(market => {
@@ -467,9 +663,22 @@ const logic = {
             })
     },
 
+    /**
+     * 
+     * @param {string} marketId
+     * 
+     *  @returns {Promise<boolean>}
+     * 
+     * @throws {Error} - If not valid marketId 
+     */
     deleteMarket(marketId) {
 
         return Promise.resolve()
+        .then(()=>{
+            if (typeof marketId !== 'string') throw Error('user marketId is not a string')
+    
+            if (!(marketId = marketId.trim()).length) throw Error('user marketId is empty or blank')
+        })
             .then(() => {
                 return Market.findById(marketId)
             })
@@ -483,9 +692,26 @@ const logic = {
 
             })
     },
-
+     /**
+     * 
+     * @param {string} name
+     * @param {string} apartmentId
+     * 
+     *  @returns {Promise<id>}
+     * 
+     * @throws {Error} - If not valid name, apartmentId 
+     */
     addNotes(name, apartmentId) {
         return Promise.resolve()
+        .then(()=>{
+            if (typeof name !== 'string') throw Error('user name is not a string')
+    
+            if (!(name = name.trim()).length) throw Error('user name is empty or blank')
+
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+    
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
+        })
             .then(() => {
 
                 return Note.create({ name, apartmentId })
@@ -499,8 +725,22 @@ const logic = {
             })
 
     },
+      /**
+     * 
+     * @param {string} apartmentId
+     * 
+     *  @returns {Promise<notes>}
+     * 
+     * @throws {Error} - If not valid apartmentId 
+     */
     listNotes(apartmentId) {
         return Promise.resolve()
+        .then(()=>{
+           
+            if (typeof apartmentId !== 'string') throw Error('user apartmentId is not a string')
+    
+            if (!(apartmentId = apartmentId.trim()).length) throw Error('user apartmentId is empty or blank')
+        })
             .then(() => {
                 return Note.find({ apartmentId })
                     .then(notes => {
@@ -510,9 +750,23 @@ const logic = {
                     })
             })
     },
+     /**
+     * 
+     * @param {string} noteId
+     * 
+     *  @returns {Promise<boolean>}
+     * 
+     * @throws {Error} - If not valid noteId 
+     */
     deleteNote(noteId) {
 
         return Promise.resolve()
+        .then(()=>{
+           
+            if (typeof noteId !== 'string') throw Error('user noteId is not a string')
+    
+            if (!(noteId = noteId.trim()).length) throw Error('user noteId is empty or blank')
+        })
             .then(() => {
                 return Note.findById(noteId)
             })
