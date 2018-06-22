@@ -4,7 +4,7 @@
 
 ### This project explores how to do an Isomorphic Server Side Rendering App with React + Redux combine it with events on client side with socket.io 
 
-[HotAuctions Demo App](https://intense-plains-98825.herokuapp.com/)
+Demo: [HotAuctions Demo App](https://intense-plains-98825.herokuapp.com/)
 
 <br>
 
