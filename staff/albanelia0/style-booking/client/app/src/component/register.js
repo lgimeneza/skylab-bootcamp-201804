@@ -115,22 +115,22 @@ export class Register extends Component {
                 <form >
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name="name" className="input is-large" type="text" placeholder="Your name" autoFocus="" />
+                      <input onChange={this.handleChange} name="name" className="input is-large" type="text" placeholder="your name" autoFocus="" />
                     </div>
                   </div>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name="surname" className="input is-large" type="text" placeholder="Your surname" autoFocus="" />
+                      <input onChange={this.handleChange} name="surname" className="input is-large" type="text" placeholder="your surname" autoFocus="" />
                     </div>
                   </div>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name="email" className="input is-large" type="text" placeholder="Your gmail" autoFocus="" />
+                      <input onChange={this.handleChange} name="email" className="input is-large" type="text" placeholder="your email" autoFocus="" />
                     </div>
                   </div>
                   <div className="field">
                     <div className="control">
-                      <input onChange={this.handleChange} name="password" className="input is-large" type="password" placeholder="Your Password" />
+                      <input onChange={this.handleChange} name="password" className="input is-large" type="password" placeholder="your Password" />
                     </div>
                   </div>
                   <div className="field">

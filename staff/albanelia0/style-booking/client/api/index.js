@@ -14,6 +14,8 @@ const logic = {
 
   /**
      * 
+     * Should register user
+     * 
      * @param {string} name 
      * @param {string} surname 
      * @param {string} email 
@@ -59,6 +61,8 @@ const logic = {
   },
   /**
    *
+   *  Should update user
+   * 
    * @param {string} id
    * @param {string} name
    * @param {string} surname
@@ -111,9 +115,14 @@ const logic = {
   },
 
   /**
+   * 
+   * Should unregister user
+   * 
    * @param {String} id
    * @param {String} email
    * @param {String} password
+   * 
+   * @returns {Promise<boolean>}
    *
    */
   unregisterUser(userId, email, password) {
@@ -153,10 +162,12 @@ const logic = {
 
   /**
      *
+     * Should authenticate user
+     * 
      * @param {string} email
      * @param {string} password
      *
-     * @returns {Promise<string>}
+     * @returns {Promise<String>}
      */
   authenticateUser(email, password) {
     return Promise.resolve()
@@ -190,7 +201,11 @@ const logic = {
           })
       })
   },
-
+  /**
+   * Should declare token
+   * 
+   * @param {String} token 
+   */
   setToken(token){
     this.token = token
   },
@@ -285,12 +300,27 @@ const logic = {
   },
 
   /**
- * @param {object} userId
- * @param {Array} serviceIds
- * @param {Date} date
- *
- * @returns {Promise<Data>}
- */
+   * This function should create a booking
+   * 
+   * @param {object} userId
+   * @param {Array} serviceIds
+   * @param {Date} date
+   *
+   * @example
+   * 
+   *  Should return something like this = 
+   * 
+   * const data = [
+   *    {
+   * "bookingId": "5b2660ab250e08c950cd6126",
+   * "servicesId": [5b2660ab250e08c950cd6139,5b2660ab250e08c950cd6178],
+   * "userId": "5b266067250e08c950cd6114",
+   * "date": "2018-06-02T09:45:00.000Z",
+   * "endDate": "2018-06-02T10:25:00.000Z"
+   * }
+   * ]
+   * @returns {Promise<Booking>}
+   */
   placeBooking(userId, serviceIds, date) {
     return Promise.resolve()
       .then(() => {
@@ -373,7 +403,22 @@ const logic = {
       })
 
   },
-
+  /**
+   * This function should list all services
+   * @example
+   * 
+   * Should return something like this =
+   * 
+   * const data = [
+   * {
+   * serviceId: 5b2bbe3efe862e1abd22858d,
+   * serviceName: Lavado de pelo,
+   * duration: 30,
+   * price: 15
+   * }
+   * ]
+   * @returns {Promise<Service>}
+   */
   listServices(){
     return Promise.resolve()
       .then(() => {

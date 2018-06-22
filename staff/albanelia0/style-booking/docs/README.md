@@ -10,34 +10,6 @@ Style Booking is a hairdresser managing tool where you can choose the service wi
 
 ![landing](images/functionalDescription.png)
 
-# Technical description
-
-* React
-* react router
-* Javascript
-* Node
-* MongoDB
-* Mongoose
-* TDD (Mocha/ chai)
-* HTML5
-* CSS3
-* Bulma
-
-## Run the app
-
-To deploy you need to go to the client and make a npm install, then go to the app folder and make a npm start
-
-## General structure
-
-### Schema
-![landing](images/schemas.png)
-
-### Components
-![landing](images/components.png)
-
-### Data model
-![landing](images/dataModel.png)
-
 # Screenshots 
 
 ## Landing
@@ -60,6 +32,35 @@ To deploy you need to go to the client and make a npm install, then go to the ap
 ![bookings](images/bookings.png)
 
 ------------------
+
+# Technical description
+
+* React
+* react router
+* Javascript
+* Node
+* MongoDB
+* Mongoose
+* TDD (Mocha/ chai)
+* HTML5
+* CSS3
+* Bulma
+
+## Run the app
+
+To deploy you need to go to the client and make a npm install, then go to the app folder and make a npm start
+
+## General structure
+
+### Data model
+![landing](images/schemas.png)
+
+### Components
+![landing](images/components.png)
+
+### Block Diagram
+![landing](images/dataModel.png)
+
 
 
 

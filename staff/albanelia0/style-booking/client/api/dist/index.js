@@ -14,6 +14,8 @@ var logic = {
 
   /**
      * 
+     * Should register user
+     * 
      * @param {string} name 
      * @param {string} surname 
      * @param {string} email 
@@ -63,6 +65,8 @@ var logic = {
 
   /**
    *
+   *  Should update user
+   * 
    * @param {string} id
    * @param {string} name
    * @param {string} surname
@@ -119,9 +123,14 @@ var logic = {
 
 
   /**
+   * 
+   * Should unregister user
+   * 
    * @param {String} id
    * @param {String} email
    * @param {String} password
+   * 
+   * @returns {Promise<boolean>}
    *
    */
   unregisterUser: function unregisterUser(userId, email, password) {
@@ -163,10 +172,12 @@ var logic = {
 
   /**
      *
+     * Should authenticate user
+     * 
      * @param {string} email
      * @param {string} password
      *
-     * @returns {Promise<string>}
+     * @returns {Promise<String>}
      */
   authenticateUser: function authenticateUser(email, password) {
     var _this5 = this;
@@ -205,6 +216,12 @@ var logic = {
       });
     });
   },
+
+  /**
+   * Should declare token
+   * 
+   * @param {String} token 
+   */
   setToken: function setToken(token) {
     this.token = token;
   },
@@ -281,7 +298,6 @@ var logic = {
       // if (typeof month !== 'number') throw Error('month is not a number')
       // if (typeof day !== 'number') throw Error('day is not a number')
 
-
       return axios.get(_this7.url + '/booking/hours/' + year + '/' + month + '/' + day, { headers: { authorization: 'Bearer ' + _this7.token } }).then(function (_ref6) {
         var status = _ref6.status,
             data = _ref6.data;
@@ -304,12 +320,27 @@ var logic = {
 
 
   /**
-  * @param {object} userId
-  * @param {Array} serviceIds
-  * @param {Date} date
-  *
-  * @returns {Promise<Data>}
-  */
+   * This function should create a booking
+   * 
+   * @param {object} userId
+   * @param {Array} serviceIds
+   * @param {Date} date
+   *
+   * @example
+   * 
+   *  Should return something like this = 
+   * 
+   * const data = [
+   *    {
+   * "bookingId": "5b2660ab250e08c950cd6126",
+   * "servicesId": [5b2660ab250e08c950cd6139,5b2660ab250e08c950cd6178],
+   * "userId": "5b266067250e08c950cd6114",
+   * "date": "2018-06-02T09:45:00.000Z",
+   * "endDate": "2018-06-02T10:25:00.000Z"
+   * }
+   * ]
+   * @returns {Promise<Booking>}
+   */
   placeBooking: function placeBooking(userId, serviceIds, date) {
     var _this8 = this;
 
@@ -339,46 +370,16 @@ var logic = {
 
 
   /**
-   * This function should list all bookings
-   * 
-   * @returns {Promise<Data>}
-   */
-  listBookings: function listBookings(ownerId) {
-    var _this9 = this;
-
-    return Promise.resolve().then(function () {
-      return axios.get(_this9.url + '/user/' + ownerId + '/booking', { headers: { authorization: 'Bearer ' + _this9.token } }).then(function (_ref8) {
-        var status = _ref8.status,
-            data = _ref8.data;
-
-        if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
-
-        return data.data;
-      }).catch(function (err) {
-        if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
-
-        if (err.response) {
-          var message = err.response.data.error;
-
-
-          throw Error(message);
-        } else throw err;
-      });
-    });
-  },
-
-
-  /**
    * This function should list the bookings of user
    * @returns {Promise<Data>}
    */
   listBookingsUser: function listBookingsUser(userId) {
-    var _this10 = this;
+    var _this9 = this;
 
     return Promise.resolve().then(function () {
-      return axios.get(_this10.url + '/booking/user/' + userId, { headers: { authorization: 'Bearer ' + _this10.token } }).then(function (_ref9) {
-        var status = _ref9.status,
-            data = _ref9.data;
+      return axios.get(_this9.url + '/booking/user/' + userId, { headers: { authorization: 'Bearer ' + _this9.token } }).then(function (_ref8) {
+        var status = _ref8.status,
+            data = _ref8.data;
 
         if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
 
@@ -404,12 +405,12 @@ var logic = {
    * @returns {Promise<boolean>}
    */
   deleteBooking: function deleteBooking(bookingId, userId) {
-    var _this11 = this;
+    var _this10 = this;
 
     return Promise.resolve().then(function () {
-      return axios.delete(_this11.url + '/booking/user/' + bookingId + '/' + userId, { headers: { authorization: 'Bearer ' + _this11.token } }).then(function (_ref10) {
-        var status = _ref10.status,
-            data = _ref10.data;
+      return axios.delete(_this10.url + '/booking/user/' + bookingId + '/' + userId, { headers: { authorization: 'Bearer ' + _this10.token } }).then(function (_ref9) {
+        var status = _ref9.status,
+            data = _ref9.data;
 
         if (status !== 200 || data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
 
@@ -426,13 +427,30 @@ var logic = {
       });
     });
   },
+
+  /**
+   * This function should list all services
+   * @example
+   * 
+   * Should return something like this =
+   * 
+   * const data = [
+   * {
+   * serviceId: 5b2bbe3efe862e1abd22858d,
+   * serviceName: Lavado de pelo,
+   * duration: 30,
+   * price: 15
+   * }
+   * ]
+   * @returns {Promise<Service>}
+   */
   listServices: function listServices() {
-    var _this12 = this;
+    var _this11 = this;
 
     return Promise.resolve().then(function () {
-      return axios.get(_this12.url + '/services').then(function (_ref11) {
-        var status = _ref11.status,
-            data = _ref11.data;
+      return axios.get(_this11.url + '/services').then(function (_ref10) {
+        var status = _ref10.status,
+            data = _ref10.data;
 
         if (status !== 200 && data.status !== 'OK') throw Error('unexpected response status ' + status + ' (' + data.status + ')');
 
