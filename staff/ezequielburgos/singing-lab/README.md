@@ -2,4 +2,4 @@
 
 [Documentation](./docs)
 
-[Demo](http://singing-lab.surge.sh/#/)
+[Demo](https://singing-lab.surge.sh/#/)

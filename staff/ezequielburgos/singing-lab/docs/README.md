@@ -75,7 +75,7 @@ The project was built following this layer separation architechture:
 
 ## PROJECT DEMO
 
-You can see a demo of the project here: [surge](http://singing-lab.surge.sh/#/)
+You can see a demo of the project here: [surge](https://singing-lab.surge.sh/#/)
 
 ## Sprint Plan (Gantt Chart)
 
