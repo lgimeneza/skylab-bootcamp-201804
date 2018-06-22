@@ -42,13 +42,6 @@ The project was built following this layer separation architechture:
 ![block model](./images/block-model.png)
 
 
-#### Client app
-
-#### Client api
-
-#### Api server
-
-
 
 ## DESIGN (screenshots)
 

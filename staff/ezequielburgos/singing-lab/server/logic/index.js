@@ -6,15 +6,18 @@ const logic = {
 
     /**
      * 
-     * @param {string} name 
-     * @param {string} surname 
-     * @param {string} address
-     * @param {string} email
-     * @param {string} password 
+     * This function registers a new user and saves it into the data base
+     * 
+     * @param {string} name - user's name
+     * @param {string} surname - user's password
+     * @param {string} address - an address
+     * @param {string} email - a email to log in 
+     * @param {string} password - a password to log in
+     * 
+     * @throws {Error} - If invalid type of input or if user already exists
      * 
      * @returns {Promise<boolean>}
      */
-
     registerUser(name, surname, address, email, password) {
         return Promise.resolve()
             .then(() => {
@@ -52,8 +55,12 @@ const logic = {
 
     /**
      * 
-     * @param {string} email
-     * @param {string} password 
+     * This function logs a registered user
+     * 
+     * @param {string} email - user's email
+     * @param {string} password - user's password
+     * 
+     * @throws {Error} - Throws error on invalid type of input or wrong credentials
      * 
      * @returns {Promise<string>}
      */
@@ -77,9 +84,14 @@ const logic = {
             })
     },
 
+
     /**
+     *
+     * This function retrieves a user stored in the database
      * 
-     * @param {string} id
+     * @param {string} id - The id of the user
+     * 
+     * @throws {Error} - If no valid id is found or if id not found
      * 
      * @returns {Promise<User>} 
      */
@@ -101,6 +113,8 @@ const logic = {
 
     /**
      * 
+     * This function updates user's information and adds an extra parameter (phone) 
+     * 
      * @param {string} id 
      * @param {string} name 
      * @param {string} surname 
@@ -109,7 +123,9 @@ const logic = {
      * @param {string} newEmail 
      * @param {string} newPassword 
      * 
-     * @returns {Promise<boolean>}
+     * @throws {Error} - If invalid type of input on the parameters or if email and password credentials are wrong
+     * 
+     * @returns {Promise<User>}
      */
     updateUser(id, name, surname, phone, address, email, password, newEmail, newPassword) {
         return Promise.resolve()
@@ -175,9 +191,13 @@ const logic = {
 
     /**
      * 
+     * This function eliminates a stored user from the database
+     * 
      * @param {string} id 
      * @param {string} email 
      * @param {string} password 
+     * 
+     * @throws {Error} - If invalid type of input or wrong email/password are introduced
      * 
      * @returns {Promise<boolean>}
      */
@@ -209,7 +229,10 @@ const logic = {
     },
 
     /**
-     * @param {string} userId
+     * 
+     * This function lists product categories stored in the database
+     * 
+     * @throws {Error} - If no categories are found in the database
      * 
      * @returns {Promise<[Category]>}
      */
@@ -226,7 +249,12 @@ const logic = {
     },
 
     /**
-     * @param {string} userId
+     * 
+     * This function lists the products contained in a specific category using the category id as an identifier.
+     * 
+     * @param {string} category
+     * 
+     * @throws {Error} - If no products are found in a specific category
      * 
      * @returns {Promise<[Product]>}
      */
@@ -245,7 +273,11 @@ const logic = {
 
     /**
      * 
-     * @param {string} id
+     * This function retrieves a product stored in the database 
+     * 
+     * @param {string} productId
+     * 
+     * @throws {Error} - on invalid type of input or if no products are found in a specific category
      * 
      * @returns {Promise<[Product]>} 
      */
@@ -265,10 +297,11 @@ const logic = {
             })
     },
 
-
-
     /**
-     * @param {string} userId
+     * 
+     * This function lists products stored in the database
+     * 
+     * @throws {Error} - If no products are found in the database
      * 
      * @returns {Promise<[Product]>}
      */
@@ -277,7 +310,7 @@ const logic = {
             .then(() => {
                 return Product.find()
                     .then(products => {
-                        if (!products) throw Error(`no categories where found`)
+                        if (!products) throw Error(`no products where found`)
 
                         return products
                     })
@@ -285,10 +318,14 @@ const logic = {
     },
 
     /**
-      * @param {array} ids
-      * 
-      * @returns {Promise<[Product]>}
-      */
+     * This function receives an array of product ids and lists that products
+     * 
+     * @param {array} ids
+     * 
+     * @throws {Error} - If no if no products match the array of ids introduced as a parameter
+     * 
+     * @returns {Promise<[Product]>}
+    */
     listProductsByIds(ids) {
         const idsArray = ids.split(',')
 
@@ -298,7 +335,7 @@ const logic = {
                     _id: { $in: idsArray }
                 })
                     .then(products => {
-                        if (!products) throw Error(`no categories where found`)
+                        if (!products) throw Error(`no products where found`)
 
                         return products
                     })
@@ -307,13 +344,18 @@ const logic = {
 
     /**
     * 
-    * @param {string} name 
-    * @param {string} surname 
-    * @param {string} address
-    * @param {string} email
-    * @param {string} password 
+    * This function creates a payment order, stores it in the database and pushes the order info into a user matching userId
     * 
-    * @returns {Promise<boolean>}
+    * @param {string} paymentMethod
+    * @param {string} status 
+    * @param {string} products 
+    * @param {string} userId
+    * @param {string} orderAdress
+    * @param {string} submitDate 
+    * 
+    * @throws {Error} - if invalid type of input is introduced 
+    * 
+    * @returns {Promise<string>}
     */
     createOrder(paymentMethod, status, products, userId, orderAdress, submitDate) {
         return Promise.resolve()
@@ -344,13 +386,16 @@ const logic = {
 
                 return Order.create({ paymentMethod, status, products, userId, orderAdress, submitDate })
                     .then(order => {
+
+                        return User.findByIdAndUpdate(userId, { $push: { orders: order } })
+                            .then(() => order.id)
+
+                        // Alternative way push orders into the user:
                         // return User.findById(userId)
                         //     .then(user => {
                         //         user.orders.push(order)
                         //         user.save()
-                        //     })
-                        return User.findByIdAndUpdate(userId, {$push: { orders: order } })
-                            .then(() => order.id)
+                        //     })    
                     })
 
             })
