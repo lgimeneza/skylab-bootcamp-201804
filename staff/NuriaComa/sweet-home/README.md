@@ -2,4 +2,4 @@
 
 [documentation](docs)
 
-[Demo](http//sweethome.surge.sh)
+[Demo](http://sweethome.surge.sh)
