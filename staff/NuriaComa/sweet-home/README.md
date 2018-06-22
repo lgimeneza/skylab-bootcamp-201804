@@ -1,5 +1,5 @@
 # Sweet Home
 
-[documentation](docs)
+[Documentation](docs)
 
 [Demo](http://sweethome.surge.sh)
