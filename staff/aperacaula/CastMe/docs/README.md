@@ -9,10 +9,7 @@ Link to site: castme.surge.sh
 ![](./design/sketches/tecnologies.png)
 
 ## UML (User Cases)
-<p align="center">
-  <img src="√./design/sketches/user.png"/>
-</p>
-
+![](./design/sketches/user.png)
 
 ## Data base diagram
 ![](./design/sketches/database_diagram.jpg)
