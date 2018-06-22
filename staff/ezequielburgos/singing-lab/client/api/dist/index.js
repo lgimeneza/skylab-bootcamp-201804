@@ -5,6 +5,15 @@ var axios = require('axios');
 var singingLabApi = {
     url: 'NO-URL',
 
+    /**
+     * Setter/getter function: 
+     * 
+     * Sets the token when the function is called with a parameter and get's it when no parameter is introduced  
+     * 
+     * @param {string} token
+     * 
+     * @returns {<string>}
+    */
     token: function token(_token) {
         if (_token) {
             this._token = _token;
@@ -18,11 +27,15 @@ var singingLabApi = {
 
     /**
      * 
-     * @param {string} name 
-     * @param {string} surname 
-     * @param {string} address
-     * @param {string} email 
-     * @param {string} password 
+     * Register user
+     * 
+     * @param {string} name - user's name
+     * @param {string} surname - user's password
+     * @param {string} address - an address
+     * @param {string} email - a email to log in 
+     * @param {string} password - a password to log in
+     * 
+     * @throws {Error} - If invalid type of input or if user already exists
      * 
      * @returns {Promise<boolean>}
      */
@@ -72,12 +85,16 @@ var singingLabApi = {
 
 
     /**
-    * 
-    * @param {string} email 
-    * @param {string} password 
-    * 
-    * @returns {Promise<string>}
-    */
+     * 
+     * Authenticates an user
+     * 
+     * @param {string} email - user's email
+     * @param {string} password - user's password
+     * 
+     * @throws {Error} - Throws error on invalid type of input, unexpected response status or unable to reach server
+     * 
+     * @returns {Promise<string>}
+     */
     authenticateUser: function authenticateUser(email, password) {
         var _this2 = this;
 
@@ -119,8 +136,12 @@ var singingLabApi = {
 
 
     /**
+     *
+     * Retrieves an user
      * 
-     * @param {string} id
+     * @param {string} id - The id of the user
+     * 
+     * @throws {Error} - If no valid id is found, error on response status or unable to reach the server
      * 
      * @returns {Promise<User>} 
      */
@@ -155,6 +176,8 @@ var singingLabApi = {
 
     /**
      * 
+     * Update user info
+     * 
      * @param {string} id 
      * @param {string} name 
      * @param {string} surname 
@@ -165,7 +188,9 @@ var singingLabApi = {
      * @param {string} newEmail 
      * @param {string} newPassword 
      * 
-     * @returns {Promise<boolean>}
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<User>}
      */
     updateUser: function updateUser(id, name, surname, phone, address, email, password, newEmail, newPassword) {
         var _this4 = this;
@@ -222,9 +247,13 @@ var singingLabApi = {
 
     /**
      * 
+     * Unregisters a user
+     * 
      * @param {string} id 
      * @param {string} email 
      * @param {string} password 
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
      * 
      * @returns {Promise<boolean>}
      */
@@ -266,7 +295,12 @@ var singingLabApi = {
 
 
     /**
-    * @returns {Promise<User>} 
+     * 
+     * Lists categories
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<[Category]>} 
     */
     listCategories: function listCategories() {
         var _this6 = this;
@@ -295,7 +329,14 @@ var singingLabApi = {
 
 
     /**
-    * @returns {Promise<User>} 
+     * 
+     * Lists products
+     *  
+     * @param {string} categoryId
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<[Product]>} 
     */
     listProducts: function listProducts(categoryId) {
         var _this7 = this;
@@ -324,10 +365,13 @@ var singingLabApi = {
 
 
     /**
+      * Retrieves product
       * 
-      * @param {string} id
+      * @param {string} productId
       * 
-      * @returns {Promise<User>} 
+      * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+      * 
+      * @returns {Promise<Product>} 
       */
     retrieveProduct: function retrieveProduct(productId) {
         var _this8 = this;
@@ -359,7 +403,12 @@ var singingLabApi = {
 
 
     /**
-    * @returns {Promise<User>} 
+     *  
+     * Lists all products
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<[Product]>} 
     */
     listAllProducts: function listAllProducts() {
         var _this9 = this;
@@ -388,7 +437,14 @@ var singingLabApi = {
 
 
     /**
-    * @returns {Promise<User>} 
+     * 
+     * Lists products by id
+     * 
+     * @param {Array} cart
+     * 
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<[Product]>} 
     */
     listProductsByIds: function listProductsByIds(cart) {
         var _this10 = this;
@@ -421,13 +477,18 @@ var singingLabApi = {
 
     /**
      * 
+     * Creates an order
+     * 
      * @param {string} paymentMethod 
      * @param {string} status 
-     * @param {string} products
+     * @param {Array} products
+     * @param {string} userId
      * @param {string} orderAdress 
-     * @param {string} date 
+     * @param {string} submitDate 
      * 
-     * @returns {Promise<boolean>}
+     * @throws {Error} - If invalid type of input, unexpected response of status or unable to reach the server
+     * 
+     * @returns {Promise<Order>}
      */
     createOrder: function createOrder(paymentMethod, status, products, userId, orderAdress, submitDate) {
         var _this11 = this;

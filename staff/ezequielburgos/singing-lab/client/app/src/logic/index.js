@@ -131,14 +131,14 @@ const logic = {
         return singingLabApi.registerUser(name, surname, address, email, password)
     },
 
-     /**
-     * Logs an user
-     * 
-     * @param {string} email - User's email
-     * @param {string} password - User's password
-     * 
-     * @returns {Promise<boolean>}
-     */
+    /**
+    * Logs an user
+    * 
+    * @param {string} email - User's email
+    * @param {string} password - User's password
+    * 
+    * @returns {Promise<boolean>}
+    */
     login(email, password) {
         return singingLabApi.authenticateUser(email, password)
             .then(id => {
@@ -254,12 +254,12 @@ const logic = {
             })
     },
 
-     /**
-     * 
-     * Retrieves a product
-     * 
-     * @returns {Promise<Product>}
-     */
+    /**
+    * 
+    * Retrieves a product
+    * 
+    * @returns {Promise<Product>}
+    */
     retrieveProduct(productId) {
         return singingLabApi.retrieveProduct(productId)
             .then(product => product)
