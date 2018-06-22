@@ -4,43 +4,13 @@
 
 E-comerce web platform focused on the sale of nutritional food products. The sale of these products is aimed at people looking for a specific diet. For this, both individual dishes and specialized packages are available for a type of nutritional plan.
 
-## TECHNOLOGIES 
-
-#### - CLIENT SIDE
-* Javascript
-* HTML5
-* CSS3
-* Bootstrap
-* React
-
-#### - SERVER SIDE
-* Node
-* Express.js
-* MongoDB
-* Mongoose
-
-#### - TESTING
-* Mocha
-* Chai
-* NYC
-
 ## FUNCTIONAL DESCRIPTION
 
-#### USE CASES
+### USE CASES
 
 ![](./models-diagram/uses-cases-nutrifit.jpg)
 
-## TECHNICAL DESCRIPTION
-
-#### DATA MODEL
-
-![](./models-diagram/data-model-nutrifit.jpg)
-
-#### BLOCK MODEL
-
-![](./models-diagram/block-diagram-nitrifit.jpg)
-
-## SCREENSHOTS
+### SCREENSHOTS
 
 ###  * Register
 
@@ -66,6 +36,35 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 
 ![](./layouts/order.jpg)
 
+## TECHNICAL DESCRIPTION
+
+### DATA MODEL
+
+![](./models-diagram/data-model-nutrifit.jpg)
+
+### BLOCK MODEL
+
+![](./models-diagram/block-diagram-nitrifit.jpg)
+
+### TECHNOLOGIES 
+
+### - Client side
+* Javascript
+* HTML5
+* CSS3
+* Bootstrap
+* React
+
+### - Server side
+* Node
+* Express.js
+* MongoDB
+* Mongoose
+
+### - Testing
+* Mocha
+* Chai
+* NYC
 
 ## SHOW DEMO
 
