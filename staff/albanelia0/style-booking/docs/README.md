@@ -1,6 +1,9 @@
 # Style Booking 
 
-(http://stylebooking.surge.sh/)
+
+PROJECT DEMO:
+[STYLE BOOKING](http://stylebooking.surge.sh/)
+
 
 Style Booking is a hairdresser managing tool where you can choose the service with the duration and price, and where you can manage your reservation faster
 
@@ -8,7 +11,7 @@ Style Booking is a hairdresser managing tool where you can choose the service wi
 # Functional description
 
 
-![landing](images/functionalDescription.png)
+![landing](images/F.Description.png)
 
 # Screenshots 
 
