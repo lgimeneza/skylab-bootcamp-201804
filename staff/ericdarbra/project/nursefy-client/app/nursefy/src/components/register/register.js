@@ -41,8 +41,7 @@ class Register extends Component {
             .then(() => {
                 this.props.history.push('/login')
             })
-            .catch(err => swal(err.message)
-            )
+            .catch(err => swal(err.message))
     }
 
     render() {
@@ -54,9 +53,7 @@ class Register extends Component {
                 <nav>
                     <div className="header-logo"><Link className="header-logo-link" to="/">Nursefy</Link></div>
                 </nav>
-                <main >
-                    {/* <h1 className="register-title">Register a <strong>new</strong> Nursefy account</h1> */}
-                   
+                <main className="animated fadeInUp">                   
                     <form onSubmit={this.registerNurse} className="main-content-register">
                         <h2>Register a new user</h2>
                         <span>Create an account by filling the data fields</span>

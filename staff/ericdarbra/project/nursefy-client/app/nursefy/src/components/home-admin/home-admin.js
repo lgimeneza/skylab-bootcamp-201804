@@ -20,7 +20,7 @@ class HomeAdmin extends Component {
 
     state = {
         nurses: '',
-        name:'',
+        name: '',
         id: '',
         admin: false,
         events: [],
@@ -65,47 +65,79 @@ class HomeAdmin extends Component {
         })
 
     }
+    addEvent = e => {
+        e.preventDefault()
+        const id = this.state.id
+        const evenT = { start: this.state.start, end: this.state.end, title: this.state.title }
+        logic.addEvent(id, evenT)
+            .then(() => {
+                logic.retrieveNurseAdmin(this.state.id)
+                    .then(info => {
+                        this.setState({
+                            events: info.data.events,
+                            id: info.data._id
+                        })
+                    })
+            })
+    }
 
     render() {
 
         return (
-            <div className="main-s">
+            <div className="main-ha">
 
                 <nav>
-                    <div className="header-logo"><Link className="header-logo-link" to="/">Nursefy</Link></div>
+                    <div className="header-logo"><Link className="header-logo-link" to="/home-admin">Nursefy</Link></div>
+                    <div className="logout">
+                    <Link className="header-logo-link" to="/" onClick={this.props.logOut}>Logout</Link>
+                    </div>
                 </nav>
 
-                <main>
-                    <h2 className="login-title">Admin panel</h2>
+                <main className="calendar">
+                    <h2 className="home-title">Admin panel</h2>
+                    <section className="form-general">
+                        <form className="form-shift" >
+                            <p>Select an available nurse</p>
+                            <select placeholder="Nurse name" onChange={this.nurseHandler}>
+                                <option value="" disabled selected>Select your option</option>
+                                {this.state.list.map(index => {
+                                    return <option value={index._id}>{index.name}</option>
+
+                                })}
+                            </select>
+                        </form>
+                        <div className="shift-box">
+                            <p>Select the shift</p>
+                            <select onChange={this.titleHandler}>
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="DH">Day Hospital</option>
+                                <option value="ES">Early Shift</option>
+                                <option value="AS">Afternoon Shift</option>
+                                <option value="NS">Night Shift</option>
+                            </select>
+                        </div>
+
+                        <form className="form-event" onSubmit={this.addEvent}>
+                            <p>Select the dates</p>
+                            <input type="date" value={this.start} onChange={this.startDate} />
+                            <input type="date" value={this.end} onChange={this.endDate} />
+                            <button type="submit" className="form-submit-button">Submit</button>
+
+                        </form>
+                    </section>
                     <Calendar
                         defaultDate={new Date()}
                         defaultView="month"
-                        views={"month"}
+                        views={["month"]}
                         events={this.state.events}
                         style={{ height: "45vh", margin: "2vh" }}
                     />
 
                 </main>
-                <form action="">
-                    <input type="date" value={this.start} onChange={this.startDate} />
-                    <input type="date" value={this.end} onChange={this.endDate} />
-                    <select name="cars" onChange={this.titleHandler}>
-                        <option value="HDD">Hospital de día</option>
-                        <option value="PT">Planta tardes</option>
-                        <option value="PN">Planta noches</option>
-                    </select>
+                <footer>
+                    Nursefy ver. 1.0.0
+                </footer>
 
-
-                </form>
-                <form>
-                    <p>Select the nurse</p>
-                    <select onChange={this.nurseHandler}>
-                        {this.state.list.map(index => {
-                            return <option value={index._id}>{index.name}</option>
-
-                        })}
-                    </select>
-                </form>
             </div>
         )
     }

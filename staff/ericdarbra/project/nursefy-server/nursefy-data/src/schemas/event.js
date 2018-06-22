@@ -1,18 +1,18 @@
-const {Schema} = require ('mongoose')
+const { Schema } = require('mongoose')
 
-module.exports = new Schema ({
+module.exports = new Schema({
 
-    start:{
+    start: {
         type: String,
         required: true
     },
-    end:{
-        type : String,
+    end: {
+        type: String,
         required: true
     },
-    title:{
-        type:String,
-        required:true
+    title: {
+        type: String,
+        required: true
     }
 
 })

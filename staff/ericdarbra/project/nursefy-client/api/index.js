@@ -17,6 +17,8 @@ const apiNurse = {
     },
 
     /**
+     * Register a new nurse
+     * 
      * @param {String} name
      * @param {String} surname
      * @param {String} email
@@ -61,6 +63,8 @@ const apiNurse = {
             })
     },
     /**
+     * Authenticates a nurse with the nursecard and password
+     * 
      * @param {String} nursecard
      * @param {String} password
      * 
@@ -96,7 +100,7 @@ const apiNurse = {
             })
     },
     /**
-     * 
+     * List all available nurses
      * 
      */
     listUsers() {
@@ -118,10 +122,11 @@ const apiNurse = {
     },
 
     /**
+   * Retrieves data from a single nurse
    * 
    * @param {string} id
    * 
-   * @returns {Promise<User>} 
+   * @returns {Promise<Object>} 
    */
     retrieveNurse(id) {
         return Promise.resolve()
@@ -145,6 +150,14 @@ const apiNurse = {
                     })
             })
     },
+    
+    /**
+   * Retrieves data from a single nurse from the admin panel
+   * 
+   * @param {string} id
+   * 
+   * @returns {Promise<Object>} 
+   */
     retrieveNurseAdmin(id) {
         return Promise.resolve()
             .then(() => {
@@ -168,7 +181,38 @@ const apiNurse = {
             })
 
     },
+    
+    /**
+   * Creates a new event
+   * 
+   * @param {string} id
+   * @param {Object} event
+   * 
+   * @returns {Promise<Boolean>} 
+   */
+    addEvent(id, event) {
+        return Promise.resolve()
+            .then(() => {
+                return axios.post(`${this.url}/users/admin/event`, { id, event })
+                    .then(({ status, data }) => {
+                        return true
+                    }).catch(err => {
+                        if (err.response) {
+                            const { response: { data: { error: message } } } = err
 
+                            throw Error(message)
+                        }
+                    })
+            })
+    },
+     /**
+   * Creates a new event
+   * 
+   * @param {string} id
+   * @param {Object} event
+   * 
+   * @returns {Promise<Boolean>} 
+   */
     changeDisp(id, disp) {
         return Promise.resolve()
             .then(() => {
@@ -187,8 +231,6 @@ const apiNurse = {
                     })
             })
     }
-
-
 }
 
 module.exports = apiNurse

@@ -18,6 +18,8 @@ var apiNurse = {
 
 
     /**
+     * Register a new nurse
+     * 
      * @param {String} name
      * @param {String} surname
      * @param {String} email
@@ -66,6 +68,8 @@ var apiNurse = {
     },
 
     /**
+     * Authenticates a nurse with the nursecard and password
+     * 
      * @param {String} nursecard
      * @param {String} password
      * 
@@ -107,7 +111,7 @@ var apiNurse = {
     },
 
     /**
-     * 
+     * List all available nurses
      * 
      */
     listUsers: function listUsers() {
@@ -130,10 +134,11 @@ var apiNurse = {
 
 
     /**
+    * Retrieves data from a single nurse
     * 
     * @param {string} id
     * 
-    * @returns {Promise<User>} 
+    * @returns {Promise<Object>} 
     */
     retrieveNurse: function retrieveNurse(id) {
         var _this4 = this;
@@ -157,6 +162,15 @@ var apiNurse = {
             });
         });
     },
+
+
+    /**
+    * Retrieves data from a single nurse from the admin panel
+    * 
+    * @param {string} id
+    * 
+    * @returns {Promise<Object>} 
+    */
     retrieveNurseAdmin: function retrieveNurseAdmin(id) {
         var _this5 = this;
 
@@ -179,14 +193,52 @@ var apiNurse = {
             });
         });
     },
-    changeDisp: function changeDisp(id, disp) {
+
+
+    /**
+    * Creates a new event
+    * 
+    * @param {string} id
+    * @param {Object} event
+    * 
+    * @returns {Promise<Boolean>} 
+    */
+    addEvent: function addEvent(id, event) {
         var _this6 = this;
 
         return Promise.resolve().then(function () {
-
-            return axios.post(_this6.url + '/users/' + id + '/disp', { disp: disp }, { headers: { Authorization: 'Bearer ' + _this6.token() } }).then(function (_ref3) {
+            return axios.post(_this6.url + '/users/admin/event', { id: id, event: event }).then(function (_ref3) {
                 var status = _ref3.status,
                     data = _ref3.data;
+
+                return true;
+            }).catch(function (err) {
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                }
+            });
+        });
+    },
+
+    /**
+    * Creates a new event
+    * 
+    * @param {string} id
+    * @param {Object} event
+    * 
+    * @returns {Promise<Boolean>} 
+    */
+    changeDisp: function changeDisp(id, disp) {
+        var _this7 = this;
+
+        return Promise.resolve().then(function () {
+
+            return axios.post(_this7.url + '/users/' + id + '/disp', { disp: disp }, { headers: { Authorization: 'Bearer ' + _this7.token() } }).then(function (_ref4) {
+                var status = _ref4.status,
+                    data = _ref4.data;
 
                 return true;
             }).catch(function (err) {

@@ -10,21 +10,21 @@ const logic = require('.')
 const { env: { DB_URL } } = process
 
 describe('logic (nursefy)', () => {
-    const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', nursecard: "38878609F", password: '123' }
-    const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', nursecard: "38878600F", password: '456' }
+    const userData = { name: 'John', surname: 'Doe', email: 'jd@mail.com', nursecard: "38878609F", password: '123', disp:true }
+    const otherUserData = { name: 'Jack', surname: 'Wayne', email: 'jw@mail.com', nursecard: "38878600F", password: '456', disp:false }
     const dummyUserId = '123456781234567812345678'
     const eventTest = { start: "2018, 6, 6", end: "2018, 6, 7", title: "Test title" }
     const indexes = []
 
     before(() => mongoose.connect(DB_URL))
 
-    /*   beforeEach(() => {
-          let count = 10 + Math.floor(Math.random() * 10)
-          indexes.length = 0
-          while (count--) indexes.push(count)
-  
-          return Promise.all(User.remove())
-      }) */
+    beforeEach(() => {
+        let count = 10 + Math.floor(Math.random() * 10)
+        indexes.length = 0
+        while (count--) indexes.push(count)
+
+        return Promise.all([User.remove()])
+    })
 
     describe('register user', () => {
         it('should succeed on correct data', () =>
@@ -90,17 +90,17 @@ describe('logic (nursefy)', () => {
         )
         it('should fail on no nurse card', () =>
             logic.registerNurse(userData.name, userData.surname, userData.email)
-                .catch(({ message }) => expect(message).to.equal('nurse card is not a string'))
+                .catch(({ message }) => expect(message).to.equal('Nurse card is not a string'))
         )
 
         it('should fail on empty nursecard', () =>
             logic.registerNurse(userData.name, userData.surname, userData.email, '')
-                .catch(({ message }) => expect(message).to.equal('nurse card is empty or blank'))
+                .catch(({ message }) => expect(message).to.equal('Nurse card is empty or blank'))
         )
 
         it('should fail on blank nursecard', () =>
             logic.registerNurse(userData.name, userData.surname, userData.email, '     ')
-                .catch(({ message }) => expect(message).to.equal('nurse card is empty or blank'))
+                .catch(({ message }) => expect(message).to.equal('Nurse card is empty or blank'))
         )
         it('should fail on no user password', () =>
             logic.registerNurse(userData.name, userData.surname, userData.email, userData.nursecard)
@@ -129,15 +129,15 @@ describe('logic (nursefy)', () => {
 
         it('should fail on no nursecard', () =>
             logic.authenticateNurse()
-                .catch(({ message }) => expect(message).to.equal('nursecard is not a string'))
+                .catch(({ message }) => expect(message).to.equal('Nursecard is not a string'))
         )
         it('should fail on blank nursecard', () =>
             logic.authenticateNurse('')
-                .catch(({ message }) => expect(message).to.equal('nursecard is empty or blank'))
+                .catch(({ message }) => expect(message).to.equal('Nursecard is empty or blank'))
         )
         it('should fail on blank nursecard', () =>
             logic.authenticateNurse('    ')
-                .catch(({ message }) => expect(message).to.equal('nursecard is empty or blank'))
+                .catch(({ message }) => expect(message).to.equal('Nursecard is empty or blank'))
         )
         it('should fail on no password', () =>
             logic.authenticateNurse(userData.nursecard)
@@ -161,21 +161,20 @@ describe('logic (nursefy)', () => {
                     return logic.addEvent(id, eventTest)
                         .then(eventId => {
 
-                            expect(eventId).to.be.a('string')
                             expect(eventId).to.exist
+                            expect(eventId).to.be.a('string')
 
                             return User.findById(id)
                                 .then(user => {
 
                                     expect(user).to.exist
-
                                     expect(user.events).to.exist
                                     expect(user.events.length).to.equal(1)
 
-                                    const [{ startDate, endDate, title }] = user.events
+                                    const [{ start, end, title }] = user.events
 
-                                    expect(startDate).to.equal('2018, 6, 6')
-                                    expect(endDate).to.equal('2018, 6, 7')
+                                    expect(start).to.equal('2018, 6, 6')
+                                    expect(end).to.equal('2018, 6, 7')
                                     expect(title).to.equal('Test title')
 
                                 })
@@ -211,18 +210,20 @@ describe('logic (nursefy)', () => {
 
     })
     describe('list users', () => {
-        it('should succeed on correct data', () =>
-            User.create(userData)  
-                .then(() => {
-                  return logic.listUsers()  
-                })
-                .then(res => {
-                    console.log(res)
-                    return res
-                })      
 
-    )
-    })
+        it('should succeed on correct data', () => {
+           User.create(userData)
+                    return User.find({ disp: true })
+                        .then(list => {
+                         
+                            expect(list).to.exist
+                            expect(list).to.be.an('array')
+                       
+                        })
+                     
+                })
+        })
+
     describe('list events', () => {
         it('should succeed on correct data', () =>
             User.create(userData)
@@ -267,5 +268,46 @@ describe('logic (nursefy)', () => {
         )
 
     })
-    //after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
+    describe('update availability', () => {
+        it('should succeed on correct data', () =>
+            User.create(userData)
+                .then(({ id, disp }) => {
+                    return User.findById(id)
+                        .then(user => {
+                            expect(user.disp).to.exist
+
+                            return logic.changeDisp(id, disp)
+                                .then(user => {
+                                    expect(user).to.be.true
+                                    expect(user).to.equal(disp)
+                                })
+                        })
+                })
+        )
+
+
+        it('should fail on no user id', () =>
+            logic.changeDisp()
+                .catch(({ message }) => expect(message).to.equal('user id is not a string'))
+        )
+
+        it('should fail on empty user id', () =>
+            logic.changeDisp('')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on blank user id', () =>
+            logic.changeDisp('     ')
+                .catch(({ message }) => expect(message).to.equal('user id is empty or blank'))
+        )
+
+        it('should fail on wrong disp', () =>
+            logic.changeDisp(userData.nursecard, 1)
+                .catch(({ message }) => expect(message).to.equal('disp is not a boolean'))
+        )
+
+
+    })
+
+    /* after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done))) */
 })

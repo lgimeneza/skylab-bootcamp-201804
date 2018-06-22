@@ -84,7 +84,21 @@ router.get('/users/admin/:nurseId', (req, res) => {
             res.status(400)
             res.json({ status: 'KO', error: message })
         })
-})
+}),
+/* Add an event */
+router.post('/users/admin/event', jsonBodyParser, (req, res) => {
+    const { body: { id, event } } = req
+
+    logic.addEvent(id, event)
+        .then(id => {
+            res.status(200)
+            res.json({ status: 'OK' })
+        })
+        .catch(({ message }) => {
+            res.status(400)
+            res.json({ status: 'KO', error: message })
+        })
+}),
 // Availability
 router.post('/users/:nurseId/disp', [jwtValidator, jsonBodyParser], (req, res) => {
     const { params: { nurseId }, body: { disp } } = req

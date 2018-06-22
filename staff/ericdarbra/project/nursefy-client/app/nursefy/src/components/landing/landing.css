@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Sriracha');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Tajawal:200');
 
 .main {
 
@@ -20,18 +21,15 @@
     margin-top: 5em;
 }
 
-header {
-    margin-top: 2em;
-    font-size: 160%;
-    font-family: 'Sriracha', cursive;
-    letter-spacing: 3px;
+.header {
+    margin: 0 auto;
+    font-family: 'Tajawal', sans-serif;
+    letter-spacing: 20px; 
+    text-transform: uppercase;
     color: rgb(167, 241, 232);
-    text-shadow: 1px 2px rgb(61, 61, 61);
 }
 
-.subtitle{
-    display:none;
-}
+
 .back-symbol {
     font-size: 8vw;
     color: #a7f1e8;
@@ -40,7 +38,26 @@ header {
 }
 
 .title {
-    text-align: center;
+    margin-top:1.5em;
+
+}
+.subtitle{
+    color:white;
+    display:block;
+    letter-spacing: 2px;
+
+    font-size:3.5vw;
+    text-shadow: none;
+    text-transform: uppercase;
+    text-align:center;
+    font-family: 'Open Sans', sans-serif;
+}
+h1{
+    font-size:14vw;
+    margin-top:1em;
+    letter-spacing: 5px;
+    font-weight: 300;
+    margin-bottom:0;
 }
 
 .main-register-button {
@@ -97,7 +114,14 @@ span a {
         right: 0
     }
     h1{
-        font-size:3em;
+        font-size:6vw;
+        font-weight:100;
+    }
+    .title{
+        margin-top:1em
+    }
+    .subtitle{
+        font-size:1.5vw
     }
     .cover {
         background: rgba(6, 133, 124, 0.5);
@@ -114,24 +138,13 @@ span a {
         margin: 0 auto;
         margin-left:2em;
         margin-right:2em;
-
         flex-direction: column;
         margin-top: 5em;
     }
     .text-center{
         text-align:center
     }
-    .subtitle{
-        color:white;
-        display:block;
-        letter-spacing: 1px;
-        font-size:1.5vw;
-        font-weight: bold;
-        text-shadow: none;
-        text-transform: uppercase;
-        text-align:center;
-        font-family: 'Open Sans', sans-serif;
-    }
+    
     .main-register-button {
         background-color: #ffffff33;
         border-radius: 10px;

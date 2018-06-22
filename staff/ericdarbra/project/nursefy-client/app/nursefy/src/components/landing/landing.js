@@ -4,17 +4,15 @@ import './landing.css'
 
 class Landing extends Component {
 
-    /*   componentDidMount(){ 
-          document.body.style.background = 'no-repeat';
-      } */
 
     render() {
         return (
             <div className="main">
                 <div className="cover">
-                    <header>
-
-                        <h1 className="title text-center">Nursefy</h1>
+                    <header className="header">
+  
+                        <h1 className="title">Nursefy</h1>
+       
                         <p className="subtitle">Your healthcare Schedule</p>
                     </header>
 
@@ -22,7 +20,7 @@ class Landing extends Component {
 
                         <Link to="/register" className="main-register-button">Register a new member</Link>
                         <Link to="/login" className="main-login-button">Login your account</Link>
-                        <span><a><Link to="/retrieve-password">Forgot your password?</Link></a></span>
+                       {/*  <span><a><Link to="/retrieve-password">Forgot your password?</Link></a></span> */}
 
                     </main>
                 </div>

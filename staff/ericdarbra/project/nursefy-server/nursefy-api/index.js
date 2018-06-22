@@ -8,24 +8,24 @@ const cors = require('cors')
 
 const { env: { PORT, DB_URL } } = process
 
-    mongoose.connect(DB_URL)
-        .then(() => {
-            const port = PORT || 3000
-            const app = express()
+mongoose.connect(DB_URL)
+    .then(() => {
+        const port = PORT || 3000
+        const app = express()
 
-            app.use(cors())
+        app.use(cors())
 
-            app.use('/api', router)
-            app.listen(port, () => console.log(`connected to server at port ${port}`))
+        app.use('/api', router)
+        app.listen(port, () => console.log(`connected to server at port ${port}`))
 
-            process.on('SIGINT', () => {
-                console.log('\nstopping server')
-    
-                mongoose.connection.close(() => {
-                    console.log('db connection closed')
-                    
-                    process.exit()
-                })
+        process.on('SIGINT', () => {
+            console.log('\nstopping server')
+
+            mongoose.connection.close(() => {
+                console.log('db connection closed')
+
+                process.exit()
             })
         })
-        .catch(console.error)
+    })
+    .catch(console.error)

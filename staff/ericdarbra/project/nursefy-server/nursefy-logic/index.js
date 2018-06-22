@@ -1,6 +1,6 @@
 'use strict'
 
-const { models: { User, Calendar, Events, Hospital } } = require('nursefy-data')
+const { models: { User, Events } } = require('nursefy-data')
 
 const logic = {
     /**
@@ -20,18 +20,23 @@ const logic = {
             .then(() => {
 
                 if (typeof name !== 'string') throw Error('user name is not a string')
+
                 if (!(name = name.trim()).length) throw Error('user name is empty or blank')
 
                 if (typeof surname !== 'string') throw Error('user surname is not a string')
+
                 if ((surname = surname.trim()).length === 0) throw Error('user surname is empty or blank')
 
                 if (typeof email !== 'string') throw Error('user email is not a string')
+
                 if (!(email = email.trim()).length) throw Error('user email is empty or blank')
 
-                if (typeof nursecard !== 'string') throw Error('nurse card is not a string')
-                if ((nursecard = nursecard.trim()).length === 0) throw Error('nurse card is empty or blank')
+                if (typeof nursecard !== 'string') throw Error('Nurse card is not a string')
+
+                if ((nursecard = nursecard.trim()).length === 0) throw Error('Nurse card is empty or blank')
 
                 if (typeof password !== 'string') throw Error('user password is not a string')
+
                 if ((password = password.trim()).length === 0) throw Error('user password is empty or blank')
 
                 return User.findOne({ nursecard })
@@ -56,10 +61,12 @@ const logic = {
             .then(() => {
 
                 if (typeof nursecard !== 'string') throw Error('Nursecard is not a string')
+
                 if ((nursecard = nursecard.trim()).length === 0) throw Error('Nursecard is empty or blank')
 
-                if (typeof password !== 'string') throw Error('Password is not a string')
-                if ((password = password.trim()).length === 0) throw Error('Password is empty or blank')
+                if (typeof password !== 'string') throw Error('password is not a string')
+
+                if ((password = password.trim()).length === 0) throw Error('password is empty or blank')
 
                 return User.findOne({ nursecard, password })
             })
@@ -69,13 +76,18 @@ const logic = {
             })
     },
     listUsers() {
+
         return Promise.resolve()
+
             .then(() => {
+
                 return User.find({ disp: true })
+
             })
             .then(user => {
-                console.log(user)
-                if(!(user)) throw Error('No nurses available')
+
+                if (!(user)) throw Error('No nurses available')
+
                 return user
             })
 
@@ -85,6 +97,7 @@ const logic = {
             .then(() => {
 
                 if (typeof id !== 'string') throw Error('id is not a string')
+
                 if ((id = id.trim()).length === 0) throw Error('id is empty or blank')
 
                 return User.findById(id).select({ _id: 1, name: 1, surname: 1, events: 1, email: 1, disp: 1, admin: 1 })
@@ -133,10 +146,13 @@ const logic = {
 
         return Promise.resolve()
             .then(() => {
-                console.log('hola')
+
                 if (typeof nurseId !== 'string') throw Error('user id is not a string')
+
                 if (!(nurseId = nurseId.trim()).length) throw Error('user id is empty or blank')
+
                 if (typeof disp !== 'boolean') throw Error('disp is not a boolean')
+
 
                 return User.findById(nurseId)
                     .then(nurse => {
@@ -150,14 +166,7 @@ const logic = {
                     .then(() => true)
             })
 
-        /*  return User.findByIdAndUpdate(nurseId, { $set:{disp} })
-             .then(nurse => {
-                 nurse.save()
-                 //console.log(nurse.disp)
-                 return nurse.disp
-             }) */
     }
-    //TODO - TEST retrieveuser...
 
 }
 

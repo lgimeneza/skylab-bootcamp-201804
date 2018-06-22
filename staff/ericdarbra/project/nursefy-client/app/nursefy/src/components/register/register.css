@@ -20,7 +20,7 @@
 .header-logo {
     margin: 0.5em;
     font-size: 160%;
-    font-family: 'Sriracha', cursive;
+    font-family: 'Tajawal', sans-serif;
     letter-spacing: 3px;
     color: rgb(167, 241, 232);
    /*  text-shadow: 1px 2px rgb(61, 61, 61); */
@@ -56,7 +56,13 @@ hr {
 
 nav {
     display: flex;
-    background: rgb(61, 104, 104)
+    background: rgb(61, 104, 104);
+    justify-content: space-between;
+}
+.logout{
+    margin:1.3em;
+    margin-right:3em;
+    font-weight:bold;
 }
 
 form input {
