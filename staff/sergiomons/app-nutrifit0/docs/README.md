@@ -52,7 +52,7 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 
 ### * Home 
 
-![](.layouts/home.jpg)
+![](.layouts/home-page.jpg)
 
 ### * Individuals Category
 
