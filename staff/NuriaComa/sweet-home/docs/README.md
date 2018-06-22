@@ -8,7 +8,7 @@
 
 ## Functional description
 ### This application allows you to make coexistence easier through different sections, such as cleaning tasks, assigning and rotating every week, another is that you have the information about the apartment and your roommates, another is a notebook...
-![user](images/user.png)
+![user](images/User.png)
 
 ## Screenshot
 ![Landing](images/Landing2.png) ![Register apartment](images/RegisterA.png)  ![Register user](images/RegisterU.png)    ![Login](images/Login.png)  ![Home](images/Home2.png)  ![ApartmentInfo](images/ApartmentI.png)  ![Apartment update](images/ApartmentU.png)  ![Users List](images/UsersI.png)   ![Users Update](images/UsersU.png)  ![Market](images/Market2.png)  ![Tasks](images/Tasks2_2.png)  ![Tasks](images/Tasks_2.png)  ![Notes](images/Notes2.png)    
