@@ -14,7 +14,7 @@ class App extends Component {
 
     componentDidUpdate(prevProps){
         if(this.props.location !== prevProps.location){
-            this.props.clear() //For clear alerts
+            this.props.clear() //Clear alerts
         }
     }
 

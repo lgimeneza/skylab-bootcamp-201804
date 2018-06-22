@@ -7,6 +7,10 @@ auctionApi.url = 'https://mysterious-basin-61944.herokuapp.com/api'
 
 const logic = {
 
+    /**
+     * Saves the logged user's info. Must be overrided in App.
+     * @param {Object<User>} user - User object like { email: 'email02@email.com', password: '123', name: 'Chas', surname: 'Keaveny', role: 'customer' }
+     */
     user(user) {
         if (user) {
             this._user = user
@@ -17,10 +21,20 @@ const logic = {
         return this._user
     },
 
+    /**
+     * Retrieve a list of products with the search and filter criteria.
+     * @param {string} query - Search criteria string
+     * @param {Array<string>} categories - Array of category id to filter
+     * @param {Array<string>} prices - Range of prices to filter [min, max]
+     */
     listProducts(query, categories, prices){
         return auctionApi.listProducts(query, categories, prices)
     },
 
+    /**
+     * Retrieve the user's bid list. Use the user stored in this logic.
+     *  @returns {Promise<[Product]>} - Array of product objects
+     */
     listUserProducts(){
         const user = this.user()
 
@@ -31,18 +45,40 @@ const logic = {
         return auctionApi.listUserProducts(user._id)
     },
 
+    /**
+     * Retrieve a product with a given id
+     * @param {string} productId - id of product to retrive
+     * @returns {Promise<Product>} - Product object
+     */
     retrieveProduct(productId){
         return auctionApi.retrieveProduct(productId)
     },
 
+    /**
+     * Save a bid for a given product
+     * @param {string} productId - id of bidding product 
+     * @param {string} userId - id of bidding user. Must be logged
+     * @param {number} price - the bid price
+     * @returns {Promise<string>} - Bid id string
+     */
     addProductBid(productId, userId, price){
         return auctionApi.addProductBid(productId, userId, price)
     },
 
+    /**
+     * Retrieve a list of product categories available. It is used to filter the products.
+     * @returns {Promise<[Category]>} - Array of categories
+     */
     listCategories(){
         return auctionApi.listCategories()
     },
 
+    /**
+     * Authenticate the user and log in saving the user info in this logic.
+     * @param {string} username - The username to log in. Email of the user.
+     * @param {string} password - User's password.
+     *  @returns {Object<User>}} - User object.
+     */
     login(username, password) {
         return auctionApi.authenticateUser(username, password)
             .then(user => {
@@ -61,6 +97,10 @@ const logic = {
             })
     },
 
+    /**
+     * Set user info saved in this logic to null
+     * @returns {Objec<User>}
+     */
     logout(){
         return Promise.resolve()
         .then(()=> {
@@ -68,8 +108,11 @@ const logic = {
         })
     },
 
+    /**
+     * Retrieves the user info.
+     * @returns {Object<User>} - User's object
+     */
     retrieveUser(){
-        //const user = JSON.parse(localStorage.getItem('user'))
         const user = this.user()
 
         if (user === null){
@@ -79,6 +122,14 @@ const logic = {
         return auctionApi.retrieveUser(user._id)
     },
 
+    /**
+     * Register a user with the data provided.
+     * @param {string} name 
+     * @param {string} surname 
+     * @param {string} email 
+     * @param {string} password 
+     * @returns {Promise<boolean>}
+     */
     register(name, surname, email,  password){
         return auctionApi.registerUser(name, surname, email,  password)
             .then(() => {
@@ -88,23 +139,6 @@ const logic = {
                 return Promise.reject(error);
             })
     },
-
-    handleResponse(response) {
-        return response.json().then(data => {
-            if (!response.ok) {
-                if (response.status === 401) {
-                    // auto logout if 401 response returned from api
-                    logout()
-                    location.reload(true)
-                }
-    
-                const error = (data && data.error) || response.statusText;
-                return Promise.reject(error)
-            }
-    
-            return data;
-        })
-    }
 
 }
 

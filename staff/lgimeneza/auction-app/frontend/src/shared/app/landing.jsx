@@ -16,7 +16,7 @@ var socket
 class Landing extends Component {
 
     static fetchData({ store }) {
-        return store.dispatch(actions.getProducts())
+        return store.dispatch(actions.getProducts('', [] , []))
     }
     
     componentDidMount() {

@@ -1032,6 +1032,7 @@ textarea.input {
 
 .product-details .add-to-cart {
   margin-bottom: 30px;
+  min-width: 401px;;
 }
 
 .product-details .add-to-cart .add-to-cart-btn {

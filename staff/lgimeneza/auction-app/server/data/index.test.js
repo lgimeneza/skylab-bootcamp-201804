@@ -248,7 +248,5 @@ describe('models (auction)', () => {
         })
     })
 
-
-    after(done => mongoose.connection.close(done))
-    //after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
+    after(done => mongoose.connection.db.dropDatabase(() => mongoose.connection.close(done)))
 })

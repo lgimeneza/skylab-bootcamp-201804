@@ -17,10 +17,12 @@ class Product extends Component {
     state = {
         bid:0,
         priceClass:'',
+        bidClass:'',
         slickImg: null,
         slickImgs: null,
         nav1: null,
-        nav2: null
+        nav2: null,
+        submitted: false,
     }
 
     componentDidMount = () => {
@@ -36,7 +38,7 @@ class Product extends Component {
                 .then(()=>{
                     this.setState( { bid: Number(this.props.product.currentPrice), priceClass: 'flash' }, () =>{
                         setTimeout(() => this.setState({priceClass: ''}),1000)
-                    } )
+                    })
                 })
             }
         })
@@ -46,29 +48,28 @@ class Product extends Component {
         })
 
         this.props.getProduct(id)
-        .then(()=>{
-            if (currentPrice){
-                this.setState({ 
-                    bid: currentPrice, //when comes from server
-                    nav1: this.slider1,
-                    nav2: this.slider2
-                 })
-            } else {
-                this.setState({ 
-                    nav1: this.slider1,
-                    nav2: this.slider2
-                 })
-            }
-        })
+
+        if (currentPrice){
+            console.log('didMount', currentPrice)
+            this.setState({ 
+                bid: currentPrice, //when comes from server
+                nav1: this.slider1,
+                nav2: this.slider2
+             })
+        } else {
+            this.setState({ 
+                nav1: this.slider1,
+                nav2: this.slider2
+             })
+        }
     }
 
     componentDidUpdate = (prevProps) => {
         const { product: { currentPrice } } = this.props
 
-        if (prevProps.product.currentPrice !== currentPrice && currentPrice) {
-            this.setState({ bid: Number(currentPrice) })
+        if (currentPrice && prevProps.product.currentPrice !== currentPrice) {
+            this.setState({ bid: currentPrice })
         } 
-
     } 
 
     componentWillUnmount = () => {
@@ -85,7 +86,6 @@ class Product extends Component {
         e.preventDefault()
 
         //TODO check bid
-
         const { product, user } = this.props
 
         if (Object.keys(user).length === 0) {
@@ -103,7 +103,10 @@ class Product extends Component {
                 })
             }
             else {
-                //bid > product.currentPrice && this.setState({ bid: product.currentPrice })
+                //this.setState({ submitted: true })
+                this.setState( { bidClass: 'flash' }, () =>{
+                    setTimeout(() => this.setState({bidClass: ''}),1000)
+                })
                 //TODO: Throw Error Something went wrong
             }
 
@@ -114,7 +117,7 @@ class Product extends Component {
     render() {
 
         const { product } = this.props
-        const { priceClass } = this.state
+        const { priceClass, bidClass, submitted } = this.state
         const settingsImgs = {
             slidesToShow: 3,
             slidesToScroll: 1,
@@ -177,24 +180,24 @@ class Product extends Component {
 
                     {!product.closed &&
                         <div className="add-to-cart" >
-                        <div className="qty-label">
-                            Enter your bid 
-                            <div className="input-number">
-                                <input type="number" name='bid' value={this.state.bid} onChange={this.handleChange} />
-                            <span className="qty-up" onClick={() => this.setState({ bid:this.state.bid +10 })} >+</span>
-                            <span className="qty-down" onClick={() => this.state.bid > product.currentPrice && this.setState({ bid:this.state.bid -10 })} >-</span>
+                            <div className="qty-label">
+                                <span className={`animated ${bidClass}`}>Enter your bid</span>  
+                                <div className="input-number">
+                                    <input type="number" name='bid' value={this.state.bid} onChange={this.handleChange} />
+                                <span className="qty-up" onClick={() => this.setState({ bid:this.state.bid +10 })} >+</span>
+                                <span className="qty-down" onClick={() => this.state.bid > product.currentPrice && this.setState({ bid:this.state.bid -10 })} >-</span>
+                                </div>
                             </div>
-                        </div>
-                        <button  onClick={this.handleSubmit} className="add-to-cart-btn"><i className="fa fa-shopping-cart" /> Submit bid</button>
+                            <button  onClick={this.handleSubmit} className="add-to-cart-btn"><i className="fa fa-shopping-cart" /> Submit bid</button>
                         </div>
                     }
 
 
                     <ul className="product-links">
                     <li>Share:</li>
-                    <li><a href="#"><i className="fab fa-facebook-square" /></a></li>
-                    <li><a href="#"><i className="fab fa-twitter-square" /></a></li>
-                    <li><a href="#"><i className="fab fa-google-plus-square" /></a></li>
+                    <li><a href="#"><i className="fab fa-facebook" /></a></li>
+                    <li><a href="#"><i className="fab fa-twitter" /></a></li>
+                    <li><a href="#"><i className="fab fa-google-plus" /></a></li>
                     <li><a href="#"><i className="far fa-envelope" /></a></li>
                     </ul>
                 </div>

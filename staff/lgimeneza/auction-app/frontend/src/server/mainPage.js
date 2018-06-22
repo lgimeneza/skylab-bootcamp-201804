@@ -44,7 +44,6 @@ export default function renderFullPage(html, preloadedState, helmet) {
 		<script src="/dist/assets/js/jquery.min.js"></script>
 		<script src="/dist/assets/js/bootstrap.min.js"></script>
 		<script src="/dist/assets/js/nouislider.min.js"></script>
-		<!-- <script src="/dist/assets/js/main.js"></script> -->
 		
       </body>
     </html>

@@ -6,7 +6,7 @@ const buildUrls = require('./utils/buildUrl')
 const auctionApi = {
     url: 'NO-URL',
 
-    token: 'NO-TOKEN',
+    _token: 'NO-TOKEN',
 
     token(token) {
         if (token) {

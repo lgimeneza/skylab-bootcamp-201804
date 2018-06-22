@@ -12,6 +12,7 @@ import { search } from '../helpers/search'
 
 class NavBar extends Component {
     static fetchData() {
+		
 	}
 
 	state = {

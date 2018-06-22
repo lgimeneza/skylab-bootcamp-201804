@@ -12,15 +12,6 @@ class Profile extends Component {
         this.props.retrieveUser()
     }
 
-    handleChange(e) {
-
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-
-    }
-
     render() {
         const { name, surname, email, password } = this.props.user
         return (
@@ -52,18 +43,6 @@ class Profile extends Component {
                                     <div className='form-group'>
                                         <input type="text" className="form-control" name="email"  placeholder="Email" value={email} onChange={this.handleChange} />
                                     </div>
-                                    {/* <div className="form-group">
-                                    <input className="input" type="text" name="address" placeholder="Address" value={address} onChange={this.handleChange} />
-                                    </div>
-                                    <div className="form-group">
-                                        <input className="input" type="text" name="city" placeholder="City" value={city} onChange={this.handleChange} />
-                                    </div>
-                                    <div className="form-group">
-                                        <input className="input" type="text" name="country" placeholder="Country" value={country} onChange={this.handleChange} />
-                                    </div>
-                                    <div className="form-group">
-                                        <input className="input" type="text" name="postcode" placeholder="Post Code" value={postcode} onChange={this.handleChange}/>
-                                    </div> */}
                                     <div className='form-group'>
                                         <input type="password" className="form-control" name="password"  placeholder="Password" value={password} onChange={this.handleChange} />
                                     </div>

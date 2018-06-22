@@ -101,7 +101,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = renderFullPage;
 function renderFullPage(html, preloadedState, helmet) {
-	return '\n    <!doctype html>\n    <html>\n      <head>\n\t\t<link rel="icon" href="/dist/favicon.ico" type="image/ico" />\n\t\t\n\t\t<!-- Google font -->\n\t\t<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">  \n\t  \n\t\t<!-- Bootstrap -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/bootstrap.min.css"/>\n\t\t\n\t\t<!-- Slick -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick.css"/>\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick-theme.css"/>\n\t  \n\t\t<!-- nouislider -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/nouislider.min.css"/>\n\t  \n\t\t<!-- Font Awesome Icon -->\n\t\t<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">\n\t\t\n\t\t<!-- Animate.css stlylesheet -->\n\t\t<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">\n\t  \n\t\t<!-- Custom stlylesheet -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/style.css"/>\n\n        ' + (Object.keys(helmet).length ? helmet.title.toString() : '') + '\n        ' + (Object.keys(helmet).length ? helmet.meta.toString() : '') + '\n\t\t' + (Object.keys(helmet).length ? helmet.link.toString() : '') + '\n\t\t\n      </head>\n\t  <body>\n\t\t<div id="root">' + html + '</div>\n\t\t\n        <script>\n\t\t\twindow.__PRELOADED_STATE__ = ' + JSON.stringify(preloadedState).replace(/</g, '\\u003c') + '\n\t\t</script>\n\t\t\n\t\t<script src="/dist/assets/app.bundle.js"></script>\n\t\t\n\t\t<script src="/dist/assets/js/jquery.min.js"></script>\n\t\t<script src="/dist/assets/js/bootstrap.min.js"></script>\n\t\t<script src="/dist/assets/js/nouislider.min.js"></script>\n\t\t<!-- <script src="/dist/assets/js/main.js"></script> -->\n\t\t\n      </body>\n    </html>\n    ';
+	return '\n    <!doctype html>\n    <html>\n      <head>\n\t\t<link rel="icon" href="/dist/favicon.ico" type="image/ico" />\n\t\t\n\t\t<!-- Google font -->\n\t\t<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">  \n\t  \n\t\t<!-- Bootstrap -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/bootstrap.min.css"/>\n\t\t\n\t\t<!-- Slick -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick.css"/>\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/slick-theme.css"/>\n\t  \n\t\t<!-- nouislider -->\n\t\t<link type="text/css" rel="stylesheet" href="/dist/assets/styles/nouislider.min.css"/>\n\t  \n\t\t<!-- Font Awesome Icon -->\n\t\t<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">\n\t\t\n\t\t<!-- Animate.css stlylesheet -->\n\t\t<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">\n\t  \n\t\t<!-- Custom stlylesheet -->\n\t\t<link rel="stylesheet" href="/dist/assets/styles/style.css"/>\n\n        ' + (Object.keys(helmet).length ? helmet.title.toString() : '') + '\n        ' + (Object.keys(helmet).length ? helmet.meta.toString() : '') + '\n\t\t' + (Object.keys(helmet).length ? helmet.link.toString() : '') + '\n\t\t\n      </head>\n\t  <body>\n\t\t<div id="root">' + html + '</div>\n\t\t\n        <script>\n\t\t\twindow.__PRELOADED_STATE__ = ' + JSON.stringify(preloadedState).replace(/</g, '\\u003c') + '\n\t\t</script>\n\t\t\n\t\t<script src="/dist/assets/app.bundle.js"></script>\n\t\t\n\t\t<script src="/dist/assets/js/jquery.min.js"></script>\n\t\t<script src="/dist/assets/js/bootstrap.min.js"></script>\n\t\t<script src="/dist/assets/js/nouislider.min.js"></script>\n\t\t\n      </body>\n    </html>\n    ';
 }
 
 /***/ }),
@@ -332,7 +332,7 @@ var App = function (_Component) {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps) {
             if (this.props.location !== prevProps.location) {
-                this.props.clear(); //For clear alerts
+                this.props.clear(); //Clear alerts
             }
         }
     }, {
@@ -957,7 +957,7 @@ var Landing = function (_Component) {
         value: function fetchData(_ref2) {
             var store = _ref2.store;
 
-            return store.dispatch(actions.getProducts());
+            return store.dispatch(actions.getProducts('', [], []));
         }
     }]);
 
@@ -1700,10 +1700,12 @@ var Product = function (_Component) {
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Product.__proto__ || Object.getPrototypeOf(Product)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
             bid: 0,
             priceClass: '',
+            bidClass: '',
             slickImg: null,
             slickImgs: null,
             nav1: null,
-            nav2: null
+            nav2: null,
+            submitted: false
         }, _this.componentDidMount = function () {
             var _this$props = _this.props,
                 id = _this$props.match.params.id,
@@ -1730,26 +1732,27 @@ var Product = function (_Component) {
                 console.log('socket error');
             });
 
-            _this.props.getProduct(id).then(function () {
-                if (currentPrice) {
-                    _this.setState({
-                        bid: currentPrice, //when comes from server
-                        nav1: _this.slider1,
-                        nav2: _this.slider2
-                    });
-                } else {
-                    _this.setState({
-                        nav1: _this.slider1,
-                        nav2: _this.slider2
-                    });
-                }
-            });
+            _this.props.getProduct(id);
+
+            if (currentPrice) {
+                console.log('didMount', currentPrice);
+                _this.setState({
+                    bid: currentPrice, //when comes from server
+                    nav1: _this.slider1,
+                    nav2: _this.slider2
+                });
+            } else {
+                _this.setState({
+                    nav1: _this.slider1,
+                    nav2: _this.slider2
+                });
+            }
         }, _this.componentDidUpdate = function (prevProps) {
             var currentPrice = _this.props.product.currentPrice;
 
 
-            if (prevProps.product.currentPrice !== currentPrice && currentPrice) {
-                _this.setState({ bid: Number(currentPrice) });
+            if (currentPrice && prevProps.product.currentPrice !== currentPrice) {
+                _this.setState({ bid: currentPrice });
             }
         }, _this.componentWillUnmount = function () {
             socket.close();
@@ -1764,7 +1767,6 @@ var Product = function (_Component) {
             e.preventDefault();
 
             //TODO check bid
-
             var _this$props2 = _this.props,
                 product = _this$props2.product,
                 user = _this$props2.user;
@@ -1782,7 +1784,12 @@ var Product = function (_Component) {
                         _this.props.getProduct(product._id);
                     });
                 } else {
-                    //bid > product.currentPrice && this.setState({ bid: product.currentPrice })
+                    //this.setState({ submitted: true })
+                    _this.setState({ bidClass: 'flash' }, function () {
+                        setTimeout(function () {
+                            return _this.setState({ bidClass: '' });
+                        }, 1000);
+                    });
                     //TODO: Throw Error Something went wrong
                 }
             }
@@ -1795,7 +1802,10 @@ var Product = function (_Component) {
             var _this2 = this;
 
             var product = this.props.product;
-            var priceClass = this.state.priceClass;
+            var _state = this.state,
+                priceClass = _state.priceClass,
+                bidClass = _state.bidClass,
+                submitted = _state.submitted;
 
             var settingsImgs = {
                 slidesToShow: 3,
@@ -1894,7 +1904,11 @@ var Product = function (_Component) {
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'qty-label' },
-                                        'Enter your bid',
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'animated ' + bidClass },
+                                            'Enter your bid'
+                                        ),
                                         _react2.default.createElement(
                                             'div',
                                             { className: 'input-number' },
@@ -1936,7 +1950,7 @@ var Product = function (_Component) {
                                         _react2.default.createElement(
                                             'a',
                                             { href: '#' },
-                                            _react2.default.createElement('i', { className: 'fab fa-facebook-square' })
+                                            _react2.default.createElement('i', { className: 'fab fa-facebook' })
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -1945,7 +1959,7 @@ var Product = function (_Component) {
                                         _react2.default.createElement(
                                             'a',
                                             { href: '#' },
-                                            _react2.default.createElement('i', { className: 'fab fa-twitter-square' })
+                                            _react2.default.createElement('i', { className: 'fab fa-twitter' })
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -1954,7 +1968,7 @@ var Product = function (_Component) {
                                         _react2.default.createElement(
                                             'a',
                                             { href: '#' },
-                                            _react2.default.createElement('i', { className: 'fab fa-google-plus-square' })
+                                            _react2.default.createElement('i', { className: 'fab fa-google-plus' })
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -2051,14 +2065,6 @@ var Profile = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.retrieveUser();
-        }
-    }, {
-        key: 'handleChange',
-        value: function handleChange(e) {}
-    }, {
-        key: 'handleSubmit',
-        value: function handleSubmit(e) {
-            e.preventDefault();
         }
     }, {
         key: 'render',
@@ -3507,6 +3513,11 @@ var auctionApi = __webpack_require__(/*! api */ "api");
 auctionApi.url = 'https://mysterious-basin-61944.herokuapp.com/api';
 
 var logic = {
+
+    /**
+     * Saves the logged user's info. Must be overrided in App.
+     * @param {Object<User>} user - User object like { email: 'email02@email.com', password: '123', name: 'Chas', surname: 'Keaveny', role: 'customer' }
+     */
     user: function user(_user) {
         if (_user) {
             this._user = _user;
@@ -3516,9 +3527,23 @@ var logic = {
 
         return this._user;
     },
+
+
+    /**
+     * Retrieve a list of products with the search and filter criteria.
+     * @param {string} query - Search criteria string
+     * @param {Array<string>} categories - Array of category id to filter
+     * @param {Array<string>} prices - Range of prices to filter [min, max]
+     */
     listProducts: function listProducts(query, categories, prices) {
         return auctionApi.listProducts(query, categories, prices);
     },
+
+
+    /**
+     * Retrieve the user's bid list. Use the user stored in this logic.
+     *  @returns {Promise<[Product]>} - Array of product objects
+     */
     listUserProducts: function listUserProducts() {
         var user = this.user();
 
@@ -3528,15 +3553,45 @@ var logic = {
 
         return auctionApi.listUserProducts(user._id);
     },
+
+
+    /**
+     * Retrieve a product with a given id
+     * @param {string} productId - id of product to retrive
+     * @returns {Promise<Product>} - Product object
+     */
     retrieveProduct: function retrieveProduct(productId) {
         return auctionApi.retrieveProduct(productId);
     },
+
+
+    /**
+     * Save a bid for a given product
+     * @param {string} productId - id of bidding product 
+     * @param {string} userId - id of bidding user. Must be logged
+     * @param {number} price - the bid price
+     * @returns {Promise<string>} - Bid id string
+     */
     addProductBid: function addProductBid(productId, userId, price) {
         return auctionApi.addProductBid(productId, userId, price);
     },
+
+
+    /**
+     * Retrieve a list of product categories available. It is used to filter the products.
+     * @returns {Promise<[Category]>} - Array of categories
+     */
     listCategories: function listCategories() {
         return auctionApi.listCategories();
     },
+
+
+    /**
+     * Authenticate the user and log in saving the user info in this logic.
+     * @param {string} username - The username to log in. Email of the user.
+     * @param {string} password - User's password.
+     *  @returns {Object<User>}} - User object.
+     */
     login: function login(username, password) {
         var _this = this;
 
@@ -3554,6 +3609,12 @@ var logic = {
             return Promise.reject(error);
         });
     },
+
+
+    /**
+     * Set user info saved in this logic to null
+     * @returns {Objec<User>}
+     */
     logout: function logout() {
         var _this2 = this;
 
@@ -3561,8 +3622,13 @@ var logic = {
             _this2.user(null);
         });
     },
+
+
+    /**
+     * Retrieves the user info.
+     * @returns {Object<User>} - User's object
+     */
     retrieveUser: function retrieveUser() {
-        //const user = JSON.parse(localStorage.getItem('user'))
         var user = this.user();
 
         if (user === null) {
@@ -3571,27 +3637,21 @@ var logic = {
 
         return auctionApi.retrieveUser(user._id);
     },
+
+
+    /**
+     * Register a user with the data provided.
+     * @param {string} name 
+     * @param {string} surname 
+     * @param {string} email 
+     * @param {string} password 
+     * @returns {Promise<boolean>}
+     */
     register: function register(name, surname, email, password) {
         return auctionApi.registerUser(name, surname, email, password).then(function () {
             return true;
         }).catch(function (error) {
             return Promise.reject(error);
-        });
-    },
-    handleResponse: function handleResponse(response) {
-        return response.json().then(function (data) {
-            if (!response.ok) {
-                if (response.status === 401) {
-                    // auto logout if 401 response returned from api
-                    logout();
-                    location.reload(true);
-                }
-
-                var error = data && data.error || response.statusText;
-                return Promise.reject(error);
-            }
-
-            return data;
         });
     }
 };
