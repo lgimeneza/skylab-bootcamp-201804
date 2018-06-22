@@ -12,7 +12,7 @@ Link to site: castme.surge.sh
 ![](./design/sketches/user.png)
 
 ## Data base diagram
-![](./design/sketches/database_diagram.jpg)
+![](./design/sketches/database_diagram.png)
 
 ## Block diagram
 ![](./design/sketches/block_diagram.png)
