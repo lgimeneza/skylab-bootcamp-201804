@@ -30,13 +30,15 @@ header{
     margin: 0;
 }
 
+span {font-size: 1.1em;}
+
 nav { justify-content: flex-end }
 
 nav * { margin-right: 2em }
 
-.link, a { text-decoration: none; }
+.link, a { text-decoration: none; cursor: pointer;}
 
-.link:visited, a:visited { color: white; }
+.link:visited, a:visited, .link:active, a:active, .link:link, a:link { color: white; }
 
 .title_wp {
     width: 130px;
