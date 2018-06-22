@@ -3,4 +3,4 @@
 [DOCUMENTATION](docs)
 
 
-[DEMO](http://stylebooking.surge.sh/)
+[DEMO](https://stylebooking.surge.sh/)
