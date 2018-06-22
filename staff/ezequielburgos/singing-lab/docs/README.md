@@ -76,6 +76,10 @@ The project was built following this layer separation architechture:
 
 ![](./images/sketch/cart-page.png)
 
+### Order
+
+![](./images/sketch/order-page.png)
+
 ## PROJECT DEMO
 
 You can see a demo of the project here: [surge](http://singing-lab.surge.sh/#/)
