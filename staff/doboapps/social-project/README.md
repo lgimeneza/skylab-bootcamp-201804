@@ -1,5 +1,5 @@
 # Dogger: The First social network for your dog
 
-![Documentation](docs)          
+[Documentation](docs)          
 <br/><br/>
-![Demo](http://dogger.surge.sh)          
+[Demo](http://dogger.surge.sh)          
