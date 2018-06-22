@@ -2,4 +2,4 @@
 
 [Documentation](docs)
 
-[Demo](http://192.168.8.46:3000)
+[Demo](http://192.168.0.46:3000)
