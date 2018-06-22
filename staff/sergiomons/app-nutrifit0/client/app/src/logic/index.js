@@ -2,16 +2,23 @@
 
 const clientApi = require('client-api')
 
-//clientApi.url = 'https://gentle-forest-77809.herokuapp.com/api'
 clientApi.url = 'http://localhost:5000/api'
+//clientApi.url = 'https://gentle-forest-77809.herokuapp.com/api'
 // clientApi.url = 'http://192.168.0.27:5000/api'
 
 const logic = {
-    // userId: 'NO-ID',
+
     _cart: [],
     _statusOrder: 'unpaid',
     _dateOrder: '',
 
+     /**
+     * Manage user id
+     * 
+     * @param {String} userId The user id.
+     * 
+     * @returns {<userId>}
+     */
     userId(userId) {
         if (userId) {
             this._userId = userId
@@ -21,71 +28,32 @@ const logic = {
         return this._userId
     },
 
+    /**
+     * Manage cart products
+     * 
+     * @param {Array} cart The user id.
+     * 
+     * @returns {[Cart]}
+     */
     cart(cart) {
         if (typeof cart !== 'undefined') {
             this._cart = cart
 
             return
         }
-
         return this._cart
     },
 
-    getDateOrder() {
-        this._dateOrder = Date.now()
-        return this._dateOrder.toString()
-    },
-
-    addProductToCart(productId, quantity = 1) {
-        for (let i = 0; i < quantity; i++)
-            this.cart().push(productId)
-
-        this.cart(this.cart())
-    },
-
-    substractProductFromCart(productId, quantity) {
-        for (let i = 0; i < quantity; i++) {
-            const index = this.cart().findIndex(_productId => _productId === productId)
-    
-            if (index > -1) {
-                this.cart().splice(index, 1)
-    
-                this.cart(this.cart())
-            }
-        }
-    },
-
-    removeProductFromCart(productId) {
-        const updateCart = this.cart().filter(id => {
-            return id !== productId
-        })
-
-        this.cart(updateCart)
-    },
-
-    listProductsFromCart() {
-        return clientApi.listProductsByIds(this.cart())
-            .then(products => {
-                const quantities = this.cart().reduce((accum, productId) => {
-                    if (accum[productId]) accum[productId]++
-                    else accum[productId] = 1
-                    return accum
-                }, {})
-                products.forEach(product => product.quantity = quantities[product.id])
-
-                return products
-            })
-    },
-
-    getCartSummary() {
-        return this.listProductsFromCart()
-            .then(products => {
-                const total = products.reduce((accum, product) => accum + product.price * product.quantity, 0)
-
-                return { products, total }
-            })
-    },
-
+    /**
+     * Register of the user
+     * 
+     * @param {string} username   User username
+     * @param {string} email      User email
+     * @param {string} password   User password
+     * @param {string} repeatPassword  Repeat Password
+     * 
+     * @returns {Promise<boolean>}
+     */
     registerUser(username, email, password, repeatPassword) {
         return Promise.resolve()
             .then(() => {
@@ -120,6 +88,14 @@ const logic = {
             })
     },
 
+     /**
+     * Authentication of the user
+     * 
+     * @param {string} email   User email
+     * @param {string} password   User password
+     * 
+     * @returns {Promise<string>}
+     */
     login(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -148,6 +124,13 @@ const logic = {
             })
     },
 
+    /**
+     * Retrieve user information
+     * 
+     * @param {string} id   User id
+     * 
+     * @returns {Promise<User>} 
+     */
     retrieveUser() {
         return Promise.resolve()
             .then(() => {
@@ -167,53 +150,187 @@ const logic = {
             })
     },
 
+    /**
+     * Get date of the order
+     * 
+     * @returns {"dateOrder"}
+     */
+    getDateOrder() {
+        this._dateOrder = Date.now()
+        return this._dateOrder.toString()
+    },
+
+     /**
+     * Add product to the cart according to the quantity
+     * 
+     * @param {String} productId The product id selected.
+     * @param {Number} quantity Quantity of products selected.
+     */
+    addProductToCart(productId, quantity = 1) {
+        for (let i = 0; i < quantity; i++)
+            this.cart().push(productId)
+
+        this.cart(this.cart())
+    },
+
+    /**
+     * Substract product to the cart according to the quantity
+     * 
+     * @param {String} productId The product id selected.
+     * @param {Number} quantity Quantity of products selected.
+     */
+    substractProductFromCart(productId, quantity) {
+        for (let i = 0; i < quantity; i++) {
+            const index = this.cart().findIndex(_productId => _productId === productId)
+    
+            if (index > -1) {
+                this.cart().splice(index, 1)
+    
+                this.cart(this.cart())
+            }
+        }
+    },
+
+    /**
+     * Remove products to the cart of a product selected
+     * 
+     * @param {String} productId The product id selected.
+     */
+    removeProductFromCart(productId) {
+        const updateCart = this.cart().filter(id => {
+            return id !== productId
+        })
+
+        this.cart(updateCart)
+    },
+
+    /**
+     * List products of the cart with the corresponding amount
+     * 
+     * @returns {[Products]}
+     */
+    listProductsFromCart() {
+        return clientApi.listProductsByIds(this.cart())
+            .then(products => {
+                const quantities = this.cart().reduce((accum, productId) => {
+                    if (accum[productId]) accum[productId]++
+                    else accum[productId] = 1
+                    return accum
+                }, {})
+                products.forEach(product => product.quantity = quantities[product.id])
+
+                return products
+            })
+    },
+
+    /**
+     * Retrieve products of the cart and their total price.
+     * 
+     * @returns {[Products], Total}
+     */
+    getCartSummary() {
+        return this.listProductsFromCart()
+            .then(products => {
+                const total = products.reduce((accum, product) => accum + product.price * product.quantity, 0)
+
+                return { products, total }
+            })
+    },
+
+    /**
+     * List all categories 
+     * 
+     * @returns {Promise<[Categories]>}
+     */
     listAllCategories() {
         return clientApi.listAllCategories()
             .then(res => res)
     },
 
-
+    /**
+    * Lists root categories
+    * 
+    * @returns {Promise<[Category]>}
+    */
     listRootCategories() {
         return clientApi.listRootCategories()
             .then(res => res)
     },
 
+    /**
+    * Lists Subcategories
+    * 
+    * @param {String} categoryId The category id of the product.
+    * 
+    * @returns {Promise<[Categorises]>}
+    */
     listSubcategories(categoryId) {
         return clientApi.listSubcategories(categoryId)
             .then(categories => categories)
     },
 
+     /**
+     * Lists products by category
+     * 
+     * @param {String} categoryId The category id of the product.
+     * 
+     * @returns {Promise<[Product]>}
+     */
     listProductsByCategory(categoryId) {
         return clientApi.listProductsByCategory(categoryId)
             .then(products => products)
     },
 
-    productDetails(productId) {
-        return clientApi.productDetails(productId)
-            .then(product => product)
-    },
-
+    /**
+     * Lists all products
+     * 
+     * @returns {Promise<[Product]>}
+     */
     listProducts() {
         return clientApi.listProducts()
             .then(products => products)
     },
 
+    /**
+     * Retrieve a product and show details
+     * 
+     * @param {String} productId The category id of the product.
+     * 
+     * @returns {Promise<Product>}
+     */
+    productDetails(productId) {
+        return clientApi.productDetails(productId)
+            .then(product => product)
+    },
+
+    /**
+     * @param {string} userId User id
+     * @param {string} deliveryAddress Deliery address of the order
+     * @param {string} orderDate    Date of the order
+     * @param {Array} orderProducts Products in the order
+     * @param {string} paymentMethod Payment method selected
+     * @param {string} status Order Status(paid, proccessing, unpaid) 
+     * 
+     * @returns {Promise<"orderId">}
+     */
     createOrder(deliveryAddress, paymentMethod) {
         return clientApi.createOrder(this.userId(), deliveryAddress, this.getDateOrder(), this.cart(), paymentMethod, this._statusOrder)
     },
 
+    /**
+     * Check if user is logged
+     * 
+     * @returns {boolean}
+     */
     get loggedIn() {
         return !!this.userId()
     },
 
     /**
- * Logs a user out
- * 
- * @param {string} username - The user's username
- * @param {string} password - The user's password
- * 
- * @returns {boolean} - Confirms log-out 
- */
+    * Logs a user out
+    * 
+    * @returns {boolean} - Confirms log-out 
+    */
     logout() {
         this.userId(null)
 

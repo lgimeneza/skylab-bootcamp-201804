@@ -24,14 +24,21 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 * Chai
 * NYC
 
+## FUNCTIONAL DESCRIPTION
 
-## UML MODEL
+#### USE CASES
 
-![](./models-diagram/UML-Diagram-Nutri-fit.jpg)
+![](./models-diagram/uses-cases-nutrifit.jpg)
 
-## BLOCK MODEL
+## TECHNICAL DESCRIPTION
 
-![block model](./models-diagram/block-diagram-nitrifit.jpg)
+#### DATA MODEL
+
+![](./models-diagram/data-model-nutrifit.jpg)
+
+#### BLOCK MODEL
+
+![](./models-diagram/block-diagram-nitrifit.jpg)
 
 ## SCREENSHOTS
 
@@ -45,7 +52,7 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 
 ### * Home 
 
-![](./layouts/home.jpg)
+![](.layouts/home.jpg)
 
 ### * Individuals Category
 
@@ -63,3 +70,7 @@ E-comerce web platform focused on the sale of nutritional food products. The sal
 ## SHOW DEMO
 
 Try a demo of the project here: surge
+
+## Information about this repository
+
+To make the application work, you must create an .env file and configure the variables for the correct use of the API. Remember that you must also install the dependencies. The Front-End uses the API to communicate with the Back-Endr. Server is responsible for managing communication with the database.

@@ -1,15 +1,16 @@
 'use strict'
 
-const { models: { User, Order, Product, Category, Subcategory } } = require('data')
+const { models: { User, Order, Product, Category } } = require('data')
 
 const logic = {
 
     /**
+     * Register of the user
      * 
-     * @param {string} username
-     * @param {string} email 
-     * @param {string} password
-     * @param {string} repeatPassword 
+     * @param {string} username   User username
+     * @param {string} email      User email
+     * @param {string} password   User password
+     * @param {string} repeatPassword  Repeat Password
      * 
      * @returns {Promise<boolean>}
      */
@@ -53,9 +54,10 @@ const logic = {
     },
 
     /**
+     * Authentication of the user
      * 
-     * @param {string} email
-     * @param {string} password 
+     * @param {string} email   User email
+     * @param {string} password   User password
      * 
      * @returns {Promise<string>}
      */
@@ -80,8 +82,9 @@ const logic = {
     },
 
     /**
+     * Retrieve user information
      * 
-     * @param {string} id
+     * @param {string} id   User id
      * 
      * @returns {Promise<User>} 
      */
@@ -102,18 +105,10 @@ const logic = {
     },
 
     /**
+     * List all categories 
      * 
-     * @param {string} id 
-     * @param {string} name 
-     * @param {string} surname 
-     * @param {string} email 
-     * @param {string} password 
-     * @param {string} newEmail 
-     * @param {string} newPassword 
-     * 
-     * @returns {Promise<boolean>}
+     * @returns {Promise<[Categories]>}
      */
-
     listAllCategories() {
         return Promise.resolve()
             .then(() => {
@@ -156,11 +151,11 @@ const logic = {
     },
 
     /**
-    * Lists products
+    * Lists Subcategories
     * 
-    * @param {String} categoryId The category id
+    * @param {String} categoryId The category id of the product.
     * 
-    * @returns {Promise<[Product]>}
+    * @returns {Promise<[Categorises]>}
     */
     listSubcategories(categoryId) {
         if (typeof categoryId !== 'string') throw Error('user categoryId is not a string')
@@ -186,9 +181,9 @@ const logic = {
     },
 
     /**
-     * Lists products
+     * Lists products by category
      * 
-     * @param {String} categoryId The category id
+     * @param {String} categoryId The category id of the product.
      * 
      * @returns {Promise<[Product]>}
      */
@@ -208,9 +203,7 @@ const logic = {
     },
 
     /**
-     * Lists products
-     * 
-     * @param {String} categoryId The category id
+     * Lists all products
      * 
      * @returns {Promise<[Product]>}
      */
@@ -226,6 +219,13 @@ const logic = {
             })
     },
 
+    /**
+     * Retrieve a product and show details
+     * 
+     * @param {String} productId The category id of the product.
+     * 
+     * @returns {Promise<Product>}
+     */
     productDetails(productId) {
         return Promise.resolve()
             .then(() => {
@@ -238,7 +238,13 @@ const logic = {
             })
     },
 
-
+    /**
+     * Lists products by theirs ids
+     * 
+     * @param {String} ids Array contains selected ids.
+     * 
+     * @returns {Promise<[Product]>}
+     */
     listProductsByIds(ids) {
 
         const arrayIds = ids.split(',')
@@ -255,6 +261,17 @@ const logic = {
             })
     },
 
+    /**
+     * 
+     * @param {string} userId User id
+     * @param {string} deliveryAddress Deliery address of the order
+     * @param {string} orderDate    Date of the order
+     * @param {Array} orderProducts Products in the order
+     * @param {string} paymentMethod Payment method selected
+     * @param {string} status Order Status(paid, proccessing, unpaid) 
+     * 
+     * @returns {Promise<"orderId">}
+     */
     createOrder(userId, deliveryAddress, orderDate, orderProducts, paymentMethod, status) {
 
         return Promise.resolve()
