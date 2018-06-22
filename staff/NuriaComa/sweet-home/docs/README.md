@@ -1,6 +1,6 @@
 # SWEET HOME: sweet living.
 
-![HTML5,CSS3 and JS](images/lenguajes.png)       ![react](images/images/React-icon.png)           ![node](images/node.png)                 ![mongoose](images/MongooseJS.png)        ![mongo](images/MongoDB-Logo.png)
+![HTML5,CSS3 and JS](images/lenguajes.png)       ![react](images/React-icon.png)           ![node](images/node.png)                 ![mongoose](images/MongooseJS.png)        ![mongo](images/MongoDB-Logo.png)
 
 
 ## Target
