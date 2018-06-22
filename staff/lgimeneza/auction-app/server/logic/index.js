@@ -5,10 +5,10 @@ const { models: { Product, User, Bid, Category }, mongoose: { Types: { ObjectId 
 const logic = {
 
     /**
-     * 
-     * @param {string} query 
-     * @param {[string]} categories 
-     * @param {[number]} prices 
+     * Retrieve a list of products with the search and filter criteria.
+     * @param {string} query - Search criteria string
+     * @param {Array<string>} categories - Array of category id to filter
+     * @param {Array<string>} prices - Range of prices to filter [min, max]
      */
     listProducts(query, categories, prices) {
         return Promise.resolve()
@@ -69,7 +69,8 @@ const logic = {
     },
 
     /**
-     * @param {string} userId 
+     * Retrieve the user's bid list.
+     *  @returns {Promise<[Product]>} - Array of product objects
      */
     listUserProducts(userId){
         return Promise.resolve()
@@ -102,7 +103,9 @@ const logic = {
     },
 
     /**
-     * @param {string} productId
+     * Retrieve a product with a given id
+     * @param {string} productId - id of product to retrive
+     * @returns {Promise<Product>} - Product object
      */
     retrieveProduct(productId) {
         return Promise.resolve()
@@ -130,7 +133,7 @@ const logic = {
     },
 
     /**
-     * 
+     * Save a product
      * @param {string} title 
      * @param {string} description 
      * @param {Date} startDate 
@@ -138,6 +141,7 @@ const logic = {
      * @param {number} startPrice 
      * @param {boolean} closed 
      * @param {string} image 
+     * @returns {Promise<Boolean>}
      */
     addProduct(
         title,
@@ -178,10 +182,11 @@ const logic = {
     },
 
     /**
-     * 
-     * @param {string} productId 
-     * @param {string} userId 
-     * @param {number} price 
+     * Save a bid for a given product
+     * @param {string} productId - id of bidding product 
+     * @param {string} userId - id of bidding user. Must be logged
+     * @param {number} price - the bid price
+     * @returns {Promise<string>} - Bid id string
      */
     addBid(productId, userId, price) {
         //TODO: not alow lower or closed bid
@@ -211,7 +216,8 @@ const logic = {
     },
 
     /**
-     * @returns {Promise<[Categories]>}
+     * Retrieve a list of product categories available. It is used to filter the products.
+     * @returns {Promise<[Category]>} - Array of categories
      */
     listCategories() {
         return Promise.resolve()
@@ -226,9 +232,10 @@ const logic = {
     },
 
     /**
-     * 
+     * Authenticate the user
      * @param {string} email 
      * @param {string} password 
+     * @returns {Object<User>}} - User object.
      */
     authenticateUser(email, password) {
         return Promise.resolve()
@@ -251,6 +258,7 @@ const logic = {
     },
 
     /**
+     * Retrieves the user info.
      * @param {string} id
      * @returns {Promise<User>} 
      */
@@ -271,12 +279,11 @@ const logic = {
     },
 
     /**
-     * 
+     * Register a user with the data provided.
      * @param {string} name 
      * @param {string} surname 
      * @param {string} email 
      * @param {string} password 
-     * 
      * @returns {Promise<boolean>}
      */
     registerUser(name, surname, email, password) {

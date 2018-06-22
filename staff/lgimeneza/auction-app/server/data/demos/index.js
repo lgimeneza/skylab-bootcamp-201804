@@ -59,7 +59,7 @@ mongoose.connect(DB_URL)
             title: 'MacBook Pro de 13 pulgadas 128GB',
             description: 'Intel Core i5 de doble núcleo a 2,3 GHz8 GB de memoria RAM128 GB flash PCIeIntel Iris Plus Graphics 640',
             startDate: '2018-05-23T18:25:43.511Z',
-            endDate: '2018-06-23T16:20:16.511Z',
+            endDate: '2018-06-22T16:20:16.511Z',
             startPrice: 100,
             currentPrice: 150,
             currentUser: user05,
@@ -99,7 +99,7 @@ mongoose.connect(DB_URL)
             currentUser: user02,
             currentBid: bid06,
             closed: false,
-            images: [image01, image03, image06, image08],
+            images: [image03, image01, image06, image08],
             category: category01,
             winningBid: null,
             winningUser: null,
@@ -107,7 +107,7 @@ mongoose.connect(DB_URL)
         })
 
         const product04 = new Product({ 
-            title: 'Laptop de 15 pulgadas 256GB',
+            title: 'Tablet Pixel C 256GB',
             description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
             startDate: '2018-04-10T11:18:12.511Z',
             endDate: '2018-06-20T18:31:12.511Z',
@@ -116,12 +116,46 @@ mongoose.connect(DB_URL)
             currentUser: user02,
             currentBid: bid06,
             closed: false,
-            images: [image08, image03, image06, image01],
+            images: [image04, image07, image04, image07],
             category: category01,
             winningBid: null,
             winningUser: null,
             bids: [bid05, bid06]
         })
+
+        const product05 = new Product({ 
+            title: 'Smartphone OnePlus 256GB',
+            description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
+            startDate: '2018-04-10T11:18:12.511Z',
+            endDate: '2018-06-20T18:20:10.511Z',
+            startPrice: 100,
+            currentPrice: 120,
+            currentUser: user02,
+            currentBid: bid06,
+            closed: false,
+            images: [image07, image09, image07, image09],
+            category: category01,
+            winningBid: null,
+            winningUser: null,
+            bids: [bid05, bid06]
+        })
+
+        const product06 = new Product({ 
+            title: 'Compact camera DSC 25',
+            description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit semper euismod, commodo urna dis ante erat sem aliquet aenean, tempor nulla non mauris a curabitur molestie metus. Sodales odio porttitor interdum sed iaculis luctus auctor tincidunt, et nunc tortor hendrerit aliquet vel sociosqu sociis, euismod senectus per pellentesque dis egestas est.',
+            startDate: '2018-04-10T11:18:12.511Z',
+            endDate: '2018-06-20T18:31:12.511Z',
+            startPrice: 100,
+            currentPrice: 120,
+            currentUser: user02,
+            currentBid: bid06,
+            closed: false,
+            images: [image09, image07, image09, image04],
+            category: category01,
+            winningBid: null,
+            winningUser: null,
+            bids: [bid05, bid06]
+        })        
 
         await Promise.all([
             user01.save(),
@@ -143,6 +177,8 @@ mongoose.connect(DB_URL)
             product02.save(),
             product03.save(),
             product04.save(),
+            product05.save(),
+            product06.save(),
         ])
         
         return true;

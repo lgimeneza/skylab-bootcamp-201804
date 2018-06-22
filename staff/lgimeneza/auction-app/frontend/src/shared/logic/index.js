@@ -77,7 +77,7 @@ const logic = {
      * Authenticate the user and log in saving the user info in this logic.
      * @param {string} username - The username to log in. Email of the user.
      * @param {string} password - User's password.
-     *  @returns {Object<User>}} - User object.
+     * @returns {Object<User>}} - User object.
      */
     login(username, password) {
         return auctionApi.authenticateUser(username, password)
