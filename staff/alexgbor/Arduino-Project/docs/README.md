@@ -23,7 +23,7 @@ After that, depending on what you want to build, you'll need male-male pin cable
 
 ##### Arduino Uno
 
-![ESP8266](https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/ESP-01.jpg/300px-ESP-01.jpg)
+![ESP8266](https://i.imgur.com/6opMNZi.png)
 
 ##### ESP8266 Wi-Fi Module
 
