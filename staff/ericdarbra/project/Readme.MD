@@ -2,6 +2,9 @@
 
 The project Nursefy is a web app that allows you to easily view and manage the nurse's shifts in a hospital.
 
+## Functional description
+![flow](data/images/flow.png)
+
 ## Technical description
 
 ### Data model
