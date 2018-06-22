@@ -2,4 +2,4 @@
 
 [Documentation](./docs)
 
-[Demo](castme.surge.sh)
+[Demo](https://castme.surge.sh)
