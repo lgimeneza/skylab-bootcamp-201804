@@ -473,6 +473,21 @@ describe('get Booking Hours For Year, Month and day', () => {
           })
       })
   )
+  // describe('should give error in the error data', () => {
+  //   it('should fail on no user id', () =>
+  //     logic.getBookingHoursForYearMonthDay('', 6, 7)
+  //       .catch(({ message }) => expect(message).to.equal('year is not a number'))
+  //   )
+
+  //   it('should fail on empty user id', () =>
+  //     logic.getBookingHoursForYearMonthDay(2018, '', 7)
+  //       .catch(({ message }) => expect(message).to.equal('month is not a number'))
+  //   )
+  //   it('should fail on empty user id', () =>
+  //     logic.getBookingHoursForYearMonthDay(2018, 6, '7')
+  //       .catch(({ message }) => expect(message).to.equal('day is not a number'))
+  //   )
+  // })
 })
 
 describe('List Services', () => {

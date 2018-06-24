@@ -202,6 +202,10 @@ const logic = {
     return Promise.resolve()
       .then(() => {
 
+        // if (typeof year !== 'number') throw Error('year is not a number')
+
+        // if (typeof month !== 'number') throw Error('month email is not a number')
+
         const monthStart = moment(`${year}-${month}-01`, 'YYYY-MM-DD')
         const monthEnd = moment(monthStart).add(1, 'M')
         const monthDays = monthEnd.diff(monthStart, 'days')
