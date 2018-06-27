@@ -1,8 +1,5 @@
 'use strict';
 
-<<<<<<< HEAD
-// TODO
-=======
 var Hangman = (function () {
     function Hangman(word, attempts) {
         if (typeof word !== 'string') throw Error('invalid word ' + word);
@@ -97,4 +94,3 @@ var Hangman = (function () {
 
     return Hangman;
 })();
->>>>>>> upstream/develop
