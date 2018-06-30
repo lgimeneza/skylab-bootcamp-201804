@@ -136,10 +136,10 @@ WorldPic1.0.0
 
 #### Next releases 
 
-1.1.. - Flat and globe maps, reponsive and zoomable.
-1.2.. - Update user info.
-1.... - Improving private app.
-2.0.0 - Find users.
+- 1.1.. - Flat and globe maps, reponsive and zoomable.
+- 1.2.. - Update user info.
+- 1.3.. - Improving private app.
+- 2.0.0 - Find users.
 
 ## Author
 
