@@ -1,4 +1,5 @@
 const {expect}= require('chai')
+const {env: {DB_URL, API_URL}}= process
 
 describe('logic testing', ()=>{
     const userData = {
@@ -47,6 +48,14 @@ describe('logic testing', ()=>{
 
         applications: []
     }
+
+
+
+    describe('register user',()=>{
+
+
+
+    })
 
 
 
