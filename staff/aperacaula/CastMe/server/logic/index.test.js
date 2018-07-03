@@ -5,7 +5,6 @@ require('dotenv').config()
 const { mongoose, models: { User, Casting, Project, ProfessionalData, PersonalData, PhysicalData } } = require('data')
 const { expect } = require('chai')
 const logic = require('.')
-const _ = require('lodash')
 const generateData = require('./generate-data')
 
 const { env: { DB_URL } } = process
@@ -546,14 +545,14 @@ describe('logic', () => {
         })
     })
 
-    false && describe('user is eligible', () => {
+    describe('user is eligible', () => {
         it('should succeed on correct data', () => {
             const user = new User(userData)
             const proj1 = projects[0]
 
             return Promise.all([proj1.save(), user.save()])
                 .then(([proj1, user]) => {
-                    debugger
+                    
 
                     const { castings: [cast1_1, cast1_2] } = proj1
 

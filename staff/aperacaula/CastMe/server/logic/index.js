@@ -362,9 +362,24 @@ const logic = {
         user.physicalData = physicalData;
         user.videobookLink = videobookLink;
         user.pics = pics;
-        user.profilePicture = profilePicture;
+        return user.save()
 
-        return user.save();
+      })
+      .then(user=>{
+        return Promise.resolve()
+          .then(()=>{
+            return new Promise((resolve, reject) => {
+              return cloudinary.v2.uploader.upload(profilePicture, function (err, data) {
+                if (err) return reject(err)
+      
+                resolve(data.url)
+              })
+            })
+          })
+          .then(url=>{
+            user.profilePicture = url;
+            return user.save();
+          })
       })
       .then(() => true);
   },
@@ -507,13 +522,13 @@ const logic = {
                 const requirements = Object.values(casting.physicalReq.toObject())
                 const userProps = Object.values(user.physicalData.toObject())
 
-                const minHeight = requirements[1]
-                const userHeight = userProps[1]
+                const minHeight = requirements[0]
+                const userHeight = userProps[0]
 
                 if (userHeight < minHeight) return false
 
                 for (let i = 2; i < requirements.length; i++) {
-                  if (!requirements[i]) {
+                  if (requirements[i]!== null) {
                     if (requirements[i] !== userProps[i]) return false
                   }
                 }
