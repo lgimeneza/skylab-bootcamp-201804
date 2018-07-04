@@ -1,82 +1,75 @@
-import React, { Component } from 'react';
-import '../App.css';
-import { withRouter } from 'react-router-dom'
-import logic from '../logic/index'
-import api from 'api'
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom"
+import logic from "../logic/index"
+import api from "api"
 
 
 class Login extends Component {
     state = {
-        user: '',
-        password: '',
-        state: '',
-        token: ''
+        user: "",
+        password: "",
+        state: "",
+        token: "",
+        error: "",
+        modal: ""
     }
-
 
     userName = (e) => {
         const user = e.target.value
         this.setState({ user })
-
     }
-    userPassword = (e) => {
 
+    userPassword = (e) => {
         const password = e.target.value
         this.setState({ password })
-
     }
+
     submit = (e) => {
         e.preventDefault()
-
-
-        logic.login(this.state.user, this.state.password)
-            .then(res => {
-                sessionStorage.setItem('userId', logic.userId)
-                sessionStorage.setItem('token', api.token)
+        return logic.login(this.state.user, this.state.password)
+            .then(() => {
+                sessionStorage.setItem("userId", logic.userId)
+                sessionStorage.setItem("token", api.token)
+                this.props.history.push(`/profile`)
             })
-            .then(() => this.props.history.push(`/profile`))//aqui iba a bucle
             .catch(error => {
-                console.error("show -> "+ error.message)
-                this.props.history.push(`/login`)
-
+                this.setState({error: error.message}, () => this.modalManager())
             })
     }
 
-    bucle = () => {
-        if (this.token) {
-            //alert you are logged in
+    modalManager() {
+        let modal = ""
+        if (this.state.error !== "") modal = (
+            <div className="modal" onClick={this.close}>
+                <div className="error-modal">
+                <div className="modal-header"><i className="fas fa-exclamation-triangle"/></div>
+                <div className="modal-body"> <h2>{this.state.error}</h2><br/></div>
+                <div className="modal-footer"> <small><sub>Click on window to close</sub></small> </div>
+                </div>
+            </div>
+        )
+        this.setState({error: "", modal })
+    } 
 
-            this.props.history.push(`/home`)
-        }
+    close = (e) => {
+        e.preventDefault()
+        this.setState({ modal: "" },() => this.modalManager())
     }
-
-    // componentDidMount() {
-    //     if (Xtorage.local.get('user')) {
-    //         logic.token = Xtorage.local.get('user').token
-    //         logic.id = Xtorage.local.get('user').id
-    //         logic.retrieve()
-    //             .catch(swal({
-    //                 type: 'error',
-    //                 title: 'Hey!',
-    //                 html: '<p>You are already logged!</p>',
-    //                 animation: true,
-    //                 customClass: 'animated flipInX'
-    //             }))
-    //             .then(this.props.history.push(`/home`))
-    //     }
-    // }
 
     render() {
-        const { user, password } = this.state
-        return <div className="login">
+        const { modal, user, password } = this.state
+        return (
+        <div className="containers login">
+            {modal}
             <h1>Login</h1>
-            <form onSubmit={this.submit}>
+            <form onSubmit={this.submit} className="form login-form">
                 <input type="text" onChange={this.userName} value={user} placeholder="User" autoComplete="off" />
                 <input type="password" onChange={this.userPassword} value={password} placeholder="Password" autoComplete="off" />
+                <br/>
                 <button type="submit">Login</button>
             </form>
         </div>
-    }
+        )}
 }
 
 export default withRouter(Login)

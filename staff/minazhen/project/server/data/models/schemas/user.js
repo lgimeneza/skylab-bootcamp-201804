@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose")
+const { Schema, SchemaTypes: { ObjectId } } = require("mongoose")
 
 module.exports = new Schema({
     username: { type: String, required: true },
@@ -6,5 +6,8 @@ module.exports = new Schema({
     location: { type: String, required: true },
     bio: { type: String, required: false },
     bestTravel: { type: String, required: false },
-    countries: { type: Array, required: false }
+    countries: [{
+        type: ObjectId,
+        ref: 'Country'
+    }]
 })

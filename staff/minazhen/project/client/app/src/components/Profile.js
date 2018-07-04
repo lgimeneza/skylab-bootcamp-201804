@@ -1,29 +1,22 @@
-import React, { Component } from 'react';
-// import '../App.css';
-// import App from '../App'
-import logic from '../logic'
-// import Unregister from './Unregister'
-// import Xtorage from './Xtorage';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom"
+import logic from "../logic"
 
 class Profile extends Component {
     state = {
         data: {},
         username: "",
-        location: ""
+        location: "",
+        error: "",
+        modal: ""
     }
 
     componentDidMount() {
-        // if (Xtorage.local.get('user')) {
-        //     logic.token = Xtorage.local.get('user').token
-        //     logic.id = Xtorage.local.get('user').id
-        //     logic.retrieve()
-        if (logic.userId !== "NO-ID") {
+        if (logic.loggedIn()) {
             logic.retrieveUser()
                 .then(res => {
                     if (res.status === "KO") {
-                        // Xtorage.local.remove('user')
-                        logic.logout()
-                        throw Error("Time expired and you should log in again")
+                        this.setState({error: "Something wrong happened... Try to log in again"}, () => this.modalManager())
                     }
                     return res
                 })
@@ -33,28 +26,50 @@ class Profile extends Component {
                         username: data.username,
                         location: data.location
                     })
+                }).catch(() => {
+                    this.setState({error: "Something wrong happened..."}, () => this.modalManager())
                 })
-                .catch(err => {
-                    console.log(err)
-                    // this.props.history.push(`/login`)
-                })
-        }  else this.props.history.push(`/login`)
+        }  else this.props.history.push(`/`)
+    }
+
+    modalManager() {
+        let modal = ""
+        if (this.state.error !== "") modal = (
+            <div className="modal" onClick={this.close}>
+                <div className="error-modal">
+                <div className="modal-header"><i className="fas fa-exclamation-triangle"/></div>
+                <div className="modal-body"> <h2>{this.state.error}</h2><br/></div>
+                <div className="modal-footer"> <small><sub>Click on window to close</sub></small> </div>
+                </div>
+            </div>
+        )
+        this.setState({error: "", modal })
+    } 
+
+    close = (e) => {
+        e.preventDefault()
+        logic.logout()
+        this.setState({ modal: "" },() => this.props.history.push(`/login`))
     }
 
     render() {
         return (
-            <div className="Profile">
-                <section className="pf-profile">
-                    <h1>Profile</h1>
+            <div className="containers profile">
+                <h1>Profile</h1>
+                    {this.state.modal}
                     <article className="info">
+                        <p> Username: </p>
                         <h1>{this.state.username}</h1>
-                        <h4>{this.state.location}</h4>
+                        <br/>
+                        <p> Location: </p>
+                        <h3>{this.state.location}</h3>
+                        <br/>
                     </article>
-                </section>
+
             </div >
         )
     }
 }
 
-export default Profile
+export default withRouter(Profile)
 

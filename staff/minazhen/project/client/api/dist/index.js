@@ -51,6 +51,8 @@ var travelApi = {
                     token = _data$data.token;
 
                 _this2.token = token;
+                
+
                 return id;
             }).catch(function (err) {
                 if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
@@ -117,10 +119,17 @@ var travelApi = {
                     data = _ref4.data;
 
                 if (status !== 200 || data.status !== 'OK') throw Error("unexpected response status " + status + " (" + data.status + ")");
+
                 return true;
-            }).catch(function (_ref5) {
-                var error = _ref5.response.data.error;
-                return error;
+            }).catch(function (err) {
+                if (err.code === 'ECONNREFUSED') throw Error('could not reach server');
+
+                if (err.response) {
+                    var message = err.response.data.error;
+
+
+                    throw Error(message);
+                } else throw err;
             });
         });
     },
@@ -172,6 +181,25 @@ var travelApi = {
                     throw Error(message);
                 } else throw err;
             });
+        });
+    },
+    uploadPhoto: function uploadPhoto(file) {
+        var formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "sjzufyub");
+
+        return axios({
+            url: "https://api.cloudinary.com/v1_1/dlpsxhpa0/upload",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: formData
+        }).then(function (res) {
+            console.log(res);
+            return res.data.secure_url;
+        }).catch(function (err) {
+            return console.error(err);
         });
     },
     addPhoto: function addPhoto(userId, countryName, url) {

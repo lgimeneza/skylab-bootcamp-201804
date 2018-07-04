@@ -85,7 +85,7 @@ router.delete('/users/:userId', [jwtValidator, jsonBodyParser], (req, res) => {
 router.get('/users/:userId/world', jwtValidator, (req, res) => {
     const { params: { userId } } = req
 
-    logic.world(userId)
+    logic.listVisitedCountries(userId)
         .then(list => {
             res.json({ status: 'OK', data: list })
         })

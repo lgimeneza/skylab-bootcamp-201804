@@ -30,34 +30,38 @@ describe("models", () => {
         it("should succeed assigning two countries to a user", () => 
             User.create(userData)
                 .then((user) => {
-                    const japan = new Country({ name : "Japan", userId: user.id,  })
-                    const peru = new Country({ name : "Peru", userId: user.id,  })
+                    const japan = new Country({ name : "Japan", user: user._id,  })
+                    const peru = new Country({ name : "Peru", user: user._id,  })
                     return Promise.all([japan, peru])
                     .then((p) => {
-                        p.map((v, i) => user.countries.push({name : v.name, id : v.id}))
+                        p.map((v, i) => {
+                            v.save()
+                            return user.countries.push(v._id)
+                        })
 
                         expect(p[0].id).not.toBe(p[1].id)
-                        expect(p[0].userId).toBe(p[1].userId)
-                        if (p[0].name === "Japan"){
-                            expect(p[1].name).toBe("Peru")
-                        } else {
-                            expect(p[1].name).toBe("Japan")
-                            expect(p[0].name).toBe("Peru")
-                        }
+                        expect(p[0].user).toBe(p[1].user)
 
-                        user.save()
+                        return user.save()
                     }).then(res => {
                         const uc = user.countries
                         expect(uc.length).toBe(2)
-                        if (uc[0].name === "Japan"){
-                            expect(uc[1].name).toBe("Peru")
-                        } else {
-                            expect(uc[1].name).toBe("Japan")
-                            expect(uc[0].name).toBe("Peru")
-                        }
-                        expect(uc[0].name).not.toBe(uc[1].name)
-                        expect(japan.userId).toBe(peru.userId)
+
+                        expect(uc[0]._id).not.toBe(uc[1]._id)
+                        const c01 = Country.findById(uc[0])
+                        const c02 = Country.findById(uc[1])
+
+                        return Promise.all([c01, c02])
+                        .then(res => {
+                            expect(res[0].user).toEqual(res[1].user)
+                            expect(res[0].name).not.toBe(res[1].name)
+                            expect(res[0].id).not.toBe(res[1].id)
+                            expect(res[0]._id).not.toBe(res[1]._id)
+                            expect((res[0].name === "Japan")||(res[0].name === "Peru")).toBeTruthy()
+                            expect((res[1].name === "Japan")||(res[1].name === "Peru")).toBeTruthy()
+                        })
                     })
+                    
                 })
         )
 
@@ -66,7 +70,7 @@ describe("models", () => {
                 .then((user) => {   
                     const _url = "http://en.toureast.com/portals/0/img/country/japan/japan_header.jpg" 
                     const photo = new Photo({ url: _url})         
-                    const place = Country.create({ name : "Japan", userId: user.id })
+                    const place = Country.create({ name : "Japan", user: user._id })
                     return Promise.all([photo, place])
                     .then((promises) => {
                         let ph = "", c = ""
@@ -75,20 +79,20 @@ describe("models", () => {
                         c.photos.push(ph)
                         return c.save()
                         .then((cntry) => {
-                            user.countries.push({name : cntry.name, id : cntry.id})
+                            user.countries.push(cntry._id)
 
                             return user.save()
                         })
                         .then(() => {
                             const uc = user.countries
                             expect(uc.length).toBe(1)
-                            return Country.findById({ _id : uc[0].id })  
+                            return Country.findById({ _id : uc[0] })  
                         })
                         .then((cp0) => {
                             const uc0 = cp0.photos[0]
                             expect(cp0.photos.length).toBe(1)
 
-                            expect(cp0.userId).toBe(user.id)
+                            expect(cp0.user.toString()).toBe(user.id)
                             expect(typeof cp0.id).toBe("string")
                             expect(cp0.name).toBe("Japan")
 

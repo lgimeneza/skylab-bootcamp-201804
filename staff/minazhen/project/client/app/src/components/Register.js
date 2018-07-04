@@ -1,11 +1,6 @@
-import React, { Component } from "react";
-import "../App.css";
+import React, { Component } from "react"
 import { withRouter } from "react-router-dom"
-// import App from "../App"
 import logic from "../logic/index"
-// import Xtorage from "./Xtorage"
-// import swal from "sweetalert2"
-
 
 class Register extends Component {
     state = {
@@ -13,82 +8,78 @@ class Register extends Component {
         password: "",
         location: "",
         state: "",
-        token: ""
+        token: "",
+        error: "",
+        message: "", 
+        modal: ""
     }
-
 
     userName = (e) => {
         const user = e.target.value
         this.setState({ user })
-
     }
-    userPassword = (e) => {
 
+    userPassword = (e) => {
         const password = e.target.value
         this.setState({ password })
-
     }
-    userLocation = (e) => {
 
+    userLocation = (e) => {
         const location = e.target.value
         this.setState({ location })
-
     }
 
     submit = (e) => {
         e.preventDefault()
-
-
-        logic.registerUser(this.state.user, this.state.password, this.state.location)
-            .then(res => {
-                if (res.status === "KO") {
-                    
-                    throw Error("KO") //BORRALO
-
-                }
-                return res
-            })
-            // .then(res =>
-            //     // Xtorage.local.set("user", { id: res.data.id, token: res.data.token})
-                
-            // )
-            // .then(this.bucle)
-            .then(this.props.history.push(`/login`))
+        logic.logout()
+        return logic.registerUser(this.state.user, this.state.password, this.state.location)
+            .then(() => this.bucle())
             .catch(error => {
-                console.error("show -> "+ error.message)
-                this.props.history.push(`/register`)
-
+                this.setState({error: error.message}, () => this.modalManager())
+                
             })
     }
 
     bucle = () => {
-        if (this.token) {
-            //alert you are logged in
-            console.log("you are register")
-
-            this.props.history.push(`/home`)
-        }
+        this.setState({message: "You are registered!"}, () => this.modalManager())
+        setTimeout(() => {
+            this.redirect()
+        }, 1000)
     }
 
-    // componentDidMount() {
-    //     if (Xtorage.local.get("user")) {
-    //         logic.token = Xtorage.local.get("user").token
-    //         logic.id = Xtorage.local.get("user").id
-    //         logic.retrieve()
-    //             .catch(swal({
-    //                 type: "error",
-    //                 title: "Hey!",
-    //                 html: "<p>You are already logged!</p>",
-    //                 animation: true,
-    //                 customClass: "animated flipInX"
-    //             }))
-    //             .then(this.props.history.push(`/home`))
-    //     }
-    // }
+    modalManager() {
+        let modal = ""
+        if (this.state.error !== "") modal = (
+            <div className="modal" onClick={this.close}>
+                <div className="error-modal">
+                <div className="modal-header"><i className="fas fa-exclamation-triangle"/></div>
+                <div className="modal-body"> <h2>{this.state.error}</h2><br/></div>
+                <div className="modal-footer"> <small><sub>Click on window to close</sub></small> </div>
+                </div>
+            </div>
+        )
+        if (this.state.message !== "") modal = (
+            <div className="modal">
+                <div className="message-modal"> <h2>{this.state.message}</h2></div>
+            </div>
+        ) 
+        this.setState({error: "", modal })
+    }
+
+    close = (e) => {
+        e.preventDefault()
+        this.setState({ modal: "" }, () => this.modalManager())
+    }
+
+    redirect = () => {
+        this.setState({ modal: "" }, () => this.props.history.push(`/login`))
+        
+    }
 
     render() {
-        const { user, password, location } = this.state
-        return <div className="register">
+        const { modal, user, password, location } = this.state
+        return <div className="containers register">
+            {modal}
             <h1>Register</h1>
             <form onSubmit={this.submit}>
                 <input type="text" onChange={this.userName} value={user} placeholder="User" autoComplete="off" />
