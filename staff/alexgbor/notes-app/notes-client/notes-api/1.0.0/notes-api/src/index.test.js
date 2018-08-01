@@ -166,7 +166,7 @@ describe('logic (notes api)', () => {
 
     describe('authenticate user', () => {
         it('should succeed on correct data', () =>
-            User.create(userData)
+            User.create()
                 .then(() =>
                     notesApi.authenticateUser('jd@mail.com', '123')
                         .then(id => {
